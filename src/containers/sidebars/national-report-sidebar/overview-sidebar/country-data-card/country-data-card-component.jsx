@@ -7,7 +7,7 @@ import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import cx from 'classnames';
 
-import AreaChart from 'components/charts/area-chart';
+import AreaChartLegacy from 'components/charts/area-chart-legacy';
 import DonutChart from 'components/charts/donut-chart';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
@@ -185,7 +185,7 @@ function CountryDataCardComponent({
             <p className={styles.areaChartYAxisLegend}>
               {t('Species Protection Index')}
             </p>
-            <AreaChart
+            <AreaChartLegacy
               area1={{
                 key: 'spi',
                 stroke: '#000000',
@@ -200,6 +200,7 @@ function CountryDataCardComponent({
                 ],
                 fillOpacity: 0.4,
                 strokeWidth: 0.5,
+                type: 'linearOpen',
               }}
               area2={{
                 key: 'protected',

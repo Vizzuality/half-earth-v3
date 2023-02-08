@@ -1,16 +1,10 @@
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
-.areaChart {
-  display: block;
-  position: relative;
-  margin: 0;
+.xAxisTick {
+  @extend %annotation;
+  color: $grey-text;
+  font-size: 8px;
+  font-weight: 200;
 }
 
-.label {
-  font-size: $font-size-xxs;
-  text-anchor: end;
-  font-family: $font-family-1;
-
-  // Readjust text. TODO: Improve positioning
-  transform: translate(18px, 0);
-}

@@ -10,13 +10,17 @@ import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import Button from 'components/button';
 import ArcChart from 'components/charts/arc-chart';
+import AreaChart from 'components/charts/area-chart';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 
 import {
+  LAND_HUMAN_PRESSURES_SLUG,
   PROTECTION_SLUG,
   getSidebarCardsConfig,
 } from 'constants/analyze-areas-constants';
+
+import COLORS from 'styles/settings';
 
 import styles from './styles.module.scss';
 
@@ -40,6 +44,7 @@ function SidebarCard({
   handleProtectedAreasModalToggle,
   contextualData,
   metadata,
+  humanPressuresData,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -47,12 +52,87 @@ function SidebarCard({
     () => getSidebarCardsConfig(locale),
     [locale]
   );
+
+  const {
+    hpAgriculture,
+    hpEnergy,
+    hpHumanIntrusion,
+    hpTransportation,
+    hpUrban,
+  } = humanPressuresData || {};
+
+  // !TODO: byYear data is mocked. Please, change it as possible.
+  const HUMAN_PRESSURE_DATA = [
+    {
+      title: 'Agriculture',
+      percentage: hpAgriculture,
+      byYear: [
+        { year: 1980, value: 12.5 },
+        { year: 1990, value: 12.5 },
+        { year: 2000, value: 14.3 },
+        { year: 2010, value: 55.3 },
+        { year: 2020, value: 80.3 },
+      ],
+    },
+    {
+      title: 'Energy',
+      percentage: hpEnergy,
+      byYear: [
+        { year: 1980, value: 12.5 },
+        { year: 1990, value: 22.5 },
+        { year: 2000, value: 24.3 },
+        { year: 2010, value: 25.3 },
+        { year: 2020, value: 50.3 },
+      ],
+    },
+    {
+      title: 'Human Intrusion',
+      percentage: hpHumanIntrusion,
+      byYear: [
+        { year: 1980, value: 12.5 },
+        { year: 1990, value: 12.5 },
+        { year: 2000, value: 14.3 },
+        { year: 2010, value: 15.3 },
+        { year: 2020, value: 60.3 },
+      ],
+    },
+    {
+      title: 'Transportation',
+      percentage: hpTransportation,
+      byYear: [
+        { year: 1980, value: 12.5 },
+        { year: 1990, value: 12.5 },
+        { year: 2000, value: 14.3 },
+        { year: 2010, value: 15.3 },
+        { year: 2020, value: 78.3 },
+      ],
+    },
+    {
+      title: 'Urban',
+      percentage: hpUrban,
+      byYear: [
+        { year: 1980, value: 12.5 },
+        { year: 1990, value: 22.5 },
+        { year: 2000, value: 24.3 },
+        { year: 2010, value: 25.3 },
+        { year: 2020, value: 68.3 },
+      ],
+    },
+  ];
+
+  const hpXAxis = useMemo(() => {
+    return HUMAN_PRESSURE_DATA[0].byYear.map((obj) => obj.year);
+  }, []);
+
   const protectedAreaChartHeight = 100;
   const protectedAreaChartWidth = 320;
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>{cardTitle}</p>
+        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
+          <p className={styles.hpLegendTitle}>{t('Land pressures')}</p>
+        )}
         {cardCategory === PROTECTION_SLUG && REACT_APP_FEATURE_AOI_CHANGES && (
           <div className={styles.protectedAreaChartContainer}>
             <div
@@ -109,6 +189,45 @@ function SidebarCard({
             />
           </div>
         )}
+        {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
+          REACT_APP_FEATURE_AOI_CHANGES && (
+            <div className={styles.humanPressureIndicators}>
+              {HUMAN_PRESSURE_DATA.map((hp) => {
+                return (
+                  <div className={styles.humanPressureIndicator}>
+                    <p className={styles.title}>{hp.title}</p>
+
+                    {hp.percentage !== undefined && (
+                      <p className={styles.percentage}>
+                        {Math.trunc(hp.percentage)}%
+                      </p>
+                    )}
+                    <div className={styles.hpChartContainer}>
+                      <AreaChart
+                        area={{
+                          key: 'value',
+                          stroke: COLORS.gold,
+                          fill: 'url(#gradientColor)',
+                          strokeWidth: 2,
+                          type: 'natural',
+                        }}
+                        data={hp.byYear}
+                        xTicks={hpXAxis}
+                        margin={{
+                          top: 0,
+                          right: 0,
+                          left: -114,
+                          bottom: 0,
+                        }}
+                        height={66}
+                        width={161}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         <SourceAnnotation
           theme="dark"
           metaDataSources={metadata && metadata.source}

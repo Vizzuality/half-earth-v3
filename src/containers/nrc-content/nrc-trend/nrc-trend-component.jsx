@@ -45,6 +45,7 @@ function Trend({
           </Tooltip>
         </span>
       </div>
+
       {countryData && (
         <TrendChart
           area1={{
