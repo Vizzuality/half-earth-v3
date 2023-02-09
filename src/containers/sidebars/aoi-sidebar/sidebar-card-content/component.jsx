@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 
+import Tooltip from '@tippyjs/react';
 import ReactMarkdown from 'react-markdown/with-html';
 
 import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
@@ -17,6 +18,7 @@ import SourceAnnotation from 'components/source-annotation';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   PROTECTION_SLUG,
+  PROTECTED_ATTRIBUTES_SLUG,
   getSidebarCardsConfig,
 } from 'constants/analyze-areas-constants';
 
@@ -24,6 +26,7 @@ import COLORS from 'styles/settings';
 
 import styles from './styles.module.scss';
 
+import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
@@ -60,6 +63,35 @@ function SidebarCard({
     hpTransportation,
     hpUrban,
   } = humanPressuresData || {};
+
+  const PROTECTED_ATTRIBUTES = [
+    {
+      title: 'Designation',
+      value: contextualData.DESIG_E,
+      tooltipContent: 'More info',
+    },
+    {
+      title: 'Status',
+      value: contextualData.STATUS,
+      tooltipContent: 'More info',
+    },
+    {
+      title: 'Status year',
+      // eslint-disable-next-line no-underscore-dangle
+      value: +contextualData.STATUS_,
+      tooltipContent: 'More info',
+    },
+    {
+      title: 'IUCN category',
+      value: contextualData.IUCN_CA,
+      tooltipContent: 'More info',
+    },
+    {
+      title: 'Governance',
+      value: contextualData.GOV_TYP,
+      tooltipContent: 'More info',
+    },
+  ];
 
   // !TODO: byYear data is mocked. Please, change it as possible.
   const HUMAN_PRESSURE_DATA = [
@@ -184,7 +216,7 @@ function SidebarCard({
             source={cardDescription}
           />
         )}
-        {cardCategory === PROTECTION_SLUG && (
+        {REACT_APP_FEATURE_AOI_CHANGES && cardCategory === PROTECTION_SLUG && (
           <div>
             <Button
               type="rectangular"
@@ -203,6 +235,36 @@ function SidebarCard({
             />
           </div>
         )}
+
+        {REACT_APP_FEATURE_AOI_CHANGES &&
+          cardCategory === PROTECTED_ATTRIBUTES_SLUG &&
+          contextualData && (
+            <div className={styles.attributtesContainer}>
+              {PROTECTED_ATTRIBUTES.map((a) => (
+                <div className={styles.attributtesItem}>
+                  <div className={styles.titleWrapper}>
+                    <h6 className={styles.title}>{a.title}</h6>
+                    <span className={styles.iconWrapper}>
+                      <Tooltip
+                        className="light"
+                        content={
+                          <div className={styles.tooltip}>
+                            {a.tooltipContent}
+                          </div>
+                        }
+                        delay={100}
+                        position="bottom"
+                      >
+                        <InfoIcon className={styles.icon} />
+                      </Tooltip>
+                    </span>
+                  </div>
+                  <p className={styles.value}>{a.value}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
           REACT_APP_FEATURE_AOI_CHANGES && (
             <div className={styles.humanPressureIndicators}>
