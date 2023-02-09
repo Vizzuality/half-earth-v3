@@ -1,12 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React, { useMemo } from 'react';
 
 import cx from 'classnames';
@@ -14,9 +5,10 @@ import { motion } from 'framer-motion';
 
 import styles from './styles.module.scss';
 
-import SPSHandleProps from './index.d';
+import type { SPSHandleProps } from './types.d';
 
 const STEP_WIDTH = 80;
+
 function DragHandle({
   isMin = false,
   setFunction,
@@ -29,7 +21,7 @@ function DragHandle({
     [isMin, min, max]
   );
   const updateMinMax = (target) => {
-    const indexChange = Math.round(target / STEP_WIDTH);
+    const indexChange: number = Math.round(target / STEP_WIDTH);
     if (indexChange !== 0) {
       const updatedMaxValue = () => {
         if (max + indexChange < min + 1) {

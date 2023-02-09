@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, FC } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -8,11 +8,17 @@ import { Modal } from 'he-components';
 
 import SpeciesCard from 'containers/sidebars/aoi-sidebar/species-card/component';
 
-import styles from './styles.module';
+import styles from './styles.module.scss';
 
 import SpsChart from './sps-chart';
 import SpsLegend from './sps-legend';
+import {
+  SpeciesModalProps,
+  SPSData as SPSDataType,
+  individualSpeciesData as IndividualSpeciesDataType,
+} from './types';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 const Spinner = loadable(() => import('components/spinner'));
 
 function SpeciesAnalysisModal({
@@ -20,15 +26,14 @@ function SpeciesAnalysisModal({
   handleModalClose,
   loading,
   cardProps,
-}) {
+}: SpeciesModalProps) {
   const [globalRangeSelected, setGlobalRangeSelected] = useState({
     min: 0,
     max: 1,
   });
   const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 4 });
   const [chartWidth, setChartWidth] = useState(700);
-
-  const chartResponsiveRef = useRef();
+  const chartResponsiveRef = useRef<HTMLInputElement>();
   useEffect(() => {
     const onChartResize = () => {
       if (chartResponsiveRef && chartResponsiveRef.current) {
@@ -43,6 +48,15 @@ function SpeciesAnalysisModal({
     return () => window.removeEventListener('resize', onChartResize);
   }, [chartResponsiveRef.current]);
 
+  if (!cardProps) return null;
+
+  const {
+    SPSData,
+    individualSpeciesData,
+  }: {
+    SPSData: SPSDataType[];
+    individualSpeciesData: IndividualSpeciesDataType;
+  } = cardProps;
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContent}>
@@ -97,15 +111,15 @@ function SpeciesAnalysisModal({
               </p>
               <div ref={chartResponsiveRef} className={styles.chartResponsive}>
                 <SpsChart
-                  data={cardProps && cardProps.SPSData}
+                  data={SPSData}
                   width={chartWidth}
-                  selectedSpecies={cardProps && cardProps.individualSpeciesData}
+                  selectedSpecies={individualSpeciesData}
                   globalRangeSelected={globalRangeSelected}
                   SPSSelected={SPSSelected}
                 />
               </div>
               <SpsLegend
-                data={cardProps && cardProps.SPSData}
+                data={SPSData}
                 globalRangeSelected={globalRangeSelected}
                 setGlobalRangeSelected={setGlobalRangeSelected}
                 SPSSelected={SPSSelected}

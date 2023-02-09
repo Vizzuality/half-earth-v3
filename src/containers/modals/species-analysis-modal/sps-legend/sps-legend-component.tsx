@@ -1,29 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React, { useMemo } from 'react';
 
 import { T } from '@transifex/react';
 
-import * as d3 from 'd3';
+import { scaleQuantize, ScaleQuantize } from 'd3';
 import groupBy from 'lodash/groupBy';
 
 import styles from './styles.module.scss';
 
 import { ReactComponent as DragIcon } from 'icons/hand-drag.svg';
 
-import SPSLegendProps from './index.d';
-import Slider from './slider';
+import type { SPSData } from '../types';
 
-const bucketScale = d3.scaleQuantize().domain([0, 100]).range([0, 1, 2, 3]);
-const getBucketValues = (data, key) =>
-  Object.values(groupBy(data, (d) => bucketScale(d[key]))).map((d) => d.length);
+import Slider from './slider';
+import { SPSLegendProps } from './types';
+
+const bucketScale: ScaleQuantize<number> = scaleQuantize()
+  .domain([0, 100])
+  .range([0, 1, 2, 3]);
+const getBucketValues = (
+  data: SPSData[],
+  key: 'SPS_global' | 'per_global'
+): number[] => {
+  function groupingFunction(d: SPSData): number {
+    return bucketScale(d[key]);
+  }
+  // TODO: Fix groupBy
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call
+  return Object.values(groupBy(data, groupingFunction)).map((d) => d.length);
+};
 
 function SpsLegend({
   setGlobalRangeSelected,
@@ -32,11 +36,11 @@ function SpsLegend({
   SPSSelected,
   data,
 }: SPSLegendProps) {
-  const spsBucketValues = useMemo(
+  const spsBucketValues = useMemo<number[]>(
     () => getBucketValues(data, 'SPS_global'),
     [data]
   );
-  const globalRangeBucketValues = useMemo(
+  const globalRangeBucketValues = useMemo<number[]>(
     () => getBucketValues(data, 'per_global'),
     [data]
   );

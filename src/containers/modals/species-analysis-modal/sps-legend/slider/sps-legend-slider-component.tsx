@@ -1,22 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React, { useRef, useMemo } from 'react';
 
 import cx from 'classnames';
-import * as d3 from 'd3';
+import { scaleLinear, ScaleLinear } from 'd3';
 
 import styles from './styles.module.scss';
 
 import DragHandle from '../drag-handle';
 
-import SPSSliderProps from './index.d';
+import type { SPSSliderProps } from './types';
 
 function Slider({
   title,
@@ -28,15 +19,16 @@ function Slider({
 }: SPSSliderProps) {
   const constraintsRef = useRef(null);
   const dragHandleProps = {
-    constraintsRef,
     setFunction,
     min,
     max,
     valuesLength: bucketValues.length,
   };
-  const barHeights = useMemo(() => {
-    const maxHeight = Math.max(...bucketValues);
-    const heightScale = d3.scaleLinear().range([0, 50]).domain([0, maxHeight]);
+  const barHeights = useMemo<number[]>(() => {
+    const maxHeight: number = Math.max(...bucketValues);
+    const heightScale: ScaleLinear<number, number> = scaleLinear()
+      .range([0, 50])
+      .domain([0, maxHeight]);
     return bucketValues.map((value) => heightScale(value));
   }, [bucketValues]);
   return (
@@ -48,7 +40,7 @@ function Slider({
         <DragHandle {...dragHandleProps} />
         {bucketValues.map((_, i) => {
           const isHighlighted = i >= min && i < max;
-          const renderTick = (index) => (
+          const renderTick = (index: number) => (
             <div
               // eslint-disable-next-line react/no-array-index-key
               key={`x-tick-${title}-${index}`}
