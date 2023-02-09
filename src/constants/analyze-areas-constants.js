@@ -112,24 +112,12 @@ export const getProtectedAttribuesConfig = (contextualData) => {
   const protectedAttributes = [
     {
       title: t('Designation'),
-      value: (
-        <T
-          _str="{designation}"
-          _comment="Cultural Park"
-          designation={contextualData.DESIG_E}
-        />
-      ),
+      value: contextualData.DESIG_E,
       tooltipContent: 'Lorem impsum',
     },
     {
       title: t('Status'),
-      value: (
-        <T
-          _str="{status}"
-          _comment="Designated"
-          status={contextualData.STATUS}
-        />
-      ),
+      value: contextualData.STATUS,
       tooltipContent: 'Lorem impsum',
     },
     {
@@ -139,24 +127,12 @@ export const getProtectedAttribuesConfig = (contextualData) => {
     },
     {
       title: t('IUCN category'),
-      value: (
-        <T
-          _str="{iucnCat}"
-          _comment="Not Reported"
-          iucnCat={contextualData.IUCN_CA}
-        />
-      ),
+      value: contextualData.IUCN_CA,
       tooltipContent: 'Lorem impsum',
     },
     {
       title: t('Governance'),
-      value: (
-        <T
-          _str="{governance}"
-          _comment="Federal or national ministry or agency"
-          governance={contextualData.GOV_TYP}
-        />
-      ),
+      value: contextualData.GOV_TYP,
       tooltipContent: 'Lorem impsum',
     },
   ];

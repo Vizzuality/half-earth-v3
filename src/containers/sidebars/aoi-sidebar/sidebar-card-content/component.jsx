@@ -22,6 +22,7 @@ import {
   getSidebarCardsConfig,
   getProtectedAttribuesConfig,
 } from 'constants/analyze-areas-constants';
+import { getWDPATranslations } from 'constants/translation-constants';
 
 import COLORS from 'styles/settings';
 
@@ -56,7 +57,9 @@ function SidebarCard({
     () => getSidebarCardsConfig(locale),
     [locale]
   );
+  const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
 
+  const translateInfo = (data) => WDPATranslations[data] || data;
   const protectedAttribuesConfig = useMemo(
     () => getProtectedAttribuesConfig(contextualData),
     [contextualData, locale]
@@ -236,7 +239,7 @@ function SidebarCard({
                       </Tooltip>
                     </span>
                   </div>
-                  <p className={styles.value}>{a.value}</p>
+                  <p className={styles.value}>{translateInfo(a.value)}</p>
                 </div>
               ))}
             </div>
