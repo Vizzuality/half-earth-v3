@@ -12,7 +12,7 @@ import {
 } from 'utils/layer-manager-utils';
 
 import ContentfulService from 'services/contentful';
-import EsriFeatureService from 'services/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature/esri-feature-service';
 
 import {
   AOI_LEGEND_CATEGORIES,

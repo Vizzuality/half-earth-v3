@@ -7,7 +7,7 @@ import * as urlActions from 'actions/url-actions';
 
 import useDebounce from 'hooks/use-debounce';
 
-import EsriFeatureService from 'services/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature/esri-feature-service';
 
 import {
   PRECALCULATED_LAYERS_PROTECTED_AREAS_DATA_URL,
