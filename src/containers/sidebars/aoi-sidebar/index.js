@@ -34,15 +34,16 @@ function AoiSidebarContainer(props) {
   } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues] = useState({});
-
   const locale = useLocale();
 
   // Effect to set parsed values TODO: move to selector
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
       // Custom AOIs rely on percentage instead of protectionPercentage
+
       const percentage =
         contextualData.protectionPercentage || contextualData.percentage;
+
       setFormattedValues({
         landCover: contextualData.elu && contextualData.elu.landCover,
         area: getLocaleNumber(contextualData.area, locale),

@@ -45,6 +45,8 @@ import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
 import { ReactComponent as PopulationIcon } from 'icons/population.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
+import goalGlobe from 'images/goal-globe.png';
+
 import mapStateToProps from './selectors';
 import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
@@ -104,6 +106,8 @@ function AOISidebar({
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
+
+  const isCustomArea = contextualData?.isCustom;
 
   const handleShareModalOpen = () => {
     shareAoiAnalytics();
@@ -276,6 +280,7 @@ function AOISidebar({
                   contextualData={contextualData}
                 />
               )}
+
               <SidebarCard
                 map={map}
                 toggleType="radio"
@@ -303,6 +308,20 @@ function AOISidebar({
                 cardCategory={LAND_HUMAN_PRESSURES_SLUG}
                 metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
               />
+              {isCustomArea && REACT_APP_FEATURE_AOI_CHANGES && (
+                <div className={styles.goalSection}>
+                  <div className={styles.goalHeader}>
+                    <img src={goalGlobe} alt={t('Half-Earth Goal')} />
+                    <h3 className={styles.goalTitle}>{t('HALF-EARTH GOAL')}</h3>
+                  </div>
+                  <p className={styles.goalSentence}>
+                    {/* // !TODO: Please, exchange when is possible.  */}
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,{' '}
+                    <span>ed do eiusmod tempor incididunts</span> ut labore et
+                    dolore magna aliqua.
+                  </p>
+                </div>
+              )}
               <section className={styles.completeDatabaseWrapper}>
                 <p>
                   {t(
