@@ -192,7 +192,6 @@ $sidebar-content-top: 180px;
   .link {
     @extend %title;
     width: 100%;
-    height: 40px;
     background-color: $white;
     color: $dark-text;
     display: flex;
@@ -200,6 +199,8 @@ $sidebar-content-top: 180px;
     justify-content: center;
     border-radius: $border-radius-desktop;
     text-decoration: none;
+    text-align: center;
+    padding: 10px 25px;
     &:hover {
       background-color: $brand-color-main;
     }
