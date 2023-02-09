@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, FC } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import loadable from '@loadable/component';
 
