@@ -40,6 +40,7 @@ export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
 export const BIODIVERSITY_SLUG = 'biodiversity';
 export const PROTECTION_SLUG = 'protected-areas';
+export const PROTECTED_ATTRIBUTES_SLUG = 'protected_attributes';
 export const SPECIES_SLUG = 'species';
 export const FUTURE_PLACES_SLUG = 'future-places';
 export const SPECIFIC_REGIONS = 'specific-regions';
@@ -168,6 +169,10 @@ export const getSidebarCardsConfig = (locale) => ({
         />
       );
     },
+    warning: null,
+  },
+  [PROTECTED_ATTRIBUTES_SLUG]: {
+    title: t('Protected Area attributes'),
     warning: null,
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {

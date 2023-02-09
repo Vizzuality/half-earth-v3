@@ -156,7 +156,7 @@ function SidebarCard({
               <p className={styles.protectedAreaChartLegend}>
                 <T
                   _str="Of the current area is {bold}"
-                  _comment="{Of the current area is} under protection"
+                  _comment="{Of the current area is"
                   bold={
                     <b>
                       <T _str="under protection" />
@@ -178,10 +178,12 @@ function SidebarCard({
             theme="light"
           />
         )}
-        <ReactMarkdown
-          className={styles.description}
-          source={cardDescription}
-        />
+        {cardDescription && (
+          <ReactMarkdown
+            className={styles.description}
+            source={cardDescription}
+          />
+        )}
         {cardCategory === PROTECTION_SLUG && (
           <div>
             <Button

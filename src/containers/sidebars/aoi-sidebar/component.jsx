@@ -22,10 +22,14 @@ import {
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG,
   PROTECTION_SLUG,
+  PROTECTED_ATTRIBUTES_SLUG,
 } from 'constants/analyze-areas-constants';
 import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import { getHumanPressuresLandUse } from 'constants/human-pressures';
-import { PROTECTED_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import {
+  WDPA_OECM_FEATURE_LAYER,
+  PROTECTED_AREAS_VECTOR_TILE_LAYER,
+} from 'constants/layers-slugs';
 import {
   MERGED_LAND_HUMAN_PRESSURES,
   ALL_TAXA_PRIORITY,
@@ -77,6 +81,7 @@ function AOISidebar({
   browsePage,
   changeUI,
   handleGlobeUpdating,
+  precalculatedLayerSlug,
   onboardingType,
   onboardingStep,
   waitingInteraction,
@@ -85,6 +90,7 @@ function AOISidebar({
   const t = useT();
   const locale = useLocale();
 
+  const isProtectedAreaAOI = precalculatedLayerSlug === WDPA_OECM_FEATURE_LAYER;
   // If we have an active area go to the analyze areas tab first
   useEffect(() => {
     if (sidebarTabActive === mapLayersTab.slug && aoiId) {
@@ -290,15 +296,30 @@ function AOISidebar({
                 layers={aoiBiodiversityToggles}
                 metadataSlug={ALL_TAXA_PRIORITY}
               />
-              <SidebarCard
-                map={map}
-                layers={WDPALayers}
-                toggleType="checkbox"
-                activeLayers={activeLayers}
-                cardCategory={PROTECTION_SLUG}
-                contextualData={contextualData}
-                metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
-              />
+              {!isProtectedAreaAOI && (
+                <SidebarCard
+                  map={map}
+                  layers={WDPALayers}
+                  toggleType="checkbox"
+                  activeLayers={activeLayers}
+                  cardCategory={PROTECTION_SLUG}
+                  contextualData={contextualData}
+                  metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+                />
+              )}
+
+              {isProtectedAreaAOI && (
+                <SidebarCard
+                  map={map}
+                  layers={WDPALayers}
+                  toggleType="checkbox"
+                  activeLayers={activeLayers}
+                  cardCategory={PROTECTED_ATTRIBUTES_SLUG}
+                  contextualData={contextualData}
+                  metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+                />
+              )}
+
               <SidebarCard
                 map={map}
                 toggleType="checkbox"
@@ -308,6 +329,7 @@ function AOISidebar({
                 cardCategory={LAND_HUMAN_PRESSURES_SLUG}
                 metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
               />
+
               {isCustomArea && REACT_APP_FEATURE_AOI_CHANGES && (
                 <div className={styles.goalSection}>
                   <div className={styles.goalHeader}>
