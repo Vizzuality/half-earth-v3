@@ -73,7 +73,7 @@ function SidebarCard({
   // !TODO: byYear data is mocked. Please, change it as possible.
   const HUMAN_PRESSURE_DATA = [
     {
-      title: 'Agriculture',
+      title: t('Agriculture'),
       percentage: hpAgriculture,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -84,7 +84,7 @@ function SidebarCard({
       ],
     },
     {
-      title: 'Energy',
+      title: t('Energy'),
       percentage: hpEnergy,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -95,7 +95,7 @@ function SidebarCard({
       ],
     },
     {
-      title: 'Human Intrusion',
+      title: t('Human Intrusion'),
       percentage: hpHumanIntrusion,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -106,7 +106,7 @@ function SidebarCard({
       ],
     },
     {
-      title: 'Transportation',
+      title: t('Transportation'),
       percentage: hpTransportation,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -117,7 +117,7 @@ function SidebarCard({
       ],
     },
     {
-      title: 'Urban',
+      title: t('Urban'),
       percentage: hpUrban,
       byYear: [
         { year: 1980, value: 12.5 },
