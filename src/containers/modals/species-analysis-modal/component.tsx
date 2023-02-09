@@ -18,7 +18,6 @@ import {
   individualSpeciesData as IndividualSpeciesDataType,
 } from './types';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 const Spinner = loadable(() => import('components/spinner'));
 
 function SpeciesAnalysisModal({

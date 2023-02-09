@@ -24,7 +24,7 @@ const getBucketValues = (
   function groupingFunction(d: SPSData): number {
     return bucketScale(d[key]);
   }
-  // TODO: Fix groupBy
+  // TODO: Fix groupBy types
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call
   return Object.values(groupBy(data, groupingFunction)).map((d) => d.length);
 };
