@@ -241,3 +241,26 @@ $sidebar-content-top: 180px;
     }
   }
 }
+
+.loadingAreaName {
+  background-color: $white;
+  height: 1px;
+  margin: 18px 0;
+  width: 200px;
+}
+
+.loadingArea {
+  background-color: $white;
+  opacity: 0.8;
+  height: 1px;
+  width: 100px;
+  margin: 12px 0;
+}
+
+.loadingIndicator {
+  background-color: $white;
+  height: 1px;
+  width: 50px;
+  margin: 2px 8px;
+
+}
