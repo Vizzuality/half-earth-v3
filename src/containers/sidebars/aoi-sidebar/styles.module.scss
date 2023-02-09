@@ -210,3 +210,34 @@ $sidebar-content-top: 180px;
   @extend %verticalScrollbar;
   height: 100%;
 }
+
+.goalSection {
+  background-color: $elephant;
+  border: 1px solid $white-opacity;
+  border-radius: $card-border-radius;
+  color: $white;
+  margin-top: 20px;
+  padding: 16px 20px;
+  width: 100%;
+  .goalHeader {
+    align-items: center;
+    display: flex;
+
+    .goalTitle {
+      @extend %bodyText;
+      color: $brand-color-main;
+      margin-left: 16px;
+      font-weight: $font-weight;
+    }
+  }
+  .goalSentence {
+    @extend %display2;
+    font-size: 24px;
+    font-style: italic;
+    letter-spacing: 2px;
+    margin: 15px 0 0 0;
+    span {
+      color: $brand-color-main;
+    }
+  }
+}

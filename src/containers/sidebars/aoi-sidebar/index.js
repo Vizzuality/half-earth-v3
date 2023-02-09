@@ -38,7 +38,6 @@ function AoiSidebarContainer(props) {
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues] = useState({});
-
   const locale = useLocale();
 
   const isProtectedAreaAOI = precalculatedLayerSlug === WDPA_OECM_FEATURE_LAYER;
@@ -49,8 +48,10 @@ function AoiSidebarContainer(props) {
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
       // Custom AOIs rely on percentage instead of protectionPercentage
+
       const percentage =
         contextualData.protectionPercentage || contextualData.percentage;
+
       setFormattedValues({
         landCover: contextualData.elu && contextualData.elu.landCover,
         area: getLocaleNumber(contextualData.area, locale),

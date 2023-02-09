@@ -126,39 +126,51 @@ function SidebarCard({
 
   const protectedAreaChartHeight = 100;
   const protectedAreaChartWidth = 320;
+
+  const isCustom = contextualData?.isCustom;
+
+  const underProtectionPercentage = isCustom
+    ? contextualData?.percentage
+    : contextualData?.protectionPercentage;
+
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>{cardTitle}</p>
+        {cardCategory === PROTECTION_SLUG &&
+          REACT_APP_FEATURE_AOI_CHANGES &&
+          underProtectionPercentage && (
+            <div className={styles.protectedAreaChartContainer}>
+              <div
+                style={{
+                  height: protectedAreaChartHeight,
+                  width: protectedAreaChartWidth,
+                }}
+              >
+                <ArcChart
+                  parentHeight={protectedAreaChartHeight}
+                  parentWidth={protectedAreaChartWidth}
+                  paPercentage={underProtectionPercentage}
+                />
+              </div>
+              <p className={styles.protectedAreaChartLegend}>
+                <T
+                  _str="Of the current area is {bold}"
+                  _comment="{Of the current area is} under protection"
+                  bold={
+                    <b>
+                      <T _str="under protection" />
+                    </b>
+                  }
+                />
+              </p>
+            </div>
+          )}
+
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
           <p className={styles.hpLegendTitle}>{t('Land pressures')}</p>
         )}
-        {cardCategory === PROTECTION_SLUG && REACT_APP_FEATURE_AOI_CHANGES && (
-          <div className={styles.protectedAreaChartContainer}>
-            <div
-              style={{
-                height: protectedAreaChartHeight,
-                width: protectedAreaChartWidth,
-              }}
-            >
-              <ArcChart
-                parentHeight={protectedAreaChartHeight}
-                parentWidth={protectedAreaChartWidth}
-                paPercentage={contextualData?.protectionPercentage}
-              />
-            </div>
-            <p className={styles.protectedAreaChartLegend}>
-              <T
-                _str="Of the current area is {bold}"
-                bold={
-                  <b>
-                    <T _str="under protection" />
-                  </b>
-                }
-              />
-            </p>
-          </div>
-        )}
+
         {hasLegend && (
           <SidebarLegend
             legendItem={cardCategory}
