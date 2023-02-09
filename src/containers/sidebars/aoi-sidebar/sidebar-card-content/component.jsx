@@ -20,6 +20,7 @@ import {
   PROTECTION_SLUG,
   PROTECTED_ATTRIBUTES_SLUG,
   getSidebarCardsConfig,
+  getProtectedAttribuesConfig,
 } from 'constants/analyze-areas-constants';
 
 import COLORS from 'styles/settings';
@@ -56,6 +57,11 @@ function SidebarCard({
     [locale]
   );
 
+  const protectedAttribuesConfig = useMemo(
+    () => getProtectedAttribuesConfig(contextualData),
+    [contextualData, locale]
+  );
+
   const {
     hpAgriculture,
     hpEnergy,
@@ -63,35 +69,6 @@ function SidebarCard({
     hpTransportation,
     hpUrban,
   } = humanPressuresData || {};
-
-  const PROTECTED_ATTRIBUTES = [
-    {
-      title: 'Designation',
-      value: contextualData.DESIG_E,
-      tooltipContent: 'More info',
-    },
-    {
-      title: 'Status',
-      value: contextualData.STATUS,
-      tooltipContent: 'More info',
-    },
-    {
-      title: 'Status year',
-      // eslint-disable-next-line no-underscore-dangle
-      value: +contextualData.STATUS_,
-      tooltipContent: 'More info',
-    },
-    {
-      title: 'IUCN category',
-      value: contextualData.IUCN_CA,
-      tooltipContent: 'More info',
-    },
-    {
-      title: 'Governance',
-      value: contextualData.GOV_TYP,
-      tooltipContent: 'More info',
-    },
-  ];
 
   // !TODO: byYear data is mocked. Please, change it as possible.
   const HUMAN_PRESSURE_DATA = [
@@ -238,9 +215,9 @@ function SidebarCard({
 
         {REACT_APP_FEATURE_AOI_CHANGES &&
           cardCategory === PROTECTED_ATTRIBUTES_SLUG &&
-          contextualData && (
+          contextualData.DESIG && (
             <div className={styles.attributtesContainer}>
-              {PROTECTED_ATTRIBUTES.map((a) => (
+              {protectedAttribuesConfig.map((a) => (
                 <div className={styles.attributtesItem}>
                   <div className={styles.titleWrapper}>
                     <h6 className={styles.title}>{a.title}</h6>

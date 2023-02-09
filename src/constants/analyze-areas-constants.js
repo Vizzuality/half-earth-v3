@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 
 import { t } from '@transifex/native';
@@ -106,6 +107,61 @@ export const AOIS_HISTORIC =
     : AOIS_HISTORIC_PRODUCTION;
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
+
+export const getProtectedAttribuesConfig = (contextualData) => {
+  const protectedAttributes = [
+    {
+      title: t('Designation'),
+      value: (
+        <T
+          _str="{designation}"
+          _comment="Cultural Park"
+          designation={contextualData.DESIG_E}
+        />
+      ),
+      tooltipContent: 'Lorem impsum',
+    },
+    {
+      title: t('Status'),
+      value: (
+        <T
+          _str="{status}"
+          _comment="Designated"
+          status={contextualData.STATUS}
+        />
+      ),
+      tooltipContent: 'Lorem impsum',
+    },
+    {
+      title: t('Status year'),
+      value: +contextualData.STATUS_,
+      tooltipContent: 'Lorem impsum',
+    },
+    {
+      title: t('IUCN category'),
+      value: (
+        <T
+          _str="{iucnCat}"
+          _comment="Not Reported"
+          iucnCat={contextualData.IUCN_CA}
+        />
+      ),
+      tooltipContent: 'Lorem impsum',
+    },
+    {
+      title: t('Governance'),
+      value: (
+        <T
+          _str="{governance}"
+          _comment="Federal or national ministry or agency"
+          governance={contextualData.GOV_TYP}
+        />
+      ),
+      tooltipContent: 'Lorem impsum',
+    },
+  ];
+  return protectedAttributes;
+};
 
 // Custom AOIs on the PROTECTION_SLUG rely on percentage instead of protectionPercentage
 export const getSidebarCardsConfig = (locale) => ({
