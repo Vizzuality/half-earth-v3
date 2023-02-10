@@ -97,7 +97,7 @@ function AOISidebar({
     if (sidebarTabActive === mapLayersTab.slug && aoiId) {
       setSidebarTabActive(analyzeAreasTab.slug);
     }
-  }, []);
+  }, [precalculatedLayerSlug]);
 
   const WDPALayers = useMemo(() => getWDPALayers(), [locale]);
 
