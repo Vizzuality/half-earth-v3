@@ -50,7 +50,6 @@ function SidebarCard({
   contextualData,
   metadata,
   humanPressuresData,
-  precalculatedLayerSlug,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -60,7 +59,6 @@ function SidebarCard({
   );
   const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
 
-  console.log({ precalculatedLayerSlug });
   const translateInfo = (data) => WDPATranslations[data] || data;
   const protectedAttribuesConfig = useMemo(
     () => getProtectedAttribuesConfig(contextualData),
