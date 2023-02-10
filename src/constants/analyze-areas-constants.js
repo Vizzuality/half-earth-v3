@@ -205,6 +205,7 @@ export const getSidebarCardsConfig = (locale) => ({
   },
   [PROTECTED_ATTRIBUTES_SLUG]: {
     title: t('Protected Area attributes'),
+    description: () => '',
     warning: null,
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {

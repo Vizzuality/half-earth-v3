@@ -306,6 +306,7 @@ function AOISidebar({
                 cardCategory={BIODIVERSITY_SLUG}
                 layers={aoiBiodiversityToggles}
                 metadataSlug={ALL_TAXA_PRIORITY}
+                precalculatedLayerSlug={precalculatedLayerSlug}
               />
               {!isProtectedAreaAOI && (
                 <SidebarCard
@@ -316,6 +317,7 @@ function AOISidebar({
                   cardCategory={PROTECTION_SLUG}
                   contextualData={contextualData}
                   metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+                  precalculatedLayerSlug={precalculatedLayerSlug}
                 />
               )}
 
@@ -328,6 +330,7 @@ function AOISidebar({
                   cardCategory={PROTECTED_ATTRIBUTES_SLUG}
                   contextualData={contextualData}
                   metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+                  precalculatedLayerSlug={precalculatedLayerSlug}
                 />
               )}
 
@@ -339,6 +342,7 @@ function AOISidebar({
                 contextualData={contextualData}
                 cardCategory={LAND_HUMAN_PRESSURES_SLUG}
                 metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
+                precalculatedLayerSlug={precalculatedLayerSlug}
               />
 
               {isCustomArea && REACT_APP_FEATURE_AOI_CHANGES && (
