@@ -42,14 +42,14 @@
 
   .firstColumn {
     .nameLink {
-      border-bottom: 1px solid $white;
       color: $white;
-      text-decoration: none;
+      text-align: left;
+      text-decoration: underline;
       padding-bottom: 0.5px;
       margin-left: 10px;
 
       &:hover {
-        border-bottom: none;
+        text-decoration: none;
       }
     }
   }
