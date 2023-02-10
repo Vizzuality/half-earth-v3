@@ -195,10 +195,9 @@ function AOISidebar({
                     <p className={styles.areaName}>{areaName}</p>
                   )}
 
-                  {!areaName ||
-                    (protectedAreaAOILoading && (
-                      <div className={styles.loadingAreaName} />
-                    ))}
+                  {(!areaName || !!protectedAreaAOILoading) && (
+                    <div className={styles.loadingAreaName} />
+                  )}
 
                   {area && !protectedAreaAOILoading && (
                     <p className={styles.area}>
@@ -210,10 +209,9 @@ function AOISidebar({
                     </p>
                   )}
 
-                  {!area ||
-                    (protectedAreaAOILoading && (
-                      <div className={styles.loadingArea} />
-                    ))}
+                  {(!area || !!protectedAreaAOILoading) && (
+                    <div className={styles.loadingArea} />
+                  )}
                 </div>
                 {isEditingName ? (
                   <div className={styles.actionButtons}>
@@ -255,11 +253,11 @@ function AOISidebar({
                   {population && !protectedAreaAOILoading && (
                     <span>{population}</span>
                   )}
-                  {!population ||
-                    (protectedAreaAOILoading && (
-                      <div className={styles.loadingIndicator} />
-                    ))}
+                  {(!population || !!protectedAreaAOILoading) && (
+                    <div className={styles.loadingIndicator} />
+                  )}
                 </div>
+
                 <div
                   className={styles.contextualIndicator}
                   title={`${t('land cover: ')}${
@@ -276,10 +274,10 @@ function AOISidebar({
                       ] || landCover}
                     </span>
                   )}
-                  {!landCover ||
-                    (protectedAreaAOILoading && (
-                      <div className={styles.loadingIndicator} />
-                    ))}
+
+                  {(!landCover || protectedAreaAOILoading) && (
+                    <div className={styles.loadingIndicator} />
+                  )}
                 </div>
                 <div
                   className={styles.contextualIndicator}
@@ -297,10 +295,10 @@ function AOISidebar({
                       ] || climateRegime}
                     </span>
                   )}
-                  {!climateRegime ||
-                    (protectedAreaAOILoading && (
-                      <div className={styles.loadingIndicator} />
-                    ))}
+
+                  {(!climateRegime || protectedAreaAOILoading) && (
+                    <div className={styles.loadingIndicator} />
+                  )}
                 </div>
               </div>
               {REACT_APP_FEATURE_AOI_CHANGES && (
