@@ -18,6 +18,8 @@ import {
   individualSpeciesData as IndividualSpeciesDataType,
 } from './types';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 const Spinner = loadable(() => import('components/spinner'));
 
 function SpeciesAnalysisModal({
@@ -30,6 +32,7 @@ function SpeciesAnalysisModal({
     min: 0,
     max: 1,
   });
+
   const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 4 });
   const [chartWidth, setChartWidth] = useState(700);
   const chartResponsiveRef = useRef<HTMLInputElement>();
