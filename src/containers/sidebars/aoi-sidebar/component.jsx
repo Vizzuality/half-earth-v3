@@ -191,6 +191,7 @@ function AOISidebar({
                   ) : (
                     <p className={styles.areaName}>{areaName}</p>
                   )}
+                  {!areaName && <div className={styles.loadingAreaName} />}
                   {area && (
                     <p className={styles.area}>
                       {`${area} `}
@@ -200,6 +201,7 @@ function AOISidebar({
                       </span>
                     </p>
                   )}
+                  {!area && <div className={styles.loadingArea} />}
                 </div>
                 {isEditingName ? (
                   <div className={styles.actionButtons}>
@@ -238,7 +240,8 @@ function AOISidebar({
               <div className={styles.contextualDataRow}>
                 <div className={styles.contextualIndicator} title="population">
                   <PopulationIcon />
-                  <span>{population}</span>
+                  {population && <span>{population}</span>}
+                  {!population && <div className={styles.loadingIndicator} />}
                 </div>
                 <div
                   className={styles.contextualIndicator}
@@ -249,11 +252,14 @@ function AOISidebar({
                   }`}
                 >
                   <LandCoverIcon />
-                  <span>
-                    {AOIContextualTranslations[
-                      landCover && landCover.toLowerCase()
-                    ] || landCover}
-                  </span>
+                  {landCover && (
+                    <span>
+                      {AOIContextualTranslations[
+                        landCover && landCover.toLowerCase()
+                      ] || landCover}
+                    </span>
+                  )}
+                  {!landCover && <div className={styles.loadingIndicator} />}
                 </div>
                 <div
                   className={styles.contextualIndicator}
@@ -264,11 +270,16 @@ function AOISidebar({
                   }`}
                 >
                   <ClimateRegimeIcon />
-                  <span>
-                    {AOIContextualTranslations[
-                      climateRegime && climateRegime.toLowerCase()
-                    ] || climateRegime}
-                  </span>
+                  {climateRegime && (
+                    <span>
+                      {AOIContextualTranslations[
+                        climateRegime && climateRegime.toLowerCase()
+                      ] || climateRegime}
+                    </span>
+                  )}
+                  {!climateRegime && (
+                    <div className={styles.loadingIndicator} />
+                  )}
                 </div>
               </div>
               {REACT_APP_FEATURE_AOI_CHANGES && (
