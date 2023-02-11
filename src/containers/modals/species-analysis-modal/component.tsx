@@ -15,9 +15,10 @@ import SpsLegend from './sps-legend';
 import {
   SpeciesModalProps,
   SPSData as SPSDataType,
-  individualSpeciesData as IndividualSpeciesDataType,
+  IndividualSpeciesData as IndividualSpeciesDataType,
 } from './types';
 
+// TODO: TS-TODO Fix loadable or use React.lazy
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 const Spinner = loadable(() => import('components/spinner'));
@@ -59,6 +60,7 @@ function SpeciesAnalysisModal({
     SPSData: SPSDataType[];
     individualSpeciesData: IndividualSpeciesDataType;
   } = cardProps;
+
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContent}>

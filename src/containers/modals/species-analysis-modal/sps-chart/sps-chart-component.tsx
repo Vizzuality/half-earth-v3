@@ -1,52 +1,50 @@
 /* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 import React, { useEffect, useMemo } from 'react';
 
 import { useT } from '@transifex/react';
 
-import * as d3 from 'd3';
+import { arc, scaleLinear, selectAll, select, Selection, BaseType } from 'd3';
 
-import COLORS from 'styles/settings';
+import COLORS from 'styles/settings.scss';
 
 import styles from './styles.module.scss';
 
-import { LineRadialProps } from '.';
+import type { Range, SPSData } from '../types';
+
+import { SPSChartProps } from './types';
 
 const innerRadius = 56;
 const arcLabelPadding = 25;
 const arcGenerator = (outerR: number, innerR = 0) =>
-  d3
-    .arc()
-    .outerRadius(outerR)
-    .innerRadius(innerR)
-    .startAngle(-Math.PI / 2)
-    .endAngle(Math.PI / 2);
+  String(
+    arc()
+      .outerRadius(outerR)
+      .innerRadius(innerR)
+      .startAngle(-Math.PI / 2)
+      .endAngle(Math.PI / 2)
+  );
 
-const indexToPercentage = (n: number) => (n * 100) / 4;
+const indexToPercentage: (n: number) => number = (n) => (n * 100) / 4;
 const isHighlighted = (
   SPS_global: number,
   perGlobal: number,
-  SPSSelected: number,
-  globalRangeSelected: number
-) =>
-  SPS_global >= indexToPercentage(SPSSelected.min) &&
-  SPS_global <= indexToPercentage(SPSSelected.max) &&
-  perGlobal >= indexToPercentage(globalRangeSelected.min) &&
-  perGlobal <= indexToPercentage(globalRangeSelected.max);
+  SPSSelected: Range,
+  globalRangeSelected: Range
+) => {
+  const { min: SPSMin, max: SPSMax } = SPSSelected;
+  const { min: globalMin, max: globalMax } = globalRangeSelected;
+  return (
+    SPS_global >= indexToPercentage(SPSMin) &&
+    SPS_global <= indexToPercentage(SPSMax) &&
+    perGlobal >= indexToPercentage(globalMin) &&
+    perGlobal <= indexToPercentage(globalMax)
+  );
+};
 
 const getHighlightedColor = (
-  d: number,
-  SPSSelected: number,
-  globalRangeSelected: number
+  d: SPSData,
+  SPSSelected: Range,
+  globalRangeSelected: Range
 ) => {
   const { per_global, SPS_global } = d;
   return isHighlighted(per_global, SPS_global, SPSSelected, globalRangeSelected)
@@ -60,29 +58,34 @@ function SpsChart({
   selectedSpecies,
   SPSSelected,
   globalRangeSelected,
-}: LineRadialProps) {
+}: SPSChartProps) {
+  // TODO. TODO-TS Fix transifex import
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const t = useT();
+  const typedT = t as (arg0: string) => string;
   const { sliceNumber: selectedSpeciesSliceNumber } = selectedSpecies;
   const height = useMemo(() => width / 2, [width]);
   if (!data) return null;
   const radius = useMemo(() => width / 2 - arcLabelPadding, [width]);
 
   // Radial scale
-  const r = d3.scaleLinear().range([radius, innerRadius]).domain([100, 0]);
+  const r = scaleLinear().range([radius, innerRadius]).domain([100, 0]);
 
   // Linear scale
-  const l = d3.scaleLinear().domain([0, 100]).range([-180, 0]);
+  const l = scaleLinear().domain([0, 100]).range([-180, 0]);
 
-  const getPointPosition = (d) => {
+  const getPointPosition = (d: SPSData) => {
     const angle = l(d.SPS_global);
     const pointRadius = r(d.per_global);
     const x = pointRadius * Math.cos((angle * Math.PI) / 180);
     const y = pointRadius * Math.sin((angle * Math.PI) / 180);
-    return `translate(${[x, y]})`;
+    return `translate([${x},${y}])`;
   };
 
   useEffect(() => {
-    const renderBackgroundArc = (radialAxis) => {
+    const renderBackgroundArc = (
+      radialAxis: Selection<SVGPathElement, number, BaseType, unknown>
+    ) => {
       radialAxis
         .append('path')
         .attr('fill', 'url(#gradient)')
@@ -95,7 +98,9 @@ function SpsChart({
         .attr('d', arcGenerator(radius));
     };
 
-    const renderAngleAxis = (angleAxis) => {
+    const renderAngleAxis = (
+      angleAxis: Selection<SVGPathElement, number, BaseType, unknown>
+    ) => {
       // Labels arc
       angleAxis
         .append('path')
@@ -125,12 +130,13 @@ function SpsChart({
         .append('g')
         .attr('transform', (d: number) => `rotate(${l(d - 25) + 180})`);
 
-      const texts = {
-        25: t('Very low SPS'),
-        50: t('Low SPS'),
-        75: t('Medium SPS'),
-        100: t('High SPS'),
-      };
+      const labelText = (d: number) =>
+        ({
+          25: typedT('Very low SPS'),
+          50: typedT('Low SPS'),
+          75: typedT('Medium SPS'),
+          100: typedT('High SPS'),
+        }[d]);
 
       // Angle labels
       angleAxisLabelGroups
@@ -140,16 +146,18 @@ function SpsChart({
         .attr('dy', '16px')
         .append('textPath')
         .attr('xlink:href', '#label-arc')
-        .text((d: number) => texts[d]);
+        .text(labelText);
     };
 
     // Recalculate on change
-    d3.selectAll('#r-axis > *').remove();
-    d3.selectAll('#a-axis > *').remove();
-    d3.selectAll('#points > *').remove();
+    selectAll('#r-axis > *').remove();
+    selectAll('#a-axis > *').remove();
+    selectAll('#points > *').remove();
 
-    const radialAxis = d3.select('#r-axis');
-    const angleAxis = d3.select('#a-axis');
+    const radialAxis: Selection<SVGPathElement, number, BaseType, unknown> =
+      select('#r-axis');
+    const angleAxis: Selection<SVGPathElement, number, BaseType, unknown> =
+      select('#a-axis');
 
     // BACKGROUND
 
@@ -187,7 +195,7 @@ function SpsChart({
       .attr('stroke-dasharray', '0 2 0')
       .attr('d', (d) => {
         if (d === 0 || d === 100) return null;
-        return arcGenerator(r(d), r(d))();
+        return arcGenerator(r(d), r(d));
       });
 
     radialAxisGroups.raise(); // Move up on the order rendering
@@ -197,27 +205,25 @@ function SpsChart({
     renderAngleAxis(angleAxis);
 
     // POINTS
-    const points = d3.select('#points');
+    const points = select('#points');
 
     points
       .selectAll('g')
       .data(data)
       .enter()
       .append('g')
-      .attr('id', (d: number) => `point-${d.SliceNumber}`)
+      .attr('id', (d) => `point-${d.SliceNumber}`)
       .attr('transform', getPointPosition)
       .append('circle')
       .attr('class', styles.point)
-      .attr('r', (d: number) =>
-        d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2
-      )
-      .attr('fill', (d: number) =>
+      .attr('r', (d) => (d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2))
+      .attr('fill', (d) =>
         getHighlightedColor(d, SPSSelected, globalRangeSelected)
       )
-      .attr('stroke', (d: number) =>
+      .attr('stroke', (d) =>
         getHighlightedColor(d, SPSSelected, globalRangeSelected)
       )
-      .attr('stroke-width', (d: number) =>
+      .attr('stroke-width', (d) =>
         d.SliceNumber === selectedSpeciesSliceNumber ? 10 : 3
       )
       .attr('mix-blend-mode', 'multiply');

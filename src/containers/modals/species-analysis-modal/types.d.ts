@@ -5,7 +5,7 @@ export type SPSData = {
   per_global: number;
 };
 
-type individualSpeciesData = {
+type IndividualSpeciesData = {
   SPS_aoi: number;
   SPS_global: number;
   SliceNumber: number;
@@ -28,12 +28,17 @@ type individualSpeciesData = {
   sliceNumber: number;
 };
 
+export type Range = {
+  min: number;
+  max: number;
+};
+
 export type SpeciesModalProps = {
   isOpen: boolean;
   handleModalClose: () => void;
   loading: boolean;
   cardProps: {
     SPSData: SPSData[];
-    individualSpeciesData: individualSpeciesData;
+    individualSpeciesData: IndividualSpeciesData;
   };
 };

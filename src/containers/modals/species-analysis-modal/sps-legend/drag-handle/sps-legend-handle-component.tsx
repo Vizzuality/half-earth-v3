@@ -42,11 +42,9 @@ function DragHandle({
         }
         return min + indexChange;
       };
-
       setFunction({
-        min,
-        max,
-        ...(isMin ? { min: updatedMinValue() } : { max: updatedMaxValue() }),
+        min: isMin ? updatedMinValue() : min,
+        max: isMin ? max : updatedMaxValue(),
       });
     }
 
