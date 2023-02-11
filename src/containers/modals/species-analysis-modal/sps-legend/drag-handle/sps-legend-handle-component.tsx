@@ -42,10 +42,11 @@ function DragHandle({
         }
         return min + indexChange;
       };
-      setFunction({
+      const updatedRange = {
         min: isMin ? updatedMinValue() : min,
         max: isMin ? max : updatedMaxValue(),
-      });
+      };
+      setFunction(updatedRange);
     }
 
     // The position change will be made on the animate prop
