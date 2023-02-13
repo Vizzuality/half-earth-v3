@@ -70,13 +70,13 @@ function RankingChart({
 
   useEffect(() => {
     const PADDING = 20;
-    const sortDirection = categorySort.split('-')[1];
+    const sortDirection = categorySort?.split('-')[1];
     const selectedCountry = data.find((d) => d.iso === countryISO);
     const countriesNumber = data.length;
-    if (sortDirection === SORT.DESC) {
+    if (selectedCountry && sortDirection === SORT.DESC) {
       tableRef.current.scroll(0, ROW_HEIGHT * selectedCountry.index - PADDING);
     }
-    if (sortDirection === SORT.ASC) {
+    if (selectedCountry && sortDirection === SORT.ASC) {
       tableRef.current.scroll(
         0,
         ROW_HEIGHT * (countriesNumber - selectedCountry.index)
