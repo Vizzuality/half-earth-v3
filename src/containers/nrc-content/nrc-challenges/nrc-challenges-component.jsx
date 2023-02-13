@@ -41,6 +41,17 @@ function Challenges({
   const { description: challengesTooltipInfo } = challengesInfo;
   const land = landMarineSelection === 'land';
 
+  const CONTINENT_LABELS = {
+    africa: t('Africa'),
+    antarctica: t('Antarctica'),
+    asia: t('Asia'),
+    europe: t('Europe'),
+    'north-america': t('North America'),
+    'south-america': t('South America'),
+    oceania: t('Oceania'),
+    australia: t('Australia'),
+  };
+
   return (
     <div
       className={cx({
@@ -160,10 +171,7 @@ function Challenges({
 
           <div className={styles.yAxisContainer}>
             <span className={styles.yAxisIndicator}>
-              <T
-                _str="{landMarineSelection} SPI"
-                landMarineSelection={land ? 'Land' : 'Marine'}
-              />
+              {land ? <T _str="Land SPI" /> : <T _str="Marine SPI" />}
             </span>
           </div>
         </div>
@@ -180,7 +188,7 @@ function Challenges({
                     }}
                   />
                   <p className={styles.legendItemLabel}>
-                    <T _str="{country}" country={c.label} />
+                    {CONTINENT_LABELS[c.slug]}
                   </p>
                 </div>
               ))}

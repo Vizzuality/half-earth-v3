@@ -80,6 +80,9 @@ function NrcContainer(props) {
       'precalculatedLayerSlug',
       PRECALCULATED_LAYERS_SLUG.national
     );
+    if (locale) {
+      aoiUrl.searchParams.append('lang', locale);
+    }
     window.open(aoiUrl);
   };
 

@@ -64,10 +64,10 @@ function NationalReportCard({
 
   const tabsData = {
     land: {
-      text: t('Land SPI'),
+      text: t('Land', { __comment: '(Land) SPI' }),
     },
     marine: {
-      text: t('Marine SPI'),
+      text: t('Marine', { __comment: '(Marine) SPI' }),
     },
   };
 

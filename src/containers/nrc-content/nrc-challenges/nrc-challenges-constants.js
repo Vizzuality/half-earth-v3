@@ -2,31 +2,31 @@ import COLORS from 'styles/settings';
 
 export const CONTINENTS = [
   {
-    label: 'Africa',
+    slug: 'africa',
     color: COLORS.shamrock,
   },
   {
-    label: 'Antarctica',
+    slug: 'antarctica',
     color: COLORS.conifer,
   },
   {
-    label: 'Asia',
+    slug: 'asia',
     color: COLORS['picton-blue'],
   },
   {
-    label: 'Europe',
+    slug: 'europe',
     color: COLORS.gold,
   },
   {
-    label: 'North America',
+    slug: 'north-america',
     color: COLORS['medium-purple'],
   },
   {
-    label: 'South America',
+    slug: 'south-america',
     color: COLORS['french-rose'],
   },
   {
-    label: 'Oceanía',
+    slug: 'oceania',
     color: COLORS.tango,
   },
 ];
