@@ -7,12 +7,8 @@ import {
   YAxis,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
-  // ReferenceDot,
-  // Label,
   Text,
 } from 'recharts';
-
-// import { useMobile } from 'constants/responsive';
 
 import styles from './trend-chart-styles.module.scss';
 
@@ -56,31 +52,6 @@ function TrendChartComponent({
   pdf = false,
 }) {
   const tickStroke = variant === 'light' ? 'white' : variant;
-  // const labelColor = variant === 'light' ? 'white' : variant;
-
-  // const isMobile = useMobile();
-
-  // const lastData =
-  //   (area1.label || area2.label) && data && data[data.length - 1];
-
-  // const renderLabel = (area) => {
-  //   const lastAreaY = lastData && area.key && lastData[area.key];
-  //   if (!lastAreaY && lastAreaY !== 0) return null;
-  //   return (
-  //     <Label
-  //       style={
-  //         area.labelOffset && {
-  //           transform: `translate(${isMobile ? 5 : area.labelOffset}px, 0)`,
-  //         }
-  //       }
-  //       className={styles.label}
-  //       value={area.label}
-  //       position="insideTop"
-  //       offset={-5}
-  //       fill={labelColor}
-  //     />
-  //   );
-  // };
 
   const renderLineChart = () => (
     <LineChart

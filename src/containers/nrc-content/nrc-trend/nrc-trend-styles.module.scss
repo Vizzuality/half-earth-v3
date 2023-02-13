@@ -36,11 +36,12 @@
     position: absolute;
     top: 36px;
     right: 20px;
+
     .areaChartLegendItem {
       align-items: center;
       display: flex;
-
     }
+
     .area1ChartLegendLine {
       border: 1px solid $white;
       height: 1px;
@@ -51,7 +52,7 @@
     .area2ChartLegendLine {
       background-color: transparent;
       border: none;
-      border-top: 2px dashed #fff;
+      border-top: 2px dashed $white;
       margin-left: 16px;
       margin-right: 6px;
       width: 20px;
