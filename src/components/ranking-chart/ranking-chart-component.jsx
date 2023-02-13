@@ -4,6 +4,8 @@ import { useT, useLocale } from '@transifex/react';
 
 import PropTypes from 'prop-types';
 
+import { getLocaleNumber } from 'utils/data-formatting-utils';
+
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 import camelCase from 'lodash/camelCase';
@@ -16,6 +18,7 @@ import {
   getRankingLegend,
   SORT_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
+import { getCountryNames } from 'constants/translation-constants';
 
 import { getLegendItems } from './ranking-chart-constants';
 import styles from './ranking-chart-styles.module.scss';
@@ -61,6 +64,8 @@ function RankingChart({
       tableRef.current.scroll(0, ROW_HEIGHT * selectedCountry.index - PADDING);
     }
   }, [selectedLandMarineOption]);
+
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   const onScroll = () => {
     if (!hasScrolled) {
@@ -189,7 +194,7 @@ function RankingChart({
                     [styles.found]: scrollIndex === i,
                   })}
                 >
-                  {d.name}
+                  {countryNames[d.name] || d.name}
                 </span>
               </button>
               {categories.map((category) =>
@@ -198,7 +203,7 @@ function RankingChart({
                     key={category}
                     className={cx(styles.titleText, styles.spiIndex)}
                   >
-                    {d[category]}
+                    {getLocaleNumber(d[category], locale)}
                   </span>
                 ) : (
                   renderBar(category, d)

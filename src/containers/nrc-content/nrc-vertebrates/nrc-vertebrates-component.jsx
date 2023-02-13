@@ -135,9 +135,8 @@ function NRCVertebrates({
                 <s.icon className={styles.endemicIcon} />
                 <p>
                   <T
-                    _str="{localNumber} {endemicSpecie} of {totalNumber}"
+                    _str="{endemicNumber} {endemicSpecie} of {totalNumber}"
                     endemicNumber={getLocaleNumber(s.endemic, locale)}
-                    localNumber={getLocaleNumber(s.endemic, locale)}
                     totalNumber={getLocaleNumber(s.total, locale)}
                     endemicSpecie={
                       <>

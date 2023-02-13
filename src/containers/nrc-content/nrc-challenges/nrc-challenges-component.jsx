@@ -160,10 +160,7 @@ function Challenges({
 
           <div className={styles.yAxisContainer}>
             <span className={styles.yAxisIndicator}>
-              <T
-                _str="{landMarineSelection} SPI"
-                landMarineSelection={land ? 'Land' : 'Marine'}
-              />
+              {land ? <T _str="Land SPI" /> : <T _str="Marine SPI" />}
             </span>
           </div>
         </div>
