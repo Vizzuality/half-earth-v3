@@ -17,6 +17,7 @@
   text-align: center;
   margin: 0;
   padding-bottom: $site-gutter;
+  letter-spacing: 0.8px;
 }
 
 .description {
@@ -86,6 +87,7 @@
     }
   }
 }
+
 .protectedAreaChartContainer {
   margin-top: 4px;
   .protectedAreaChartLegend {
@@ -93,4 +95,48 @@
     text-align: center;
     margin: 6px 0 44px 0;
   }
+}
+
+.attributtesContainer {
+
+  .attributtesItem {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(34, 34, 34, 0.1);
+
+    .titleWrapper {
+      align-items: center;
+      display: flex;
+
+      .title {
+        @extend %bodyText;
+        color: $oslo-gray;
+        font-size: 12px;
+        font-weight: $font-weight;
+        margin: 0 9px 0 0;
+        padding: 0;
+      }
+    }
+
+    .value {
+      @extend %bodyText;
+      font-size: 12px;
+      margin: 0 0 0 38px;
+      line-height: 22px;
+      text-align: right;
+    }
+  }
+}
+
+.tooltip {
+  @extend %annotation;
+  background-color: $white;
+  border-radius: $border-radius-desktop;
+  box-shadow: $box-shadow-light-bottom-large;
+  color: $dark-text;
+  padding: 2px 6px;
+  width: 65px;
+  margin-bottom: 5px;
 }

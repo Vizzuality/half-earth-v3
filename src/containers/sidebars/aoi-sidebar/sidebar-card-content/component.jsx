@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 
+import Tooltip from '@tippyjs/react';
 import ReactMarkdown from 'react-markdown/with-html';
 
 import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
@@ -17,13 +18,17 @@ import SourceAnnotation from 'components/source-annotation';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   PROTECTION_SLUG,
+  PROTECTED_ATTRIBUTES_SLUG,
   getSidebarCardsConfig,
+  getProtectedAttributesConfig,
 } from 'constants/analyze-areas-constants';
+import { getWDPATranslations } from 'constants/translation-constants';
 
 import COLORS from 'styles/settings';
 
 import styles from './styles.module.scss';
 
+import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
@@ -52,6 +57,13 @@ function SidebarCard({
     () => getSidebarCardsConfig(locale),
     [locale]
   );
+  const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
+
+  const translateInfo = (data) => WDPATranslations[data] || data;
+  const protectedAttributesConfig = useMemo(
+    () => getProtectedAttributesConfig(contextualData),
+    [contextualData, locale]
+  );
 
   const {
     hpAgriculture,
@@ -64,7 +76,7 @@ function SidebarCard({
   // !TODO: byYear data is mocked. Please, change it as possible.
   const HUMAN_PRESSURE_DATA = [
     {
-      title: 'Agriculture',
+      title: t('Agriculture'),
       percentage: hpAgriculture,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -75,7 +87,7 @@ function SidebarCard({
       ],
     },
     {
-      title: 'Energy',
+      title: t('Energy'),
       percentage: hpEnergy,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -86,7 +98,7 @@ function SidebarCard({
       ],
     },
     {
-      title: 'Human Intrusion',
+      title: t('Human Intrusion'),
       percentage: hpHumanIntrusion,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -97,7 +109,7 @@ function SidebarCard({
       ],
     },
     {
-      title: 'Transportation',
+      title: t('Transportation'),
       percentage: hpTransportation,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -108,7 +120,7 @@ function SidebarCard({
       ],
     },
     {
-      title: 'Urban',
+      title: t('Urban'),
       percentage: hpUrban,
       byYear: [
         { year: 1980, value: 12.5 },
@@ -156,7 +168,7 @@ function SidebarCard({
               <p className={styles.protectedAreaChartLegend}>
                 <T
                   _str="Of the current area is {bold}"
-                  _comment="{Of the current area is} under protection"
+                  _comment="{Of the current area is"
                   bold={
                     <b>
                       <T _str="under protection" />
@@ -178,11 +190,13 @@ function SidebarCard({
             theme="light"
           />
         )}
-        <ReactMarkdown
-          className={styles.description}
-          source={cardDescription}
-        />
-        {cardCategory === PROTECTION_SLUG && (
+        {cardDescription && (
+          <ReactMarkdown
+            className={styles.description}
+            source={cardDescription}
+          />
+        )}
+        {REACT_APP_FEATURE_AOI_CHANGES && cardCategory === PROTECTION_SLUG && (
           <div>
             <Button
               type="rectangular"
@@ -201,6 +215,36 @@ function SidebarCard({
             />
           </div>
         )}
+
+        {REACT_APP_FEATURE_AOI_CHANGES &&
+          cardCategory === PROTECTED_ATTRIBUTES_SLUG &&
+          contextualData.DESIG && (
+            <div className={styles.attributtesContainer}>
+              {protectedAttributesConfig.map((a) => (
+                <div className={styles.attributtesItem}>
+                  <div className={styles.titleWrapper}>
+                    <h6 className={styles.title}>{a.title}</h6>
+                    <span className={styles.iconWrapper}>
+                      <Tooltip
+                        className="light"
+                        content={
+                          <div className={styles.tooltip}>
+                            {a.tooltipContent}
+                          </div>
+                        }
+                        delay={100}
+                        position="bottom"
+                      >
+                        <InfoIcon className={styles.icon} />
+                      </Tooltip>
+                    </span>
+                  </div>
+                  <p className={styles.value}>{translateInfo(a.value)}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
           REACT_APP_FEATURE_AOI_CHANGES && (
             <div className={styles.humanPressureIndicators}>

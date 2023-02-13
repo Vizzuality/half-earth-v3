@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 
 import { t } from '@transifex/native';
@@ -40,6 +41,7 @@ export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
 export const BIODIVERSITY_SLUG = 'biodiversity';
 export const PROTECTION_SLUG = 'protected-areas';
+export const PROTECTED_ATTRIBUTES_SLUG = 'protected_attributes';
 export const SPECIES_SLUG = 'species';
 export const FUTURE_PLACES_SLUG = 'future-places';
 export const SPECIFIC_REGIONS = 'specific-regions';
@@ -106,6 +108,37 @@ export const AOIS_HISTORIC =
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
 
+export const getProtectedAttributesConfig = (contextualData) => {
+  const protectedAttributes = [
+    {
+      title: t('Designation'),
+      value: contextualData.DESIG_E,
+      tooltipContent: 'Lorem impsum',
+    },
+    {
+      title: t('Status'),
+      value: contextualData.STATUS,
+      tooltipContent: 'Lorem impsum',
+    },
+    {
+      title: t('Status year'),
+      value: +contextualData.STATUS_,
+      tooltipContent: 'Lorem impsum',
+    },
+    {
+      title: t('IUCN category'),
+      value: contextualData.IUCN_CA,
+      tooltipContent: 'Lorem impsum',
+    },
+    {
+      title: t('Governance'),
+      value: contextualData.GOV_TYP,
+      tooltipContent: 'Lorem impsum',
+    },
+  ];
+  return protectedAttributes;
+};
+
 // Custom AOIs on the PROTECTION_SLUG rely on percentage instead of protectionPercentage
 export const getSidebarCardsConfig = (locale) => ({
   [SPECIES_SLUG]: {
@@ -168,6 +201,11 @@ export const getSidebarCardsConfig = (locale) => ({
         />
       );
     },
+    warning: null,
+  },
+  [PROTECTED_ATTRIBUTES_SLUG]: {
+    title: t('Protected Area attributes'),
+    description: () => '',
     warning: null,
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {

@@ -96,7 +96,7 @@ function Container(props) {
   }, [locale]);
 
   useEffect(() => {
-    if (Object.keys(contextualData).length > 0) {
+    if (Object.keys(contextualData).length > 0 && !contextualData.WDPA_PID) {
       setCardDescription(getDescription(contextualData));
     }
     // Don't remove locale. Is here to recalculate the description translation

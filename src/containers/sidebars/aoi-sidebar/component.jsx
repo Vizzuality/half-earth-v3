@@ -22,10 +22,14 @@ import {
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG,
   PROTECTION_SLUG,
+  PROTECTED_ATTRIBUTES_SLUG,
 } from 'constants/analyze-areas-constants';
 import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import { getHumanPressuresLandUse } from 'constants/human-pressures';
-import { PROTECTED_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import {
+  WDPA_OECM_FEATURE_LAYER,
+  PROTECTED_AREAS_VECTOR_TILE_LAYER,
+} from 'constants/layers-slugs';
 import {
   MERGED_LAND_HUMAN_PRESSURES,
   ALL_TAXA_PRIORITY,
@@ -77,6 +81,7 @@ function AOISidebar({
   browsePage,
   changeUI,
   handleGlobeUpdating,
+  precalculatedLayerSlug,
   onboardingType,
   onboardingStep,
   waitingInteraction,
@@ -85,12 +90,14 @@ function AOISidebar({
   const t = useT();
   const locale = useLocale();
 
+  const isProtectedAreaAOI = precalculatedLayerSlug === WDPA_OECM_FEATURE_LAYER;
+  const protectedAreaAOILoading = contextualData.iso && isProtectedAreaAOI;
   // If we have an active area go to the analyze areas tab first
   useEffect(() => {
     if (sidebarTabActive === mapLayersTab.slug && aoiId) {
       setSidebarTabActive(analyzeAreasTab.slug);
     }
-  }, []);
+  }, [precalculatedLayerSlug]);
 
   const WDPALayers = useMemo(() => getWDPALayers(), [locale]);
 
@@ -173,7 +180,7 @@ function AOISidebar({
               <DummyBlurWorkaround />
               <div className={styles.topRow}>
                 <div className={styles.nameWrapper}>
-                  {isEditingName ? (
+                  {isEditingName && (
                     <input
                       // eslint-disable-next-line jsx-a11y/no-autofocus
                       autoFocus
@@ -182,11 +189,17 @@ function AOISidebar({
                       onChange={(e) => setUpdatedAreaName(e.target.value)}
                       placeholder={t('Type name')}
                     />
-                  ) : (
+                  )}
+
+                  {!isEditingName && !protectedAreaAOILoading && (
                     <p className={styles.areaName}>{areaName}</p>
                   )}
-                  {!areaName && <div className={styles.loadingAreaName} />}
-                  {area && (
+
+                  {(!areaName || !!protectedAreaAOILoading) && (
+                    <div className={styles.loadingAreaName} />
+                  )}
+
+                  {area && !protectedAreaAOILoading && (
                     <p className={styles.area}>
                       {`${area} `}
                       <span>
@@ -195,7 +208,10 @@ function AOISidebar({
                       </span>
                     </p>
                   )}
-                  {!area && <div className={styles.loadingArea} />}
+
+                  {(!area || !!protectedAreaAOILoading) && (
+                    <div className={styles.loadingArea} />
+                  )}
                 </div>
                 {isEditingName ? (
                   <div className={styles.actionButtons}>
@@ -234,9 +250,14 @@ function AOISidebar({
               <div className={styles.contextualDataRow}>
                 <div className={styles.contextualIndicator} title="population">
                   <PopulationIcon />
-                  {population && <span>{population}</span>}
-                  {!population && <div className={styles.loadingIndicator} />}
+                  {population && !protectedAreaAOILoading && (
+                    <span>{population}</span>
+                  )}
+                  {(!population || !!protectedAreaAOILoading) && (
+                    <div className={styles.loadingIndicator} />
+                  )}
                 </div>
+
                 <div
                   className={styles.contextualIndicator}
                   title={`${t('land cover: ')}${
@@ -246,14 +267,17 @@ function AOISidebar({
                   }`}
                 >
                   <LandCoverIcon />
-                  {landCover && (
+                  {landCover && !protectedAreaAOILoading && (
                     <span>
                       {AOIContextualTranslations[
                         landCover && landCover.toLowerCase()
                       ] || landCover}
                     </span>
                   )}
-                  {!landCover && <div className={styles.loadingIndicator} />}
+
+                  {(!landCover || protectedAreaAOILoading) && (
+                    <div className={styles.loadingIndicator} />
+                  )}
                 </div>
                 <div
                   className={styles.contextualIndicator}
@@ -264,14 +288,15 @@ function AOISidebar({
                   }`}
                 >
                   <ClimateRegimeIcon />
-                  {climateRegime && (
+                  {climateRegime && !protectedAreaAOILoading && (
                     <span>
                       {AOIContextualTranslations[
                         climateRegime && climateRegime.toLowerCase()
                       ] || climateRegime}
                     </span>
                   )}
-                  {!climateRegime && (
+
+                  {(!climateRegime || protectedAreaAOILoading) && (
                     <div className={styles.loadingIndicator} />
                   )}
                 </div>
@@ -301,15 +326,30 @@ function AOISidebar({
                 layers={aoiBiodiversityToggles}
                 metadataSlug={ALL_TAXA_PRIORITY}
               />
-              <SidebarCard
-                map={map}
-                layers={WDPALayers}
-                toggleType="checkbox"
-                activeLayers={activeLayers}
-                cardCategory={PROTECTION_SLUG}
-                contextualData={contextualData}
-                metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
-              />
+              {!isProtectedAreaAOI && (
+                <SidebarCard
+                  map={map}
+                  layers={WDPALayers}
+                  toggleType="checkbox"
+                  activeLayers={activeLayers}
+                  cardCategory={PROTECTION_SLUG}
+                  contextualData={contextualData}
+                  metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+                />
+              )}
+
+              {isProtectedAreaAOI && (
+                <SidebarCard
+                  map={map}
+                  layers={WDPALayers}
+                  toggleType="checkbox"
+                  activeLayers={activeLayers}
+                  cardCategory={PROTECTED_ATTRIBUTES_SLUG}
+                  contextualData={contextualData}
+                  metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+                />
+              )}
+
               <SidebarCard
                 map={map}
                 toggleType="checkbox"
@@ -319,6 +359,7 @@ function AOISidebar({
                 cardCategory={LAND_HUMAN_PRESSURES_SLUG}
                 metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
               />
+
               {isCustomArea && REACT_APP_FEATURE_AOI_CHANGES && (
                 <div className={styles.goalSection}>
                   <div className={styles.goalHeader}>
