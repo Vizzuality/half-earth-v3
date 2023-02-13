@@ -100,7 +100,7 @@ function Component({
             onClick={handleSearchIconClick}
           />
           <input
-            onKeyPress={handleSearchKeyPress}
+            onKeyDown={handleSearchKeyPress}
             onChange={handleSearchInputChange}
             type="text"
             placeholder={placeholderText || t('SEARCH')}
@@ -145,8 +145,9 @@ function Component({
         createPortal(
           <div
             ref={setPopperElement}
-            style={{ ...popperStyles.popper, width: parentWidth, zIndex: 10 }}
+            style={{ ...popperStyles.popper, width: parentWidth }}
             {...attributes.popper}
+            className={styles.optionListContainer}
           >
             <ul
               className={cx(styles.optionsList, {
