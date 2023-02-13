@@ -98,14 +98,9 @@ function ScatterPlot({
     if (!_data || !selectedKey) return null;
     const highValue = d3.max(_data, (d) => d.xAxisValues[selectedKey]);
     const lowValue = d3.min(_data, (d) => d.xAxisValues[selectedKey]);
-
-    const margin = (highValue - lowValue) / 20;
     // eslint-disable-next-line no-underscore-dangle
     const _formatFunction = countryChallengesChartFormats[selectedKey];
-    return [
-      _formatFunction(lowValue - margin),
-      _formatFunction(highValue + margin),
-    ];
+    return [_formatFunction(lowValue), _formatFunction(highValue)];
   };
 
   const xAxisTicks = getXAxisTicks(data, countryChallengesSelectedKey);
