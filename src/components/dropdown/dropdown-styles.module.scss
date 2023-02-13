@@ -8,6 +8,7 @@
   border-radius: 6px;
   position: relative;
   border: 1px solid $dark-opacity;
+
   &.fullWidth {
     width: 100%;
   }
@@ -17,6 +18,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+
   &.fullWidth {
     justify-content: space-between;
   }
@@ -133,9 +135,20 @@
   text-transform: unset;
 }
 
+.optionListContainer {
+  z-index: $over-modal;
+}
+
 .dark {
   background-color: transparent;
-  border: 1px solid $white-opacity;
+  border: 1px solid $grey-text;
+
+  &:not(:first-child) {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: none;
+  }
+
   &:hover,
   &.open {
     background-color: $white-opacity;
@@ -146,8 +159,7 @@
   }
 
   .selectedOptionLabel {
-    color: $white;
-    max-width: 100px;
+    color: $grey-text;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -166,6 +178,22 @@
       stroke: $white;
     }
   }
+
+  .searchInput {
+    input {
+      color: $white;
+
+      &::placeholder {
+        color: $grey-text;
+      }
+    }
+
+  }
+
+  .closeSearch svg {
+    fill: $white;
+  }
+
 }
 
 .secondary-darkOptionsList {

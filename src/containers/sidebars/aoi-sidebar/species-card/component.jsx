@@ -98,7 +98,7 @@ function Component(props) {
             options={speciesFilters}
             selectedOption={selectedSpeciesFilter}
             handleOptionSelection={setSpeciesFilter}
-            theme="dark"
+            theme={insideModal && 'dark'}
           />
           {/* Search dropdown */}
           <Dropdown
@@ -112,7 +112,7 @@ function Component(props) {
             selectedOption={selectedSearchOption}
             handleOptionSelection={handleSearchOptionSelected}
             handleCloseSearch={handleCloseSearch}
-            theme="dark"
+            theme={insideModal && 'dark'}
           />
           {individualSpeciesData && (
             <section>
