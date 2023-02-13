@@ -30,7 +30,7 @@
     font-size: $font-size-xxs;
     height: 25px;
     text-transform: capitalize;
-    width: 50px;
+    min-width: 50px;
 
     &:disabled {
       cursor: not-allowed;
