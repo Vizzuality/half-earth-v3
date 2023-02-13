@@ -20,7 +20,7 @@ import {
   PROTECTION_SLUG,
   PROTECTED_ATTRIBUTES_SLUG,
   getSidebarCardsConfig,
-  getProtectedAttribuesConfig,
+  getProtectedAttributesConfig,
 } from 'constants/analyze-areas-constants';
 import { getWDPATranslations } from 'constants/translation-constants';
 
@@ -60,8 +60,8 @@ function SidebarCard({
   const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
 
   const translateInfo = (data) => WDPATranslations[data] || data;
-  const protectedAttribuesConfig = useMemo(
-    () => getProtectedAttribuesConfig(contextualData),
+  const protectedAttributesConfig = useMemo(
+    () => getProtectedAttributesConfig(contextualData),
     [contextualData, locale]
   );
 
@@ -220,7 +220,7 @@ function SidebarCard({
           cardCategory === PROTECTED_ATTRIBUTES_SLUG &&
           contextualData.DESIG && (
             <div className={styles.attributtesContainer}>
-              {protectedAttribuesConfig.map((a) => (
+              {protectedAttributesConfig.map((a) => (
                 <div className={styles.attributtesItem}>
                   <div className={styles.titleWrapper}>
                     <h6 className={styles.title}>{a.title}</h6>

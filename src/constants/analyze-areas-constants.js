@@ -108,7 +108,7 @@ export const AOIS_HISTORIC =
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
 
-export const getProtectedAttribuesConfig = (contextualData) => {
+export const getProtectedAttributesConfig = (contextualData) => {
   const protectedAttributes = [
     {
       title: t('Designation'),
