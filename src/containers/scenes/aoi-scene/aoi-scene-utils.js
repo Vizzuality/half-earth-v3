@@ -318,7 +318,7 @@ export const recoverOrCreateNotPrecalculatedAoi = ({
           .then((aoiData) => {
             if (aoiData && aoiData[0]) {
               recoverAOIFromDB({
-                aoiData,
+                aoiData: aoiData[0],
                 setContextualData,
                 setGeometry,
                 setSpeciesData,
