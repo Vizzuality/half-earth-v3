@@ -15,13 +15,15 @@ import { SPSChartProps } from './types';
 
 const innerRadius = 56;
 const arcLabelPadding = 25;
-const arcGenerator = (outerR: number, innerR = 0) =>
+const arcGenerator = (d, outerR: number, innerR = 0) =>
   String(
     arc()
       .outerRadius(outerR)
       .innerRadius(innerR)
       .startAngle(-Math.PI / 2)
-      .endAngle(Math.PI / 2)
+      // TODO: TS-TODO
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      .endAngle(Math.PI / 2)(d)
   );
 
 const indexToPercentage: (n: number) => number = (n) => (n * 100) / 4;
@@ -59,15 +61,16 @@ function SpsChart({
   SPSSelected,
   globalRangeSelected,
 }: SPSChartProps) {
-  // TODO. TODO-TS Fix transifex import
+  // TODO. TS-TODO Fix transifex import
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const t = useT();
   const typedT = t as (arg0: string) => string;
+  // TODO. TS-TODO
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { sliceNumber: selectedSpeciesSliceNumber } = selectedSpecies;
   const height = useMemo(() => width / 2, [width]);
   if (!data) return null;
   const radius = useMemo(() => width / 2 - arcLabelPadding, [width]);
-
   // Radial scale
   const r = scaleLinear().range([radius, innerRadius]).domain([100, 0]);
 
@@ -79,7 +82,7 @@ function SpsChart({
     const pointRadius = r(d.per_global);
     const x = pointRadius * Math.cos((angle * Math.PI) / 180);
     const y = pointRadius * Math.sin((angle * Math.PI) / 180);
-    return `translate([${x},${y}])`;
+    return `translate(${x},${y})`;
   };
 
   useEffect(() => {
@@ -89,13 +92,13 @@ function SpsChart({
       radialAxis
         .append('path')
         .attr('fill', 'url(#gradient)')
-        .attr('d', arcGenerator(radius));
+        .attr('d', (d) => arcGenerator(d, radius));
 
       // Second element just for extra gradient
       radialAxis
         .append('path')
         .attr('fill', 'url(#radial-gradient)')
-        .attr('d', arcGenerator(radius));
+        .attr('d', (d) => arcGenerator(d, radius));
     };
 
     const renderAngleAxis = (
@@ -106,7 +109,7 @@ function SpsChart({
         .append('path')
         .attr('fill', COLORS.firefly)
         .attr('id', 'label-arc')
-        .attr('d', arcGenerator(radius + arcLabelPadding, radius));
+        .attr('d', (d) => arcGenerator(d, radius + arcLabelPadding, radius));
 
       const angleAxisGroups = angleAxis
         .selectAll('g')
@@ -168,7 +171,7 @@ function SpsChart({
     radialAxis
       .append('path')
       .attr('fill', COLORS.navy)
-      .attr('d', arcGenerator(innerRadius, 0));
+      .attr('d', (d) => arcGenerator(d, innerRadius, 0));
 
     // RADIAL AXIS
 
@@ -195,7 +198,7 @@ function SpsChart({
       .attr('stroke-dasharray', '0 2 0')
       .attr('d', (d) => {
         if (d === 0 || d === 100) return null;
-        return arcGenerator(r(d), r(d));
+        return arcGenerator(d, r(d), r(d));
       });
 
     radialAxisGroups.raise(); // Move up on the order rendering
