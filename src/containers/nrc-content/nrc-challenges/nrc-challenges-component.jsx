@@ -41,6 +41,17 @@ function Challenges({
   const { description: challengesTooltipInfo } = challengesInfo;
   const land = landMarineSelection === 'land';
 
+  const CONTINENT_LABELS = {
+    africa: t('Africa'),
+    antarctica: t('Antarctica'),
+    asia: t('Asia'),
+    europe: t('Europe'),
+    'north-america': t('North America'),
+    'south-america': t('South America'),
+    oceania: t('Oceania'),
+    australia: t('Australia'),
+  };
+
   return (
     <div
       className={cx({
@@ -177,7 +188,7 @@ function Challenges({
                     }}
                   />
                   <p className={styles.legendItemLabel}>
-                    <T _str="{country}" country={c.label} />
+                    {CONTINENT_LABELS[c.slug]}
                   </p>
                 </div>
               ))}
