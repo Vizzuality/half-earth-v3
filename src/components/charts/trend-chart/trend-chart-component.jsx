@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import cx from 'classnames';
 import {
   LineChart,
   Line,
@@ -61,14 +60,6 @@ function TrendChartComponent({
 
   const isMobile = useMobile();
 
-  const areAreasOverlapping = useMemo(() => {
-    const lastItem = data && data.length ? data[data.length - 1] : {};
-    // eslint-disable-next-line no-unsafe-optional-chaining
-    const areasDistance = Math.abs(lastItem?.protected - lastItem?.spi);
-    if (areasDistance < 2) return true;
-    return false;
-  }, [data]);
-
   const lastData =
     (area1.label || area2.label) && data && data[data.length - 1];
 
@@ -88,11 +79,7 @@ function TrendChartComponent({
               transform: `translate(${isMobile ? 5 : area.labelOffset}px, 0)`,
             }
           }
-          className={cx({
-            [styles.label]: true,
-            [styles.labelOverlap]:
-              area.key === area2.key && areAreasOverlapping,
-          })}
+          className={styles.label}
           value={area.label}
           position="insideTop"
           offset={-5}
