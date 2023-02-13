@@ -48,9 +48,14 @@ function RankingChart({
   };
 
   const tableRef = useRef();
+
+  const scrollTableVertically = (distance) => {
+    tableRef.current.scroll(0, distance);
+  };
+
   useEffect(() => {
     if (scrollIndex > -1 && tableRef.current) {
-      tableRef.current.scroll(0, ROW_HEIGHT * scrollIndex);
+      scrollTableVertically(ROW_HEIGHT * scrollIndex);
     }
   }, [scrollIndex, tableRef]);
 
@@ -58,7 +63,7 @@ function RankingChart({
     const selectedCountry = data.find((d) => d.iso === countryISO);
     if (selectedCountry) {
       const PADDING = 30;
-      tableRef.current.scroll(0, ROW_HEIGHT * selectedCountry.index - PADDING);
+      scrollTableVertically(ROW_HEIGHT * selectedCountry.index - PADDING);
     }
   }, [selectedLandMarineOption]);
 
@@ -74,15 +79,14 @@ function RankingChart({
     const selectedCountry = data.find((d) => d.iso === countryISO);
     const countriesNumber = data.length;
     if (selectedCountry && sortDirection === SORT.DESC) {
-      tableRef.current.scroll(0, ROW_HEIGHT * selectedCountry.index - PADDING);
+      scrollTableVertically(ROW_HEIGHT * selectedCountry.index - PADDING);
     }
     if (selectedCountry && sortDirection === SORT.ASC) {
-      tableRef.current.scroll(
-        0,
+      scrollTableVertically(
         ROW_HEIGHT * (countriesNumber - selectedCountry.index)
       );
     }
-  }, [handleSortClick]);
+  }, [handleSortClick, tableRef.current]);
 
   const barTooltip = (d, name, attrs) => (
     <div className={styles.tooltip} {...attrs} key={`tooltip-${name}`}>
