@@ -35,6 +35,16 @@ function Trend({
             landMarineSPI={land ? t('land SPI') : t('marine SPI')}
           />
         </p>
+        <div className={styles.areaChartLegend}>
+          <div className={styles.areaChartLegendItem}>
+            <hr className={styles.area1ChartLegendLine} />
+            <p>{t('SPI')}</p>
+          </div>
+          <div className={styles.areaChartLegendItem}>
+            <hr className={styles.area2ChartLegendLine} />
+            <p>% {t('Protected areas')}</p>
+          </div>
+        </div>
         <span>
           <Tooltip
             content={<div className={styles.titleTooltip}>{metadataInfo}</div>}
