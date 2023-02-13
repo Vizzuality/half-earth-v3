@@ -9,7 +9,7 @@ import cx from 'classnames';
 import camelCase from 'lodash/camelCase';
 import groupBy from 'lodash/groupBy';
 
-import HeaderItem from 'components/header-item';
+import HeaderItem, { SORT } from 'components/header-item';
 import SearchInput from 'components/search-input';
 
 import {
@@ -67,6 +67,22 @@ function RankingChart({
       changeHasScrolled(true);
     }
   };
+
+  useEffect(() => {
+    const PADDING = 20;
+    const sortDirection = categorySort.split('-')[1];
+    const selectedCountry = data.find((d) => d.iso === countryISO);
+    const countriesNumber = data.length;
+    if (sortDirection === SORT.DESC) {
+      tableRef.current.scroll(0, ROW_HEIGHT * selectedCountry.index - PADDING);
+    }
+    if (sortDirection === SORT.ASC) {
+      tableRef.current.scroll(
+        0,
+        ROW_HEIGHT * (countriesNumber - selectedCountry.index)
+      );
+    }
+  }, [handleSortClick]);
 
   const barTooltip = (d, name, attrs) => (
     <div className={styles.tooltip} {...attrs} key={`tooltip-${name}`}>
@@ -164,6 +180,7 @@ function RankingChart({
           })}
           onScroll={onScroll}
           ref={tableRef}
+          id="ranking-scroll"
         >
           {data.map((d, i) => (
             <div

@@ -77,6 +77,7 @@ function RankingChartContainer(props) {
     setUrlSort(`${parsedCategory}-${sortDirection}`);
     changeUI({ categorySort: `${parsedCategory}-${sortDirection}` });
   };
+
   return (
     <Component
       handleCountryClick={handleCountryClick}
