@@ -38,6 +38,9 @@ function RankingChart({
   const t = useT();
   const locale = useLocale();
   const [hasScrolled, changeHasScrolled] = useState(false);
+  const [, /* selectedCountryIndex, */ setSelectedCountryIndex] =
+    useState(null);
+
   const LEGEND_ITEMS = useMemo(() => getLegendItems(), [locale]);
   const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
   const RANKING_HEADER_LABELS = {
@@ -87,6 +90,12 @@ function RankingChart({
       );
     }
   }, [handleSortClick, tableRef.current]);
+
+  useEffect(() => {
+    const selectedCountry = data.find((d) => d.iso === countryISO);
+    const countryIndex = data.indexOf(selectedCountry);
+    setSelectedCountryIndex(countryIndex);
+  }, [handleSortClick, handleCountryClick]);
 
   const barTooltip = (d, name, attrs) => (
     <div className={styles.tooltip} {...attrs} key={`tooltip-${name}`}>
