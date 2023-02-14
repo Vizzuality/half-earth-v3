@@ -15,11 +15,11 @@ declare module '@transifex/react' {
 
   const useT: () => (key: string) => string;
 
-  // TODO-TS Better define T return type
+  // TODO: TS-TODO Better define T return type
   const T: FunctionComponent<params> = (
     _str: string,
     _comment?: string,
-    ..._m
+    ..._params
   ) =>
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     FunctionComponent;

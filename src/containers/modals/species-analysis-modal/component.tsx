@@ -18,7 +18,7 @@ import {
   IndividualSpeciesDataType,
 } from './types';
 
-// TODO: TS-TODO Fix loadable or use React.lazy
+// TODO: TS-TODO Fix import of components
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 const Spinner = loadable(() => import('components/spinner'));
