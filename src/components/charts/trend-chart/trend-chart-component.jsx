@@ -14,7 +14,7 @@ import styles from './trend-chart-styles.module.scss';
 
 function CustomCursor(props) {
   const { payload, points, chartHeight } = props;
-  const { year } = payload && payload[0] && payload[0].payload;
+  const { year } = (payload && payload[0] && payload[0].payload) || {};
   const { x } = points && points[0];
 
   // Correction to show last points
