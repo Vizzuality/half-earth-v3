@@ -9,7 +9,7 @@ import cx from 'classnames';
 import camelCase from 'lodash/camelCase';
 import groupBy from 'lodash/groupBy';
 
-import HeaderItem, { SORT } from 'components/header-item';
+import HeaderItem from 'components/header-item';
 import SearchInput from 'components/search-input';
 
 import {
@@ -38,8 +38,7 @@ function RankingChart({
   const t = useT();
   const locale = useLocale();
   const [hasScrolled, changeHasScrolled] = useState(false);
-  const [, /* selectedCountryIndex, */ setSelectedCountryIndex] =
-    useState(null);
+  const [selectedCountryIndex, setSelectedCountryIndex] = useState(null);
 
   const LEGEND_ITEMS = useMemo(() => getLegendItems(), [locale]);
   const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
@@ -78,18 +77,12 @@ function RankingChart({
 
   useEffect(() => {
     const PADDING = 20;
-    const sortDirection = categorySort?.split('-')[1];
     const selectedCountry = data.find((d) => d.iso === countryISO);
-    const countriesNumber = data.length;
-    if (selectedCountry && sortDirection === SORT.DESC) {
-      scrollTableVertically(ROW_HEIGHT * selectedCountry.index - PADDING);
+
+    if (selectedCountry) {
+      scrollTableVertically(ROW_HEIGHT * selectedCountryIndex - PADDING);
     }
-    if (selectedCountry && sortDirection === SORT.ASC) {
-      scrollTableVertically(
-        ROW_HEIGHT * (countriesNumber - selectedCountry.index)
-      );
-    }
-  }, [handleSortClick, tableRef.current]);
+  }, [handleSortClick, tableRef.current, selectedCountryIndex]);
 
   useEffect(() => {
     const selectedCountry = data.find((d) => d.iso === countryISO);
