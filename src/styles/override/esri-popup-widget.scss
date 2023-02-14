@@ -3,23 +3,24 @@
 @import 'styles/typography-extends';
 
 .esri-popup {
-  bottom: auto;
+  @media #{$tablet-only} {
+    top: 0 !important;
+    bottom: auto !important;
+  }
 
   @media #{$mobile-only} {
-    bottom: 60px !important;
     left: 0 !important;
     width: 100%;
     display: flex;
     align-items: center;
+    bottom: auto !important;
+    top: 40% !important;
   }
 
   @media #{$mobile-landscape} {
     top: 0 !important;
     right: 0px !important;
     margin-left: 30% !important;
-  }
-  @media #{$tablet-only} {
-    bottom: auto;
   }
 }
 
