@@ -6,11 +6,18 @@
   bottom: auto;
 
   @media #{$mobile-only} {
-    bottom: 60px;
+    bottom: 60px !important;
+    left: 0 !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
   }
 
   @media #{$mobile-landscape} {
     bottom: 10px !important;
+  }
+  @media #{$tablet-landscape} {
+    top: 10px !important;
   }
 }
 

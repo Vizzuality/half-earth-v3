@@ -2,6 +2,7 @@
   z-index: $default-z-index;
 
   @media #{$mobile-landscape} {
+    border: 2px solid red;
     top: 0 !important;
     z-index: $over-front;
   }
