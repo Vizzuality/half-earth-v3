@@ -5,6 +5,7 @@ import { useT, useLocale } from '@transifex/react';
 import { roundGlobalRange } from 'utils/data-formatting-utils';
 
 import Tooltip from '@tippyjs/react';
+import cx from 'classnames';
 
 import SpeciesAnalysisModal from 'containers/modals/species-analysis-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -27,26 +28,28 @@ import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
 
-function Component({
-  area,
-  speciesData,
-  speciesFilters,
-  placeholderText,
-  setSpeciesFilter,
-  selectedSpeciesFilter,
-  individualSpeciesData,
-  handleNextSpeciesSelection,
-  handlePreviousSpeciesSelection,
-  previousImage,
-  nextImage,
-  showCarouselArrows,
-  handleSpeciesSearch,
-  handleSearchOptionSelected,
-  handleCloseSearch,
-  selectedSearchOption,
-  searchOptions,
-  contextualData,
-}) {
+function Component(props) {
+  const {
+    area,
+    speciesData,
+    speciesFilters,
+    placeholderText,
+    setSpeciesFilter,
+    selectedSpeciesFilter,
+    individualSpeciesData,
+    handleNextSpeciesSelection,
+    handlePreviousSpeciesSelection,
+    previousImage,
+    nextImage,
+    showCarouselArrows,
+    handleSpeciesSearch,
+    handleSearchOptionSelected,
+    handleCloseSearch,
+    selectedSearchOption,
+    searchOptions,
+    contextualData,
+    insideModal,
+  } = props;
   const { speciesNumbers } = contextualData;
   const [isDetailedAnalysisModalOpen, handleDetailedAnalysisModalToggle] =
     useState(false);
@@ -69,21 +72,25 @@ function Component({
       </div>
     </section>
   ) : (
-    <SidebarCardWrapper className={styles.cardWrapper}>
+    <SidebarCardWrapper
+      className={cx(styles.cardWrapper, { [styles.insideModal]: insideModal })}
+    >
       {speciesNumbers && speciesNumbers.nspecies && (
         <div>
-          <p className={styles.title}>
-            {sidebarCardsConfig[SPECIES_SLUG].title(
-              speciesNumbers && speciesNumbers.nspecies
-            )}
-            <span
-              className={styles.infoClue}
-              title={sidebarCardsConfig[SPECIES_SLUG].hint}
-            >
-              {' '}
-              {t('terrestrial vertebrates')}
-            </span>
-          </p>
+          {!insideModal && (
+            <p className={styles.title}>
+              {sidebarCardsConfig[SPECIES_SLUG].title(
+                speciesNumbers && speciesNumbers.nspecies
+              )}
+              <span
+                className={styles.infoClue}
+                title={sidebarCardsConfig[SPECIES_SLUG].hint}
+              >
+                {' '}
+                {t('terrestrial vertebrates')}
+              </span>
+            </p>
+          )}
           <Dropdown
             stacked
             width="full"
@@ -91,6 +98,7 @@ function Component({
             options={speciesFilters}
             selectedOption={selectedSpeciesFilter}
             handleOptionSelection={setSpeciesFilter}
+            theme={insideModal && 'dark'}
           />
           {/* Search dropdown */}
           <Dropdown
@@ -104,6 +112,7 @@ function Component({
             selectedOption={selectedSearchOption}
             handleOptionSelection={handleSearchOptionSelected}
             handleCloseSearch={handleCloseSearch}
+            theme={insideModal && 'dark'}
           />
           {individualSpeciesData && (
             <section>
@@ -219,6 +228,7 @@ function Component({
                   className={styles.speciesBarContainer}
                   percentage={individualSpeciesData.globalProtectedPercentage}
                   barAnnotation={individualSpeciesData.protectionTarget}
+                  theme={insideModal && 'dark'}
                 />
                 <SpeciesBar
                   title={t('Portion of global range in this area')}
@@ -226,6 +236,7 @@ function Component({
                   percentage={capPercentage(
                     individualSpeciesData.presenceInArea
                   )}
+                  theme={insideModal && 'dark'}
                 />
 
                 <div className={styles.sectionContainer}>
@@ -271,20 +282,23 @@ function Component({
                 </div>
               </div>
 
-              <div>
-                <Button
-                  type="rectangular-secondary"
-                  handleClick={() => handleDetailedAnalysisModalToggle(true)}
-                  label={t('DETAILED ANALYSIS')}
-                />
-                <SpeciesAnalysisModal
-                  isOpen={isDetailedAnalysisModalOpen}
-                  handleModalClose={() =>
-                    handleDetailedAnalysisModalToggle(false)
-                  }
-                  contextualData={contextualData}
-                />
-              </div>
+              {!insideModal && (
+                <div>
+                  <Button
+                    type="rectangular-secondary"
+                    handleClick={() => handleDetailedAnalysisModalToggle(true)}
+                    label={t('DETAILED ANALYSIS')}
+                  />
+                  <SpeciesAnalysisModal
+                    isOpen={isDetailedAnalysisModalOpen}
+                    handleModalClose={() =>
+                      handleDetailedAnalysisModalToggle(false)
+                    }
+                    contextualData={contextualData}
+                    cardProps={props}
+                  />
+                </div>
+              )}
             </section>
           )}
         </div>

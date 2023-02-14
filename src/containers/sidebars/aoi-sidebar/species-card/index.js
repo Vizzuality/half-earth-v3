@@ -355,6 +355,7 @@ function SpeciesCardContainer(props) {
       handleSpeciesSearch={handleSpeciesSearch}
       handleSearchOptionSelected={handleSearchOptionSelected}
       handleCloseSearch={handleCloseSearch}
+      SPSData={SPSData && Object.values(SPSData).flat()}
       {...props}
     />
   );

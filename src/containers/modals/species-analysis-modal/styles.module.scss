@@ -14,3 +14,42 @@
   background-color: transparent;
   border: none;
 }
+
+.modalContent {
+  display: flex;
+}
+
+.cardContainer {
+  padding-right: 0px;
+  min-width: 30%;
+}
+
+.chartContainer {
+  position: relative;
+  margin: 0 100px;
+}
+
+.chartResponsive {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.title {
+  @extend %display2;
+  font-size: $font-size-rg;
+}
+
+.subtitle {
+  @extend %bodyText;
+}
+
+.bold {
+  font-weight: $font-weight-bold;
+}
+
+.moreProtectionSentence {
+  @extend %annotation;
+  min-height: 26px;
+  color: $grey-text;
+  margin-top: 20px;
+}

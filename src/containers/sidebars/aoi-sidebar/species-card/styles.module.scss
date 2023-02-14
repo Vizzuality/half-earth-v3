@@ -53,6 +53,39 @@
 
 .cardWrapper {
   margin-top: $site-gutter;
+
+  &.insideModal {
+    section {
+      background-color: transparent;
+    }
+
+    .dropdown {
+      background-color: transparent;
+      color: $white;
+    }
+
+    .speciesNames,
+    .commonName,
+    .speciesDataContainer {
+      color: $white;
+    }
+
+    .sectionContainer,
+    .speciesBarContainer {
+      &:not(:last-child) {
+        border-bottom-color: $white-opacity;
+      }
+    }
+
+
+    .commonName {
+      color: $white !important;
+    }
+
+    .sliderControls svg {
+      fill: $white;
+    }
+  }
 }
 
 .togglesContainer {
@@ -91,7 +124,7 @@
 }
 
 .speciesBarContainer {
-  padding-bottom: 16px;
+  padding: 8px 0;
 }
 
 
@@ -227,15 +260,28 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 16px;
+    padding: 8px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px dashed $grey-text-hover;
+    }
+
     .sectionTitleWrapper {
       align-items: center;
-        display: flex;
-        position: relative;
-        p {
-          margin: 0;
-        }
+      display: flex;
+      position: relative;
+      color: $grey-text;
+
+
+      p {
+        margin: 0;
+      }
     }
+  }
+
+  .speciesBarContainer {
+    border-bottom: 1px dashed $grey-text-hover;
+    color: $grey-text;
   }
 
   .iconWrapper {
@@ -243,6 +289,7 @@
     justify-items: center;
     align-items: center;
     margin-left: 5px;
+
     .icon {
       color: $white-opacity;
       stroke: $white-opacity;
@@ -264,4 +311,3 @@
   width: 65px;
   margin-bottom: 5px;
 }
-

@@ -1,0 +1,45 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.title {
+  @extend %annotation;
+  line-height: $line-height;
+}
+
+.subtitle {
+  @extend %annotation;
+  color: $grey-text;
+}
+
+.bars {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  max-width: 320px;
+  padding-bottom: 20px;
+}
+
+.bar {
+  display: block;
+  width: 80px;
+  background-color: $white-opacity-20;
+  margin: 10px 2px 0 0;
+
+  .xAxisTick {
+    @extend %annotation;
+    top: 80px;
+    position: absolute;
+    font-size: $font-size-xxs;
+    color: $white-opacity-20;
+    min-width: 30px;
+    margin-left: -6px;
+  }
+
+  .tickHighlighted {
+    color: $white;
+  }
+
+  &.highlighted {
+    background-color: $white;
+  }
+}

@@ -1,0 +1,15 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.legend {
+  display: flex;
+  justify-content: space-between;
+
+  > :first-child {
+    margin-right: 25px;
+  }
+}
+
+.dragIcon {
+  vertical-align: sub;
+}

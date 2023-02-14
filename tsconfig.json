@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "target": "es5",
+    "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
@@ -42,5 +43,5 @@
     "@store-middleware": ["store/store-middleware/*"]
   },
   "include": ["declarations.d.ts", "**/*.ts", "**/*.tsx", "**/*.d.ts"],
-  "exclude": ["node_modules", ".storybook", "cypress"]
+  "exclude": ["node_modules", "cypress"]
 }
