@@ -27,6 +27,7 @@ function RankingChartContainer(props) {
   } = props;
   const [searchTerm, setSearchTerm] = useState();
   const [scrollIndex, setScrollIndex] = useState(0);
+  const [urlSort, setUrlSort] = useState(null);
   const debouncedSearchTerm = useDebounce(searchTerm, 30);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ function RankingChartContainer(props) {
     });
     changeUI({
       landMarineSelection: selectedLandMarineOption.slug,
+      categorySort: urlSort,
       fullRanking,
     });
   };
@@ -72,8 +74,10 @@ function RankingChartContainer(props) {
       sortedCategory === parsedCategory && direction === SORT.DESC
         ? SORT.ASC
         : SORT.DESC;
+    setUrlSort(`${parsedCategory}-${sortDirection}`);
     changeUI({ categorySort: `${parsedCategory}-${sortDirection}` });
   };
+
   return (
     <Component
       handleCountryClick={handleCountryClick}

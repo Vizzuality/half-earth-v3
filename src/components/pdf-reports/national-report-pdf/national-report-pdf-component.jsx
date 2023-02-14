@@ -395,6 +395,16 @@ function NationalReportPdf({
             landMarineSPI={selectedLandMarineOption.label}
           />
         </p>
+        <div className={styles.areaChartLegend}>
+          <div className={styles.areaChartLegendItem}>
+            <hr className={styles.area1ChartLegendLine} />
+            <T _str="SPI" />
+          </div>
+          <div className={styles.areaChartLegendItem}>
+            <hr className={styles.area2ChartLegendLine} />
+            <T _str="% Protected areas" />
+          </div>
+        </div>
       </div>
       <TrendChart
         area1={{

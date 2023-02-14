@@ -9,6 +9,10 @@ $gap: 20pt;
 
 // @extends need to be outside @media rules
 // https://sass-lang.com/documentation/at-rules/extend#extend-in-media
+.areaChartLegend {
+  @extend %annotation;
+}
+
 .nameWrapper {
   @extend %display2;
 }
@@ -174,6 +178,32 @@ $gap: 20pt;
       background-color: $white-opacity-pdf;
       padding: 16pt;
       border-radius: 8pt;
+      .chartHeader {
+        display: flex;
+        justify-content: space-between;
+        .areaChartLegend {
+          color: $black;
+          display: flex;
+        }
+        .areaChartLegendItem {
+          align-items: center;
+          display: flex;
+        }
+        .area1ChartLegendLine {
+          border: 1pt solid $black;
+          height: 1pt;
+          margin-right: 6pt;
+          width: 20pt;
+        }
+        .area2ChartLegendLine {
+          background-color: transparent;
+          border: none;
+          border-top: 2pt dashed $black;
+          margin-left: 16pt;
+          margin-right: 6pt;
+          width: 20pt;
+        }
+      }
     }
 
     .sources {
@@ -188,6 +218,5 @@ $gap: 20pt;
         color: $brand-color-main;
       }
     }
-
   }
 }

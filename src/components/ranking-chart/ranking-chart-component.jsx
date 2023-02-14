@@ -41,6 +41,8 @@ function RankingChart({
   const t = useT();
   const locale = useLocale();
   const [hasScrolled, changeHasScrolled] = useState(false);
+  const [selectedCountryIndex, setSelectedCountryIndex] = useState(null);
+
   const LEGEND_ITEMS = useMemo(() => getLegendItems(), [locale]);
   const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
   const RANKING_HEADER_LABELS = {
@@ -51,9 +53,14 @@ function RankingChart({
   };
 
   const tableRef = useRef();
+
+  const scrollTableVertically = (distance) => {
+    tableRef.current.scroll(0, distance);
+  };
+
   useEffect(() => {
     if (scrollIndex > -1 && tableRef.current) {
-      tableRef.current.scroll(0, ROW_HEIGHT * scrollIndex);
+      scrollTableVertically(ROW_HEIGHT * scrollIndex);
     }
   }, [scrollIndex, tableRef]);
 
@@ -61,7 +68,7 @@ function RankingChart({
     const selectedCountry = data.find((d) => d.iso === countryISO);
     if (selectedCountry) {
       const PADDING = 30;
-      tableRef.current.scroll(0, ROW_HEIGHT * selectedCountry.index - PADDING);
+      scrollTableVertically(ROW_HEIGHT * selectedCountry.index - PADDING);
     }
   }, [selectedLandMarineOption]);
 
@@ -72,6 +79,21 @@ function RankingChart({
       changeHasScrolled(true);
     }
   };
+
+  useEffect(() => {
+    const PADDING = 20;
+    const selectedCountry = data.find((d) => d.iso === countryISO);
+
+    if (selectedCountry) {
+      scrollTableVertically(ROW_HEIGHT * selectedCountryIndex - PADDING);
+    }
+  }, [handleSortClick, tableRef.current, selectedCountryIndex]);
+
+  useEffect(() => {
+    const selectedCountry = data.find((d) => d.iso === countryISO);
+    const countryIndex = data.indexOf(selectedCountry);
+    setSelectedCountryIndex(countryIndex);
+  }, [handleSortClick, handleCountryClick]);
 
   const barTooltip = (d, name, attrs) => (
     <div className={styles.tooltip} {...attrs} key={`tooltip-${name}`}>
@@ -169,6 +191,7 @@ function RankingChart({
           })}
           onScroll={onScroll}
           ref={tableRef}
+          id="ranking-scroll"
         >
           {data.map((d, i) => (
             <div

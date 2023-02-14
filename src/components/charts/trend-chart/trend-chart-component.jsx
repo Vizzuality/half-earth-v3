@@ -7,18 +7,14 @@ import {
   YAxis,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
-  ReferenceDot,
-  Label,
   Text,
 } from 'recharts';
-
-import { useMobile } from 'constants/responsive';
 
 import styles from './trend-chart-styles.module.scss';
 
 function CustomCursor(props) {
   const { payload, points, chartHeight } = props;
-  const { year } = payload && payload[0] && payload[0].payload;
+  const { year } = (payload && payload[0] && payload[0].payload) || {};
   const { x } = points && points[0];
 
   // Correction to show last points
@@ -56,38 +52,6 @@ function TrendChartComponent({
   pdf = false,
 }) {
   const tickStroke = variant === 'light' ? 'white' : variant;
-  const labelColor = variant === 'light' ? 'white' : variant;
-
-  const isMobile = useMobile();
-
-  const lastData =
-    (area1.label || area2.label) && data && data[data.length - 1];
-
-  const renderLabel = (area) => {
-    const lastAreaY = lastData && area.key && lastData[area.key];
-    if (!lastAreaY && lastAreaY !== 0) return null;
-    return (
-      <ReferenceDot
-        y={lastAreaY}
-        x={2020}
-        stroke="transparent"
-        fill="transparent"
-      >
-        <Label
-          style={
-            area.labelOffset && {
-              transform: `translate(${isMobile ? 5 : area.labelOffset}px, 0)`,
-            }
-          }
-          className={styles.label}
-          value={area.label}
-          position="insideTop"
-          offset={-5}
-          fill={labelColor}
-        />
-      </ReferenceDot>
-    );
-  };
 
   const renderLineChart = () => (
     <LineChart
@@ -138,8 +102,6 @@ function TrendChartComponent({
         strokeWidth={area1.strokeWidth}
         dot={false}
       />
-      {area1.label && renderLabel(area1)}
-      {area2.label && renderLabel(area2)}
       <Line
         type="monotone"
         dataKey={area2.key}
