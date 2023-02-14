@@ -5,7 +5,7 @@ export type SPSData = {
   per_global: number;
 };
 
-type IndividualSpeciesData = {
+type IndividualSpeciesDataType = {
   SPS_aoi: number;
   SPS_global: number;
   SliceNumber: number;
@@ -39,6 +39,6 @@ export type SpeciesModalProps = {
   loading: boolean;
   cardProps: {
     SPSData: SPSData[];
-    individualSpeciesData: IndividualSpeciesData;
+    individualSpeciesData: IndividualSpeciesDataType;
   };
 };

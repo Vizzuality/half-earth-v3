@@ -15,7 +15,7 @@ import SpsLegend from './sps-legend';
 import {
   SpeciesModalProps,
   SPSData as SPSDataType,
-  IndividualSpeciesData as IndividualSpeciesDataType,
+  IndividualSpeciesDataType,
 } from './types';
 
 // TODO: TS-TODO Fix loadable or use React.lazy

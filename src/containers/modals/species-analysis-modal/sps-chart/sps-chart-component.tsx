@@ -61,13 +61,9 @@ function SpsChart({
   SPSSelected,
   globalRangeSelected,
 }: SPSChartProps) {
-  // TODO. TS-TODO Fix transifex import
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const t = useT();
-  const typedT = t as (arg0: string) => string;
-  // TODO. TS-TODO
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { sliceNumber: selectedSpeciesSliceNumber } = selectedSpecies;
+  const { sliceNumber: selectedSpeciesSliceNumber }: { sliceNumber: number } =
+    selectedSpecies;
   const height = useMemo(() => width / 2, [width]);
   if (!data) return null;
   const radius = useMemo(() => width / 2 - arcLabelPadding, [width]);
@@ -135,10 +131,10 @@ function SpsChart({
 
       const labelText = (d: number) =>
         ({
-          25: typedT('Very low SPS'),
-          50: typedT('Low SPS'),
-          75: typedT('Medium SPS'),
-          100: typedT('High SPS'),
+          25: t('Very low SPS'),
+          50: t('Low SPS'),
+          75: t('Medium SPS'),
+          100: t('High SPS'),
         }[d]);
 
       // Angle labels
