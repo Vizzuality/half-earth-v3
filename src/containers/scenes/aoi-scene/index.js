@@ -136,11 +136,20 @@ function AOIScene(props) {
 
   // Reconcile all data until completely loaded
   useEffect(() => {
+    const hasWDPAData =
+      contextualData && (contextualData.WDPAID || contextualData.DESIG_T);
+    // This check is for the case where the user goes from other AOI to a WDPA and the old data is still loaded
+    const isWDPAButNoWDPAData =
+      precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas &&
+      !hasWDPAData;
+
     const hasAllData =
-      speciesData &&
-      contextualData &&
-      !isEmpty(contextualData) &&
-      (!contextualData.isCustom || contextualData.protectedAreasList);
+      (speciesData &&
+        contextualData &&
+        !isEmpty(contextualData) &&
+        !isWDPAButNoWDPAData) ||
+      !contextualData.isCustom ||
+      contextualData.protectedAreasList;
     if (!precalculatedLayerSlug && hasAllData) {
       const updatedStoredArea =
         speciesData.species && speciesData.species.length > 0
