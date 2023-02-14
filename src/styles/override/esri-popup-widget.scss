@@ -14,7 +14,10 @@
   }
 
   @media #{$mobile-landscape} {
-    bottom: 10px !important;
+    top: 10px !important;
+    right: 0px !important;
+    margin-left: 30% !important;
+
   }
   @media #{$tablet-landscape} {
     top: 10px !important;
