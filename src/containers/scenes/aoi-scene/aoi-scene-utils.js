@@ -148,38 +148,43 @@ export const setPrecalculatedAOIs = ({
     whereClause: `MOL_ID = '${aoiId}'`,
     returnGeometry: true,
   }).then((features) => {
-    const { geometry, attributes } = features[0];
-    setGeometry(geometry);
-    const setProtectedAreasType = () => {
-      // Special case for WDPA areas
-      // call to WDPA_OECM_FEATURE_DATA_LAYER with MOL_ID as parameter
+    if (features && features[0]) {
+      const { geometry, attributes } = features[0];
+      setGeometry(geometry);
 
-      EsriFeatureService.getFeatures({
-        url: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
-        whereClause: `MOL_ID = '${aoiId}'`,
-        returnGeometry: false,
-      }).then((results) => {
-        const { attributes: protectedAreaAttributes } = results[0];
-        setContextualData(
-          getPrecalculatedContextualData({
-            data: protectedAreaAttributes,
-            includeProtectedAreasList: true,
-            includeAllData: true,
-          })
-        );
-        setPrecalculatedSpeciesData(protectedAreaAttributes, setTaxaData);
-      });
-    };
+      const setProtectedAreasType = () => {
+        // Special case for WDPA areas
+        // call to WDPA_OECM_FEATURE_DATA_LAYER with MOL_ID as parameter
 
-    const setNationalOrSubnationalType = () => {
-      setContextualData(getPrecalculatedContextualData({ data: attributes }));
-      setPrecalculatedSpeciesData(attributes, setTaxaData);
-    };
+        EsriFeatureService.getFeatures({
+          url: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
+          whereClause: `MOL_ID = '${aoiId}'`,
+          returnGeometry: false,
+        }).then((results) => {
+          const { attributes: protectedAreaAttributes } = results[0];
+          setContextualData(
+            getPrecalculatedContextualData({
+              data: protectedAreaAttributes,
+              includeProtectedAreasList: true,
+              includeAllData: true,
+            })
+          );
+          setPrecalculatedSpeciesData(protectedAreaAttributes, setTaxaData);
+        });
+      };
 
-    if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas) {
-      setProtectedAreasType();
+      const setNationalOrSubnationalType = () => {
+        setContextualData(getPrecalculatedContextualData({ data: attributes }));
+        setPrecalculatedSpeciesData(attributes, setTaxaData);
+      };
+
+      if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas) {
+        setProtectedAreasType();
+      } else {
+        setNationalOrSubnationalType();
+      }
     } else {
-      setNationalOrSubnationalType();
+      console.warn(`No data for ${aoiId}`);
     }
   });
 };
