@@ -4,7 +4,10 @@
 
 .switcher {
   display: inline-block;
-  // position: relative;
+  position: relative;
+  @media #{$mobile-only} {
+    position: static;
+  }
 
   &:hover .switcherContent {
     display: flex;
