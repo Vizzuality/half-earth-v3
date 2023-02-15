@@ -10,9 +10,13 @@
   width: 100%;
 
   .switcherWrapper {
+    display: flex;
+    align-items: center;
     position: absolute;
+    height: 7svh;
     right: 20px;
-    top: 5px;
+    top: 0;
     z-index: $over-front;
+
   }
 }

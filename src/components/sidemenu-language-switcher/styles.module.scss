@@ -4,7 +4,7 @@
 
 .switcher {
   display: inline-block;
-  position: relative;
+  // position: relative;
 
   &:hover .switcherContent {
     display: flex;
@@ -24,6 +24,11 @@
     transition: color 200ms ease-in;
     height: 32px;
     width: 32px;
+    @media #{$mobile-only} {
+      margin-top: 0;
+      padding-top: 0;
+      height: 7svh;
+    }
   }
 
   .switcherContent {
@@ -35,12 +40,24 @@
     right: 32px;
     top: 8px;
 
+    @media #{$mobile-only} {
+      top: 0.25svh;
+    }
+
+
     button {
       display: flex;
       color: $grey-text;
       font-size: $font-size-xs;
       text-transform: uppercase;
       padding: 5px;
+
+      @media #{$mobile-only} {
+        height: 7svh;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+      }
 
       &:hover {
         color: $white;

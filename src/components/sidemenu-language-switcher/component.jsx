@@ -48,7 +48,7 @@ function SideMenuLanguageSwitcher(props) {
           opacity: 0,
         }}
         animate={{
-          right: isHover ? '28px' : '-100px',
+          right: isHover ? '30px' : '-100px',
           opacity: isHover ? 1 : 0,
         }}
         transition={{

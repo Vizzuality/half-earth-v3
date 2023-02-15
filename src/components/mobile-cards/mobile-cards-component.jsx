@@ -87,7 +87,7 @@ function CardsComponent({ cardsContent, setCurrent }) {
               style={{
                 position: 'absolute',
                 width: '100%',
-                height: '100%',
+                height: '100svh',
                 x,
                 left: `${indexRange * 100}%`,
                 right: `${indexRange * 100}%`,
@@ -102,9 +102,11 @@ function CardsComponent({ cardsContent, setCurrent }) {
                 <div className={styles.card} draggable={false}>
                   <div>
                     <div className={styles.indicatorBg} />
-                    <p className={styles.progress}>
-                      {cardIndex + 1} / {cardsContent.length}
-                    </p>
+                    <div className={styles.progress}>
+                      <p>
+                        {cardIndex + 1} / {cardsContent.length}
+                      </p>
+                    </div>
                     <h5 className={styles.title}>
                       {cardsContent[cardIndex].title}
                     </h5>
