@@ -54,7 +54,8 @@ function AoiSidebarContainer(props) {
 
       setFormattedValues({
         landCover: contextualData.elu && contextualData.elu.landCover,
-        area: getLocaleNumber(contextualData.area, locale),
+        area:
+          contextualData.area && getLocaleNumber(contextualData.area, locale),
         climateRegime: contextualData.elu && contextualData.elu.climateRegime,
         population:
           contextualData.population &&
