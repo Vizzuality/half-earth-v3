@@ -87,7 +87,7 @@ function NationalReportPdf({
         <IndicatorCard
           className={styles.indicatorCard}
           indicator={
-            !!SPI || SPI === 0 ? getLocaleNumber(roundSPI(SPI), locale) : ''
+            !!SPI || SPI === 0 ? roundSPI(getLocaleNumber(SPI, locale)) : ''
           }
           description={
             <p>
@@ -105,7 +105,7 @@ function NationalReportPdf({
                 _str="{point} Global SPI average: {spiAverage}"
                 _comment="> Global SPI average: 100"
                 point=">"
-                spiAverage={getLocaleNumber(roundSPI(Global_SPI), locale) || 0}
+                spiAverage={roundSPI(getLocaleNumber(Global_SPI, locale) || 0)}
               />
             </p>
           </div>

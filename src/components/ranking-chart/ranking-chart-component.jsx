@@ -226,7 +226,7 @@ function RankingChart({
                     key={category}
                     className={cx(styles.titleText, styles.spiIndex)}
                   >
-                    {getLocaleNumber(roundSPI(d[category]), locale)}
+                    {roundSPI(getLocaleNumber(d[category], locale))}
                   </span>
                 ) : (
                   renderBar(category, d)

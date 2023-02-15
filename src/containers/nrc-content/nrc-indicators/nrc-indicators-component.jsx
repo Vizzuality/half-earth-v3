@@ -281,7 +281,7 @@ function Indicators({ countryData, landMarineSelection }) {
     >
       <IndicatorCard
         indicator={
-          !!SPI || SPI === 0 ? getLocaleNumber(roundSPI(SPI), locale) : ''
+          !!SPI || SPI === 0 ? roundSPI(getLocaleNumber(SPI, locale)) : ''
         }
         description={
           <p>
@@ -302,7 +302,7 @@ function Indicators({ countryData, landMarineSelection }) {
               _str="{more} Global SPI average: {spiAverage}"
               _comment="> Global SPI average: 100"
               more=">"
-              spiAverage={getLocaleNumber(roundSPI(Global_SPI), locale) || 0}
+              spiAverage={roundSPI(getLocaleNumber(Global_SPI, locale) || 0)}
             />
           </p>
         </div>

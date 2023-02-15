@@ -271,7 +271,7 @@ function ScatterPlot({
               top: `${chartScale.yScale(yAxisValue)}px`,
             }}
           >
-            {getLocaleNumber(roundSPI(yAxisValue), locale)}
+            {roundSPI(getLocaleNumber(yAxisValue, locale))}
           </span>
         )}
         {xAxisValue && (
