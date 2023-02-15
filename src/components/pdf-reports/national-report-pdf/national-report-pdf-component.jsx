@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 
-import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { getLocaleNumber, roundSPI } from 'utils/data-formatting-utils';
 
 import IndicatorCard from 'containers/nrc-content/nrc-indicators/indicator-card';
 import { getBarStyles } from 'containers/nrc-content/nrc-indicators/nrc-indicators-utils';
@@ -86,7 +86,9 @@ function NationalReportPdf({
       <section className={styles.indicatorCardsContainer}>
         <IndicatorCard
           className={styles.indicatorCard}
-          indicator={!!SPI || SPI === 0 ? getLocaleNumber(SPI, locale) : ''}
+          indicator={
+            !!SPI || SPI === 0 ? getLocaleNumber(roundSPI(SPI), locale) : ''
+          }
           description={
             <p>
               {land ? (
@@ -103,7 +105,7 @@ function NationalReportPdf({
                 _str="{point} Global SPI average: {spiAverage}"
                 _comment="> Global SPI average: 100"
                 point=">"
-                spiAverage={getLocaleNumber(Global_SPI, locale) || 0}
+                spiAverage={getLocaleNumber(roundSPI(Global_SPI), locale) || 0}
               />
             </p>
           </div>
