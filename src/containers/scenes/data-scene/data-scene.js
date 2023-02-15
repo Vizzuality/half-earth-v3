@@ -71,7 +71,8 @@ function Container(props) {
     });
   }, [onboardingType, centerOn]);
 
-  const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
+  const { content: mapTooltipContent, precalculatedLayerSlug } =
+    mapTooltipData || {};
   const [mapLayerTab, analyzeAreasTab] = getSidebarTabs();
 
   const activeLayersWithoutAdmin = activeLayers.filter(
