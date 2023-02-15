@@ -147,12 +147,16 @@ function SpeciesCardContainer(props) {
       whereClause: `GID_0 = '${contextualData.iso}'`,
       returnGeometry: false,
     }).then((results) => {
-      const { attributes } = results[0];
-      const amphibians = JSON.parse(attributes.amphibians);
-      const birds = JSON.parse(attributes.birds);
-      const mammals = JSON.parse(attributes.mammals);
-      const reptiles = JSON.parse(attributes.reptiles);
-      setSPSData({ amphibians, birds, mammals, reptiles });
+      if (results && results[0]) {
+        const { attributes } = results[0];
+        const amphibians = JSON.parse(attributes.amphibians);
+        const birds = JSON.parse(attributes.birds);
+        const mammals = JSON.parse(attributes.mammals);
+        const reptiles = JSON.parse(attributes.reptiles);
+        setSPSData({ amphibians, birds, mammals, reptiles });
+      } else {
+        console.warn(`No data for ${contextualData.iso}`);
+      }
     });
   }, [selectedSpecies]);
 

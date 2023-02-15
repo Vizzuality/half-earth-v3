@@ -199,17 +199,15 @@ function AOISidebar({
                     <div className={styles.loadingAreaName} />
                   )}
 
-                  {area && !protectedAreaAOILoading && (
+                  {!!area && !protectedAreaAOILoading ? (
                     <p className={styles.area}>
-                      {`${area} `}
+                      {area}{' '}
                       <span>
                         {t('km')}
                         <sup>2</sup>
                       </span>
                     </p>
-                  )}
-
-                  {(!area || !!protectedAreaAOILoading) && (
+                  ) : (
                     <div className={styles.loadingArea} />
                   )}
                 </div>

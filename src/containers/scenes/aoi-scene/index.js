@@ -33,6 +33,9 @@ import mapStateToProps from './selectors';
 
 const actions = { ...urlActions, ...aoisGeometriesActions };
 
+const INITIAL_SPECIES_STATE = {
+  species: [],
+};
 // Protected areas are fetched on protected areas modal except for PA type AOIs
 function AOIScene(props) {
   const {
@@ -53,12 +56,18 @@ function AOIScene(props) {
   const [jsonUtils, setJsonUtils] = useState(null);
   const [contextualData, setContextualData] = useState({});
   const [geometryEngine, setGeometryEngine] = useState(null);
-  const [speciesData, setSpeciesData] = useState({ species: [] });
+  const [speciesData, setSpeciesData] = useState(INITIAL_SPECIES_STATE);
   const [storedArea, setStoredArea] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
   const [tooltipInfo, setTooltipInfo] = useState(null);
   const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
+
+  // Reset data when we change AOI (E.g. Country to WDPA)
+  useEffect(() => {
+    setSpeciesData(INITIAL_SPECIES_STATE);
+    setContextualData({});
+  }, [precalculatedLayerSlug]);
 
   // Add future places layer only if the AOI  is a future place
   useEffect(() => {
@@ -137,10 +146,9 @@ function AOIScene(props) {
   // Reconcile all data until completely loaded
   useEffect(() => {
     const hasAllData =
-      speciesData &&
-      contextualData &&
-      !isEmpty(contextualData) &&
-      (!contextualData.isCustom || contextualData.protectedAreasList);
+      (speciesData && contextualData && !isEmpty(contextualData)) ||
+      !contextualData.isCustom ||
+      contextualData.protectedAreasList;
     if (!precalculatedLayerSlug && hasAllData) {
       const updatedStoredArea =
         speciesData.species && speciesData.species.length > 0
