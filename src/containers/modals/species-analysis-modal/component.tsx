@@ -30,11 +30,11 @@ function SpeciesAnalysisModal({
   cardProps,
 }: SpeciesModalProps) {
   const [globalRangeSelected, setGlobalRangeSelected] = useState({
-    min: 0,
-    max: 1,
+    min: 3,
+    max: 4,
   });
 
-  const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 4 });
+  const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 1 });
   const [chartWidth, setChartWidth] = useState(700);
   const chartResponsiveRef = useRef<HTMLInputElement>();
   useEffect(() => {

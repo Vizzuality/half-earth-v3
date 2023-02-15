@@ -74,8 +74,8 @@ function SpsChart({
   const l = scaleLinear().domain([0, 100]).range([-180, 0]);
 
   const getPointPosition = (d: SPSData) => {
-    const angle = l(d.SPS_global);
-    const pointRadius = r(d.per_global);
+    const pointRadius = r(d.SPS_global);
+    const angle = l(d.per_global);
     const x = pointRadius * Math.cos((angle * Math.PI) / 180);
     const y = pointRadius * Math.sin((angle * Math.PI) / 180);
     return `translate(${x},${y})`;
