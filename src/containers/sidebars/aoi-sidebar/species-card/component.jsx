@@ -38,6 +38,7 @@ function Component(props) {
     selectedSpeciesFilter,
     individualSpeciesData,
     handleNextSpeciesSelection,
+    setSpecieBySliceNumber,
     handlePreviousSpeciesSelection,
     previousImage,
     nextImage,
@@ -296,6 +297,8 @@ function Component(props) {
                     }
                     contextualData={contextualData}
                     cardProps={props}
+                    speciesData={speciesData && speciesData.species}
+                    setSpecieBySliceNumber={setSpecieBySliceNumber}
                   />
                 </div>
               )}

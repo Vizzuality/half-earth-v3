@@ -28,6 +28,8 @@ function SpeciesAnalysisModal({
   handleModalClose,
   loading,
   cardProps,
+  speciesData,
+  setSpecieBySliceNumber,
 }: SpeciesModalProps) {
   const [globalRangeSelected, setGlobalRangeSelected] = useState({
     min: 3,
@@ -120,6 +122,8 @@ function SpeciesAnalysisModal({
                   selectedSpecies={individualSpeciesData}
                   globalRangeSelected={globalRangeSelected}
                   SPSSelected={SPSSelected}
+                  speciesData={speciesData}
+                  setSpecieBySliceNumber={setSpecieBySliceNumber}
                 />
               </div>
               <SpsLegend
@@ -128,6 +132,7 @@ function SpeciesAnalysisModal({
                 setGlobalRangeSelected={setGlobalRangeSelected}
                 SPSSelected={SPSSelected}
                 setSPSSelected={setSPSSelected}
+                speciesData={speciesData}
               />
             </>
           )}

@@ -1,5 +1,5 @@
 import { Range } from '../../types';
-import { SPSData } from '../types';
+import { SPSData, SpeciesData } from '../types';
 
 export type SPSLegendProps = {
   globalRangeSelected: Range;
@@ -7,4 +7,5 @@ export type SPSLegendProps = {
   SPSSelected: Range;
   setSPSSelected: ({ min: number, max: number }: Range) => void;
   data: SPSData[];
+  speciesData: SpeciesData[];
 };
