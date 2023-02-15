@@ -18,11 +18,14 @@ function Slider({
   setFunction,
 }: SPSSliderProps) {
   const constraintsRef = useRef(null);
+  const [isDragging, setIsDragging] = React.useState(false);
   const dragHandleProps = {
     setFunction,
     min,
     max,
     valuesLength: bucketValues.length,
+    handleDragStart: () => setIsDragging(true),
+    handleDragEnd: () => setIsDragging(false),
   };
   const barHeights = useMemo<number[]>(() => {
     const maxHeight: number = Math.max(...bucketValues);
@@ -42,7 +45,7 @@ function Slider({
           const isHighlighted = i >= min && i < max;
           const renderTick = (index: number) => (
             <div
-              // eslint-disable-next-line react/no-array-index-key
+              // eslint-disable-next-line react/no-array-index-key, @typescript-eslint/restrict-template-expressions
               key={`x-tick-${title}-${index}`}
               className={cx(styles.xAxisTick, {
                 [styles.tickHighlighted]: isHighlighted || index === max,
@@ -55,7 +58,7 @@ function Slider({
 
           return (
             <div
-              // eslint-disable-next-line react/no-array-index-key
+              // eslint-disable-next-line react/no-array-index-key, @typescript-eslint/restrict-template-expressions
               key={`bar${title}-${i}`}
               className={cx(styles.bar, {
                 [styles.highlighted]: isHighlighted,
@@ -64,6 +67,11 @@ function Slider({
             >
               {renderTick(i)}
               {i === bucketValues.length - 1 && renderTick(i + 1)}
+              {isDragging && (
+                <div className={styles.barValue}>
+                  {Math.round(barHeights[i])}
+                </div>
+              )}
             </div>
           );
         })}

@@ -35,6 +35,13 @@
     margin-left: -6px;
   }
 
+  .barValue {
+    @extend %annotation;
+    margin-top: -20px;
+    text-align: center;
+    font-size: $font-size-xxs;
+  }
+
   .tickHighlighted {
     color: $white;
   }
