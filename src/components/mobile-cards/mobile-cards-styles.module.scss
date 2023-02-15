@@ -3,7 +3,7 @@
 @import 'styles/ui.module';
 
 .container {
-  bottom: 5svh;
+  bottom: 2svh;
   display: flex;
   justify-content: center;;
   height: 40svh;
@@ -13,9 +13,9 @@
   z-index: 10;
 
    @media #{$mobile-landscape} {
-      bottom: 12px;
+      bottom: 5svh;
       height: 68%;
-      right: 3%;
+      right: 4%;
       left: auto;
       width: 45vw;
     }
