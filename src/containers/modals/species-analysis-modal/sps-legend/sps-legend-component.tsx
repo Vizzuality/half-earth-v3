@@ -45,7 +45,6 @@ function SpsLegend({
     () => getBucketValues(data, 'per_global'),
     [data]
   );
-  console.log(globalRangeBucketValues);
   const dragToSelectText = (
     <T
       _str="( {icon} Drag to select interval)"
