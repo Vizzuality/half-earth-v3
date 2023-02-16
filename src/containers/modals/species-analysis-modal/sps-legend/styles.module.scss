@@ -3,7 +3,13 @@
 
 .legend {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  @media #{$tablet-portrait} {
+    justify-content: space-between;
+    flex-direction: row;
+  }
 
   > :first-child {
     margin-right: 25px;
