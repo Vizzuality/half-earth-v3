@@ -1,5 +1,7 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 
+import { roundSPI } from 'utils/data-formatting-utils';
+
 import get from 'lodash/get';
 import sortBy from 'lodash/sortBy';
 import { getLandMarineSelected } from 'pages/nrc/nrc-selectors';
@@ -31,7 +33,7 @@ const getRankingData = createSelector(
       .map((iso) => {
         const d = countriesData[iso];
         return {
-          [RANKING_INDICATORS.spi]: Math.round(d[attributes.SPI] * 100) / 100,
+          [RANKING_INDICATORS.spi]: roundSPI(d[attributes.SPI]),
           [RANKING_INDICATORS.speciesRichness]: d[attributes.nspecies_richness], // Just for sorting
           name: d.NAME_0,
           iso,

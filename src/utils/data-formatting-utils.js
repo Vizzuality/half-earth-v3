@@ -95,3 +95,5 @@ export const countryChallengesSizes = (area) => {
   if (area <= 3250000) return 35;
   return 45;
 };
+
+export const roundSPI = (spi) => Math.round(spi);

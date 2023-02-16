@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 import { useLocale } from '@transifex/react';
 
-import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { getLocaleNumber, roundSPI } from 'utils/data-formatting-utils';
 
 import cx from 'classnames';
 import * as d3 from 'd3';
@@ -271,7 +271,7 @@ function ScatterPlot({
               top: `${chartScale.yScale(yAxisValue)}px`,
             }}
           >
-            {getLocaleNumber(yAxisValue, locale)}
+            {roundSPI(yAxisValue)}
           </span>
         )}
         {xAxisValue && (

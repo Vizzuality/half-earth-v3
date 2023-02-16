@@ -4,6 +4,8 @@ import { loadModules } from 'esri-loader';
 
 import { T, useT, useLocale } from '@transifex/react';
 
+import { roundSPI } from 'utils/data-formatting-utils';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 
@@ -180,7 +182,7 @@ function CountryEntryTooltipComponent({
       )}
       <section className={styles.spiInfo}>
         <p className={styles.spi}>
-          {landTab ? Math.round(spiLand) : Math.round(spiMar)}
+          {landTab ? roundSPI(spiLand) : roundSPI(spiMar)}
         </p>
         <p className={styles.subtitle}>
           {t('National species protection index')}

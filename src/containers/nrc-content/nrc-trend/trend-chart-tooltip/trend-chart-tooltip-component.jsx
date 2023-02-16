@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { useLocale, useT } from '@transifex/react';
+import { useT } from '@transifex/react';
 
-import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { roundSPI } from 'utils/data-formatting-utils';
 
 import styles from './trend-chart-tooltip-styles.module.scss';
 
 function TrendChartTooltip({ active, payload }) {
   const t = useT();
-  const locale = useLocale();
 
   const SPI = payload && payload[0];
   const protectedAreas = payload && payload[1];
@@ -18,7 +17,7 @@ function TrendChartTooltip({ active, payload }) {
       <div className={styles.container}>
         <div className={styles.SPIcontainer}>
           <p>
-            {t('SPI')}: {getLocaleNumber(Math.round(SPI.value), locale)}
+            {t('SPI')}: {roundSPI(SPI.value)}
           </p>
         </div>
         <div className={styles.protectedAreasContainer}>

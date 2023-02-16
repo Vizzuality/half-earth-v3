@@ -4,7 +4,7 @@ import { useT, useLocale } from '@transifex/react';
 
 import PropTypes from 'prop-types';
 
-import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { roundSPI } from 'utils/data-formatting-utils';
 
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
@@ -226,7 +226,7 @@ function RankingChart({
                     key={category}
                     className={cx(styles.titleText, styles.spiIndex)}
                   >
-                    {getLocaleNumber(d[category], locale)}
+                    {roundSPI(d[category])}
                   </span>
                 ) : (
                   renderBar(category, d)

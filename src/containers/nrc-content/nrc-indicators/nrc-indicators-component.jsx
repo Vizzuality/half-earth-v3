@@ -3,7 +3,7 @@ import React from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 
-import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { getLocaleNumber, roundSPI } from 'utils/data-formatting-utils';
 
 import cx from 'classnames';
 
@@ -280,7 +280,7 @@ function Indicators({ countryData, landMarineSelection }) {
       })}
     >
       <IndicatorCard
-        indicator={!!SPI || SPI === 0 ? getLocaleNumber(SPI, locale) : ''}
+        indicator={!!SPI || SPI === 0 ? roundSPI(SPI) : ''}
         description={
           <p>
             {land ? (
@@ -300,7 +300,7 @@ function Indicators({ countryData, landMarineSelection }) {
               _str="{more} Global SPI average: {spiAverage}"
               _comment="> Global SPI average: 100"
               more=">"
-              spiAverage={getLocaleNumber(Global_SPI, locale) || 0}
+              spiAverage={Global_SPI ? roundSPI(Global_SPI) : 0}
             />
           </p>
         </div>
