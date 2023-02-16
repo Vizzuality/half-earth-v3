@@ -77,9 +77,7 @@ function CountryDataCardComponent({
               style={{ left: `${SPI_ter}%`, width: `${100 - SPI_ter}%` }}
             />
           </div>
-          <div className={styles.index}>{`${
-            roundSPI(SPI_ter * 100) / 100
-          }`}</div>
+          <div className={styles.index}>{`${roundSPI(SPI_ter)}`}</div>
         </div>
         <p className={styles.indexStatement}>{indexStatement}</p>
       </section>

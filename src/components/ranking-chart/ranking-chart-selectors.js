@@ -33,7 +33,7 @@ const getRankingData = createSelector(
       .map((iso) => {
         const d = countriesData[iso];
         return {
-          [RANKING_INDICATORS.spi]: roundSPI(d[attributes.SPI] * 100) / 100,
+          [RANKING_INDICATORS.spi]: roundSPI(d[attributes.SPI]),
           [RANKING_INDICATORS.speciesRichness]: d[attributes.nspecies_richness], // Just for sorting
           name: d.NAME_0,
           iso,
