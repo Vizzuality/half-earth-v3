@@ -2,25 +2,26 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
+$mobile-tooltip-min-width: 94vw;
+
 .esri-popup {
   @media #{$tablet-only} {
-    top: 0 !important;
+    top: auto !important;
     bottom: auto !important;
   }
 
   @media #{$mobile-only} {
-    left: 0 !important;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    bottom: auto !important;
-    top: 65% !important;
+    left: 3vw !important;
+    top: auto !important;
+    bottom: 0 !important;
+    right: 3vw !important;
   }
 
   @media #{$mobile-landscape} {
-    top: 0 !important;
-    right: 0px !important;
-    margin-left: 30% !important;
+    left: auto !important;
+    right: 4vw !important;
+    bottom: 0 !important;
+    top: auto !important;
   }
 }
 
@@ -47,7 +48,7 @@
   background-color: $firefly;
 
   @media #{$mobile-only} {
-    min-width: 94vw;
+    min-width: $mobile-tooltip-min-width !important;
     background: transparent;
   }
 }
