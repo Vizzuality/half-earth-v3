@@ -127,6 +127,12 @@ function SearchLocation({
           ref={inputRef}
           onClick={handleOpenSearch}
           onFocus={handleOpenSearch}
+          onKeyDown={(e) => {
+            // Prevent enter key from submitting the form
+            if (e.key === 'Enter') {
+              e.preventDefault();
+            }
+          }}
           onChange={(e) => handleInputChange(e)}
         />
 
