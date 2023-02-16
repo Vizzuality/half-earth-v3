@@ -37,7 +37,7 @@ function SpeciesAnalysisModal({
   });
 
   const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 1 });
-  const [chartWidth, setChartWidth] = useState(700);
+  const [chartWidth, setChartWidth] = useState(759);
   const chartResponsiveRef = useRef<HTMLInputElement>();
   useEffect(() => {
     const onChartResize = () => {
@@ -46,12 +46,16 @@ function SpeciesAnalysisModal({
         setChartWidth(width);
       }
     };
-
-    onChartResize();
-
-    window.addEventListener('resize', onChartResize);
-    return () => window.removeEventListener('resize', onChartResize);
-  }, [chartResponsiveRef.current]);
+    if (isOpen) {
+      // Resize the chart when the modal just opened
+      setTimeout(() => {
+        onChartResize();
+      }, 1);
+      window.addEventListener('resize', onChartResize);
+      return () => window.removeEventListener('resize', onChartResize);
+    }
+    return undefined;
+  }, [chartResponsiveRef.current, isOpen]);
 
   if (!cardProps) return null;
 
