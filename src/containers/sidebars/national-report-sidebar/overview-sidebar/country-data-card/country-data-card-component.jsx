@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 
-import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { getLocaleNumber, roundSPI } from 'utils/data-formatting-utils';
 
 import cx from 'classnames';
 
@@ -78,7 +78,7 @@ function CountryDataCardComponent({
             />
           </div>
           <div className={styles.index}>{`${
-            Math.round(SPI_ter * 100) / 100
+            roundSPI(SPI_ter * 100) / 100
           }`}</div>
         </div>
         <p className={styles.indexStatement}>{indexStatement}</p>
