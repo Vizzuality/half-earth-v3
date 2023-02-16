@@ -10,5 +10,9 @@
   width: 100vw;
   height: 100vh;
   background-color: $app-background;
+
+  @media #{$mobile-only} {
+    height: 100svh;
+  }
 }
 

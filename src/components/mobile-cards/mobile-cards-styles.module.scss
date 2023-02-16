@@ -3,7 +3,7 @@
 @import 'styles/ui.module';
 
 .container {
-  bottom: 5svh;
+  bottom: 2svh;
   display: flex;
   justify-content: center;;
   height: 40svh;
@@ -13,18 +13,18 @@
   z-index: 10;
 
    @media #{$mobile-landscape} {
-      bottom: 12px;
+      bottom: 5svh;
       height: 68%;
-      right: 3%;
+      right: 4%;
       left: auto;
       width: 45vw;
     }
 
   .cardPage {
-    position: relative;
-    padding-top: 10px;
+    padding-top: 2svh;
     height: 100%;
     .card {
+      position: relative;
       border: 1px solid $elephant;
       color: $white;
       min-width: 94vw;
@@ -141,26 +141,27 @@
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         position: absolute;
-        height: 9px;
-        width: 34px;
-        z-index: 2;
-        top: -10px;
+        height: 3.5svh;
+        width: 38px;
+        z-index: $bring-to-front;
+        top: -2svh;
       }
     }
 
     .progress {
       @extend %bodyText;
+      align-items: center;
       border: 1px solid $elephant;
       border-radius: 2px;
       color: $white;
       display: flex;
-      height: 24px;
+      height: 3.5svh;
       justify-content: center;
       left: 16px;
       margin: 0;
       position: absolute;
-      top: -10px;
-      width: 34px;
+      top: -2svh;
+      width: 38px;
       z-index: 11;
 
       p {

@@ -13,4 +13,8 @@
 .esri-view-root,
 .esri-view-surface {
   height: 100%;
+
+  @media #{$mobile-only} {
+    height: 100svh;
+  }
 }
