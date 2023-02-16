@@ -87,7 +87,7 @@ function CardsComponent({ cardsContent, setCurrent }) {
               style={{
                 position: 'absolute',
                 width: '100%',
-                height: '100svh',
+                height: '100%',
                 x,
                 left: `${indexRange * 100}%`,
                 right: `${indexRange * 100}%`,
