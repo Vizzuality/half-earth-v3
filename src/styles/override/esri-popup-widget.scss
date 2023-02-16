@@ -2,8 +2,6 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
-$mobile-tooltip-min-width: 94vw;
-
 .esri-popup {
   @media #{$tablet-only} {
     top: auto !important;
@@ -48,7 +46,11 @@ $mobile-tooltip-min-width: 94vw;
   background-color: $firefly;
 
   @media #{$mobile-only} {
-    min-width: $mobile-tooltip-min-width !important;
+    min-width: 94vw !important;
+    background: transparent;
+  }
+  @media #{$mobile-landscape} {
+    min-width: 340px !important;
     background: transparent;
   }
 }
