@@ -201,7 +201,7 @@
   $mobile-landscape: 'screen and (max-width: #{$breakpoint-mobile-landscape}) and (orientation:landscape)';
   $tablet-only: 'screen and (max-width: #{$breakpoint-tablet-only})';
   $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
-  $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
+  $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape}) and (max-width: #{$breakpoint-desktop}) and (orientation:landscape)';
   $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
   :export {
