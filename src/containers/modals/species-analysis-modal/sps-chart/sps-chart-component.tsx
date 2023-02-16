@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -9,7 +9,7 @@ import COLORS from 'styles/settings.scss';
 
 import styles from './styles.module.scss';
 
-import type { Range, SPSData } from '../types';
+import type { Range, SPSData, SpeciesData } from '../types';
 
 import { SPSChartProps } from './types';
 
@@ -45,14 +45,21 @@ const isHighlighted = (
 
 const getHighlightedColor = (
   d: SPSData,
+  selectedSpeciesSliceNumber: number,
   SPSSelected: Range,
   globalRangeSelected: Range
 ) => {
-  const { per_global, SPS_global } = d;
+  const { per_global, SPS_global, SliceNumber } = d;
+  if (SliceNumber === selectedSpeciesSliceNumber) {
+    return COLORS.white;
+  }
   return isHighlighted(per_global, SPS_global, SPSSelected, globalRangeSelected)
     ? COLORS.white
     : COLORS['white-opacity-20'];
 };
+
+// To avoid the cut points at the bottom
+const HEIGHT_PADDING = 10;
 
 function SpsChart({
   width,
@@ -60,11 +67,17 @@ function SpsChart({
   selectedSpecies,
   SPSSelected,
   globalRangeSelected,
+  speciesData,
+  setSpecieBySliceNumber,
 }: SPSChartProps) {
+  const [tooltipPosition, setTooltipPosition] = useState<
+    { top: number; left: number } | undefined
+  >();
+  const [tooltipText, setTooltipText] = useState<string | undefined>();
   const t = useT();
   const { sliceNumber: selectedSpeciesSliceNumber }: { sliceNumber: number } =
     selectedSpecies;
-  const height = useMemo(() => width / 2, [width]);
+  const height = useMemo(() => width / 2 + HEIGHT_PADDING, [width]);
   if (!data) return null;
   const radius = useMemo(() => width / 2 - arcLabelPadding, [width]);
   // Radial scale
@@ -73,11 +86,16 @@ function SpsChart({
   // Linear scale
   const l = scaleLinear().domain([0, 100]).range([-180, 0]);
 
-  const getPointPosition = (d: SPSData) => {
-    const angle = l(d.SPS_global);
-    const pointRadius = r(d.per_global);
+  const getPointCoordinates = (d: SPSData) => {
+    const pointRadius = r(d.SPS_global);
+    const angle = l(d.per_global);
     const x = pointRadius * Math.cos((angle * Math.PI) / 180);
     const y = pointRadius * Math.sin((angle * Math.PI) / 180);
+    return { x, y };
+  };
+
+  const getPointPosition = (d: SPSData) => {
+    const { x, y } = getPointCoordinates(d);
     return `translate(${x},${y})`;
   };
 
@@ -148,6 +166,94 @@ function SpsChart({
         .text(labelText);
     };
 
+    const renderRadialAxis = (
+      radialAxis: Selection<SVGPathElement, number, BaseType, unknown>
+    ) => {
+      const radialAxisGroups = radialAxis
+        .selectAll('g')
+        .data([0, 25, 50, 75, 100])
+        .enter()
+        .append('g');
+
+      // // Radial number values
+      radialAxisGroups
+        .append('text')
+        .attr('class', styles.radialLabels)
+        .attr('x', (d: number) => -r(d) + 10)
+        .attr('dy', '-2px')
+        .text((d: number) => d)
+        .raise();
+
+      // // Radial arcs ticks
+      radialAxisGroups
+        .append('path')
+        .attr('stroke', COLORS.white)
+        .attr('stroke-opacity', 0.5)
+        .attr('stroke-dasharray', '0 2 0')
+        .attr('d', (d) => {
+          if (d === 0 || d === 100) return null;
+          return arcGenerator(d, r(d), r(d));
+        });
+    };
+
+    const renderPoints = () => {
+      const points = select('#points');
+
+      points
+        .selectAll('g')
+        .data(data)
+        .enter()
+        .append('g')
+        .attr('id', (d) => `point-${d.SliceNumber}`)
+        .attr('transform', getPointPosition)
+        .append('circle')
+        .attr('class', styles.point)
+        .attr('r', (d) =>
+          d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2
+        )
+        .attr('fill', (d) =>
+          getHighlightedColor(
+            d,
+            selectedSpeciesSliceNumber,
+            SPSSelected,
+            globalRangeSelected
+          )
+        )
+        .attr('stroke', (d) =>
+          getHighlightedColor(
+            d,
+            selectedSpeciesSliceNumber,
+            SPSSelected,
+            globalRangeSelected
+          )
+        )
+        .attr('stroke-width', (d) =>
+          d.SliceNumber === selectedSpeciesSliceNumber ? 10 : 3
+        )
+        .on('mouseenter', (d) => {
+          if (speciesData) {
+            const specie: SpeciesData = speciesData.find(
+              (s) => s.sliceNumber === d.SliceNumber
+            );
+            const PADDING_LEFT = 5;
+            const TOP_PADDING_CENTER = 25;
+            setTooltipText(specie.name);
+            const { x, y } = getPointCoordinates(d);
+            setTooltipPosition({
+              left: x + width / 2 + PADDING_LEFT,
+              top: y + height - TOP_PADDING_CENTER,
+            });
+          }
+        })
+        .on('mouseleave', () => {
+          setTooltipPosition(undefined);
+          setTooltipText(undefined);
+        })
+        .on('click', (d) => {
+          setSpecieBySliceNumber(d.SliceNumber);
+        });
+    };
+
     // Recalculate on change
     selectAll('#r-axis > *').remove();
     selectAll('#a-axis > *').remove();
@@ -158,9 +264,8 @@ function SpsChart({
     const angleAxis: Selection<SVGPathElement, number, BaseType, unknown> =
       select('#a-axis');
 
-    // BACKGROUND
+    // RENDER
 
-    // Background arc
     renderBackgroundArc(radialAxis);
 
     // Center arc
@@ -169,63 +274,11 @@ function SpsChart({
       .attr('fill', COLORS.navy)
       .attr('d', (d) => arcGenerator(d, innerRadius, 0));
 
-    // RADIAL AXIS
-
-    const radialAxisGroups = radialAxis
-      .selectAll('g')
-      .data([0, 25, 50, 75, 100])
-      .enter()
-      .append('g');
-
-    // Radial number values
-    radialAxisGroups
-      .append('text')
-      .attr('class', styles.radialLabels)
-      .attr('x', (d: number) => -r(d) + 10)
-      .attr('dy', '-2px')
-      .text((d: number) => d)
-      .raise();
-
-    // Radial arcs ticks
-    radialAxisGroups
-      .append('path')
-      .attr('stroke', COLORS.white)
-      .attr('stroke-opacity', 0.5)
-      .attr('stroke-dasharray', '0 2 0')
-      .attr('d', (d) => {
-        if (d === 0 || d === 100) return null;
-        return arcGenerator(d, r(d), r(d));
-      });
-
-    radialAxisGroups.raise(); // Move up on the order rendering
-
-    // ANGLE AXIS
+    renderRadialAxis(radialAxis);
 
     renderAngleAxis(angleAxis);
 
-    // POINTS
-    const points = select('#points');
-
-    points
-      .selectAll('g')
-      .data(data)
-      .enter()
-      .append('g')
-      .attr('id', (d) => `point-${d.SliceNumber}`)
-      .attr('transform', getPointPosition)
-      .append('circle')
-      .attr('class', styles.point)
-      .attr('r', (d) => (d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2))
-      .attr('fill', (d) =>
-        getHighlightedColor(d, SPSSelected, globalRangeSelected)
-      )
-      .attr('stroke', (d) =>
-        getHighlightedColor(d, SPSSelected, globalRangeSelected)
-      )
-      .attr('stroke-width', (d) =>
-        d.SliceNumber === selectedSpeciesSliceNumber ? 10 : 3
-      )
-      .attr('mix-blend-mode', 'multiply');
+    renderPoints();
   }, [
     width,
     t,
@@ -233,27 +286,46 @@ function SpsChart({
     SPSSelected,
     globalRangeSelected,
     data,
+    setTooltipPosition,
+    setTooltipText,
+    setSpecieBySliceNumber,
   ]);
 
   return (
-    <svg id="sps-chart" className={styles.chart} width={width} height={height}>
-      <g id="sps-group" transform={`translate(${width / 2},${height})`}>
-        <g id="r-axis" />
-        <g id="a-axis" />
-        <g id="points" className="points" />
-      </g>
-      <defs>
-        <linearGradient id="gradient">
-          <stop offset="0%" stopColor="#a00000" />
-          <stop offset="50%" stopColor="#aaaa00" />
-          <stop offset="100%" stopColor="#00A548" />
-        </linearGradient>
-        <radialGradient id="radial-gradient" cy="100%">
-          <stop offset="30%" stopColor={COLORS.firefly} />
-          <stop offset="100%" stopOpacity={0.3} stopColor={COLORS.firefly} />
-        </radialGradient>
-      </defs>
-    </svg>
+    <>
+      <div
+        className={styles.tooltip}
+        style={tooltipPosition || { visibility: 'hidden' }}
+      >
+        <div className={styles.tooltipText}>{tooltipText}</div>
+      </div>
+      <svg
+        id="sps-chart"
+        className={styles.chart}
+        width={width}
+        height={height}
+      >
+        <g
+          id="sps-group"
+          transform={`translate(${width / 2},${height - HEIGHT_PADDING})`}
+        >
+          <g id="r-axis" />
+          <g id="a-axis" />
+          <g id="points" className="points" />
+        </g>
+        <defs>
+          <linearGradient id="gradient">
+            <stop offset="0%" stopColor="#a00000" />
+            <stop offset="50%" stopColor="#aaaa00" />
+            <stop offset="100%" stopColor="#00A548" />
+          </linearGradient>
+          <radialGradient id="radial-gradient" cy="100%">
+            <stop offset="30%" stopColor={COLORS.firefly} />
+            <stop offset="100%" stopOpacity={0.3} stopColor={COLORS.firefly} />
+          </radialGradient>
+        </defs>
+      </svg>
+    </>
   );
 }
 

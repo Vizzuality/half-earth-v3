@@ -15,6 +15,8 @@ function DragHandle({
   min,
   max,
   valuesLength,
+  handleDragStart,
+  handleDragEnd,
 }: SPSHandleProps) {
   const xPercentage = useMemo(
     () => `${((isMin ? min : max) * 100) / valuesLength}%`,
@@ -57,6 +59,8 @@ function DragHandle({
     <motion.div
       drag="x"
       whileHover={{ scale: 1.1 }}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       dragConstraints={{
         left: isMin ? -STEP_WIDTH * min : -STEP_WIDTH * max,
         right: isMin

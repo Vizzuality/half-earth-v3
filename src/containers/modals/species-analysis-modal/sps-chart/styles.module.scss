@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
+@import 'styles/mixins';
 
 .chart {
   width: 100%;
@@ -22,4 +23,30 @@
 .point {
   fill-opacity: 1;
   stroke-opacity: 0.5;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+
+  .tooltipText {
+    background-color: $white;
+    @extend %annotation;
+    color: $black;
+    padding: 5px;
+  }
+
+  &::before {
+    content: '';
+    width: 0;
+    height: 0;
+    transform: none;
+
+    border-left: none;
+    border-right: 5px solid $white;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
 }

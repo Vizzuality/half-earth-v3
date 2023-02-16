@@ -24,9 +24,10 @@ const getBucketValues = (
   function groupingFunction(d: SPSData): number {
     return bucketScale(d[key]);
   }
-  // TODO: TS-TODO Fix groupBy types
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call
-  return Object.values(groupBy(data, groupingFunction)).map((d) => d.length);
+  const groupedData = groupBy(data, groupingFunction);
+  return [0, 1, 2, 3].map((i) =>
+    groupedData && groupedData[i] ? groupedData[i].length : 0
+  );
 };
 
 function SpsLegend({
@@ -44,7 +45,6 @@ function SpsLegend({
     () => getBucketValues(data, 'per_global'),
     [data]
   );
-
   const dragToSelectText = (
     <T
       _str="( {icon} Drag to select interval)"

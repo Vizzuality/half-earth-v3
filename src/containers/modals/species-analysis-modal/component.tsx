@@ -28,14 +28,16 @@ function SpeciesAnalysisModal({
   handleModalClose,
   loading,
   cardProps,
+  speciesData,
+  setSpecieBySliceNumber,
 }: SpeciesModalProps) {
   const [globalRangeSelected, setGlobalRangeSelected] = useState({
-    min: 0,
-    max: 1,
+    min: 3,
+    max: 4,
   });
 
-  const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 4 });
-  const [chartWidth, setChartWidth] = useState(700);
+  const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 1 });
+  const [chartWidth, setChartWidth] = useState(759);
   const chartResponsiveRef = useRef<HTMLInputElement>();
   useEffect(() => {
     const onChartResize = () => {
@@ -44,12 +46,16 @@ function SpeciesAnalysisModal({
         setChartWidth(width);
       }
     };
-
-    onChartResize();
-
-    window.addEventListener('resize', onChartResize);
-    return () => window.removeEventListener('resize', onChartResize);
-  }, [chartResponsiveRef.current]);
+    if (isOpen) {
+      // Resize the chart when the modal just opened
+      setTimeout(() => {
+        onChartResize();
+      }, 1);
+      window.addEventListener('resize', onChartResize);
+      return () => window.removeEventListener('resize', onChartResize);
+    }
+    return undefined;
+  }, [chartResponsiveRef.current, isOpen]);
 
   if (!cardProps) return null;
 
@@ -120,6 +126,8 @@ function SpeciesAnalysisModal({
                   selectedSpecies={individualSpeciesData}
                   globalRangeSelected={globalRangeSelected}
                   SPSSelected={SPSSelected}
+                  speciesData={speciesData}
+                  setSpecieBySliceNumber={setSpecieBySliceNumber}
                 />
               </div>
               <SpsLegend
@@ -128,6 +136,7 @@ function SpeciesAnalysisModal({
                 setGlobalRangeSelected={setGlobalRangeSelected}
                 SPSSelected={SPSSelected}
                 setSPSSelected={setSPSSelected}
+                speciesData={speciesData}
               />
             </>
           )}

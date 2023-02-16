@@ -17,6 +17,13 @@
 
 .modalContent {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media #{$tablet-landscape} {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
 }
 
 .cardContainer {
@@ -26,12 +33,17 @@
 
 .chartContainer {
   position: relative;
-  margin: 0 100px;
+  margin-left: 0;
+
+  @media #{$tablet-portrait} {
+    margin-left: 100px;
+  }
 }
 
 .chartResponsive {
   width: 100%;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .title {

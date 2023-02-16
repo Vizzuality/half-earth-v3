@@ -4,4 +4,12 @@ export type SPSHandleProps = {
   min: number;
   max: number;
   valuesLength: number;
+  handleDragStart: (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => void;
+  handleDragEnd: (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => void;
 };

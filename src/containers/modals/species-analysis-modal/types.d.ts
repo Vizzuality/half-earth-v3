@@ -33,6 +33,21 @@ export type Range = {
   max: number;
 };
 
+export type SpeciesData = {
+  category: string;
+  commonName: string | string[];
+  conservationConcern: number;
+  globalProtectedArea: number;
+  globalProtectedPercentage: number;
+  globaldRangeArea: number;
+  has_image: number;
+  isFlagship: number;
+  name: string;
+  presenceInArea: number;
+  protectionTarget: number;
+  sliceNumber: number;
+};
+
 export type SpeciesModalProps = {
   isOpen: boolean;
   handleModalClose: () => void;
@@ -41,4 +56,6 @@ export type SpeciesModalProps = {
     SPSData: SPSData[];
     individualSpeciesData: IndividualSpeciesDataType;
   };
+  speciesData: SpeciesData[];
+  setSpecieBySliceNumber: (sliceNumber: number) => void;
 };
