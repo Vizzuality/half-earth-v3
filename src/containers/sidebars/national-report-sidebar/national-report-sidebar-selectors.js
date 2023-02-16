@@ -6,6 +6,8 @@ import { t } from '@transifex/native';
 
 import { selectLangUrlState } from 'selectors/location-selectors';
 
+import { roundSPI } from 'utils/data-formatting-utils';
+
 import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
 
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
@@ -89,7 +91,7 @@ const getSpeciesProtectionIndex = createSelector(
   getCountryData,
   (countryData) => {
     if (!countryData) return null;
-    return Math.round(countryData[COUNTRY_ATTRIBUTES.SPI_ter] * 100) / 100;
+    return roundSPI(countryData[COUNTRY_ATTRIBUTES.SPI_ter] * 100) / 100;
   }
 );
 
@@ -131,7 +133,7 @@ export const getMarineProtectionNeeded = createSelector(
 
 const getSPIMean = createSelector(getCountryData, (countryData) => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.Global_SPI_ter]));
+  return roundSPI(parseFloat(countryData[COUNTRY_ATTRIBUTES.Global_SPI_ter]));
 });
 
 const getNumberOfVertebrates = createSelector(getCountryData, (countryData) => {
