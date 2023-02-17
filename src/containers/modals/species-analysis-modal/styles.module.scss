@@ -20,7 +20,7 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  @media #{$tablet-landscape} {
+  @media #{$tablet-portrait} {
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
