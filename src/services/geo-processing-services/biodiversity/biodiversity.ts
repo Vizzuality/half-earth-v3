@@ -10,10 +10,12 @@ import {
   GEOPROCESSING_SERVICES_URLS,
 } from 'constants/geo-processing-services';
 
+import { GetCrfDataProps, JobInfoProps } from './types';
+
 const { basePath, inputRasterKey, inputGeometryKey, outputParamKey } =
   CRFS_CONFIG;
 
-export function getCrfData({ dataset, aoiFeatureGeometry }) {
+export function getCrfData({ dataset, aoiFeatureGeometry }: GetCrfDataProps) {
   return new Promise((resolve, reject) => {
     const JSONGeometry = aoiFeatureGeometry.toJSON();
     getJobInfo(GEOPROCESSING_SERVICES_URLS[dataset], {
@@ -22,7 +24,7 @@ export function getCrfData({ dataset, aoiFeatureGeometry }) {
         addZcoordToRings(JSONGeometry.rings)
       ),
     })
-      .then((jobInfo) => {
+      .then((jobInfo: JobInfoProps) => {
         const JOB_START = Date.now();
         const { jobId } = jobInfo;
         jobInfo

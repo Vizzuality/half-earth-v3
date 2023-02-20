@@ -41,7 +41,6 @@ function getFeatures({
           query.returnGeometry = returnGeometry;
           query.outSpatialReference = outSpatialReference;
           layer.queryFeatures(query).then((results) => {
-            console.log({ features: results.features[0] });
             if (results && results.features && results.features.length > 0) {
               resolve(results.features);
             }
