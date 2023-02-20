@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -12,11 +12,7 @@ import styles from './styles.module.scss';
 
 import SpsChart from './sps-chart';
 import SpsLegend from './sps-legend';
-import {
-  SpeciesModalProps,
-  SPSData as SPSDataType,
-  IndividualSpeciesDataType,
-} from './types';
+import { SpeciesModalProps } from './types';
 
 // TODO: TS-TODO Fix import of components
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -59,13 +55,30 @@ function SpeciesAnalysisModal({
 
   if (!cardProps) return null;
 
-  const {
-    SPSData,
-    individualSpeciesData,
-  }: {
-    SPSData: SPSDataType[];
-    individualSpeciesData: IndividualSpeciesDataType;
-  } = cardProps;
+  const { SPSData, individualSpeciesData, selectedSpeciesFilter } = cardProps;
+
+  const filteredSpeciesSliceNumber = useMemo(
+    () =>
+      speciesData
+        .map((specieData) => {
+          if (
+            selectedSpeciesFilter.slug === 'all' ||
+            specieData.category === selectedSpeciesFilter.slug
+          ) {
+            return specieData.sliceNumber;
+          }
+          return null;
+        })
+        .filter(Boolean),
+    [speciesData, selectedSpeciesFilter]
+  );
+  const filteredSPSData = useMemo(
+    () =>
+      SPSData.filter((spsData) =>
+        filteredSpeciesSliceNumber.includes(spsData.SliceNumber)
+      ),
+    [filteredSpeciesSliceNumber, SPSData]
+  );
 
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
@@ -121,7 +134,7 @@ function SpeciesAnalysisModal({
               </p>
               <div ref={chartResponsiveRef} className={styles.chartResponsive}>
                 <SpsChart
-                  data={SPSData}
+                  data={filteredSPSData}
                   width={chartWidth}
                   selectedSpecies={individualSpeciesData}
                   globalRangeSelected={globalRangeSelected}
@@ -131,7 +144,7 @@ function SpeciesAnalysisModal({
                 />
               </div>
               <SpsLegend
-                data={SPSData}
+                data={filteredSPSData}
                 globalRangeSelected={globalRangeSelected}
                 setGlobalRangeSelected={setGlobalRangeSelected}
                 SPSSelected={SPSSelected}

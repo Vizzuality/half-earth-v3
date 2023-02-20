@@ -299,6 +299,7 @@ function Component(props) {
                     cardProps={props}
                     speciesData={speciesData && speciesData.species}
                     setSpecieBySliceNumber={setSpecieBySliceNumber}
+                    selectedSpeciesFilter={selectedSpeciesFilter}
                   />
                 </div>
               )}

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -91,20 +91,29 @@ export const useD3Effect = ({
   const radius: number = useMemo(() => width / 2 - ARC_LABEL_PADDING, [width]);
 
   // Radial scale
-  const r = scaleLinear().range([radius, INNER_RADIUS]).domain([100, 0]);
+  const r = useCallback(
+    scaleLinear().range([radius, INNER_RADIUS]).domain([100, 0]),
+    [radius]
+  );
 
-  const getPointCoordinates = (d: SPSData) => {
-    const pointRadius = r(d.SPS_global);
-    const angle = l(d.per_global);
-    const x: number = pointRadius * Math.cos((angle * Math.PI) / 180);
-    const y: number = pointRadius * Math.sin((angle * Math.PI) / 180);
-    return { x, y };
-  };
+  const getPointCoordinates = useCallback(
+    (d: SPSData) => {
+      const pointRadius = r(d.SPS_global);
+      const angle = l(d.per_global);
+      const x: number = pointRadius * Math.cos((angle * Math.PI) / 180);
+      const y: number = pointRadius * Math.sin((angle * Math.PI) / 180);
+      return { x, y };
+    },
+    [r]
+  );
 
-  const getPointPosition = (d: SPSData) => {
-    const { x, y } = getPointCoordinates(d);
-    return `translate(${x},${y})`;
-  };
+  const getPointPosition = useCallback(
+    (d: SPSData) => {
+      const { x, y } = getPointCoordinates(d);
+      return `translate(${x},${y})`;
+    },
+    [getPointCoordinates]
+  );
 
   useEffect(() => {
     const renderBackgroundArc = (
