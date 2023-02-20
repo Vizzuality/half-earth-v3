@@ -20,6 +20,7 @@ module.exports = function override(config) {
       styles: path.resolve(__dirname, 'src/styles'),
       router: path.resolve(__dirname, 'src/router'),
       selectors: path.resolve(__dirname, 'src/store/selectors'),
+      store: path.resolve(__dirname, 'src/store'),
       sideEffects: path.resolve(__dirname, 'src/side-effects'),
       actions: path.resolve(__dirname, 'src/store/actions'),
       utils: path.resolve(__dirname, 'src/utils'),

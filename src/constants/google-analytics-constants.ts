@@ -4,6 +4,10 @@ export const CATEGORIES = {
   EXPLORE_DATA: 'Explore Data',
   AOI: 'Analyze Area (AOI)',
   NRC: 'NRC and SPI',
+  LAYER_INTERACTION: 'Layer interaction',
+  NAVIGATION: 'Navigation',
+  FOLLOW_UP_ACTIONS: 'Follow-up actions',
+  PROJECT_INFO: 'Project info',
 };
 
 export const ACTIONS = {
