@@ -4,7 +4,7 @@ import countryDataActions from 'redux_modules/country-data';
 
 import * as urlActions from 'actions/url-actions';
 
-import EsriFeatureService from 'services/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature/esri-feature-service';
 
 import {
   COUNTRIES_DATA_SERVICE_URL,

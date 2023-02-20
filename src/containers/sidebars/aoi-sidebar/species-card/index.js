@@ -9,7 +9,7 @@ import {
 
 import orderBy from 'lodash/orderBy';
 
-import EsriFeatureService from 'services/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature/esri-feature-service';
 import MolService from 'services/mol';
 
 import { getSpeciesFilters } from 'constants/analyze-areas-constants';

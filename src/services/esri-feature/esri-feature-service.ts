@@ -9,6 +9,8 @@ import {
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
+import { AddFeatureProps, GetFeauturesProps, GetLayerProps } from './types';
+
 const { REACT_APP_ARGISJS_API_VERSION } = process.env;
 
 function getFeatures({
@@ -18,7 +20,7 @@ function getFeatures({
   returnGeometry = false,
   outSpatialReference = LOCAL_SPATIAL_REFERENCE,
   geometry = null,
-}) {
+}: GetFeauturesProps) {
   return new Promise((resolve, reject) => {
     if (
       REACT_APP_ARGISJS_API_VERSION &&
@@ -39,6 +41,7 @@ function getFeatures({
           query.returnGeometry = returnGeometry;
           query.outSpatialReference = outSpatialReference;
           layer.queryFeatures(query).then((results) => {
+            console.log({ features: results.features[0] });
             if (results && results.features && results.features.length > 0) {
               resolve(results.features);
             }
@@ -72,7 +75,7 @@ function getFeatures({
   });
 }
 
-function getLayer({ slug, outFields = ['*'] }) {
+function getLayer({ slug, outFields = ['*'] }: GetLayerProps) {
   return loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
     return new FeatureLayer({
       url: LAYERS_URLS[slug],
@@ -81,13 +84,13 @@ function getLayer({ slug, outFields = ['*'] }) {
   });
 }
 
-function addFeature({ url, features }) {
+function addFeature({ url, features }: AddFeatureProps) {
   return queryFeatures({
     url,
     where: `aoiId = '${features.attributes.aoiId}'`,
     // eslint-disable-next-line consistent-return
   }).then((feat) => {
-    const existingFeature = feat.features && feat.features[0];
+    const existingFeature = (feat as any).features && (feat as any).features[0];
     if (existingFeature) {
       // Only update if the name is different
       if (

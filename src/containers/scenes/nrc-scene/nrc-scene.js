@@ -8,7 +8,7 @@ import { DATA, NATIONAL_REPORT_CARD } from 'router';
 import { visitCountryReportCardAnalyticsEvent as visitAction } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
-import EsriFeatureService from 'services/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature/esri-feature-service';
 
 // Constants
 import { EEZ_MARINE_GEOMETRY_BORDERS_URL } from 'constants/layers-urls';
