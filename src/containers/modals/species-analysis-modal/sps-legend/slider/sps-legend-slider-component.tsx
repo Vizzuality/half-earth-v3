@@ -69,7 +69,7 @@ function Slider({
               {i === bucketValues.length - 1 && renderTick(i + 1)}
               {isDragging && (
                 <div className={styles.barValue}>
-                  {Math.round(barHeights[i])}
+                  {Math.round(bucketValues[i])}
                 </div>
               )}
             </div>
