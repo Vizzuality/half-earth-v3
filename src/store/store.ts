@@ -4,6 +4,7 @@ import {
   compose,
   combineReducers,
 } from 'redux';
+import type { Location } from 'redux-first-router';
 import thunk from 'redux-thunk';
 
 import router from '../router';
@@ -32,7 +33,10 @@ const getStore = () => {
 export default getStore;
 
 const store = getStore();
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
+
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+
+export type GetState = () => {
+  location: Location;
+};

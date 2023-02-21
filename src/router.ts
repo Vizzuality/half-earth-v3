@@ -1,4 +1,4 @@
-import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
+import { decodeUrlForState, encodeStateForUrl } from 'utils/state-to-url';
 
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import type { RoutesMap } from 'redux-first-router';
