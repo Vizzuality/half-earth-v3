@@ -10,7 +10,7 @@ import * as urlActions from 'actions/url-actions';
 
 import nrcSceneConfig from 'scenes/mobile/nrc-landing-scene-mobile/scene-config';
 
-import ContentfulService from 'services/contentful';
+import ContentfulService from 'services/contentful/contentful';
 
 import metadataConfig, { SPECIES_PROTECTION_INDEX } from 'constants/metadata';
 import { useLandscape } from 'constants/responsive';

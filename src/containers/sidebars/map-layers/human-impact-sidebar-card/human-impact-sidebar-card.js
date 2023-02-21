@@ -11,7 +11,7 @@ import {
   batchToggleLayers,
 } from 'utils/layer-manager-utils';
 
-import ContentfulService from 'services/contentful';
+import ContentfulService from 'services/contentful/contentful';
 
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
 import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { useLocale } from '@transifex/react';
 
-import ContentfulService from 'services/contentful';
+import ContentfulService from 'services/contentful/contentful';
 
 import metadataConfig, { SPECIES_PROTECTION_INDEX } from 'constants/metadata';
 

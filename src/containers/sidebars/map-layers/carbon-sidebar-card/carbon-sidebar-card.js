@@ -8,7 +8,7 @@ import * as urlActions from 'actions/url-actions';
 
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 
-import ContentfulService from 'services/contentful';
+import ContentfulService from 'services/contentful/contentful';
 
 import { CARBON_LAYER } from 'constants/layers-slugs';
 import metadataConfig from 'constants/metadata';

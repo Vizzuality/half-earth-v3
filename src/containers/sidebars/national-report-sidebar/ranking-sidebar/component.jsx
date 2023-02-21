@@ -5,7 +5,7 @@ import { useLocale, useT } from '@transifex/react';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 
-import ContentfulService from 'services/contentful';
+import ContentfulService from 'services/contentful/contentful';
 
 import {
   RANKING_COLORS,

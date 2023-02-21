@@ -1,6 +1,6 @@
 import { createClient } from 'contentful';
 
-import fetchWithCache from './fetch';
+import fetchWithCache from 'services/fetch/fetch';
 
 const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
 const { REACT_APP_CONTENTFUL_TOKEN } = process.env;

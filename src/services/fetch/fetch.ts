@@ -8,12 +8,12 @@ const queryClient = new QueryClient({
   },
 });
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) => fetch(url as string).then((res) => res.json());
 
 // eslint-disable-next-line consistent-return
 const fetchWithCache = async (url) => {
   try {
-    const data = await queryClient.fetchQuery([url], () => fetcher(url));
+    const data: [] = await queryClient.fetchQuery([url], () => fetcher(url));
     return data;
   } catch (error) {
     console.error('Fetch failed', error);

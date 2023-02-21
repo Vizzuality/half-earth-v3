@@ -11,7 +11,7 @@ import {
   batchToggleLayers,
 } from 'utils/layer-manager-utils';
 
-import ContentfulService from 'services/contentful';
+import ContentfulService from 'services/contentful/contentful';
 import EsriFeatureService from 'services/esri-feature/esri-feature-service';
 
 import {

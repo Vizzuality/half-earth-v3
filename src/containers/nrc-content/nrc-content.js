@@ -11,7 +11,7 @@ import { useLocale } from '@transifex/react';
 import { downloadNrcPdfAnalytics } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
-import ContentfulService from 'services/contentful';
+import ContentfulService from 'services/contentful/contentful';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';

@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
-import CONTENTFUL from 'services/contentful';
+import CONTENTFUL from 'services/contentful/contentful';
 
 const CONFIG = { imageWidth: 300, imageHeight: 190 };
 

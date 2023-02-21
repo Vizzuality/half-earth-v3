@@ -4,6 +4,7 @@ import {
   addFeatures,
   queryFeatures,
   applyEdits,
+  IFeature,
 } from '@esri/arcgis-rest-feature-layer';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
