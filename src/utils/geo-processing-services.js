@@ -2,7 +2,7 @@ import { loadModules } from 'esri-loader';
 
 import EsriFeatureService from 'services/esri-feature/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/biodiversity/biodiversity';
-import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data';
+import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual/contextual-data';
 
 import { AOIS_HISTORIC } from 'constants/analyze-areas-constants';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
