@@ -13,3 +13,11 @@ export interface JobInfoProps {
   catch: (error: Error) => function;
   then: () => function;
 }
+
+export interface JSONGeometryProps {
+  rings: number[][];
+  spatialReference: {
+    latestWkid: number;
+    wkid: number;
+  };
+}
