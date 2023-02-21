@@ -18,8 +18,8 @@
   @media #{$mobile-landscape} {
     left: auto !important;
     right: 4vw !important;
-    bottom: 0 !important;
-    top: auto !important;
+    bottom: auto !important;
+    top: 0 !important;
   }
 }
 
@@ -37,6 +37,9 @@
   @media #{$mobile-only} {
     border-radius: 8px;
   }
+  @media #{$mobile-landscape} {
+    border-radius: 8px;
+  }
 }
 
 .esri-popup__main-container {
@@ -51,6 +54,7 @@
   }
   @media #{$mobile-landscape} {
     min-width: 340px !important;
+    max-height: 340px !important;
     background: transparent;
   }
 }
@@ -91,6 +95,12 @@
 
 .esri-popup--shadow {
   box-shadow: none;
+}
+
+.esri-popup__pointer {
+  @media #{$mobile-landscape} {
+    display: none;
+  }
 }
 
 .tooltip-dot {
