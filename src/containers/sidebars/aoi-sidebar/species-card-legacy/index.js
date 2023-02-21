@@ -10,7 +10,7 @@ import {
 import orderBy from 'lodash/orderBy';
 
 import EsriFeatureService from 'services/esri-feature/esri-feature-service';
-import MolService from 'services/mol';
+import MolService from 'services/mol/mol';
 
 import { getSpeciesFilters } from 'constants/analyze-areas-constants';
 import { getIUCNList } from 'constants/iucn-list';
