@@ -100,7 +100,7 @@ function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
     };
     await getContentfulImage(data.fields.picture.sys.id, null).then(
       (mapImageUrl) => {
-        (featuredMap as any).image = mapImageUrl;
+        featuredMap.image = mapImageUrl;
       }
     );
     const acummPromise = await acc;
@@ -131,7 +131,7 @@ function parseFeaturedPlaces(data, config, locale) {
     if (data.fields.image) {
       await getContentfulImage(data.fields.image.sys.id, config).then(
         (placeImageUrl) => {
-          (featuredPlace as any).image = placeImageUrl;
+          featuredPlace.image = placeImageUrl;
         }
       );
     }
