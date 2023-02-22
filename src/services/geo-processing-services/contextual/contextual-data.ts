@@ -10,7 +10,7 @@ import {
   CONTEXTUAL_DATA_SERVICE_CONFIG,
 } from 'constants/geo-processing-services';
 
-import { GetCrfDataProps, JobInfoProps } from './types';
+import { GetCrfDataProps } from './types';
 
 const { inputGeometryKey, outputTablesKeys, inputRasterKeyPairs } =
   CONTEXTUAL_DATA_SERVICE_CONFIG;
@@ -24,7 +24,7 @@ export function getCrfData(aoiFeatureGeometry: GetCrfDataProps) {
         addZcoordToRings(JSONGeometry.rings)
       ),
     })
-      .then((jobInfo: JobInfoProps) => {
+      .then((jobInfo) => {
         const { jobId } = jobInfo;
         jobInfo
           .waitForJobCompletion(jobId)

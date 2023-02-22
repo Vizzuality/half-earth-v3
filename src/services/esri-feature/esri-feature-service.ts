@@ -4,7 +4,7 @@ import {
   addFeatures,
   queryFeatures,
   applyEdits,
-  IFeature,
+  IQueryFeaturesResponse,
 } from '@esri/arcgis-rest-feature-layer';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
@@ -42,6 +42,7 @@ function getFeatures({
           query.returnGeometry = returnGeometry;
           query.outSpatialReference = outSpatialReference;
           layer.queryFeatures(query).then((results) => {
+            // ! Type results.
             if (results && results.features && results.features.length > 0) {
               resolve(results.features);
             }
@@ -89,8 +90,8 @@ function addFeature({ url, features }: AddFeatureProps) {
     url,
     where: `aoiId = '${features.attributes.aoiId}'`,
     // eslint-disable-next-line consistent-return
-  }).then((feat) => {
-    const existingFeature = (feat as any).features && (feat as any).features[0];
+  }).then((feat: IQueryFeaturesResponse) => {
+    const existingFeature = feat.features && feat.features[0];
     if (existingFeature) {
       // Only update if the name is different
       if (
@@ -112,7 +113,7 @@ function addFeature({ url, features }: AddFeatureProps) {
     } else {
       return addFeatures({
         url,
-        features,
+        features: [features],
       }).catch((error) => console.error('e', error));
     }
   });

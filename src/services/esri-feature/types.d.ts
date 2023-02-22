@@ -4,11 +4,26 @@ import {
   esriGeometryPolyline,
   esriGeometryPolygon,
   esriGeometryEnvelope,
-  // IFeature,
 } from '@esri/arcgis-rest-feature-layer';
+import type { IFeature } from '@esri/arcgis-rest-request';
+
+interface Feat extends IFeature {
+  attributes: {
+    aoiId: string;
+    area: number;
+    areaName: string;
+    isCustom: boolean;
+    per_global: number;
+    species: string;
+    speciesNumbers: {
+      nspecies: number;
+    };
+    time_stamp: number;
+  };
+}
 
 export interface AddFeatureProps {
-  features: any;
+  features: Feat;
   url: string;
 }
 

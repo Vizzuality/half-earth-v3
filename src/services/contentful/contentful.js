@@ -144,7 +144,9 @@ async function fetchContentfulEntry({
 }
 
 async function getFeaturedMapData(locale = 'en') {
-  const data = await fetchContentfulEntry({ contentType: 'featuredMaps' });
+  const data = await fetchContentfulEntry({
+    contentType: 'featuredMaps',
+  });
   if (data && data.items && data.items.length > 0) {
     return parseFeaturedMaps(data.items, locale);
   }
@@ -158,6 +160,7 @@ async function getFeaturedPlacesData(slug, config, locale = 'en') {
     filterField: 'featureSlug',
     filterValue: slug,
   });
+
   if (data && data.items && data.items.length > 0) {
     return parseFeaturedPlaces(data.items, config, locale);
   }
