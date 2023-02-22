@@ -55,6 +55,7 @@ export type SpeciesModalProps = {
   cardProps: {
     SPSData: SPSData[];
     individualSpeciesData: IndividualSpeciesDataType;
+    selectedSpeciesFilter: { label: string; slug: string };
   };
   speciesData: SpeciesData[];
   setSpecieBySliceNumber: (sliceNumber: number) => void;
