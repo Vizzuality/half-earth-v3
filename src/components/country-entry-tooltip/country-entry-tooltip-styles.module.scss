@@ -193,6 +193,19 @@
         line-height: 16px;
       }
     }
+
+    @media #{$mobile-landscape} {
+      padding: 10px 10% 10px 8%;
+      .infoPill {
+        padding-bottom: 4px;
+        .text {
+          font-size: 12px;
+        }
+        .numeric {
+          font-size: 12px;
+        }
+      }
+    }
   }
 
   .tooltipExplore {
