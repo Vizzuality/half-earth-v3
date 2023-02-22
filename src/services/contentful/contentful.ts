@@ -1,6 +1,8 @@
-import { createClient } from 'contentful';
+import { Asset, createClient } from 'contentful';
 
 import fetchWithCache from 'services/fetch/fetch';
+
+import { ConfigProps, FeaturePlaceItemProps, GenericItemProps } from './types';
 
 const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
 const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
@@ -10,26 +12,37 @@ const contentfulClient = createClient({
   accessToken: REACT_APP_CONTENTFUL_TOKEN,
 });
 
-const config = {
+const config: ConfigProps = {
   baseUrl: 'https://cdn.contentful.com',
   space: REACT_APP_CONTENTFUL_SPACE_ID,
   token: REACT_APP_CONTENTFUL_TOKEN,
   env: 'master',
+  imageWidth: null,
 };
 
-export const removeLanguageFromSlug = (slug) => {
+export const removeLanguageFromSlug = (slug: string) => {
   const splittedSlug = slug.split('_');
   return splittedSlug ? splittedSlug[0] : slug;
 };
 
-const hasTranslation = (slug, allItems, locale, slugName = 'slug') => {
+const hasTranslation = (
+  slug: string,
+  allItems,
+  locale: string,
+  slugName = 'slug'
+) => {
   const slugWithoutLocale = removeLanguageFromSlug(slug);
   return allItems.some(
     (s) => s[slugName].startsWith(slugWithoutLocale) && s.language === locale
   );
 };
 
-const isOtherLocalesData = (data, locale, allItems, slugName = 'slug') => {
+const isOtherLocalesData = (
+  data: FeaturePlaceItemProps,
+  locale: string,
+  allItems: GenericItemProps[],
+  slugName = 'slug'
+) => {
   const isEnOrDoesntHaveTranslation =
     locale === 'en' ||
     locale === '' ||
@@ -46,11 +59,14 @@ const isOtherLocalesData = (data, locale, allItems, slugName = 'slug') => {
   );
 };
 
-async function getContentfulImage(assetId, _config) {
+async function getContentfulImage(
+  assetId: string,
+  _config: { imageHeight: number; imageWidth: number }
+) {
   try {
     const imageUrl = await contentfulClient
       .getAsset(assetId)
-      .then((asset) => asset.fields.file.url);
+      .then((asset: Asset) => asset.fields.file.url);
     if (_config) {
       return `${imageUrl}?w=${config.imageWidth || ''}&h=${
         _config.imageHeight || ''
@@ -63,32 +79,40 @@ async function getContentfulImage(assetId, _config) {
   }
 }
 
-function parseFeaturedMaps(data, locale = 'en') {
+function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
   const allItems = data.map((p) => p.fields);
 
   // eslint-disable-next-line no-shadow
-  return data.reduce(async (acc, data) => {
+  return data.reduce(async (acc: any, data) => {
     // Filter other locales data
     if (isOtherLocalesData(data, locale, allItems)) {
       return acc;
     }
 
-    const featuredMap = {
+    const featuredMap: {
+      slug: string;
+      title: string;
+      description: Record<string, unknown>;
+      image: any;
+    } = {
       slug: removeLanguageFromSlug(data.fields.slug),
       title: data.fields.title,
       description: data.fields.description,
+      image: null,
     };
-    await getContentfulImage(data.fields.picture.sys.id).then((mapImageUrl) => {
-      featuredMap.image = mapImageUrl;
-    });
+    await getContentfulImage(data.fields.picture.sys.id, null).then(
+      (mapImageUrl) => {
+        featuredMap.image = mapImageUrl;
+      }
+    );
     const acummPromise = await acc;
     return [...acummPromise, featuredMap];
   }, []);
 }
 
 // eslint-disable-next-line no-shadow
-async function parseFeaturedPlaces(data, config, locale) {
-  const allItems = data.map((p) => p.fields);
+async function parseFeaturedPlaces(data, config, locale: string) {
+  const allItems: GenericItemProps[] = data.map((p) => p.fields);
 
   // eslint-disable-next-line no-shadow
   return data.reduce(async (acc, data) => {
@@ -104,7 +128,7 @@ async function parseFeaturedPlaces(data, config, locale) {
     if (data.fields.image) {
       await getContentfulImage(data.fields.image.sys.id, config).then(
         (placeImageUrl) => {
-          featuredPlace.image = placeImageUrl;
+          (featuredPlace as any).image = placeImageUrl;
         }
       );
     }
@@ -112,8 +136,8 @@ async function parseFeaturedPlaces(data, config, locale) {
     return [...acummPromise, featuredPlace];
   }, []);
 }
-async function parseMetadata(data, locale) {
-  const allItems = data.map((p) => p.fields);
+async function parseMetadata(data: FeaturePlaceItemProps[], locale: string) {
+  const allItems: GenericItemProps[] = data.map((p) => p.fields);
   const metadata = data[0];
   // Filter other locales data
   if (isOtherLocalesData(metadata, locale, allItems, 'layerSlug')) {
@@ -144,9 +168,10 @@ async function fetchContentfulEntry({
 }
 
 async function getFeaturedMapData(locale = 'en') {
-  const data = await fetchContentfulEntry({
+  const data: any = await fetchContentfulEntry({
     contentType: 'featuredMaps',
   });
+
   if (data && data.items && data.items.length > 0) {
     return parseFeaturedMaps(data.items, locale);
   }
@@ -154,8 +179,8 @@ async function getFeaturedMapData(locale = 'en') {
 }
 
 // eslint-disable-next-line no-shadow
-async function getFeaturedPlacesData(slug, config, locale = 'en') {
-  const data = await fetchContentfulEntry({
+async function getFeaturedPlacesData(slug: string, config, locale = 'en') {
+  const data: any = await fetchContentfulEntry({
     contentType: 'featuredPoints',
     filterField: 'featureSlug',
     filterValue: slug,
@@ -167,13 +192,14 @@ async function getFeaturedPlacesData(slug, config, locale = 'en') {
   return null;
 }
 
-async function getMetadata(slug, locale = 'en') {
+async function getMetadata(slug: string, locale = 'en') {
   const slugWithLocale = locale && locale !== 'en' ? `${slug}_${locale}` : slug;
-  let data = await fetchContentfulEntry({
+  let data = (await fetchContentfulEntry({
     contentType: 'metadataProd',
     filterField: 'layerSlug',
     filterValue: slugWithLocale,
-  });
+  })) as any;
+
   // eslint-disable-next-line no-shadow
   const hasData = (data) => data && data.items && data.items.length > 0;
   if (!hasData(data)) {
