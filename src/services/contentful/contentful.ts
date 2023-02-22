@@ -109,11 +109,7 @@ function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
 }
 
 // eslint-disable-next-line no-shadow
-async function parseFeaturedPlaces(
-  data: FeaturePlaceItemProps[],
-  conf,
-  locale: string
-) {
+async function parseFeaturedPlaces(data, config, locale: string) {
   const allItems: GenericItemProps[] = data.map((p) => p.fields);
 
   // eslint-disable-next-line no-shadow
@@ -133,7 +129,7 @@ async function parseFeaturedPlaces(
       description: data.fields.description,
     };
     if (data.fields.image) {
-      await getContentfulImage(data.fields.image.sys.id, conf).then(
+      await getContentfulImage(data.fields.image.sys.id, config).then(
         (placeImageUrl: string) => {
           featuredPlace.image = placeImageUrl;
         }
