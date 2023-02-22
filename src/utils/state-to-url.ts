@@ -1,6 +1,7 @@
 import { omit } from 'lodash';
 
 import qs from 'qs';
+import { AnyAction } from 'redux';
 import { Location } from 'redux-first-router';
 import { GetState } from 'store/store';
 
@@ -39,7 +40,7 @@ export const setComponentStateToUrl = ({
 }: {
   key: string;
   subKey?: string;
-  change: unknown;
+  change: AnyAction;
   state: GetState;
 }) => {
   const {
