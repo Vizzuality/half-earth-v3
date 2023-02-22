@@ -12,8 +12,13 @@ interface Feat extends IFeature {
     aoiId: string;
     area: number;
     areaName: string;
+    elu: string;
     isCustom: boolean;
     per_global: number;
+    percentage: number;
+    population: number;
+    pressures: string;
+    protectedAreasList: string;
     species: string;
     speciesNumbers: {
       nspecies: number;
