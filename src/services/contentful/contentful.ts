@@ -92,7 +92,7 @@ function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
       slug: string;
       title: string;
       description: Record<string, unknown>;
-      image?: any;
+      image?: string;
     } = {
       slug: removeLanguageFromSlug(data.fields.slug),
       title: data.fields.title,
@@ -122,7 +122,7 @@ function parseFeaturedPlaces(data, config, locale) {
       slug: string;
       title: string;
       description: Record<string, unknown>;
-      image?: any;
+      image?: string;
     } = {
       slug: removeLanguageFromSlug(data.fields.nameSlug),
       title: data.fields.title,
