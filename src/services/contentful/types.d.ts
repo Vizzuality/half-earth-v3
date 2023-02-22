@@ -9,8 +9,8 @@ export interface ConfigProps {
   space: string;
   token: string;
   env: string;
-  imageWidth: null;
-  imageWidth: number;
+  imageHeight?: number;
+  imageWidth?: number;
 }
 
 export interface GenericItemProps {

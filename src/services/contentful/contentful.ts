@@ -17,7 +17,6 @@ const config: ConfigProps = {
   space: REACT_APP_CONTENTFUL_SPACE_ID,
   token: REACT_APP_CONTENTFUL_TOKEN,
   env: 'master',
-  imageWidth: null,
 };
 
 export const removeLanguageFromSlug = (slug: string) => {
@@ -61,7 +60,7 @@ const isOtherLocalesData = (
 
 async function getContentfulImage(
   assetId: string,
-  _config: { imageHeight: number; imageWidth: number }
+  _config: { imageHeight?: number; imageWidth?: number }
 ) {
   try {
     const imageUrl = await contentfulClient
@@ -93,12 +92,11 @@ function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
       slug: string;
       title: string;
       description: Record<string, unknown>;
-      image: any;
+      image?: any;
     } = {
       slug: removeLanguageFromSlug(data.fields.slug),
       title: data.fields.title,
       description: data.fields.description,
-      image: null,
     };
     await getContentfulImage(data.fields.picture.sys.id, null).then(
       (mapImageUrl) => {
@@ -111,24 +109,33 @@ function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
 }
 
 // eslint-disable-next-line no-shadow
-async function parseFeaturedPlaces(data, config, locale: string) {
+async function parseFeaturedPlaces(
+  data: FeaturePlaceItemProps[],
+  conf,
+  locale: string
+) {
   const allItems: GenericItemProps[] = data.map((p) => p.fields);
 
   // eslint-disable-next-line no-shadow
-  return data.reduce(async (acc, data) => {
+  return data.reduce(async (acc: any, data) => {
     // Filter other locales data
     if (isOtherLocalesData(data, locale, allItems, 'nameSlug')) {
       return acc;
     }
-    const featuredPlace = {
+    const featuredPlace: {
+      slug: string;
+      title: string;
+      description: Record<string, unknown>;
+      image?: any;
+    } = {
       slug: removeLanguageFromSlug(data.fields.nameSlug),
       title: data.fields.title,
       description: data.fields.description,
     };
     if (data.fields.image) {
-      await getContentfulImage(data.fields.image.sys.id, config).then(
-        (placeImageUrl) => {
-          (featuredPlace as any).image = placeImageUrl;
+      await getContentfulImage(data.fields.image.sys.id, conf).then(
+        (placeImageUrl: string) => {
+          featuredPlace.image = placeImageUrl;
         }
       );
     }
@@ -179,7 +186,7 @@ async function getFeaturedMapData(locale = 'en') {
 }
 
 // eslint-disable-next-line no-shadow
-async function getFeaturedPlacesData(slug: string, config, locale = 'en') {
+async function getFeaturedPlacesData(slug: string, locale = 'en') {
   const data: any = await fetchContentfulEntry({
     contentType: 'featuredPoints',
     filterField: 'featureSlug',
