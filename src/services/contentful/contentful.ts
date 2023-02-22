@@ -100,7 +100,7 @@ function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
     };
     await getContentfulImage(data.fields.picture.sys.id, null).then(
       (mapImageUrl) => {
-        featuredMap.image = mapImageUrl;
+        (featuredMap as any).image = mapImageUrl;
       }
     );
     const acummPromise = await acc;
@@ -109,11 +109,11 @@ function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
 }
 
 // eslint-disable-next-line no-shadow
-async function parseFeaturedPlaces(data, config, locale: string) {
+function parseFeaturedPlaces(data, config, locale) {
   const allItems: GenericItemProps[] = data.map((p) => p.fields);
 
   // eslint-disable-next-line no-shadow
-  return data.reduce(async (acc: any, data) => {
+  return data.reduce(async (acc, data) => {
     // Filter other locales data
     if (isOtherLocalesData(data, locale, allItems, 'nameSlug')) {
       return acc;
@@ -130,8 +130,8 @@ async function parseFeaturedPlaces(data, config, locale: string) {
     };
     if (data.fields.image) {
       await getContentfulImage(data.fields.image.sys.id, config).then(
-        (placeImageUrl: string) => {
-          featuredPlace.image = placeImageUrl;
+        (placeImageUrl) => {
+          (featuredPlace as any).image = placeImageUrl;
         }
       );
     }
@@ -139,7 +139,7 @@ async function parseFeaturedPlaces(data, config, locale: string) {
     return [...acummPromise, featuredPlace];
   }, []);
 }
-async function parseMetadata(data: FeaturePlaceItemProps[], locale: string) {
+function parseMetadata(data: FeaturePlaceItemProps[], locale) {
   const allItems: GenericItemProps[] = data.map((p) => p.fields);
   const metadata = data[0];
   // Filter other locales data
@@ -162,7 +162,7 @@ async function fetchContentfulEntry({
     url += `&fields.${filterField}=${filterValue}&limit=999`;
   }
   try {
-    const data = await fetchWithCache(url);
+    const data: any = await fetchWithCache(url);
     return data;
   } catch (e) {
     console.warn(e);
@@ -171,10 +171,7 @@ async function fetchContentfulEntry({
 }
 
 async function getFeaturedMapData(locale = 'en') {
-  const data: any = await fetchContentfulEntry({
-    contentType: 'featuredMaps',
-  });
-
+  const data = await fetchContentfulEntry({ contentType: 'featuredMaps' });
   if (data && data.items && data.items.length > 0) {
     return parseFeaturedMaps(data.items, locale);
   }
@@ -182,13 +179,12 @@ async function getFeaturedMapData(locale = 'en') {
 }
 
 // eslint-disable-next-line no-shadow
-async function getFeaturedPlacesData(slug: string, locale = 'en') {
-  const data: any = await fetchContentfulEntry({
+async function getFeaturedPlacesData(slug, config, locale = 'en') {
+  const data = await fetchContentfulEntry({
     contentType: 'featuredPoints',
     filterField: 'featureSlug',
     filterValue: slug,
   });
-
   if (data && data.items && data.items.length > 0) {
     return parseFeaturedPlaces(data.items, config, locale);
   }
@@ -197,12 +193,11 @@ async function getFeaturedPlacesData(slug: string, locale = 'en') {
 
 async function getMetadata(slug: string, locale = 'en') {
   const slugWithLocale = locale && locale !== 'en' ? `${slug}_${locale}` : slug;
-  let data = (await fetchContentfulEntry({
+  let data = await fetchContentfulEntry({
     contentType: 'metadataProd',
     filterField: 'layerSlug',
     filterValue: slugWithLocale,
-  })) as any;
-
+  });
   // eslint-disable-next-line no-shadow
   const hasData = (data) => data && data.items && data.items.length > 0;
   if (!hasData(data)) {
