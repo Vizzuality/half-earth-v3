@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocale } from '@transifex/react';
 
 import EsriFeatureService from 'services/esri-feature-service';
-import MolService from 'services/mol/mol';
+import MolService from 'services/mol';
 
 import { HIGHLIGHTED_COUNTRY_SPECIES_URL } from 'constants/layers-urls';
 
