@@ -161,7 +161,7 @@ async function fetchContentfulEntry({
     url += `&fields.${filterField}=${filterValue}&limit=999`;
   }
   try {
-    const data: any = await fetchWithCache(url);
+    const data = await fetchWithCache(url);
     return data;
   } catch (e) {
     console.warn(e);
