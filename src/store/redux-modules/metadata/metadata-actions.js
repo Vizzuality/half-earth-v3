@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
-import ContentfulService from 'services/contentful/contentful';
+import ContentfulService from 'services/contentful';
 
 export const setModalMetadataParams = createAction('setModalMetadataParams');
 

@@ -12,7 +12,7 @@ import { getTooltipContent } from 'utils/tooltip-utils';
 
 import { useSearchWidgetLogic } from 'hooks/esri';
 
-import EsriFeatureService from 'services/esri-feature/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature-service';
 
 import { SEARCH_LOOKUP_TABLE } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';

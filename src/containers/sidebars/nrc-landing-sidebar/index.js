@@ -7,7 +7,7 @@ import * as urlActions from 'actions/url-actions';
 
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 
-import EsriFeatureService from 'services/esri-feature/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';

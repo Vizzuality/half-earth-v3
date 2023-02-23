@@ -11,7 +11,7 @@ import { batchToggleLayers } from 'utils/layer-manager-utils';
 
 import isEmpty from 'lodash/isEmpty';
 
-import ContentfulService from 'services/contentful/contentful';
+import ContentfulService from 'services/contentful';
 
 import {
   getLayersResolution,

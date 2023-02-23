@@ -10,7 +10,7 @@ import { useLocale } from '@transifex/react';
 
 import * as urlActions from 'actions/url-actions';
 
-import ContentfulService from 'services/contentful/contentful';
+import ContentfulService from 'services/contentful';
 
 import { getIndicatorLabels } from 'constants/country-mode-constants';
 import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';

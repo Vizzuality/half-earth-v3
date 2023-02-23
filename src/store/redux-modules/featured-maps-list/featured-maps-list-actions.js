@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
-import CONTENTFUL from 'services/contentful/contentful';
+import CONTENTFUL from 'services/contentful';
 
 export const fetchFeaturedMapsDataFail = createAction(
   'fetchFeaturedMapsDataFail'

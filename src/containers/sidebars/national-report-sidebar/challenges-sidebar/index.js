@@ -5,7 +5,7 @@ import { useT, useLocale } from '@transifex/react';
 
 import { visitNrcChallengesAnalytics } from 'actions/google-analytics-actions';
 
-import ContentfulService from 'services/contentful/contentful';
+import ContentfulService from 'services/contentful';
 
 import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
 

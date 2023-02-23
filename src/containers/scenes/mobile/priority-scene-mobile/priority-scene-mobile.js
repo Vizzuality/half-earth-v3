@@ -10,7 +10,7 @@ import * as urlActions from 'actions/url-actions';
 
 import prioritySceneConfig from 'scenes/mobile/priority-scene-mobile/scene-config';
 
-import ContentfulService from 'services/contentful/contentful';
+import ContentfulService from 'services/contentful';
 
 import metadataConfig from 'constants/metadata';
 import { useLandscape } from 'constants/responsive';

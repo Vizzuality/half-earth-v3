@@ -11,7 +11,7 @@ import { writeToForageItem } from 'utils/local-forage-utils';
 
 import localforage from 'localforage';
 
-import EsriFeatureService from 'services/esri-feature/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature-service';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';

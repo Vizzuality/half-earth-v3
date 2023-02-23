@@ -15,7 +15,7 @@ import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import initialState from 'containers/scenes/mobile/nrc-landing-scene-mobile/scene-config';
 
-import EsriFeatureService from 'services/esri-feature/esri-feature-service';
+import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
