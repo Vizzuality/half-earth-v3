@@ -79,7 +79,7 @@ async function getContentfulImage(
 
 function parseFeaturedMaps(data: FeaturePlaceItem[], locale = 'en') {
   const allItems = data.map((p) => p.fields);
-
+  // TODO: TS-TODO: type accumulator correctly
   // eslint-disable-next-line no-shadow
   return data.reduce(async (acc: any, data) => {
     // Filter other locales data
