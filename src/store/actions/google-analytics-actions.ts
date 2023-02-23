@@ -13,41 +13,42 @@ const { GENERAL_MENU, DISCOVER_STORIES, EXPLORE_DATA, AOI, NRC } = CATEGORIES;
 export const addLayerAnalyticsEvent = createAction(
   'addLayer',
   null,
-  ({ slug, query }) => {
-    const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
-    return { analytics: [viewMode, 'Add layer', `${slug}`] };
+  ({ slug, query }: { slug: string; query?: { viewMode: string } }) => {
+    const viewModeString: string = query && query.viewMode;
+    const viewMode: string = query && (viewModeString || VIEW_MODE.GLOBE);
+    return { analytics: [viewMode, 'Add layer', slug] };
   }
 );
 
-export const joinConversationAnalytics = (label) =>
+export const joinConversationAnalytics = (label: string) =>
   analyticsActionCreator({
     category: GENERAL_MENU,
     action: ACTIONS.SOCIAL,
     label,
   });
 
-export const shareMapAnalytics = (label) =>
+export const shareMapAnalytics = (label: string) =>
   analyticsActionCreator({
     category: GENERAL_MENU,
     action: ACTIONS.SHARE,
     label,
   });
 
-export const readStoryAnalytics = (label) =>
+export const readStoryAnalytics = (label: string) =>
   analyticsActionCreator({
     category: DISCOVER_STORIES,
     action: ACTIONS.CLICK_ON_STORY,
     label,
   });
 
-export const changeTaxaAnalytics = (label) =>
+export const changeTaxaAnalytics = (label: string) =>
   analyticsActionCreator({
     category: DISCOVER_STORIES,
     action: ACTIONS.CHANGE_TAXA,
     label,
   });
 
-export const layerToggleAnalytics = (label) =>
+export const layerToggleAnalytics = (label: string) =>
   analyticsActionCreator({
     category: EXPLORE_DATA,
     action: ACTIONS.TOGGLE_LAYER,
@@ -68,7 +69,7 @@ export const shapeUploadTooBigAnalytics = () =>
     label: 'Shape too big',
   });
 
-export const shapeUploadErrorAnalytics = (label) =>
+export const shapeUploadErrorAnalytics = (label: string) =>
   analyticsActionCreator({
     category: AOI,
     action: ACTIONS.UPLOAD_SHAPE,
@@ -89,21 +90,21 @@ export const shapeDrawTooBigAnalytics = () =>
     label: 'Drawing too big',
   });
 
-export const aoiHistoryModalOpenAnalytics = (label) =>
+export const aoiHistoryModalOpenAnalytics = (label: string) =>
   analyticsActionCreator({
     category: AOI,
     action: ACTIONS.OPEN_HISTORY,
     label,
   });
 
-export const precomputedAoiAnalytics = (label) =>
+export const precomputedAoiAnalytics = (label: string) =>
   analyticsActionCreator({
     category: AOI,
     action: ACTIONS.PRECOMPUTED_AOI,
     label,
   });
 
-export const shareAoiAnalytics = (label) =>
+export const shareAoiAnalytics = (label: string) =>
   analyticsActionCreator({
     category: AOI,
     action: ACTIONS.SHARE_AOI,
@@ -121,63 +122,63 @@ export const aoiAnalyticsActions = {
   shareAoiAnalytics,
 };
 
-export const clickCountryAnalytics = (label) =>
+export const clickCountryAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.CLICK_ON_COUNTRY,
     label,
   });
 
-export const enterNrcAnalytics = (label) =>
+export const enterNrcAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.ENTER_NRC,
     label,
   });
 
-export const searchCountryAnalytics = (label) =>
+export const searchCountryAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.SEARCH_COUNTRY,
     label,
   });
 
-export const openSpeciesListAnalytics = (label) =>
+export const openSpeciesListAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.SPECIES_LIST,
     label,
   });
 
-export const visitNrcChallengesAnalytics = (label) =>
+export const visitNrcChallengesAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.CHALLENGES,
     label,
   });
 
-export const visitNrcRankingAnalytics = (label) =>
+export const visitNrcRankingAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.RANKING,
     label,
   });
 
-export const visitNrcOverviewAnalytics = (label) =>
+export const visitNrcOverviewAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.OVERVIEW,
     label,
   });
 
-export const downloadNrcPdfAnalytics = (label) =>
+export const downloadNrcPdfAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.DOWNLOAD_PDF,
     label,
   });
 
-export const checkSpiInfoAnalytics = (label) =>
+export const checkSpiInfoAnalytics = (label: string) =>
   analyticsActionCreator({
     category: NRC,
     action: ACTIONS.SPI_INFO,
@@ -196,14 +197,18 @@ export const nrcAnalyticsActions = {
   checkSpiInfoAnalytics,
 };
 
-const createGtagEventStructure = (category, action, label) => ({
+const createGtagEventStructure = (
+  category: string,
+  action: string,
+  label?: string
+) => ({
   analytics: { category, action, label },
 });
 
 export const openInfoModalAnalyticsEvent = createAction(
   'openLayerInfoModal',
   null,
-  ({ slug }) => {
+  ({ slug }: { slug: string }) => {
     return createGtagEventStructure(
       CATEGORIES.LAYER_INTERACTION,
       ACTIONS.OPEN_INFO,
@@ -237,7 +242,7 @@ export const openAboutPageAnalyticsEvent = createAction(
 export const settingsAnalyticsEvent = createAction(
   'updateMapSettings',
   null,
-  ({ notDisplayedLayers }) => {
+  ({ notDisplayedLayers }: { notDisplayedLayers: string }) => {
     return createGtagEventStructure(
       CATEGORIES.LAYER_INTERACTION,
       ACTIONS.UPDATE_SETTINGS,
@@ -282,7 +287,7 @@ export const helpCompleteDatabaseAnalyticsEvent = createAction(
 export const openShareModalAnalyticsEvent = createAction(
   'openShareModal',
   null,
-  (viewMode) => {
+  (viewMode: string) => {
     return createGtagEventStructure(
       CATEGORIES.FOLLOW_UP_ACTIONS,
       ACTIONS.SHARE_MAP,
@@ -295,7 +300,7 @@ export const openShareModalAnalyticsEvent = createAction(
 export const exploreCountryFromTooltipAnalyticsEvent = createAction(
   'exploreCountryFromTooltip',
   null,
-  ({ countryName }) => {
+  ({ countryName }: { countryName: string }) => {
     return createGtagEventStructure(
       CATEGORIES.NAVIGATION,
       ACTIONS.ENTER_COUNTRY_FROM_TOOLTIP,
@@ -307,7 +312,7 @@ export const exploreCountryFromTooltipAnalyticsEvent = createAction(
 export const exploreCountryFromSearchAnalyticsEvent = createAction(
   'exploreCountryFromSearch',
   null,
-  ({ countryName }) => {
+  ({ countryName }: { countryName: string }) => {
     return createGtagEventStructure(
       CATEGORIES.NAVIGATION,
       ACTIONS.ENTER_COUNTRY_FROM_SEARCH,
@@ -319,7 +324,7 @@ export const exploreCountryFromSearchAnalyticsEvent = createAction(
 export const searchTermsAnalyticsEvent = createAction(
   'searchTermsAnalyticsEvent',
   null,
-  (searchTerm) => {
+  (searchTerm: string) => {
     return createGtagEventStructure(
       CATEGORIES.NAVIGATION,
       ACTIONS.FIND_PLACES_SEARCH,
@@ -332,7 +337,7 @@ export const searchTermsAnalyticsEvent = createAction(
 export const downloadCountryPdfAnalyticsEvent = createAction(
   'downloadCountryPdf',
   null,
-  (countryName) => {
+  (countryName: string) => {
     return createGtagEventStructure(
       CATEGORIES.FOLLOW_UP_ACTIONS,
       ACTIONS.DOWNLOAD_REPORT,
@@ -344,7 +349,7 @@ export const downloadCountryPdfAnalyticsEvent = createAction(
 export const selectNRCSectionAnalyticsEvent = createAction(
   'selectNRCsection',
   null,
-  (sectionSlug) => {
+  (sectionSlug: string) => {
     return createGtagEventStructure(
       CATEGORIES.NAVIGATION,
       ACTIONS.CHANGE_NRC_VIEW,
@@ -367,7 +372,7 @@ export const openSpeciesListAnalyticsEvent = createAction(
 export const visitCountryReportCardAnalyticsEvent = createAction(
   'visitCountryReportCard',
   null,
-  (countryName) => {
+  (countryName: string) => {
     return createGtagEventStructure(
       CATEGORIES.NAVIGATION,
       ACTIONS.ENTER_COUNTRY,
@@ -381,7 +386,7 @@ export const visitCountryReportCardAnalyticsEvent = createAction(
 export const changeMapSceneAnalyticsEvent = createAction(
   'changeMapScene',
   null,
-  (scene) => {
+  (scene: string) => {
     return createGtagEventStructure(
       CATEGORIES.NAVIGATION,
       ACTIONS.CHANGE_SCENE,
@@ -395,7 +400,7 @@ export const changeMapSceneAnalyticsEvent = createAction(
 export const removeLayerAnalyticsEvent = createAction(
   'removeLayer',
   null,
-  ({ slug, query }) => {
+  ({ slug, query }: { slug: string; query?: { viewMode: string } }) => {
     const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
     return { analytics: [viewMode, 'Remove layer', `${slug}`] };
   }

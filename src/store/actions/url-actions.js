@@ -1,4 +1,4 @@
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { setComponentStateToUrl } from 'utils/state-to-url';
 
 import { createThunkAction } from 'redux-tools';
 
