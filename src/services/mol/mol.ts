@@ -1,4 +1,4 @@
-import { SpeciesItemProps } from './types';
+import { SpeciesItemProps } from 'types/services-types';
 
 const config = {
   url: 'https://api.mol.org/2.x/species/info',

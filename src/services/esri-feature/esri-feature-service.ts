@@ -6,11 +6,14 @@ import {
   applyEdits,
   IQueryFeaturesResponse,
 } from '@esri/arcgis-rest-feature-layer';
+import {
+  AddFeatureProps,
+  GetFeauturesProps,
+  GetLayerProps,
+} from 'types/services-types';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-
-import { AddFeatureProps, GetFeauturesProps, GetLayerProps } from './types';
 
 const { REACT_APP_ARGISJS_API_VERSION } = process.env;
 

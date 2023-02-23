@@ -4,13 +4,13 @@ import {
   addZcoordToRings,
 } from 'utils/geo-processing-services';
 
+import { GetCrfDataProps } from 'types/services-types';
+
 import {
   CONTEXTUAL_DATA,
   GEOPROCESSING_SERVICES_URLS,
   CONTEXTUAL_DATA_SERVICE_CONFIG,
 } from 'constants/geo-processing-services';
-
-import { GetCrfDataProps } from './types';
 
 const { inputGeometryKey, outputTablesKeys, inputRasterKeyPairs } =
   CONTEXTUAL_DATA_SERVICE_CONFIG;

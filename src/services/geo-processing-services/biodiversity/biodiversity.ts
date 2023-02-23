@@ -6,11 +6,15 @@ import {
 } from 'utils/geo-processing-services';
 
 import {
+  GetCrfDataProps,
+  JobInfoProps,
+  JSONGeometryProps,
+} from 'types/services-types';
+
+import {
   CRFS_CONFIG,
   GEOPROCESSING_SERVICES_URLS,
 } from 'constants/geo-processing-services';
-
-import { GetCrfDataProps, JobInfoProps, JSONGeometryProps } from './types';
 
 const { basePath, inputRasterKey, inputGeometryKey, outputParamKey } =
   CRFS_CONFIG;

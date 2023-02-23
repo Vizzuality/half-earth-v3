@@ -1,8 +1,11 @@
 import { Asset, createClient } from 'contentful';
+import {
+  ConfigProps,
+  FeaturePlaceItemProps,
+  GenericItemProps,
+} from 'types/services-types';
 
 import fetchWithCache from 'services/fetch/fetch';
-
-import { ConfigProps, FeaturePlaceItemProps, GenericItemProps } from './types';
 
 const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
 const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
