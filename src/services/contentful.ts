@@ -1,9 +1,5 @@
 import { Asset, createClient } from 'contentful';
-import {
-  ConfigProps,
-  FeaturePlaceItemProps,
-  GenericItemProps,
-} from 'types/services-types';
+import { Config, FeaturePlaceItem, GenericItem } from 'types/services-types';
 
 import fetchWithCache from 'services/fetch';
 
@@ -15,7 +11,7 @@ const contentfulClient = createClient({
   accessToken: REACT_APP_CONTENTFUL_TOKEN,
 });
 
-const config: ConfigProps = {
+const config: Config = {
   baseUrl: 'https://cdn.contentful.com',
   space: REACT_APP_CONTENTFUL_SPACE_ID,
   token: REACT_APP_CONTENTFUL_TOKEN,
@@ -40,9 +36,9 @@ const hasTranslation = (
 };
 
 const isOtherLocalesData = (
-  data: FeaturePlaceItemProps,
+  data: FeaturePlaceItem,
   locale: string,
-  allItems: GenericItemProps[],
+  allItems: GenericItem[],
   slugName = 'slug'
 ) => {
   const isEnOrDoesntHaveTranslation =
@@ -81,7 +77,7 @@ async function getContentfulImage(
   }
 }
 
-function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
+function parseFeaturedMaps(data: FeaturePlaceItem[], locale = 'en') {
   const allItems = data.map((p) => p.fields);
 
   // eslint-disable-next-line no-shadow
@@ -113,7 +109,7 @@ function parseFeaturedMaps(data: FeaturePlaceItemProps[], locale = 'en') {
 
 // eslint-disable-next-line no-shadow
 function parseFeaturedPlaces(data, config, locale) {
-  const allItems: GenericItemProps[] = data.map((p) => p.fields);
+  const allItems: GenericItem[] = data.map((p) => p.fields);
 
   // eslint-disable-next-line no-shadow
   return data.reduce(async (acc, data) => {
@@ -142,8 +138,8 @@ function parseFeaturedPlaces(data, config, locale) {
     return [...acummPromise, featuredPlace];
   }, []);
 }
-function parseMetadata(data: FeaturePlaceItemProps[], locale) {
-  const allItems: GenericItemProps[] = data.map((p) => p.fields);
+function parseMetadata(data: FeaturePlaceItem[], locale) {
+  const allItems: GenericItem[] = data.map((p) => p.fields);
   const metadata = data[0];
   // Filter other locales data
   if (isOtherLocalesData(metadata, locale, allItems, 'layerSlug')) {

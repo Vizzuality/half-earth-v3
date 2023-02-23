@@ -4,7 +4,7 @@ import {
   addZcoordToRings,
 } from 'utils/geo-processing-services';
 
-import { GetCrfDataProps } from 'types/services-types';
+import { GetCrfData } from 'types/services-types';
 
 import {
   CONTEXTUAL_DATA,
@@ -15,7 +15,7 @@ import {
 const { inputGeometryKey, outputTablesKeys, inputRasterKeyPairs } =
   CONTEXTUAL_DATA_SERVICE_CONFIG;
 
-export function getCrfData(aoiFeatureGeometry: GetCrfDataProps) {
+export function getCrfData(aoiFeatureGeometry: GetCrfData) {
   return new Promise((resolve, reject) => {
     const JSONGeometry = aoiFeatureGeometry.toJSON();
     getJobInfo(GEOPROCESSING_SERVICES_URLS[CONTEXTUAL_DATA], {

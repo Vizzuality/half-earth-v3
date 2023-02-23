@@ -1,4 +1,4 @@
-import { SpeciesItemProps } from 'types/services-types';
+import { SpeciesItem } from 'types/services-types';
 
 const config = {
   url: 'https://api.mol.org/2.x/species/info',
@@ -15,12 +15,12 @@ async function getSpecies(species: string, locale: string) {
     )
   );
 
-  const data = await Promise.all<Array<SpeciesItemProps>>(promises);
+  const data = await Promise.all<Array<SpeciesItem>>(promises);
   return (
     data &&
     data
-      .filter((d: SpeciesItemProps[]) => !!d.length)
-      .map((d: SpeciesItemProps[]) => ({ ...d[0] }))
+      .filter((d: SpeciesItem[]) => !!d.length)
+      .map((d: SpeciesItem[]) => ({ ...d[0] }))
   );
 }
 

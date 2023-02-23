@@ -5,11 +5,7 @@ import {
   jobTimeProfiling,
 } from 'utils/geo-processing-services';
 
-import {
-  GetCrfDataProps,
-  JobInfoProps,
-  JSONGeometryProps,
-} from 'types/services-types';
+import { GetCrfData, JobInfo, JsonGeometry } from 'types/services-types';
 
 import {
   CRFS_CONFIG,
@@ -19,16 +15,16 @@ import {
 const { basePath, inputRasterKey, inputGeometryKey, outputParamKey } =
   CRFS_CONFIG;
 
-export function getCrfData({ dataset, aoiFeatureGeometry }: GetCrfDataProps) {
+export function getCrfData({ dataset, aoiFeatureGeometry }: GetCrfData) {
   return new Promise((resolve, reject) => {
-    const JSONGeometry: JSONGeometryProps = aoiFeatureGeometry.toJSON();
+    const JSONGeometry: JsonGeometry = aoiFeatureGeometry.toJSON();
     getJobInfo(GEOPROCESSING_SERVICES_URLS[dataset], {
       [inputRasterKey]: `${basePath}/${dataset}.crf`,
       [inputGeometryKey]: setSpeciesJSONGeometryRings(
         addZcoordToRings(JSONGeometry.rings)
       ),
     })
-      .then((jobInfo: JobInfoProps) => {
+      .then((jobInfo: JobInfo) => {
         const JOB_START = Date.now();
         const { jobId } = jobInfo;
         jobInfo

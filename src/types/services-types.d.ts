@@ -44,12 +44,12 @@ interface Sys {
   type: string;
 }
 
-export interface AddFeatureProps {
+export interface AddFeature {
   features: Feat;
   url: string;
 }
 
-export interface ConfigProps {
+export interface Config {
   baseUrl: string;
   space: string;
   token: string;
@@ -58,7 +58,7 @@ export interface ConfigProps {
   imageWidth?: number;
 }
 
-export interface FeaturePlaceItemProps {
+export interface FeaturePlaceItem {
   fields: {
     slug: string;
     picture: {
@@ -103,7 +103,7 @@ export interface FeaturePlaceItemProps {
   };
 }
 
-export interface GenericItemProps {
+export interface GenericItem {
   description: {
     nodeType: string;
     data: unknown;
@@ -117,7 +117,7 @@ export interface GenericItemProps {
   nameSlug: string;
 }
 
-export interface GetCrfDataProps {
+export interface GetCrfData {
   aoiFeatureGeometry: {
     rings: number[][];
     toJSON: () => isDefaultToJSON;
@@ -127,7 +127,7 @@ export interface GetCrfDataProps {
   dataset: string;
 }
 
-export interface GetFeaturesProps {
+export interface GetFeatures {
   geometry?:
     | esriGeometryPoint
     | esriGeometryMultipoint
@@ -141,12 +141,12 @@ export interface GetFeaturesProps {
   whereClause?: string;
 }
 
-export interface GetLayerProps {
+export interface GetLayer {
   outFields?: string[];
   slug: string;
 }
 
-export interface JSONGeometryProps {
+export interface JsonGeometry {
   rings: number[][];
   spatialReference: {
     latestWkid: number;
@@ -154,7 +154,7 @@ export interface JSONGeometryProps {
   };
 }
 
-export interface JobInfoProps {
+export interface JobInfo {
   jobId: number;
   fetchResultData: (outputParamKey: string) => function;
   waitForJobCompletion: (jobId: number) => function;
@@ -162,7 +162,7 @@ export interface JobInfoProps {
   then: () => unknown;
 }
 
-export interface SpeciesItemProps {
+export interface SpeciesItem {
   map: () => void;
   bounds: {
     northEast: {

@@ -6,11 +6,7 @@ import {
   applyEdits,
   IQueryFeaturesResponse,
 } from '@esri/arcgis-rest-feature-layer';
-import {
-  AddFeatureProps,
-  GetFeaturesProps,
-  GetLayerProps,
-} from 'types/services-types';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
@@ -24,7 +20,7 @@ function getFeatures({
   returnGeometry = false,
   outSpatialReference = LOCAL_SPATIAL_REFERENCE,
   geometry = null,
-}: GetFeaturesProps) {
+}: GetFeatures) {
   return new Promise((resolve, reject) => {
     if (
       REACT_APP_ARGISJS_API_VERSION &&
@@ -79,7 +75,7 @@ function getFeatures({
   });
 }
 
-function getLayer({ slug, outFields = ['*'] }: GetLayerProps) {
+function getLayer({ slug, outFields = ['*'] }: GetLayer) {
   return loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
     return new FeatureLayer({
       url: LAYERS_URLS[slug],
@@ -88,7 +84,7 @@ function getLayer({ slug, outFields = ['*'] }: GetLayerProps) {
   });
 }
 
-function addFeature({ url, features }: AddFeatureProps) {
+function addFeature({ url, features }: AddFeature) {
   return queryFeatures({
     url,
     where: `aoiId = '${features.attributes.aoiId}'`,
