@@ -22,18 +22,18 @@ module.exports = {
         // ! we have changed the configuration rules from error to warning for now to avoid crashing the deploy.
         // ! This does not mean the below rules are meant to stay as if, the warning must be fixed until
         // ! linter does not complain about a specific rule and can be safely removed from below.
-        // TODO: off rules should be changed as migration progresses
-        '@typescript-eslint/no-unsafe-assignment': 'off',
-        '@typescript-eslint/no-unsafe-member-access': 'off',
-        '@typescript-eslint/no-unsafe-call': 'off',
-        '@typescript-eslint/no-unsafe-argument': 'off',
+
+        '@typescript-eslint/no-unsafe-assignment': 'warn',
+        '@typescript-eslint/no-unsafe-member-access': 'warn',
+        '@typescript-eslint/no-unsafe-call': 'warn',
+        '@typescript-eslint/no-unsafe-argument': 'warn',
         '@typescript-eslint/no-floating-promises': 'warn',
         '@typescript-eslint/restrict-template-expressions': 'warn',
-        '@typescript-eslint/no-unsafe-return': 'off',
+        '@typescript-eslint/no-unsafe-return': 'warn',
         '@typescript-eslint/ban-ts-comment': 'warn',
         '@typescript-eslint/no-misused-promises': 'warn',
         '@typescript-eslint/require-await': 'warn',
-        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-explicit-any': 'warn',
         // ---
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': [1, {
