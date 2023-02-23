@@ -8,7 +8,7 @@ import {
 } from '@esri/arcgis-rest-feature-layer';
 import {
   AddFeatureProps,
-  GetFeauturesProps,
+  GetFeaturesProps,
   GetLayerProps,
 } from 'types/services-types';
 
@@ -24,7 +24,7 @@ function getFeatures({
   returnGeometry = false,
   outSpatialReference = LOCAL_SPATIAL_REFERENCE,
   geometry = null,
-}: GetFeauturesProps) {
+}: GetFeaturesProps) {
   return new Promise((resolve, reject) => {
     if (
       REACT_APP_ARGISJS_API_VERSION &&
@@ -45,7 +45,7 @@ function getFeatures({
           query.returnGeometry = returnGeometry;
           query.outSpatialReference = outSpatialReference;
           layer.queryFeatures(query).then((results) => {
-            // ! Type results.
+            // TODO: TS-TODO: Type results.
             if (results && results.features && results.features.length > 0) {
               resolve(results.features);
             }

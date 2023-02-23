@@ -127,7 +127,7 @@ export interface GetCrfDataProps {
   dataset: string;
 }
 
-export interface GetFeauturesProps {
+export interface GetFeaturesProps {
   geometry?:
     | esriGeometryPoint
     | esriGeometryMultipoint
