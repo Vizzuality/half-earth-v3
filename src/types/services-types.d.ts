@@ -1,10 +1,3 @@
-import {
-  esriGeometryPoint,
-  esriGeometryMultipoint,
-  esriGeometryPolyline,
-  esriGeometryPolygon,
-  esriGeometryEnvelope,
-} from '@esri/arcgis-rest-feature-layer';
 import type { IFeature } from '@esri/arcgis-rest-request';
 
 interface Family {
@@ -128,12 +121,7 @@ export interface GetCrfData {
 }
 
 export interface GetFeatures {
-  geometry?:
-    | esriGeometryPoint
-    | esriGeometryMultipoint
-    | esriGeometryPolyline
-    | esriGeometryPolygon
-    | esriGeometryEnvelope;
+  geometry?: IFeature.geometry;
   outFields: string[];
   outSpatialReference?: number;
   returnGeometry: boolean;
