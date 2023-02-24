@@ -28,7 +28,6 @@ function NrcScene({
   onMapLoad,
   isVisible,
   countryISO,
-  countryName,
   openedModal,
   activeLayers,
   countryBorder,
@@ -66,7 +65,6 @@ function NrcScene({
       />
       <CountryEntryTooltip
         countryTooltipDisplayFor={countryTooltipDisplayFor}
-        countryName={countryName}
       />
       <FuturePlaceTooltip
         tooltipInfo={futurePlaceTooltipInfo}

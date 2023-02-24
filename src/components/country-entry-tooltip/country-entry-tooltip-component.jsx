@@ -22,7 +22,6 @@ import styles from './country-entry-tooltip-styles.module.scss';
 function CountryEntryTooltipComponent({
   view,
   countryISO,
-  countryName,
   mapTooltipIsVisible,
   tooltipContent,
   tooltipPosition,
@@ -45,6 +44,7 @@ function CountryEntryTooltipComponent({
   const [activeTab, setActiveTab] = useState('land');
 
   const {
+    countryName,
     coastal,
     spiLand,
     spiMar,

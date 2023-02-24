@@ -77,6 +77,7 @@ function NrcLandingComponent({
 
       <CountriesBordersLayer
         countryISO={countryISO}
+        countryName={countryName}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
 
@@ -93,7 +94,6 @@ function NrcLandingComponent({
 
       <CountryEntryTooltip
         countryISO={countryISO}
-        countryName={countryName}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}

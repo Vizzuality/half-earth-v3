@@ -46,6 +46,7 @@ function CountryEntryTooltipContainer(props) {
           setTooltipPosition(geometry);
           setTooltipIsVisible(true);
           setContent({
+            countryName: attributes.NAME_0,
             coastal: attributes.Marine === 'True',
             spiLand: attributes[COUNTRY_ATTRIBUTES.SPI_ter],
             spiMar: attributes.SPI_mar,
