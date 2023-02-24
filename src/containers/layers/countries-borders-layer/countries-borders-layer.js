@@ -20,7 +20,7 @@ import debounce from 'lodash/debounce';
 // CONSTANTS
 import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import {
-  GLOBAL_SPI_FEATURE_LAYER as bordersLayerTitle,
+  EEZ_MARINE_AND_LAND_BORDERS as bordersLayerTitle,
   GRAPHIC_LAYER,
 } from 'constants/layers-slugs';
 
