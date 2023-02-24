@@ -110,7 +110,7 @@ function SpeciesAnalysisModal({
                 />
               </div>
               <p className={styles.moreProtectionSentence}>
-                {globalRangeSelected.max === 1 && (
+                {SPSSelected.max === 1 && (
                   <T
                     _str="Currently {highlighted} in the chart are the species that {needMoreProtection}."
                     highlighted={
