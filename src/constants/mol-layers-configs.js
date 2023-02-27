@@ -98,7 +98,7 @@ import {
   ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
-  EEZ_MARINE_BORDERS,
+  EEZ_MARINE_AND_LAND_BORDERS,
 } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
@@ -809,11 +809,11 @@ export const layersConfig = {
     url: LAYERS_URLS[CONIFERS_RICHNESS],
     bbox: null,
   },
-  [EEZ_MARINE_BORDERS]: {
-    title: EEZ_MARINE_BORDERS,
-    slug: EEZ_MARINE_BORDERS,
+  [EEZ_MARINE_AND_LAND_BORDERS]: {
+    title: EEZ_MARINE_AND_LAND_BORDERS,
+    slug: EEZ_MARINE_AND_LAND_BORDERS,
     type: LAYER_TYPES.FEATURE_LAYER,
-    url: LAYERS_URLS[EEZ_MARINE_BORDERS],
+    url: LAYERS_URLS[EEZ_MARINE_AND_LAND_BORDERS],
     bbox: null,
   },
   [CARBON_LAYER]: {

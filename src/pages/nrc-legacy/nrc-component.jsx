@@ -85,7 +85,6 @@ function NationalReportCard({
         chartData={chartData}
         countryISO={countryISO}
         openedModal={openedModal}
-        countryName={countryName}
         activeLayers={activeLayers}
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}

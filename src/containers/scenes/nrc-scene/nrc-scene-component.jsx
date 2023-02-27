@@ -18,7 +18,7 @@ import Scene from 'components/scene';
 
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
-  EEZ_MARINE_BORDERS,
+  EEZ_MARINE_AND_LAND_BORDERS,
 } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
@@ -28,7 +28,6 @@ function NrcScene({
   onMapLoad,
   isVisible,
   countryISO,
-  countryName,
   openedModal,
   activeLayers,
   countryBorder,
@@ -58,12 +57,14 @@ function NrcScene({
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
       <FeatureHighlightLayer
-        featureLayerSlugs={[EEZ_MARINE_BORDERS, HALF_EARTH_FUTURE_TILE_LAYER]}
+        featureLayerSlugs={[
+          EEZ_MARINE_AND_LAND_BORDERS,
+          HALF_EARTH_FUTURE_TILE_LAYER,
+        ]}
         onFeatureClick={handleAreaClick}
       />
       <CountryEntryTooltip
         countryTooltipDisplayFor={countryTooltipDisplayFor}
-        countryName={countryName}
       />
       <FuturePlaceTooltip
         tooltipInfo={futurePlaceTooltipInfo}
