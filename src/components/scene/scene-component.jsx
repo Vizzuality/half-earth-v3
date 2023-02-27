@@ -38,7 +38,7 @@ function SceneComponent({
   if (loadState === 'loaded') {
     return (
       <div
-        className={cx(className, styles.sceneWrapper, {
+        className={cx(className, styles.noSelect, styles.sceneWrapper, {
           [styles.sceneWrapperBlur]: blur && isGlobesMenuPages,
           [styles.disabled]: disabled,
         })}
