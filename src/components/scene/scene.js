@@ -7,6 +7,8 @@ import { loadModules } from 'esri-loader';
 
 import urlActions from 'actions/url-actions';
 
+import useIsSafari from 'utils/user-agent-utils';
+
 import { useWatchUtils } from 'hooks/esri';
 
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
@@ -73,6 +75,7 @@ function SceneContainer(props) {
   const [animationRotatedDegrees, setAnimationRotatedDegrees] = useState(0);
   const [loadState, setLoadState] = useState('loading');
   const isMobile = useMobile();
+  const isSafari = useIsSafari();
 
   const rotationKey = useMemo(
     () => initialRotation && `${sceneName}HasRotated`,
@@ -97,35 +100,46 @@ function SceneContainer(props) {
         console.error(err);
       });
   }, []);
+
   const mobileCustomPan = (mapView) => {
     const pointers = new Map(); // javascript map
     mapView.on('pointer-down', (event) => {
+      event.preventDefault();
       if (event.pointerType === 'touch') {
         pointers.set(event.pointerId, { x: event.x, y: event.y });
       }
     });
 
     mapView.on(['pointer-up', 'pointer-leave'], (event) => {
+      event.preventDefault();
       if (event.pointerType === 'touch') {
         pointers.delete(event.pointerId);
       }
     });
 
-    mapView.on('pointer-move', (event) => {
-      if (event.pointerType === 'touch') {
-        if (pointers.size !== 1) {
-          return;
+    const moveMap = (event) => {
+      const distanceLon = event.x - pointers.get(event.pointerId).x;
+      const distanceLat = event.y - pointers.get(event.pointerId).y;
+      const camera = mapView.camera.clone();
+      const { zoom } = mapView;
+      const isIphoneSafari = isMobile && isSafari;
+      const zoomRatio = (z) =>
+        isIphoneSafari ? z ** 2 : z ** 2 / (z > 5 ? 2 : 5);
+      camera.position.longitude -= distanceLon / zoomRatio(zoom);
+      camera.position.latitude += distanceLat / zoomRatio(zoom);
+      return mapView.goTo(camera, { animate: true });
+    };
+
+    mapView.on(
+      'pointer-move',
+      (event) => {
+        event.preventDefault();
+        if (event.pointerType === 'touch' && pointers.size === 1) {
+          moveMap(event);
         }
-        const distanceLon = event.x - pointers.get(event.pointerId).x;
-        const distanceLat = event.y - pointers.get(event.pointerId).y;
-        const camera = mapView.camera.clone();
-        const { zoom } = mapView;
-        const zoomRatio = (z) => z ** 2 / (z > 5 ? 2 : 5);
-        camera.position.longitude -= distanceLon / zoomRatio(zoom);
-        camera.position.latitude += distanceLat / zoomRatio(zoom);
-        mapView.goTo(camera, { animate: true });
-      }
-    });
+      },
+      { passive: false }
+    );
   };
 
   useEffect(() => {
