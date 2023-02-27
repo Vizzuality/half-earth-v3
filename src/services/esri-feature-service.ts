@@ -4,7 +4,9 @@ import {
   addFeatures,
   queryFeatures,
   applyEdits,
+  IQueryFeaturesResponse,
 } from '@esri/arcgis-rest-feature-layer';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
@@ -18,7 +20,7 @@ function getFeatures({
   returnGeometry = false,
   outSpatialReference = LOCAL_SPATIAL_REFERENCE,
   geometry = null,
-}) {
+}: GetFeatures) {
   return new Promise((resolve, reject) => {
     if (
       REACT_APP_ARGISJS_API_VERSION &&
@@ -39,6 +41,7 @@ function getFeatures({
           query.returnGeometry = returnGeometry;
           query.outSpatialReference = outSpatialReference;
           layer.queryFeatures(query).then((results) => {
+            // TODO: TS-TODO: Type results.
             if (results && results.features && results.features.length > 0) {
               resolve(results.features);
             }
@@ -72,7 +75,7 @@ function getFeatures({
   });
 }
 
-function getLayer({ slug, outFields = ['*'] }) {
+function getLayer({ slug, outFields = ['*'] }: GetLayer) {
   return loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
     return new FeatureLayer({
       url: LAYERS_URLS[slug],
@@ -81,12 +84,12 @@ function getLayer({ slug, outFields = ['*'] }) {
   });
 }
 
-function addFeature({ url, features }) {
+function addFeature({ url, features }: AddFeature) {
   return queryFeatures({
     url,
     where: `aoiId = '${features.attributes.aoiId}'`,
     // eslint-disable-next-line consistent-return
-  }).then((feat) => {
+  }).then((feat: IQueryFeaturesResponse) => {
     const existingFeature = feat.features && feat.features[0];
     if (existingFeature) {
       // Only update if the name is different
@@ -109,7 +112,7 @@ function addFeature({ url, features }) {
     } else {
       return addFeatures({
         url,
-        features,
+        features: [features],
       }).catch((error) => console.error('e', error));
     }
   });
