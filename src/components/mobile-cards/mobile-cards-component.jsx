@@ -110,9 +110,9 @@ function CardsComponent({ cardsContent, setCurrent }) {
                     <h5 className={styles.title}>
                       {cardsContent[cardIndex].title}
                     </h5>
-                    <p className={styles.description}>
+                    <div className={styles.description}>
                       {cardsContent[cardIndex].description}
-                    </p>
+                    </div>
                   </div>
                   {cardsContent[cardIndex].legendTitle && (
                     <div className={styles.legendContainer}>
@@ -141,7 +141,7 @@ function CardsComponent({ cardsContent, setCurrent }) {
                           />
                         )}
                       </div>
-                      <p className={styles.source}>
+                      <div className={styles.source}>
                         <span className={styles.sourceIntro}>
                           <T _str="Source:" />{' '}
                         </span>
@@ -150,7 +150,7 @@ function CardsComponent({ cardsContent, setCurrent }) {
                           source={cardsContent[cardIndex].source}
                           escapeHtml={false}
                         />
-                      </p>
+                      </div>
                     </div>
                   )}
                 </div>
