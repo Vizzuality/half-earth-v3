@@ -2,6 +2,20 @@
 @import 'styles/typography-extends';
 @import 'styles/ui.module';
 
+
+.hint {
+  @extend %annotation;
+  position: absolute;
+  top: -8px;
+  width: 100%;
+  text-align: center;
+  color: $white;
+
+  @media #{$mobile-landscape} {
+    top: -16px;
+  }
+}
+
 .container {
   bottom: 2svh;
   display: flex;
@@ -20,11 +34,19 @@
       width: 45vw;
     }
 
+  .cardDraggable {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
   .cardPage {
     padding-top: 2svh;
     height: 100%;
+
     .card {
       position: relative;
+      overflow: visible;
       border: 1px solid $elephant;
       color: $white;
       min-width: 94vw;

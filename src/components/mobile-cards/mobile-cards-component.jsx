@@ -2,11 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { T } from '@transifex/react';
 
+import useIsSafari from 'utils/user-agent-utils';
+
 import cx from 'classnames';
 import { animate, motion, useMotionValue } from 'framer-motion';
 import ReactMarkdown from 'react-markdown/with-html';
 
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
+
+import { MobileOnly } from 'constants/responsive';
 
 import styles from './mobile-cards-styles.module.scss';
 
@@ -57,8 +61,16 @@ function CardsComponent({ cardsContent, setCurrent }) {
     return controls.stop;
   }, [index]);
 
+  const isSafari = useIsSafari();
   return (
     <div className={styles.container}>
+      <MobileOnly>
+        {isSafari && (
+          <div className={styles.hint}>
+            <T _str="Use two fingers to move the map" />
+          </div>
+        )}
+      </MobileOnly>
       <motion.div
         ref={containerRef}
         style={{
@@ -84,10 +96,8 @@ function CardsComponent({ cardsContent, setCurrent }) {
 
           return (
             <motion.div
+              className={styles.cardDraggable}
               style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
                 x,
                 left: `${indexRange * 100}%`,
                 right: `${indexRange * 100}%`,
