@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -13,6 +13,7 @@ import Cards from 'components/mobile-cards';
 import MobileSearchLocation from 'components/mobile-search-location';
 import Scene from 'components/scene';
 
+import { MARINE_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
@@ -40,7 +41,10 @@ function NrcLandingMobileComponent({
   view,
 }) {
   const t = useT();
-
+  const displayMarineOutline = useMemo(
+    () => selectedLayers.some((l) => l.title === MARINE_SPI_FEATURE_LAYER),
+    [selectedLayers]
+  );
   return (
     <Scene
       sceneName="nrc-landing-mobile-scene"
@@ -77,6 +81,7 @@ function NrcLandingMobileComponent({
       <CountriesBordersLayer
         countryISO={countryISO}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
+        displayMarineOutline={displayMarineOutline}
       />
 
       <CountryEntryTooltip countryISO={countryISO} />

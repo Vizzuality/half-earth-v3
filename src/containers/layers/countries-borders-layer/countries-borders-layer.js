@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 
 import { loadModules } from 'esri-loader';
@@ -20,8 +20,9 @@ import debounce from 'lodash/debounce';
 // CONSTANTS
 import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import {
-  EEZ_MARINE_AND_LAND_BORDERS as bordersLayerTitle,
+  EEZ_MARINE_AND_LAND_BORDERS,
   GRAPHIC_LAYER,
+  GLOBAL_SPI_FEATURE_LAYER,
 } from 'constants/layers-slugs';
 
 // UTILS
@@ -31,8 +32,14 @@ import {
 const actions = { ...urlActions };
 
 function CountriesBordersLayerContainer(props) {
-  const { view, changeGlobe, countryISO } = props;
-
+  const { view, changeGlobe, countryISO, displayMarineOutline } = props;
+  const bordersLayerTitle = useMemo(
+    () =>
+      displayMarineOutline
+        ? EEZ_MARINE_AND_LAND_BORDERS
+        : GLOBAL_SPI_FEATURE_LAYER,
+    [displayMarineOutline]
+  );
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] =
     useState(null);
   const [hoveredCountryBorderGraphic, setHoveredCountryGraphic] =
@@ -60,7 +67,7 @@ function CountriesBordersLayerContainer(props) {
         view.map.add(graphicsLayer);
       }
     );
-  }, []);
+  }, [bordersLayerTitle]);
 
   useEffect(() => {
     if (selectedCountryBorderGraphic) {

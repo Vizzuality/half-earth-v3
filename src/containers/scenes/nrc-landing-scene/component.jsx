@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -17,6 +17,7 @@ import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
 
+import { MARINE_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 import uiStyles from 'styles/ui.module';
@@ -44,6 +45,10 @@ function NrcLandingComponent({
   browsePage,
 }) {
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
+  const displayMarineOutline = useMemo(
+    () => activeLayers.some((l) => l.title === MARINE_SPI_FEATURE_LAYER),
+    [activeLayers]
+  );
 
   return (
     <Scene
@@ -79,6 +84,7 @@ function NrcLandingComponent({
         countryISO={countryISO}
         countryName={countryName}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
+        displayMarineOutline={displayMarineOutline}
       />
 
       {!onboardingType && (
