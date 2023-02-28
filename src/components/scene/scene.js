@@ -122,9 +122,7 @@ function SceneContainer(props) {
       const distanceLat = event.y - pointers.get(event.pointerId).y;
       const camera = mapView.camera.clone();
       const { zoom } = mapView;
-      const isIphoneSafari = isMobile && isSafari;
-      const zoomRatio = (z) =>
-        isIphoneSafari ? z ** 2 : z ** 2 / (z > 5 ? 2 : 5);
+      const zoomRatio = (z) => z ** 2 / (z > 5 ? 2 : 5);
       camera.position.longitude -= distanceLon / zoomRatio(zoom);
       camera.position.latitude += distanceLat / zoomRatio(zoom);
       return mapView.goTo(camera, { animate: true });
@@ -134,6 +132,11 @@ function SceneContainer(props) {
       'pointer-move',
       (event) => {
         event.preventDefault();
+        const isIphoneSafari = isMobile && isSafari;
+        if (isIphoneSafari) {
+          // Only allow double finger interaction
+          return;
+        }
         if (event.pointerType === 'touch' && pointers.size === 1) {
           moveMap(event);
         }
@@ -150,7 +153,9 @@ function SceneContainer(props) {
             map,
             container: `scene-container-${sceneName || sceneId}`,
             navigation: {
-              browserTouchPanEnabled: false,
+              ...(isMobile
+                ? { browserTouchPanEnabled: false, momentumEnabled: false }
+                : {}),
             },
             ...sceneSettings,
             ...(isMobile ? { qualityProfile: 'low' } : {}),
