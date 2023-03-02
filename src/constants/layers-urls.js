@@ -413,12 +413,12 @@ export const LAYERS_URLS = {
   [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1_updated/FeatureServer/0',
   [WDPA_OECM_FEATURE_LAYER]: [
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp50_nspecies/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp50_nspecies2/FeatureServer/0',
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp90_nspecies/FeatureServer/0',
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp99_nspecies/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/69cab813905c40e38be43c9b23353f63/rest/services/wdpa_precal_with_contextual_nspecies_all/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/254999264f6f4931a5903ea33796345f/rest/services/wdpa_precal_with_contextual_nspecies_no_invalid_geom/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/e1976b5ba3d2423f910172ccbb131824/rest/services/top_places_precalculated_nspecies/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:
