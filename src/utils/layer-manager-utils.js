@@ -1,10 +1,5 @@
 import { loadModules } from 'esri-loader';
 
-import {
-  addLayerAnalyticsEvent,
-  removeLayerAnalyticsEvent,
-} from 'actions/google-analytics-actions';
-
 import intersection from 'lodash/intersection';
 
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
