@@ -395,17 +395,6 @@ export const changeMapSceneAnalyticsEvent = createAction(
   }
 );
 
-// LEGACY
-
-export const removeLayerAnalyticsEvent = createAction(
-  'removeLayer',
-  null,
-  ({ slug, query }: { slug: string; query?: { viewMode: string } }) => {
-    const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
-    return { analytics: [viewMode, 'Remove layer', `${slug}`] };
-  }
-);
-
 export default {
   openInfoModalAnalyticsEvent,
   openHalfEarthMeterAnalyticsEvent,
