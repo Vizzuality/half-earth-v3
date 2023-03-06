@@ -8,10 +8,9 @@ import { tx, PseudoTranslationPolicy } from '@transifex/native';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { useMobile, MobileOnly } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 
 import styles from './app-styles.module.scss';
-import MobileDisclaimer from './components/mobile-disclaimer-modal';
 
 // Dynamic imports
 const Landing = loadable(() => import('pages/landing'));
@@ -36,7 +35,7 @@ const mapStateToProps = ({ location }) => ({
   lang: location.query && location.query.lang,
 });
 
-const { REACT_APP_TRANSIFEX_TOKEN, REACT_APP_FEATURE_MOBILE } = process.env;
+const { REACT_APP_TRANSIFEX_TOKEN } = process.env;
 
 function AppLayout(props) {
   const { route } = props;
@@ -88,11 +87,6 @@ function App(props) {
   return (
     <QueryClientProvider client={queryClient}>
       <div className={styles.app}>
-        {!REACT_APP_FEATURE_MOBILE && (
-          <MobileOnly>
-            <MobileDisclaimer />
-          </MobileOnly>
-        )}
         <AppLayout {...props} />
       </div>
     </QueryClientProvider>

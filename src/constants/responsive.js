@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Responsive from 'react-responsive';
 
-const { REACT_APP_FEATURE_MOBILE } = process.env;
-
 export const baseUnit = 16;
 export const pixelBreakpoints = {
   mobile: 719,
@@ -23,10 +21,8 @@ export const useMobile = () => {
 
   useEffect(() => {
     if (
-      (REACT_APP_FEATURE_MOBILE &&
-        window.screen.width < pixelBreakpoints.mobile) ||
-      (REACT_APP_FEATURE_MOBILE &&
-        window.screen.height < pixelBreakpoints.mobile &&
+      window.screen.width < pixelBreakpoints.mobile ||
+      (window.screen.height < pixelBreakpoints.mobile &&
         window.matchMedia('(orientation: landscape)').matches)
     )
       set(true);
