@@ -297,36 +297,3 @@ export const flyToLayerExtent = (bbox, view) => {
     });
   });
 };
-
-// LEGACY
-
-export const batchLayerManagerToggle = (
-  layerNamesArray,
-  activeLayers,
-  callback,
-  category
-) => {
-  const activeLayersNamesArray = activeLayers
-    ? activeLayers.map((l) => l.title)
-    : [];
-  const areActive =
-    activeLayers &&
-    intersection(layerNamesArray, activeLayersNamesArray).length > 0;
-  if (areActive) {
-    const updatedLayers = layerNamesArray.reduce((acc, title) => {
-      removeLayerAnalyticsEvent({ slug: title });
-      return [...acc.filter((l) => l.title !== title)];
-    }, activeLayers);
-    callback({ activeLayers: updatedLayers });
-  } else {
-    const layersToAdd = layerNamesArray.map((title) => {
-      addLayerAnalyticsEvent({ slug: title });
-      return { title, category, opacity: DEFAULT_OPACITY };
-    });
-    if (activeLayers) {
-      callback({ activeLayers: layersToAdd.concat(activeLayers) });
-    } else {
-      callback({ activeLayers: layersToAdd });
-    }
-  }
-};
