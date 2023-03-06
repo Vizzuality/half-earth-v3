@@ -27,7 +27,6 @@ const PriorityMobileGlobe = loadable(() =>
   import('pages/mobile/priority-mobile')
 );
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
-const NationalReportCardLegacy = loadable(() => import('pages/nrc-legacy'));
 const NationalReportCard = loadable(() => import('pages/nrc'));
 const NationalReportCardLanding = loadable(() => import('pages/nrc-landing'));
 const AreaOfInterest = loadable(() => import('pages/aoi'));
@@ -37,11 +36,7 @@ const mapStateToProps = ({ location }) => ({
   lang: location.query && location.query.lang,
 });
 
-const {
-  REACT_APP_TRANSIFEX_TOKEN,
-  REACT_APP_FEATURE_NEW_NRC_PAGE,
-  REACT_APP_FEATURE_MOBILE,
-} = process.env;
+const { REACT_APP_TRANSIFEX_TOKEN, REACT_APP_FEATURE_MOBILE } = process.env;
 
 function AppLayout(props) {
   const { route } = props;
@@ -57,11 +52,7 @@ function AppLayout(props) {
       if (isMobile) {
         return <NationalReportCardMobile />;
       }
-      return REACT_APP_FEATURE_NEW_NRC_PAGE ? (
-        <NationalReportCard />
-      ) : (
-        <NationalReportCardLegacy />
-      );
+      return <NationalReportCard />;
     case 'nrc-landing':
       return isMobile ? (
         <NationalReportCardLandingMobile />

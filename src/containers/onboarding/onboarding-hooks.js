@@ -5,11 +5,8 @@ import { NATIONAL_REPORT_CARD, NATIONAL_REPORT_CARD_LANDING } from 'router';
 import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 import { NRC_STEPS, PRIORITY_STEPS } from 'constants/onboarding-constants';
 import { getCountryNames } from 'constants/translation-constants';
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 import uiStyles from 'styles/ui.module.scss';
-
-const { REACT_APP_FEATURE_NEW_NRC_PAGE } = process.env;
 
 export const useOnboardingTooltipRefs = ({
   changeUI,
@@ -30,15 +27,8 @@ export const useOnboardingTooltipRefs = ({
     // This tooltip wil be positioned on the country-entry-tooltip-component
     nrcLandingButton: false,
     challenges:
-      onboardingType === 'national-report-cards' &&
-      onboardingStep === REACT_APP_FEATURE_NEW_NRC_PAGE
-        ? 5
-        : 3,
-    ranking:
-      onboardingType === 'national-report-cards' &&
-      onboardingStep === REACT_APP_FEATURE_NEW_NRC_PAGE
-        ? 3
-        : 4,
+      onboardingType === 'national-report-cards' && onboardingStep === 5,
+    ranking: onboardingType === 'national-report-cards' && onboardingStep === 3,
     closure: onboardingType === 'national-report-cards' && onboardingStep === 5,
   };
   const activeSlug = useMemo(() => {
@@ -90,7 +80,6 @@ export const useOnboardingOpenSection = ({
   locationRoute,
   countryISO,
   countryName,
-  localSceneActiveTab,
 }) => {
   useEffect(() => {
     if (onboardingType === 'priority-places') {
@@ -172,36 +161,8 @@ export const useOnboardingOpenSection = ({
         });
       }
 
-      const nrcActiveTab = {
-        [NRC_STEPS.overview]: LOCAL_SCENE_TABS_SLUGS.OVERVIEW,
-        [NRC_STEPS.challenges]: LOCAL_SCENE_TABS_SLUGS.CHALLENGES,
-        [NRC_STEPS.ranking]: LOCAL_SCENE_TABS_SLUGS.RANKING,
-      }[onboardingStep];
-
-      // Go to NRC page and open tab
-      if (
-        !REACT_APP_FEATURE_NEW_NRC_PAGE &&
-        [NRC_STEPS.overview, NRC_STEPS.challenges, NRC_STEPS.ranking].includes(
-          onboardingStep
-        ) &&
-        localSceneActiveTab !== nrcActiveTab
-      ) {
-        browsePage({
-          type: NATIONAL_REPORT_CARD,
-          payload: { iso: countryISO || DEFAULT_ISO, view: nrcActiveTab },
-        });
-        changeUI({
-          onboardingType,
-          onboardingStep,
-          waitingInteraction,
-        });
-      }
-
       // Set NRC page sidebar view position
-      if (
-        REACT_APP_FEATURE_NEW_NRC_PAGE &&
-        [NRC_STEPS.challenges, NRC_STEPS.ranking].includes(onboardingStep)
-      ) {
+      if ([NRC_STEPS.challenges, NRC_STEPS.ranking].includes(onboardingStep)) {
         if (locationRoute !== NATIONAL_REPORT_CARD) {
           browsePage({
             type: NATIONAL_REPORT_CARD,

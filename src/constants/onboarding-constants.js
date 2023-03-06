@@ -1,12 +1,8 @@
 import { t } from '@transifex/native';
 
-const { REACT_APP_FEATURE_NEW_NRC_PAGE } = process.env;
-
 export const NO_INTERACTION_STEPS = {
   'priority-places': ['human-pressures'],
-  'national-report-cards': REACT_APP_FEATURE_NEW_NRC_PAGE
-    ? ['ranking', 'challenges']
-    : [],
+  'national-report-cards': ['ranking', 'challenges'],
 };
 
 export const ONBOARDING_TYPE_CENTER = {
@@ -27,14 +23,9 @@ export const NRC_STEPS = {
   intro: 0,
   spi: 1,
   nrc: 2,
-  ...(REACT_APP_FEATURE_NEW_NRC_PAGE
-    ? {}
-    : {
-        overview: 3,
-      }),
-  ranking: REACT_APP_FEATURE_NEW_NRC_PAGE ? 3 : 5,
+  ranking: 3,
   challenges: 4,
-  closure: REACT_APP_FEATURE_NEW_NRC_PAGE ? 5 : 6,
+  closure: 5,
 };
 
 export const getScripts = () => {
@@ -88,17 +79,6 @@ export const getScripts = () => {
         'Have a look at how the country you’re interested in scores in each of the available rankings.'
       ),
     },
-    ...(REACT_APP_FEATURE_NEW_NRC_PAGE
-      ? []
-      : [
-          {
-            startTime: 63.1,
-            endTime: 70,
-            text: t(
-              'To exit from the current National Report Card, click on the cross on the top left of the screen.'
-            ),
-          },
-        ]),
   ];
 
   const challenges = [
@@ -172,30 +152,16 @@ export const getScripts = () => {
         'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to '
       ),
     },
-    ...(REACT_APP_FEATURE_NEW_NRC_PAGE
-      ? [
-          {
-            startTime: 85,
-            endTime: 89,
-            text: t('explore relationships between various indicators.', {
-              _comment:
-                'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
-            }),
-          },
-        ]
-      : [
-          {
-            startTime: 85,
-            endTime: 92.4,
-            text: t(
-              'explore relationships between various indicators. Finally click on the "ranking" tab.',
-              {
-                _comment:
-                  'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
-              }
-            ),
-          },
-        ]),
+    [
+      {
+        startTime: 85,
+        endTime: 89,
+        text: t('explore relationships between various indicators.', {
+          _comment:
+            'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
+        }),
+      },
+    ],
   ];
 
   return {
@@ -765,85 +731,8 @@ export const getScripts = () => {
           text: t('Click on “Explore” to enter the National Report Card.'),
         },
       ],
-      ...(REACT_APP_FEATURE_NEW_NRC_PAGE
-        ? {}
-        : {
-            overview: [
-              {
-                startTime: 0,
-                endTime: 7.1,
-                text: t(
-                  'The first section of the National Report Cards describes the current conservation status of the nation.'
-                ),
-              },
-              {
-                startTime: 7.1,
-                endTime: 13.4,
-                text: t(
-                  'On the map, you can see 2 layers, one showing locations of currently protected areas,'
-                ),
-              },
-              {
-                startTime: 13.4,
-                endTime: 23.3,
-                text: t(
-                  'and the other highlighting one possible configuration of where new conservation areas could be added in the country in pursuit of the Half-Earth'
-                ),
-              },
-              {
-                startTime: 23.3,
-                endTime: 29.6,
-                text: t(
-                  'goal. Lighter colors correspond to areas that would contribute more to the conservation of species habitat,'
-                ),
-              },
-              {
-                startTime: 29.6,
-                endTime: 41,
-                text: t(
-                  'while darker shades represent locations with lower priority for conservation. Areas that are not colored harbor important species,'
-                ),
-              },
-              {
-                startTime: 41,
-                endTime: 47,
-                text: t(
-                  'but do not achieve species richness and rarity levels that denote a high conservation priority score.'
-                ),
-              },
-              {
-                startTime: 47,
-                endTime: 55.1,
-                text: t(
-                  'In some cases the map may be colored gray, light yellow or green because the area has adequate protection.'
-                ),
-              },
-              {
-                startTime: 55.1,
-                endTime: 61.5,
-                text: t(
-                  'If you scroll down on the left-side panel you can find more information about these layers.'
-                ),
-              },
-              {
-                startTime: 61.5,
-                endTime: 70,
-                text: t(
-                  'You can also find photos of representative species of concern and more information about the key species present in the country,'
-                ),
-              },
-              {
-                startTime: 70,
-                endTime: 81,
-                text: t(
-                  'as well as get an overview of the species distribution by taxonomic group. Now, click on the "Challenges" tab.'
-                ),
-              },
-            ],
-          }),
-      ...(REACT_APP_FEATURE_NEW_NRC_PAGE
-        ? { ranking, challenges }
-        : { challenges, ranking }),
+      ranking,
+      challenges,
       closure: [
         {
           startTime: 0,

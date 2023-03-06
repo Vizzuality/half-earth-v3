@@ -35,5 +35,3 @@ REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI= Show specific regions as an option in an
 REACT_APP_FEATURE_ALLOWED_LANGUAGES= Languages showing in language switcher
 
 Temporal
-
-REACT_APP_FEATURE_NEW_NRC_PAGE= New NRC Page
