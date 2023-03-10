@@ -33,7 +33,6 @@ function SpeciesCardContainer(props) {
   const { species } = speciesData;
 
   if (!species) return null;
-
   const language = locale !== '' ? locale : 'en';
 
   // Species dropdown
@@ -55,6 +54,7 @@ function SpeciesCardContainer(props) {
   );
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null);
   const [SPSData, setSPSData] = useState(null);
+
   // Carousel images
   const [previousImage, setPreviousImage] = useState(null);
   const [nextImage, setNextImage] = useState(null);
@@ -204,7 +204,7 @@ function SpeciesCardContainer(props) {
     const sortSpecies = (s) =>
       orderBy(
         s,
-        ['has_image', 'presenceInArea', 'conservationConcern'],
+        ['has_image', 'per_global', 'conservationConcern'],
         ['desc', 'desc', 'desc']
       );
     const speciesSorted =
@@ -303,20 +303,9 @@ function SpeciesCardContainer(props) {
 
       MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (results.length > 0) {
-          const getCategory = () => {
-            const categories = ['mammals', 'birds', 'reptiles', 'amphibians'];
-            const currentCategory = categories.find((cat) =>
-              selectedSpecies.category.includes(cat)
-            );
-
-            return currentCategory;
-          };
-          const mainCategory = getCategory();
-
-          const currentSPSData = SPSData[mainCategory].find(
+          const currentSPSData = SPSData.find(
             (obj) => obj.SliceNumber === selectedSpecies.sliceNumber
           );
-
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
@@ -326,7 +315,7 @@ function SpeciesCardContainer(props) {
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
             SPS_global: currentSPSData.SPS_global,
-            SPS_aoi: currentSPSData.SPS_aoi,
+            SPS_AOI: currentSPSData.SPS_AOI,
           });
           if (results[0].image) {
             setPlaceholderText(null);

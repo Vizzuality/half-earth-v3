@@ -56,7 +56,6 @@ function SpeciesAnalysisModal({
   if (!cardProps) return null;
 
   const { SPSData, individualSpeciesData, selectedSpeciesFilter } = cardProps;
-
   const filteredSpeciesSliceNumber = useMemo(
     () =>
       speciesData
@@ -74,6 +73,7 @@ function SpeciesAnalysisModal({
   );
   const filteredSPSData = useMemo(
     () =>
+      SPSData &&
       SPSData.filter((spsData) =>
         filteredSpeciesSliceNumber.includes(spsData.SliceNumber)
       ),

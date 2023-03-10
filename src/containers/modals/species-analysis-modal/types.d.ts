@@ -1,12 +1,12 @@
 export type SPSData = {
-  SPS_aoi: number;
+  SPS_AOI: number;
   SPS_global: number;
   SliceNumber: number;
   per_global: number;
 };
 
 type IndividualSpeciesDataType = {
-  SPS_aoi: number;
+  SPS_AOI: number;
   SPS_global: number;
   SliceNumber: number;
   per_global: number;
@@ -23,7 +23,6 @@ type IndividualSpeciesDataType = {
   iucnCategory: string;
   molLink: string;
   name: string;
-  presenceInArea: number;
   protectionTarget: number;
   sliceNumber: number;
 };
@@ -43,7 +42,7 @@ export type SpeciesData = {
   has_image: number;
   isFlagship: number;
   name: string;
-  presenceInArea: number;
+  per_global: number;
   protectionTarget: number;
   sliceNumber: number;
 };

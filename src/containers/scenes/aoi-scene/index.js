@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 
@@ -12,7 +12,6 @@ import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 import { writeToForageItem } from 'utils/local-forage-utils';
 
 import groupBy from 'lodash/groupBy';
-import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 import unionBy from 'lodash/unionBy';
 
@@ -52,9 +51,40 @@ function AOIScene(props) {
   const t = useT();
 
   const [taxaData, setTaxaData] = useState([]);
+  // These are handled independently as they come asyncronously
+  const [areReptilesLoaded, setAreReptilesLoaded] = useState(false);
+  const [areMammalsLoaded, setAreMammalsLoaded] = useState(false);
+  const [areBirdsLoaded, setAreBirdsLoaded] = useState(false);
+  const [areAmphibiansLoaded, setAreAmphibiansLoaded] = useState(false);
+  const handleLoadedTaxaData = (taxaName) => {
+    const loadedFunction = {
+      birds: setAreBirdsLoaded,
+      mammals: setAreMammalsLoaded,
+      reptiles: setAreReptilesLoaded,
+      amphibians: setAreAmphibiansLoaded,
+    }[taxaName];
+    loadedFunction(true);
+  };
+  const areAllTaxaLoaded = useMemo(
+    () =>
+      areReptilesLoaded &&
+      areMammalsLoaded &&
+      areBirdsLoaded &&
+      areAmphibiansLoaded,
+    [areReptilesLoaded, areMammalsLoaded, areBirdsLoaded, areAmphibiansLoaded]
+  );
+  const isAnyTaxaLoaded = useMemo(
+    () =>
+      areReptilesLoaded ||
+      areMammalsLoaded ||
+      areBirdsLoaded ||
+      areAmphibiansLoaded,
+    [areReptilesLoaded, areMammalsLoaded, areBirdsLoaded, areAmphibiansLoaded]
+  );
+
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
-  const [contextualData, setContextualData] = useState({});
+  const [contextualData, setContextualData] = useState(null);
   const [geometryEngine, setGeometryEngine] = useState(null);
   const [speciesData, setSpeciesData] = useState(INITIAL_SPECIES_STATE);
   const [storedArea, setStoredArea] = useState(null);
@@ -110,6 +140,7 @@ function AOIScene(props) {
         setGeometry,
         setContextualData,
         setTaxaData,
+        handleLoadedTaxaData,
         setSpeciesData,
         t,
       });
@@ -128,6 +159,7 @@ function AOIScene(props) {
         setGeometry,
         setStoredArea,
         setTaxaData,
+        handleLoadedTaxaData,
         setSpeciesData,
         t,
       });
@@ -145,11 +177,7 @@ function AOIScene(props) {
 
   // Reconcile all data until completely loaded
   useEffect(() => {
-    const hasAllData =
-      (speciesData && contextualData && !isEmpty(contextualData)) ||
-      !contextualData.isCustom ||
-      contextualData.protectedAreasList;
-    if (!precalculatedLayerSlug && hasAllData) {
+    if (!precalculatedLayerSlug && isAnyTaxaLoaded) {
       const updatedStoredArea =
         speciesData.species && speciesData.species.length > 0
           ? {
@@ -164,7 +192,8 @@ function AOIScene(props) {
       writeToForageItem(aoiId, updatedStoredArea);
       setStoredArea(updatedStoredArea, storedArea);
     }
-    if (hasAllData && !contextualData.speciesNumbers) {
+
+    if (areAllTaxaLoaded && !contextualData.speciesNumbers) {
       // custom AOI don't have precalculated species numbers so we have to set them up
       const categoryGroupedSpecies =
         speciesData.species && groupBy(speciesData.species, 'category');
@@ -185,7 +214,7 @@ function AOIScene(props) {
       });
     }
 
-    if (hasAllData && contextualData.speciesNumbers) {
+    if (areAllTaxaLoaded && contextualData.speciesNumbers) {
       setLoaded(true);
     }
   }, [speciesData, precalculatedLayerSlug, contextualData]);

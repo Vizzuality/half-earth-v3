@@ -24,6 +24,8 @@ import {
 import { ELU_LOOKUP_TABLE } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
+const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
+
 export function getJobInfo(url, params) {
   return new Promise((resolve, reject) => {
     loadModules(['esri/rest/geoprocessor'])
@@ -66,9 +68,17 @@ const landPressuresLookup = LAND_PRESSURES_LOOKUP.reduce((acc, current, i) => {
   acc[i + 1] = current;
   return acc;
 }, {});
+
 function getAreaPressures(data) {
-  if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1)
+  if (REACT_APP_FEATURE_AOI_CHANGES) {
+    // ATTENTION: return new area pressures data
     return {};
+  }
+
+  if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) {
+    return {};
+  }
+
   return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce(
     (acc, value) => ({
       ...acc,
@@ -139,7 +149,10 @@ export function getCustomAOISpeciesData(crfName, geometry) {
           ...acc,
           [f.attributes.SliceNumber]: {
             sliceNumber: f.attributes.SliceNumber,
-            presencePercentage: f.attributes.per_global,
+            per_global: f.attributes.per_global,
+            SPS_global: f.attributes.SPS,
+            SPS_AOI: f.attributes.SPS_AOI,
+            SPS_increase: f.attributes.SPS_increase,
           },
         }),
         {}
@@ -152,21 +165,28 @@ export function getCustomAOISpeciesData(crfName, geometry) {
         })
           .then((features) => {
             const result = features
-              .map((f) => ({
-                category: crfName,
-                has_image: f.attributes.has_image,
-                isFlagship: f.attributes.is_flagship,
-                sliceNumber: f.attributes.SliceNumber,
-                name: f.attributes.scientific_name,
-                commonName: parseCommonName(f),
-                globalProtectedArea: f.attributes.wdpa_km2,
-                globaldRangeArea: f.attributes.range_area_km2,
-                globalProtectedPercentage: f.attributes.percent_protected,
-                protectionTarget: f.attributes.conservation_target,
-                conservationConcern: f.attributes.conservation_concern || 0,
-                presenceInArea:
-                  crfSlices[f.attributes.SliceNumber].presencePercentage,
-              }))
+              .map((f) => {
+                const { attributes } = f;
+                const crfInfo = crfSlices[attributes.SliceNumber];
+                return {
+                  category: crfName,
+                  has_image: attributes.has_image,
+                  isFlagship: attributes.is_flagship,
+                  sliceNumber: attributes.SliceNumber,
+                  name: attributes.scientific_name,
+                  commonName: parseCommonName(f),
+                  globalProtectedArea: attributes.wdpa_km2,
+                  globaldRangeArea: attributes.range_area_km2,
+                  globalProtectedPercentage: attributes.percent_protected,
+                  protectionTarget: attributes.conservation_target,
+                  conservationConcern: attributes.conservation_concern || 0,
+                  per_global: crfInfo.per_global,
+                  SPS_global: crfInfo.SPS_global,
+                  SPS_AOI: crfInfo.SPS_AOI,
+                  meet_target: crfInfo.meet_target,
+                  SPS_increase: crfInfo.SPS_increase,
+                };
+              })
               .filter((f) => f.name !== null);
             resolve(result);
           })
@@ -189,7 +209,7 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
         ...acc,
         [f.SliceNumber]: {
           sliceNumber: f.SliceNumber,
-          presencePercentage: f.per_global,
+          per_global: f.per_global,
         },
       }),
       {}
@@ -201,21 +221,23 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
     })
       .then((features) => {
         const result = features
-          .map((f) => ({
-            category: crfName,
-            isFlagship: f.attributes.is_flagship,
-            has_image: f.attributes.has_image,
-            sliceNumber: f.attributes.SliceNumber,
-            name: f.attributes.scientific_name,
-            commonName: parseCommonName(f),
-            globalProtectedArea: f.attributes.wdpa_km2,
-            globaldRangeArea: f.attributes.range_area_km2,
-            globalProtectedPercentage: f.attributes.percent_protected,
-            protectionTarget: f.attributes.conservation_target,
-            conservationConcern: f.attributes.conservation_concern,
-            presenceInArea:
-              crfSlices[f.attributes.SliceNumber].presencePercentage,
-          }))
+          .map((f) => {
+            const crfInfo = crfSlices[f.attributes.SliceNumber];
+            return {
+              category: crfName,
+              isFlagship: f.attributes.is_flagship,
+              has_image: f.attributes.has_image,
+              sliceNumber: f.attributes.SliceNumber,
+              name: f.attributes.scientific_name,
+              commonName: parseCommonName(f),
+              globalProtectedArea: f.attributes.wdpa_km2,
+              globaldRangeArea: f.attributes.range_area_km2,
+              globalProtectedPercentage: f.attributes.percent_protected,
+              protectionTarget: f.attributes.conservation_target,
+              conservationConcern: f.attributes.conservation_concern,
+              per_global: crfInfo.per_global,
+            };
+          })
           .filter((f) => f.name !== null);
         resolve(result);
       })
@@ -225,21 +247,31 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
   });
 };
 
-export const setPrecalculatedSpeciesData = (attributes, setTaxaData) => {
-  getPrecalculatedSpeciesData(BIRDS, attributes.birds).then((data) =>
-    setTaxaData(data)
-  );
+export const setPrecalculatedSpeciesData = (
+  attributes,
+  setTaxaData,
+  handleLoadedTaxaData
+) => {
+  getPrecalculatedSpeciesData(BIRDS, attributes.birds).then((data) => {
+    setTaxaData(data);
+    handleLoadedTaxaData('birds');
+  });
   getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
     // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
     setTaxaData(
       data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955)
     );
+    handleLoadedTaxaData('mammals');
   });
-  getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then((data) =>
-    setTaxaData(data)
-  );
-  getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then((data) =>
-    setTaxaData(data)
+  getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then((data) => {
+    setTaxaData(data);
+    handleLoadedTaxaData('reptiles');
+  });
+  getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(
+    (data) => {
+      setTaxaData(data);
+      handleLoadedTaxaData('amphibians');
+    }
   );
 };
 

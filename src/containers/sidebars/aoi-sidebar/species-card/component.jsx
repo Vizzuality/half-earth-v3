@@ -60,9 +60,9 @@ function Component(props) {
     () => getSidebarCardsConfig(locale),
     [locale]
   );
-  if (!speciesData.species) return null;
 
-  return speciesData.species && speciesData.species.length === 0 ? (
+  if (!speciesData.species) return null;
+  return speciesData.species.length === 0 ? (
     <section className={styles.loaderCard}>
       <div className={styles.loaderBarContainer}>
         <div className={styles.loaderBarPercentage} />
@@ -76,12 +76,13 @@ function Component(props) {
     <SidebarCardWrapper
       className={cx(styles.cardWrapper, { [styles.insideModal]: insideModal })}
     >
-      {speciesNumbers && speciesNumbers.nspecies && (
+      {(speciesNumbers || contextualData.isCustom) && (
         <div>
           {!insideModal && (
             <p className={styles.title}>
               {sidebarCardsConfig[SPECIES_SLUG].title(
-                speciesNumbers && speciesNumbers.nspecies
+                (speciesNumbers && speciesNumbers.nspecies) ||
+                  speciesData.species.length
               )}
               <span
                 className={styles.infoClue}
@@ -234,9 +235,7 @@ function Component(props) {
                 <SpeciesBar
                   title={t('Portion of global range in this area')}
                   className={styles.speciesBarContainer}
-                  percentage={capPercentage(
-                    individualSpeciesData.presenceInArea
-                  )}
+                  percentage={capPercentage(individualSpeciesData.per_global)}
                   theme={insideModal && 'dark'}
                 />
 
@@ -259,7 +258,7 @@ function Component(props) {
                   <div>
                     {' '}
                     {individualSpeciesData.SPS_global} |{' '}
-                    {individualSpeciesData.SPS_aoi}
+                    {individualSpeciesData.SPS_AOI}
                   </div>
                 </div>
 
@@ -307,7 +306,7 @@ function Component(props) {
           )}
         </div>
       )}
-      {area && area < 1000 && (
+      {area && area < 1000 && !insideModal && (
         <div className={styles.warningContainer}>
           <WarningIcon className={styles.icon} />
           <span>{sidebarCardsConfig[SPECIES_SLUG].warning}</span>

@@ -37,6 +37,7 @@ const setFuturePlace = ({
   setGeometry,
   setContextualData,
   setTaxaData,
+  handleLoadedTaxaData,
   setSpeciesData,
   t,
 }) => {
@@ -48,7 +49,7 @@ const setFuturePlace = ({
     returnGeometry: true,
   }).then((results) => {
     const { attributes, geometry } = results[0];
-    setPrecalculatedSpeciesData(attributes, setTaxaData);
+    setPrecalculatedSpeciesData(attributes, setTaxaData, handleLoadedTaxaData);
     setGeometry(geometry);
     const areaName = `${t('Priority place')} ${attributes.cluster}`;
     setContextualData(
@@ -73,6 +74,7 @@ const setSpecificRegion = ({
   setGeometry,
   setContextualData,
   setTaxaData,
+  handleLoadedTaxaData,
   setSpeciesData,
 }) => {
   setSpeciesData({ species: [] }); // First reset species data
@@ -85,7 +87,7 @@ const setSpecificRegion = ({
   }).then((results) => {
     const { attributes, geometry } = results[0];
     const { NAME } = attributes;
-    setPrecalculatedSpeciesData(attributes, setTaxaData);
+    setPrecalculatedSpeciesData(attributes, setTaxaData, handleLoadedTaxaData);
     setGeometry(geometry);
     setContextualData(
       getPrecalculatedContextualData({
@@ -111,6 +113,7 @@ export const setPrecalculatedAOIs = ({
   setGeometry,
   setContextualData,
   setTaxaData,
+  handleLoadedTaxaData,
   setSpeciesData,
   t,
   // eslint-disable-next-line consistent-return
@@ -122,6 +125,7 @@ export const setPrecalculatedAOIs = ({
       setGeometry,
       setContextualData,
       setTaxaData,
+      handleLoadedTaxaData,
       setSpeciesData,
       t,
     });
@@ -134,6 +138,7 @@ export const setPrecalculatedAOIs = ({
       setGeometry,
       setContextualData,
       setTaxaData,
+      handleLoadedTaxaData,
       setSpeciesData,
     });
   }
@@ -169,13 +174,21 @@ export const setPrecalculatedAOIs = ({
               includeAllData: true,
             })
           );
-          setPrecalculatedSpeciesData(protectedAreaAttributes, setTaxaData);
+          setPrecalculatedSpeciesData(
+            protectedAreaAttributes,
+            setTaxaData,
+            handleLoadedTaxaData
+          );
         });
       };
 
       const setNationalOrSubnationalType = () => {
         setContextualData(getPrecalculatedContextualData({ data: attributes }));
-        setPrecalculatedSpeciesData(attributes, setTaxaData);
+        setPrecalculatedSpeciesData(
+          attributes,
+          setTaxaData,
+          handleLoadedTaxaData
+        );
       };
 
       if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas) {
@@ -200,6 +213,7 @@ const createNewCustomAOI = ({
   setGeometry,
   setStoredArea,
   setTaxaData,
+  handleLoadedTaxaData,
   t,
 }) => {
   const areaName = t('Custom area');
@@ -231,17 +245,20 @@ const createNewCustomAOI = ({
   const promises = taxas
     .map((taxa) => getCustomAOISpeciesData(taxa, aoiStoredGeometry))
     .filter(Boolean);
-  Promise.all(promises).then((allTaxaData) => {
-    allTaxaData.forEach((taxaData, i) => {
-      const taxaName = taxas[i];
+
+  promises.forEach((promise, i) => {
+    promise.then((data) => {
+      const taxaName = taxas[i].split('_')[0];
       setTaxaData(
         // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
         taxaName === MAMMALS
-          ? taxaData.filter(
+          ? data.filter(
               (sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955
             )
-          : taxaData
+          : data
       );
+
+      handleLoadedTaxaData(taxaName);
     });
   });
 };
@@ -264,7 +281,7 @@ const recoverAOIFromDB = ({
       acc[key] = JSON.parse(otherAttributes[key]);
       return acc;
     }, {}),
-    percentage: otherAttributes.per_global,
+    percentage: otherAttributes.per_global || otherAttributes.per_global,
     isCustom: true,
   });
 };
@@ -299,6 +316,7 @@ export const recoverOrCreateNotPrecalculatedAoi = ({
   setGeometry,
   setStoredArea,
   setTaxaData,
+  handleLoadedTaxaData,
   setSpeciesData,
   t,
 }) => {
@@ -316,6 +334,7 @@ export const recoverOrCreateNotPrecalculatedAoi = ({
           setGeometry,
           setStoredArea,
           setTaxaData,
+          handleLoadedTaxaData,
           setSpeciesData,
         });
       } else {
@@ -339,6 +358,7 @@ export const recoverOrCreateNotPrecalculatedAoi = ({
                 setGeometry,
                 setStoredArea,
                 setTaxaData,
+                handleLoadedTaxaData,
                 t,
               });
             }

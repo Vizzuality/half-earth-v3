@@ -213,9 +213,9 @@ function Component({
                 scale="local"
                 title={t('Portion of global range in this area')}
                 className={styles.speciesBarContainer}
-                percentage={capPercentage(individualSpeciesData.presenceInArea)}
+                percentage={capPercentage(individualSpeciesData.per_global)}
                 percentageLabel={roundRangeInArea(
-                  capPercentage(individualSpeciesData.presenceInArea)
+                  capPercentage(individualSpeciesData.per_global)
                 )}
               />
 

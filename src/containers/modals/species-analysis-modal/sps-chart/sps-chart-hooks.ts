@@ -32,7 +32,7 @@ const indexToPercentage: (n: number) => number = (n) => (n * 100) / 4;
 
 const isHighlighted = (
   SPS_global: number,
-  perGlobal: number,
+  per_global: number,
   SPSSelected: Range,
   globalRangeSelected: Range
 ) => {
@@ -41,8 +41,8 @@ const isHighlighted = (
   return (
     SPS_global >= indexToPercentage(SPSMin) &&
     SPS_global <= indexToPercentage(SPSMax) &&
-    perGlobal >= indexToPercentage(globalMin) &&
-    perGlobal <= indexToPercentage(globalMax)
+    per_global >= indexToPercentage(globalMin) &&
+    per_global <= indexToPercentage(globalMax)
   );
 };
 const getHighlightedColor = (
