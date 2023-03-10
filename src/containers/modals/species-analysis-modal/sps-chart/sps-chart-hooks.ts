@@ -30,12 +30,17 @@ const arcGenerator = (d, outerR: number, innerR = 0) =>
 
 const indexToPercentage: (n: number) => number = (n) => (n * 100) / 4;
 
-const isHighlighted = (
-  SPS_global: number,
-  per_global: number,
-  SPSSelected: Range,
-  globalRangeSelected: Range
-) => {
+const isHighlighted = ({
+  per_global,
+  SPS_global,
+  SPSSelected,
+  globalRangeSelected,
+}: {
+  per_global: number;
+  SPS_global: number;
+  SPSSelected: Range;
+  globalRangeSelected: Range;
+}) => {
   const { min: SPSMin, max: SPSMax } = SPSSelected;
   const { min: globalMin, max: globalMax } = globalRangeSelected;
   return (
@@ -55,7 +60,12 @@ const getHighlightedColor = (
   if (SliceNumber === selectedSpeciesSliceNumber) {
     return COLORS.white;
   }
-  return isHighlighted(per_global, SPS_global, SPSSelected, globalRangeSelected)
+  return isHighlighted({
+    per_global,
+    SPS_global,
+    SPSSelected,
+    globalRangeSelected,
+  })
     ? COLORS.white
     : COLORS['white-opacity-20'];
 };
@@ -98,8 +108,8 @@ export const useD3Effect = ({
 
   const getPointCoordinates = useCallback(
     (d: SPSData) => {
-      const pointRadius = r(d.SPS_global);
-      const angle = l(d.per_global);
+      const pointRadius = r(d.per_global);
+      const angle = l(d.SPS_global);
       const x: number = pointRadius * Math.cos((angle * Math.PI) / 180);
       const y: number = pointRadius * Math.sin((angle * Math.PI) / 180);
       return { x, y };

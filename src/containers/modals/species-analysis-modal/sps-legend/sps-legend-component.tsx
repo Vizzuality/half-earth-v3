@@ -61,7 +61,7 @@ function SpsLegend({
           </>
         }
         {...globalRangeSelected}
-        bucketValues={spsBucketValues}
+        bucketValues={globalRangeBucketValues}
         setFunction={setGlobalRangeSelected}
       />
       <Slider
@@ -72,7 +72,7 @@ function SpsLegend({
           </>
         }
         {...SPSSelected}
-        bucketValues={globalRangeBucketValues}
+        bucketValues={spsBucketValues}
         setFunction={setSPSSelected}
       />
     </div>
