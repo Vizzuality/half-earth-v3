@@ -159,18 +159,17 @@ function SpeciesCardContainer(props) {
         }
       });
     } else if (
+      // Custom AOI's
       species &&
       species[0] &&
       (species[0].SPS || species[0].SPS === 0)
     ) {
-      // Custom AOI's
-      setSPSData(
-        species.map((s) => ({
-          SPS_AOI: s.SPS_AOI,
-          SPS_global: s.SPS,
-          SliceNumber: s.SliceNumber,
-          per_global: s.per_global,
-        }))
+      setSPSData({
+        SPS_AOI: s.SPS_AOI || s.SPS_aoi,
+        SPS_global: s.SPS,
+        SliceNumber: s.SliceNumber,
+        per_global: s.per_global,
+      })
       );
     }
   }, [selectedSpecies, contextualData]);

@@ -153,6 +153,7 @@ export function getCustomAOISpeciesData(crfName, geometry) {
             SPS_global: f.attributes.SPS,
             SPS_AOI: f.attributes.SPS_AOI,
             SPS_increase: f.attributes.SPS_increase,
+            meet_target: f.attributes.meet_target,
           },
         }),
         {}

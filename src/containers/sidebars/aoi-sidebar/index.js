@@ -37,6 +37,7 @@ function AoiSidebarContainer(props) {
   } = props;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const [sentenceData, setSentenceData] = useState();
   const [values, setFormattedValues] = useState({});
   const locale = useLocale();
 
@@ -91,6 +92,35 @@ function AoiSidebarContainer(props) {
     }
   }, [isShareModalOpen]);
 
+  useEffect(() => {
+    if (speciesData?.species) {
+      const { species } = speciesData;
+      const data = species.reduce((acc, specie) => {
+        if (specie.meet_target === 1) {
+          if (acc.meetTargetTotal) {
+            acc.meetTargetTotal += 1;
+          } else {
+            acc.meetTargetTotal = 1;
+          }
+        }
+        if (specie.SPS_increase === 1) {
+          if (acc.SPSIncreaseTotal) {
+            acc.SPSIncreaseTotal += 1;
+          } else {
+            acc.SPSIncreaseTotal = 1;
+          }
+        }
+        return acc;
+      }, {});
+
+      if (data.meetTargetTotal) {
+        data.meetTargetPercentage = Math.round(
+          (data.meetTargetTotal * 100) / species.length
+        );
+      }
+      setSentenceData(data);
+    }
+  }, [speciesData]);
   const handleClose = () => {
     browsePage({
       type: DATA,
@@ -124,6 +154,7 @@ function AoiSidebarContainer(props) {
       handleClose={handleClose}
       isShareModalOpen={isShareModalOpen}
       setShareModalOpen={setShareModalOpen}
+      sentenceData={sentenceData}
       {...props}
     />
   );

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { DATA } from 'router';
 
-import { useT, useLocale } from '@transifex/react';
+import { useT, useLocale, T } from '@transifex/react';
 
 import { writeToForageItem } from 'utils/local-forage-utils';
 
@@ -85,6 +85,7 @@ function AOISidebar({
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  sentenceData,
 }) {
   const [mapLayersTab, analyzeAreasTab] = getSidebarTabs();
   const t = useT();
@@ -365,10 +366,42 @@ function AOISidebar({
                     <h3 className={styles.goalTitle}>{t('HALF-EARTH GOAL')}</h3>
                   </div>
                   <p className={styles.goalSentence}>
-                    {/* // !TODO: Please, exchange when is possible.  */}
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,{' '}
-                    <span>ed do eiusmod tempor incididunts</span> ut labore et
-                    dolore magna aliqua.
+                    {sentenceData &&
+                      (sentenceData.meetTargetTotal ? (
+                        <T
+                          _str="Protecting the appropriate habitats in this area would help satisfy the {conservationTargets} representing {meetTargetPercentage}% of species found here."
+                          conservationTargets={
+                            <span>
+                              <T
+                                _str="conservation targets of {meetTargetTotal} species,"
+                                meetTargetTotal={sentenceData.meetTargetTotal}
+                                _comment="Protecting the appropriate habitats in this area would help satisfy the {conservation targets of } meetTargetTotal{ species,} representing meetTargetPercentage% of species found here."
+                              />
+                            </span>
+                          }
+                          meetTargetPercentage={
+                            sentenceData.meetTargetPercentage
+                          }
+                          _comment="Protecting the appropriate habitats in this area would help satisfy the conservation targets of meetTargetTotal species, representing meetTargetPercentage of species found here."
+                        />
+                      ) : (
+                        <T
+                          _str="Protecting the appropriate habitats in this area would improve the {conservationTargets} moving them closer to their conservation target."
+                          conservationTargets={
+                            <span>
+                              <T
+                                _str="Species Protection Score of {SPSIncreaseTotal} species,"
+                                SPSIncreaseTotal={sentenceData.SPSIncreaseTotal}
+                                _comment="Protecting the appropriate habitats in this area would improve the {Species Protection Score of } SPSIncreaseTotal{ species,} moving them closer to their conservation target."
+                              />
+                            </span>
+                          }
+                          meetTargetPercentage={
+                            sentenceData.meetTargetPercentage
+                          }
+                          _comment="Protecting the appropriate habitats in this area would improve the Species Protection Score of SPSIncreaseTotal species, moving them closer to their conservation target."
+                        />
+                      ))}
                   </p>
                 </div>
               )}
