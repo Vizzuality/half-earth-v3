@@ -164,12 +164,13 @@ function SpeciesCardContainer(props) {
       species[0] &&
       (species[0].SPS || species[0].SPS === 0)
     ) {
-      setSPSData({
-        SPS_AOI: s.SPS_AOI || s.SPS_aoi,
-        SPS_global: s.SPS,
-        SliceNumber: s.SliceNumber,
-        per_global: s.per_global,
-      })
+      setSPSData(
+        species.map((s) => ({
+          SPS_AOI: s.SPS_AOI || s.SPS_aoi,
+          SPS_global: s.SPS,
+          SliceNumber: s.SliceNumber,
+          per_global: s.per_global,
+        }))
       );
     }
   }, [selectedSpecies, contextualData]);
