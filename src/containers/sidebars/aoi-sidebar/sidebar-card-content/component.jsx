@@ -65,79 +65,32 @@ function SidebarCard({
     [contextualData, locale]
   );
 
-  const {
-    hpAgriculture,
-    hpEnergy,
-    hpHumanIntrusion,
-    hpTransportation,
-    hpUrban,
-  } = humanPressuresData || {};
-
-  // !TODO: byYear data is mocked. Please, change it as possible.
-  const HUMAN_PRESSURE_DATA = [
-    {
-      title: t('Agriculture'),
-      percentage: hpAgriculture,
-      byYear: [
-        { year: 1980, value: 12.5 },
-        { year: 1990, value: 12.5 },
-        { year: 2000, value: 14.3 },
-        { year: 2010, value: 55.3 },
-        { year: 2020, value: 80.3 },
-      ],
-    },
-    {
-      title: t('Energy'),
-      percentage: hpEnergy,
-      byYear: [
-        { year: 1980, value: 12.5 },
-        { year: 1990, value: 22.5 },
-        { year: 2000, value: 24.3 },
-        { year: 2010, value: 25.3 },
-        { year: 2020, value: 50.3 },
-      ],
-    },
-    {
-      title: t('Human Intrusion'),
-      percentage: hpHumanIntrusion,
-      byYear: [
-        { year: 1980, value: 12.5 },
-        { year: 1990, value: 12.5 },
-        { year: 2000, value: 14.3 },
-        { year: 2010, value: 15.3 },
-        { year: 2020, value: 60.3 },
-      ],
-    },
-    {
-      title: t('Transportation'),
-      percentage: hpTransportation,
-      byYear: [
-        { year: 1980, value: 12.5 },
-        { year: 1990, value: 12.5 },
-        { year: 2000, value: 14.3 },
-        { year: 2010, value: 15.3 },
-        { year: 2020, value: 78.3 },
-      ],
-    },
-    {
-      title: t('Urban'),
-      percentage: hpUrban,
-      byYear: [
-        { year: 1980, value: 12.5 },
-        { year: 1990, value: 22.5 },
-        { year: 2000, value: 24.3 },
-        { year: 2010, value: 25.3 },
-        { year: 2020, value: 68.3 },
-      ],
-    },
-  ];
-
   const hpXAxis = useMemo(() => {
-    return HUMAN_PRESSURE_DATA[0].byYear.map((obj) => obj.year);
-  }, []);
+    const existingKey =
+      humanPressuresData &&
+      Object.keys(humanPressuresData).find((k) => humanPressuresData[k]);
+
+    return (
+      humanPressuresData &&
+      humanPressuresData[existingKey] &&
+      humanPressuresData[existingKey].values
+        .map((pressure, i) => {
+          if (
+            pressure.year % 10 === 0 ||
+            i === humanPressuresData[existingKey].values.length - 1
+          ) {
+            return pressure.year;
+          }
+          return false;
+        })
+        .filter(Boolean)
+    );
+  }, [humanPressuresData]);
 
   const protectedAreaChartHeight = 100;
   const protectedAreaChartWidth = 320;
+  const PRESSURES_CHART_WIDTH = 180;
+  const PRESSURES_CHART_HEIGHT = 66;
 
   const isCustom = contextualData?.isCustom;
 
@@ -246,18 +199,23 @@ function SidebarCard({
           )}
 
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
-          REACT_APP_FEATURE_AOI_CHANGES && (
+          REACT_APP_FEATURE_AOI_CHANGES &&
+          humanPressuresData && (
             <div className={styles.humanPressureIndicators}>
-              {HUMAN_PRESSURE_DATA.map((hp) => {
+              {Object.keys(humanPressuresData).map((key) => {
+                const humanPressure = humanPressuresData[key];
+                if (!humanPressure || !hpXAxis) return null;
                 return (
                   <div className={styles.humanPressureIndicator}>
-                    <p className={styles.title}>{hp.title}</p>
+                    <p className={styles.title}>{humanPressure.title}</p>
 
-                    {hp.percentage !== undefined && (
-                      <p className={styles.percentage}>
-                        {Math.trunc(hp.percentage)}%
-                      </p>
-                    )}
+                    <p className={styles.percentage}>
+                      {Math.trunc(
+                        humanPressure.values[humanPressure.values.length - 1]
+                          .value
+                      )}
+                      %
+                    </p>
                     <div className={styles.hpChartContainer}>
                       <AreaChart
                         area={{
@@ -267,16 +225,22 @@ function SidebarCard({
                           strokeWidth: 2,
                           type: 'natural',
                         }}
-                        data={hp.byYear}
+                        data={humanPressure.values}
                         xTicks={hpXAxis}
                         margin={{
                           top: 0,
                           right: 0,
-                          left: -114,
+                          left: -PRESSURES_CHART_WIDTH,
                           bottom: 0,
                         }}
-                        height={66}
-                        width={161}
+                        height={PRESSURES_CHART_HEIGHT}
+                        width={PRESSURES_CHART_WIDTH}
+                        domain={
+                          hpXAxis && [
+                            Math.min(...hpXAxis),
+                            Math.max(...hpXAxis),
+                          ]
+                        }
                       />
                     </div>
                   </div>

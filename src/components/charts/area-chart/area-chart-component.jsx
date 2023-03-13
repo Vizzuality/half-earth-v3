@@ -35,6 +35,7 @@ function AreaChartComponent({
   xTicks,
   width,
   pdf = false,
+  domain = [1990, 2020],
 }) {
   const renderAreaChart = () => (
     <AreaChart data={data} margin={margin} width={width} height={height}>
@@ -48,7 +49,7 @@ function AreaChartComponent({
         axisLine={false}
         dataKey="year"
         // first number of domain is 20 years below the range for all numbers to fit on the axis
-        domain={[1960, 2020]}
+        domain={[domain[0] - 20, domain[1]]}
         fontSize={9}
         strokeWidth={2}
         tickCount={xTicks.length}

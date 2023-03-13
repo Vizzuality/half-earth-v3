@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import metadataActions from 'redux_modules/metadata';
 
-import { useLocale } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import * as urlActions from 'actions/url-actions';
 
@@ -12,7 +12,6 @@ import {
 } from 'utils/layer-manager-utils';
 
 import ContentfulService from 'services/contentful';
-import EsriFeatureService from 'services/esri-feature-service';
 
 import {
   AOI_LEGEND_CATEGORIES,
@@ -22,8 +21,6 @@ import {
   ALL_TAXA_LAYER_VARIANTS,
   LAYER_VARIANTS,
 } from 'constants/biodiversity-layers-constants';
-import { AOI_HUMAN_PRESSURES_TABLE } from 'constants/layers-slugs.js';
-import { LAYERS_URLS } from 'constants/layers-urls';
 import metadataConfig from 'constants/metadata';
 
 import Component from './component';
@@ -43,6 +40,8 @@ function Container(props) {
   } = props;
 
   const locale = useLocale();
+  const t = useT();
+
   const sidebarCardsConfig = useMemo(
     () => getSidebarCardsConfig(locale),
     [locale]
@@ -58,34 +57,10 @@ function Container(props) {
 
   const [cardDescription, setCardDescription] = useState(null);
   const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
-  const [humanPressuresData, setHumanPressuresData] = useState(null);
 
   const { description: getDescription, title } =
     sidebarCardsConfig[cardCategory];
   const [metadata, setMetadata] = useState(null);
-
-  useEffect(() => {
-    EsriFeatureService.getFeatures({
-      url: LAYERS_URLS[AOI_HUMAN_PRESSURES_TABLE],
-      returnGeometry: false,
-    }).then((results) => {
-      const { attributes } = results[0];
-      const hpAgriculture = attributes?.percent_agriculture;
-      const hpEnergy = attributes?.percent_energy;
-      const hpHumanIntrusion = attributes?.percent_human_intrusion;
-      const hpTransportation = attributes?.percent_transportation;
-      const hpUrban = attributes?.percent_urban;
-
-      setHumanPressuresData({
-        hpAgriculture,
-        hpEnergy,
-        hpHumanIntrusion,
-        hpTransportation,
-        hpUrban,
-      });
-    });
-  }, []);
-
   // Just to get the sources of each card
   useEffect(() => {
     ContentfulService.getMetadata(metadataConfig[metadataSlug], locale).then(
@@ -101,6 +76,31 @@ function Container(props) {
     }
     // Don't remove locale. Is here to recalculate the description translation
   }, [contextualData, locale]);
+
+  const humanPressuresData = useMemo(() => {
+    const titles = {
+      agriculture: t('Agriculture'),
+      builtup: t('Builtup'),
+      extraction: t('Extraction'),
+      intrusion: t('Intrusion'),
+      transportation: t('Transportation'),
+    };
+    return (
+      contextualData?.pressures &&
+      Object.keys(contextualData?.pressures).reduce((acc, key) => {
+        if (
+          contextualData.pressures[key] &&
+          contextualData.pressures[key].length
+        ) {
+          acc[key] = {
+            title: titles[key],
+            values: contextualData.pressures[key],
+          };
+        }
+        return acc;
+      }, {})
+    );
+  }, [contextualData]);
 
   const radioTypeToggle = (option) => {
     const selectedActiveLayerTitles =
@@ -155,12 +155,12 @@ function Container(props) {
       cardTitle={title}
       cardDescription={cardDescription}
       hasLegend={AOI_LEGEND_CATEGORIES.some((c) => c === cardCategory)}
-      humanPressuresData={humanPressuresData}
       onChange={toggleType === 'radio' ? radioTypeToggle : checkboxTypeToggle}
       handleAllProtectedAreasClick={handleAllProtectedAreasClick}
       handleProtectedAreasModalToggle={handleProtectedAreasModalToggle}
       isProtectedAreasModalOpen={protectedAreasModalOpen}
       metadata={metadata}
+      humanPressuresData={humanPressuresData}
       {...props}
     />
   );

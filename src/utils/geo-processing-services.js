@@ -20,6 +20,11 @@ import {
   MAMMALS,
   REPTILES,
   AMPHIBIANS,
+  EXTRACTION,
+  AGRICULTURE,
+  TRANSPORTATION,
+  INTRUSION,
+  BUILTUP,
 } from 'constants/geo-processing-services';
 import { ELU_LOOKUP_TABLE } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
@@ -71,8 +76,25 @@ const landPressuresLookup = LAND_PRESSURES_LOOKUP.reduce((acc, current, i) => {
 
 function getAreaPressures(data) {
   if (REACT_APP_FEATURE_AOI_CHANGES) {
-    // ATTENTION: return new area pressures data
-    return {};
+    const getData = (key) => {
+      if (!data[CONTEXTUAL_DATA_TABLES[key]]?.value?.features.length) {
+        return null;
+      }
+      return data[CONTEXTUAL_DATA_TABLES[key]].value.features.map(
+        (f) =>
+          f.attributes && {
+            year: f.attributes.Year,
+            value: f.attributes.percentage_land_encroachment,
+          }
+      );
+    };
+    return {
+      extraction: getData(EXTRACTION),
+      agriculture: getData(AGRICULTURE),
+      transportation: getData(TRANSPORTATION),
+      intrusion: getData(INTRUSION),
+      builtup: getData(BUILTUP),
+    };
   }
 
   if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) {

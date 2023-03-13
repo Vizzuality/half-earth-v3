@@ -10,6 +10,8 @@ import birdsPlaceholder from 'images/no-bird.png';
 import mammalsPlaceholder from 'images/no-mammal.png';
 import reptilesPlaceholder from 'images/no-reptile.png';
 
+const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
+
 export function logGeometryArea(geometry) {
   loadModules(['esri/geometry/geometryEngine']).then(([geometryEngine]) => {
     const SQ_KM_WKID = 109414;
@@ -67,6 +69,19 @@ export const getTotalPressures = (pressures) => {
 
 export const getMainPressure = (pressures) => {
   if (!pressures) return null;
+  if (REACT_APP_FEATURE_AOI_CHANGES) {
+    const mainPressure = Object.keys(pressures).reduce((acc, key) => {
+      const pressure = pressures[key];
+      if (
+        pressure &&
+        (!acc.value || pressure[pressure.length - 1].value > acc.value)
+      ) {
+        return { name: key, value: pressure[pressure.length - 1].value };
+      }
+      return acc;
+    });
+    return mainPressure.name;
+  }
   const existingPressures = Object.keys(pressures).filter(
     (key) => pressures[key] !== null
   );
