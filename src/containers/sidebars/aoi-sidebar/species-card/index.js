@@ -337,7 +337,10 @@ function SpeciesCardContainer(props) {
             (d) => d.SliceNumber === selectedSpecies.sliceNumber
           );
 
-          // ATTENTION: SPS_AOI not showing on countries
+          const SPS_AOI =
+            individualSPSData.SPS_aoi ||
+            (individualSPSData.SPS_aoi === 0 ? 0 : individualSPSData.SPS_AOI);
+
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
@@ -347,7 +350,7 @@ function SpeciesCardContainer(props) {
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
             SPS_global: individualSPSData.SPS_global,
-            SPS_AOI: individualSPSData.SPS_aoi || individualSPSData.SPS_AOI,
+            SPS_AOI,
             per_global: individualSPSData.per_global,
           });
 

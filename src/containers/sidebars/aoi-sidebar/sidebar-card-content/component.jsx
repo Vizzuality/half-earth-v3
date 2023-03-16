@@ -71,8 +71,11 @@ function SidebarCard({
       Object.keys(humanPressuresData).find((k) => humanPressuresData[k]);
 
     return (
-      humanPressuresData &&
+      existingKey &&
       humanPressuresData[existingKey] &&
+      humanPressuresData[existingKey].values &&
+      humanPressuresData[existingKey].values.length > 0 &&
+      humanPressuresData[existingKey].values[0].value &&
       humanPressuresData[existingKey].values
         .map((pressure, i) => {
           if (

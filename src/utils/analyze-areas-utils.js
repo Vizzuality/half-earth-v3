@@ -1,3 +1,5 @@
+import { isArray } from 'lodash';
+
 import { loadModules } from 'esri-loader';
 
 import { percentageFormat } from 'utils/data-formatting-utils';
@@ -69,19 +71,30 @@ export const getTotalPressures = (pressures) => {
 
 export const getMainPressure = (pressures) => {
   if (!pressures) return null;
+
   if (REACT_APP_FEATURE_AOI_CHANGES) {
     const mainPressure = Object.keys(pressures).reduce((acc, key) => {
       const pressure = pressures[key];
-      if (
-        pressure &&
-        (!acc.value || pressure[pressure.length - 1].value > acc.value)
-      ) {
-        return { name: key, value: pressure[pressure.length - 1].value };
+      if (!pressure) return acc;
+
+      // Custom AOIs
+      if (isArray(pressure)) {
+        if (!acc.value || pressure[pressure.length - 1].value > acc.value) {
+          return { name: key, value: pressure[pressure.length - 1].value };
+        }
+        return acc;
+      }
+
+      // Rest
+      if (!acc.value || pressure > acc.value) {
+        return { name: key, value: pressure.value || pressure };
       }
       return acc;
     });
+
     return mainPressure.name;
   }
+
   const existingPressures = Object.keys(pressures).filter(
     (key) => pressures[key] !== null
   );
