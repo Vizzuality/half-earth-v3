@@ -117,6 +117,7 @@ import {
 } from 'constants/layers-slugs';
 
 const { REACT_APP_VERCEL_ENV } = process.env;
+const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 const isNotProduction =
   REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
@@ -143,10 +144,12 @@ export const NRC_TERRESTRIAL_SPI_DATA_LAYER =
 export const NRC_MARINE_SPI_DATA_LAYER =
   'https://utility.arcgis.com/usrsvcs/servers/d1d8be859b4844658d9f567b9d6b4194/rest/services/Marine_Species_Protection_Index_by_Country_v2/FeatureServer/0';
 
-const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer';
-const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer';
+const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL = REACT_APP_FEATURE_AOI_CHANGES
+  ? 'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer'
+  : 'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer';
+const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL = REACT_APP_FEATURE_AOI_CHANGES
+  ? 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer'
+  : 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer';
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm_v2/FeatureServer',
