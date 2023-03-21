@@ -9,13 +9,10 @@ import {
 
 import orderBy from 'lodash/orderBy';
 
-import EsriFeatureService from 'services/esri-feature-service';
 import MolService from 'services/mol';
 
 import { getSpeciesFilters } from 'constants/analyze-areas-constants';
 import { getIUCNList } from 'constants/iucn-list';
-import { AOI_SPS_TABLE } from 'constants/layers-slugs.js';
-import { LAYERS_URLS } from 'constants/layers-urls';
 
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
@@ -139,41 +136,22 @@ function SpeciesCardContainer(props) {
     );
   };
 
-  // TODO: ATM it only has data by country and custom AOIs. It will be necessary to obtain SPS data for all AOIs
-  // ATTENTION: Check data for regions, WDPA and future and special places
   useEffect(() => {
-    if (contextualData.iso) {
-      EsriFeatureService.getFeatures({
-        url: LAYERS_URLS[AOI_SPS_TABLE],
-        whereClause: `GID_0 = '${contextualData.iso}'`,
-        returnGeometry: false,
-      }).then((results) => {
-        if (results && results[0]) {
-          const { attributes } = results[0];
-          const amphibians = JSON.parse(attributes.amphibians);
-          const birds = JSON.parse(attributes.birds);
-          const mammals = JSON.parse(attributes.mammals);
-          const reptiles = JSON.parse(attributes.reptiles);
-          const taxaSPSdata = { amphibians, birds, mammals, reptiles };
-          setSPSData(Object.values(taxaSPSdata).flat());
-        }
-      });
-    } else if (
-      // Custom AOI's
+    if (
       species &&
       species[0] &&
-      (species[0].SPS || species[0].SPS === 0)
+      (species[0].SPS_global || species[0].SPS_global === 0)
     ) {
       setSPSData(
         species.map((s) => ({
           SPS_AOI: s.SPS_AOI || s.SPS_aoi,
-          SPS_global: s.SPS,
-          SliceNumber: s.SliceNumber,
+          SPS_global: s.SPS || s.SPS_global,
+          SliceNumber: s.SliceNumber || s.sliceNumber,
           per_global: s.per_global,
         }))
       );
     }
-  }, [selectedSpecies, contextualData]);
+  }, [species]);
 
   useEffect(() => {
     if (
@@ -248,21 +226,6 @@ function SpeciesCardContainer(props) {
     setSelectedSpeciesIndex(0);
   }, [selectedSpeciesFilter]);
 
-  const AllSourcesSPSData = useMemo(
-    () =>
-      SPSData ||
-      // For custom AOIs comes directly from species
-      species.map(
-        (specie) => ({
-          SPS_global: specie.SPS_global,
-          SPS_AOI: specie.SPS_AOI,
-          per_global: specie.per_global,
-          SliceNumber: specie.sliceNumber,
-        }),
-        [SPSData, species]
-      )
-  );
-
   // Get individual species info and image for slider
   useEffect(() => {
     if (selectedSpecies) {
@@ -332,11 +295,10 @@ function SpeciesCardContainer(props) {
       }
 
       MolService.getSpecies(selectedSpecies.name, language).then((results) => {
-        if (results.length > 0) {
-          const individualSPSData = AllSourcesSPSData.find(
+        if (SPSData && results.length > 0) {
+          const individualSPSData = SPSData.find(
             (d) => d.SliceNumber === selectedSpecies.sliceNumber
           );
-
           const SPS_AOI =
             individualSPSData.SPS_aoi ||
             (individualSPSData.SPS_aoi === 0 ? 0 : individualSPSData.SPS_AOI);
@@ -371,7 +333,6 @@ function SpeciesCardContainer(props) {
       speciesToDisplay.find((s) => s.sliceNumber === sliceNumber)
     );
   };
-
   return (
     <Component
       speciesFilters={speciesFilters}
@@ -392,7 +353,7 @@ function SpeciesCardContainer(props) {
       handleSpeciesSearch={handleSpeciesSearch}
       handleSearchOptionSelected={handleSearchOptionSelected}
       handleCloseSearch={handleCloseSearch}
-      SPSData={AllSourcesSPSData}
+      SPSData={SPSData}
       {...props}
     />
   );

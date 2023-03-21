@@ -9,13 +9,10 @@ import {
 
 import orderBy from 'lodash/orderBy';
 
-import EsriFeatureService from 'services/esri-feature-service';
 import MolService from 'services/mol';
 
 import { getSpeciesFilters } from 'constants/analyze-areas-constants';
 import { getIUCNList } from 'constants/iucn-list';
-import { AOI_SPS_TABLE } from 'constants/layers-slugs.js';
-import { LAYERS_URLS } from 'constants/layers-urls';
 
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
@@ -53,7 +50,6 @@ function SpeciesCardContainer(props) {
     speciesToDisplay[selectedSpeciesIndex]
   );
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null);
-  const [SPSData, setSPSData] = useState(null);
 
   // Carousel images
   const [previousImage, setPreviousImage] = useState(null);
@@ -139,26 +135,6 @@ function SpeciesCardContainer(props) {
         : selectedSpeciesIndex - 1
     );
   };
-
-  // TODO: ATM it only has data by country. It will be necessary to obtain SPS data for all AOIs
-  useEffect(() => {
-    EsriFeatureService.getFeatures({
-      url: LAYERS_URLS[AOI_SPS_TABLE],
-      whereClause: `GID_0 = '${contextualData.iso}'`,
-      returnGeometry: false,
-    }).then((results) => {
-      if (results && results[0]) {
-        const { attributes } = results[0];
-        const amphibians = JSON.parse(attributes.amphibians);
-        const birds = JSON.parse(attributes.birds);
-        const mammals = JSON.parse(attributes.mammals);
-        const reptiles = JSON.parse(attributes.reptiles);
-        setSPSData({ amphibians, birds, mammals, reptiles });
-      } else {
-        console.warn(`No data for ${contextualData.iso}`);
-      }
-    });
-  }, [selectedSpecies]);
 
   useEffect(() => {
     if (
@@ -303,9 +279,6 @@ function SpeciesCardContainer(props) {
 
       MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (results.length > 0) {
-          const currentSPSData = SPSData.find(
-            (obj) => obj.SliceNumber === selectedSpecies.sliceNumber
-          );
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
@@ -314,8 +287,6 @@ function SpeciesCardContainer(props) {
               : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
-            SPS_global: currentSPSData.SPS_global,
-            SPS_AOI: currentSPSData.SPS_AOI,
           });
           if (results[0].image) {
             setPlaceholderText(null);
@@ -327,7 +298,7 @@ function SpeciesCardContainer(props) {
         }
       });
     }
-  }, [selectedSpecies, locale, SPSData]);
+  }, [selectedSpecies, locale]);
 
   return (
     <Component

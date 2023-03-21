@@ -233,6 +233,7 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
         [f.SliceNumber]: {
           sliceNumber: f.SliceNumber,
           per_global: f.per_global,
+          SPS_AOI: f.SPS_aoi,
         },
       }),
       {}
@@ -258,7 +259,8 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
               globalProtectedPercentage: f.attributes.percent_protected,
               protectionTarget: f.attributes.conservation_target,
               conservationConcern: f.attributes.conservation_concern,
-              per_global: crfInfo.per_global,
+              SPS_global: f.attributes.SPS,
+              ...crfInfo,
             };
           })
           .filter((f) => f.name !== null);
