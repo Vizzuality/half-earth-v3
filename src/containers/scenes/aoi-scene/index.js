@@ -23,12 +23,10 @@ import {
 } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
-import {
-  setPrecalculatedAOIs,
-  recoverOrCreateNotPrecalculatedAoi,
-} from './aoi-scene-utils';
 import Component from './component.jsx';
 import mapStateToProps from './selectors';
+import { recoverOrCreateNotPrecalculatedAoi } from './utils/custom-aoi-scene-utils';
+import { setPrecalculatedAOIs } from './utils/precalculated-aois-utils';
 
 const actions = { ...urlActions, ...aoisGeometriesActions };
 

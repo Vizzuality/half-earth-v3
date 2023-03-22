@@ -57,7 +57,6 @@ function Container(props) {
 
   const [cardDescription, setCardDescription] = useState(null);
   const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
-
   const { description: getDescription, title } =
     sidebarCardsConfig[cardCategory];
   const [metadata, setMetadata] = useState(null);
@@ -71,7 +70,7 @@ function Container(props) {
   }, [locale]);
 
   useEffect(() => {
-    if (Object.keys(contextualData).length > 0 && !contextualData.WDPA_PID) {
+    if (Object.keys(contextualData).length > 0) {
       setCardDescription(getDescription(contextualData));
     }
     // Don't remove locale. Is here to recalculate the description translation

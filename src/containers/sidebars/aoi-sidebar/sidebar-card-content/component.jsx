@@ -66,21 +66,23 @@ function SidebarCard({
   );
 
   const hpXAxis = useMemo(() => {
-    const existingKey =
-      humanPressuresData &&
-      Object.keys(humanPressuresData).find((k) => humanPressuresData[k]);
-
+    const existingValues =
+      humanPressuresData && Object.values(humanPressuresData);
+    const nonEmptyValues =
+      existingValues &&
+      existingValues.find(
+        (existingValue) =>
+          existingValue.values &&
+          existingValue.values.length > 0 &&
+          existingValue.values.some((v) => v.value && v.value !== 0)
+      );
     return (
-      existingKey &&
-      humanPressuresData[existingKey] &&
-      humanPressuresData[existingKey].values &&
-      humanPressuresData[existingKey].values.length > 0 &&
-      humanPressuresData[existingKey].values[0].value &&
-      humanPressuresData[existingKey].values
+      nonEmptyValues &&
+      nonEmptyValues.values
         .map((pressure, i) => {
           if (
             pressure.year % 10 === 0 ||
-            i === humanPressuresData[existingKey].values.length - 1
+            i === nonEmptyValues.values.length - 1
           ) {
             return pressure.year;
           }
@@ -207,7 +209,12 @@ function SidebarCard({
             <div className={styles.humanPressureIndicators}>
               {Object.keys(humanPressuresData).map((key) => {
                 const humanPressure = humanPressuresData[key];
-                if (!humanPressure || !hpXAxis) return null;
+                if (
+                  !humanPressure ||
+                  !hpXAxis ||
+                  humanPressure.values.every((py) => py.value === 0)
+                )
+                  return null;
                 // Cap value to 100 as more than 100 is only caused by errors on the calculations
                 const humanPressureValues = humanPressure.values.map((v) => ({
                   year: v.year,
