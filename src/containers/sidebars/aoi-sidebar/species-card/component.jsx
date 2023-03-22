@@ -69,7 +69,7 @@ function Component(props) {
       </div>
       <div className={styles.loaderTextContainer}>
         <p>{t('Looking for species to watch here...')}</p>
-        <p>{t('This could take up to 30 seconds.')}</p>
+        <p>{t('This could take some minutes.')}</p>
       </div>
     </section>
   ) : (
