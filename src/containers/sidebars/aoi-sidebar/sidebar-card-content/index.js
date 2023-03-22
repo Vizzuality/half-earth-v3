@@ -80,9 +80,9 @@ function Container(props) {
   const humanPressuresData = useMemo(() => {
     const titles = {
       agriculture: t('Agriculture'),
-      builtup: t('Builtup'),
-      extraction: t('Extraction'),
-      intrusion: t('Intrusion'),
+      builtup: t('Urban and Built up'),
+      extraction: t('Energy and Occupancy'),
+      intrusion: t('Human intrusion'),
       transportation: t('Transportation'),
     };
     return (

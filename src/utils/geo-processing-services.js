@@ -88,6 +88,7 @@ function getAreaPressures(data) {
           }
       );
     };
+    console.log('lll', getData(EXTRACTION), data);
     return {
       extraction: getData(EXTRACTION),
       agriculture: getData(AGRICULTURE),
@@ -136,6 +137,7 @@ export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
     getContextualData(geometry)
       .then(async (data) => {
+        console.log('...', data);
         const pressures = getAreaPressures(data);
         const population = getAreaPopulation(data);
         const elu = await getEluData(data);
@@ -314,9 +316,23 @@ export const getPrecalculatedContextualData = ({
   includeAllData = false,
 }) => {
   const pressures = {};
-  Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
-    pressures[key] = data[LAND_PRESSURES_LABELS_SLUGS[key]];
-  });
+  if (REACT_APP_FEATURE_AOI_CHANGES) {
+    Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
+      const pressureData = data[LAND_PRESSURES_LABELS_SLUGS[key]];
+      const parsedData = pressureData && JSON.parse(pressureData);
+      pressures[key] =
+        parsedData &&
+        parsedData.length > 0 &&
+        parsedData.map((d) => ({
+          year: d.Year,
+          value: d.percentage_land_encroachment,
+        }));
+    });
+  } else {
+    Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
+      pressures[key] = data[LAND_PRESSURES_LABELS_SLUGS[key]];
+    });
+  }
 
   return {
     elu: {

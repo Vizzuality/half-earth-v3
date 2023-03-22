@@ -70,33 +70,66 @@ export const LOOKUP_TABLES = {
   [AMPHIBIANS]: AMPHIBIAN_LOOKUP,
 };
 
-const LAND_PRESSURES_LABELS = {
-  irrigated: 'irrigated agriculture',
-  rainfed: 'rainfed agriculture',
-  rangelands: 'rangelands',
-  urban: 'urban activities',
-};
+const LAND_PRESSURES_LABELS = REACT_APP_FEATURE_AOI_CHANGES
+  ? {
+      extraction: 'extraction',
+      transportation: 'transportation',
+      builtup: 'builtup',
+      agriculture: 'agriculture',
+      intrusion: 'intrusion',
+    }
+  : {
+      irrigated: 'irrigated agriculture',
+      rainfed: 'rainfed agriculture',
+      rangelands: 'rangelands',
+      urban: 'urban activities',
+    };
 
-export const getLandPressuresTranslatedLabels = (t) => ({
-  irrigated: t('irrigated agriculture'),
-  rainfed: t('rainfed agriculture'),
-  rangelands: t('rangelands'),
-  urban: t('urban activities'),
-});
+export const getLandPressuresTranslatedLabels = (t) =>
+  REACT_APP_FEATURE_AOI_CHANGES
+    ? {
+        energy: t('energy and occupancy'),
+        transportation: t('transportation'),
+        builtup: t('urban and built up'),
+        agriculture: t('agriculture pressures'),
+        intrusion: t('human intrusion'),
+      }
+    : {
+        irrigated: t('irrigated agriculture'),
+        rainfed: t('rainfed agriculture'),
+        rangelands: t('rangelands'),
+        urban: t('urban activities'),
+      };
 
-export const LAND_PRESSURES_LABELS_SLUGS = {
-  [LAND_PRESSURES_LABELS.irrigated]: 'percent_irrigated',
-  [LAND_PRESSURES_LABELS.rainfed]: 'percent_rainfed',
-  [LAND_PRESSURES_LABELS.rangelands]: 'percent_rangeland',
-  [LAND_PRESSURES_LABELS.urban]: 'percent_urban',
-};
+export const LAND_PRESSURES_LABELS_SLUGS = REACT_APP_FEATURE_AOI_CHANGES
+  ? {
+      [LAND_PRESSURES_LABELS.extraction]: 'extraction',
+      [LAND_PRESSURES_LABELS.intrusion]: 'intrusion',
+      [LAND_PRESSURES_LABELS.transportation]: 'transportation',
+      [LAND_PRESSURES_LABELS.builtup]: 'builtup',
+      [LAND_PRESSURES_LABELS.agriculture]: 'agriculture',
+    }
+  : {
+      [LAND_PRESSURES_LABELS.irrigated]: 'percent_irrigated',
+      [LAND_PRESSURES_LABELS.rainfed]: 'percent_rainfed',
+      [LAND_PRESSURES_LABELS.rangelands]: 'percent_rangeland',
+      [LAND_PRESSURES_LABELS.urban]: 'percent_urban',
+    };
 
-export const LAND_PRESSURES_LOOKUP = [
-  LAND_PRESSURES_LABELS.irrigated,
-  LAND_PRESSURES_LABELS.rainfed,
-  LAND_PRESSURES_LABELS.rangelands,
-  LAND_PRESSURES_LABELS.urban,
-];
+export const LAND_PRESSURES_LOOKUP = REACT_APP_FEATURE_AOI_CHANGES
+  ? [
+      LAND_PRESSURES_LABELS.extraction,
+      LAND_PRESSURES_LABELS.intrusion,
+      LAND_PRESSURES_LABELS.transportation,
+      LAND_PRESSURES_LABELS.builtup,
+      LAND_PRESSURES_LABELS.agriculture,
+    ]
+  : [
+      LAND_PRESSURES_LABELS.irrigated,
+      LAND_PRESSURES_LABELS.rainfed,
+      LAND_PRESSURES_LABELS.rangelands,
+      LAND_PRESSURES_LABELS.urban,
+    ];
 
 export const CRFS_CONFIG = {
   inputRasterKey: 'crf_name',

@@ -1,5 +1,3 @@
-import { isArray } from 'lodash';
-
 import { loadModules } from 'esri-loader';
 
 import { percentageFormat } from 'utils/data-formatting-utils';
@@ -77,17 +75,14 @@ export const getMainPressure = (pressures) => {
       const pressure = pressures[key];
       if (!pressure) return acc;
 
-      // Custom AOIs
-      if (isArray(pressure)) {
-        if (!acc.value || pressure[pressure.length - 1].value > acc.value) {
-          return { name: key, value: pressure[pressure.length - 1].value };
-        }
-        return acc;
-      }
-
-      // Rest
-      if (!acc.value || pressure > acc.value) {
-        return { name: key, value: pressure.value || pressure };
+      const currentValue =
+        pressure[pressure.length - 1].percentage_land_encroachment ||
+        pressure[pressure.length - 1].value;
+      if (!acc.value || currentValue > acc.value) {
+        return {
+          name: key,
+          value: currentValue,
+        };
       }
       return acc;
     });

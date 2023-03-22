@@ -38,6 +38,15 @@ export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
 export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
 export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
 export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
+
+export const ENERGY_HUMAN_PRESSURES_TILE_LAYER = 'energy_human_pressures';
+export const BUILTUP_HUMAN_PRESSURES_TILE_LAYER = 'builtup_human_pressures';
+export const TRANSPORTATION_HUMAN_PRESSURES_TILE_LAYER =
+  'transportation_human_pressures';
+export const AGRICULTURE_HUMAN_PRESSURES_TILE_LAYER =
+  'agriculture_human_pressures';
+export const INTRUSION_HUMAN_PRESSURES_TILE_LAYER = 'intrusion_human_pressures';
+
 // Marine human pressures tiled layers.
 export const MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER =
   'marine_land_drivers_human_pressures';
@@ -198,8 +207,6 @@ export const AMPHIBIAN_LOOKUP = 'amphibians-lookup-table';
 export const BIRDS_LOOKUP = 'birds-lookup-table';
 export const MAMMALS_LOOKUP = 'mammals-lookup-table';
 export const REPTILES_LOOKUP = 'reptiles-lookup-table';
-export const AOI_SPS_TABLE = 'aoi-sps-table';
-export const AOI_HUMAN_PRESSURES_TABLE = 'aoi-human-pressures-table';
 
 // NRC Landing Layers
 export const NRC_LANDING_LAYERS_SLUG = 'nrc-landing-layers';
