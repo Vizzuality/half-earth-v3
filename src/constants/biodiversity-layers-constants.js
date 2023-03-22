@@ -181,8 +181,8 @@ export const getLayersToggleConfig = () => ({
       LOW: [
         {
           value: ALL_TAXA_RICHNESS,
-          name: t('all vertebrates'),
-          title: t('all vertebrates'),
+          name: t('all taxa'),
+          title: t('all taxa'),
           layer: ALL_TAXA_RICHNESS,
           group: ALL_TAXA_RICHNESS,
         },
@@ -384,8 +384,8 @@ export const getLayersToggleConfig = () => ({
       LOW: [
         {
           value: ALL_TAXA_RARITY,
-          name: t('all vertebrates'),
-          title: t('all vertebrates'),
+          name: t('all taxa'),
+          title: t('all taxa'),
           layer: ALL_TAXA_RARITY,
           group: ALL_TAXA_RARITY,
         },
@@ -592,13 +592,13 @@ const parseGroupLayers = (group, layers) => {
     });
 };
 
-const parseAllGroupLayers = (group, allLayers) => {
+const parseAllGroupLayers = (group, allLayers, label) => {
   return allLayers
     .filter((layer) => layer.group === group)
     .map((layer) => {
       return {
         ...layer,
-        label: t('All vertebrates'),
+        label: label || t('All vertebrates'),
       };
     });
 };
@@ -613,16 +613,16 @@ export const GROUPED_OPTIONS = (layers) => [
     options: parseAllGroupLayers(ALL_MARINE_VERTEBRATES_PRIORITY, layers),
   },
   {
-    label: t('All vertebrates'),
-    options: parseAllGroupLayers(ALL_TAXA_RICHNESS, layers),
+    label: t('All taxa'),
+    options: parseAllGroupLayers(ALL_TAXA_RICHNESS, layers, t('All taxa')),
   },
   {
     label: t('All vertebrates'),
     options: parseAllGroupLayers(ALL_MARINE_VERTEBRATES_RICHNESS, layers),
   },
   {
-    label: t('All vertebrates'),
-    options: parseAllGroupLayers(ALL_TAXA_RARITY, layers),
+    label: t('All taxa'),
+    options: parseAllGroupLayers(ALL_TAXA_RARITY, layers, t('All taxa')),
   },
   {
     label: t('All vertebrates'),
