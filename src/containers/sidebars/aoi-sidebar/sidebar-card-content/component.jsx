@@ -92,7 +92,7 @@ function SidebarCard({
 
   const protectedAreaChartHeight = 100;
   const protectedAreaChartWidth = 320;
-  const PRESSURES_CHART_WIDTH = 180;
+  const PRESSURES_CHART_WIDTH = 166;
   const PRESSURES_CHART_HEIGHT = 66;
 
   const isCustom = contextualData?.isCustom;
@@ -208,16 +208,25 @@ function SidebarCard({
               {Object.keys(humanPressuresData).map((key) => {
                 const humanPressure = humanPressuresData[key];
                 if (!humanPressure || !hpXAxis) return null;
+                // Cap value to 100 as more than 100 is only caused by errors on the calculations
+                const humanPressureValues = humanPressure.values.map((v) => ({
+                  year: v.year,
+                  value: v.value > 100 ? 100 : v.value,
+                }));
+
+                const lastHumanPressure =
+                  humanPressureValues[humanPressureValues.length - 1];
+                const getLastHumanPressureValue = () => {
+                  return lastHumanPressure.value > 1
+                    ? Math.trunc(lastHumanPressure.value)
+                    : '<1';
+                };
                 return (
                   <div className={styles.humanPressureIndicator}>
                     <p className={styles.title}>{humanPressure.title}</p>
 
                     <p className={styles.percentage}>
-                      {Math.trunc(
-                        humanPressure.values[humanPressure.values.length - 1]
-                          .value
-                      )}
-                      %
+                      {getLastHumanPressureValue()}%
                     </p>
                     <div className={styles.hpChartContainer}>
                       <AreaChart
@@ -228,7 +237,7 @@ function SidebarCard({
                           strokeWidth: 2,
                           type: 'natural',
                         }}
-                        data={humanPressure.values}
+                        data={humanPressureValues}
                         xTicks={hpXAxis}
                         margin={{
                           top: 0,
