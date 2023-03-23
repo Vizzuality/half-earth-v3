@@ -50,6 +50,8 @@ const createNewCustomAOI = ({
     jsonGeometry,
     timestamp: Date.now(),
   };
+
+  // Here areas are saved to local forage. Areas are only saved to online DB when shared
   writeToForageItem(aoiId, forageStoredArea);
   setStoredArea(forageStoredArea);
 
