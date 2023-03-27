@@ -212,17 +212,17 @@ export const LAYERS_URLS = {
   [GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/human_pressure_55km/FeatureServer',
   [URBAN_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiledimageservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Theobald_bu_1000m_2017/ImageServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Urban_MerimNelson/MapServer',
   [BUILTUP_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiledimageservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Theobald_bu_1000m_2017/ImageServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Human_Pressures_Urban_and_Built_up/MapServer',
   [ENERGY_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiledimageservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Theobald_en_1000m_2017/ImageServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Human_Pressures_Energy_Production_and_Occupancy/MapServer',
   [TRANSPORTATION_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiledimageservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Theobald_tr_1000m_2017/ImageServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Human_Pressures_Transportation/MapServer',
   [AGRICULTURE_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiledimageservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Theobald_ag_1000m_2017/ImageServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Human_Pressures_Agriculture/MapServer',
   [INTRUSION_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiledimageservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Theobald_in_1000m_2017/ImageServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Human_Pressures_Human_Intrusion/MapServer',
   [IRRIGATED_HUMAN_PRESSURES_TILE_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Irrigated_MerimNelson/MapServer',
   [RAINFED_HUMAN_PRESSURES_TILE_LAYER]:
