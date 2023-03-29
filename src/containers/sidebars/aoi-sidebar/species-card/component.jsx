@@ -205,7 +205,11 @@ function Component(props) {
                       <Tooltip
                         className="light"
                         content={
-                          <div className={styles.tooltip}>{t('More info')}</div>
+                          <div className={styles.tooltip}>
+                            {t(
+                              'This is the estimated size of the species global range taking into account habitat preferences and the latest land cover layers'
+                            )}
+                          </div>
                         }
                         delay={100}
                         position="bottom"
@@ -231,12 +235,18 @@ function Component(props) {
                   percentage={individualSpeciesData.globalProtectedPercentage}
                   barAnnotation={individualSpeciesData.protectionTarget}
                   theme={insideModal && 'dark'}
+                  tooltipContent={t(
+                    'This is the percentage of the habitat-suitable range that is under some form of protection for conservation purposes.'
+                  )}
                 />
                 <SpeciesBar
                   title={t('Portion of global range in this area')}
                   className={styles.speciesBarContainer}
                   percentage={capPercentage(individualSpeciesData.per_global)}
                   theme={insideModal && 'dark'}
+                  tooltipContent={t(
+                    'This is the percentage of this species global habitat-suitable range found in this Area of Interest. A high percentage means that this species is unique to this area and not found in many other places.'
+                  )}
                 />
 
                 <div className={styles.sectionContainer}>
@@ -246,7 +256,11 @@ function Component(props) {
                       <Tooltip
                         className="light"
                         content={
-                          <div className={styles.tooltip}>{t('More info')}</div>
+                          <div className={styles.tooltip}>
+                            {t(
+                              'The Species Protection Score (SPS) indicates how adequately this species range is covered by protected areas. A conservation target or amount of protection needed is given for each species based on its global range size. The Area SPS is a percentage of the Global SPS proportional to the size of the Area of Interest and the species range within it.'
+                            )}
+                          </div>
                         }
                         delay={100}
                         position="bottom"
@@ -269,7 +283,11 @@ function Component(props) {
                       <Tooltip
                         className="light"
                         content={
-                          <div className={styles.tooltip}>{t('More info')}</div>
+                          <div className={styles.tooltip}>
+                            {t(
+                              'The IUCN Red List Categories and Criteria are intended to be an easily and widely understood system for classifying species at high risk of global extinction. It divides species into nine categories:  Not Evaluated, Data Deficient, Least Concern, Near Threatened, Vulnerable, Endangered, Critically Endangered, Extinct in the Wild and Extinct.'
+                            )}
+                          </div>
                         }
                         delay={100}
                         position="bottom"
