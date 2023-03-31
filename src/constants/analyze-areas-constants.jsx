@@ -214,14 +214,14 @@ export const getSidebarCardsConfig = (locale) => ({
       : t('Human impact'),
     description: ({ pressures }) => {
       if (pressures && REACT_APP_FEATURE_AOI_CHANGES) {
-        return `${t('Of the current area, ')}__${roundUpPercentage(
-          getTotalPressures(pressures)
-        )}${t('%__ is under human pressures')}, ${t(
-          'the majority of which are pressures from'
-        )}__ ${
-          getLandPressuresTranslatedLabels(t)[getMainPressure(pressures)] ||
-          getMainPressure(pressures)
-        }__.`;
+        // em = *{highHumanPressure}* is used here for the tooltip
+        return `${t(
+          'The current area is facing *{highHumanPressure}* from the following pressures. The percentage figures refer to the latest year of the time series (2017).',
+          {
+            percentage: roundUpPercentage(getTotalPressures(pressures)),
+            highHumanPressure: t('high human pressure'),
+          }
+        )}`;
       }
       if (pressures && !REACT_APP_FEATURE_AOI_CHANGES) {
         return `${t('Of the current area, ')}__${roundUpPercentage(

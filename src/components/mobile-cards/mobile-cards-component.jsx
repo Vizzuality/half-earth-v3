@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import { T } from '@transifex/react';
 
@@ -6,7 +7,6 @@ import useIsSafari from 'utils/user-agent-utils';
 
 import cx from 'classnames';
 import { animate, motion, useMotionValue } from 'framer-motion';
-import ReactMarkdown from 'react-markdown/with-html';
 
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
@@ -158,7 +158,6 @@ function CardsComponent({ cardsContent, setCurrent }) {
                         <ReactMarkdown
                           key={`source-${index + 1}`}
                           source={cardsContent[cardIndex].source}
-                          escapeHtml={false}
                         />
                       </div>
                     </div>

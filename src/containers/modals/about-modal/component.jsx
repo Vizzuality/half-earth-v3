@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 import { Modal } from 'he-components';
-import ReactMarkdown from 'react-markdown/with-html';
 
 import styles from './styles.module';
 
@@ -45,11 +44,11 @@ function AboutModal({ handleClose, isOpen, sections }) {
                 </div>
                 {description &&
                   description.map((paragraph) => (
-                    <ReactMarkdown
-                      key={paragraph}
+                    <div
+                      // eslint-disable-next-line react/no-danger
+                      dangerouslySetInnerHTML={{ __html: paragraph }}
                       className={styles.description}
-                      source={paragraph}
-                      escapeHtml={false}
+                      key={paragraph}
                     />
                   ))}
               </div>
