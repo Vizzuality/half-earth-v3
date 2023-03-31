@@ -100,9 +100,9 @@
     .description {
       @extend %bodyText;
       color: $white;
-      margin: 0;
       text-align: center;
       padding: 20px;
+      margin: 14px 0;
 
       a {
         color: $brand-color-main;

@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import { T, useT, useLocale } from '@transifex/react';
 
 import Tooltip from '@tippyjs/react';
-import ReactMarkdown from 'react-markdown/with-html';
 
 import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -32,6 +32,36 @@ import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
+function HumanPressuresTooltipComponent({ node, ...props }) {
+  return (
+    <span className={styles.tooltipContainer}>
+      <Tooltip
+        className="light"
+        interactive
+        appendTo={document.body}
+        content={
+          <div className={styles.tooltip}>
+            <T
+              _str="An area classified as experiencing high human pressure is considered to be in a human-dominated state and empirically relates to species threshold responses to habitat loss. See {kennedyEtAl} for more details."
+              kennedyEtAl={
+                <a
+                  href="https://onlinelibrary.wiley.com/doi/abs/10.1111/gcb.14549"
+                  title="human modification source Kennedy et al. 2019"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Kennedy et al. 2019
+                </a>
+              }
+            />
+          </div>
+        }
+      >
+        <span className={styles.tooltipTriggerText} {...props} />
+      </Tooltip>
+    </span>
+  );
+}
 
 function SidebarCard({
   map,
@@ -136,11 +166,9 @@ function SidebarCard({
               </p>
             </div>
           )}
-
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
           <p className={styles.hpLegendTitle}>{t('Land pressures')}</p>
         )}
-
         {hasLegend && (
           <SidebarLegend
             legendItem={cardCategory}
@@ -151,8 +179,12 @@ function SidebarCard({
         {cardDescription && (
           <ReactMarkdown
             className={styles.description}
-            source={cardDescription}
-          />
+            components={{
+              em: HumanPressuresTooltipComponent,
+            }}
+          >
+            {cardDescription}
+          </ReactMarkdown>
         )}
         {REACT_APP_FEATURE_AOI_CHANGES && cardCategory === PROTECTION_SLUG && (
           <div>
@@ -173,7 +205,6 @@ function SidebarCard({
             />
           </div>
         )}
-
         {REACT_APP_FEATURE_AOI_CHANGES &&
           cardCategory === PROTECTED_ATTRIBUTES_SLUG &&
           contextualData.DESIG && (
@@ -202,7 +233,6 @@ function SidebarCard({
               ))}
             </div>
           )}
-
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
           REACT_APP_FEATURE_AOI_CHANGES &&
           humanPressuresData && (

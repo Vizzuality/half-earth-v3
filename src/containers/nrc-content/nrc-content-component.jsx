@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import { Loading } from 'he-components';
-import ReactMarkdown from 'react-markdown/with-html';
 
 import Challenges from 'containers/nrc-content/nrc-challenges';
 import Footer from 'containers/nrc-content/nrc-footer';
@@ -221,7 +221,6 @@ function NrcContent({
                   <ReactMarkdown
                     key={challengesSources}
                     source={challengesSources}
-                    escapeHtml={false}
                   />
                 </div>
               )}

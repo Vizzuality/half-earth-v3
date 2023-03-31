@@ -46,8 +46,3 @@ export const MODALS = {
   HE: 'HE',
   SPECIES: 'SPECIES',
 };
-
-export const ABOUT_TABS = {
-  PARTNERS: 'partners',
-  INSTRUCTIONS: 'map_instructions',
-};
