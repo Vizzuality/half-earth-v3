@@ -213,16 +213,26 @@ export const getSidebarCardsConfig = (locale) => ({
       ? t('How much do humans affect this area?')
       : t('Human impact'),
     description: ({ pressures }) => {
-      if (pressures && REACT_APP_FEATURE_AOI_CHANGES) {
+      if (
+        REACT_APP_FEATURE_AOI_CHANGES &&
+        (!pressures || Object.values(pressures).every((p) => p.length === 0))
+      ) {
+        // em = *{highHumanPressure}* is used here for the tooltip
+        return `${t('The current area is not facing {highHumanPressures}', {
+          highHumanPressures: `*${t('high human pressures')}*`,
+        })}`;
+      }
+
+      if (REACT_APP_FEATURE_AOI_CHANGES) {
         // em = *{highHumanPressure}* is used here for the tooltip
         return `${t(
-          'The current area is facing *{highHumanPressure}* from the following pressures. The percentage figures refer to the latest year of the time series (2017).',
+          'The current area is facing {highHumanPressure} from the following pressures. The percentage figures refer to the latest year of the time series (2017).',
           {
-            percentage: roundUpPercentage(getTotalPressures(pressures)),
-            highHumanPressure: t('high human pressure'),
+            highHumanPressure: `*${t('high human pressure')}*`,
           }
         )}`;
       }
+
       if (pressures && !REACT_APP_FEATURE_AOI_CHANGES) {
         return `${t('Of the current area, ')}__${roundUpPercentage(
           getTotalPressures(pressures)

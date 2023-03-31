@@ -32,7 +32,7 @@ import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
-function TooltipComponent({ node, ...props }) {
+function HumanPressuresTooltipComponent({ node, ...props }) {
   return (
     <span className={styles.tooltipContainer}>
       <Tooltip
@@ -62,6 +62,7 @@ function TooltipComponent({ node, ...props }) {
     </span>
   );
 }
+
 function SidebarCard({
   map,
   layers,
@@ -179,7 +180,7 @@ function SidebarCard({
           <ReactMarkdown
             className={styles.description}
             components={{
-              em: TooltipComponent,
+              em: HumanPressuresTooltipComponent,
             }}
           >
             {cardDescription}
