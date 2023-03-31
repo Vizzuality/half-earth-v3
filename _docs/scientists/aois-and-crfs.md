@@ -5,7 +5,8 @@ parent: Scientists 🧑‍🔬
 permalink: /_docs/science/aois-crfs
 ---
 # Areas of Interest driven by Cloud Raster Format and webtools in the ESRI portal
-## Existing documents
+
+## Context
 - [Basecamp thread](https://basecamp.com/1756858/projects/13899003/messages/93850769){:target="_blank"} with videos.
 - [Rapid summaries report](https://docs.google.com/document/d/1ndUZfxKBKqpFgUymfge8JKyEcJu3r1IbsVCUQnjnWec/edit){:target="_blank"}: you will find some tricks to build the models of model builder, also a test of performance.
 - [CRF creation and storage](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"}: the process to build a crf is in this document.
@@ -14,7 +15,7 @@ permalink: /_docs/science/aois-crfs
 **IMPORTANT NOTE**
 This documentation has been written using the ArcGIS Pro version `2.8.3` and the ArcGIS Enterprise Portal version `10.9 (Release May 2021)`.
 
-# Creating a crf
+## **Creating a crf**
 Check the document of [CRF creation and storage](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"} for detailed steps. Before starting, make sure you are NOT building pyramids. This can add hours to the processing. Your Pro may be set to do this automatically. You can turn it off in Options (Access by clicking on the `Project` tab in the top left corner). If you don't want to make the change through the Options, you can simply make sure that you unclick the `Build pyramids` option when running a geoprocessing service.
 
 ![](/public/option-pyramids.jpg)
@@ -51,36 +52,66 @@ arcpy.md.BuildMultidimensionalInfo("land_encroachment", "Variable_new", "SliceNu
 
 ![](/public/multidimensional_info_table.png)
 
-# Where do the CRFs live?
-They live in an Azure bucket in the cloud. They are managed using Microsoft Azure Storage Explorer. Check [this doc]((https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"}) for specific details, section: `Storing crf files for the Half-Earth Project`.
-## Accessing the CRFs from ArcGIS Pro
-The Virtual machine  already has the `.acs` file that makes the connection. When a new project is created a connection is done via the ribbon. The `yaleCube.acs` file is located in `Documents/ArcGIS/Projects`
+### Where do the CRFs live?
+They live in an Azure bucket in the cloud. They are managed using Microsoft Azure Storage Explorer. There are different ways to access the CRFs. 
+
+### Accessing the CRFs from ArcGIS Pro
+The Virtual machine  already has the `.acs` file that makes the connection. The `yaleCube.acs` file is located in `Documents/ArcGIS/Projects`. When a new project is created a connection is done via the ribbon (Insert/Connections/Add Cloud Storage Connection). Then, the `yaleCube.acs` appears on the catalog, within the Cloud Stores folder and we can add the CRFs stored there to our map and work with them in ArcGIS Pro.
+
+### Accessing the CRFs from the webtools
+Once the webtools are created (process explained in the following sections), we can test them and used them calling the CRFs directly from the Azure bucket in the cloud. For that, we need to use the path `/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/` and add thr name of the CRF we need to use. 
+
+Currently (March 2023), the services in use require these CRFs:
+
+- For the biodiversity GP services:
+
+| **CRF** | **Path** |
+|--|--|
+|Birds|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/birds_equal_area_20211003.crf|
+|Amphibians|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/amphibians_equal_area_20211003.crf|
+|Mammals|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/mammals_equal_area_20211003.crf|
+|Reptiles|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/reptiles_equal_area_20211003.crf|
+
+- For the contextual GP services:
+
+| **CRF** | **Path** |
+|--|--|
+|Ecological Land Units (ELU)|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/ELU.crf|
+|Population|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/population2020.crf|
+|WDPA|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/WDPA_Terrestrial_CEA_June2021.crf|
+|Human Pressure: energy and extractive resources|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Extraction_TimeSeries_V2_Reclassify.crf|
+|Human Pressure: Transportation|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Transportation_TimeSeries_V2_Reclassify.crf|
+|Human Pressure: Agriculture|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Agriculture_TimeSeries_Reclassify.crf|
+|Human Pressure: Human intrusion|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/HumanIntrusion_TimeSeries_V3_Reclassify.crf|
+|Human Pressure: Urban and built-up|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Builtup_TimeSeries_Reclassify.crf|
 
 
-# **Building and publishing a _webtool_**
+## **Building and publishing a Geoprocessing Service or _webtool_**
 A Webtool is a geoprocessing tool that lives in the ArcGIS Enterprise Portal and can be called from the Half Earth Application to make calculations on the fly. The data shown when a user draws it's own area of interest relies completely on these tools.
 
-The first step is to create a Model locally in ArcGIS Pro, and then publish it to the Portal.
+To create these tools, the first steps is to build a model locally in ArcGIS Pro, and then publish it to the Portal.
 
-## Create a Model in ArcGIS Pro
+### Create a Model in ArcGIS Pro
 In the Catalogue, create a new model (Model Builder) in the project's Toolbox.
 ![](/public/new-model.png)
 
 Once the model is ready, indicate which ovals are Parameters by right clicking on them (a small `P` appears). Set their names so they are legible by the Front End, inside model builder rename the parameters (right click on the ovals). Currently we are using: `geometry`, `crf_name` and `output_table`.
 
-Use `calculate value` as much as possible (this is a Model Builder Utility tool), Python is quicker than adding extra geoprocessing tools.
+Use the tool `calculate value` as much as possible (this is a Model Builder Utility tool), Python is quicker than adding extra geoprocessing tools.
 
 ![](/public/model-builder-utilities.png)
 
-Since we are using Multidimensional cubes, it is key to set up the `Parallel processing` to `90%` in any of the geoprocessing tools added to the model.
+Avoid using the tool `Calculate field` because it generates problems when publishing the tool due to version incompatibilities between ArcGIS Pro and ArcGIS Enterprise Portal.
+
+Since we are using Multidimensional cubes, it is key to set up the `Parallel processing` to `90%` in any of the geoprocessing tools added to the model. That will speed up the processing. 
 
 **IMPORTANT NOTE:** Take into account the input and output coordinate reference systems. In this case, we are providing a Pseudo Mercator input (the geometry) and we are using it against an Equal Area projection (the crf). The geoprocessing tools automatically serve the output in the raster projection, without us having to manually add a re-projection step to change the crs of the geometry. However, it is a good practice to make explicit the CRS in the `Environments` tab of each of the geoprocessing tools.
 
-## How to publish a geoprocessing service
-These steps take into account that the Model (made with Model Builder) is done.
+### Publish a geoprocessing service
+Once our Model (made with Model Builder) is ready, we can publish it as a geoprocessing service. For that, we should follow the next steps:
 
 1. Create a small polygon using the Sample tool (click on the pencil that shows up on the left of `Input location raster or features` and create a small polygon in an area of interest). In the Table of contents right click on the new polygon and click on `Zoom to Layer` to show only the polygon.
-2. Create a small subset of the crf using `Subset Multidimensional raster`, set the environment setting of `extent` to "current Display". _This is so a very small portion of the crf is copied in the portal. So, the smaller the extent, the better, but make sure it is larger than the extent to the polygon used for testing._
+2. Create a small subset of the crf using `Subset Multidimensional raster`, set the environment setting of `extent` to "current Display". _The reason for doing this is to avoid copying the entire datasets in the portal. Since the Model cannot be published without layers, we generate samples of the crf that are limited to the extent of the geometry that we are using for testing. The smaller the extent, the better, but we need to make sure the crf samples are slightly larger than the polygon used for testing, otherwise the tool would fail._
 
 ![](/public/subset-crf.png)
 
@@ -108,7 +139,7 @@ These steps take into account that the Model (made with Model Builder) is done.
 9.  Analyse before publishing to check which parameters or info is missing on the description of the tool. Sometimes analyse has to be run a couple of times without having to change anything between analyses. There will always be a warning message saying that the data will be copied to the Portal, that is expected and ok.
 10.  Click on `Publish` 🚀
 
-### The Url to the geoprocessing service
+### Find the published GP Service on the Portal
 Once you have succeeded with the publication of a webtool, it appears in the `Portal` section of the Catalogue Panel. When hovering over the tool the url to the item in the Portal appears. Follow the url and it takes you to the Portal in the Web (You can also log in directly to the Portal with your credentials, go to Content and find the tool you want to check). The "look and feel"" of the portal is identical to ArcGIS online. Protect the tool from deletion and update to Public the sharing options in the settings. Then, in the Overview panel, on the bottom right you will find the url of the service. Click to View the tool in a new window.
 
 ![](/public/tool-url.png)
@@ -117,17 +148,24 @@ On this new window click on `Tasks`. The url that appears in the search bar is t
 
 Another way to get the URL is to click on the tool, and on the Overview panel Under Tools click on `Service URL`, this will take you directly to the Tasks View and you have the URL on the top.
 
-### Test Geoprocessing Services from the Portal
-In order to check that the GP service is working correctly before passing the URL to the FE, we can simulate the call that the FE would make in the ArcGIS REST API.
+### Test the new GP Service
+In order to check that the GP service is working correctly before passing the URL to the front-end, we can simulate the call that the front-end would make in the ArcGIS REST API.
+
+#### Access the tool
 * Log in to the Production Portal (https://heportal.esri.com/portal/home) with the required credentials
 * Go to Content > Production folder > choose a GP service
 * Click on Service URL
 ![](/public/GP_test_url.png)
 * Go to bottom of page and click on `Submit Job`
-* Depending on the GP service, you will have to provide information to a different number of boxes, but for sure you will have to provide a `geometry` and at least one path to a crf (the Biodiversity GP services only require the input of the taxa crf, while the Contextual data GP services will need the input of more crfs). The default values that appear in the boxes represent the data that was used to publish the service, aka they are a very small subset of the data and if you test with a geometry that is outside of that area you will get an error.
 ![](/public/GP_test_Submit_default.png)
-  - **geometry**: the geometry needs to have a very specific format. The structure passed is a json that can be obtained by using the tool `Features To Json` in ArcGIS Pro: make sure the output path is set outside of the gdb so it can be accessed easily, and tick the boxes for `Formatted JSON` and `Include Z values`
+
+#### Fill parameters
+To test the service, we need to provide a `geometry` and the path to the CRFs used by the webtool. 
+
+- **Geometry**: the geometry needs to have a very specific format. The structure passed is a json that can be obtained by using the tool `Features To Json` in ArcGIS Pro: make sure the output path is set outside of the gdb so it can be accessed easily, and tick the boxes for `Formatted JSON` and `Include Z values`.
+
 ![](/public/GP_test_FeaturesToJson.png)
+
 This is an example of the geometry you need to add to the box:
 ```json
  {
@@ -241,48 +279,78 @@ This is an example of the geometry you need to add to the box:
   ]
 }
 ```
-- **crfs**: Substitute with the name of the final crf with the complete path to the Azure bucket
 
-* Click on `Submit Job (POST)`. Then, click on `Check Job details` to see how the processing is going.
+- **CRFs:**
+
+Depending on the GP service, we will need to provide the path to one or more than one CRFs. For example, the biodiversity GP services only use one CRF, the one corresponding to their taxa. The Contextual GP service, on the other hand, extracts information from different CRFs, so we need to provide the path to all of them. 
+
+Note that the default values that appear in the boxes represent the data that was used to publish the service, that is, small subsets of the original CRFs. So if we test the tool using a different geometry but we do not change the default CRF paths, the new geometry will fall outside the extent of the subset data and we will get an error. For that reason, we need to make sure we substitute the default names with the complete path to the Azure bucket `/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft` and the name of the corresponding CRF.
+
+#### Submit job
+Once the boxes have the geometry in a json format and the paths to the required CRFs, we can click on `Submit Job (POST)`. To see how the process is going and check if there are any erros, we can click on `Check Job details` and get updates on the process progress.
 ![](/public/GP_test_CheckDetails.png)
-* Click several times on until the processing is done and you see the output tables. You can click on those tables to see the results as a JSON.
+
+
+When the process finishes, we get links to the output tables, which provide results in a JSON format.
 ![](/public/GP_test_output.png)
 
 
-## Particularities of certain tools within the Model Builder working with CRFs
-**IMPORTANT NOTE**
-This documentation has been written using the ArcGIS Pro version `2.6.4` and the Portal version `10.8.1`.
-### `Sample`
-This is a super powerful tool. Its power lays on the fact that it is the first tool developed to deal with multidimensional data. Our testing showed that the time of processing increases as the area of interest increases. To use it in the portal server it was necessary to provide a new field to the polygon that had an integer.
+## Current GP services in use
+
+The section [AOI_summaries](https://vizzuality.github.io/half-earth-v3/_docs/science/aois-summaries) provides information about the most recent Geoprocessing Services. They were created in March 2023 for the implementation of the AOI richer summaries, which included new calculations such as the SPS and the incorporation of new human pressure layers. 
+
+* [AmphibiansProd_SPS](https://heportal.esri.com/portal/home/item.html?id=7063ab2d8bc9477bb72f640f2c3b4108)
+* [BirdsProd_SPS](https://heportal.esri.com/portal/home/item.html?id=13c50ba2eca34926bd7fad29942d3d43)
+* [MammalsProd_SPS](https://heportal.esri.com/portal/home/item.html?id=7a2b896ed91d47f8975df88650316273)
+* [ReptilesProd_SPS](https://heportal.esri.com/portal/home/item.html?id=a5c9ec0b277d432b8d6ed99ed6925c65)
+* [Contextual_Prod](https://heportal.esri.com/portal/home/item.html?id=584cc9c81e644bd9a39273b3213f2c16)
+
+## Historic of AOIs and its maintenance
+
+The AOIs created by users can be shared with an url. When the urls are created, the data is also sent to an AGOL table where the data is stored. When the recepient uses the url, the same data will be displayed without having to call the GP service. Currently, this is the [Service being tested](https://eowilson.maps.arcgis.com/home/item.html?id=26aca70f8b8247aea489decdee1fe537), but there are previous versions in the folder #2 aois ([aoi-historic](https://eowilson.maps.arcgis.com/home/item.html?id=62059a44e8dc4b1abb2d704cae91eb77) and [aoi-historic-dev](https://eowilson.maps.arcgis.com/home/item.html?id=ac362edf17cb4c90a15507511e2b9444))
+
+### Cleaning the historic AOIs service
+
+[The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`.   
+
+---
+
+## Information from the first iteration of geoprocessing services
+
+Just in case some of this information is needed in the future, we have kept the documentation written when the first GP services were created (2021):
+
+### **Some details about the tools used within the GP Services when working with CRFs**
+
+**NOTE:** This documentation has been written using the ArcGIS Pro version `2.6.4` and the Portal version `10.8.1`, so there might be some differences with newer versions.
+
+* `Sample`: This is a super powerful tool. Its power lays on the fact that it is the first tool developed to deal with multidimensional data. Our testing showed that the time of processing increases as the area of interest increases. To use it in the portal server it was necessary to provide a new field to the polygon that had an integer.
 
 ![](/public/unique_field.png)
 
-### `Zonal Statistics as Table`
-Our testing showed that the time of processing increased as the number of slices increased, not the area of interest.
+* `Zonal Statistics as Table`: Our testing showed that the time of processing increased as the number of slices increased, not the area of interest.
 
-### Rasterizing a polygon and getting the area (`Polygon to Raster`)
-When rasterizing a polygon for the purpose of calculating proportions it is key that the cell size is the same as the input crf. In this case, opposite to `Sample`, the field that worked well was `OBJECTID`. In the ArcGIS Pro version we were working, the raster created did not have an attribute table. Within Model Builder we got the number of pixels using `Calculate Value` and the following Python codeblock:
-`getAreaRaster(r"%custom_raster%")`
-**It is key to use the right double quotes.**
-```Python
-import arcpy
-import numpy
-def getAreaRaster(rst):
+* `Polygon to Raster`: When rasterizing a polygon for the purpose of calculating proportions it is key that the cell size is the same as the input crf. In this case, opposite to `Sample`, the field that worked well was `OBJECTID`. In the ArcGIS Pro version we were working, the raster created did not have an attribute table. Within Model Builder we got the number of pixels using `Calculate Value` and the following Python codeblock:
+>`getAreaRaster(r"%custom_raster%")`
+>**It is key to use the right double quotes.**
+>```Python
+>import arcpy
+>import numpy
+>def getAreaRaster(rst):
     arr = arcpy.da.TableToNumPyArray(rst, "COUNT")
     a,= arr.tolist()[0]
     return a
-```
-`%custom_raster%` refers to the output from `Polygon to Raster`. The `%` uses ESRI's in-line variable scripting.
+>```
+>`%custom_raster%` refers to the output from `Polygon to Raster`. The `%` uses ESRI's in-line variable scripting.
 
-### Filtering a table using SQL
-To obtain only the necessary rows, we have used `Table Select`. This tool uses an SQL expression that is built using `Calculate value` and python codeblock.
+* `Filtering a table using SQL`: To obtain only the necessary rows, we have used `Table Select`. This tool uses an SQL expression that is built using `Calculate value` and python codeblock.
 
-#### Example 1: Getting the top 20% most prevalent species
-`getTopRows(r"%table_in%")`
-```Python
-import arcpy
-import numpy as np
-def getTopRows(table, prop = 0.2 ):
+Example 1: Getting the top 20% most prevalent species
+
+>`getTopRows(r"%table_in%")`
+>```Python
+>import arcpy
+>import numpy as np
+>def getTopRows(table, prop = 0.2 ):
     arr = arcpy.da.TableToNumPyArray(table,['SliceNumber',"COUNT"])
     n = int(round(prop * len(arr), 0))
     sort_arr = np.sort(arr, order = "COUNT",)[0:n]
@@ -291,16 +359,15 @@ def getTopRows(table, prop = 0.2 ):
     res = ', '.join(map(str, arr_int))
     out = f"SliceNumber IN ({res})"
     return out
-```
+>```
 
-#### Example 2: Getting only the rows with presence
-This might be unecessary if used in `Select Table`. `Select Table` allows for a `WHERE` query.
+Example 2: Getting only the rows with presence. This might be unecessary if used in `Select Table`. `Select Table` allows for a `WHERE` query.
 
-`getPresentSpecies(r"%table_in%")`
-```Python
-import arcpy
-import numpy as np
-def getPresentSpecies(table):
+>`getPresentSpecies(r"%table_in%")`
+>```Python
+>import arcpy
+>import numpy as np
+>def getPresentSpecies(table):
     arr = arcpy.da.TableToNumPyArray(table,["SliceNumber","presence"])
     out_arr = arr[arr["presence"]>0]
     arr_lit = out_arr["SliceNumber"].tolist()
@@ -308,20 +375,18 @@ def getPresentSpecies(table):
     res = ', '.join(map(str, arr_int))
     out = f"SliceNumber IN ({res})"
     return out
-```
+>```
 
-# About the limit of records returned
+**About the limit of records returned:**
 If you forget to set a high limit for the records returned, the front end might inform of this limit. In the object `w` returned, check `value.exceededTransferLimit`.
 
-# Current geoprocessing services in use
-
-## Models from Model Builder as Python code
+### Models from Model Builder as Python code
 The process inside the Geoprocessing service can be found in the `he-scratchfolder` [repo](https://github.com/Vizzuality/he-scratchfolder/tree/master/ModelBuilderGPs).
 
-## Creating the lookup tables
+### Creating the lookup tables
 The process of creation of the tables consist on getting the slice number and matching name from the raster mosaic dataset and then merge using the scientific name with data from MOL. ([notebook](https://eowilson.maps.arcgis.com/home/item.html?id=ea3b17b950114b909a62c5a791cfe539)).
 
-
+### First iteration of GP Services
 | **Front end element** | **Crf name** |**Crf variable**| **Gp service** | **Output to use** | **Field to use from response** | **AGOL table to use** | **AGOL field to use** |
 |--|--|--|--|--|--|
 | population | population2020.crf |_none_| [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd)|output_table_population|`SUM` | _none_   | _none_ |
@@ -340,7 +405,7 @@ The process of creation of the tables consist on getting the slice number and ma
 Population: WorldPop 2020 - [web](https://www.worldpop.org/geodata/summary?id=24777)
 World Terrestrial Ecosystem - [Living Atlas](https://eowilson.maps.arcgis.com/home/item.html?id=926a206393ec40a590d8caf29ae9a93e)
 
-## Querying the AGOL tables
+### Querying the AGOL tables
 For those Geoprocessing services that require to query information from a table in ArcGIS Online, Arcade can be used to return the information ([more about Arcade in this docs](/_docs/science/arcade)).
 The [`Filter`](https://developers.arcgis.com/arcade/function-reference/data_functions/#filter) function accepts an SQL expression and a layer.
 
@@ -353,12 +418,4 @@ var val = Filter(lay, sqlExpr)
 return val
 ```
 
-# Historic of AOIs and its maintenance
 
-The AOIs created by users can be shared with an url. When the urls is created, the data is also sent to an AGOL table where the data is stored. When the recepient uses the url, the same data will be displayed without having to call the GP service. Currently, this is the [Service being tested](https://eowilson.maps.arcgis.com/home/item.html?id=26aca70f8b8247aea489decdee1fe537), but there are previous versions in the folder #2 aois ([aoi-historic](https://eowilson.maps.arcgis.com/home/item.html?id=62059a44e8dc4b1abb2d704cae91eb77) and [aoi-historic-dev](https://eowilson.maps.arcgis.com/home/item.html?id=ac362edf17cb4c90a15507511e2b9444))
-
-## Notebooks in ArcGIS online
-ArcGIS online allows to run jupyter notebooks. There are different kinds, some cost credits, but for small tasks they are included. Users need to be provided the permissions to use the Notebooks. Once a notebook is saved as an item in the organisation it is possible to schedule tasks. Check [ESRI's documentation](https://doc.arcgis.com/en/arcgis-online/create-maps/prepare-a-notebook-for-automated-execution.htm) on how to schedule tasks.
-## Cleaning the historic AOIs service
-
-[The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`.
