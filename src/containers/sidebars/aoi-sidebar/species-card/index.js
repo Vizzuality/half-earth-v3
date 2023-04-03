@@ -144,8 +144,8 @@ function SpeciesCardContainer(props) {
     ) {
       setSPSData(
         species.map((s) => ({
-          SPS_AOI: s.SPS_AOI || s.SPS_aoi,
-          SPS_global: s.SPS || s.SPS_global,
+          SPS_AOI: s.SPS_AOI === 0 ? 0 : s.SPS_AOI || s.SPS_aoi,
+          SPS_global: s.SPS === 0 ? 0 : s.SPS || s.SPS_global,
           SliceNumber: s.SliceNumber || s.sliceNumber,
           per_global: s.per_global,
         }))
@@ -299,6 +299,7 @@ function SpeciesCardContainer(props) {
           const individualSPSData = SPSData.find(
             (d) => d.SliceNumber === selectedSpecies.sliceNumber
           );
+          console.log(individualSPSData);
           const SPS_AOI =
             individualSPSData.SPS_aoi ||
             (individualSPSData.SPS_aoi === 0 ? 0 : individualSPSData.SPS_AOI);
