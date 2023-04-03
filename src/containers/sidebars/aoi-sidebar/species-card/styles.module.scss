@@ -78,6 +78,16 @@
     }
 
 
+    .speciesBarContainer {
+      color: $grey-text;
+    }
+
+    .speciesDataContainer {
+      .sectionTitleWrapper {
+        color: $grey-text;
+      }
+    }
+
     .commonName {
       color: $white !important;
     }
@@ -270,7 +280,7 @@
       align-items: center;
       display: flex;
       position: relative;
-      color: $grey-text;
+      color: $dark-text;
 
 
       p {
@@ -281,7 +291,7 @@
 
   .speciesBarContainer {
     border-bottom: 1px dashed $grey-text-hover;
-    color: $grey-text;
+    color: $dark-text;
   }
 
   .iconWrapper {
