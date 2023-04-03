@@ -215,7 +215,10 @@ export const getSidebarCardsConfig = (locale) => ({
     description: ({ pressures }) => {
       if (
         REACT_APP_FEATURE_AOI_CHANGES &&
-        (!pressures || Object.values(pressures).every((p) => p.length === 0))
+        (!pressures ||
+          Object.values(pressures).every(
+            (p) => !p || p.length === 0 || p.every((v) => v.value === 0)
+          ))
       ) {
         // em = *{highHumanPressure}* is used here for the tooltip
         return `${t('The current area is not facing {highHumanPressures}', {
