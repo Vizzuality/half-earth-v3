@@ -428,9 +428,9 @@ export const LAYERS_URLS = {
   [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1_updated/FeatureServer/0',
   [WDPA_OECM_FEATURE_LAYER]: [
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp50_nspecies2/FeatureServer/0',
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp90_nspecies/FeatureServer/0',
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp99_nspecies/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification50/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification90/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification99/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/b0445839687d4169aaf173be07e04a7a/rest/services/wdpa_precalculated_aoi_summaries/FeatureServer/0',
