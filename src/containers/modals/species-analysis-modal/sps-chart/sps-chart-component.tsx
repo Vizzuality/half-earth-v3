@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useMemo, useState } from 'react';
 
+import cx from 'classnames';
+
 import COLORS from 'styles/settings.scss';
 
 import styles from './styles.module.scss';
@@ -47,7 +49,9 @@ function SpsChart({
   return (
     <>
       <div
-        className={styles.tooltip}
+        className={cx(styles.tooltip, {
+          [styles.inverted]: tooltipPosition?.left > width - 200,
+        })}
         style={tooltipPosition || { visibility: 'hidden' }}
       >
         <div className={styles.tooltipText}>{tooltipText}</div>

@@ -30,6 +30,7 @@
   position: absolute;
   display: flex;
   align-items: center;
+  min-width: 100px;
 
   .tooltipText {
     background-color: $white;
@@ -48,5 +49,25 @@
     border-right: 5px solid $white;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
+  }
+
+  &.inverted {
+    transform: translate(calc(-100% - 10px), -10px);
+
+    &::before {
+      border: 0;
+    }
+
+    &::after {
+      content: '';
+      width: 0;
+      height: 0;
+      transform: none;
+
+      border-right: none;
+      border-left: 5px solid $white;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
   }
 }
