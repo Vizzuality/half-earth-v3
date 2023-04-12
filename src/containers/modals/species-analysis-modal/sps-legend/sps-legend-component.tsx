@@ -57,7 +57,7 @@ function SpsLegend({
         title={<T _str="Portion of global range (%)" />}
         subtitle={
           <>
-            <T _str="Nº of species per range" /> {dragToSelectText}
+            <T _str="Number of species per range" /> {dragToSelectText}
           </>
         }
         {...globalRangeSelected}
@@ -68,7 +68,7 @@ function SpsLegend({
         title={<T _str="Global SPS" />}
         subtitle={
           <>
-            <T _str="Nº of species per SPS" /> {dragToSelectText}
+            <T _str="Number of species per SPS" /> {dragToSelectText}
           </>
         }
         {...SPSSelected}
