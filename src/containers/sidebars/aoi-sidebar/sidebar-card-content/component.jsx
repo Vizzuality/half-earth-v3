@@ -95,7 +95,7 @@ function SidebarCard({
     [contextualData, locale]
   );
 
-  const hpXAxis = useMemo(() => {
+  const hummanPressuresXAxis = useMemo(() => {
     const existingValues =
       humanPressuresData && Object.values(humanPressuresData);
     const nonEmptyValues =
@@ -126,6 +126,66 @@ function SidebarCard({
   const protectedAreaChartWidth = 320;
   const PRESSURES_CHART_WIDTH = 166;
   const PRESSURES_CHART_HEIGHT = 66;
+  const renderHumanPressure = () => (
+    <div className={styles.humanPressureIndicators}>
+      {Object.keys(humanPressuresData).map((key) => {
+        const humanPressure = humanPressuresData[key];
+        if (
+          !humanPressure ||
+          !hummanPressuresXAxis ||
+          humanPressure.values.every((py) => py.value === 0)
+        )
+          return null;
+        // Cap value to 100 as more than 100 is only caused by errors on the calculations
+        const humanPressureValues = humanPressure.values.map((v) => ({
+          year: v.year,
+          value: v.value > 100 ? 100 : v.value,
+        }));
+
+        const lastHumanPressure =
+          humanPressureValues[humanPressureValues.length - 1];
+        const getLastHumanPressureValue = () => {
+          return lastHumanPressure.value > 1
+            ? Math.trunc(lastHumanPressure.value)
+            : '<1';
+        };
+        return (
+          <div className={styles.humanPressureIndicator}>
+            <p className={styles.title}>{humanPressure.title}</p>
+
+            <p className={styles.percentage}>{getLastHumanPressureValue()}%</p>
+            <div className={styles.hpChartContainer}>
+              <AreaChart
+                area={{
+                  key: 'value',
+                  stroke: COLORS.gold,
+                  fill: 'url(#gradientColor)',
+                  strokeWidth: 2,
+                  type: 'natural',
+                }}
+                data={humanPressureValues}
+                xTicks={hummanPressuresXAxis}
+                margin={{
+                  top: 0,
+                  right: 0,
+                  left: -PRESSURES_CHART_WIDTH,
+                  bottom: 0,
+                }}
+                height={PRESSURES_CHART_HEIGHT}
+                width={PRESSURES_CHART_WIDTH}
+                domain={
+                  hummanPressuresXAxis && [
+                    Math.min(...hummanPressuresXAxis),
+                    Math.max(...hummanPressuresXAxis),
+                  ]
+                }
+              />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 
   const isCustom = contextualData?.isCustom;
 
@@ -235,68 +295,8 @@ function SidebarCard({
           )}
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
           REACT_APP_FEATURE_AOI_CHANGES &&
-          humanPressuresData && (
-            <div className={styles.humanPressureIndicators}>
-              {Object.keys(humanPressuresData).map((key) => {
-                const humanPressure = humanPressuresData[key];
-                if (
-                  !humanPressure ||
-                  !hpXAxis ||
-                  humanPressure.values.every((py) => py.value === 0)
-                )
-                  return null;
-                // Cap value to 100 as more than 100 is only caused by errors on the calculations
-                const humanPressureValues = humanPressure.values.map((v) => ({
-                  year: v.year,
-                  value: v.value > 100 ? 100 : v.value,
-                }));
-
-                const lastHumanPressure =
-                  humanPressureValues[humanPressureValues.length - 1];
-                const getLastHumanPressureValue = () => {
-                  return lastHumanPressure.value > 1
-                    ? Math.trunc(lastHumanPressure.value)
-                    : '<1';
-                };
-                return (
-                  <div className={styles.humanPressureIndicator}>
-                    <p className={styles.title}>{humanPressure.title}</p>
-
-                    <p className={styles.percentage}>
-                      {getLastHumanPressureValue()}%
-                    </p>
-                    <div className={styles.hpChartContainer}>
-                      <AreaChart
-                        area={{
-                          key: 'value',
-                          stroke: COLORS.gold,
-                          fill: 'url(#gradientColor)',
-                          strokeWidth: 2,
-                          type: 'natural',
-                        }}
-                        data={humanPressureValues}
-                        xTicks={hpXAxis}
-                        margin={{
-                          top: 0,
-                          right: 0,
-                          left: -PRESSURES_CHART_WIDTH,
-                          bottom: 0,
-                        }}
-                        height={PRESSURES_CHART_HEIGHT}
-                        width={PRESSURES_CHART_WIDTH}
-                        domain={
-                          hpXAxis && [
-                            Math.min(...hpXAxis),
-                            Math.max(...hpXAxis),
-                          ]
-                        }
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+          humanPressuresData &&
+          renderHumanPressure()}
         <SourceAnnotation
           theme="dark"
           metaDataSources={metadata && metadata.source}
