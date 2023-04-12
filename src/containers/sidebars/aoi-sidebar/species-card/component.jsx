@@ -258,7 +258,7 @@ function Component(props) {
                         content={
                           <div className={styles.tooltip}>
                             {t(
-                              'The Species Protection Score (SPS) indicates how adequately this species range is covered by protected areas. A conservation target or amount of protection needed is given for each species based on its global range size. The Area SPS is a percentage of the Global SPS proportional to the size of the Area of Interest and the species range within it.'
+                              'The Species Protection Score (SPS) indicates how adequately this species range is covered by protected areas. A conservation target or amount of protection needed is given for each species based on its global range size. The Area SPS is a percentage of the Global SPS proportional to the size of the Area of Interest and the species range within it. The SPS ranges from 0-100.'
                             )}
                           </div>
                         }
