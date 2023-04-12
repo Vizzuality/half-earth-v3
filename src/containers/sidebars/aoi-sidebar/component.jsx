@@ -29,11 +29,9 @@ import { getHumanPressuresLandUse } from 'constants/human-pressures';
 import {
   WDPA_OECM_FEATURE_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  LAND_HUMAN_PRESSURES,
 } from 'constants/layers-slugs';
-import {
-  MERGED_LAND_HUMAN_PRESSURES,
-  ALL_TAXA_PRIORITY,
-} from 'constants/metadata';
+import { ALL_TAXA_PRIORITY } from 'constants/metadata';
 import { getWDPALayers } from 'constants/protected-areas';
 import {
   getAOIContextualData,
@@ -356,7 +354,7 @@ function AOISidebar({
                 layers={humanPressuresLandUse}
                 contextualData={contextualData}
                 cardCategory={LAND_HUMAN_PRESSURES_SLUG}
-                metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
+                metadataSlug={LAND_HUMAN_PRESSURES}
               />
 
               {isCustomArea && REACT_APP_FEATURE_AOI_CHANGES && (

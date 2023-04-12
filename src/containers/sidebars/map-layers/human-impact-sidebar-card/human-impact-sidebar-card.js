@@ -14,7 +14,10 @@ import {
 import ContentfulService from 'services/contentful';
 
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
-import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
+import {
+  LAND_HUMAN_PRESSURES,
+  MARINE_HUMAN_PRESSURES,
+} from 'constants/layers-slugs';
 import metadataConfig from 'constants/metadata';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
@@ -26,16 +29,28 @@ const actions = { ...metadataActions, ...urlActions };
 function Container(props) {
   const { changeGlobe, activeLayers } = props;
 
-  const [metadataSource, setMetadataSource] = useState(null);
+  const [marineMetadataSource, setMarineMetadataSource] = useState(null);
+  const [landMetadataSource, setLandMetadataSource] = useState(null);
   const locale = useLocale();
 
   useEffect(() => {
     ContentfulService.getMetadata(
-      metadataConfig[MARINE_AND_LAND_HUMAN_PRESSURES],
+      metadataConfig[MARINE_HUMAN_PRESSURES],
       locale
     ).then((data) => {
       if (data) {
-        setMetadataSource(data.source);
+        setMarineMetadataSource(data.source);
+      }
+    });
+  }, [locale]);
+
+  useEffect(() => {
+    ContentfulService.getMetadata(
+      metadataConfig[LAND_HUMAN_PRESSURES],
+      locale
+    ).then((data) => {
+      if (data) {
+        setLandMetadataSource(data.source);
       }
     });
   }, [locale]);
@@ -71,7 +86,8 @@ function Container(props) {
   return (
     <Component
       handleLayerToggle={handleLayerToggle}
-      source={metadataSource}
+      landSource={landMetadataSource}
+      marineSource={marineMetadataSource}
       {...props}
     />
   );

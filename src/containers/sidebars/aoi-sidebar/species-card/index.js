@@ -299,7 +299,6 @@ function SpeciesCardContainer(props) {
           const individualSPSData = SPSData.find(
             (d) => d.SliceNumber === selectedSpecies.sliceNumber
           );
-          console.log(individualSPSData);
           const SPS_AOI =
             individualSPSData.SPS_aoi ||
             (individualSPSData.SPS_aoi === 0 ? 0 : individualSPSData.SPS_AOI);

@@ -38,7 +38,8 @@ import styles from './human-impact-sidebar-card-styles.module.scss';
 
 function HumanImpactSidebarCardComponent({
   map,
-  source,
+  landSource,
+  marineSource,
   activeLayers,
   className,
   handleLayerToggle,
@@ -174,6 +175,11 @@ function HumanImpactSidebarCardComponent({
             {allHumanPressuresSelected ? t('Unselect all') : t('Select all')}
           </button>
         </div>
+        <SourceAnnotation
+          theme="light"
+          metaDataSources={landSource}
+          className={styles.sourceContainer}
+        />
         <hr className={hrTheme.dark} />
         <span className={styles.layersTitle}>{texts.marineLayersTitle}</span>
         <SidebarLegend
@@ -213,7 +219,7 @@ function HumanImpactSidebarCardComponent({
         </div>
         <SourceAnnotation
           theme="light"
-          metaDataSources={source}
+          metaDataSources={marineSource}
           className={styles.sourceContainer}
         />
       </div>

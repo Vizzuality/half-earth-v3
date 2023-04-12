@@ -28,10 +28,10 @@ export const LAND_COUNTRY_PRIORITY_LAYER = 'land_country_priority_layer';
 export const MARINE_COUNTRY_PRIORITY_LAYER = 'marine_country_priority_layer';
 
 // Terrestrial human pressures tiled layers.
-export const MARINE_AND_LAND_HUMAN_PRESSURES =
-  'marine_and_land_human_pressures';
 export const LAND_HUMAN_PRESSURES = 'land_human_pressures';
+export const LAND_HUMAN_PRESSURES_METADATA_SLUG = 'land_human_pressures_new';
 export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures';
+
 // Land human pressures
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
