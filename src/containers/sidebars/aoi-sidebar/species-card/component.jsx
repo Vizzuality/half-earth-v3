@@ -245,7 +245,7 @@ function Component(props) {
                   percentage={capPercentage(individualSpeciesData.per_global)}
                   theme={insideModal && 'dark'}
                   tooltipContent={t(
-                    'This is the percentage of this species global habitat-suitable range found in this Area of Interest. A high percentage means that this species is unique to this area and not found in many other places.'
+                    'This is the percentage of this species global habitat-suitable range found in this Area of Interest. A high percentage means that this species is unique to this area and not found in many other places. The vertical line is the species conservation target.'
                   )}
                 />
 
