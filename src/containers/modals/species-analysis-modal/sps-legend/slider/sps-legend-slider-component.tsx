@@ -18,14 +18,11 @@ function Slider({
   setFunction,
 }: SPSSliderProps) {
   const constraintsRef = useRef(null);
-  const [isDragging, setIsDragging] = React.useState(false);
   const dragHandleProps = {
     setFunction,
     min,
     max,
     valuesLength: bucketValues.length,
-    handleDragStart: () => setIsDragging(true),
-    handleDragEnd: () => setIsDragging(false),
   };
   const barHeights = useMemo<number[]>(() => {
     const maxHeight: number = Math.max(...bucketValues);
@@ -67,11 +64,9 @@ function Slider({
             >
               {renderTick(i)}
               {i === bucketValues.length - 1 && renderTick(i + 1)}
-              {isDragging && (
-                <div className={styles.barValue}>
-                  {Math.round(bucketValues[i])}
-                </div>
-              )}
+              <div className={styles.barValue}>
+                {Math.round(bucketValues[i])}
+              </div>
             </div>
           );
         })}
