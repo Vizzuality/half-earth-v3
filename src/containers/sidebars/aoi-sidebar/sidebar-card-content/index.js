@@ -80,7 +80,7 @@ function Container(props) {
     const titles = {
       agriculture: t('Agriculture'),
       builtup: t('Urban and Built up'),
-      extraction: t('Energy and Occupancy'),
+      extraction: t('Energy and extractive resources'),
       intrusion: t('Human intrusion'),
       transportation: t('Transportation'),
     };

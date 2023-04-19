@@ -88,7 +88,7 @@ const LAND_PRESSURES_LABELS = REACT_APP_FEATURE_AOI_CHANGES
 export const getLandPressuresTranslatedLabels = (t) =>
   REACT_APP_FEATURE_AOI_CHANGES
     ? {
-        energy: t('energy and occupancy'),
+        energy: t('energy and extractive resources'),
         transportation: t('transportation'),
         builtup: t('urban and built up'),
         agriculture: t('agriculture pressures'),

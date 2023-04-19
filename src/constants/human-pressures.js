@@ -40,7 +40,7 @@ export const PRESSURES_SLUGS = {
 };
 
 export const getHumanPressuresLandUse = () => {
-  const ENERGY = t('Energy and Occupancy');
+  const ENERGY = t('Energy and extractive resources');
   const TRANSPORTATION = t('Transportation');
   const BUILTUP = t('Urban and Built up');
   const AGRICULTURE = t('Agriculture pressures');
