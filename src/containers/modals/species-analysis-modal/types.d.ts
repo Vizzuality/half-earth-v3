@@ -3,6 +3,7 @@ export type SPSData = {
   SPS_global: number;
   SliceNumber: number;
   per_global: number;
+  id: string;
 };
 
 type IndividualSpeciesDataType = {
@@ -25,6 +26,7 @@ type IndividualSpeciesDataType = {
   name: string;
   protectionTarget: number;
   sliceNumber: number;
+  id: string;
 };
 
 export type Range = {
@@ -45,6 +47,7 @@ export type SpeciesData = {
   per_global: number;
   protectionTarget: number;
   sliceNumber: number;
+  id: string;
 };
 
 export type SpeciesModalProps = {

@@ -148,6 +148,7 @@ function SpeciesCardContainer(props) {
           SPS_global: s.SPS === 0 ? 0 : s.SPS || s.SPS_global,
           SliceNumber: s.SliceNumber || s.sliceNumber,
           per_global: s.per_global,
+          id: s.id,
         }))
       );
     }

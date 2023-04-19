@@ -52,12 +52,12 @@ const isHighlighted = ({
 };
 const getHighlightedColor = (
   d: SPSData,
-  selectedSpeciesSliceNumber: number,
+  selectedSpeciesId: string,
   SPSSelected: Range,
   globalRangeSelected: Range
 ) => {
-  const { per_global, SPS_global, SliceNumber } = d;
-  if (SliceNumber === selectedSpeciesSliceNumber) {
+  const { per_global, SPS_global, id } = d;
+  if (id === selectedSpeciesId) {
     return COLORS.white;
   }
   return isHighlighted({
@@ -73,7 +73,7 @@ const getHighlightedColor = (
 export const useD3Effect = ({
   width,
   height,
-  selectedSpeciesSliceNumber,
+  selectedSpeciesId,
   SPSSelected,
   globalRangeSelected,
   data,
@@ -85,7 +85,7 @@ export const useD3Effect = ({
 }: {
   width: SPSChartProps['width'];
   height: number;
-  selectedSpeciesSliceNumber: number;
+  selectedSpeciesId: string;
   SPSSelected: SPSChartProps['SPSSelected'];
   globalRangeSelected: SPSChartProps['globalRangeSelected'];
   data: SPSChartProps['data'];
@@ -234,13 +234,11 @@ export const useD3Effect = ({
         .attr('transform', getPointPosition)
         .append('circle')
         .attr('class', styles.point)
-        .attr('r', (d: SPSData) =>
-          d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2
-        )
+        .attr('r', (d: SPSData) => (d.id === selectedSpeciesId ? 5 : 2))
         .attr('fill', (d: SPSData) =>
           getHighlightedColor(
             d,
-            selectedSpeciesSliceNumber,
+            selectedSpeciesId,
             SPSSelected,
             globalRangeSelected
           )
@@ -248,13 +246,13 @@ export const useD3Effect = ({
         .attr('stroke', (d: SPSData) =>
           getHighlightedColor(
             d,
-            selectedSpeciesSliceNumber,
+            selectedSpeciesId,
             SPSSelected,
             globalRangeSelected
           )
         )
         .attr('stroke-width', (d: SPSData) =>
-          d.SliceNumber === selectedSpeciesSliceNumber ? 10 : 3
+          d.id === selectedSpeciesId ? 10 : 3
         )
         .on('mouseenter', (d: SPSData) => {
           if (speciesData) {
@@ -308,7 +306,7 @@ export const useD3Effect = ({
   }, [
     width,
     t,
-    selectedSpeciesSliceNumber,
+    selectedSpeciesId,
     SPSSelected,
     globalRangeSelected,
     data,

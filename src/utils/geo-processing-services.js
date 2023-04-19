@@ -159,6 +159,9 @@ const parseCommonName = (f) => {
   return f.attributes.common_name && f.attributes.common_name.split(',');
 };
 
+const getId = (crfName, sliceNumber) =>
+  `${crfName.split('_')[0]}-${sliceNumber}`;
+
 export function getCustomAOISpeciesData(crfName, geometry) {
   return new Promise((resolve, reject) => {
     getCrfData({
@@ -208,6 +211,7 @@ export function getCustomAOISpeciesData(crfName, geometry) {
                   SPS_AOI: crfInfo.SPS_AOI,
                   meet_target: crfInfo.meet_target,
                   SPS_increase: crfInfo.SPS_increase,
+                  id: getId(crfName, attributes.SliceNumber),
                 };
               })
               .filter((f) => f.name !== null);
@@ -260,6 +264,7 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
               protectionTarget: f.attributes.conservation_target,
               conservationConcern: f.attributes.conservation_concern,
               SPS_global: f.attributes.SPS,
+              id: getId(crfName, f.attributes.SliceNumber),
               ...crfInfo,
             };
           })
@@ -295,7 +300,7 @@ export const setPrecalculatedSpeciesData = (
   getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(
     (data) => {
       setTaxaData(data);
-      handleLoadedTaxaData('amphibians');
+      handleLoadedTaxaData('amphibians', AMPHIBIANS);
     }
   );
 };

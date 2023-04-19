@@ -26,15 +26,14 @@ function SpsChart({
     { top: number; left: number } | undefined
   >();
   const [tooltipText, setTooltipText] = useState<string | undefined>();
-  const { sliceNumber: selectedSpeciesSliceNumber }: { sliceNumber: number } =
-    selectedSpecies;
+  const { id: selectedSpeciesId }: { id: string } = selectedSpecies;
   const height: number = useMemo(() => width / 2 + HEIGHT_PADDING, [width]);
 
   if (!data) return null;
 
   useD3Effect({
     width,
-    selectedSpeciesSliceNumber,
+    selectedSpeciesId,
     SPSSelected,
     globalRangeSelected,
     data,
