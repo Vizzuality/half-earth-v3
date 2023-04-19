@@ -10,6 +10,14 @@ import MolLogo from 'logos/mol.png';
 
 import styles from './modal-metadata-styles.module.scss';
 
+function MarkDownLinkComponent({ href, children }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {children[0]}
+    </a>
+  );
+}
+
 function ModalMetadata({
   isOpen,
   handleClose,
@@ -59,12 +67,8 @@ function ModalMetadata({
           {metadata && metadata.source && (
             <div className={styles.metadataSource}>
               <ReactMarkdown
-                renderers={{
-                  link: ({ href, children }) => (
-                    <a href={href} target="_blank" rel="noopener noreferrer">
-                      {children[0].props.children}
-                    </a>
-                  ),
+                components={{
+                  a: MarkDownLinkComponent,
                 }}
               >
                 {`${t('Source:')} ${metadata.source}`}

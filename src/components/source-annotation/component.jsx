@@ -7,6 +7,14 @@ import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
+function MarkDownLinkComponent({ href, children }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {children[0]}
+    </a>
+  );
+}
+
 function Component({
   theme,
   sources,
@@ -28,12 +36,8 @@ function Component({
         >
           {!isJSX && (
             <ReactMarkdown
-              renderers={{
-                link: ({ href, children }) => (
-                  <a href={href} target="_blank" rel="noopener noreferrer">
-                    {children[0].props.children}
-                  </a>
-                ),
+              components={{
+                a: MarkDownLinkComponent,
               }}
             >
               {`${t('Source:')} ${metaDataSources}`}
@@ -41,8 +45,7 @@ function Component({
           )}
           {isJSX && (
             <span>
-              {t('Source: ')}
-              {metaDataSources}
+              {t('Source:')} {metaDataSources}
             </span>
           )}
         </cite>
