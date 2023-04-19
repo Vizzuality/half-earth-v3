@@ -148,7 +148,7 @@ $sidebar-content-top: 180px;
 .contextualIndicator {
   display: flex;
   align-items: center;
-  cursor: help;
+
   span {
     @extend %subtitle;
     position: relative;

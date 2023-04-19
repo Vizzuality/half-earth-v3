@@ -13,6 +13,7 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import Button from 'components/button';
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
+import TitleTooltip from 'components/title-tooltip';
 
 import {
   getSidebarCardsConfig,
@@ -83,14 +84,12 @@ function Component(props) {
               {sidebarCardsConfig[SPECIES_SLUG].title(
                 (speciesNumbers && speciesNumbers.nspecies) ||
                   speciesData.species.length
-              )}
-              <span
-                className={styles.infoClue}
-                title={sidebarCardsConfig[SPECIES_SLUG].hint}
-              >
-                {' '}
-                {t('terrestrial vertebrates')}
-              </span>
+              )}{' '}
+              <TitleTooltip content={sidebarCardsConfig[SPECIES_SLUG].hint}>
+                <span className={styles.infoClue}>
+                  {t('terrestrial vertebrates')}
+                </span>
+              </TitleTooltip>
             </p>
           )}
           <Dropdown

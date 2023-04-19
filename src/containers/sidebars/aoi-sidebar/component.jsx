@@ -17,6 +17,7 @@ import Button from 'components/button';
 import CloseButton from 'components/close-button';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import ShareModal from 'components/share-modal';
+import TitleTooltip from 'components/title-tooltip';
 
 import {
   LAND_HUMAN_PRESSURES_SLUG,
@@ -245,58 +246,63 @@ function AOISidebar({
             </section>
             <div className={cx(styles.content, className)}>
               <div className={styles.contextualDataRow}>
-                <div className={styles.contextualIndicator} title="population">
-                  <PopulationIcon />
-                  {population && !protectedAreaAOILoading && (
-                    <span>{population}</span>
-                  )}
-                  {(!population || !!protectedAreaAOILoading) && (
-                    <div className={styles.loadingIndicator} />
-                  )}
-                </div>
+                <TitleTooltip content={<T _str="Population" />}>
+                  <div className={styles.contextualIndicator}>
+                    <PopulationIcon />
+                    {population && !protectedAreaAOILoading && (
+                      <span>{population}</span>
+                    )}
+                    {(!population || !!protectedAreaAOILoading) && (
+                      <div className={styles.loadingIndicator} />
+                    )}
+                  </div>
+                </TitleTooltip>
 
-                <div
-                  className={styles.contextualIndicator}
-                  title={`${t('land cover: ')}${
+                <TitleTooltip
+                  content={`${t('Land cover: ')}${
                     AOIContextualTranslations[
                       landCover && landCover.toLowerCase()
                     ] || landCover
                   }`}
                 >
-                  <LandCoverIcon />
-                  {landCover && !protectedAreaAOILoading && (
-                    <span>
-                      {AOIContextualTranslations[
-                        landCover && landCover.toLowerCase()
-                      ] || landCover}
-                    </span>
-                  )}
+                  <div className={styles.contextualIndicator}>
+                    {landCover && !protectedAreaAOILoading && (
+                      <span>
+                        {AOIContextualTranslations[
+                          landCover && landCover.toLowerCase()
+                        ] || landCover}
+                      </span>
+                    )}
 
-                  {(!landCover || protectedAreaAOILoading) && (
-                    <div className={styles.loadingIndicator} />
-                  )}
-                </div>
-                <div
-                  className={styles.contextualIndicator}
-                  title={`${t('climate regime: ')}${
+                    {(!landCover || protectedAreaAOILoading) && (
+                      <div className={styles.loadingIndicator} />
+                    )}
+                    <LandCoverIcon />
+                  </div>
+                </TitleTooltip>
+
+                <TitleTooltip
+                  content={`${t('Climate regime: ')}${
                     AOIContextualTranslations[
                       climateRegime && climateRegime.toLowerCase()
                     ] || climateRegime
                   }`}
                 >
-                  <ClimateRegimeIcon />
-                  {climateRegime && !protectedAreaAOILoading && (
-                    <span>
-                      {AOIContextualTranslations[
-                        climateRegime && climateRegime.toLowerCase()
-                      ] || climateRegime}
-                    </span>
-                  )}
+                  <div className={styles.contextualIndicator}>
+                    <ClimateRegimeIcon />
+                    {climateRegime && !protectedAreaAOILoading && (
+                      <span>
+                        {AOIContextualTranslations[
+                          climateRegime && climateRegime.toLowerCase()
+                        ] || climateRegime}
+                      </span>
+                    )}
 
-                  {(!climateRegime || protectedAreaAOILoading) && (
-                    <div className={styles.loadingIndicator} />
-                  )}
-                </div>
+                    {(!climateRegime || protectedAreaAOILoading) && (
+                      <div className={styles.loadingIndicator} />
+                    )}
+                  </div>
+                </TitleTooltip>
               </div>
               {REACT_APP_FEATURE_AOI_CHANGES && (
                 <SpeciesCard

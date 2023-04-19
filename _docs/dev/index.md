@@ -7,4 +7,4 @@ permalink: /_docs/dev
 nav_order: 3
 ---
 
-dev docs intro
+Developers docs intro
