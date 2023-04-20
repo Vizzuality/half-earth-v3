@@ -60,6 +60,7 @@ const getHighlightedColor = (
   if (id === selectedSpeciesId) {
     return COLORS.white;
   }
+
   return isHighlighted({
     per_global,
     SPS_global,
@@ -67,7 +68,7 @@ const getHighlightedColor = (
     globalRangeSelected,
   })
     ? COLORS.white
-    : COLORS['white-opacity-20'];
+    : COLORS['oslo-gray'];
 };
 
 export const useD3Effect = ({
