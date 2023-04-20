@@ -60,7 +60,7 @@ function Slider({
               className={cx(styles.bar, {
                 [styles.highlighted]: isHighlighted,
               })}
-              style={{ height: barHeights[i] }}
+              style={{ height: barHeights[i] === 0 ? 1 : barHeights[i] }}
             >
               {renderTick(i)}
               {i === bucketValues.length - 1 && renderTick(i + 1)}
