@@ -96,19 +96,33 @@ function SpeciesAnalysisModal({
               </h1>
               <div className={styles.subtitle}>
                 <T
-                  _str="This chart shows the {globalSpeciesProtectionScore} (SPS) and the {portionOfGlobalRange} of the species found in this area. The higher the range, the more important the area is to the species; the lower the SPS, the more effort is needed to protect the species."
+                  _str="This chart shows the {globalSpeciesProtectionScore} and the proportion of the global range of the species found in this area. If the SPS is low, a greater effort is needed to protect the species. The greater the proportion range, the more important the area is to the species."
                   globalSpeciesProtectionScore={
                     <span className={styles.bold}>
-                      <T _str="Global Species Protection Score" />
-                    </span>
-                  }
-                  portionOfGlobalRange={
-                    <span className={styles.bold}>
-                      <T _str="portion of global range" />
+                      <T _str="Global Species Protection Score (SPS)" />
                     </span>
                   }
                 />
               </div>
+              <div ref={chartResponsiveRef} className={styles.chartResponsive}>
+                <SpsChart
+                  data={filteredSPSData}
+                  width={chartWidth}
+                  selectedSpecies={individualSpeciesData}
+                  globalRangeSelected={globalRangeSelected}
+                  SPSSelected={SPSSelected}
+                  speciesData={speciesData}
+                  setSpecieBySliceNumber={setSpecieBySliceNumber}
+                />
+              </div>
+              <SpsLegend
+                data={filteredSPSData}
+                globalRangeSelected={globalRangeSelected}
+                setGlobalRangeSelected={setGlobalRangeSelected}
+                SPSSelected={SPSSelected}
+                setSPSSelected={setSPSSelected}
+                speciesData={speciesData}
+              />
               <p className={styles.moreProtectionSentence}>
                 {SPSSelected.max === 1 && (
                   <T
@@ -132,25 +146,6 @@ function SpeciesAnalysisModal({
                   />
                 )}
               </p>
-              <div ref={chartResponsiveRef} className={styles.chartResponsive}>
-                <SpsChart
-                  data={filteredSPSData}
-                  width={chartWidth}
-                  selectedSpecies={individualSpeciesData}
-                  globalRangeSelected={globalRangeSelected}
-                  SPSSelected={SPSSelected}
-                  speciesData={speciesData}
-                  setSpecieBySliceNumber={setSpecieBySliceNumber}
-                />
-              </div>
-              <SpsLegend
-                data={filteredSPSData}
-                globalRangeSelected={globalRangeSelected}
-                setGlobalRangeSelected={setGlobalRangeSelected}
-                SPSSelected={SPSSelected}
-                setSPSSelected={setSPSSelected}
-                speciesData={speciesData}
-              />
             </>
           )}
         </div>
