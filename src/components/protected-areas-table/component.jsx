@@ -22,6 +22,9 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
   const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
   const translateString = (d) => WDPATranslations[d] || d;
   const translateCountry = (d) => CountryNamesTranslations[d] || d;
+
+  const parseAreaKm = (number) => (number < 1 ? '<1' : Math.round(number));
+
   return (
     <table className={styles.protectedAreasTable}>
       <thead>
@@ -207,7 +210,7 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
               <td className={styles.lastColumn}>
                 {`${
                   (row.AREA_KM || row.AREA_KM2) &&
-                  Math.round(row.AREA_KM || row.AREA_KM2)
+                  parseAreaKm(row.AREA_KM || row.AREA_KM2)
                 }km`}
                 <sup>2</sup>
               </td>
