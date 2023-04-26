@@ -24,15 +24,11 @@ import {
   GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER,
   GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE,
   FEATURED_PLACES_LAYER,
-  URBAN_HUMAN_PRESSURES_TILE_LAYER,
   ENERGY_HUMAN_PRESSURES_TILE_LAYER,
   BUILTUP_HUMAN_PRESSURES_TILE_LAYER,
   TRANSPORTATION_HUMAN_PRESSURES_TILE_LAYER,
   AGRICULTURE_HUMAN_PRESSURES_TILE_LAYER,
   INTRUSION_HUMAN_PRESSURES_TILE_LAYER,
-  IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
-  RAINFED_HUMAN_PRESSURES_TILE_LAYER,
-  RANGELAND_HUMAN_PRESSURES_TILE_LAYER,
   MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
   MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
   COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
@@ -120,7 +116,6 @@ import {
 } from 'constants/layers-slugs';
 
 const { REACT_APP_VERCEL_ENV } = process.env;
-const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 const isNotProduction =
   REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
@@ -147,12 +142,10 @@ export const NRC_TERRESTRIAL_SPI_DATA_LAYER =
 export const NRC_MARINE_SPI_DATA_LAYER =
   'https://utility.arcgis.com/usrsvcs/servers/d1d8be859b4844658d9f567b9d6b4194/rest/services/Marine_Species_Protection_Index_by_Country_v2/FeatureServer/0';
 
-const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL = REACT_APP_FEATURE_AOI_CHANGES
-  ? 'https://utility.arcgis.com/usrsvcs/servers/367688be94be472eb53db8ef043716dc/rest/services/gadm0_precalculated_aoi_summaries/FeatureServer'
-  : 'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer';
-const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL = REACT_APP_FEATURE_AOI_CHANGES
-  ? 'https://utility.arcgis.com/usrsvcs/servers/04b9635566a74890a38d28acf3e23d04/rest/services/gadm1_precalculated_aoi_summaries/FeatureServer'
-  : 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer';
+const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
+  'https://utility.arcgis.com/usrsvcs/servers/367688be94be472eb53db8ef043716dc/rest/services/gadm0_precalculated_aoi_summaries/FeatureServer';
+const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
+  'https://utility.arcgis.com/usrsvcs/servers/04b9635566a74890a38d28acf3e23d04/rest/services/gadm1_precalculated_aoi_summaries/FeatureServer';
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm_v2/FeatureServer',
@@ -211,8 +204,6 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_data_55km/FeatureServer',
   [GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/human_pressure_55km/FeatureServer',
-  [URBAN_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Urban_MerimNelson/MapServer',
   [BUILTUP_HUMAN_PRESSURES_TILE_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Human_Pressures_Urban_and_Built_up/MapServer',
   [ENERGY_HUMAN_PRESSURES_TILE_LAYER]:
@@ -223,12 +214,6 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Human_Pressures_Agriculture/MapServer',
   [INTRUSION_HUMAN_PRESSURES_TILE_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Human_Pressures_Human_Intrusion/MapServer',
-  [IRRIGATED_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Irrigated_MerimNelson/MapServer',
-  [RAINFED_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rainfed_MerimNelson/MapServer',
-  [RANGELAND_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rangeland_MerimNelson/MapServer',
   [MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Land_Based_Drivers_MeriamNelson_cont/MapServer',
   [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]:
@@ -404,18 +389,14 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   [WDPA_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
-  [AMPHIBIAN_LOOKUP]: REACT_APP_FEATURE_AOI_CHANGES
-    ? 'https://utility.arcgis.com/usrsvcs/servers/31b7c16e626141d7aca80f4a6b0bbd48/rest/services/amphibians_lookup_with_SPS/FeatureServer/0'
-    : 'https://utility.arcgis.com/usrsvcs/servers/c20121cd88754247bbbeac5da6b26be1/rest/services/Test_Amphibian_CRF_species_table/FeatureServer/0',
-  [BIRDS_LOOKUP]: REACT_APP_FEATURE_AOI_CHANGES
-    ? 'https://utility.arcgis.com/usrsvcs/servers/0dc45096d41a4939a393b99fe66c78f2/rest/services/birds_lookup__with_SPS/FeatureServer/0'
-    : 'https://utility.arcgis.com/usrsvcs/servers/fb93f4475cc84fd7b0eec712d701e46d/rest/services/Bird_CRF_species_table/FeatureServer/0',
-  [MAMMALS_LOOKUP]: REACT_APP_FEATURE_AOI_CHANGES
-    ? 'https://utility.arcgis.com/usrsvcs/servers/a4981e626dd74adbae6db81359f11bbd/rest/services/mammals_lookup_with_SPS/FeatureServer/0'
-    : 'https://utility.arcgis.com/usrsvcs/servers/7c7e6649a44e423ab52083b65823c310/rest/services/Test_Mammal_CRF_species_table/FeatureServer/0',
-  [REPTILES_LOOKUP]: REACT_APP_FEATURE_AOI_CHANGES
-    ? 'https://utility.arcgis.com/usrsvcs/servers/3ce09e39d83c415e9f003285bc3400bf/rest/services/reptiles_with_SPS/FeatureServer/0'
-    : 'https://utility.arcgis.com/usrsvcs/servers/f0b987e051844fd78b05c813ba251548/rest/services/Test_Reptile_CRF_species_table/FeatureServer/0',
+  [AMPHIBIAN_LOOKUP]:
+    'https://utility.arcgis.com/usrsvcs/servers/31b7c16e626141d7aca80f4a6b0bbd48/rest/services/amphibians_lookup_with_SPS/FeatureServer/0',
+  [BIRDS_LOOKUP]:
+    'https://utility.arcgis.com/usrsvcs/servers/0dc45096d41a4939a393b99fe66c78f2/rest/services/birds_lookup__with_SPS/FeatureServer/0',
+  [MAMMALS_LOOKUP]:
+    'https://utility.arcgis.com/usrsvcs/servers/a4981e626dd74adbae6db81359f11bbd/rest/services/mammals_lookup_with_SPS/FeatureServer/0',
+  [REPTILES_LOOKUP]:
+    'https://utility.arcgis.com/usrsvcs/servers/3ce09e39d83c415e9f003285bc3400bf/rest/services/reptiles_with_SPS/FeatureServer/0',
   // AOIs precalculated layers
   [ADMIN_AREAS_FEATURE_LAYER]: [
     GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL,

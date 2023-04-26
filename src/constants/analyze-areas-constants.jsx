@@ -4,11 +4,7 @@ import React from 'react';
 import { t } from '@transifex/native';
 import { T } from '@transifex/react';
 
-import {
-  getTotalPressures,
-  getMainPressure,
-  roundUpPercentage,
-} from 'utils/analyze-areas-utils';
+import { roundUpPercentage } from 'utils/analyze-areas-utils';
 import { percentageFormat } from 'utils/data-formatting-utils';
 
 import {
@@ -16,7 +12,6 @@ import {
   AMPHIBIANS,
   MAMMALS,
   REPTILES,
-  getLandPressuresTranslatedLabels,
 } from 'constants/geo-processing-services';
 import {
   ADMIN_AREAS_FEATURE_LAYER,
@@ -71,8 +66,6 @@ export const {
 } = SEARCH_SOURCES;
 
 export const DEFAULT_SOURCE = ADMINISTRATIVE_BOUNDARIES;
-
-const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 export const getPrecalculatedAOIOptions = () => [
   {
@@ -190,9 +183,7 @@ export const getSidebarCardsConfig = (locale) => ({
     ),
   },
   [PROTECTION_SLUG]: {
-    title: REACT_APP_FEATURE_AOI_CHANGES
-      ? t('What is already protected in this area?')
-      : t('Current protection status'),
+    title: t('What is already protected in this area?'),
     description: ({ protectionPercentage, percentage, DESIG }) => {
       const isProtectedArea = !!DESIG;
       if (isProtectedArea) return null;
@@ -219,16 +210,13 @@ export const getSidebarCardsConfig = (locale) => ({
     warning: null,
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
-    title: REACT_APP_FEATURE_AOI_CHANGES
-      ? t('How much do humans affect this area?')
-      : t('Human impact'),
+    title: t('How much do humans affect this area?'),
     description: ({ pressures }) => {
       if (
-        REACT_APP_FEATURE_AOI_CHANGES &&
-        (!pressures ||
-          Object.values(pressures).every(
-            (p) => !p || p.length === 0 || p.every((v) => v.value === 0)
-          ))
+        !pressures ||
+        Object.values(pressures).every(
+          (p) => !p || p.length === 0 || p.every((v) => v.value === 0)
+        )
       ) {
         // em = *{highHumanPressure}* is used here for the tooltip
         return `${t('The current area is not facing {highHumanPressures}', {
@@ -236,27 +224,13 @@ export const getSidebarCardsConfig = (locale) => ({
         })}`;
       }
 
-      if (REACT_APP_FEATURE_AOI_CHANGES) {
-        // em = *{highHumanPressure}* is used here for the tooltip
-        return `${t(
-          'The current area is facing {highHumanPressure} from the following pressures. The percentage figures refer to the latest year of the time series (2017).',
-          {
-            highHumanPressure: `*${t('high human pressure')}*`,
-          }
-        )}`;
-      }
-
-      if (pressures && !REACT_APP_FEATURE_AOI_CHANGES) {
-        return `${t('Of the current area, ')}__${roundUpPercentage(
-          getTotalPressures(pressures)
-        )}${t('% is currently experiencing human pressures__')}, ${t(
-          'the majority of which are pressures from '
-        )}${
-          getLandPressuresTranslatedLabels(t)[getMainPressure(pressures)] ||
-          getMainPressure(pressures)
-        }.`;
-      }
-      return '';
+      // em = *{highHumanPressure}* is used here for the tooltip
+      return `${t(
+        'The current area is facing {highHumanPressure} from the following pressures. The percentage figures refer to the latest year of the time series (2017).',
+        {
+          highHumanPressure: `*${t('high human pressure')}*`,
+        }
+      )}`;
     },
     warning: null,
   },

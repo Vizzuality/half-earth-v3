@@ -64,19 +64,6 @@ export const roundGlobalRange = (value, locale, t) => {
   return format('.2s')(value).replace('M', `${t('million')}`);
 };
 
-export const roundRangeInArea = (value) => {
-  const low = Math.floor(value / 5) * 5;
-  const high = Math.ceil(value / 5) * 5;
-  if (low < 5) {
-    return '<5%';
-  }
-  if (low === 100) {
-    return '100%';
-  }
-
-  return `${low}-${high}%`;
-};
-
 export const countryChallengesChartFormats = {
   [COUNTRY_ATTRIBUTES.Pop2020]: (value) => localeFormatting(value),
   GNI_PPP: (value) => `${currencyFormatting(value)} B`,

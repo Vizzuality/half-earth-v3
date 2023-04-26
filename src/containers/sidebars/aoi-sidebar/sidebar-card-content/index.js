@@ -149,6 +149,7 @@ function Container(props) {
   const handleProtectedAreasModalToggle = () => {
     setProtectedAreasModalOpen(!protectedAreasModalOpen);
   };
+
   return (
     <Component
       cardTitle={title}

@@ -2,15 +2,12 @@ import { loadModules } from 'esri-loader';
 
 import { percentageFormat } from 'utils/data-formatting-utils';
 
-import _pick from 'lodash/pick';
 import sha1 from 'sha1';
 
 import amphibiansPlaceholder from 'images/no-amphibian.png';
 import birdsPlaceholder from 'images/no-bird.png';
 import mammalsPlaceholder from 'images/no-mammal.png';
 import reptilesPlaceholder from 'images/no-reptile.png';
-
-const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 export function logGeometryArea(geometry) {
   loadModules(['esri/geometry/geometryEngine']).then(([geometryEngine]) => {
@@ -70,34 +67,23 @@ export const getTotalPressures = (pressures) => {
 export const getMainPressure = (pressures) => {
   if (!pressures) return null;
 
-  if (REACT_APP_FEATURE_AOI_CHANGES) {
-    const mainPressure = Object.keys(pressures).reduce((acc, key) => {
-      const pressure = pressures[key];
-      if (!pressure) return acc;
+  const mainPressure = Object.keys(pressures).reduce((acc, key) => {
+    const pressure = pressures[key];
+    if (!pressure) return acc;
 
-      const currentValue =
-        pressure[pressure.length - 1].percentage_land_encroachment ||
-        pressure[pressure.length - 1].value;
-      if (!acc.value || currentValue > acc.value) {
-        return {
-          name: key,
-          value: currentValue,
-        };
-      }
-      return acc;
-    });
+    const currentValue =
+      pressure[pressure.length - 1].percentage_land_encroachment ||
+      pressure[pressure.length - 1].value;
+    if (!acc.value || currentValue > acc.value) {
+      return {
+        name: key,
+        value: currentValue,
+      };
+    }
+    return acc;
+  });
 
-    return mainPressure.name;
-  }
-
-  const existingPressures = Object.keys(pressures).filter(
-    (key) => pressures[key] !== null
-  );
-  const cleanedPressures = _pick(pressures, existingPressures);
-  const sorted = Object.keys(cleanedPressures).sort(
-    (a, b) => parseFloat(pressures[b]) - parseFloat(pressures[a])
-  );
-  return sorted[0];
+  return mainPressure.name;
 };
 
 export const getPlaceholderSpeciesImage = (taxa) => {

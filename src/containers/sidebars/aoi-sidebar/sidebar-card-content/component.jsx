@@ -12,7 +12,6 @@ import SidebarLegend from 'containers/sidebars/sidebar-legend';
 import Button from 'components/button';
 import ArcChart from 'components/charts/arc-chart';
 import AreaChart from 'components/charts/area-chart';
-import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 
 import {
@@ -31,7 +30,6 @@ import styles from './styles.module.scss';
 import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
-const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 function HumanPressuresTooltipComponent({ node, ...props }) {
   return (
     <span className={styles.tooltipContainer}>
@@ -64,14 +62,9 @@ function HumanPressuresTooltipComponent({ node, ...props }) {
 }
 
 function SidebarCard({
-  map,
-  layers,
-  onChange,
   hasLegend,
   cardTitle,
-  toggleType,
   cardCategory,
-  activeLayers,
   cardDescription,
   displayWarning,
   handleAllProtectedAreasClick,
@@ -197,35 +190,33 @@ function SidebarCard({
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>{cardTitle}</p>
-        {cardCategory === PROTECTION_SLUG &&
-          REACT_APP_FEATURE_AOI_CHANGES &&
-          underProtectionPercentage && (
-            <div className={styles.protectedAreaChartContainer}>
-              <div
-                style={{
-                  height: protectedAreaChartHeight,
-                  width: protectedAreaChartWidth,
-                }}
-              >
-                <ArcChart
-                  parentHeight={protectedAreaChartHeight}
-                  parentWidth={protectedAreaChartWidth}
-                  paPercentage={underProtectionPercentage}
-                />
-              </div>
-              <p className={styles.protectedAreaChartLegend}>
-                <T
-                  _str="Of the current area is {bold}"
-                  _comment="{Of the current area is"
-                  bold={
-                    <b>
-                      <T _str="under protection" />
-                    </b>
-                  }
-                />
-              </p>
+        {cardCategory === PROTECTION_SLUG && underProtectionPercentage && (
+          <div className={styles.protectedAreaChartContainer}>
+            <div
+              style={{
+                height: protectedAreaChartHeight,
+                width: protectedAreaChartWidth,
+              }}
+            >
+              <ArcChart
+                parentHeight={protectedAreaChartHeight}
+                parentWidth={protectedAreaChartWidth}
+                paPercentage={underProtectionPercentage}
+              />
             </div>
-          )}
+            <p className={styles.protectedAreaChartLegend}>
+              <T
+                _str="Of the current area is {bold}"
+                _comment="{Of the current area is"
+                bold={
+                  <b>
+                    <T _str="under protection" />
+                  </b>
+                }
+              />
+            </p>
+          </div>
+        )}
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
           <p className={styles.hpLegendTitle}>{t('Land pressures')}</p>
         )}
@@ -246,17 +237,13 @@ function SidebarCard({
             {cardDescription}
           </ReactMarkdown>
         )}
-        {REACT_APP_FEATURE_AOI_CHANGES && cardCategory === PROTECTION_SLUG && (
+        {cardCategory === PROTECTION_SLUG && (
           <div>
             <Button
               type="rectangular"
               className={styles.fullwidthButton}
               handleClick={handleAllProtectedAreasClick}
-              label={
-                REACT_APP_FEATURE_AOI_CHANGES
-                  ? t('EXPLORE PROTECTED AREAS')
-                  : t('ALL PROTECTED AREAS')
-              }
+              label={t('EXPLORE PROTECTED AREAS')}
             />
             <ProtectedAreasModal
               isOpen={isProtectedAreasModalOpen}
@@ -265,36 +252,31 @@ function SidebarCard({
             />
           </div>
         )}
-        {REACT_APP_FEATURE_AOI_CHANGES &&
-          cardCategory === PROTECTED_ATTRIBUTES_SLUG &&
-          contextualData.DESIG && (
-            <div className={styles.attributtesContainer}>
-              {protectedAttributesConfig.map((a) => (
-                <div className={styles.attributtesItem}>
-                  <div className={styles.titleWrapper}>
-                    <h6 className={styles.title}>{a.title}</h6>
-                    <span className={styles.iconWrapper}>
-                      <Tooltip
-                        className="light"
-                        content={
-                          <div className={styles.tooltip}>
-                            {a.tooltipContent}
-                          </div>
-                        }
-                        delay={100}
-                        position="bottom"
-                      >
-                        <InfoIcon className={styles.icon} />
-                      </Tooltip>
-                    </span>
-                  </div>
-                  <p className={styles.value}>{translateInfo(a.value)}</p>
+        {cardCategory === PROTECTED_ATTRIBUTES_SLUG && contextualData.DESIG && (
+          <div className={styles.attributtesContainer}>
+            {protectedAttributesConfig.map((a) => (
+              <div className={styles.attributtesItem}>
+                <div className={styles.titleWrapper}>
+                  <h6 className={styles.title}>{a.title}</h6>
+                  <span className={styles.iconWrapper}>
+                    <Tooltip
+                      className="light"
+                      content={
+                        <div className={styles.tooltip}>{a.tooltipContent}</div>
+                      }
+                      delay={100}
+                      position="bottom"
+                    >
+                      <InfoIcon className={styles.icon} />
+                    </Tooltip>
+                  </span>
                 </div>
-              ))}
-            </div>
-          )}
+                <p className={styles.value}>{translateInfo(a.value)}</p>
+              </div>
+            ))}
+          </div>
+        )}
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
-          REACT_APP_FEATURE_AOI_CHANGES &&
           humanPressuresData &&
           renderHumanPressure()}
         <SourceAnnotation
@@ -310,22 +292,6 @@ function SidebarCard({
             className={styles.description}
             source={sidebarCardsConfig[cardCategory].warning}
           />
-        </div>
-      )}
-      {!displayWarning && !REACT_APP_FEATURE_AOI_CHANGES && (
-        <div className={styles.togglesContainer}>
-          {layers.map((layer) => (
-            <LayerToggle
-              map={map}
-              variant="dark"
-              option={layer}
-              key={layer.value}
-              type={toggleType}
-              onChange={onChange}
-              themeCategorySlug={cardCategory}
-              activeLayers={activeLayers}
-            />
-          ))}
         </div>
       )}
     </SidebarCardWrapper>

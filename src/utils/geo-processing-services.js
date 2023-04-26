@@ -11,10 +11,8 @@ import {
   WDPA_PERCENTAGE,
   POPULATION,
   LOOKUP_TABLES,
-  HUMAN_PRESSURES,
   ECOLOGICAL_LAND_UNITS,
   CONTEXTUAL_DATA_TABLES,
-  LAND_PRESSURES_LOOKUP,
   LAND_PRESSURES_LABELS_SLUGS,
   BIRDS,
   MAMMALS,
@@ -28,8 +26,6 @@ import {
 } from 'constants/geo-processing-services';
 import { ELU_LOOKUP_TABLE } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-
-const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 export function getJobInfo(url, params) {
   return new Promise((resolve, reject) => {
@@ -69,46 +65,26 @@ export function getEluData(data) {
   });
 }
 
-const landPressuresLookup = LAND_PRESSURES_LOOKUP.reduce((acc, current, i) => {
-  acc[i + 1] = current;
-  return acc;
-}, {});
-
 function getAreaPressures(data) {
-  if (REACT_APP_FEATURE_AOI_CHANGES) {
-    const getData = (key) => {
-      if (!data[CONTEXTUAL_DATA_TABLES[key]]?.value?.features.length) {
-        return null;
-      }
-      return data[CONTEXTUAL_DATA_TABLES[key]].value.features.map(
-        (f) =>
-          f.attributes && {
-            year: f.attributes.Year,
-            value: f.attributes.percentage_land_encroachment,
-          }
-      );
-    };
-    return {
-      extraction: getData(EXTRACTION),
-      agriculture: getData(AGRICULTURE),
-      transportation: getData(TRANSPORTATION),
-      intrusion: getData(INTRUSION),
-      builtup: getData(BUILTUP),
-    };
-  }
-
-  if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) {
-    return {};
-  }
-
-  return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce(
-    (acc, value) => ({
-      ...acc,
-      [landPressuresLookup[value.attributes.SliceNumber]]:
-        value.attributes.percentage_land_encroachment,
-    }),
-    {}
-  );
+  const getData = (key) => {
+    if (!data[CONTEXTUAL_DATA_TABLES[key]]?.value?.features.length) {
+      return null;
+    }
+    return data[CONTEXTUAL_DATA_TABLES[key]].value.features.map(
+      (f) =>
+        f.attributes && {
+          year: f.attributes.Year,
+          value: f.attributes.percentage_land_encroachment,
+        }
+    );
+  };
+  return {
+    extraction: getData(EXTRACTION),
+    agriculture: getData(AGRICULTURE),
+    transportation: getData(TRANSPORTATION),
+    intrusion: getData(INTRUSION),
+    builtup: getData(BUILTUP),
+  };
 }
 
 const getAreaPopulation = (data) =>
@@ -319,23 +295,18 @@ export const getPrecalculatedContextualData = ({
   includeAllData = false,
 }) => {
   const pressures = {};
-  if (REACT_APP_FEATURE_AOI_CHANGES) {
-    Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
-      const pressureData = data[LAND_PRESSURES_LABELS_SLUGS[key]];
-      const parsedData = pressureData && JSON.parse(pressureData);
-      pressures[key] =
-        parsedData &&
-        parsedData.length > 0 &&
-        parsedData.map((d) => ({
-          year: d.Year,
-          value: d.percentage_land_encroachment,
-        }));
-    });
-  } else {
-    Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
-      pressures[key] = data[LAND_PRESSURES_LABELS_SLUGS[key]];
-    });
-  }
+
+  Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
+    const pressureData = data[LAND_PRESSURES_LABELS_SLUGS[key]];
+    const parsedData = pressureData && JSON.parse(pressureData);
+    pressures[key] =
+      parsedData &&
+      parsedData.length > 0 &&
+      parsedData.map((d) => ({
+        year: d.Year,
+        value: d.percentage_land_encroachment,
+      }));
+  });
 
   return {
     elu: {

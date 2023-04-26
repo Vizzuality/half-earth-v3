@@ -33,12 +33,6 @@ export const LAND_HUMAN_PRESSURES_METADATA_SLUG = 'land_human_pressures_new';
 export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures';
 
 // Land human pressures
-export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
-export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
-export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
-export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
-export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
-
 export const ENERGY_HUMAN_PRESSURES_TILE_LAYER = 'energy_human_pressures';
 export const BUILTUP_HUMAN_PRESSURES_TILE_LAYER = 'builtup_human_pressures';
 export const TRANSPORTATION_HUMAN_PRESSURES_TILE_LAYER =
