@@ -99,7 +99,7 @@ function Container(props) {
         return acc;
       }, {})
     );
-  }, [contextualData]);
+  }, [contextualData, locale]);
 
   const radioTypeToggle = (option) => {
     const selectedActiveLayerTitles =

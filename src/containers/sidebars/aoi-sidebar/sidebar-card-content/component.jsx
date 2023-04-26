@@ -119,6 +119,7 @@ function SidebarCard({
   const protectedAreaChartWidth = 320;
   const PRESSURES_CHART_WIDTH = 166;
   const PRESSURES_CHART_HEIGHT = 66;
+
   const renderHumanPressure = () => (
     <div className={styles.humanPressureIndicators}>
       {Object.keys(humanPressuresData).map((key) => {
@@ -185,7 +186,6 @@ function SidebarCard({
   const underProtectionPercentage = isCustom
     ? contextualData?.percentage
     : contextualData?.protectionPercentage;
-
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
