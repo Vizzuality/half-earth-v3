@@ -60,5 +60,5 @@ export type SpeciesModalProps = {
     selectedSpeciesFilter: { label: string; slug: string };
   };
   speciesData: SpeciesData[];
-  setSpecieBySliceNumber: (sliceNumber: number) => void;
+  setSpecieById: (id: string) => void;
 };

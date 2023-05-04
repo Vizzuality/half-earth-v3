@@ -80,7 +80,7 @@ export const useD3Effect = ({
   data,
   setTooltipPosition,
   setTooltipText,
-  setSpecieBySliceNumber,
+  setSpecieById,
   speciesData,
   styles,
 }: {
@@ -92,7 +92,7 @@ export const useD3Effect = ({
   data: SPSChartProps['data'];
   setTooltipPosition: (tooltipPosition: { top: number; left: number }) => void;
   setTooltipText: (tooltipText: string) => void;
-  setSpecieBySliceNumber: (sliceNumber: number) => void;
+  setSpecieById: (id: string) => void;
   speciesData: SPSChartProps['speciesData'];
   styles: {
     [className: string]: string;
@@ -231,7 +231,7 @@ export const useD3Effect = ({
         .data(data)
         .enter()
         .append('g')
-        .attr('id', (d: SPSData) => `point-${d.SliceNumber}`)
+        .attr('id', (d: SPSData) => `point-${d.id}`)
         .attr('transform', getPointPosition)
         .append('circle')
         .attr('class', styles.point)
@@ -257,9 +257,7 @@ export const useD3Effect = ({
         )
         .on('mouseenter', (d: SPSData) => {
           if (speciesData) {
-            const specie: SpeciesData = speciesData.find(
-              (s) => s.sliceNumber === d.SliceNumber
-            );
+            const specie: SpeciesData = speciesData.find((s) => s.id === d.id);
             const PADDING_LEFT = 5;
             const TOP_PADDING_CENTER = 25;
             setTooltipText(specie.name);
@@ -275,8 +273,12 @@ export const useD3Effect = ({
           setTooltipText(undefined);
         })
         .on('click', (d: SPSData) => {
-          setSpecieBySliceNumber(d.SliceNumber);
+          setSpecieById(d.id);
         });
+
+      // Raise selected point so we can see it clearly over the rest
+      const selectedPoint = points.select(`#point-${selectedSpeciesId}`);
+      selectedPoint.raise();
     };
 
     // Recalculate on change
@@ -313,7 +315,7 @@ export const useD3Effect = ({
     data,
     setTooltipPosition,
     setTooltipText,
-    setSpecieBySliceNumber,
+    setSpecieById,
     speciesData,
   ]);
 };

@@ -12,5 +12,5 @@ export type SPSChartProps = {
   SPSSelected: Range;
   globalRangeSelected: Range;
   speciesData: SpeciesData[];
-  setSpecieBySliceNumber: (sliceNumber: number) => void;
+  setSpecieById: (id: string) => void;
 };

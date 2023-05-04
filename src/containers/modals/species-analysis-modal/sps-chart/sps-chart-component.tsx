@@ -20,7 +20,7 @@ function SpsChart({
   SPSSelected,
   globalRangeSelected,
   speciesData,
-  setSpecieBySliceNumber,
+  setSpecieById,
 }: SPSChartProps) {
   const [tooltipPosition, setTooltipPosition] = useState<
     { top: number; left: number } | undefined
@@ -28,7 +28,6 @@ function SpsChart({
   const [tooltipText, setTooltipText] = useState<string | undefined>();
   const { id: selectedSpeciesId }: { id: string } = selectedSpecies;
   const height: number = useMemo(() => width / 2 + HEIGHT_PADDING, [width]);
-
   if (!data) return null;
 
   useD3Effect({
@@ -39,7 +38,7 @@ function SpsChart({
     data,
     setTooltipPosition,
     setTooltipText,
-    setSpecieBySliceNumber,
+    setSpecieById,
     speciesData,
     styles,
     height,

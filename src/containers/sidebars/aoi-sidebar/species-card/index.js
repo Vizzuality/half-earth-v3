@@ -329,17 +329,15 @@ function SpeciesCardContainer(props) {
     }
   }, [selectedSpecies, locale, SPSData]);
 
-  const setSpecieBySliceNumber = (sliceNumber) => {
-    setSelectedSpecies(
-      speciesToDisplay.find((s) => s.sliceNumber === sliceNumber)
-    );
+  const setSpecieById = (id) => {
+    setSelectedSpecies(speciesToDisplay.find((s) => s.id === id));
   };
   return (
     <Component
       speciesFilters={speciesFilters}
       placeholderText={placeholderText}
       individualSpeciesData={individualSpeciesData}
-      setSpecieBySliceNumber={setSpecieBySliceNumber}
+      setSpecieById={setSpecieById}
       speciesToDisplay={speciesToDisplay}
       setSpeciesFilter={setSpeciesFilter}
       selectedSpeciesFilter={selectedSpeciesFilter}
