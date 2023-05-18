@@ -6,6 +6,7 @@ import cx from 'classnames';
 
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import GlobePageIndicator from 'containers/menus/globe-page-indicator';
 import GlobesMenu from 'containers/menus/globes-menu';
@@ -79,6 +80,7 @@ function NrcLandingComponent({
         countryName={countryName}
         sceneMode={sceneMode}
       />
+      <RegionsLabelsLayer sceneMode={sceneMode} activeLayers={activeLayers} />
 
       <CountriesBordersLayer
         countryISO={countryISO}

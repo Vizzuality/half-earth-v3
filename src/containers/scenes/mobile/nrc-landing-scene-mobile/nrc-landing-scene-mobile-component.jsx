@@ -6,6 +6,7 @@ import { useT } from '@transifex/react';
 
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
@@ -77,6 +78,7 @@ function NrcLandingMobileComponent({
         countryName={countryName}
         sceneMode={sceneMode}
       />
+      <RegionsLabelsLayer activeLayers={selectedLayers} sceneMode={sceneMode} />
 
       <CountriesBordersLayer
         countryISO={countryISO}

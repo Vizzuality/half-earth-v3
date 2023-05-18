@@ -7,6 +7,7 @@ import cx from 'classnames';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
+import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import GlobePageIndicator from 'containers/menus/globe-page-indicator';
 import GlobesMenu from 'containers/menus/globes-menu';
@@ -113,6 +114,10 @@ function DataSceneComponent({
         sceneMode={sceneMode}
         countryISO={countryISO}
         countryName={countryName}
+        activeLayers={updatedActiveLayers}
+      />
+      <RegionsLabelsLayer
+        sceneMode={sceneMode}
         activeLayers={updatedActiveLayers}
       />
 

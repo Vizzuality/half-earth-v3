@@ -8,6 +8,7 @@ import {
   MARINE_SPI_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
+  REGIONS_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
   SATELLITE_BASEMAP_LAYER,
   PRIORITY_PLACES_POLYGONS,
@@ -174,6 +175,8 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/LandscapeUniqueRivers_gadm36/FeatureServer',
   [CITIES_LABELS_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/CityLabels/FeatureServer',
+  [REGIONS_LABELS_LAYER]:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm1_centroid/FeatureServer',
   [VIBRANT_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Vibrant/MapServer',
   [SATELLITE_BASEMAP_LAYER]:

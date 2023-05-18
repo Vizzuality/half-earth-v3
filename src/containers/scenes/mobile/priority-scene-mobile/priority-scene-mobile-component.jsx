@@ -5,6 +5,7 @@ import loadable from '@loadable/component';
 import { useT } from '@transifex/react';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
@@ -70,6 +71,7 @@ function PriorityMobileComponent({
         countryName={countryName}
         sceneMode={sceneMode}
       />
+      <RegionsLabelsLayer sceneMode={sceneMode} activeLayers={selectedLayers} />
       <CountryEntryTooltip countryISO={countryISO} />
 
       {!countryISO && (
