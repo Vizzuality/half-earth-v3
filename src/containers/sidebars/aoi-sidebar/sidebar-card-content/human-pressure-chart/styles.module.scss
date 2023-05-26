@@ -1,0 +1,41 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.title {
+  @extend %display2;
+  text-align: center;
+  margin: 0;
+  padding-bottom: $site-gutter;
+  letter-spacing: 0.8px;
+}
+
+.humanPressureIndicators {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 14px;
+  row-gap: 6px;
+  margin: 24px 0;
+
+  .humanPressureIndicator {
+    position: relative;
+    height: 120px;
+    width: 166px;
+
+    .title {
+      @extend %bodyText;
+      text-align: left;
+      padding: 0;
+
+    }
+    .percentage {
+      @extend %display2;
+      margin: 0;
+    }
+
+    .hpChartContainer {
+      position: absolute;
+      left: -18px;
+      top: 50px;
+    }
+  }
+}

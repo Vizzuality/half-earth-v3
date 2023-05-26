@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { T, useT, useLocale } from '@transifex/react';
@@ -11,7 +11,6 @@ import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import Button from 'components/button';
 import ArcChart from 'components/charts/arc-chart';
-import AreaChart from 'components/charts/area-chart';
 import SourceAnnotation from 'components/source-annotation';
 
 import {
@@ -23,12 +22,12 @@ import {
 } from 'constants/analyze-areas-constants';
 import { getWDPATranslations } from 'constants/translation-constants';
 
-import COLORS from 'styles/settings';
-
 import styles from './styles.module.scss';
 
 import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+
+import HumanPressure from './human-pressure-chart';
 
 function HumanPressuresTooltipComponent({ node, ...props }) {
   return (
@@ -81,105 +80,15 @@ function SidebarCard({
     [locale]
   );
   const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
-
+  const [chartDomain, setChartDomain] = useState([1990, 2017]);
   const translateInfo = (data) => WDPATranslations[data] || data;
   const protectedAttributesConfig = useMemo(
     () => getProtectedAttributesConfig(contextualData),
     [contextualData, locale]
   );
 
-  const hummanPressuresXAxis = useMemo(() => {
-    const existingValues =
-      humanPressuresData && Object.values(humanPressuresData);
-    const nonEmptyValues =
-      existingValues &&
-      existingValues.find(
-        (existingValue) =>
-          existingValue.values &&
-          existingValue.values.length > 0 &&
-          existingValue.values.some((v) => v.value && v.value !== 0)
-      );
-    return (
-      nonEmptyValues &&
-      nonEmptyValues.values
-        .map((pressure, i) => {
-          if (
-            pressure.year % 10 === 0 ||
-            i === nonEmptyValues.values.length - 1
-          ) {
-            return pressure.year;
-          }
-          return false;
-        })
-        .filter(Boolean)
-    );
-  }, [humanPressuresData]);
-
   const protectedAreaChartHeight = 100;
   const protectedAreaChartWidth = 320;
-  const PRESSURES_CHART_WIDTH = 166;
-  const PRESSURES_CHART_HEIGHT = 66;
-
-  const renderHumanPressure = () => (
-    <div className={styles.humanPressureIndicators}>
-      {Object.keys(humanPressuresData).map((key) => {
-        const humanPressure = humanPressuresData[key];
-        if (
-          !humanPressure ||
-          !hummanPressuresXAxis ||
-          humanPressure.values.every((py) => py.value === 0)
-        )
-          return null;
-        // Cap value to 100 as more than 100 is only caused by errors on the calculations
-        const humanPressureValues = humanPressure.values.map((v) => ({
-          year: v.year,
-          value: v.value > 100 ? 100 : v.value,
-        }));
-
-        const lastHumanPressure =
-          humanPressureValues[humanPressureValues.length - 1];
-        const getLastHumanPressureValue = () => {
-          return lastHumanPressure.value > 1
-            ? Math.trunc(lastHumanPressure.value)
-            : '<1';
-        };
-        return (
-          <div className={styles.humanPressureIndicator}>
-            <p className={styles.title}>{humanPressure.title}</p>
-
-            <p className={styles.percentage}>{getLastHumanPressureValue()}%</p>
-            <div className={styles.hpChartContainer}>
-              <AreaChart
-                area={{
-                  key: 'value',
-                  stroke: COLORS.gold,
-                  fill: 'url(#gradientColor)',
-                  strokeWidth: 2,
-                  type: 'natural',
-                }}
-                data={humanPressureValues}
-                xTicks={hummanPressuresXAxis}
-                margin={{
-                  top: 0,
-                  right: 0,
-                  left: -PRESSURES_CHART_WIDTH,
-                  bottom: 0,
-                }}
-                height={PRESSURES_CHART_HEIGHT}
-                width={PRESSURES_CHART_WIDTH}
-                domain={
-                  hummanPressuresXAxis && [
-                    Math.min(...hummanPressuresXAxis),
-                    Math.max(...hummanPressuresXAxis),
-                  ]
-                }
-              />
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
 
   const isCustom = contextualData?.isCustom;
 
@@ -276,9 +185,13 @@ function SidebarCard({
             ))}
           </div>
         )}
-        {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
-          humanPressuresData &&
-          renderHumanPressure()}
+        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && humanPressuresData && (
+          <HumanPressure
+            chartDomain={chartDomain}
+            setChartDomain={setChartDomain}
+            data={humanPressuresData}
+          />
+        )}
         <SourceAnnotation
           theme="dark"
           metaDataSources={metadata && metadata.source}

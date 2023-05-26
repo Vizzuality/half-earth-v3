@@ -58,37 +58,6 @@
   margin: 0px 0 8px 0;
 }
 
-.humanPressureIndicators {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 14px;
-  row-gap: 6px;
-  margin: 24px 0;
-
-  .humanPressureIndicator {
-    position: relative;
-    height: 120px;
-    width: 166px;
-
-    .title {
-      @extend %bodyText;
-      text-align: left;
-      padding: 0;
-
-    }
-    .percentage {
-      @extend %display2;
-      margin: 0;
-    }
-
-    .hpChartContainer {
-      position: absolute;
-      left: -18px;
-      top: 50px;
-    }
-  }
-}
-
 .protectedAreaChartContainer {
   margin-top: 4px;
   .protectedAreaChartLegend {
