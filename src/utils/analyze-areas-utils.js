@@ -32,7 +32,7 @@ export function createHashFromGeometry(geometry) {
   return sha1(flatRings.toString());
 }
 
-export function featureCollectionFromShape(input, view, onSucces, onError) {
+export function featureCollectionFromShape(body, view, onSucces, onError) {
   const generateRequestParams = {
     filetype: 'shapefile',
     publishParameters: JSON.stringify({
@@ -45,7 +45,7 @@ export function featureCollectionFromShape(input, view, onSucces, onError) {
       'https://www.arcgis.com/sharing/rest/content/features/generate',
       {
         query: generateRequestParams,
-        body: input,
+        body,
         method: 'post',
         responseType: 'json',
       }

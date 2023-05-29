@@ -12,9 +12,16 @@ import { ReactComponent as AddShapeIcon } from 'icons/add_shape_icon.svg';
 function ShapeFileUploader({ sizeWarning, view, onError, onSuccess }) {
   const t = useT();
 
-  const { getRootProps, getInputProps, rootRef } = useDropzone({
-    onDrop: useCallback(() => {
-      featureCollectionFromShape(rootRef.current, view, onSuccess, onError);
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: useCallback((files) => {
+      if (!files || !files[0]) {
+        console.error('No file provided');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', files[0]);
+      featureCollectionFromShape(formData, view, onSuccess, onError);
     }),
   });
 
