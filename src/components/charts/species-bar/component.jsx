@@ -17,13 +17,6 @@ function SpeciesBar({
   tooltipContent = 'More info',
   theme = 'light',
 }) {
-  let titlePosition = barAnnotation;
-  let updatedBarAnnotation = barAnnotation;
-  if (barAnnotation < 18) {
-    titlePosition = 18;
-  } else if (barAnnotation > 82) {
-    updatedBarAnnotation = 82;
-  }
   const renderTitle = () => (
     <div className={styles.barTitleWrapper}>
       <p className={styles.barTitle}>{title}</p>
@@ -67,13 +60,9 @@ function SpeciesBar({
           {barAnnotation && (
             <div
               className={styles.annotationBar}
-              style={{ left: `${updatedBarAnnotation}%` }}
+              style={{ left: `${barAnnotation}%` }}
             />
           )}
-          <div
-            className={styles.annotation}
-            style={{ left: `${titlePosition}%` }}
-          />
         </div>
       </div>
     </Tooltip>
