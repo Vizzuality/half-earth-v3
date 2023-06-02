@@ -68,11 +68,11 @@ function CountryLabelsLayerComponent(props) {
         if (layer) {
           setCountryLabelsLayer(layer);
         } else {
-          addLayerToActiveLayers(
-            COUNTRIES_LABELS_FEATURE_LAYER,
+          addLayerToActiveLayers({
+            slug: COUNTRIES_LABELS_FEATURE_LAYER,
             activeLayers,
-            changeGlobe
-          );
+            callback: changeGlobe,
+          });
         }
       }
     }

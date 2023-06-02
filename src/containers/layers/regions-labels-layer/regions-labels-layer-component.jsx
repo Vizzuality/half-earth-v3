@@ -48,13 +48,6 @@ function RegionsLabelsLayerComponent(props) {
       layer.labelsVisible = true;
       layer.minScale = 10000000; // When the regions are clickable
       layer.labelingInfo = [labelingInfo];
-      layer.renderer = {
-        type: 'simple',
-        symbol: {
-          type: 'simple-marker',
-          size: 0,
-        },
-      };
     };
     if (labelingInfo) {
       if (regionsLabelsLayer) {
@@ -64,11 +57,12 @@ function RegionsLabelsLayerComponent(props) {
         if (layer) {
           setRegionsLabelsLayer(layer);
         } else {
-          addLayerToActiveLayers(
-            REGIONS_LABELS_LAYER,
+          addLayerToActiveLayers({
+            slug: REGIONS_LABELS_LAYER,
             activeLayers,
-            changeGlobe
-          );
+            callback: changeGlobe,
+            opacity: 0,
+          });
         }
       }
     }

@@ -87,13 +87,16 @@ export const layerManagerToggle = (
   }
 };
 
-export const addLayerToActiveLayers = (
+export const addLayerToActiveLayers = ({
   slug,
   activeLayers,
   callback,
-  category
-) => {
-  const newActiveLayer = [{ title: slug, opacity: DEFAULT_OPACITY, category }];
+  category,
+  opacity,
+}) => {
+  const newActiveLayer = [
+    { title: slug, opacity: opacity || DEFAULT_OPACITY, category },
+  ];
   callback({
     activeLayers: activeLayers
       ? newActiveLayer.concat(activeLayers)
