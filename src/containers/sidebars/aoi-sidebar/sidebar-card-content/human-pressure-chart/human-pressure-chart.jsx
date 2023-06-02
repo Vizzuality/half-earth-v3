@@ -38,8 +38,9 @@ function HumanPressure({ chartDomain, setChartDomain, data }) {
         const humanPressure = data[key];
         const humanPressureXAxis = humanPressuresXAxis(humanPressure);
         if (
-          Math.min(...humanPressureXAxis) < chartDomain[0] ||
-          Math.max(...humanPressureXAxis) > chartDomain[1]
+          humanPressureXAxis &&
+          (Math.min(...humanPressureXAxis) < chartDomain[0] ||
+            Math.max(...humanPressureXAxis) > chartDomain[1])
         ) {
           setChartDomain([
             Math.min(...humanPressureXAxis, chartDomain[0]),
