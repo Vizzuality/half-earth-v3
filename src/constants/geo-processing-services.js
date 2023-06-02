@@ -15,11 +15,11 @@ export const CRF_NAMES = {
   PROTECTED_AREA_PERCENTAGE: 'WDPA_Terrestrial_CEA_June2021',
   HUMAN_PRESSURES: 'land_encroachment',
   // Human pressures group
-  EXTRACTION: 'Extraction_TimeSeries_V2_Reclassify',
-  AGRICULTURE: 'Agriculture_TimeSeries_Reclassify',
-  TRANSPORTATION: 'Transportation_TimeSeries_V2_Reclassify',
-  INTRUSION: 'HumanIntrusion_TimeSeries_V3_Reclassify',
-  BUILTUP: 'Builtup_TimeSeries_Reclassify',
+  EXTRACTION: 'Extraction_TimeSeries_Reclassify_20230501',
+  AGRICULTURE: 'Agriculture_TimeSeries_Reclassify_20230501',
+  TRANSPORTATION: 'Transportation_TimeSeries_Reclassify_20230515',
+  INTRUSION: 'HumanIntrusion_TimeSeries_Reclassify_20230501',
+  BUILTUP: 'Builtup_TimeSeries_Reclassify_20230501',
 };
 
 export const CONTEXTUAL_DATA = 'contextual_data';
