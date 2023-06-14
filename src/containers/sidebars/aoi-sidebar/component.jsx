@@ -381,7 +381,9 @@ function AOISidebar({
                             <span>
                               <T
                                 _str="Species Protection Score of {SPSIncreaseTotal} species,"
-                                SPSIncreaseTotal={sentenceData.SPSIncreaseTotal}
+                                SPSIncreaseTotal={
+                                  sentenceData.SPSIncreaseTotal || ''
+                                }
                                 _comment="Protecting the appropriate habitats in this area would improve the {Species Protection Score of } SPSIncreaseTotal{ species,} moving them closer to their conservation target."
                               />
                             </span>

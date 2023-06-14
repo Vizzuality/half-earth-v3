@@ -101,6 +101,7 @@ const getProtectedAreasList = (data) =>
     DESIG: f.attributes.DESIG_E,
     IUCN_CA: f.attributes.IUCN_CA,
     DESIG_T: f.attributes.DESIG_T,
+    MOL_ID: f.attributes.MOL_ID,
   }));
 
 const getPercentage = (data) =>
