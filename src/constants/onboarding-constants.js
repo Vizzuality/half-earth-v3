@@ -325,23 +325,23 @@ export const getScripts = () => {
         },
         {
           startTime: 41,
-          endTime: 52,
+          endTime: 51.8,
           text: t(
-            'For now, this data is only provided for vertebrate species because accurate information for other taxonomic groups is more difficult to gather. '
+            'For now, this data is primarily provided for vertebrates and some plant species because accurate information for other taxonomic groups'
           ),
         },
         {
-          startTime: 52.1,
+          startTime: 51.9,
           endTime: 57.8,
           text: t(
-            "Nevertheless, we are working toward the most complete picture of the Earth's biodiversity."
+            "is more difficult to gather. Nevertheless, we are working toward the most complete picture of the Earth's biodiversity."
           ),
         },
         {
           startTime: 57.8,
           endTime: 65.5,
           text: t(
-            'Data on plant groups and some insect groups are being prepared for inclusion in future map releases.'
+            'More data on plant groups and some insect groups are being prepared for inclusion in future map releases.'
           ),
         },
         {
