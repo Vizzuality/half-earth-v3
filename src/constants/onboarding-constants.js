@@ -471,18 +471,18 @@ export const getScripts = () => {
       'human-pressures': [
         {
           startTime: 0,
-          endTime: 2.9,
-          text: t('The layer showing human pressures'),
+          endTime: 2.8,
+          text: t('The layers showing human pressures'),
         },
         {
-          startTime: 2.9,
-          endTime: 10.6,
+          startTime: 2.8,
+          endTime: 10,
           text: t(
-            'illustrates how much human encroachment occurs from urbanization and other economic activities.'
+            'illustrate how much human encroachment occurs from urbanization and other economic activities.'
           ),
         },
         {
-          startTime: 10.6,
+          startTime: 10,
           endTime: 15.2,
           text: t(
             'In the Amazon, clear-cutting and burning forest for rangeland,'
@@ -490,27 +490,27 @@ export const getScripts = () => {
         },
         {
           startTime: 15.2,
-          endTime: 22.8,
+          endTime: 21.7,
           text: t(
             'along with mining, roads and settlements are the main factors responsible for habitat degradation.'
           ),
         },
         {
-          startTime: 22.8,
-          endTime: 29.8,
+          startTime: 21.8,
+          endTime: 28.9,
           text: t(
             'When planning new protected areas or managing existing ones, human pressures should be considered.'
           ),
         },
         {
-          startTime: 29.8,
-          endTime: 34.4,
+          startTime: 28.9,
+          endTime: 33.6,
           text: t(
             'Some species are less tolerant than others to human disturbances.'
           ),
         },
         {
-          startTime: 34.4,
+          startTime: 33.6,
           endTime: 100,
           text: t(
             'However, lands that have already undergone high human modification are more costly to restore.'
