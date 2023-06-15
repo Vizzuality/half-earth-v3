@@ -2,7 +2,7 @@ import { t } from '@transifex/native';
 
 export const NO_INTERACTION_STEPS = {
   'priority-places': ['human-pressures'],
-  'national-report-cards': ['ranking', 'challenges'],
+  'national-report-cards': ['overview', 'challenges', 'ranking'],
 };
 
 export const ONBOARDING_TYPE_CENTER = {
@@ -23,9 +23,10 @@ export const NRC_STEPS = {
   intro: 0,
   spi: 1,
   nrc: 2,
-  ranking: 3,
+  overview: 3,
   challenges: 4,
-  closure: 5,
+  ranking: 5,
+  closure: 6,
 };
 
 export const getScripts = () => {
@@ -731,8 +732,57 @@ export const getScripts = () => {
           text: t('Click on “Explore” to enter the National Report Card.'),
         },
       ],
-      ranking,
+      overview: [
+        {
+          startTime: 0,
+          endTime: 5.4,
+          text: t(
+            'National Report Cards provide a comprehensive overview of the selected country,'
+          ),
+        },
+        {
+          startTime: 5.4,
+          endTime: 13.9,
+          text: t(
+            'delving into various aspects such as the Species Protection Index, the number of endemic species, the level of protection,'
+          ),
+        },
+        {
+          startTime: 13.9,
+          endTime: 17.3,
+          text: t('and the degree of human modification in the region.'),
+        },
+        {
+          startTime: 17.3,
+          endTime: 24.1,
+          text: t(
+            'By clicking on the "All vertebrates" button, you can access a list of vertebrate species found within the country,'
+          ),
+        },
+        {
+          startTime: 24.1,
+          endTime: 32.2,
+          text: t(
+            'along with relevant information. Below, the time series chart illustrates the progression of the SPI'
+          ),
+        },
+        {
+          startTime: 32.2,
+          endTime: 38.6,
+          text: t(
+            'and changes in the proportion of protected areas within the country over the past few decades.'
+          ),
+        },
+        {
+          startTime: 38.6,
+          endTime: 100,
+          text: t(
+            'Lastly, as you scroll down, you will come across the challenges chart.'
+          ),
+        },
+      ],
       challenges,
+      ranking,
       closure: [
         {
           startTime: 0,

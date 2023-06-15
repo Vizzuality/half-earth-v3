@@ -162,7 +162,11 @@ export const useOnboardingOpenSection = ({
       }
 
       // Set NRC page sidebar view position
-      if ([NRC_STEPS.challenges, NRC_STEPS.ranking].includes(onboardingStep)) {
+      if (
+        [NRC_STEPS.overview, NRC_STEPS.challenges, NRC_STEPS.ranking].includes(
+          onboardingStep
+        )
+      ) {
         if (locationRoute !== NATIONAL_REPORT_CARD) {
           browsePage({
             type: NATIONAL_REPORT_CARD,
