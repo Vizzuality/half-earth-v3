@@ -33,51 +33,100 @@ export const getScripts = () => {
   const ranking = [
     {
       startTime: 0,
-      endTime: 11.1,
+      endTime: 8,
       text: t(
-        'The ranking feature provides an overview of the species composition, human modification, and protection status for each of the 252 countries '
+        'This ranking sorts countries and territories included in the National Report Cards according to different variables.'
       ),
     },
     {
-      startTime: 11.1,
-      endTime: 21.1,
+      startTime: 8,
+      endTime: 18.3,
       text: t(
-        'and territories included in the National Report Cards. Countries can be sorted according to different variables using the drop down menu at the top. '
+        'By default, the ranking is ordered by SPI values, revealing that countries with the highest SPI scores tend to host very few endemic species.'
       ),
     },
     {
-      startTime: 21.1,
-      endTime: 30.7,
+      startTime: 18.3,
+      endTime: 27,
       text: t(
-        'The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species,'
+        'They earn a higher score because it is easier to build protected area networks when richness is the primary factor to consider.'
       ),
     },
     {
-      startTime: 30.7,
-      endTime: 40.4,
+      startTime: 27,
+      endTime: 34.5,
       text: t(
-        'countries under high human modification, or those with a high level of additional protection needed. The default ranking is ordered by SPI '
+        'Click on the “full ranking” bottom to get an overview of the species composition, human modification, ',
+        {
+          context:
+            'Click on the “full ranking” bottom to get an overview of the species composition, human modification, (and the protection status for each of those regions.)',
+        }
       ),
     },
     {
-      startTime: 40.4,
-      endTime: 47.8,
+      startTime: 34.5,
+      endTime: 38.3,
+      text: t('and the protection status for each of those regions.', {
+        context:
+          '(Click on the “full ranking” bottom to get an overview of the species composition, human modification,) and the protection status for each of those regions.',
+      }),
+    },
+    {
+      startTime: 38.3,
+      endTime: 45,
       text: t(
-        'values, revealing that countries with the highest SPI scores tend to host very few endemic species.'
+        'Countries and territories can also be sorted according to these variables using the sorting bottoms at the top. '
       ),
     },
     {
-      startTime: 47.8,
-      endTime: 56.8,
+      startTime: 45,
+      endTime: 55.45,
       text: t(
-        'They earn a higher score because it is easier to build protected area networks when richness is the primary factor to consider. '
+        'The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species, ',
+        {
+          context:
+            'The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species, (countries under high human modification, or those with a high level of additional protection needed.)',
+        }
       ),
     },
     {
-      startTime: 56.8,
-      endTime: 63.1,
+      startTime: 55.45,
+      endTime: 62,
       text: t(
-        'Have a look at how the country you’re interested in scores in each of the available rankings.'
+        'countries under high human modification, or those with a high level of additional protection needed.',
+        {
+          context:
+            '(The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species,) countries under high human modification, or those with a high level of additional protection needed.',
+        }
+      ),
+    },
+    {
+      startTime: 62,
+      endTime: 67.8,
+      text: t(
+        'Have a look at how the country you’re interested in scores in each of the available rankings, ',
+        {
+          context:
+            'Have a look at how the country you’re interested in scores in each of the available rankings, (or explore other National Report Cards by selecting a different territory.)',
+        }
+      ),
+    },
+    {
+      startTime: 67.8,
+      endTime: 72.3,
+      text: t(
+        'or explore other National Report Cards by selecting a different territory.',
+        {
+          context:
+            '(Have a look at how the country you’re interested in scores in each of the available rankings,) or explore other National Report Cards by selecting a different territory.',
+        }
+      ),
+    },
+    {
+      startTime: 72.3,
+      endTime: 100,
+      text: t(
+        'To exit from the current National Report Card, click on the cross on the top right of the screen.'
       ),
     },
   ];
