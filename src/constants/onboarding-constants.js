@@ -153,16 +153,36 @@ export const getScripts = () => {
         'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to '
       ),
     },
-    [
-      {
-        startTime: 85,
-        endTime: 89,
-        text: t('explore relationships between various indicators.', {
+    {
+      startTime: 85,
+      endTime: 89,
+      text: t('explore relationships between various indicators.', {
+        _comment:
+          'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
+      }),
+    },
+    {
+      startTime: 89,
+      endTime: 96.3,
+      text: t(
+        'Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section',
+        {
           _comment:
-            'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
-        }),
-      },
-    ],
+            '(Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section) for further exploration of your specific area of interest.',
+        }
+      ),
+    },
+    {
+      startTime: 96.3,
+      endTime: 110,
+      text: t(
+        'for further exploration of your specific area of interest. But before that, take a moment to check out the ranking feature situated on the left side panel.',
+        {
+          _comment:
+            '(Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section) for further exploration of your specific area of interest. ...',
+        }
+      ),
+    },
   ];
 
   return {
