@@ -348,14 +348,22 @@ export const getScripts = () => {
           startTime: 41,
           endTime: 51.8,
           text: t(
-            'For now, this data is primarily provided for vertebrates and some plant species because accurate information for other taxonomic groups'
+            'For now, this data is primarily provided for vertebrates and some plant species because accurate information for other taxonomic groups',
+            {
+              context:
+                '...because accurate information for other taxonomic groups (is more difficult to gather).',
+            }
           ),
         },
         {
           startTime: 51.9,
           endTime: 57.8,
           text: t(
-            "is more difficult to gather. Nevertheless, we are working toward the most complete picture of the Earth's biodiversity."
+            "is more difficult to gather. Nevertheless, we are working toward the most complete picture of the Earth's biodiversity.",
+            {
+              context:
+                '(For now, this data is primarily provided for vertebrates and some plant species because accurate information for other taxonomic groups) is more difficult to gather. ...',
+            }
           ),
         },
         {
@@ -493,13 +501,20 @@ export const getScripts = () => {
         {
           startTime: 0,
           endTime: 2.8,
-          text: t('The layers showing human pressures'),
+          text: t('The layers showing human pressures', {
+            context:
+              'The layers showing human pressures (illustrate how much human encroachment occurs from urbanization and other economic activities.)',
+          }),
         },
         {
           startTime: 2.8,
           endTime: 10,
           text: t(
-            'illustrate how much human encroachment occurs from urbanization and other economic activities.'
+            'illustrate how much human encroachment occurs from urbanization and other economic activities.',
+            {
+              context:
+                '(The layers showing human pressures) illustrate how much human encroachment occurs from urbanization and other economic activities.',
+            }
           ),
         },
         {
@@ -757,40 +772,63 @@ export const getScripts = () => {
           startTime: 0,
           endTime: 5.4,
           text: t(
-            'National Report Cards provide a comprehensive overview of the selected country,'
+            'National Report Cards provide a comprehensive overview of the selected country,',
+            {
+              context:
+                'National Report Cards provide a comprehensive overview of the selected country,(delving into various aspects such as the Species Protection Index,...)',
+            }
           ),
         },
         {
           startTime: 5.4,
           endTime: 13.9,
           text: t(
-            'delving into various aspects such as the Species Protection Index, the number of endemic species, the level of protection,'
+            'delving into various aspects such as the Species Protection Index, the number of endemic species, the level of protection,',
+            {
+              context:
+                '(National Report Cards provide a comprehensive overview of the selected country,) delving into various aspects such as the Species Protection Index,the number of endemic species, the level of protection,(and the degree of human modification in the region.)',
+            }
           ),
         },
         {
           startTime: 13.9,
           endTime: 17.3,
-          text: t('and the degree of human modification in the region.'),
+          text: t('and the degree of human modification in the region.', {
+            context:
+              '(National Report Cards provide a comprehensive overview of the selected country, delving into various aspects such as the Species Protection Index,...)and the degree of human modification in the region.',
+          }),
         },
         {
           startTime: 17.3,
           endTime: 24.1,
           text: t(
-            'By clicking on the "All vertebrates" button, you can access a list of vertebrate species found within the country,'
+            'By clicking on the "All vertebrates" button, you can access a list of vertebrate species found within the country,',
+            {
+              context:
+                'By clicking on the "All vertebrates" button, you can access a list of vertebrate species found within the country,(along with relevant information. )',
+            }
           ),
         },
         {
           startTime: 24.1,
           endTime: 32.2,
           text: t(
-            'along with relevant information. Below, the time series chart illustrates the progression of the SPI'
+            'along with relevant information. Below, the time series chart illustrates the progression of the SPI',
+            {
+              context:
+                '(By clicking on the "All vertebrates" button, you can access a list of vertebrate species found within the country,)along with relevant information. Below, the time series chart illustrates the progression of the SPI (and changes in the proportion of protected areas within the country over the past few decades)',
+            }
           ),
         },
         {
           startTime: 32.2,
           endTime: 38.6,
           text: t(
-            'and changes in the proportion of protected areas within the country over the past few decades.'
+            'and changes in the proportion of protected areas within the country over the past few decades.',
+            {
+              context:
+                '(Below, the time series chart illustrates the progression of the SPI )and changes in the proportion of protected areas within the country over the past few decades)',
+            }
           ),
         },
         {
