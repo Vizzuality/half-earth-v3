@@ -25,8 +25,6 @@ import NRCClosureFile from 'sounds/tour2-track7-closure.mp3';
 
 import Modal from 'containers/modals/onboarding-modal';
 
-import OnboardingDisclaimer from 'components/onboarding-disclaimer-modal';
-
 import {
   getScripts,
   NO_INTERACTION_STEPS,
@@ -359,9 +357,6 @@ function SoundButtonComponent({
         handleClose={handleSwitchMode}
         onRequestClose={handleSwitchMode}
       />
-      {onboardingType === 'national-report-cards' && (
-        <OnboardingDisclaimer handleBack={handleBack} />
-      )}
     </div>
   );
 }

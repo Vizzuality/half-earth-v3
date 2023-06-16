@@ -10,6 +10,9 @@ import Button from 'components/button';
 
 import styles from './onboarding-disclaimer-modal-styles.module.scss';
 
+// Component used when the onboarding tour is outdated and we need to communicate it to the user
+// Remove if not needed anymore
+
 function OnboardingDisclaimer({ handleBack }) {
   const [isOpen, setOpen] = useState(true);
 
