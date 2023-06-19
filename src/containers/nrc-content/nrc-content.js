@@ -36,10 +36,8 @@ export const NRCSidebar = {
 function NrcContainer(props) {
   const {
     browsePage,
-    onboardingType,
     countryName,
     countryId,
-    changeUI,
     setNRCSidebarView,
     NRCSidebarView,
   } = props;
@@ -65,12 +63,6 @@ function NrcContainer(props) {
     }
 
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
-    if (onboardingType)
-      changeUI({
-        onboardingType: 'national-report-cards',
-        onboardingStep: 6,
-        waitingInteraction: false,
-      });
   };
 
   const openAnalyzeArea = () => {

@@ -21,7 +21,8 @@ import nrcFile from 'sounds/tour2-track3-nrc.mp3';
 import overviewFile from 'sounds/tour2-track4-overview.mp3';
 import challengesFile from 'sounds/tour2-track5-challenges.mp3';
 import rankingFile from 'sounds/tour2-track6-ranking.mp3';
-import NRCClosureFile from 'sounds/tour2-track7-closure.mp3';
+import fullRankingFile from 'sounds/tour2-track7-full-ranking.mp3';
+import NRCClosureFile from 'sounds/tour2-track8-closure.mp3';
 
 import Modal from 'containers/modals/onboarding-modal';
 
@@ -60,6 +61,7 @@ const NRCFiles = {
   nrc: nrcFile,
   overview: overviewFile,
   ranking: rankingFile,
+  fullRanking: fullRankingFile,
   challenges: challengesFile,
   closure: NRCClosureFile,
 };

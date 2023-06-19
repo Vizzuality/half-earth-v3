@@ -2,7 +2,7 @@ import { t } from '@transifex/native';
 
 export const NO_INTERACTION_STEPS = {
   'priority-places': ['human-pressures'],
-  'national-report-cards': ['overview', 'challenges', 'ranking'],
+  'national-report-cards': ['overview', 'challenges'],
 };
 
 export const ONBOARDING_TYPE_CENTER = {
@@ -26,214 +26,11 @@ export const NRC_STEPS = {
   overview: 3,
   challenges: 4,
   ranking: 5,
-  closure: 6,
+  fullRanking: 6,
+  closure: 7,
 };
 
 export const getScripts = () => {
-  const ranking = [
-    {
-      startTime: 0,
-      endTime: 8,
-      text: t(
-        'This ranking sorts countries and territories included in the National Report Cards according to different variables.'
-      ),
-    },
-    {
-      startTime: 8,
-      endTime: 18.3,
-      text: t(
-        'By default, the ranking is ordered by SPI values, revealing that countries with the highest SPI scores tend to host very few endemic species.'
-      ),
-    },
-    {
-      startTime: 18.3,
-      endTime: 27,
-      text: t(
-        'They earn a higher score because it is easier to build protected area networks when richness is the primary factor to consider.'
-      ),
-    },
-    {
-      startTime: 27,
-      endTime: 34.5,
-      text: t(
-        'Click on the “full ranking” bottom to get an overview of the species composition, human modification, ',
-        {
-          context:
-            'Click on the “full ranking” bottom to get an overview of the species composition, human modification, (and the protection status for each of those regions.)',
-        }
-      ),
-    },
-    {
-      startTime: 34.5,
-      endTime: 38.3,
-      text: t('and the protection status for each of those regions.', {
-        context:
-          '(Click on the “full ranking” bottom to get an overview of the species composition, human modification,) and the protection status for each of those regions.',
-      }),
-    },
-    {
-      startTime: 38.3,
-      endTime: 45,
-      text: t(
-        'Countries and territories can also be sorted according to these variables using the sorting bottoms at the top. '
-      ),
-    },
-    {
-      startTime: 45,
-      endTime: 55.45,
-      text: t(
-        'The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species, ',
-        {
-          context:
-            'The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species, (countries under high human modification, or those with a high level of additional protection needed.)',
-        }
-      ),
-    },
-    {
-      startTime: 55.45,
-      endTime: 62,
-      text: t(
-        'countries under high human modification, or those with a high level of additional protection needed.',
-        {
-          context:
-            '(The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species,) countries under high human modification, or those with a high level of additional protection needed.',
-        }
-      ),
-    },
-    {
-      startTime: 62,
-      endTime: 67.8,
-      text: t(
-        'Have a look at how the country you’re interested in scores in each of the available rankings, ',
-        {
-          context:
-            'Have a look at how the country you’re interested in scores in each of the available rankings, (or explore other National Report Cards by selecting a different territory.)',
-        }
-      ),
-    },
-    {
-      startTime: 67.8,
-      endTime: 72.3,
-      text: t(
-        'or explore other National Report Cards by selecting a different territory.',
-        {
-          context:
-            '(Have a look at how the country you’re interested in scores in each of the available rankings,) or explore other National Report Cards by selecting a different territory.',
-        }
-      ),
-    },
-    {
-      startTime: 72.3,
-      endTime: 100,
-      text: t(
-        'To exit from the current National Report Card, click on the cross on the top right of the screen.'
-      ),
-    },
-  ];
-
-  const challenges = [
-    {
-      startTime: 0,
-      endTime: 5.4,
-      text: t(
-        'To better understand the challenges countries face when planning conservation action, in this section'
-      ),
-    },
-    {
-      startTime: 5.4,
-      endTime: 15.8,
-      text: t(
-        'you can explore relationships between the Species Protection Index and some simple socio-political and biodiversity indicators. '
-      ),
-    },
-    {
-      startTime: 15.8,
-      endTime: 27.4,
-      text: t(
-        'On this plot, the vertical y-axis represents the SPI values, while the horizontal x-axis can represent different variables of your choice;'
-      ),
-    },
-    {
-      startTime: 27.4,
-      endTime: 32.6,
-      text: t(
-        'such as the number of species present in the country or the human population.'
-      ),
-    },
-    {
-      startTime: 32.6,
-      endTime: 42,
-      text: t(
-        'The drop down menu at the top makes it possible to filter countries by key similarities to illuminate critical differences between nations,'
-      ),
-    },
-    {
-      startTime: 42,
-      endTime: 49,
-      text: t(
-        'and explore social challenges to consider for achieving equitable conservation goals and results. '
-      ),
-    },
-    {
-      startTime: 49,
-      endTime: 58.5,
-      text: t(
-        'Each country is represented by a circle color-coded by continent, with a diameter proportional to the country’s area. '
-      ),
-    },
-    {
-      startTime: 58.5,
-      endTime: 69.6,
-      text: t(
-        'A blinking halo marks your selected country. The default view shows countries with shared stewardship over many of the same species,'
-      ),
-    },
-    {
-      startTime: 69.6,
-      endTime: 74.5,
-      text: t(
-        'often with shared borders. These countries could work together to maximize species protection.'
-      ),
-    },
-    {
-      startTime: 74.5,
-      endTime: 85,
-      text: t(
-        'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to '
-      ),
-    },
-    {
-      startTime: 85,
-      endTime: 89,
-      text: t('explore relationships between various indicators.', {
-        _comment:
-          'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
-      }),
-    },
-    {
-      startTime: 89,
-      endTime: 96.3,
-      text: t(
-        'Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section',
-        {
-          _comment:
-            '(Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section) for further exploration of your specific area of interest.',
-        }
-      ),
-    },
-    {
-      startTime: 96.3,
-      endTime: 110,
-      text: t(
-        'for further exploration of your specific area of interest. But before that, take a moment to check out the ranking feature situated on the left side panel.',
-        {
-          _comment:
-            '(Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section) for further exploration of your specific area of interest. ...',
-        }
-      ),
-    },
-  ];
-
   return {
     'priority-places': {
       intro: [
@@ -888,8 +685,210 @@ export const getScripts = () => {
           ),
         },
       ],
-      challenges,
-      ranking,
+      challenges: [
+        {
+          startTime: 0,
+          endTime: 5.4,
+          text: t(
+            'To better understand the challenges countries face when planning conservation action, in this section'
+          ),
+        },
+        {
+          startTime: 5.4,
+          endTime: 15.8,
+          text: t(
+            'you can explore relationships between the Species Protection Index and some simple socio-political and biodiversity indicators. '
+          ),
+        },
+        {
+          startTime: 15.8,
+          endTime: 27.4,
+          text: t(
+            'On this plot, the vertical y-axis represents the SPI values, while the horizontal x-axis can represent different variables of your choice;'
+          ),
+        },
+        {
+          startTime: 27.4,
+          endTime: 32.6,
+          text: t(
+            'such as the number of species present in the country or the human population.'
+          ),
+        },
+        {
+          startTime: 32.6,
+          endTime: 42,
+          text: t(
+            'The drop down menu at the top makes it possible to filter countries by key similarities to illuminate critical differences between nations,'
+          ),
+        },
+        {
+          startTime: 42,
+          endTime: 49,
+          text: t(
+            'and explore social challenges to consider for achieving equitable conservation goals and results. '
+          ),
+        },
+        {
+          startTime: 49,
+          endTime: 58.5,
+          text: t(
+            'Each country is represented by a circle color-coded by continent, with a diameter proportional to the country’s area. '
+          ),
+        },
+        {
+          startTime: 58.5,
+          endTime: 69.6,
+          text: t(
+            'A blinking halo marks your selected country. The default view shows countries with shared stewardship over many of the same species,'
+          ),
+        },
+        {
+          startTime: 69.6,
+          endTime: 74.5,
+          text: t(
+            'often with shared borders. These countries could work together to maximize species protection.'
+          ),
+        },
+        {
+          startTime: 74.5,
+          endTime: 85,
+          text: t(
+            'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to '
+          ),
+        },
+        {
+          startTime: 85,
+          endTime: 89,
+          text: t('explore relationships between various indicators.', {
+            _comment:
+              'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
+          }),
+        },
+        {
+          startTime: 89,
+          endTime: 96.3,
+          text: t(
+            'Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section',
+            {
+              _comment:
+                '(Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section) for further exploration of your specific area of interest.',
+            }
+          ),
+        },
+        {
+          startTime: 96.3,
+          endTime: 110,
+          text: t(
+            'for further exploration of your specific area of interest. But before that, take a moment to check out the ranking feature situated on the left side panel.',
+            {
+              _comment:
+                '(Clicking the "Analyze area" button in the lower right corner will direct you to our "Analyze areas" section) for further exploration of your specific area of interest. ...',
+            }
+          ),
+        },
+      ],
+      ranking: [
+        {
+          startTime: 0,
+          endTime: 8,
+          text: t(
+            'This ranking sorts countries and territories included in the National Report Cards according to different variables.'
+          ),
+        },
+        {
+          startTime: 8,
+          endTime: 18.3,
+          text: t(
+            'By default, the ranking is ordered by SPI values, revealing that countries with the highest SPI scores tend to host very few endemic species.'
+          ),
+        },
+        {
+          startTime: 18.3,
+          endTime: 27,
+          text: t(
+            'They earn a higher score because it is easier to build protected area networks when richness is the primary factor to consider.'
+          ),
+        },
+        {
+          startTime: 27,
+          endTime: 34.5,
+          text: t(
+            'Click on the “full ranking” button to get an overview of the species composition, human modification, ',
+            {
+              context:
+                'Click on the “full ranking” button to get an overview of the species composition, human modification, (and the protection status for each of those regions.)',
+            }
+          ),
+        },
+        {
+          startTime: 34.5,
+          endTime: 40,
+          text: t('and the protection status for each of those regions.', {
+            context:
+              '(Click on the “full ranking” button to get an overview of the species composition, human modification,) and the protection status for each of those regions.',
+          }),
+        },
+      ],
+      fullRanking: [
+        {
+          startTime: 0,
+          endTime: 7,
+          text: t(
+            'Countries and territories can also be sorted according to these variables using the sorting bottoms at the top. '
+          ),
+        },
+        {
+          startTime: 7,
+          endTime: 17.2,
+          text: t(
+            'The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species, ',
+            {
+              context:
+                'The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species, (countries under high human modification, or those with a high level of additional protection needed.)',
+            }
+          ),
+        },
+        {
+          startTime: 17.2,
+          endTime: 23.5,
+          text: t(
+            'countries under high human modification, or those with a high level of additional protection needed.',
+            {
+              context:
+                '(The resulting rankings, which are ordered from highest to lowest, help to identify, for example, countries with a high proportion of endemic species,) countries under high human modification, or those with a high level of additional protection needed.',
+            }
+          ),
+        },
+        {
+          startTime: 23.5,
+          endTime: 29.3,
+          text: t(
+            'Have a look at how the country you’re interested in scores in each of the available rankings, ',
+            {
+              context:
+                'Have a look at how the country you’re interested in scores in each of the available rankings, (or explore other National Report Cards by selecting a different territory.)',
+            }
+          ),
+        },
+        {
+          startTime: 29.3,
+          endTime: 34,
+          text: t(
+            'or explore other National Report Cards by selecting a different territory.',
+            {
+              context:
+                '(Have a look at how the country you’re interested in scores in each of the available rankings,) or explore other National Report Cards by selecting a different territory.',
+            }
+          ),
+        },
+        {
+          startTime: 34,
+          endTime: 100,
+          text: t(
+            'To exit from the current National Report Card, click on the cross on the top right of the screen.'
+          ),
+        },
+      ],
       closure: [
         {
           startTime: 0,
