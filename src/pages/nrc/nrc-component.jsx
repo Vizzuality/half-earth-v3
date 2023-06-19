@@ -10,7 +10,10 @@ import cx from 'classnames';
 import { motion } from 'framer-motion';
 
 import NrcContent from 'containers/nrc-content';
-import { useOnboardingOpenSection } from 'containers/onboarding/onboarding-hooks';
+import {
+  useOnboardingOpenSection,
+  getOnboardingProps,
+} from 'containers/onboarding/onboarding-hooks';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
 
@@ -61,7 +64,17 @@ function NationalReportCard({
 
   const t = useT();
   const { marine } = chartData;
-
+  const {
+    overlay: onboardingOverlay,
+    onClick: onboardingOnClick,
+    className: onboardingClassName,
+  } = getOnboardingProps({
+    section: 'ranking',
+    styles,
+    changeUI,
+    onboardingStep,
+    waitingInteraction,
+  });
   const tabsData = {
     land: {
       text: t('Land', { __comment: '(Land) SPI' }),
@@ -135,13 +148,21 @@ function NationalReportCard({
               animate={{ left: fullRanking ? -26 : -4 }}
               transition={{ duration: 0.5 }}
             >
-              <Button
-                type="rectangular-primary"
-                Icon={ArrowExpandIcon}
-                className={styles.fullRankingButton}
-                handleClick={() => handleSetFullRanking(!fullRanking)}
-                label={fullRanking ? t('Default Ranking') : t('Full Ranking')}
-              />
+              <motion.div
+                className={cx(onboardingClassName)}
+                {...onboardingOverlay}
+              >
+                <Button
+                  type="rectangular-primary"
+                  Icon={ArrowExpandIcon}
+                  className={styles.fullRankingButton}
+                  handleClick={() => {
+                    handleSetFullRanking(!fullRanking);
+                    onboardingOnClick.onClick();
+                  }}
+                  label={fullRanking ? t('Default Ranking') : t('Full Ranking')}
+                />
+              </motion.div>
             </motion.div>
           )}
           <NrcContent

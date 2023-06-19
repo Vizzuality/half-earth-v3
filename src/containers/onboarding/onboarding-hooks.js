@@ -8,28 +8,45 @@ import { getCountryNames } from 'constants/translation-constants';
 
 import uiStyles from 'styles/ui.module.scss';
 
+// Add the onboarding tooltip refs for the tooltip position so the user can see where to click on the interaction steps
 export const useOnboardingTooltipRefs = ({
   changeUI,
   onboardingType,
   onboardingStep,
 }) => {
   const activeConditions = {
-    biodiversity: onboardingType === 'priority-places' && onboardingStep === 0, // priority tab
-    richness: onboardingType === 'priority-places' && onboardingStep === 1,
-    rarity: onboardingType === 'priority-places' && onboardingStep === 2,
-    protection: onboardingType === 'priority-places' && onboardingStep === 3,
+    biodiversity:
+      onboardingType === 'priority-places' &&
+      onboardingStep === PRIORITY_STEPS.intro, // priority tab
+    richness:
+      onboardingType === 'priority-places' &&
+      onboardingStep === PRIORITY_STEPS.priority,
+    rarity:
+      onboardingType === 'priority-places' &&
+      onboardingStep === PRIORITY_STEPS.richness,
+    protection:
+      onboardingType === 'priority-places' &&
+      onboardingStep === PRIORITY_STEPS.rarity,
     humanPressures:
-      onboardingType === 'priority-places' && onboardingStep === 4,
+      onboardingType === 'priority-places' &&
+      onboardingStep === PRIORITY_STEPS.protection,
     nrcLandingSidebar:
-      onboardingType === 'national-report-cards' && onboardingStep === 0,
+      onboardingType === 'national-report-cards' &&
+      onboardingStep === NRC_STEPS.intro,
     nrcLandingSearch:
-      onboardingType === 'national-report-cards' && onboardingStep === 1,
+      onboardingType === 'national-report-cards' &&
+      onboardingStep === PRIORITY_STEPS.spi,
     // This tooltip wil be positioned on the country-entry-tooltip-component
     nrcLandingButton: false,
     challenges:
-      onboardingType === 'national-report-cards' && onboardingStep === 5,
-    ranking: onboardingType === 'national-report-cards' && onboardingStep === 3,
-    closure: onboardingType === 'national-report-cards' && onboardingStep === 5,
+      onboardingType === 'national-report-cards' &&
+      onboardingStep === PRIORITY_STEPS.challenges,
+    ranking:
+      onboardingType === 'national-report-cards' &&
+      onboardingStep === PRIORITY_STEPS.ranking,
+    closure:
+      onboardingType === 'national-report-cards' &&
+      onboardingStep === PRIORITY_STEPS.fullRanking,
   };
   const activeSlug = useMemo(() => {
     let activeKey = null;
@@ -162,21 +179,38 @@ export const useOnboardingOpenSection = ({
       }
 
       // Set NRC page sidebar view position
-      if ([NRC_STEPS.challenges, NRC_STEPS.ranking].includes(onboardingStep)) {
+      if (
+        [
+          NRC_STEPS.overview,
+          NRC_STEPS.challenges,
+          NRC_STEPS.ranking,
+          NRC_STEPS.fullRanking,
+        ].includes(onboardingStep)
+      ) {
         if (locationRoute !== NATIONAL_REPORT_CARD) {
           browsePage({
             type: NATIONAL_REPORT_CARD,
             payload: { iso: countryISO || DEFAULT_ISO },
           });
+
           changeUI({
             onboardingType,
             onboardingStep,
             waitingInteraction,
-            fullRanking: NRC_STEPS.ranking === onboardingStep,
+            ...(onboardingStep === NRC_STEPS.ranking
+              ? { fullRanking: false }
+              : {}),
+            ...(onboardingStep === NRC_STEPS.fullRanking
+              ? { fullRanking: true }
+              : {}),
           });
-        } else {
+        } else if (onboardingStep === NRC_STEPS.ranking) {
           changeUI({
-            fullRanking: NRC_STEPS.ranking === onboardingStep,
+            fullRanking: false,
+          });
+        } else if (onboardingStep === NRC_STEPS.fullRanking) {
+          changeUI({
+            fullRanking: true,
           });
         }
 
@@ -186,6 +220,7 @@ export const useOnboardingOpenSection = ({
   }, [onboardingStep, setOpen, waitingInteraction, onboardingType]);
 };
 
+// Adds styling and interaction to the different onboarding steps
 export const getOnboardingProps = ({
   section,
   slug,
@@ -199,25 +234,25 @@ export const getOnboardingProps = ({
     return {};
   }
 
-  const richnessonboardingStep =
+  const richnessOnboardingStep =
     slug === 'richness' &&
     onboardingType === 'priority-places' &&
-    onboardingStep === 1;
+    onboardingStep === PRIORITY_STEPS.priority;
   const rarityOnBoardingTab =
     slug === 'rarity' &&
     onboardingType === 'priority-places' &&
-    onboardingStep === 2;
+    onboardingStep === PRIORITY_STEPS.richness;
   const challengesOnBoardingTab =
     slug === 'challenges' &&
     onboardingType === 'national-report-cards' &&
-    onboardingStep === 3;
+    onboardingStep === PRIORITY_STEPS.rarity;
   const rankingOnBoardingTab =
     slug === 'ranking' &&
     onboardingType === 'national-report-cards' &&
-    onboardingStep === 4;
+    onboardingStep === PRIORITY_STEPS.challenges;
 
   const isTabActiveStep =
-    richnessonboardingStep ||
+    richnessOnboardingStep ||
     rarityOnBoardingTab ||
     challengesOnBoardingTab ||
     rankingOnBoardingTab;
@@ -230,78 +265,77 @@ export const getOnboardingProps = ({
   const getOutline = (animatedOnboardingStep) =>
     onboardingStep === animatedOnboardingStep && outline;
 
+  const goToNextStep = (currentStep) => {
+    return (
+      onboardingStep === currentStep && {
+        onClick: () =>
+          changeUI({
+            onboardingStep: currentStep + 1,
+            waitingInteraction: false,
+          }),
+      }
+    );
+  };
   return {
     biodiversity: {
       overlay: {
         animate: {
-          outline: getOutline(0),
+          outline: getOutline(PRIORITY_STEPS.intro),
         },
         transition,
       },
       className: {
         [styles.onboardingOverlay]: !(
-          onboardingStep === 0 ||
+          onboardingStep === PRIORITY_STEPS.intro ||
           onboardingStep === 1 ||
           onboardingStep === 2
         ),
-        [uiStyles.allowClick]: onboardingStep === 0,
+        [uiStyles.allowClick]: onboardingStep === PRIORITY_STEPS.intro,
       },
-      onClick: {
-        onClick: () =>
-          changeUI({ onboardingStep: 1, waitingInteraction: false }),
-      },
+      onClick: goToNextStep(PRIORITY_STEPS.intro),
     },
-
     humanPressures: {
       overlay: {
         animate: {
-          outline: getOutline(4),
+          outline: getOutline(PRIORITY_STEPS.protection),
         },
         transition,
       },
       className: {
-        [styles.onboardingOverlay]: !onboardingStep === 4,
-        [uiStyles.allowClick]: onboardingStep === 4,
+        [styles.onboardingOverlay]:
+          !onboardingStep === PRIORITY_STEPS.protection,
+        [uiStyles.allowClick]: onboardingStep === PRIORITY_STEPS.protection,
       },
-      onClick: onboardingStep === 4 && {
-        onClick: () =>
-          changeUI({ onboardingStep: 5, waitingInteraction: false }),
-      },
+      onClick: goToNextStep(PRIORITY_STEPS.protection),
     },
     protection: {
       overlay: {
         animate: {
-          outline: getOutline(3),
+          outline: getOutline(PRIORITY_STEPS.rarity),
         },
         transition,
       },
       className: {
-        [styles.onboardingOverlay]: !onboardingStep === 4,
-        [styles.onboardingMode]: onboardingStep === 4,
-        [uiStyles.allowClick]: onboardingStep === 3,
+        [styles.onboardingOverlay]:
+          !onboardingStep === PRIORITY_STEPS.protection,
+        [styles.onboardingMode]: onboardingStep === PRIORITY_STEPS.protection,
+        [uiStyles.allowClick]: onboardingStep === PRIORITY_STEPS.rarity,
       },
-      onClick: onboardingStep === 3 && {
-        onClick: () =>
-          changeUI({ onboardingStep: 4, waitingInteraction: false }),
-      },
+      onClick: goToNextStep(PRIORITY_STEPS.rarity),
     },
     nrcLandingSidebar: {
       overlay: {
         animate: {
-          outline: getOutline(0),
+          outline: getOutline(NRC_STEPS.intro),
         },
         transition,
       },
-      onClick: {
-        onClick: () =>
-          onboardingStep === 0 &&
-          changeUI({ onboardingStep: 1, waitingInteraction: false }),
-      },
+      onClick: goToNextStep(NRC_STEPS.intro),
     },
     searchNRC: {
       overlay: {
         animate: {
-          outline: getOutline(1),
+          outline: getOutline(NRC_STEPS.spi),
         },
         transition,
       },
@@ -309,21 +343,34 @@ export const getOnboardingProps = ({
     exploreNRC: {
       overlay: {
         animate: {
-          outline: getOutline(2),
+          outline: getOutline(NRC_STEPS.nrc),
         },
         transition,
       },
     },
-    closure: {
+    ranking: {
       overlay: {
         animate: {
-          outline: getOutline(5),
+          outline: getOutline(NRC_STEPS.ranking),
         },
         transition,
       },
       className: {
-        [uiStyles.allowClick]: onboardingStep === 5,
+        [uiStyles.allowClick]: onboardingStep === NRC_STEPS.ranking,
       },
+      onClick: goToNextStep(NRC_STEPS.ranking),
+    },
+    closure: {
+      overlay: {
+        animate: {
+          outline: getOutline(NRC_STEPS.fullRanking),
+        },
+        transition,
+      },
+      className: {
+        [uiStyles.allowClick]: onboardingStep === NRC_STEPS.fullRanking,
+      },
+      onClick: goToNextStep(NRC_STEPS.fullRanking),
     },
     tabs: {
       overlay: {

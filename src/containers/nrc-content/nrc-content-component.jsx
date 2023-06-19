@@ -74,15 +74,18 @@ function NrcContent({
     onboardingType,
     onboardingStep,
   });
-  const { overlay: onboardingOverlay, className: onboardingClassName } =
-    getOnboardingProps({
-      section: 'closure',
-      styles,
-      changeUI,
-      onboardingType,
-      onboardingStep,
-      waitingInteraction,
-    });
+  const {
+    overlay: onboardingOverlay,
+    className: onboardingClassName,
+    onClick: onboardingOnClick,
+  } = getOnboardingProps({
+    section: 'closure',
+    styles,
+    changeUI,
+    onboardingType,
+    onboardingStep,
+    waitingInteraction,
+  });
 
   useOnboardingOpenSection({
     onboardingStep,
@@ -128,7 +131,13 @@ function NrcContent({
         reference={(ref) => {
           tooltipRefs.current.closure = ref;
         }}
-        handleClose={handleClose}
+        handleClose={() => {
+          if (onboardingOnClick && onboardingOnClick.onClick) {
+            onboardingOnClick.onClick();
+          } else {
+            handleClose();
+          }
+        }}
         className={cx(styles.closeButton, onboardingClassName)}
         tooltipText={t('Go back to the globe')}
         onboardingOverlay={onboardingOverlay}
