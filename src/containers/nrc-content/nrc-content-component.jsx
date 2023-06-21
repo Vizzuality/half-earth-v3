@@ -14,7 +14,6 @@ import Indicators from 'containers/nrc-content/nrc-indicators';
 import Trend from 'containers/nrc-content/nrc-trend';
 import Vertebrates from 'containers/nrc-content/nrc-vertebrates';
 import {
-  useOnboardingTooltipRefs,
   getOnboardingProps,
   useOnboardingOpenSection,
 } from 'containers/onboarding/onboarding-hooks';
@@ -71,11 +70,6 @@ function NrcContent({
   const { source: challengesSources } = challengesInfo;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
-  const tooltipRefs = useOnboardingTooltipRefs({
-    changeUI,
-    onboardingType,
-    onboardingStep,
-  });
   const {
     overlay: onboardingOverlay,
     className: onboardingClassName,
@@ -130,9 +124,6 @@ function NrcContent({
         selectedLandMarineOption={selectedLandMarineOption}
       />
       <CloseButton
-        reference={(ref) => {
-          tooltipRefs.current.closure = ref;
-        }}
         handleClose={() => {
           if (onboardingOnClick && onboardingOnClick.onClick) {
             onboardingOnClick.onClick();

@@ -36,17 +36,8 @@ export const useOnboardingTooltipRefs = ({
     nrcLandingSearch:
       onboardingType === 'national-report-cards' &&
       onboardingStep === NRC_STEPS.spi,
-    // This tooltip wil be positioned on the country-entry-tooltip-component
+    // This tooltip will be positioned on the country-entry-tooltip-component
     nrcLandingButton: false,
-    challenges:
-      onboardingType === 'national-report-cards' &&
-      onboardingStep === NRC_STEPS.challenges,
-    ranking:
-      onboardingType === 'national-report-cards' &&
-      onboardingStep === NRC_STEPS.ranking,
-    closure:
-      onboardingType === 'national-report-cards' &&
-      onboardingStep === NRC_STEPS.fullRanking,
   };
   const activeSlug = useMemo(() => {
     let activeKey = null;
@@ -63,6 +54,7 @@ export const useOnboardingTooltipRefs = ({
   const onboardingRefs = useRef({});
 
   useEffect(() => {
+    console.log(activeSlug, onboardingRefs.current);
     if (activeSlug && onboardingRefs.current[activeSlug]) {
       const { offsetLeft } = onboardingRefs.current[activeSlug];
       const { top, width } =
