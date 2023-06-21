@@ -48,9 +48,8 @@ function DonutChart({
         ))}
       </Pie>
       <text
-        fontFamily="ivypresto-display"
         fontSize="32"
-        fontWeight={400}
+        fontWeight={700}
         x={legendXPosition}
         y={legendYPosition}
         textAnchor="middle"
