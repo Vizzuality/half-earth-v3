@@ -51,14 +51,17 @@ function ChallengesContainer(props) {
   }, []);
 
   const handleBubbleClick = ({ countryISO }) => {
-    const { selectedFilterOption } = props;
-    browsePage({
-      type: NATIONAL_REPORT_CARD,
-      payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES },
-      query: {
-        ui: { countryChallengesSelectedFilter: selectedFilterOption.slug },
-      },
-    });
+    const { selectedFilterOption, onboardingType } = props;
+    const isOnboarding = !!onboardingType;
+    if (!isOnboarding) {
+      browsePage({
+        type: NATIONAL_REPORT_CARD,
+        payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES },
+        query: {
+          ui: { countryChallengesSelectedFilter: selectedFilterOption.slug },
+        },
+      });
+    }
   };
 
   const handleFilterSelection = (selectedFilter) => {

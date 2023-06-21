@@ -18,7 +18,7 @@ function OnboardingTooltipComponent({
   const t = useT();
   const getTooltipText = (_onboardingType, _onboardingStep) =>
     _onboardingType === 'national-report-cards' && _onboardingStep === 1
-      ? t('Type here to continue')
+      ? t('Type here to continue or click on the map')
       : t('Click here to continue.');
 
   if (

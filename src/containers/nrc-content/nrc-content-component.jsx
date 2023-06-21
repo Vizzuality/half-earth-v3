@@ -28,6 +28,8 @@ import SpeciesTable from 'components/species-table';
 import { NRC_STEPS } from 'constants/onboarding-constants';
 import { useMobile } from 'constants/responsive';
 
+import uiStyles from 'styles/ui.module.scss';
+
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
@@ -197,7 +199,13 @@ function NrcContent({
             </div>
           )}
           {dataIsLoaded && (
-            <div ref={scrollableRef} className={styles.scrolleableArea}>
+            <div
+              ref={scrollableRef}
+              className={cx(
+                styles.scrolleableArea,
+                uiStyles.onboardingAllowInteraction
+              )}
+            >
               {isMobile && landMarineSwitch}
               <div className={styles.countryDescriptionContainer}>
                 <p className={styles.countryDescription}>

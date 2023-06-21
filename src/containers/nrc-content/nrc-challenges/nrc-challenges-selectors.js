@@ -17,6 +17,8 @@ import {
 import * as d3 from 'd3';
 import kebabCase from 'lodash/kebabCase';
 
+import { getOnboardingType } from 'containers/onboarding/onboarding-selectors';
+
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import {
   CONTINENT_COLORS,
@@ -238,4 +240,5 @@ export default createStructuredSelector({
   xAxisKeys: getXAxisKeys,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
+  onboardingType: getOnboardingType,
 });

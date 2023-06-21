@@ -141,6 +141,8 @@ function ButtonIcon({
           changeUI({
             onboardingStep: i,
             waitingInteraction: false,
+            onboardingTooltipTop: null,
+            onboardingTooltipLeft: null,
           });
         }}
       />
@@ -214,15 +216,17 @@ function SoundButtonComponent({
       onboardingType: null,
       onboardingStep: null,
       waitingInteraction: false,
+      onboardingTooltipTop: null,
+      onboardingTooltipLeft: null,
     });
   };
 
   const handleSwitchMode = () => {
     setFinishModal(false);
     changeUI({
+      waitingInteraction: false,
       onboardingType: null,
       onboardingStep: null,
-      waitingInteraction: false,
     });
   };
 

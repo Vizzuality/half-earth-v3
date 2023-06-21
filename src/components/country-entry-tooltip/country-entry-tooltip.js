@@ -26,7 +26,14 @@ import Component from './country-entry-tooltip-component';
 const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions };
 
 function CountryEntryTooltipContainer(props) {
-  const { browsePage, countryISO, changeUI, mapTooltipIsVisible, view } = props;
+  const {
+    browsePage,
+    countryISO,
+    changeUI,
+    mapTooltipIsVisible,
+    view,
+    changeGlobe,
+  } = props;
   const locale = useLocale();
   const isMobile = useMobile();
   const [tooltipPosition, setTooltipPosition] = useState(null);
@@ -83,6 +90,7 @@ function CountryEntryTooltipContainer(props) {
     const { setTooltipIsVisible, setTooltipContent } = props;
     setTooltipIsVisible(false);
     setTooltipContent({});
+    changeGlobe({ countryTooltipDisplayFor: null });
 
     if (isMobile) {
       browsePage({
@@ -103,16 +111,21 @@ function CountryEntryTooltipContainer(props) {
       onboardingStep,
       onboardingType,
     } = props;
-    setTooltipIsVisible(false);
-    setTooltipContent({});
-    _enterNrcAnalytics(countryName);
-    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: _countryISO } });
-    if (onboardingStep && onboardingType) {
-      changeUI({
-        onboardingType: 'national-report-cards',
-        onboardingStep: 3,
-        waitingInteraction: false,
-      });
+    if (onboardingType) {
+      if (onboardingStep === 2) {
+        changeUI({
+          onboardingType: 'national-report-cards',
+          onboardingStep: 3,
+          waitingInteraction: false,
+          onboardingTooltipTop: null,
+          onboardingTooltipLeft: null,
+        });
+      }
+    } else {
+      setTooltipIsVisible(false);
+      setTooltipContent({});
+      _enterNrcAnalytics(countryName);
+      browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: _countryISO } });
     }
   };
 

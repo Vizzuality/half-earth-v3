@@ -39,10 +39,6 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
   @extend %title;
 }
 
-.onboardingMode {
-  cursor: pointer;
-}
-
 .bold {
   font-weight: $font-weight-bold;
 }

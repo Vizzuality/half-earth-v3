@@ -25,6 +25,7 @@ import {
 } from 'constants/protected-areas';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
+import uiStyles from 'styles/ui.module.scss';
 
 import ProtectionThumbnail from 'images/existing-protection.png';
 
@@ -113,7 +114,7 @@ function ProtectedAreasSidebarCardComponent({
       <div
         className={cx(styles.layersTogglesContainer, {
           [styles.open]: isOpen,
-          [styles.onboardingMode]: onboardingStep === 3,
+          [uiStyles.onboardingDisableInteraction]: onboardingStep === 3,
         })}
       >
         <span className={styles.description}>{texts.description}</span>

@@ -12,6 +12,8 @@ import Button from 'components/button';
 import { LAND_MARINE } from 'constants/country-mode-constants';
 import { useMobile } from 'constants/responsive';
 
+import uiStyles from 'styles/ui.module.scss';
+
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as FishesIcon } from 'icons/taxa_fishes.svg';
@@ -27,12 +29,12 @@ function NRCVertebrates({
   selectedLandMarineOption,
   setFullRanking,
   setNRCSidebarView,
+  onboardingType,
 }) {
   const t = useT();
   const isMobile = useMobile();
   const locale = useLocale();
   const land = selectedLandMarineOption.slug === LAND_MARINE.land;
-
   const {
     amphibians,
     birds,
@@ -153,7 +155,9 @@ function NRCVertebrates({
       </div>
       {!isMobile && (
         <Button
-          className={styles.vertebratesButton}
+          className={cx(styles.vertebratesButton, {
+            [uiStyles.onboardingDisableInteraction]: !!onboardingType,
+          })}
           type="compound"
           handleClick={() => {
             setFullRanking(false);

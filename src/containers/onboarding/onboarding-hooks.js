@@ -35,18 +35,18 @@ export const useOnboardingTooltipRefs = ({
       onboardingStep === NRC_STEPS.intro,
     nrcLandingSearch:
       onboardingType === 'national-report-cards' &&
-      onboardingStep === PRIORITY_STEPS.spi,
+      onboardingStep === NRC_STEPS.spi,
     // This tooltip wil be positioned on the country-entry-tooltip-component
     nrcLandingButton: false,
     challenges:
       onboardingType === 'national-report-cards' &&
-      onboardingStep === PRIORITY_STEPS.challenges,
+      onboardingStep === NRC_STEPS.challenges,
     ranking:
       onboardingType === 'national-report-cards' &&
-      onboardingStep === PRIORITY_STEPS.ranking,
+      onboardingStep === NRC_STEPS.ranking,
     closure:
       onboardingType === 'national-report-cards' &&
-      onboardingStep === PRIORITY_STEPS.fullRanking,
+      onboardingStep === NRC_STEPS.fullRanking,
   };
   const activeSlug = useMemo(() => {
     let activeKey = null;
@@ -272,6 +272,8 @@ export const getOnboardingProps = ({
           changeUI({
             onboardingStep: currentStep + 1,
             waitingInteraction: false,
+            onboardingTooltipTop: null,
+            onboardingTooltipLeft: null,
           }),
       }
     );
@@ -290,7 +292,8 @@ export const getOnboardingProps = ({
           onboardingStep === 1 ||
           onboardingStep === 2
         ),
-        [uiStyles.allowClick]: onboardingStep === PRIORITY_STEPS.intro,
+        [uiStyles.onboardingAllowInteraction]:
+          onboardingStep === PRIORITY_STEPS.intro,
       },
       onClick: goToNextStep(PRIORITY_STEPS.intro),
     },
@@ -304,7 +307,8 @@ export const getOnboardingProps = ({
       className: {
         [styles.onboardingOverlay]:
           !onboardingStep === PRIORITY_STEPS.protection,
-        [uiStyles.allowClick]: onboardingStep === PRIORITY_STEPS.protection,
+        [uiStyles.onboardingAllowInteraction]:
+          onboardingStep === PRIORITY_STEPS.protection,
       },
       onClick: goToNextStep(PRIORITY_STEPS.protection),
     },
@@ -318,8 +322,10 @@ export const getOnboardingProps = ({
       className: {
         [styles.onboardingOverlay]:
           !onboardingStep === PRIORITY_STEPS.protection,
-        [styles.onboardingMode]: onboardingStep === PRIORITY_STEPS.protection,
-        [uiStyles.allowClick]: onboardingStep === PRIORITY_STEPS.rarity,
+        [uiStyles.onboardingDisableInteraction]:
+          onboardingStep === PRIORITY_STEPS.protection,
+        [uiStyles.onboardingAllowInteraction]:
+          onboardingStep === PRIORITY_STEPS.rarity,
       },
       onClick: goToNextStep(PRIORITY_STEPS.rarity),
     },
@@ -356,7 +362,8 @@ export const getOnboardingProps = ({
         transition,
       },
       className: {
-        [uiStyles.allowClick]: onboardingStep === NRC_STEPS.ranking,
+        [uiStyles.onboardingAllowInteraction]:
+          onboardingStep === NRC_STEPS.ranking,
       },
       onClick: goToNextStep(NRC_STEPS.ranking),
     },
@@ -368,7 +375,8 @@ export const getOnboardingProps = ({
         transition,
       },
       className: {
-        [uiStyles.allowClick]: onboardingStep === NRC_STEPS.fullRanking,
+        [uiStyles.onboardingAllowInteraction]:
+          onboardingStep === NRC_STEPS.fullRanking,
       },
       onClick: goToNextStep(NRC_STEPS.fullRanking),
     },
@@ -380,7 +388,7 @@ export const getOnboardingProps = ({
         transition,
       },
       className: {
-        [uiStyles.allowClick]: isTabActiveStep,
+        [uiStyles.onboardingAllowInteraction]: isTabActiveStep,
       },
     },
   }[section];

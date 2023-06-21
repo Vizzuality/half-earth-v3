@@ -6,6 +6,8 @@ import get from 'lodash/get';
 import sortBy from 'lodash/sortBy';
 import { getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 
+import { getOnboardingType } from 'containers/onboarding/onboarding-selectors';
+
 import { SORT } from 'components/header-item';
 
 import {
@@ -98,6 +100,7 @@ const getSortedData = createSelector(
 const mapStateToProps = createStructuredSelector({
   data: getSortedData,
   categorySort: getCategorySort,
+  onboardingType: getOnboardingType,
 });
 
 export default mapStateToProps;

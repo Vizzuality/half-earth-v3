@@ -72,8 +72,13 @@ function SearchLocation({
   useClickOutside(searchOptionsListRef, handleCloseOptionList, inputRef);
 
   const onNextonboardingStep = useCallback((countryValue) => {
-    if (countryValue && onboardingStep !== null) {
-      changeUI({ onboardingStep: 2, waitingInteraction: false });
+    if (!!onboardingStep && countryValue) {
+      changeUI({
+        onboardingStep: 2,
+        waitingInteraction: false,
+        onboardingTooltipTop: null,
+        onboardingTooltipLeft: null,
+      });
     }
     return null;
   }, []);
@@ -193,9 +198,14 @@ function SearchLocation({
         {hasResetButton && (
           <button type="button" onClick={() => handleCloseButton()}>
             {mobile && (
-              <input type="reset" value="" className={styles.resetBtn} />
+              <input
+                type="reset"
+                value=""
+                aria-label="reset"
+                className={styles.resetBtn}
+              />
             )}
-            <CloseIcon className={styles.closeIcon} />
+            <CloseIcon className={styles.closeIcon} aria-label="Close" />
           </button>
         )}
       </motion.div>

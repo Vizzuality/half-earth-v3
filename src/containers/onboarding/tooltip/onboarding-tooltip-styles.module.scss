@@ -12,7 +12,8 @@
     display: flex;
     justify-content: space-between;
     height: 38px;
-    width: 170px;
+    min-width: 170px;
+    max-width: 370px;
 }
 
 .tooltipContainerReverse {
@@ -27,7 +28,8 @@
     display: flex;
     height: 38px;
     justify-content: center;
-    width: 165px;
+    min-width: 165px;
+    padding: 0 10px;
 }
 
 .arrow {

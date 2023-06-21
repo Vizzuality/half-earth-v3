@@ -122,13 +122,11 @@ function NationalReportCard({
           initial={{ width: 300 }}
           animate={{ width: fullRanking ? '64vw' : 300 }}
           transition={{ duration: rankingTransitionDuration / 1000 }}
-          className={cx(styles.hideOnPrint, styles.rankingContainer, {
-            [uiStyles.onboardingMode]: !!onboardingType,
-          })}
+          className={cx(styles.hideOnPrint, styles.rankingContainer)}
         >
           <RankingChart
             countryISO={countryISO}
-            className={styles.rankingChart}
+            className={cx(styles.rankingChart)}
             fullRanking={fullRanking}
             selectedLandMarineOption={selectedLandMarineOption}
           />
@@ -136,7 +134,7 @@ function NationalReportCard({
         </motion.div>
         <motion.div
           className={cx(styles.hideOnPrint, styles.nrcContentContainer, {
-            [uiStyles.onboardingMode]: !!onboardingType,
+            [uiStyles.onboardingDisableInteraction]: !!onboardingType,
           })}
         >
           {NRCSidebarView === 'main' && (

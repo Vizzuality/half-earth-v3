@@ -24,6 +24,7 @@ function RankingChartContainer(props) {
     categorySort,
     changeUI,
     fullRanking,
+    onboardingType,
   } = props;
   const [searchTerm, setSearchTerm] = useState();
   const [scrollIndex, setScrollIndex] = useState(0);
@@ -48,17 +49,20 @@ function RankingChartContainer(props) {
 
   const handleCountryClick = (countryISO) => {
     const { browsePage } = props;
-    browsePage({
-      type: NATIONAL_REPORT_CARD,
-      payload: {
-        iso: countryISO,
-      },
-    });
-    changeUI({
-      landMarineSelection: selectedLandMarineOption.slug,
-      categorySort: urlSort,
-      fullRanking,
-    });
+    const isOnboarding = !!onboardingType;
+    if (!isOnboarding) {
+      browsePage({
+        type: NATIONAL_REPORT_CARD,
+        payload: {
+          iso: countryISO,
+        },
+      });
+      changeUI({
+        landMarineSelection: selectedLandMarineOption.slug,
+        categorySort: urlSort,
+        fullRanking,
+      });
+    }
   };
 
   const handleSearchChange = (event) => {

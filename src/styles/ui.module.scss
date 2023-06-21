@@ -86,11 +86,11 @@ $scrollbar-width: 4px;
   pointer-events: none;
 }
 
-.onboardingMode {
+.onboardingDisableInteraction {
   pointer-events: none;
 }
 
-.allowClick {
+.onboardingAllowInteraction {
   pointer-events: auto;
 }
 

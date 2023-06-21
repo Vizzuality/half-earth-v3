@@ -44,12 +44,28 @@ function NrcLandingComponent({
   onboardingStep,
   waitingInteraction,
   browsePage,
+  changeUI,
 }) {
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
   const displayMarineOutline = useMemo(
     () => activeLayers.some((l) => l.title === MARINE_SPI_FEATURE_LAYER),
     [activeLayers]
   );
+
+  // Change specific onboarding step
+  if (
+    onboardingType &&
+    onboardingStep === 1 &&
+    waitingInteraction &&
+    !!countryISO
+  ) {
+    changeUI({
+      onboardingStep: 2,
+      waitingInteraction: false,
+      onboardingTooltipTop: null,
+      onboardingTooltipLeft: null,
+    });
+  }
 
   return (
     <Scene
@@ -59,7 +75,8 @@ function NrcLandingComponent({
       onMapLoad={onMapLoad}
       initialRotation
       disabled={
-        !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
+        !!onboardingType &&
+        !(onboardingStep === 2 || (onboardingStep === 1 && waitingInteraction))
       }
       blur={activeGlobesMenu}
       className={cx({

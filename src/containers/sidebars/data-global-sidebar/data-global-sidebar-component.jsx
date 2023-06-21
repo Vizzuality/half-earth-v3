@@ -38,7 +38,7 @@ function DataGlobalSidebarComponent({
         aoiId={aoiId}
         view={view}
         className={cx({
-          [uiStyles.onboardingMode]: !!onboardingType,
+          [uiStyles.onboardingDisableInteraction]: !!onboardingType,
         })}
       />
       <div className={styles.content}>

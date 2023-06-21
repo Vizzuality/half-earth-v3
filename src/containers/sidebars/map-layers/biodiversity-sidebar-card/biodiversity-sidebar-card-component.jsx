@@ -23,6 +23,7 @@ import { TERRESTRIAL, MARINE } from 'constants/biodiversity-layers-constants';
 import { getBiodiversityTabs } from 'constants/ui-params';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
+import uiStyles from 'styles/ui.module.scss';
 
 import BiodiversityThumbnail from 'images/biodiversity.png';
 
@@ -143,7 +144,7 @@ function BiodiversitySidebarCardComponent({
           styles[`${biodiversityLayerVariant}Tab`],
           {
             [styles.open]: isOpen,
-            [styles.onboardingMode]: firstStep,
+            [uiStyles.onboardingDisableInteraction]: firstStep,
           }
         )}
       >

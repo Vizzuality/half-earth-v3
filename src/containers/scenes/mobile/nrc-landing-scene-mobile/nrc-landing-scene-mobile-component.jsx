@@ -46,6 +46,7 @@ function NrcLandingMobileComponent({
     () => selectedLayers.some((l) => l.title === MARINE_SPI_FEATURE_LAYER),
     [selectedLayers]
   );
+
   return (
     <Scene
       sceneName="nrc-landing-mobile-scene"
