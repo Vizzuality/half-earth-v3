@@ -10,6 +10,7 @@ import cx from 'classnames';
 import { motion } from 'framer-motion';
 
 import NrcContent from 'containers/nrc-content';
+import OnboardingDisclaimer from 'containers/onboarding/onboarding-disclaimer';
 import {
   useOnboardingOpenSection,
   getOnboardingProps,
@@ -107,6 +108,7 @@ function NationalReportCard({
   return (
     <>
       {!!onboardingType && <SoundButton />}
+      {!!onboardingType && <OnboardingDisclaimer />}
       <OnboardingTooltip />
       <img
         title="NRC background"

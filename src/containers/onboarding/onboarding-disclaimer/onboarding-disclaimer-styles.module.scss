@@ -1,0 +1,19 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.disclaimerContainer {
+  position: absolute;
+  right: 16px;
+  top: 2px;
+}
+
+.disclaimer {
+  position: relative;
+  background-color: $white;
+  padding: 0px 6px;
+  z-index: $bring-to-front;
+  @extend %annotation;
+  font-size: $font-size-xxs;
+  border-radius: 2px;
+}

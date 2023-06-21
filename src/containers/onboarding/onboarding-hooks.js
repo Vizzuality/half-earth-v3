@@ -54,7 +54,6 @@ export const useOnboardingTooltipRefs = ({
   const onboardingRefs = useRef({});
 
   useEffect(() => {
-    console.log(activeSlug, onboardingRefs.current);
     if (activeSlug && onboardingRefs.current[activeSlug]) {
       const { offsetLeft } = onboardingRefs.current[activeSlug];
       const { top, width } =
