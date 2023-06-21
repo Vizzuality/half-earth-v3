@@ -10,10 +10,23 @@
 
 .disclaimer {
   position: relative;
-  background-color: $white;
+  background-color: rgba($navy-he, 0.8);
+  border: 1px solid $navy-he;
   padding: 0px 6px;
   z-index: $bring-to-front;
   @extend %annotation;
   font-size: $font-size-xxs;
   border-radius: 2px;
+  color: $white;
+
+  .text {
+    vertical-align: top;
+  }
+}
+
+.icon {
+  stroke: $white;
+  width: 14px;
+  transform: translateY(2px);
+  margin: 0 8px;
 }
