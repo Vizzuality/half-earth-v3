@@ -4,7 +4,7 @@ import loadable from '@loadable/component';
 
 import DataScene from 'scenes/data-scene';
 
-import HalfEarthLogo from 'components/half-earth-logo';
+import Logo from 'components/half-earth-logo';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -34,7 +34,7 @@ function DataGlobeComponent({
 }) {
   return (
     <>
-      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
+      <Logo className={uiStyles.halfEarthLogoTopLeft} />
       <DataScene
         sceneMode={sceneMode}
         countryISO={countryISO}

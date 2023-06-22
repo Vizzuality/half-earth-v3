@@ -9,7 +9,7 @@ import NationalReportCardLandingScene from 'scenes/nrc-landing-scene';
 import OnboardingDisclaimer from 'containers/onboarding/onboarding-disclaimer';
 import { useOnboardingOpenSection } from 'containers/onboarding/onboarding-hooks';
 
-import HalfEarthLogo from 'components/half-earth-logo';
+import Logo from 'components/half-earth-logo';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -47,7 +47,7 @@ function NationalReportCardLanding({
 
   return (
     <>
-      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
+      <Logo className={uiStyles.halfEarthLogoTopLeft} />
       {!!onboardingType && <OnboardingDisclaimer />}
       <NationalReportCardLandingScene
         map={map}

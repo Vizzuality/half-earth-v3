@@ -12,7 +12,7 @@ $scrollbar-width: 4px;
   position: absolute;
   height: $he-project-logo-size;
   top: $layout-top-margin;
-  left: $site-gutter;
+  left: calc($site-gutter + 8px);
   z-index: $bring-to-front;
 }
 

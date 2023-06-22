@@ -9,7 +9,7 @@ import IndicatorCard from 'containers/nrc-content/nrc-indicators/indicator-card'
 import { getBarStyles } from 'containers/nrc-content/nrc-indicators/nrc-indicators-utils';
 
 import TrendChart from 'components/charts/trend-chart';
-import HalfEarthLogo from 'components/half-earth-logo';
+import Logo from 'components/half-earth-logo';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
 import { getCountryNames } from 'constants/translation-constants';
@@ -450,12 +450,7 @@ function NationalReportPdf({
           />
         </div>
       </section>
-      <HalfEarthLogo
-        withBackground
-        className={styles.logo}
-        linkClassName={styles.logoContainer}
-        pdf
-      />
+      <Logo pdf className={styles.logo} linkClassName={styles.logoContainer} />
       {renderIndicatorCards()}
       {renderSpecies()}
       {renderChart()}

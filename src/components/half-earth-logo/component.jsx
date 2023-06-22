@@ -1,26 +1,28 @@
 import React from 'react';
 
-import { ReactComponent as Logo } from 'icons/icon_half-earth.svg';
-import { ReactComponent as LogoColour } from 'icons/icon_half-earth_colour.svg';
-import { ReactComponent as LogoPDF } from 'icons/pdf-logo.svg';
+import { t } from '@transifex/native';
 
-function HalfEarthLogo({ withBackground, className, pdf, linkClassName }) {
-  const logo = withBackground ? (
-    <LogoColour className={className} />
+import logoImg from 'icons/eowilson_logo.png';
+import logoImgBlack from 'icons/eowilson_logo_black.png';
+
+function Logo({ className, pdf, linkClassName }) {
+  const alt = t('E.O. Wilson Biodiversity Foundation logo');
+  const logo = pdf ? (
+    <img src={logoImgBlack} alt={alt} className={className} />
   ) : (
-    <Logo className={className} />
+    <img src={logoImg} alt={alt} className={className} />
   );
 
   return (
     <a
-      href="https://www.half-earthproject.org"
+      href="https://eowilsonfoundation.org/"
       target="_blank"
       rel="noopener noreferrer"
       className={linkClassName}
     >
-      {pdf ? <LogoPDF className={className} /> : logo}
+      {logo}
     </a>
   );
 }
 
-export default HalfEarthLogo;
+export default Logo;

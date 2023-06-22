@@ -14,7 +14,7 @@ import SideMenu from 'containers/menus/sidemenu';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
 
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
-import HalfEarthLogo from 'components/half-earth-logo';
+import Logo from 'components/half-earth-logo';
 import Scene from 'components/scene';
 import Spinner from 'components/spinner';
 
@@ -55,7 +55,7 @@ function FeaturedGlobe({
 
   return (
     <>
-      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
+      <Logo className={uiStyles.halfEarthLogoTopLeft} />
       <Scene
         sceneName="featured-scene"
         sceneSettings={sceneSettings}

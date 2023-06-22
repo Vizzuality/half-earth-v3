@@ -6,7 +6,7 @@ import cx from 'classnames';
 
 import AreaOfInterestScene from 'scenes/aoi-scene';
 
-import HalfEarthLogo from 'components/half-earth-logo';
+import Logo from 'components/half-earth-logo';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -24,9 +24,7 @@ function AreaOfInterestPageComponent({
 }) {
   return (
     <>
-      <HalfEarthLogo
-        className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
-      />
+      <Logo className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)} />
       <AreaOfInterestScene
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
