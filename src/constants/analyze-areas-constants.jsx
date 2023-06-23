@@ -173,7 +173,7 @@ export const getSidebarCardsConfig = (locale) => ({
     title: t('Biodiversity patterns'),
     description: () =>
       t(
-        'The species range maps are summarized by biodiversity richness and rarity.  By combining richness and rarity, these maps inform the __Half-Earth Project’s__ prioritization for conservation efforts. These three layers (richness, rarity, and priority) can be visualized below.'
+        'The species range maps are summarized by biodiversity richness and rarity, providing important insights for prioritizing conservation efforts in the __Half-Earth Project__. Layers for richness, rarity, and priority can be activated in the Map Layers tab in the Biodiversity section.'
       ),
     warning: (
       <T
