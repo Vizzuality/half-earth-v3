@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
+import { t as tNative } from '@transifex/native';
 import { useT, useLocale } from '@transifex/react';
 
 import { roundGlobalRange } from 'utils/data-formatting-utils';
@@ -126,6 +127,7 @@ function Component(props) {
                       tabIndex={0}
                       className={`${styles.previousSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
                       onClick={handlePreviousSpeciesSelection}
+                      aria-label={tNative('Go to previous species')}
                       style={{
                         backgroundImage: `url(${previousImage})`,
                       }}
@@ -151,6 +153,7 @@ function Component(props) {
                       tabIndex={0}
                       className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
                       onClick={handleNextSpeciesSelection}
+                      aria-label={tNative('Go to next species')}
                       style={{
                         backgroundImage: `url(${nextImage})`,
                       }}

@@ -1,0 +1,49 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.cookies {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: $over-modal;
+  width: 100%;
+  transform: translateY(100%);
+  overflow: hidden;
+  background-color: rgba($navy-he, 0.8);
+  padding: 6px;
+  padding-left: 2rem;
+  outline: none;
+
+  @extend %annotation;
+  color: $white;
+}
+
+.bannerContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+@media #{$desktop} {
+  .bannerContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.link {
+  color: $white;
+  font-weight: $font-weight-bold;
+  text-decoration: underline;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.button {
+  min-width: 150px;
+}
