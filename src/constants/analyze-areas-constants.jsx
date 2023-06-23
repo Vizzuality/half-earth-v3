@@ -170,7 +170,7 @@ export const getSidebarCardsConfig = (locale) => ({
     ),
   },
   [BIODIVERSITY_SLUG]: {
-    title: t('Biodiversity patterns'),
+    title: t('What is the biodiversity pattern in this area?'),
     description: () =>
       t(
         'The species range maps are summarized by biodiversity richness and rarity, providing important insights for prioritizing conservation efforts in the __Half-Earth Project__. Layers for richness, rarity, and priority can be activated in the Map Layers tab in the Biodiversity section.'
