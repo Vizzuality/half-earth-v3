@@ -8,6 +8,8 @@ import { tx, PseudoTranslationPolicy } from '@transifex/native';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import ThirdParty from 'containers/third-party';
+
 import { useMobile } from 'constants/responsive';
 
 import styles from './app-styles.module.scss';
@@ -88,6 +90,7 @@ function App(props) {
     <QueryClientProvider client={queryClient}>
       <div className={styles.app}>
         <AppLayout {...props} />
+        <ThirdParty />
       </div>
     </QueryClientProvider>
   );

@@ -5,6 +5,18 @@ import { motion } from 'framer-motion';
 
 import styles from './styles.module.scss';
 
+interface ButtonProps {
+  type: 'rectangular' | 'rectangular-primary' | 'icon' | 'icon-square';
+  Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  label?: string;
+  active?: boolean;
+  className?: string;
+  handleClick: () => void;
+  tooltipText?: string;
+  onboardingOverlay?: any;
+  reference?: any;
+}
+
 function Component({
   type,
   Icon,
@@ -15,7 +27,7 @@ function Component({
   tooltipText,
   onboardingOverlay,
   reference,
-}) {
+}: ButtonProps) {
   return (
     <motion.button
       {...onboardingOverlay}
@@ -33,5 +45,15 @@ function Component({
     </motion.button>
   );
 }
+
+Component.defaultProps = {
+  Icon: undefined,
+  label: undefined,
+  reference: undefined,
+  onboardingOverlay: undefined,
+  tooltipText: undefined,
+  className: undefined,
+  active: undefined,
+};
 
 export default Component;
