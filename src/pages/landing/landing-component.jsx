@@ -6,7 +6,7 @@ import LandingScene from 'scenes/landing-scene';
 
 import About from 'containers/landing/about';
 
-import HalfEarthLogo from 'components/half-earth-logo';
+import Logo from 'components/half-earth-logo';
 import LanguageSwitcher from 'components/language-switcher';
 
 import uiStyles from 'styles/ui.module.scss';
@@ -16,7 +16,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 function LandingComponent({ hasMetadata, sceneSettings }) {
   return (
     <>
-      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
+      <Logo className={uiStyles.halfEarthLogoTopLeft} />
       <LanguageSwitcher />
       <About />
       <LandingScene sceneSettings={sceneSettings} />

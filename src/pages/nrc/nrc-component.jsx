@@ -19,7 +19,7 @@ import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
 
 import Button from 'components/button';
-import HalfEarthLogo from 'components/half-earth-logo';
+import Logo from 'components/half-earth-logo';
 import RankingChart from 'components/ranking-chart';
 
 import uiStyles from 'styles/ui.module.scss';
@@ -116,9 +116,7 @@ function NationalReportCard({
         src={nrcBackground}
         className={styles.background}
       />
-      <HalfEarthLogo
-        className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
-      />
+      <Logo className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)} />
       <div className={styles.container}>
         <motion.div
           initial={{ width: 300 }}
