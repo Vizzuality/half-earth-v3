@@ -7,6 +7,8 @@ permalink: /_docs/science/precalculated-data
 
 # Precalculated data AOIs
 
+**Note:** Some of the layers and tables here might be deprecated or inexistent due to recent updates or cleaning processes in AGOL, but the described workflow might still be useful to understand the process behind the precalculations.
+
 ## Context
 The precalculated refers to the summary data that results from crossing a geometry with several data sources to obtain information in that area for biodiversity and other contextual layers. It uses the same steps than the AOIs, the only difference is that they are run beforehand and the data is stored in AGOL, instead of being run on the fly inside the platform. The main reason for this approach is that the size of these geometries is too big to be run in a timely way on the fly.
 
@@ -28,26 +30,26 @@ Biodiversity data:
 ### Current precalculated services
 The services for the precalculated data are hosted in AGOL in folder `#6 precalculated data`
 1. #### National boundaries
-   1. [GADM0 FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=7b940493af104f7e86f1844b432bf5d3)
+   1. [GADM0 FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=25ee0339d8fc4e2ea7c8362535250b74)
    2. [GADM0 FS protected areas](https://eowilson.maps.arcgis.com/home/item.html?id=628b6c66992d4216972dccbe75d95c67)
 
 2. #### Subnational boundaries
-   1. [GADM1 FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=b963d3abc00245ccbd986fb9534e8b6a)
+   1. [GADM1 FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=ee196cef7e5b4d6ab504de16317723b5)
    2. [GADM1 FS protected areas](https://eowilson.maps.arcgis.com/home/item.html?id=5cf6f76156e2470a825bafa329b7d388)
 
 3. #### Up to 20 Places for Half-Earth Future
-   1. [Places FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=50b9d98566de457080f0c951f43b45c5)
+   1. [Places FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=5bffd154b48f4723976c46d87f8f6e2a)
    2. [Places FS protected areas](https://eowilson.maps.arcgis.com/home/item.html?id=cf64e2655d2140d79b597ba0aa9f6332)
 
 4. #### Protected Areas
 \* The WDPAs are a special case where the data and the geometries are separate in different tables. This is because the WDPA layer is so big it would take too long to load. Even simplified geometries can very heavy and, if they are too simplified, some geometries are too distorted and lose resolution. To solve this we have created three simplifications, each with a greater level of simplification. In this way, the global view shows a very simplified layer and, as the user zooms in, the geometries are more and more detailed. The simplifications of the WDPA were made in this [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/WDPA_Simplification.ipynb).
-   1. [WDPA FS geometries: simplification 1 (detailed)](https://eowilson.maps.arcgis.com/home/item.html?id=94463f9e1d644b979bcad4a56f9f73df)
-   2. [WDPA FS geometries: simplification 2 (medium)](https://eowilson.maps.arcgis.com/home/item.html?id=01830ac50a864fe08fc31c2491d3333b)
-   3. [WDPA FS geometries: simplification 3 (global)](https://eowilson.maps.arcgis.com/home/item.html?id=f238cff91e974b85ab834a2cd5efba08)
-   4. [WDPA FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=3be5742afc35421b85cc2030c5079f84)
+   1. [WDPA FS geometries: simplification 1 (detailed)](https://eowilson.maps.arcgis.com/home/item.html?id=ae74d5017b8548319bcf5833600be8c4)
+   2. [WDPA FS geometries: simplification 2 (medium)](https://eowilson.maps.arcgis.com/home/item.html?id=c834268ff5cf4ea599f46571867ab603)
+   3. [WDPA FS geometries: simplification 3 (global)](https://eowilson.maps.arcgis.com/home/item.html?id=5bb791abf2704da491be78eeba3ec354)
+   4. [WDPA FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=f866e163361d4160bb96742186709db7)
 
 5. #### Special Areas
-   1. [Areas FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=c622d044b0a7447fb4b00de1c8ba066d)
+   1. [Areas FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=5bffd154b48f4723976c46d87f8f6e2a)
    2. [Areas FS protected areas](https://eowilson.maps.arcgis.com/home/item.html?id=5af0af4ae1974c00b778689b486b8803)
 
 
@@ -94,8 +96,16 @@ All the terrestrial taxa have a resolution of 1km x 1km, so we can assume that e
 #### 3. **Contextual layers CRFs**
 The contextual layers are also stored in the Azure bucket. Currently there is only terrestrial contextual data.
 * Land cover and climate regime: `ELU.crf`
-* Land encroachment: `land_encroachment.crf`
 * Population: `population2020.crf`
+* Land encroachment: `land_encroachment.crf` (Deprecated!)
+
+**Note:** In 2023, the land encroachment crf was substituted by new human pressure layers (see AOI_Summaries entry for more information). The new crfs are:
+* Agriculture: `Agriculture_TimeSeries_Reclassify_20230501.crf`
+* Extraction: `Extraction_TimeSeries_Reclassify_20230501.crf`
+* Transportation: `Transportation_TimeSeries_Reclassify_20230515.crf`
+* Human intrusion: `HumanIntrusion_TimeSeries_Reclassify_20230501.crf`
+* Builtup: `Builtup_TimeSeries_Reclassify_20230501.crf`
+
 
 ### Data processing:
 This is the summary of the general steps that we need to follow to precalculate data:
@@ -108,11 +118,12 @@ This is the summary of the general steps that we need to follow to precalculate 
    1. **Original notebook**.  This [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_AOI_tables.ipynb) was originally used for gadm0 and gadm1. However, the method used here is not efficient, especially when dealing with large databases like the WDPAs. Therefore, the next precalculations were done following a more efficient method, and gadm0 and gadm1 were also rerun using the new script to solve errores detected in the previous precalculations. **This process is therefore deprecated**
 
    2. **Efficient method**. The new method was used in different notebooks, one for each of the layers with precalculated data:
-   * [WDPA](https://github.com/Vizzuality/he-scratchfolder/blob/main/Precalculated_WDPA.ipynb)
-   * [Future Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb)
-   * [Specific Regions](https://github.com/Vizzuality/he-scratchfolder/blob/master/SpecificRegions_Precalculation.ipynb)
-   * [National boundaries](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_gadm0.ipynb)
-   * [Subnational boundaries](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_gadm1.ipynb)
+   * [WDPA](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_WDPA_SPS.ipynb)
+   * [Future Places](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_Future_Places_SPS.ipynb)
+   * [Specific Regions](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_SpecificRegions_SPS.ipynb)
+   * [National boundaries](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_gadm0_SPS.ipynb)
+   * [Subnational boundaries](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_gadm1_SPS.ipynb)
+
 
 2. Table of protected areas by country
 For each of these layers, except in the case of the WDPAs, a table with the protected areas that intersect each geometry needs to be provided separately. To identify the WDPAs that fall within each polygon, we can either perform a spatial join between the geometries we are precalculating the data for and the WDPA layer in ArcGIS Pro or use Python. The [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/main/WDPA_gadm1.ipynb) provides an example of how to do this.
@@ -155,6 +166,8 @@ The models used in the contextual precalculations are:
 |Climate regime and Land cover|`ZstatMajorityMOLID`|feature layer with geometries (gadm0, gadm1 or wdpa)|`ELU.crf`|`ZonalSt_Majority_ELU`|[elu lookup](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer)|
 |WDPA percentage|`WDPA_percentage`|feature layer with geometries (gadm0, gadm1 or wdpa)|`WDPA_Terrestrial_CEA_June2021.crf`|`wdpa_percentage`|none|
 
+**Note:** Some of these changed during the AOI updates to incorporate new human pressure data (see AOI_Summaries)
+
 #### **Steps to process Protected Areas table:**
 Each precalculated area should have a table that shows all the protected areas present in that area. They are given to the frontend as separate tables. For instance, the national boundaries ([gadm 0](https://eowilson.maps.arcgis.com/home/item.html?id=628b6c66992d4216972dccbe75d95c67)) and subnational boundaries ([gadm 1](https://eowilson.maps.arcgis.com/home/item.html?id=5cf6f76156e2470a825bafa329b7d388)) tables provide an example of the kind of table we need to create. The data can be processed using the code in this [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/main/WDPA_gadm1.ipynb) or directly in ArcGIS online using the `WDPA_Percentage` model (as in the `SpecificRegions` project) or a spatial join.
 ![](/public/precalc_All_protected_areas.png)
@@ -168,14 +181,14 @@ Because the species data cannot be shared publicly, the precalculated data gener
    3. Because these tables contain private information, Vizzuality needs to perform a [whitelisting process](https://vizzuality.github.io/half-earth-v3/_docs/science/whitelisting)using this [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/update_whitelisted_urls.ipynb).
 
 Currently, there are 4 lookup tables in AGOL:
-- [Amphibians](https://eowilson.maps.arcgis.com/home/item.html?id=c20121cd88754247bbbeac5da6b26be1)
-- [Birds](https://eowilson.maps.arcgis.com/home/item.html?id=fb93f4475cc84fd7b0eec712d701e46d)
-- [Mammals](https://eowilson.maps.arcgis.com/home/item.html?id=7c7e6649a44e423ab52083b65823c310)
-- [Reptiles](https://eowilson.maps.arcgis.com/home/item.html?id=f0b987e051844fd78b05c813ba251548)
-
+* [amphibians](https://eowilson.maps.arcgis.com/home/item.html?id=de2309ec6aa64223a8bea682c0200d34) 
+* [birds](https://eowilson.maps.arcgis.com/home/item.html?id=b5f5c8d693b74abd9b0d236915d8e739) 
+* [mammals](https://eowilson.maps.arcgis.com/home/item.html?id=1d3b50e3b8544730ae0e2a80f00b4119) 
+* [reptiles](https://eowilson.maps.arcgis.com/home/item.html?id=bc6de8b9b8df4fffb6aa4208f4bf1467) 
 
 
 ## Examples of precalculations:
+
 ### **20 Places for a Half-Earth future: detailed explanation**
 In this section we provide a summary of how the data for the Places for the HE Future was precalculated. The Project in ArcGIS Pro: `Places_HE_Future`.
 
@@ -196,11 +209,11 @@ In this section we provide a summary of how the data for the Places for the HE F
     - population.crf
     - WDPA_Terrestrial_CEA_June2021.crf
   - Add the WDPA_Mercator layer (only terrestrial) (in the Catalog panel, Add to Database: ArcGIS > Projects > Contextual precalculations.gdb and select the layer `WDPA_Mercator`)
-6. Format and merge data in python ([notebook for HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb)). Export file as geojson and upload it in AGOL.
+6. Format and merge data in python ([notebook for HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_Future_Places_SPS.ipynb)). Export file as geojson and upload it in AGOL. Remember to create a [whitelisted service](https://eowilson.maps.arcgis.com/home/item.html?id=5bffd154b48f4723976c46d87f8f6e2a) from the original layer. 
 7. For Protected Areas data
    - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Places for a Half-Earth Future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
    - Create a csv with only the relevant fields (exclude geometry) using the Table to Table tool.
-   - Upload the table in AGOL as a [hosted table](https://eowilson.maps.arcgis.com/home/item.html?id=ec40de8083304b279d416685a5b98209). The resulting table contains only WDPAs that intersect the geometries for the 20 places for Half-Earth Future.
+   - Upload the table in AGOL as a [hosted table](https://eowilson.maps.arcgis.com/home/item.html?id=cf64e2655d2140d79b597ba0aa9f6332). The resulting table contains only WDPAs that intersect the geometries for the 20 places for Half-Earth Future.
 
 ### **Specific Regions: detailed explanation**
 Project in ArcGIS Pro: `SpecificRegions`
@@ -223,5 +236,5 @@ Project in ArcGIS Pro: `SpecificRegions`
       - Add the WDPA_Mercator layer (only terrestrial) (in the Catalog panel, Add to Database: ArcGIS > Projects > Contextual precalculations.gdb and select the layer `WDPA_Mercator`)
    - Use the 4 models available in the SpecificRegions toolbox to generate the corresponding contextual tables.
 6. Import the biodiversity and contextual data (except for the table containing the WDPA intersecting each geometry) and format them in python with the ([notebook for Specific Regions](https://github.com/Vizzuality/he-scratchfolder/blob/master/SpecificRegions_Precalculation.ipynb)).
-7. Export file as geojson and upload it in AGOL. [This layer](https://eowilson.maps.arcgis.com/home/item.html?id=c622d044b0a7447fb4b00de1c8ba066d) contains both the geometries and the precalculated data.
+7. Export file as geojson and upload it in AGOL. Remember to create a whitelisted service for this layer.[This layer](https://eowilson.maps.arcgis.com/home/item.html?id=49fdcffd842f4b8a8b1a919ba843a932) contains both the geometries and the precalculated data. 
 7. Upload the WDPA table generated in AGOL as a [hosted table](https://eowilson.maps.arcgis.com/home/item.html?id=5af0af4ae1974c00b778689b486b8803). The resulting table contains only WDPAs that intersect the geometries for the 20 places for Half-Earth Future.

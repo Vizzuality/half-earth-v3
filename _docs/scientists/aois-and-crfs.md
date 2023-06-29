@@ -79,11 +79,11 @@ Currently (March 2023), the services in use require these CRFs:
 |Ecological Land Units (ELU)|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/ELU.crf|
 |Population|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/population2020.crf|
 |WDPA|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/WDPA_Terrestrial_CEA_June2021.crf|
-|Human Pressure: energy and extractive resources|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Extraction_TimeSeries_V2_Reclassify.crf|
-|Human Pressure: Transportation|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Transportation_TimeSeries_V2_Reclassify.crf|
-|Human Pressure: Agriculture|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Agriculture_TimeSeries_Reclassify.crf|
-|Human Pressure: Human intrusion|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/HumanIntrusion_TimeSeries_V3_Reclassify.crf|
-|Human Pressure: Urban and built-up|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Builtup_TimeSeries_Reclassify.crf|
+|Human Pressure: energy and extractive resources|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Extraction_TimeSeries_Reclassify_20230501.crf|
+|Human Pressure: Transportation|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Transportation_TimeSeries_Reclassify_20230515.crf|
+|Human Pressure: Agriculture|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Agriculture_TimeSeries_Reclassify_20230501.crf|
+|Human Pressure: Human intrusion|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/HumanIntrusion_TimeSeries_Reclassify_20230501.crf|
+|Human Pressure: Urban and built-up|/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/Builtup_TimeSeries_Reclassify_20230501.crf|
 
 
 ## **Building and publishing a Geoprocessing Service or _webtool_**

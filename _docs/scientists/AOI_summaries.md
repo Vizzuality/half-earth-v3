@@ -112,26 +112,26 @@ There is only one GP service in charge of extracting all the contextual informat
 |ELU.crf|table_out_elu_majority|`MAJORITY`|
 |WDPA_Terrestrial_CEA_June2021.crf|output_table_wdpa_percentage|`percentage_protectd`|
 |wdpa_Mercator layer (derived from WDPA_Terrestrial_CEA_June2021.crf) included within model|output_table_wdpa|`NAME, ORIG_NA, DESIG, DESIG_E,DESIG_T,IUCN_CA,GOV_TYP,STATUS, STATUS_, AREA_KM,NAME_0`|
-|Agriculture_TimeSeries_Reclassify.crf|agriculture_series|`percentage_land_encroachment`|
-|Extraction_TimeSeries_V2_Reclassify.crf|extraction_series|`percentage_land_encroachment`|
-|Transportation_TimeSeries_V2_Reclassify.crf|transportation_series|`percentage_land_encroachment`|
-|HumanIntrusion_TimeSeries_V3_Reclassify.crf|intrusion_series|`percentage_land_encroachment`|
-|Builtup_TimeSeries_Reclassify.crf|builtup_series|`percentage_land_encroachment`|
+|Agriculture_TimeSeries_Reclassify_20230501.crf|agriculture_series|`percentage_land_encroachment`|
+|Extraction_TimeSeries_Reclassify_20230501|extraction_series|`percentage_land_encroachment`|
+|Transportation_TimeSeries_Reclassify_20230515.crf|transportation_series|`percentage_land_encroachment`|
+|HumanIntrusion_TimeSeries_Reclassify_20230501.crf|intrusion_series|`percentage_land_encroachment`|
+|Builtup_TimeSeries_Reclassify_20230501.crf|builtup_series|`percentage_land_encroachment`|
 
 
 ### **Precalculated data**
 
 Because some common AOIs are too big to be calculated by the Geoprocessing Service, we have generated new precalculated data for:
 
-* [Countries](https://eowilson.maps.arcgis.com/home/item.html?id=367688be94be472eb53db8ef043716dc)
-* [Regions](https://eowilson.maps.arcgis.com/home/item.html?id=04b9635566a74890a38d28acf3e23d04)
-* [WDPA](https://eowilson.maps.arcgis.com/home/item.html?id=b0445839687d4169aaf173be07e04a7a)
-* [Future places](https://eowilson.maps.arcgis.com/home/item.html?id=dbc8abcd3ab24729ade182c167b909c9)
-* [Specific regions](https://eowilson.maps.arcgis.com/home/item.html?id=36133b1a141a4d54ad4af13e29185fa5)
+* [Countries](https://eowilson.maps.arcgis.com/home/item.html?id=0ec69547065c4505ba974bc3be2ecc20) - [whitelisted service](https://eowilson.maps.arcgis.com/home/item.html?id=25ee0339d8fc4e2ea7c8362535250b74)
+* [Subnational regions](https://eowilson.maps.arcgis.com/home/item.html?id=072f67ddb875461fa82df4353ed7bd59) - [whitelisted service](https://eowilson.maps.arcgis.com/home/item.html?id=ee196cef7e5b4d6ab504de16317723b5)
+* [WDPA](https://eowilson.maps.arcgis.com/home/item.html?id=d41978b2afca407f89a37a0cce875b8d) - [whitelisted service](https://eowilson.maps.arcgis.com/home/item.html?id=f866e163361d4160bb96742186709db7)
+* [Future places](https://eowilson.maps.arcgis.com/home/item.html?id=5163df11be8446b9a30cc325aeb872ec) - [whitelisted service](https://eowilson.maps.arcgis.com/home/item.html?id=5bffd154b48f4723976c46d87f8f6e2a)
+* [Specific regions](https://eowilson.maps.arcgis.com/home/item.html?id=c2e51501026d4a7cbbb83567b61a68a6) - [whitelisted service](https://eowilson.maps.arcgis.com/home/item.html?id=49fdcffd842f4b8a8b1a919ba843a932)
 
 Except in the case of the WDPAs, these AOI groups also have another layer showing the list of WDPA that intersect each of the geometries contained in these layers:
 * [Countries](https://eowilson.maps.arcgis.com/home/item.html?id=628b6c66992d4216972dccbe75d95c67)
-* [Regions](https://eowilson.maps.arcgis.com/home/item.html?id=5cf6f76156e2470a825bafa329b7d388)
+* [Subnational regions](https://eowilson.maps.arcgis.com/home/item.html?id=5cf6f76156e2470a825bafa329b7d388)
 * [Future places](https://eowilson.maps.arcgis.com/home/item.html?id=cf64e2655d2140d79b597ba0aa9f6332)
 * [Specific regions](https://eowilson.maps.arcgis.com/home/item.html?id=5af0af4ae1974c00b778689b486b8803)
 
@@ -149,6 +149,6 @@ As with the OTF analysis, the new data incorporated in the precalculations is re
 
 **- Human pressures:** Data from the new human pressure layers, which include a time series, is also extracted for each of the precalculated AOIs in the ArcPro Project `AOI_summaries_precalculations`, and formated in the corresponding notebooks. 
 
-**Note:** although these new layers have a large coverage, we are only considering pixels classified as *high human pressure* in our calculations. The threshold for high human pressures is 0.4 for all human pressures except extraction, for which is 0.2. For this reason, about half of the WDPA have no human pressure data, as they do not intersect any pixels above those thresholds. However, there are geometries in the WDPA and Future places layers that should have human pressure values but they retrieved none. This is due to the malfunctioning of one of the tools used in ArcPro, probably due to rasterization problems when dealing with very small or very complex geometries. Although these cases are not common, in future iterations of the AOI we should try to identify the reason why the tool is failing and retrieve data for those geometries.
+**Note:** although these new layers have a large coverage, we are only considering pixels classified as *high human pressure* in our calculations.
 
 
