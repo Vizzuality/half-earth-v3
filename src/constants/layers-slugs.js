@@ -92,6 +92,7 @@ export const PRIORITY_POLYGONS_GRAPHIC_LAYER =
 
 // Carbon Layer
 export const CARBON_LAYER = 'carbon-layer-land';
+export const MARINE_CARBON_LAYER = 'carbon-layer-marine';
 
 // Global biodiversity
 

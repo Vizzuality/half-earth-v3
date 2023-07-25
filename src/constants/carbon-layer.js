@@ -1,12 +1,20 @@
 import { t } from '@transifex/native';
 
-import { CARBON_LAYER } from 'constants/layers-slugs';
+import { CARBON_LAYER, MARINE_CARBON_LAYER } from 'constants/layers-slugs';
 
-export const getCarbonLayer = () => {
+export const getCarbonLayers = () => {
   const CARBON_LAYER_LABEL = t('Irrecoverable land carbon');
-  return {
-    name: CARBON_LAYER_LABEL,
-    value: CARBON_LAYER,
-    slug: CARBON_LAYER,
-  };
+  const MARINE_CARBON_LAYER_LABEL = t('Irrecoverable marine carbon');
+  return [
+    {
+      name: CARBON_LAYER_LABEL,
+      value: CARBON_LAYER,
+      slug: CARBON_LAYER,
+    },
+    {
+      name: MARINE_CARBON_LAYER_LABEL,
+      value: MARINE_CARBON_LAYER,
+      slug: MARINE_CARBON_LAYER,
+    },
+  ];
 };

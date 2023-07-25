@@ -17,6 +17,7 @@ import {
   TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   CARBON_LAYER,
+  MARINE_CARBON_LAYER,
   HALF_EARTH_FUTURE_WDPA_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
@@ -189,6 +190,8 @@ export const LAYERS_URLS = {
   // Carbon layer
   [CARBON_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Carbon_Total_2018/MapServer',
+  [MARINE_CARBON_LAYER]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Mean_Marine_Carbon_Stock/MapServer',
 
   // Protected areas WDPA
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]:

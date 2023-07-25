@@ -2,21 +2,25 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 import { selectLangUrlState } from 'selectors/location-selectors';
 
-import { getCarbonLayer } from 'constants/carbon-layer';
+import { getCarbonLayers } from 'constants/carbon-layer';
 
 // locale is here to recompute the data when the language changes
 // eslint-disable-next-line no-unused-vars
-const getComputedCarbonLayer = createSelector(selectLangUrlState, (locale) =>
-  getCarbonLayer()
+const getComputedCarbonLayers = createSelector(selectLangUrlState, (locale) =>
+  getCarbonLayers()
 );
 
 export const getCarbonCountedActiveLayers = createSelector(
-  [(state, props) => props && props.activeLayers, getComputedCarbonLayer],
-  (activeLayers, carbonLayer) => {
+  [(state, props) => props && props.activeLayers, getComputedCarbonLayers],
+  (activeLayers, carbonLayers) => {
     if (!activeLayers || !activeLayers.length) return 0;
     return activeLayers
       .map((l) => l.title)
-      .reduce((acc, title) => (carbonLayer.value === title ? acc + 1 : acc), 0);
+      .reduce(
+        (acc, title) =>
+          carbonLayers.map((l) => l.value).includes(title) ? acc + 1 : acc,
+        0
+      );
   }
 );
 

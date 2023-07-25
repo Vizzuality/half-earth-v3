@@ -14,7 +14,7 @@ import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 
 // Constants
-import { getCarbonLayer } from 'constants/carbon-layer';
+import { getCarbonLayers } from 'constants/carbon-layer';
 import { CARBON_LAYER } from 'constants/layers-slugs';
 
 // Hooks
@@ -37,7 +37,7 @@ function CarbonSidebarCardComponent({
   const t = useT();
   const locale = useLocale();
 
-  const carbonLayer = useMemo(() => getCarbonLayer(), [locale]);
+  const carbonLayers = useMemo(() => getCarbonLayers(), [locale]);
   const texts = {
     categoryTitle: t('Carbon'),
     description: t(
@@ -70,17 +70,19 @@ function CarbonSidebarCardComponent({
           className={styles.legendContainer}
         />
         <div className={styles.togglesContainer}>
-          <LayerToggle
-            key={carbonLayer.value}
-            map={map}
-            option={carbonLayer}
-            variant="light"
-            type="checkbox"
-            activeLayers={activeLayers}
-            themeCategorySlug={CARBON_LAYER}
-            theme={checkboxTheme.carbonLayer}
-            onChange={(option) => handleLayerToggle(option, CARBON_LAYER)}
-          />
+          {carbonLayers.map((carbonLayer) => (
+            <LayerToggle
+              key={carbonLayer.value}
+              map={map}
+              option={carbonLayer}
+              variant="light"
+              type="checkbox"
+              activeLayers={activeLayers}
+              themeCategorySlug={CARBON_LAYER}
+              theme={checkboxTheme.carbonLayer}
+              onChange={(option) => handleLayerToggle(option, CARBON_LAYER)}
+            />
+          ))}
         </div>
         <SourceAnnotation
           theme="light"

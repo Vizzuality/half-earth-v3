@@ -1,5 +1,5 @@
 import { getLayersToggleConfig as getBiodiversityLayers } from 'constants/biodiversity-layers-constants';
-import { getCarbonLayer } from 'constants/carbon-layer';
+import { getCarbonLayers } from 'constants/carbon-layer';
 import {
   getHumanPressuresLandUse,
   getHumanPressuresMarine,
@@ -24,13 +24,13 @@ const getCategoryLayers = () => {
     getHumanPressuresMarine()
   );
   const allHumanImpactLayers = Object.values(humanImpactLayers);
-  const carbonLayer = getCarbonLayer();
+  const carbonLayers = getCarbonLayers();
 
   return [
     ...allBiodiversityLayers,
     ...allProtectionLayers,
     ...allHumanImpactLayers,
-    carbonLayer,
+    ...carbonLayers,
   ].map((layer) => ({ title: layer.value }));
 };
 
