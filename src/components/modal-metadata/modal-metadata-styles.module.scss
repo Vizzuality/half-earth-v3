@@ -3,14 +3,14 @@
 
 .modal {
   padding: 0;
-  max-width: 90%;
-  height: 90vh;
+
+  max-width: 720px;
+  width: 90%;
+  height: auto;
 
   @media #{$tablet-landscape} {
-    padding: 50px 60px;
-    max-width: 620px;
-    width: 80%;
-    height: auto;
+    width: 50%;
+    min-width: 512px;
   }
 }
 

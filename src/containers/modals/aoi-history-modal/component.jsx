@@ -83,7 +83,7 @@ function AoiHistoryModalComponent({
             type="compound"
             className={styles.deleteAllButton}
             handleClick={handleRemoveAllLocalAoiRecords}
-            label={t('delete all areas')}
+            label={t('Delete all areas')}
           />
         )}
         <ul className={styles.aoiListContainer}>

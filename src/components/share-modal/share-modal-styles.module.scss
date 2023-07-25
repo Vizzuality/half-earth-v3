@@ -5,14 +5,17 @@
 $tabsMarginBottom: 4px;
 $socialMediaIcon: 30px;
 
+
 .modal {
-  width: 90% !important;
-  max-width: 90% !important;
-  height: auto !important;
+  padding: 0;
+
+  max-width: 600px;
+  width: 90%;
+  height: auto;
 
   @media #{$tablet-landscape} {
-    max-width: 620px !important;
-    width: 600px !important;
+    width: 90%;
+    min-width: 512px;
   }
 }
 

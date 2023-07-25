@@ -31,14 +31,13 @@
   height: 100%;
   padding: 24px;
   width: 100%;
-  overflow: hidden;
+  overflow-y: auto;
 
   .wrapper {
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    margin-top: 80px;
+    margin-top: 50px;
     padding: 32px;
     width: 100%;
 
@@ -84,7 +83,7 @@
       width: 100%;
 
       @media #{$tablet-portrait} {
-        width: 750px;
+        width: 800px;
         display: flex;
         text-align: left;
         justify-content: space-between;
@@ -93,7 +92,7 @@
       .storyElement {
         align-items: center;
         display: flex;
-        margin-right: 70px;
+        margin-right: 50px;
         &:last-of-type {
           margin-right: 0;
         }

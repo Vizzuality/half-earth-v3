@@ -6,6 +6,7 @@ import styles from './styles.module';
 
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
+// Modal to display warnings and other alerts
 function PromptModalComponent({ title, isOpen, description, handleClose }) {
   return (
     <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
