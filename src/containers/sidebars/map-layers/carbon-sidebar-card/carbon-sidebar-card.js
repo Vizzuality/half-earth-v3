@@ -10,7 +10,7 @@ import { layerManagerToggle } from 'utils/layer-manager-utils';
 
 import ContentfulService from 'services/contentful';
 
-import { CARBON_LAYER } from 'constants/layers-slugs';
+import { LAND_AND_MARINE_CARBON_LAYER } from 'constants/layers-slugs';
 import metadataConfig from 'constants/metadata';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
@@ -27,13 +27,14 @@ function CarbonSidebarCardContainer(props) {
   const [metadataSource, setMetadataSource] = useState(null);
 
   useEffect(() => {
-    ContentfulService.getMetadata(metadataConfig[CARBON_LAYER], locale).then(
-      (data) => {
-        if (data) {
-          setMetadataSource(data.source);
-        }
+    ContentfulService.getMetadata(
+      metadataConfig[LAND_AND_MARINE_CARBON_LAYER],
+      locale
+    ).then((data) => {
+      if (data) {
+        setMetadataSource(data.source);
       }
-    );
+    });
   }, [locale]);
 
   const handleLayerToggle = (option, category) => {
