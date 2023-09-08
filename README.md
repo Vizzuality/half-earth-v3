@@ -1,9 +1,16 @@
+# Half Earth
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 And [`rewired`](https://github.com/timarney/react-app-rewired) instead of [`ejected`](https://facebook.github.io/create-react-app/docs/available-scripts#npm-run-eject)
 
 Arcgis JS is consumed as React components through [esri-loader](https://github.com/esri/esri-loader)
 
 Clone the repo and run `yarn install` to install the needed dependencies.
+
+## Documentation
+
+The documentation is available though this [link](https://vizzuality.github.io/half-earth-v3/).
+It uses github pages and the content is generated from the `_docs` folder.
 
 ## Available Scripts
 
