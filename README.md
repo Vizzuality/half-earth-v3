@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 And [`rewired`](https://github.com/timarney/react-app-rewired) instead of [`ejected`](https://facebook.github.io/create-react-app/docs/available-scripts#npm-run-eject)
 
-Arcgis JS is consumed as React components through [react-arcgis](https://github.com/Esri/react-arcgis)
+Arcgis JS is consumed as React components through [esri-loader](https://github.com/esri/esri-loader)
 
 Clone the repo and run `yarn install` to install the needed dependencies.
 
@@ -19,8 +19,6 @@ You will also see any lint errors in the console.
 
 ### `yarn docs:serve`
 
-
-
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br>
@@ -36,14 +34,8 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-
 ### `config-overrides`
 
 This file is ised to override/extend the default `create-react-app` webpack configuration.
 
 Since `create-react-app` version 2 is used under the hoods no configuration to allow the use of [`CSSModules`](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) is needed. Just have in mind that for it to work the file naming convention `file-name.module.scss` should be followed.
-
-
-
-
-
