@@ -5,10 +5,7 @@ import * as urlActions from 'actions/url-actions';
 
 import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 
-import {
-  FIREFLY_BASEMAP_LAYER,
-  SATELLITE_BASEMAP_LAYER,
-} from 'constants/layers-slugs';
+import { FIREFLY_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import DataGlobeComponent from './data-globe-component.jsx';
@@ -23,7 +20,8 @@ function DataGlobeContainer(props) {
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({
       map,
-      layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER],
+      surfaceColor: '#070710',
+      layersArray: [FIREFLY_BASEMAP_LAYER],
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);
   };

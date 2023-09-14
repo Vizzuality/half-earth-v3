@@ -18,7 +18,6 @@ import unionBy from 'lodash/unionBy';
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import {
   FIREFLY_BASEMAP_LAYER,
-  SATELLITE_BASEMAP_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
@@ -222,7 +221,8 @@ function AOIScene(props) {
   const handleMapLoad = (map, initialActiveLayers) => {
     setBasemap({
       map,
-      layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER],
+      surfaceColor: '#070710',
+      layersArray: [FIREFLY_BASEMAP_LAYER],
     });
     activateLayersOnLoad(map, initialActiveLayers, layersConfig);
   };

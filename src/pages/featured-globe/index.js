@@ -25,7 +25,6 @@ import {
 import {
   FEATURED_PLACES_LAYER,
   VIBRANT_BASEMAP_LAYER,
-  SATELLITE_BASEMAP_LAYER,
 } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
@@ -77,7 +76,8 @@ const featuredGlobeContainer = (props) => {
   const handleMapLoad = (map, _activeLayers) => {
     setBasemap({
       map,
-      layersArray: [SATELLITE_BASEMAP_LAYER, VIBRANT_BASEMAP_LAYER],
+      surfaceColor: '#070710',
+      layersArray: [VIBRANT_BASEMAP_LAYER],
     });
     activateLayersOnLoad(map, _activeLayers, layersConfig);
   };
