@@ -263,6 +263,7 @@ function AOISidebar({
                   }`}
                 >
                   <div className={styles.contextualIndicator}>
+                    <LandCoverIcon />
                     {landCover && !protectedAreaAOILoading && (
                       <span>
                         {AOIContextualTranslations[
@@ -274,7 +275,6 @@ function AOISidebar({
                     {(!landCover || protectedAreaAOILoading) && (
                       <div className={styles.loadingIndicator} />
                     )}
-                    <LandCoverIcon />
                   </div>
                 </TitleTooltip>
 
