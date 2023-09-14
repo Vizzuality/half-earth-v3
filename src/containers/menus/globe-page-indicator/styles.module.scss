@@ -1,14 +1,15 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
 
-$container-width: 100px;
+$container-width: 134px;
+$box-shadow: 0px 4px 15px 0px rgba(255, 255, 255, 0.20);
 
 .container {
   bottom: 0;
   display: flex;
   justify-content: space-around;
   right: calc(50% - $container-width/2);
-  height: 34px;
+  height: 45px;
   position: absolute;
   width: $container-width;
 
@@ -19,8 +20,9 @@ $container-width: 100px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
-    height: 27px;
-    width: 27px;
+    height: 34px;
+    width: 34px;
+    box-shadow: $box-shadow;
   }
 
   .globeHidden {
@@ -30,12 +32,13 @@ $container-width: 100px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
-    height: 27px;
-    width: 27px;
+    height: 34px;
+    width: 34px;
+    box-shadow: $box-shadow;
   }
 
   .globeImage {
-    height: 20px;
-    width: 20px;
+    height: 32px;
+    width: 32px;
   }
 }
