@@ -27,7 +27,6 @@ import {
 } from 'constants/layers-slugs';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
-import { getSidebarTabs } from 'constants/ui-params';
 
 import Component from './data-scene-component';
 import mapStateToProps from './data-scene-selectors';
@@ -48,7 +47,6 @@ function Container(props) {
     precomputedAoiAnalytics,
     changeUI,
     activeCategoryLayers,
-    sidebarTabActive,
     selectedAnalysisLayer,
     sceneSettings,
     centerOn,
@@ -73,7 +71,6 @@ function Container(props) {
 
   const { content: mapTooltipContent, precalculatedLayerSlug } =
     mapTooltipData || {};
-  const [mapLayerTab, analyzeAreasTab] = getSidebarTabs();
 
   const activeLayersWithoutAdmin = activeLayers.filter(
     (ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER
@@ -81,26 +78,6 @@ function Container(props) {
   const [updatedActiveLayers, setUpdatedActiveLayers] = useState(
     activeLayersWithoutAdmin
   );
-
-  useEffect(() => {
-    const adminLayerIsActive = !!updatedActiveLayers.find(
-      (ual) => ual.title === ADMIN_AREAS_FEATURE_LAYER
-    );
-
-    if (sidebarTabActive === mapLayerTab.slug && adminLayerIsActive) {
-      setUpdatedActiveLayers(
-        updatedActiveLayers.filter(
-          (ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER
-        )
-      );
-    }
-    if (sidebarTabActive === analyzeAreasTab.slug && !adminLayerIsActive) {
-      setUpdatedActiveLayers([
-        ...updatedActiveLayers,
-        { title: ADMIN_AREAS_FEATURE_LAYER },
-      ]);
-    }
-  }, [sidebarTabActive, updatedActiveLayers, setUpdatedActiveLayers]);
 
   const t = useT();
 
