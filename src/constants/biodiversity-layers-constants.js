@@ -274,8 +274,8 @@ export const getLayersToggleConfig = () => ({
         },
         {
           value: PROTEA_RICHNESS_1KM,
-          name: t('protea'),
-          title: t('protea'),
+          name: t('sugarbushes'),
+          title: t('sugarbushes'),
           layer: PROTEA_RICHNESS_1KM,
           group: t('plants'),
         },
@@ -477,8 +477,8 @@ export const getLayersToggleConfig = () => ({
         },
         {
           value: PROTEA_RARITY_1KM,
-          name: t('protea'),
-          title: t('protea'),
+          name: t('sugarbushes'),
+          title: t('sugarbushes'),
           layer: PROTEA_RARITY_1KM,
           group: t('plants'),
         },
