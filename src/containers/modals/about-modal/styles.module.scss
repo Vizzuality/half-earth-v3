@@ -63,7 +63,7 @@
       color: $white;
       margin: 0;
       margin-bottom: 34px;
-      text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+      text-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
       padding: 0 20px;
       text-align: center;
 
@@ -138,6 +138,31 @@
 
     .narrow {
       height: 70px;
+    }
+
+    .teamSection {
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+
+      h2 {
+        text-align: center;
+      }
+
+      .teamMembers {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: flex-start;
+
+        .member {
+          width: 40%;
+          display: flex;
+          flex-direction: column;
+        }
+      }
     }
   }
 }
