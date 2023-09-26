@@ -108,7 +108,6 @@ function NrcContent({
       }
     }
   }, [onboardingStep, scrollableRef.current]);
-  const isCountryWithDisclaimer = ['CHN', 'IND'].includes(countryISO);
 
   return (
     <div
@@ -203,20 +202,6 @@ function NrcContent({
                 <p className={styles.countryDescription}>
                   {countryDescription}
                 </p>
-                {isCountryWithDisclaimer && (
-                  <div className={styles.disclaimerContainer}>
-                    <div className={styles.disclaimer}>
-                      <span className={styles.disclaimerBold}>Note:</span> You
-                      may notice some notable gaps in protected area coverage on
-                      the map. This is because we use protected area information
-                      from the World Database on Protected Areas, or WDPA, which
-                      requires countries to report information about their
-                      protected areas to the WDPA. Some countries do not fully
-                      report their protected areas in recent years, leading to
-                      the gaps in data coverage you see on the map.
-                    </div>
-                  </div>
-                )}
               </div>
 
               <Indicators isShrunken={fullRanking} />
