@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { t } from '@transifex/native';
 
 import burtsLogo from 'logos/BB_Foundation_logo_stacked.png';
@@ -23,74 +25,9 @@ import unEnvironmentLogo from 'logos/unEnvironment.png';
 import universityOfFloridaLogo from 'logos/universityOfFlorida.png';
 import vizzualityLogo from 'logos/vizzuality.png';
 import yaleLogo from 'logos/yale.png';
+import { renderToString } from 'react-dom/server';
 
-import styles from '../containers/modals/about-modal/styles.module.scss';
-
-// team members to show on About Us modal
-const teamMembers = [
-  {
-    team: 'E.O. Wilson Biodiversity Foundation',
-    members: [
-      { name: 'Paula J. Ehrlich', title: 'President and CEO' },
-      { name: 'Walter Jetz', title: 'Scientific Chair' },
-      { name: 'Lori Parro', title: 'Chief Financial Officer' },
-      { name: 'Amy Tidovsky', title: 'VP of Development' },
-      { name: 'Dennis Liu', title: 'VP of Education' },
-      { name: 'Jenna Adams', title: 'Master Ambassador' },
-      { name: 'Piotr Naskrecki', title: 'Half-Earth Chair' },
-      { name: 'Tamara Jolly', title: 'Master Ambassador' },
-      { name: 'Chris Sims', title: 'Director of Video and Web Projects' },
-      { name: 'Selim Tlili', title: 'Master Ambassador' },
-      { name: 'Brooks Bonner', title: 'Program Director to the Foundation.' },
-    ],
-  },
-  {
-    team: 'Map of Life',
-    members: [
-      { name: 'Alexander Killion', title: 'Managing Director' },
-      { name: 'Yanina Sica', title: 'Biodiversity Data Specialist' },
-      { name: 'Melissa Slater', title: 'ESRI Biodiversity Data Specialist' },
-      { name: 'John Wilshire', title: 'Software Engineer' },
-      { name: 'Jeremy Cohen', title: 'Associate Research Scientist' },
-      { name: 'Kevin Winner', title: 'Modeling Project Lead' },
-      { name: 'Kalkidan Chefira', title: 'Software Engineer' },
-      { name: 'Julia Portmann', title: 'Research Associate' },
-      { name: 'Tamara Rudic', title: 'Science Communication Specialist' },
-      { name: 'Danyan Leng', title: 'Postgraduate Associate' },
-      { name: 'Christopher Manciero', title: 'Senior Software Developer' },
-    ],
-  },
-  {
-    team: 'Vizzuality',
-    members: [
-      { name: 'Craig Mills', title: 'CEO of Vizzuality' },
-      { name: 'Susana Romao', title: 'Project Manager' },
-      { name: 'Sofía Aldabet', title: 'Scientist' },
-      { name: 'Álvaro Leal', title: 'Full-stack Developer' },
-      { name: 'Andreia Ribeiro', title: 'Designer' },
-      { name: 'María Relea', title: 'Project Manager' },
-      { name: 'Martin Dubuisson', title: 'User Research' },
-    ],
-  },
-];
-
-// create section for Team members
-const getTeamMembers = () => {
-  return teamMembers
-    .map((team, teamIndex) => {
-      return `<section class=${styles.teamSection}>
-                <h2 class=${styles.title} key="${teamIndex}">${team.team}</h2>
-              <div class=${styles.teamMembers}>
-                ${team.members
-                  .map((member, index) => {
-                    return `<div class=${styles.member} key="${index}"><label>${member.name}</label><span>${member.title}</span></div>`;
-                  })
-                  .join('')}
-              </div>
-            </section>`;
-    })
-    .join('');
-};
+import TeamMembers from '../containers/modals/about-modal/teamMembers';
 
 export const getTexts = () => ({
   partners: {
@@ -101,7 +38,7 @@ export const getTexts = () => ({
       )}</a> ${t(
         ' is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life'
       )}`,
-      `${getTeamMembers()}`,
+      `${renderToString(<TeamMembers />)}`,
     ],
   },
   platformPartners: {
