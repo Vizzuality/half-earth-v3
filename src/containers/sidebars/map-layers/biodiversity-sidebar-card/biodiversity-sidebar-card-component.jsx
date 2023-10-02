@@ -170,9 +170,26 @@ function BiodiversitySidebarCardComponent({
           </div>
         )}
         <div className={styles.dropdownContainer}>
-          <span className={styles.dropdownLabel}>
-            {t('Terrestrial species')}
-          </span>
+          <div className={styles.dropdownLabel}>{t('Terrestrial species')}</div>
+          <div className={styles.dropdownSubtitle}>
+            <span className={styles.subtitle}>{t('Global layers')}</span>
+            <span className={styles.description}>
+              {t('Global layers available at different resolutions.')}
+            </span>
+          </div>
+        </div>
+        <div className={styles.togglesContainer}>
+          {renderBiodiversityLayerToggle(TERRESTRIAL)}
+        </div>
+        <div className={styles.dropdownContainer}>
+          <div className={styles.dropdownSubtitle}>
+            <span className={styles.subtitle}>{t('Regional layers')}</span>
+            <span className={styles.description}>
+              {t('Regional layers available at 1km{square} resolutions.', {
+                square: <sup>2</sup>,
+              })}
+            </span>
+          </div>
         </div>
         <div className={styles.togglesContainer}>
           {renderBiodiversityLayerToggle(TERRESTRIAL)}
@@ -180,6 +197,14 @@ function BiodiversitySidebarCardComponent({
         <hr className={hrTheme.dark} />
         <div className={styles.dropdownContainer}>
           <span className={styles.dropdownLabel}>{t('Marine species')}</span>
+          <div className={styles.dropdownSubtitle}>
+            <span className={styles.subtitle}>{t('Global layers')}</span>
+            <span className={styles.description}>
+              {t('Global layers available at 55km{square} resolution.', {
+                square: <sup>2</sup>,
+              })}
+            </span>
+          </div>
         </div>
         <div className={styles.togglesContainer}>
           {renderBiodiversityLayerToggle(MARINE)}
