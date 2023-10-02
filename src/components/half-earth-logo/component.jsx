@@ -19,7 +19,7 @@ const IMAGES = {
   he: {
     default: heLogoImg,
     black: heLogoImgColor,
-    height: '40px',
+    height: '30px',
   },
 };
 
