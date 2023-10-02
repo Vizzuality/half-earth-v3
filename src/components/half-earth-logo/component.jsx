@@ -2,26 +2,55 @@ import React from 'react';
 
 import { t } from '@transifex/native';
 
-import logoImg from 'icons/eowilson_logo.png';
-import logoImgBlack from 'icons/eowilson_logo_black.png';
+import cx from 'classnames';
+import logoImg from 'logos/eowilson_logo.png';
+import logoImgBlack from 'logos/eowilson_logo_black.png';
+import heLogoImg from 'logos/he_logo.svg';
+import heLogoImgColor from 'logos/he_logo_color.png';
+
+import styles from './half-earth-logo-styles.module.scss';
+
+const IMAGES = {
+  eowilson: {
+    default: logoImg,
+    black: logoImgBlack,
+    height: '52px',
+  },
+  he: {
+    default: heLogoImg,
+    black: heLogoImgColor,
+    height: '40px',
+  },
+};
 
 function Logo({ className, pdf, linkClassName }) {
   const alt = t('E.O. Wilson Biodiversity Foundation logo');
-  const logo = pdf ? (
-    <img src={logoImgBlack} alt={alt} className={className} />
-  ) : (
-    <img src={logoImg} alt={alt} className={className} />
-  );
+  const logo = (images) =>
+    pdf ? (
+      <img src={images.black} alt={alt} style={{ height: images.height }} />
+    ) : (
+      <img src={images.default} alt={alt} style={{ height: images.height }} />
+    );
 
   return (
-    <a
-      href="https://eowilsonfoundation.org/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className={linkClassName}
-    >
-      {logo}
-    </a>
+    <div className={cx(styles.logo, className)}>
+      <a
+        href="https://eowilsonfoundation.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cx(styles.link, linkClassName)}
+      >
+        {logo(IMAGES.eowilson)}
+      </a>
+      <a
+        href="https://map.half-earthproject.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cx(styles.link, linkClassName)}
+      >
+        {logo(IMAGES.he)}
+      </a>
+    </div>
   );
 }
 
