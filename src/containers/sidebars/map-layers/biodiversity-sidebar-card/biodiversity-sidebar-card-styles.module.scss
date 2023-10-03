@@ -18,7 +18,9 @@
 .sourceContainer,
 .togglesContainer,
 .dropdownContainer {
-  padding-top: $sidebar-vertical-flow;
+  &:not(.marineDropdownContainer) {
+    padding-top: $sidebar-vertical-flow;
+  }
   color: $white;
 }
 
