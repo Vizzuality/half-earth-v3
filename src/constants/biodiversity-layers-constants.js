@@ -21,6 +21,8 @@ import {
   WINTER_BIRDS_RARITY_1KM,
   RESIDENT_BIRDS_RICHNESS_1KM,
   RESIDENT_BIRDS_RARITY_1KM,
+  ANTS_RARITY_GLOBAL,
+  ANTS_RICHNESS_GLOBAL,
   ANTS_RARITY_1KM,
   ANTS_RICHNESS_1KM,
   AMPHIB_PRIORITY,
@@ -228,6 +230,13 @@ export const getLayersToggleConfig = () => ({
           layer: REPTILES_RICHNESS,
           group: t('reptiles'),
         },
+        {
+          value: ANTS_RICHNESS_GLOBAL,
+          name: t('ants'),
+          title: t('ants'),
+          layer: ANTS_RICHNESS_GLOBAL,
+          group: t('invertebrates'),
+        },
       ],
       HIGH: [
         {
@@ -430,6 +439,13 @@ export const getLayersToggleConfig = () => ({
           title: t('reptiles'),
           layer: REPTILES_RARITY,
           group: t('reptiles'),
+        },
+        {
+          value: ANTS_RARITY_GLOBAL,
+          name: t('ants'),
+          title: t('ants'),
+          layer: ANTS_RARITY_GLOBAL,
+          group: t('invertebrates'),
         },
       ],
       HIGH: [

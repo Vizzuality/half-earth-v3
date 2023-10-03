@@ -156,6 +156,9 @@ export const RESIDENT_BIRDS_RARITY_1KM = 'resident-birds-rarity-1km';
 export const ANTS_RARITY_1KM = 'ants-rarity-1km';
 export const ANTS_RICHNESS_1KM = 'ants-richness-1km';
 
+export const ANTS_RARITY_GLOBAL = 'ants-rarity-global';
+export const ANTS_RICHNESS_GLOBAL = 'ants-richness-global';
+
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';
 export const ODONATES_RICHNESS = 'odonates-richness';
