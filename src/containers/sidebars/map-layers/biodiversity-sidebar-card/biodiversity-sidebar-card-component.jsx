@@ -102,7 +102,7 @@ function BiodiversitySidebarCardComponent({
 
   // ---
 
-  const renderBiodiversityLayerToggle = (category, hideCheckboxes) => {
+  const renderBiodiversityLayerToggle = (category) => {
     const categoryResolutionOptions = layersResolutionsOptions[category];
     return (
       <BiodiversityLayerToggle
@@ -119,9 +119,21 @@ function BiodiversitySidebarCardComponent({
         handleResolutionSelection={(slug) =>
           handleResolutionSelection(slug, category)
         }
-        hideCheckboxes={hideCheckboxes}
       />
     );
+  };
+
+  const resolutionSentence = (category) => {
+    const resolutions = layersResolutionsOptions[category];
+    if (!resolutions) return '';
+    if (resolutions.length > 1)
+      return t('different resolutions', {
+        __comment: 'Global layers available at {different resolutions}',
+      });
+    return t(`{resolution} resolution`, {
+      resolution: resolutions[0].label,
+      __comment: 'Global layers available at {1km2 resolution}',
+    });
   };
 
   return (
@@ -178,7 +190,9 @@ function BiodiversitySidebarCardComponent({
           <div className={styles.dropdownSubtitle}>
             <span className={styles.subtitle}>{t('Global layers')}</span>
             <span className={styles.description}>
-              {t('Global layers available at different resolutions.')}
+              {t('Global layers available at {resolution}.', {
+                resolution: resolutionSentence(TERRESTRIAL_GLOBAL),
+              })}
             </span>
           </div>
         </div>
@@ -191,14 +205,14 @@ function BiodiversitySidebarCardComponent({
               <div className={styles.dropdownSubtitle}>
                 <span className={styles.subtitle}>{t('Regional layers')}</span>
                 <span className={styles.description}>
-                  {t('Regional layers available at 1km{square} resolutions.', {
-                    square: <sup>2</sup>,
+                  {t('Regional layers available at {resolution}.', {
+                    resolution: resolutionSentence(TERRESTRIAL_REGIONAL),
                   })}
                 </span>
               </div>
             </div>
             <div className={styles.togglesContainer}>
-              {renderBiodiversityLayerToggle(TERRESTRIAL_REGIONAL, true)}
+              {renderBiodiversityLayerToggle(TERRESTRIAL_REGIONAL)}
             </div>
           </>
         )}
@@ -213,14 +227,14 @@ function BiodiversitySidebarCardComponent({
           <div className={styles.dropdownSubtitle}>
             <span className={styles.subtitle}>{t('Global layers')}</span>
             <span className={styles.description}>
-              {t('Global layers available at 55km{square} resolution.', {
-                square: <sup>2</sup>,
+              {t('Global layers available at {resolution}.', {
+                resolution: resolutionSentence(MARINE),
               })}
             </span>
           </div>
         </div>
         <div className={styles.togglesContainer}>
-          {renderBiodiversityLayerToggle(MARINE, true)}
+          {renderBiodiversityLayerToggle(MARINE)}
         </div>
         <SourceAnnotation
           theme="light"

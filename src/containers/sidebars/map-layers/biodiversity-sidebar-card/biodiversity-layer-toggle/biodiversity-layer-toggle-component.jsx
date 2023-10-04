@@ -36,7 +36,6 @@ function BiodiversityLayerToggle({
   handleResolutionSelection,
   category,
   isChecked,
-  hideCheckboxes,
 }) {
   return (
     <div
@@ -77,7 +76,7 @@ function BiodiversityLayerToggle({
           />
         )}
       </div>
-      {selectedLayerOption && !hideCheckboxes && (
+      {selectedLayerOption && resolutionOptions.length > 1 && (
         <div className={styles.resolutionOptions}>
           <span className={styles.resolutionIntro}>
             <T _str="Resolution:" />
@@ -114,12 +113,10 @@ BiodiversityLayerToggle.propTypes = {
   selectedResolutionOption: PropTypes.shape({}).isRequired,
   category: PropTypes.oneOf([TERRESTRIAL_GLOBAL, TERRESTRIAL_REGIONAL, MARINE])
     .isRequired,
-  hideCheckboxes: PropTypes.bool,
 };
 
 BiodiversityLayerToggle.defaultProps = {
   onOpacityClick: undefined,
-  hideCheckboxes: false,
 };
 
 export default BiodiversityLayerToggle;
