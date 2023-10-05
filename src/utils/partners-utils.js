@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { t } from '@transifex/native';
 
 import burtsLogo from 'logos/BB_Foundation_logo_stacked.png';
@@ -23,6 +25,9 @@ import unEnvironmentLogo from 'logos/unEnvironment.png';
 import universityOfFloridaLogo from 'logos/universityOfFlorida.png';
 import vizzualityLogo from 'logos/vizzuality.png';
 import yaleLogo from 'logos/yale.png';
+import { renderToString } from 'react-dom/server';
+
+import TeamMembers from '../containers/modals/about-modal/teamMembers';
 
 export const getTexts = () => ({
   partners: {
@@ -33,9 +38,7 @@ export const getTexts = () => ({
       )}</a> ${t(
         ' is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life'
       )}`,
-      `<a style="text-decoration: underline;" target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/"> ${t(
-        'More about the core team of Half-Earth'
-      )} </a>`,
+      `${renderToString(<TeamMembers />)}`,
     ],
   },
   platformPartners: {

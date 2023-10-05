@@ -27,6 +27,7 @@ function CustomizedAxisTick(props) {
     </g>
   );
 }
+
 function AreaChartComponent({
   area,
   data,
@@ -53,8 +54,8 @@ function AreaChartComponent({
         fontSize={9}
         strokeWidth={2}
         tickCount={xTicks.length}
-        tickLine={false}
         ticks={xTicks}
+        tickLine={{ stroke: 'gray', strokeWidth: 0.5 }}
         type="number"
         interval={0}
         tick={

@@ -82,6 +82,24 @@ $content-height-mobile: 100svh;
     }
   }
 
+  .disclaimerContainer {
+    display: flex;
+    padding: 12px 12px 12px 16px;
+    border-radius: 6px;
+    background: $white-opacity;
+    box-shadow: $box-shadow-light;
+    margin-top: 8px;
+  }
+
+  .disclaimerBold {
+    font-weight: $font-weight-bold;
+  }
+
+  .disclaimer {
+    color: $white;
+    font-size: $font-size-xs;
+  }
+
   .actionButtons {
     display: flex;
     margin-right: 30px;

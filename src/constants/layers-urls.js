@@ -57,6 +57,8 @@ import {
   RESIDENT_BIRDS_RARITY_1KM,
   ANTS_RARITY_1KM,
   ANTS_RICHNESS_1KM,
+  ANTS_RARITY_GLOBAL,
+  ANTS_RICHNESS_GLOBAL,
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
@@ -311,7 +313,10 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_amphib/MapServer',
   [AMPHIB_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_amphibians/MapServer',
-
+  [ANTS_RARITY_GLOBAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Ant_Species_Rarity_025_Degree/MapServer',
+  [ANTS_RICHNESS_GLOBAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Global_Ant_Species_Richness_025_Degree_Scaled/MapServer',
   [MAMMALS_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_mammals/MapServer',
   [MAMMALS_RICHNESS]:
