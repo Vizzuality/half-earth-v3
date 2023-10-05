@@ -5,7 +5,6 @@ import * as urlActions from 'actions/url-actions';
 
 import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 
-import { FIREFLY_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import LandingComponent from './landing-component.jsx';
@@ -21,7 +20,7 @@ function LandingContainer(props) {
     setBasemap({
       map,
       surfaceColor: '#070710',
-      layersArray: [FIREFLY_BASEMAP_LAYER],
+      layersArray: [],
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);
   };
