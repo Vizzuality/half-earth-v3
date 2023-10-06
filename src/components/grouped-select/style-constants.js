@@ -53,7 +53,6 @@ export const customStyles = {
     ...provided,
     borderRadius: '0 0 6px 6px',
     margin: 0,
-    maxWidth: '154px',
     overflowX: 'hidden',
   }),
   menuList: (provided) => ({

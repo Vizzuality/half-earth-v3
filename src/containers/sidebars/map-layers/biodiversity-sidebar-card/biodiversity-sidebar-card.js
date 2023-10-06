@@ -17,7 +17,8 @@ import {
   getLayersResolution,
   getResolutionOptions,
   LAYER_VARIANTS,
-  TERRESTRIAL,
+  TERRESTRIAL_GLOBAL,
+  TERRESTRIAL_REGIONAL,
   MARINE,
   DEFAULT_RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
@@ -74,8 +75,8 @@ function BiodiversitySidebarCard(props) {
   // select default resolution if the selected resolution doesn't exist on terrestrial
   useEffect(() => {
     const selectedResolutionExists = layersResolution[biodiversityLayerVariant][
-      TERRESTRIAL
-    ].some((res) => res.slug === selectedResolutions[TERRESTRIAL]);
+      TERRESTRIAL_GLOBAL
+    ].some((res) => res.slug === selectedResolutions[TERRESTRIAL_GLOBAL]);
     if (!selectedResolutionExists) {
       setSelectedResolutions(DEFAULT_RESOLUTIONS);
     }
@@ -107,7 +108,10 @@ function BiodiversitySidebarCard(props) {
     <Component
       handleResolutionSelection={handleResolutionSelection}
       selectedResolutionOptions={{
-        [TERRESTRIAL]: resolutionOptions[selectedResolutions[TERRESTRIAL]],
+        [TERRESTRIAL_GLOBAL]:
+          resolutionOptions[selectedResolutions[TERRESTRIAL_GLOBAL]],
+        [TERRESTRIAL_REGIONAL]:
+          resolutionOptions[selectedResolutions[TERRESTRIAL_REGIONAL]],
         [MARINE]: resolutionOptions[selectedResolutions[MARINE]],
       }}
       selectedLayer={selectedLayer}

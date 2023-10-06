@@ -7,7 +7,7 @@
   color: inherit;
   cursor: pointer;
   display: flex;
-  width: 50%;
+  width: 100%;
 }
 
 .reverseSwitchIcon {
@@ -15,23 +15,42 @@
 }
 
 .container {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  height: 44px;
-  padding: 0 20px;
-  position: relative;
-  width: 100%;
-
   &:hover,
   &.checked {
     background-color: $white-opacity;
   }
+}
 
-  .resolutionDropown {
-    height: 38px;
-    width: 100px;
-    margin-left: 6px;
-    padding-top: 8px;
-  }
+.selectContainer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  height: 44px;
+  padding: 0 20px;
+  position: relative;
+  width: 100%;
+}
+
+.resolutionDropown {
+  height: 38px;
+  width: 100px;
+  margin-left: 6px;
+  padding-top: 8px;
+}
+
+.resolutionOptions {
+  padding: 4px 45px 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.resolutionIntro {
+  color: $grey-text;
+}
+
+.checkboxes {
+  display: flex;
+  gap: 8px;
 }

@@ -18,14 +18,10 @@ import { handleMetadataClick } from 'utils/metadata-utils';
 
 import usePrevious from 'hooks/use-previous';
 
-import {
-  getLayersToggleConfig,
-  TERRESTRIAL,
-  MARINE,
-  DEFAULT_RESOLUTIONS,
-} from 'constants/biodiversity-layers-constants';
+import { getLayersToggleConfig } from 'constants/biodiversity-layers-constants';
 import { LAYERS_CATEGORIES, layersConfig } from 'constants/mol-layers-configs';
 
+import { useSelectLayersOnTabOrResolutionChange } from './biodiversity-layer-hooks';
 import Component from './biodiversity-layer-toggle-component';
 import mapStateToProps from './biodiversity-layer-toggle-selectors';
 
@@ -107,84 +103,18 @@ function BiodiversityLayerToggle(props) {
     setSelectedLayer(option.layer);
   };
 
-  // Select layers when we change resolutions or tabs
-  useEffect(() => {
-    const resolutionsHaventChanged =
-      previousSelectedResolutions &&
-      previousSelectedResolutions[TERRESTRIAL] ===
-        selectedResolutions[TERRESTRIAL] &&
-      previousSelectedResolutions[MARINE] === selectedResolutions[MARINE];
-    const biodiversityLayerHasntChanged =
-      previousBiodiversityLayerVariant &&
-      previousBiodiversityLayerVariant === biodiversityLayerVariant;
-
-    // Also if category is terrestrial and is not checked but we have a active biodiversityLayers = marine
-    const marineLayerIsActive =
-      category === TERRESTRIAL && !isChecked && allActiveLayerTitles.length > 0;
-
-    if (
-      !previousBiodiversityLayerVariant ||
-      !previousSelectedResolutions ||
-      (biodiversityLayerHasntChanged && resolutionsHaventChanged)
-    ) {
-      return;
-    }
-
-    // is MARINE toggle and not checked => Don't do anything (will do on the terrestrial toggle)
-    // is MARINE toggle and checked => select marine available layers on the new tab for marine
-
-    // is TERRESTRIAL toggle and not checked and marine checked => Don't do anything (will do on the marine toggle)
-    // is TERRESTRIAL toggle and checked
-    // or is TERRESTRIAL toggle and not checked (no selection checked) =>
-    //   select terrestrial available layers on the new tab for terrestrial
-
-    if (
-      (category === MARINE && !isChecked) ||
-      (category === TERRESTRIAL && marineLayerIsActive)
-    ) {
-      return;
-    }
-    const currentResolution = category;
-    const activeBiodiversityLayers = activeLayers
-      .filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY)
-      .map((l) => l.title);
-    const resolution = selectedResolutions[currentResolution];
-    const defaultResolutionLayers =
-      layersToggleConfig[biodiversityLayerVariant][currentResolution][
-        DEFAULT_RESOLUTIONS[currentResolution]
-      ];
-    const availableLayers =
-      layersToggleConfig[biodiversityLayerVariant][currentResolution][
-        resolution
-      ];
-
-    const layerTaxa = activeBiodiversityLayers.length
-      ? activeBiodiversityLayers[0].slice(
-          0,
-          activeBiodiversityLayers[0].indexOf('-')
-        )
-      : '';
-    const hasMatchingLayer =
-      availableLayers &&
-      availableLayers.find((layer) => layer.value.includes(layerTaxa));
-
-    if (hasMatchingLayer) {
-      // select matching layer on selected variant
-      handleLayerToggle(hasMatchingLayer);
-    } else if (availableLayers) {
-      // select first element if there's no matching layer
-      handleLayerToggle(availableLayers[0]);
-    } else {
-      // select first element if there's no maching resolution
-      handleLayerToggle(defaultResolutionLayers[0]);
-    }
-  }, [
+  useSelectLayersOnTabOrResolutionChange({
     biodiversityLayerVariant,
     selectedResolutions,
     previousBiodiversityLayerVariant,
     previousSelectedResolutions,
     layersToggleConfig,
-  ]);
+    category,
+    isChecked,
+    allActiveLayerTitles,
+    activeLayers,
+    handleLayerToggle,
+  });
 
   const handleInfoClick = (option) => {
     const { setModalMetadata } = props;
