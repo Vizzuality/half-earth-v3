@@ -91,5 +91,10 @@ export const customStyles = {
   valueContainer: (styles) => ({
     ...styles,
     display: 'flex',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '216px',
+    maxHeight: '30px',
   }),
 };
