@@ -147,9 +147,9 @@ export const NRC_MARINE_SPI_DATA_LAYER =
   'https://utility.arcgis.com/usrsvcs/servers/d1d8be859b4844658d9f567b9d6b4194/rest/services/Marine_Species_Protection_Index_by_Country_v2/FeatureServer/0';
 
 const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/25ee0339d8fc4e2ea7c8362535250b74/rest/services/gadm0_precalculated_aoi_summaries_updated/FeatureServer';
+  'https://utility.arcgis.com/usrsvcs/servers/1d905beff5b74af18acdb789a94c9ff3/rest/services/gadm0_precalculated_aoi_summaries_SPI/FeatureServer';
 const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/ee196cef7e5b4d6ab504de16317723b5/rest/services/gadm1_precalculated_aoi_summaries_updated/FeatureServer';
+  'https://utility.arcgis.com/usrsvcs/servers/8f42e91efa7b43d1a38afa70dac9684f/rest/services/gadm1_precalculated_aoi_summaries_SPI/FeatureServer';
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm_v2/FeatureServer',

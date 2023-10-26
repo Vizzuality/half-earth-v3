@@ -36,6 +36,7 @@ export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
 export const BIODIVERSITY_SLUG = 'biodiversity';
 export const PROTECTION_SLUG = 'protected-areas';
+export const SPI_SLUG = 'spi';
 export const PROTECTED_ATTRIBUTES_SLUG = 'protected_attributes';
 export const SPECIES_SLUG = 'species';
 export const FUTURE_PLACES_SLUG = 'future-places';
@@ -202,6 +203,14 @@ export const getSidebarCardsConfig = (locale) => ({
         />
       );
     },
+    warning: null,
+  },
+  [SPI_SLUG]: {
+    title: t('Species Protection Index (SPI)'),
+    description: () =>
+      t(
+        'The SPI provides an estimation of how well each country is meeting conservation targets and is the basis for a National Report Card on every country in the world.'
+      ),
     warning: null,
   },
   [PROTECTED_ATTRIBUTES_SLUG]: {
