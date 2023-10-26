@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { T, useT, useLocale } from '@transifex/react';
 
 import Tooltip from '@tippyjs/react';
+import cx from 'classnames';
 
 import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -16,14 +17,18 @@ import SourceAnnotation from 'components/source-annotation';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   PROTECTION_SLUG,
+  SPI_SLUG,
   PROTECTED_ATTRIBUTES_SLUG,
   getSidebarCardsConfig,
   getProtectedAttributesConfig,
 } from 'constants/analyze-areas-constants';
 import { getWDPATranslations } from 'constants/translation-constants';
 
+import COLORS from 'styles/settings';
+
 import styles from './styles.module.scss';
 
+import { ReactComponent as ExternalLinkIcon } from 'icons/external_link.svg';
 import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
@@ -62,6 +67,7 @@ function HumanPressuresTooltipComponent({ node, ...props }) {
 
 function SidebarCard({
   hasLegend,
+  openNRCInNewTab,
   cardTitle,
   cardCategory,
   cardDescription,
@@ -87,14 +93,15 @@ function SidebarCard({
     [contextualData, locale]
   );
 
-  const protectedAreaChartHeight = 100;
-  const protectedAreaChartWidth = 320;
+  const areaChartHeight = 100;
+  const areaChartWidth = 320;
 
   const isCustom = contextualData?.isCustom;
 
   const underProtectionPercentage = isCustom
     ? contextualData?.percentage
     : contextualData?.protectionPercentage;
+  const spi = contextualData?.SPI;
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
@@ -103,14 +110,15 @@ function SidebarCard({
           <div className={styles.protectedAreaChartContainer}>
             <div
               style={{
-                height: protectedAreaChartHeight,
-                width: protectedAreaChartWidth,
+                height: areaChartHeight,
+                width: areaChartWidth,
               }}
             >
               <ArcChart
-                parentHeight={protectedAreaChartHeight}
-                parentWidth={protectedAreaChartWidth}
-                paPercentage={underProtectionPercentage}
+                parentHeight={areaChartHeight}
+                parentWidth={areaChartWidth}
+                value={underProtectionPercentage}
+                isPercentage
               />
             </div>
             <p className={styles.protectedAreaChartLegend}>
@@ -126,6 +134,7 @@ function SidebarCard({
             </p>
           </div>
         )}
+
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
           <p className={styles.hpLegendTitle}>{t('Land pressures')}</p>
         )}
@@ -160,6 +169,42 @@ function SidebarCard({
               contextualData={contextualData}
             />
           </div>
+        )}
+        {cardCategory === SPI_SLUG && (
+          <>
+            <div className={styles.protectedAreaChartContainer}>
+              <div
+                style={{
+                  height: areaChartHeight,
+                  width: areaChartWidth,
+                }}
+              >
+                <ArcChart
+                  color={COLORS.primary}
+                  parentHeight={areaChartHeight}
+                  parentWidth={areaChartWidth}
+                  value={spi}
+                />
+              </div>
+              <p className={styles.protectedAreaChartLegend}>
+                <T _str="Land SPI" />
+              </p>
+            </div>
+            <div>
+              <Button
+                type="rectangular"
+                className={cx(styles.fullwidthButton, styles.reverseIconButton)}
+                handleClick={openNRCInNewTab}
+                label={t('EXPLORE NATIONAL REPORT CARD')}
+                Icon={ExternalLinkIcon}
+              />
+              <ProtectedAreasModal
+                isOpen={isProtectedAreasModalOpen}
+                handleModalClose={handleProtectedAreasModalToggle}
+                contextualData={contextualData}
+              />
+            </div>
+          </>
         )}
         {cardCategory === PROTECTED_ATTRIBUTES_SLUG && contextualData.DESIG && (
           <div className={styles.attributtesContainer}>

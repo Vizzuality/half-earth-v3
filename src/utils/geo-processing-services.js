@@ -328,6 +328,7 @@ export const getPrecalculatedContextualData = ({
       amphibians: data.amph_nspecies,
     },
     protectionPercentage: data.percentage_protected,
+    SPI: data.SPI,
     ...(includeAllData && { ...data }),
   };
 };

@@ -188,6 +188,7 @@ $sidebar-content-top: 180px;
   color: $white;
   margin-top: $site-gutter;
   border-top: 2px solid $white-opacity;
+  padding-bottom: $site-gutter;
 
   .link {
     @extend %title;

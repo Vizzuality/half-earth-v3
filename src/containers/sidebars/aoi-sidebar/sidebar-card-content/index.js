@@ -38,7 +38,6 @@ function Container(props) {
     metadataSlug,
     layers,
   } = props;
-
   const locale = useLocale();
   const t = useT();
 
@@ -150,6 +149,15 @@ function Container(props) {
     setProtectedAreasModalOpen(!protectedAreasModalOpen);
   };
 
+  const openNRCInNewTab = () => {
+    const nrcPath = `/nrc/${contextualData?.iso}`;
+    const nrcUrl = new URL(`${window.location.origin}${nrcPath}`);
+
+    if (locale) {
+      nrcUrl.searchParams.append('lang', locale);
+    }
+    window.open(nrcUrl);
+  };
   return (
     <Component
       cardTitle={title}
@@ -161,6 +169,7 @@ function Container(props) {
       isProtectedAreasModalOpen={protectedAreasModalOpen}
       metadata={metadata}
       humanPressuresData={humanPressuresData}
+      openNRCInNewTab={openNRCInNewTab}
       {...props}
     />
   );
