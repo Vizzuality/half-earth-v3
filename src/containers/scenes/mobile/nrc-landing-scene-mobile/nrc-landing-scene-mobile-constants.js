@@ -13,7 +13,7 @@ export const getNRCLandingCards = () => [
     title: t('National Report Cards'),
     description: (
       <p>
-        <T _str="The SPI (Species Protection Index) provides an estimation of how well each country is meeting species conservation targets and is the basis for a National Report Card on every country in the world. Countries with the highest SPI scores tend to host very few endemic species. They earn a higher score because it is easier to build protected area networks when richness is the primary factor to consider." />
+        <T _str="The SPI (Species Protection Index) provides an estimation of how well each country is meeting conservation targets and is the basis for a National Report Card on every country in the world. Countries with the highest SPI scores tend to host very few endemic species. They earn a higher score because it is easier to build protected area networks when richness is the primary factor to consider." />
       </p>
     ),
     layer: GLOBAL_SPI_FEATURE_LAYER,
