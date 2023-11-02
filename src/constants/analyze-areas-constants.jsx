@@ -209,7 +209,7 @@ export const getSidebarCardsConfig = (locale) => ({
     title: t('Species Protection Index (SPI)'),
     description: () =>
       t(
-        'The SPI provides an estimation of how well each country is meeting conservation targets and is the basis for a National Report Card on every country in the world.'
+        'The SPI provides an estimation of how well each country is meeting species conservation targets and is the basis for a National Report Card on every country in the world.'
       ),
     warning: null,
   },
