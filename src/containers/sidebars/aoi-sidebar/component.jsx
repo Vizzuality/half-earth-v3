@@ -23,6 +23,7 @@ import {
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG,
   PROTECTION_SLUG,
+  SPI_SLUG,
   PROTECTED_ATTRIBUTES_SLUG,
 } from 'constants/analyze-areas-constants';
 import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
@@ -32,7 +33,10 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   LAND_HUMAN_PRESSURES,
 } from 'constants/layers-slugs';
-import { ALL_TAXA_PRIORITY } from 'constants/metadata';
+import {
+  SPECIES_PROTECTION_INDEX,
+  ALL_TAXA_PRIORITY,
+} from 'constants/metadata';
 import { getWDPALayers } from 'constants/protected-areas';
 import {
   getAOIContextualData,
@@ -319,14 +323,22 @@ function AOISidebar({
                 <SidebarCard
                   map={map}
                   layers={WDPALayers}
-                  toggleType="checkbox"
                   activeLayers={activeLayers}
                   cardCategory={PROTECTION_SLUG}
                   contextualData={contextualData}
                   metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
                 />
               )}
-
+              {(contextualData?.SPI || contextualData?.SPI === 0) && (
+                <SidebarCard
+                  map={map}
+                  layers={WDPALayers}
+                  activeLayers={activeLayers}
+                  cardCategory={SPI_SLUG}
+                  contextualData={contextualData}
+                  metadataSlug={SPECIES_PROTECTION_INDEX}
+                />
+              )}
               {isProtectedAreaAOI && (
                 <SidebarCard
                   map={map}

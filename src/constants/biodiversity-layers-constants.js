@@ -78,42 +78,50 @@ export const ALL_TAXA_LAYER_VARIANTS = {
 const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
 
 const TAXA_DISTRIBUTION = {
-  TERRESTRIAL: 'terrestrial',
+  TERRESTRIAL_GLOBAL: 'terrestrial-global',
+  TERRESTRIAL_REGIONAL: 'terrestrial-regional',
   MARINE: 'marine',
 };
 
-export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION;
+export const { TERRESTRIAL_GLOBAL, TERRESTRIAL_REGIONAL, MARINE } =
+  TAXA_DISTRIBUTION;
 
 export const getResolutionOptions = () => ({
-  LOWEST: { label: `${t('~55km2')} ${t('resolution')}`, slug: 'LOWEST' },
-  LOW: { label: `${t('~27km2')} ${t('resolution')}`, slug: 'LOW' },
-  HIGH: { label: `${t('~1km2')} ${t('resolution')}`, slug: 'HIGH' },
-  COUNTRY: { label: `${t('Country')} ${t('resolution')}`, slug: 'COUNTRY' },
+  LOWEST: { label: t('~55km2'), slug: 'LOWEST' },
+  LOW: { label: t('~27km2'), slug: 'LOW' },
+  HIGH: { label: t('~1km2'), slug: 'HIGH' },
+  COUNTRY: { label: t('country'), slug: 'COUNTRY' },
 });
 
 export const getLayersResolution = () => {
   const resolutions = getResolutionOptions();
   return {
     [PRIORITY]: {
-      [TERRESTRIAL]: [resolutions.LOW],
+      [TERRESTRIAL_GLOBAL]: [resolutions.LOW],
       [MARINE]: [resolutions.LOWEST],
     },
     [RICHNESS]: {
-      [TERRESTRIAL]: [resolutions.LOW, resolutions.HIGH, resolutions.COUNTRY],
+      [TERRESTRIAL_GLOBAL]: [resolutions.LOW, resolutions.COUNTRY],
+      [TERRESTRIAL_REGIONAL]: [resolutions.HIGH],
       [MARINE]: [resolutions.LOWEST],
     },
     [RARITY]: {
-      [TERRESTRIAL]: [resolutions.LOW, resolutions.HIGH],
+      [TERRESTRIAL_GLOBAL]: [resolutions.LOW],
+      [TERRESTRIAL_REGIONAL]: [resolutions.HIGH],
       [MARINE]: [resolutions.LOWEST],
     },
   };
 };
 
-export const DEFAULT_RESOLUTIONS = { [TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST' };
+export const DEFAULT_RESOLUTIONS = {
+  [TERRESTRIAL_GLOBAL]: 'LOW',
+  [TERRESTRIAL_REGIONAL]: 'HIGH',
+  [MARINE]: 'LOWEST',
+};
 
 export const getLayersToggleConfig = () => ({
   [PRIORITY]: {
-    [TERRESTRIAL]: {
+    [TERRESTRIAL_GLOBAL]: {
       LOW: [
         {
           value: ALL_TAXA_PRIORITY,
@@ -179,7 +187,7 @@ export const getLayersToggleConfig = () => ({
     },
   },
   [RICHNESS]: {
-    [TERRESTRIAL]: {
+    [TERRESTRIAL_GLOBAL]: {
       LOW: [
         {
           value: ALL_TAXA_RICHNESS,
@@ -238,6 +246,38 @@ export const getLayersToggleConfig = () => ({
           group: t('invertebrates'),
         },
       ],
+      COUNTRY: [
+        {
+          value: ANTS_RICHNESS,
+          name: t('ants'),
+          title: t('ants'),
+          layer: ANTS_RICHNESS,
+          group: t('invertebrates'),
+        },
+        {
+          value: BUTTERFLIES_RICHNESS,
+          name: t('butterflies'),
+          title: t('butterflies'),
+          layer: BUTTERFLIES_RICHNESS,
+          group: t('invertebrates'),
+        },
+        {
+          value: ODONATES_RICHNESS,
+          name: t('odonates'),
+          title: t('odonates'),
+          layer: ODONATES_RICHNESS,
+          group: t('invertebrates'),
+        },
+        {
+          value: SAPINDALES_RICHNESS,
+          name: t('sapindales'),
+          title: t('sapindales'),
+          layer: SAPINDALES_RICHNESS,
+          group: t('plants'),
+        },
+      ],
+    },
+    [TERRESTRIAL_REGIONAL]: {
       HIGH: [
         {
           value: ANTS_RICHNESS_1KM,
@@ -331,36 +371,6 @@ export const getLayersToggleConfig = () => ({
           group: t('birds'),
         },
       ],
-      COUNTRY: [
-        {
-          value: ANTS_RICHNESS,
-          name: t('ants'),
-          title: t('ants'),
-          layer: ANTS_RICHNESS,
-          group: t('invertebrates'),
-        },
-        {
-          value: BUTTERFLIES_RICHNESS,
-          name: t('butterflies'),
-          title: t('butterflies'),
-          layer: BUTTERFLIES_RICHNESS,
-          group: t('invertebrates'),
-        },
-        {
-          value: ODONATES_RICHNESS,
-          name: t('odonates'),
-          title: t('odonates'),
-          layer: ODONATES_RICHNESS,
-          group: t('invertebrates'),
-        },
-        {
-          value: SAPINDALES_RICHNESS,
-          name: t('sapindales'),
-          title: t('sapindales'),
-          layer: SAPINDALES_RICHNESS,
-          group: t('plants'),
-        },
-      ],
     },
     [MARINE]: {
       LOWEST: [
@@ -389,7 +399,7 @@ export const getLayersToggleConfig = () => ({
     },
   },
   [RARITY]: {
-    [TERRESTRIAL]: {
+    [TERRESTRIAL_GLOBAL]: {
       LOW: [
         {
           value: ALL_TAXA_RARITY,
@@ -448,6 +458,8 @@ export const getLayersToggleConfig = () => ({
           group: t('invertebrates'),
         },
       ],
+    },
+    [TERRESTRIAL_REGIONAL]: {
       HIGH: [
         {
           value: ANTS_RARITY_1KM,

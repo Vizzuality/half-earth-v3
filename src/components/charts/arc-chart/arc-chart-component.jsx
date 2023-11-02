@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import {
   RadialBar,
   RadialBarChart,
@@ -15,10 +17,11 @@ function ArcChartComponent({
   color = COLORS['protected-areas'],
   parentHeight,
   parentWidth,
-  paPercentage,
+  value,
+  isPercentage,
   strokeWidth = 8,
 }) {
-  const DATA = [{ percentage: paPercentage / 10, fill: color }];
+  const DATA = [{ percentage: value / 10, fill: color }];
   return (
     <ResponsiveContainer width="100%" height="100%">
       <RadialBarChart
@@ -44,14 +47,16 @@ function ArcChartComponent({
           cornerRadius={30 / 2}
           fill={COLORS['athens-gray']}
         />
-        {paPercentage && (
+        {value && (
           <text
-            x={parentWidth / 2 + 6}
+            x={parentWidth / 2 + (isPercentage ? 6 : 0)}
             y={parentHeight / 2 + 40}
             className={styles.label}
           >
-            {paPercentage.toFixed()}
-            <tspan className={styles.labelPercentage}>%</tspan>
+            {value.toFixed()}
+            {isPercentage && (
+              <tspan className={styles.labelPercentage}>%</tspan>
+            )}
           </text>
         )}
       </RadialBarChart>
@@ -60,3 +65,20 @@ function ArcChartComponent({
 }
 
 export default ArcChartComponent;
+
+ArcChartComponent.propTypes = {
+  color: PropTypes.string,
+  parentHeight: PropTypes.number,
+  parentWidth: PropTypes.number,
+  value: PropTypes.number.isRequired,
+  isPercentage: PropTypes.bool,
+  strokeWidth: PropTypes.number,
+};
+
+ArcChartComponent.defaultProps = {
+  color: COLORS['protected-areas'],
+  parentHeight: 100,
+  parentWidth: 320,
+  isPercentage: false,
+  strokeWidth: 8,
+};

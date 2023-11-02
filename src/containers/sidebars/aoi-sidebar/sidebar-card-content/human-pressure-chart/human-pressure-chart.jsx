@@ -68,7 +68,7 @@ function HumanPressure({ chartDomain, setChartDomain, data }) {
             : '<1';
         };
         return (
-          <div className={styles.humanPressureIndicator}>
+          <div key={key} className={styles.humanPressureIndicator}>
             <p className={styles.title}>{humanPressure.title}</p>
 
             <p className={styles.percentage}>{getLastHumanPressureValue()}%</p>

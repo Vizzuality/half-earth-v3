@@ -42,6 +42,15 @@
   }
 }
 
+.reverseIconButton {
+  flex-direction: row-reverse;
+  gap: 10px;
+
+  svg {
+    margin-right: 0 !important;
+  }
+}
+
 .warningWrapper {
   display: flex;
   .warning {

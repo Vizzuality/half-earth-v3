@@ -18,18 +18,40 @@
 .sourceContainer,
 .togglesContainer,
 .dropdownContainer {
-  padding-top: $sidebar-vertical-flow;
+  &:not(.marineDropdownContainer) {
+    padding-top: $sidebar-vertical-flow;
+  }
   color: $white;
 }
 
 .dropdownContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   .dropdownLabel {
     @extend %title;
+    display: block;
     color: $white;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
     padding-right: $sidebar-paddings;
+    margin-bottom: 8px;
+  }
+
+  .dropdownSubtitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    .subtitle {
+      @extend %bodyText;
+      font-size: $font-size-base;
+      color: $white;
+    }
+
+    .description {
+      @extend %bodyText;
+      color: $grey-text;
+      font-size: $font-size-xs;
+    }
+
   }
 }
 

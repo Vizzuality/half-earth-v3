@@ -19,7 +19,11 @@ import SourceAnnotation from 'components/source-annotation';
 import Tabs from 'components/tabs';
 
 import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
-import { TERRESTRIAL, MARINE } from 'constants/biodiversity-layers-constants';
+import {
+  TERRESTRIAL_GLOBAL,
+  TERRESTRIAL_REGIONAL,
+  MARINE,
+} from 'constants/biodiversity-layers-constants';
 import { getBiodiversityTabs } from 'constants/ui-params';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -111,13 +115,25 @@ function BiodiversitySidebarCardComponent({
         setSelectedLayer={setSelectedLayer}
         selectedResolutions={selectedResolutions}
         resolutionOptions={categoryResolutionOptions}
-        disabledResolutionDropdown={categoryResolutionOptions.length < 2}
         selectedResolutionOption={selectedResolutionOptions[category]}
         handleResolutionSelection={(slug) =>
           handleResolutionSelection(slug, category)
         }
       />
     );
+  };
+
+  const resolutionSentence = (category) => {
+    const resolutions = layersResolutionsOptions[category];
+    if (!resolutions) return '';
+    if (resolutions.length > 1)
+      return t('different resolutions', {
+        __comment: 'Global layers available at {different resolutions}',
+      });
+    return t(`{resolution} resolution`, {
+      resolution: resolutions[0].label,
+      __comment: 'Global layers available at {1km2 resolution}',
+    });
   };
 
   return (
@@ -170,16 +186,52 @@ function BiodiversitySidebarCardComponent({
           </div>
         )}
         <div className={styles.dropdownContainer}>
-          <span className={styles.dropdownLabel}>
-            {t('Terrestrial species')}
-          </span>
+          <div className={styles.dropdownLabel}>{t('Terrestrial species')}</div>
+          <div className={styles.dropdownSubtitle}>
+            <span className={styles.subtitle}>{t('Global layers')}</span>
+            <span className={styles.description}>
+              {t('Global layers available at {resolution}.', {
+                resolution: resolutionSentence(TERRESTRIAL_GLOBAL),
+              })}
+            </span>
+          </div>
         </div>
         <div className={styles.togglesContainer}>
-          {renderBiodiversityLayerToggle(TERRESTRIAL)}
+          {renderBiodiversityLayerToggle(TERRESTRIAL_GLOBAL)}
         </div>
+        {layersResolutionsOptions[TERRESTRIAL_REGIONAL] && (
+          <>
+            <div className={styles.dropdownContainer}>
+              <div className={styles.dropdownSubtitle}>
+                <span className={styles.subtitle}>{t('Regional layers')}</span>
+                <span className={styles.description}>
+                  {t('Regional layers available at {resolution}.', {
+                    resolution: resolutionSentence(TERRESTRIAL_REGIONAL),
+                  })}
+                </span>
+              </div>
+            </div>
+            <div className={styles.togglesContainer}>
+              {renderBiodiversityLayerToggle(TERRESTRIAL_REGIONAL)}
+            </div>
+          </>
+        )}
         <hr className={hrTheme.dark} />
-        <div className={styles.dropdownContainer}>
+        <div
+          className={cx(
+            styles.dropdownContainer,
+            styles.marineDropdownContainer
+          )}
+        >
           <span className={styles.dropdownLabel}>{t('Marine species')}</span>
+          <div className={styles.dropdownSubtitle}>
+            <span className={styles.subtitle}>{t('Global layers')}</span>
+            <span className={styles.description}>
+              {t('Global layers available at {resolution}.', {
+                resolution: resolutionSentence(MARINE),
+              })}
+            </span>
+          </div>
         </div>
         <div className={styles.togglesContainer}>
           {renderBiodiversityLayerToggle(MARINE)}
