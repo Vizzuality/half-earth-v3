@@ -1,0 +1,27 @@
+@import 'styles/settings';
+
+.basemapContainer {
+  bottom: 16px;
+  outline: 2px solid $grey-text;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: 64px;
+  position: absolute;
+  right: 16px;
+  width: 64px;
+  z-index: $default-z-index;
+  transition: 0.3s;
+  &:hover {
+    outline: 2px solid $brand-color-main-hover;
+  }
+  .basemapLabel {
+    color: $white;
+    font-family: $font-family-1;
+    font-size: 8px;
+    font-weight: 600;
+    margin: 1px auto;
+    text-transform: uppercase;
+  }
+}

@@ -6,6 +6,7 @@ import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graph
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import ZoomIntoGeometryManager from 'containers/managers/zoom-into-geometry-manager';
+import BasemapSelector from 'containers/menus/basemap-selector';
 import SideMenu from 'containers/menus/sidemenu';
 import AoiSidebar from 'containers/sidebars/aoi-sidebar';
 
@@ -52,6 +53,7 @@ function AoiSceneComponent({
 
       <ZoomIntoGeometryManager localGeometry={geometry} />
       <SideMenu activeLayers={activeLayers} />
+      <BasemapSelector />
 
       <TerrainExaggerationLayer />
 
