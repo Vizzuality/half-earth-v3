@@ -6,37 +6,32 @@ import cx from 'classnames';
 
 import styles from './styles.module';
 
-function BasemapSelector({ basemap, setBasemap }) {
-  const handleBasemapClick = () => {
-    if (basemap === 'default') {
-      setBasemap('landcover');
-    }
-    if (basemap === 'landcover') {
-      setBasemap('default');
-    }
-  };
+function BasemapSelector({ landcoverBasemap, setLandcoverBasemap }) {
+  const handleBasemapClick = () => setLandcoverBasemap(!landcoverBasemap);
 
   return (
     <button
       className={cx(styles.basemapContainer, {
-        [styles.basemapDefault]: basemap === 'default',
-        [styles.basemapLandcover]: basemap === 'landcover',
+        [styles.basemapDefault]: !landcoverBasemap,
+        [styles.basemapLandcover]: landcoverBasemap,
       })}
       type="button"
       onClick={handleBasemapClick}
     >
-      <p className={styles.basemapLabel}>{basemap}</p>
+      <p className={styles.basemapLabel}>
+        {landcoverBasemap ? 'lancover' : 'default'}
+      </p>
     </button>
   );
 }
 
 BasemapSelector.propTypes = {
-  basemap: PropTypes.oneOf(['default', 'landcover']),
-  setBasemap: PropTypes.func.isRequired,
+  landcoverBasemap: PropTypes.bool,
+  setLandcoverBasemap: PropTypes.func.isRequired,
 };
 
 BasemapSelector.defaultProps = {
-  basemap: 'default',
+  landcoverBasemap: false,
 };
 
 export default BasemapSelector;

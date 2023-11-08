@@ -2,10 +2,10 @@ import { createStructuredSelector } from 'reselect';
 
 export const getSidebarTabActive = ({ ui }) => ui && ui.sidebarTabActive;
 export const getNRCSidebarView = ({ ui }) => ui && ui.NRCSidebarView;
-export const getBasemap = ({ ui }) => ui && ui.basemap;
+export const getLandcoverBasemap = ({ ui }) => ui && ui.landcoverBasemap;
 
 export default createStructuredSelector({
   sidebarTabActive: getSidebarTabActive,
   NRCSidebarView: getNRCSidebarView,
-  basemap: getBasemap,
+  landcoverBasemap: getLandcoverBasemap,
 });

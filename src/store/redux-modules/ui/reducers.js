@@ -8,7 +8,7 @@ export const initialState = {
   sidebarTabActive: sidebarTabs[0].slug,
   NRCSidebarView: 'main',
   fullRanking: false,
-  basemap: 'default',
+  landcoverBasemap: false,
 };
 
 const setSidebarTabActive = (state, { payload }) => ({
@@ -21,13 +21,13 @@ const setNRCSidebarView = (state, { payload }) => ({
   NRCSidebarView: payload,
 });
 
-const setBasemap = (state, { payload }) => ({
+const setLandcoverBasemap = (state, { payload }) => ({
   ...state,
-  basemap: payload,
+  landcoverBasemap: payload,
 });
 
 export default {
   [actions.setSidebarTabActive]: setSidebarTabActive,
   [actions.setNRCSidebarView]: setNRCSidebarView,
-  [actions.setBasemap]: setBasemap,
+  [actions.setLandcoverBasemap]: setLandcoverBasemap,
 };

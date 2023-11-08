@@ -10,9 +10,9 @@ const actions = {
 };
 
 function BasemapSelectorComponent(props) {
-  const { setBasemap } = props;
+  const { setLandcoverBasemap } = props;
 
-  return <Component {...props} setBasemap={setBasemap} />;
+  return <Component {...props} setLandcoverBasemap={setLandcoverBasemap} />;
 }
 
 export default connect(mapStateToProps, actions)(BasemapSelectorComponent);
