@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
+import uiStyles from 'styles/ui.module.scss';
+
 import styles from './styles.module';
 
-function BasemapSelector({ landcoverBasemap, setLandcoverBasemap }) {
+function BasemapSelector({ blur, landcoverBasemap, setLandcoverBasemap }) {
   const handleBasemapClick = () => setLandcoverBasemap(!landcoverBasemap);
 
   return (
@@ -14,6 +16,7 @@ function BasemapSelector({ landcoverBasemap, setLandcoverBasemap }) {
       className={cx(styles.basemapContainer, {
         [styles.basemapDefault]: !landcoverBasemap,
         [styles.basemapLandcover]: landcoverBasemap,
+        [uiStyles.blur]: blur,
       })}
       type="button"
       onClick={handleBasemapClick}
@@ -26,11 +29,13 @@ function BasemapSelector({ landcoverBasemap, setLandcoverBasemap }) {
 }
 
 BasemapSelector.propTypes = {
+  blur: PropTypes.bool,
   landcoverBasemap: PropTypes.bool,
   setLandcoverBasemap: PropTypes.func.isRequired,
 };
 
 BasemapSelector.defaultProps = {
+  blur: false,
   landcoverBasemap: false,
 };
 

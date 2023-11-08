@@ -140,7 +140,7 @@ function DataSceneComponent({
         />
       )}
 
-      {!onboardingType && <BasemapSelector />}
+      {!onboardingType && <BasemapSelector blur={activeGlobesMenu} />}
 
       <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
 

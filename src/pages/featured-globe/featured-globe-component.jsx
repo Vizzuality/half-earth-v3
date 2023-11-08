@@ -96,7 +96,7 @@ function FeaturedGlobe({
             blur={activeGlobesMenu}
           />
         )}
-        <BasemapSelector />
+        <BasemapSelector blur={activeGlobesMenu} />
 
         {!selectedFeaturedPlace && (
           <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />

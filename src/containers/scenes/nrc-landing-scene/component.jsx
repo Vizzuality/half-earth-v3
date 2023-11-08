@@ -117,7 +117,7 @@ function NrcLandingComponent({
         />
       )}
 
-      {!onboardingType && <BasemapSelector />}
+      {!onboardingType && <BasemapSelector blur={activeGlobesMenu} />}
 
       <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
 
