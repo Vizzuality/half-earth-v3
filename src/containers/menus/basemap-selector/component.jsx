@@ -2,6 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import cx from 'classnames';
+
 import styles from './styles.module';
 
 function BasemapSelector({ basemap, setBasemap }) {
@@ -16,9 +18,12 @@ function BasemapSelector({ basemap, setBasemap }) {
 
   return (
     <button
-      className={styles.basemapContainer}
+      className={cx(styles.basemapContainer, {
+        [styles.basemapDefault]: basemap === 'default',
+        [styles.basemapLandcover]: basemap === 'landcover',
+      })}
       type="button"
-      onClick={() => handleBasemapClick()}
+      onClick={handleBasemapClick}
     >
       <p className={styles.basemapLabel}>{basemap}</p>
     </button>
