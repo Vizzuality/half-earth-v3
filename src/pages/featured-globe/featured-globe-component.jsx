@@ -20,6 +20,8 @@ import Spinner from 'components/spinner';
 
 import uiStyles from 'styles/ui.module';
 
+import BasemapSelector from '../../containers/menus/basemap-selector';
+
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() =>
   import('containers/sidebars/featured-place-card')
@@ -94,6 +96,7 @@ function FeaturedGlobe({
             blur={activeGlobesMenu}
           />
         )}
+        <BasemapSelector />
 
         {!selectedFeaturedPlace && (
           <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />

@@ -23,6 +23,8 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 import uiStyles from 'styles/ui.module';
 
+import BasemapSelector from '../../menus/basemap-selector';
+
 import styles from './nrc-landing-scene-styles.module.scss';
 
 const Spinner = loadable(() => import('components/spinner'));
@@ -114,6 +116,8 @@ function NrcLandingComponent({
           blur={activeGlobesMenu}
         />
       )}
+
+      {!onboardingType && <BasemapSelector />}
 
       <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
 

@@ -24,6 +24,8 @@ import { getSidebarTabs } from 'constants/ui-params';
 import animationStyles from 'styles/common-animations.module.scss';
 import uiStyles from 'styles/ui.module';
 
+import BasemapSelector from '../../menus/basemap-selector';
+
 import styles from './data-scene-styles.module.scss';
 
 const Spinner = loadable(() => import('components/spinner'));
@@ -137,6 +139,8 @@ function DataSceneComponent({
           blur={activeGlobesMenu}
         />
       )}
+
+      {!onboardingType && <BasemapSelector />}
 
       <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
 
