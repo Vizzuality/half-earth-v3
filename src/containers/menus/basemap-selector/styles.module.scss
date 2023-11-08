@@ -2,7 +2,7 @@
 
 .basemapContainer {
   bottom: 16px;
-  outline: 2px solid $grey-text;
+  border: 2px solid $grey-text;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
   z-index: $default-z-index;
   transition: 0.3s;
   &:hover {
-    outline: 2px solid $brand-color-main-hover;
+    border: 2px solid $brand-color-main-hover;
   }
 
   .basemapLabel {

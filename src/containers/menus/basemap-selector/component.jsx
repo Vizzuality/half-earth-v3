@@ -1,30 +1,37 @@
 import React from 'react';
 
-// import { useT } from '@transifex/react';
-
-// import { useMobile } from 'constants/responsive';
+import PropTypes from 'prop-types';
 
 import styles from './styles.module';
 
 function BasemapSelector({ basemap, setBasemap }) {
-  // const t = useT();
-  // const isMobile = useMobile();
-
-  console.log({ basemap });
+  const handleBasemapClick = () => {
+    if (basemap === 'default') {
+      setBasemap('landcover');
+    }
+    if (basemap === 'landcover') {
+      setBasemap('default');
+    }
+  };
 
   return (
     <button
       className={styles.basemapContainer}
       type="button"
-      onClick={() => setBasemap('landcover')}
+      onClick={() => handleBasemapClick()}
     >
-      <p className={styles.basemapLabel}>LANDCOVER</p>
+      <p className={styles.basemapLabel}>{basemap}</p>
     </button>
   );
 }
 
-BasemapSelector.propTypes = {};
+BasemapSelector.propTypes = {
+  basemap: PropTypes.oneOf(['default', 'landcover']),
+  setBasemap: PropTypes.func.isRequired,
+};
 
-BasemapSelector.defaultProps = {};
+BasemapSelector.defaultProps = {
+  basemap: 'default',
+};
 
 export default BasemapSelector;
