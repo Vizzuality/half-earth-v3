@@ -6,12 +6,18 @@ import React from 'react';
 
 import styles from './styles.module';
 
-function BasemapSelector() {
+function BasemapSelector({ basemap, setBasemap }) {
   // const t = useT();
   // const isMobile = useMobile();
 
+  console.log({ basemap });
+
   return (
-    <button type="button" className={styles.basemapContainer}>
+    <button
+      className={styles.basemapContainer}
+      type="button"
+      onClick={() => setBasemap('landcover')}
+    >
       <p className={styles.basemapLabel}>LANDCOVER</p>
     </button>
   );
