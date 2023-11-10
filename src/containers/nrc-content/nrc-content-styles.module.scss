@@ -20,11 +20,6 @@ $content-height-mobile: 100svh;
     overflow-y: scroll;
   }
 
-  // .scrolleableArea::-webkit-scrollbar {
-  //   width: 0px;
-  //   background: transparent;
-  // }
-
   .scrolleableArea {
     &::-webkit-scrollbar {
       background-color: hsla(0, 0%, 96%, 0.2);
