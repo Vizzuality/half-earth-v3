@@ -14,6 +14,8 @@ import { useWatchUtils } from 'hooks/esri';
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { useMobile } from 'constants/responsive';
 
+import { setBasemap } from '../../utils/layer-manager-utils';
+
 import Component from './scene-component';
 import mapStateToProps from './selectors';
 
@@ -66,6 +68,7 @@ function SceneContainer(props) {
     urlParamsUpdateDisabled,
     initialRotation,
     centerOn,
+    landcoverBasemap,
   } = props;
 
   const [map, setMap] = useState(null);
@@ -100,6 +103,16 @@ function SceneContainer(props) {
         console.error(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (map) {
+      setBasemap({
+        map,
+        landcoverBasemap,
+        layersArray: [SATELLITE_BASEMAP_LAYER],
+      });
+    }
+  }, [landcoverBasemap]);
 
   const mobileCustomPan = (mapView) => {
     const pointers = new Map(); // javascript map

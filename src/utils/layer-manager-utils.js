@@ -3,10 +3,7 @@ import { loadModules } from 'esri-loader';
 import intersection from 'lodash/intersection';
 
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
-import {
-  LANDCOVER_BASEMAP_LAYER,
-  FIREFLY_BASEMAP_LAYER,
-} from 'constants/layers-slugs';
+import { LANDCOVER_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   DEFAULT_OPACITY,
@@ -261,7 +258,13 @@ export const addActiveLayersToScene = (activeLayers, _layersConfig, map) => {
   }
 };
 
-export const setBasemap = async ({ map, surfaceColor, layersArray }) => {
+export const setBasemap = async ({
+  map,
+  surfaceColor,
+  layersArray,
+  landcoverBasemap,
+}) => {
+  console.log('landcoverBasemap 1', landcoverBasemap);
   map.ground.surfaceColor = surfaceColor || '#0A212E'; // set surface color, before basemap is loaded
   const baseLayers = await Promise.all(
     layersArray.map(async (layer) => createLayer(layersConfig[layer]))
@@ -619,9 +622,10 @@ export const setBasemap = async ({ map, surfaceColor, layersArray }) => {
         useViewTime: false,
         renderer: uniqueValueRenderer,
       });
+      console.log('landcoverBasemap 2', landcoverBasemap);
 
       const basemap = new Basemap({
-        baseLayers: [imageryLayer],
+        baseLayers: [...baseLayers, imageryLayer],
         title: 'half-earth-basemap',
         id: 'half-earth-basemap',
       });
