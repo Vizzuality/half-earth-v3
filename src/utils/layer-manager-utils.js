@@ -3,6 +3,8 @@ import { loadModules } from 'esri-loader';
 import intersection from 'lodash/intersection';
 
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
+import { LANDCOVER_BASEMAP_LAYER } from 'constants/layers-slugs';
+import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   DEFAULT_OPACITY,
   LAYERS_CATEGORIES,
@@ -263,20 +265,363 @@ export const setBasemap = async ({ map, surfaceColor, layersArray }) => {
     layersArray.map(async (layer) => createLayer(layersConfig[layer]))
   );
 
-  loadModules(['esri/Basemap', 'esri/layers/ImageryLayer']).then(
-    ([Basemap, ImageryLayer]) => {
-      const LANDCOVER_BASEMAP = new ImageryLayer({
-        url: 'https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer',
-      });
+  loadModules([
+    'esri/Basemap',
+    'esri/layers/ImageryLayer',
+    'esri/renderers/UniqueValueRenderer',
+  ]).then(([Basemap, ImageryLayer, UniqueValueRenderer]) => {
+    const uniqueValueRenderer = new UniqueValueRenderer({
+      authoringInfo: {
+        classificationMethod: 'esriClassifyManual',
+        colorRamp: {
+          type: 'multipart',
+          colorRamps: [
+            {
+              type: 'algorithmic',
+              algorithm: 'esriHSVAlgorithm',
+              fromColor: [153, 0, 0, 255],
+              toColor: [153, 153, 0, 255],
+            },
+            {
+              type: 'algorithmic',
+              algorithm: 'esriHSVAlgorithm',
+              fromColor: [153, 153, 0, 255],
+              toColor: [0, 153, 153, 255],
+            },
+            {
+              type: 'algorithmic',
+              algorithm: 'esriHSVAlgorithm',
+              fromColor: [0, 153, 153, 255],
+              toColor: [0, 0, 153, 255],
+            },
+          ],
+        },
+      },
+      type: 'uniqueValue',
+      field1: 'ClassName',
+      uniqueValueGroups: [
+        {
+          classes: [
+            {
+              label: 'Water',
+              symbol: {
+                type: 'esriSFS',
+                color: [57, 114, 184, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Water']],
+            },
+            {
+              label: 'Trees',
+              symbol: {
+                type: 'esriSFS',
+                color: [23, 84, 8, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Trees']],
+            },
+            {
+              label: 'Flooded Vegetation',
+              symbol: {
+                type: 'esriSFS',
+                color: [79, 171, 108, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Flooded Vegetation']],
+            },
+            {
+              label: 'Crops',
+              symbol: {
+                type: 'esriSFS',
+                color: [184, 155, 53, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Crops']],
+            },
+            {
+              label: 'Built Area',
+              symbol: {
+                type: 'esriSFS',
+                color: [255, 0, 102, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Built Area']],
+            },
+            {
+              label: 'Bare Ground',
+              symbol: {
+                type: 'esriSFS',
+                color: [91, 90, 72, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Bare Ground']],
+            },
+            {
+              label: 'Snow/Ice',
+              symbol: {
+                type: 'esriSFS',
+                color: [242, 250, 255, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Snow/Ice']],
+            },
+            {
+              label: 'Clouds',
+              symbol: {
+                type: 'esriSFS',
+                color: [250, 250, 250, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Clouds']],
+            },
+            {
+              label: 'Rangeland',
+              symbol: {
+                type: 'esriSFS',
+                color: [235, 224, 211, 255],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['Rangeland']],
+            },
+            {
+              label: 'No Data',
+              symbol: {
+                type: 'esriSFS',
+                color: [0, 0, 0, 0],
+                outline: {
+                  type: 'esriSLS',
+                  color: [0, 0, 0, 0],
+                  width: 0.998,
+                  style: 'esriSLSSolid',
+                },
+                style: 'esriSFSSolid',
+              },
+              values: [['No Data']],
+            },
+          ],
+        },
+      ],
+      uniqueValueInfos: [
+        {
+          label: 'Water',
+          symbol: {
+            type: 'esriSFS',
+            color: [57, 114, 184, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Water',
+        },
+        {
+          label: 'Trees',
+          symbol: {
+            type: 'esriSFS',
+            color: [23, 84, 8, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Trees',
+        },
+        {
+          label: 'Flooded Vegetation',
+          symbol: {
+            type: 'esriSFS',
+            color: [79, 171, 108, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Flooded Vegetation',
+        },
+        {
+          label: 'Crops',
+          symbol: {
+            type: 'esriSFS',
+            color: [184, 155, 53, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Crops',
+        },
+        {
+          label: 'Built Area',
+          symbol: {
+            type: 'esriSFS',
+            color: [255, 0, 102, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Built Area',
+        },
+        {
+          label: 'Bare Ground',
+          symbol: {
+            type: 'esriSFS',
+            color: [91, 90, 72, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Bare Ground',
+        },
+        {
+          label: 'Snow/Ice',
+          symbol: {
+            type: 'esriSFS',
+            color: [242, 250, 255, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Snow/Ice',
+        },
+        {
+          label: 'Clouds',
+          symbol: {
+            type: 'esriSFS',
+            color: [250, 250, 250, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Clouds',
+        },
+        {
+          label: 'Rangeland',
+          symbol: {
+            type: 'esriSFS',
+            color: [235, 224, 211, 255],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'Rangeland',
+        },
+        {
+          label: 'No Data',
+          symbol: {
+            type: 'esriSFS',
+            color: [0, 0, 0, 0],
+            outline: {
+              type: 'esriSLS',
+              color: [0, 0, 0, 0],
+              width: 0.998,
+              style: 'esriSLSSolid',
+            },
+            style: 'esriSFSSolid',
+          },
+          value: 'No Data',
+        },
+      ],
+    });
 
-      const basemap = new Basemap({
-        baseLayers: [...baseLayers, LANDCOVER_BASEMAP],
-        title: 'half-earth-basemap',
-        id: 'half-earth-basemap',
-      });
-      map.basemap = basemap;
-    }
-  );
+    const imageryLayer = new ImageryLayer({
+      url: LAYERS_URLS[LANDCOVER_BASEMAP_LAYER],
+    });
+
+    imageryLayer.renderer = uniqueValueRenderer;
+
+    const basemap = new Basemap({
+      baseLayers: [...baseLayers, imageryLayer],
+      title: 'half-earth-basemap',
+      id: 'half-earth-basemap',
+    });
+    map.basemap = basemap;
+  });
 };
 
 export const getActiveLayersFromLayerGroup = (layerGroup, activeLayers) =>
