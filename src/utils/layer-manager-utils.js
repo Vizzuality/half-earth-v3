@@ -262,14 +262,21 @@ export const setBasemap = async ({ map, surfaceColor, layersArray }) => {
   const baseLayers = await Promise.all(
     layersArray.map(async (layer) => createLayer(layersConfig[layer]))
   );
-  loadModules(['esri/Basemap']).then(([Basemap]) => {
-    const basemap = new Basemap({
-      baseLayers,
-      title: 'half-earth-basemap',
-      id: 'half-earth-basemap',
-    });
-    map.basemap = basemap;
-  });
+
+  loadModules(['esri/Basemap', 'esri/layers/ImageryLayer']).then(
+    ([Basemap, ImageryLayer]) => {
+      const LANDCOVER_BASEMAP = new ImageryLayer({
+        url: 'https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer',
+      });
+
+      const basemap = new Basemap({
+        baseLayers: [...baseLayers, LANDCOVER_BASEMAP],
+        title: 'half-earth-basemap',
+        id: 'half-earth-basemap',
+      });
+      map.basemap = basemap;
+    }
+  );
 };
 
 export const getActiveLayersFromLayerGroup = (layerGroup, activeLayers) =>
