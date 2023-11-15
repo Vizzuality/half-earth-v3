@@ -8,7 +8,7 @@ import { useT } from '@transifex/react';
 
 import * as urlActions from 'actions/url-actions';
 
-import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
+import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { writeToForageItem } from 'utils/local-forage-utils';
 
 import groupBy from 'lodash/groupBy';
@@ -16,11 +16,7 @@ import orderBy from 'lodash/orderBy';
 import unionBy from 'lodash/unionBy';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
-import {
-  FIREFLY_BASEMAP_LAYER,
-  SATELLITE_BASEMAP_LAYER,
-  HALF_EARTH_FUTURE_TILE_LAYER,
-} from 'constants/layers-slugs';
+import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import Component from './component.jsx';
@@ -220,11 +216,6 @@ function AOIScene(props) {
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, initialActiveLayers) => {
-    setBasemap({
-      map,
-      surfaceColor: '#070710',
-      layersArray: [FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER],
-    });
     activateLayersOnLoad(map, initialActiveLayers, layersConfig);
   };
 

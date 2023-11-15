@@ -5,6 +5,8 @@ import {
   COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   EEZ_MARINE_AND_LAND_BORDERS,
+  FIREFLY_BASEMAP_LAYER,
+  SATELLITE_BASEMAP_LAYER,
 } from 'constants/layers-slugs';
 import { BASEMAP_OPACITY } from 'constants/mol-layers-configs';
 
@@ -42,6 +44,10 @@ export default {
     },
     ui: {
       components: [],
+    },
+    basemap: {
+      surfaceColor: '#070710',
+      layersArray: [FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER],
     },
   },
   ui: {

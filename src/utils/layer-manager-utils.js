@@ -264,7 +264,6 @@ export const setBasemap = async ({
   layersArray,
   landcoverBasemap,
 }) => {
-  console.log('landcoverBasemap 1', landcoverBasemap);
   map.ground.surfaceColor = surfaceColor || '#0A212E'; // set surface color, before basemap is loaded
   const baseLayers = await Promise.all(
     layersArray.map(async (layer) => createLayer(layersConfig[layer]))
@@ -622,10 +621,11 @@ export const setBasemap = async ({
         useViewTime: false,
         renderer: uniqueValueRenderer,
       });
-      console.log('landcoverBasemap 2', landcoverBasemap);
 
       const basemap = new Basemap({
-        baseLayers: [...baseLayers, imageryLayer],
+        baseLayers: landcoverBasemap
+          ? [...baseLayers, imageryLayer]
+          : baseLayers,
         title: 'half-earth-basemap',
         id: 'half-earth-basemap',
       });

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as urlActions from 'actions/url-actions';
 
-import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
+import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 
 import { layersConfig } from 'constants/mol-layers-configs';
 
@@ -17,11 +17,6 @@ function LandingContainer(props) {
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
-    setBasemap({
-      map,
-      surfaceColor: '#070710',
-      layersArray: [],
-    });
     activateLayersOnLoad(map, activeLayers, layersConfig);
   };
 

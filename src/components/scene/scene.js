@@ -109,7 +109,8 @@ function SceneContainer(props) {
       setBasemap({
         map,
         landcoverBasemap,
-        layersArray: [SATELLITE_BASEMAP_LAYER],
+        surfaceColor: sceneSettings.basemap.surfaceColor || '#0A212E',
+        layersArray: sceneSettings.basemap.layersArray,
       });
     }
   }, [landcoverBasemap]);

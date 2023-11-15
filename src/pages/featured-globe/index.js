@@ -19,7 +19,6 @@ import {
 import {
   layerManagerToggle,
   activateLayersOnLoad,
-  setBasemap,
 } from 'utils/layer-manager-utils';
 
 import {
@@ -74,11 +73,6 @@ const featuredGlobeContainer = (props) => {
   }, [locale]);
 
   const handleMapLoad = (map, _activeLayers) => {
-    setBasemap({
-      map,
-      surfaceColor: '#070710',
-      layersArray: [VIBRANT_BASEMAP_LAYER],
-    });
     activateLayersOnLoad(map, _activeLayers, layersConfig);
   };
 

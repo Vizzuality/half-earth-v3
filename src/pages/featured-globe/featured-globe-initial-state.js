@@ -4,6 +4,7 @@ import {
   GRAPHIC_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   PRIORITY_POLYGONS_GRAPHIC_LAYER,
+  VIBRANT_BASEMAP_LAYER,
 } from 'constants/layers-slugs';
 
 export default {
@@ -37,6 +38,10 @@ export default {
     },
     ui: {
       components: [],
+    },
+    basemap: {
+      surfaceColor: '#070710',
+      layersArray: [VIBRANT_BASEMAP_LAYER],
     },
   },
   ui: {

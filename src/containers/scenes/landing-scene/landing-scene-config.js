@@ -11,6 +11,10 @@ export default {
     ui: {
       components: [],
     },
+    basemap: {
+      surfaceColor: '#070710',
+      layersArray: [],
+    },
   },
   ui: {
     isSidebarOpen: false,
