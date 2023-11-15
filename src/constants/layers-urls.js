@@ -1,5 +1,4 @@
 import {
-  LANDCOVER_BASEMAP_LAYER,
   COUNTRY_PRIORITY_LAYER,
   LAND_COUNTRY_PRIORITY_LAYER,
   MARINE_COUNTRY_PRIORITY_LAYER,
@@ -152,8 +151,6 @@ const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
 const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
   'https://utility.arcgis.com/usrsvcs/servers/8f42e91efa7b43d1a38afa70dac9684f/rest/services/gadm1_precalculated_aoi_summaries_SPI/FeatureServer';
 export const LAYERS_URLS = {
-  [LANDCOVER_BASEMAP_LAYER]:
-    'https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer',
   [GLOBAL_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm_v2/FeatureServer',
   [MARINE_SPI_FEATURE_LAYER]:

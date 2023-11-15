@@ -222,7 +222,7 @@ function AOIScene(props) {
   const handleMapLoad = (map, initialActiveLayers) => {
     setBasemap({
       map,
-      surfaceColor: '#070710',
+      surfaceColor: sceneSettings.basemap.surfaceColor,
       landcoverBasemap,
       layersArray: sceneSettings.basemap.layersArray,
     });

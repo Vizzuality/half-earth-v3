@@ -1,6 +1,3 @@
-// Basemaps
-export const LANDCOVER_BASEMAP_LAYER = 'landcover_basemap';
-
 // Protected areas layers.
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER =
   'protected_areas_vector_tile_layer';

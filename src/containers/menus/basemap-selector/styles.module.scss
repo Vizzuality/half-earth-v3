@@ -1,4 +1,5 @@
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .basemapContainer {
   bottom: 16px;
@@ -19,19 +20,16 @@
 
 
   .basemapLabel {
+    @extend %miniAnnotation;
     color: $white;
-    font-family: $font-family-1;
-    font-size: 8px;
-    font-weight: 600;
     margin: 1px auto;
-    text-transform: uppercase;
   }
 }
 
 .basemapDefault {
-  background-image: url('../../../assets/images/mini-default-basemap.png');
+  background-image: url('/assets/images/mini-default-basemap.png');
 }
 
 .basemapLandcover {
-  background-image: url('../../../assets/images/mini-landcover-basemap.png');
+  background-image: url('/assets/images/mini-landcover-basemap.png');
 }

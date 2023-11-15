@@ -3,8 +3,6 @@ import { loadModules } from 'esri-loader';
 import intersection from 'lodash/intersection';
 
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
-// import { LANDCOVER_BASEMAP_LAYER } from 'constants/layers-slugs';
-// import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   DEFAULT_OPACITY,
   LAYERS_CATEGORIES,
