@@ -7,6 +7,7 @@ import {
   selectGlobeUrlState,
   selectUiUrlState,
 } from 'selectors/location-selectors';
+import { getLandcoverBasemap } from 'selectors/ui-selectors';
 
 import dataSceneConfig from 'scenes/nrc-landing-scene/scene-config';
 
@@ -91,4 +92,5 @@ export default createStructuredSelector({
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
   locationRoute: getLocationRoute,
+  landcoverBasemap: getLandcoverBasemap,
 });

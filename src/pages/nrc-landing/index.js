@@ -15,7 +15,7 @@ import mapStateToProps from './selectors';
 const actions = { ...urlActions };
 
 function NrcLandingContainer(props) {
-  const { changeGlobe, sceneSettings } = props;
+  const { changeGlobe, landcoverBasemap, sceneSettings } = props;
 
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
@@ -24,6 +24,7 @@ function NrcLandingContainer(props) {
     setBasemap({
       map,
       surfaceColor: '#070710',
+      landcoverBasemap,
       layersArray: sceneSettings.basemap.layersArray,
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);

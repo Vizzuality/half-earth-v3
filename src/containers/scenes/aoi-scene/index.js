@@ -19,6 +19,8 @@ import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
+import { setBasemap } from '../../../utils/layer-manager-utils.js';
+
 import Component from './component.jsx';
 import mapStateToProps from './selectors';
 import { recoverOrCreateNotPrecalculatedAoi } from './utils/custom-aoi-scene-utils';
@@ -40,6 +42,8 @@ function AOIScene(props) {
     objectId,
     activeCategoryLayers,
     changeUI,
+    sceneSettings,
+    landcoverBasemap,
   } = props;
 
   const t = useT();
@@ -216,6 +220,12 @@ function AOIScene(props) {
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, initialActiveLayers) => {
+    setBasemap({
+      map,
+      surfaceColor: '#070710',
+      landcoverBasemap,
+      layersArray: sceneSettings.basemap.layersArray,
+    });
     activateLayersOnLoad(map, initialActiveLayers, layersConfig);
   };
 
