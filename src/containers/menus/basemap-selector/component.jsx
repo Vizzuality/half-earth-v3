@@ -14,15 +14,15 @@ function BasemapSelector({ blur, landcoverBasemap, setLandcoverBasemap }) {
   return (
     <button
       className={cx(styles.basemapContainer, {
-        [styles.basemapDefault]: !landcoverBasemap,
-        [styles.basemapLandcover]: landcoverBasemap,
+        [styles.basemapDefault]: landcoverBasemap,
+        [styles.basemapLandcover]: !landcoverBasemap,
         [uiStyles.blur]: blur,
       })}
       type="button"
       onClick={handleBasemapClick}
     >
       <p className={styles.basemapLabel}>
-        {landcoverBasemap ? 'landcover' : 'default'}
+        {landcoverBasemap ? 'default' : 'landcover'}
       </p>
     </button>
   );
