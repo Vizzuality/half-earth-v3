@@ -11,7 +11,6 @@ import useIsSafari from 'utils/user-agent-utils';
 
 import { useWatchUtils } from 'hooks/esri';
 
-import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { useMobile } from 'constants/responsive';
 
 import { setBasemap } from '../../utils/layer-manager-utils';
@@ -90,9 +89,7 @@ function SceneContainer(props) {
   useEffect(() => {
     loadModules(['esri/Map'], loaderOptions)
       .then(([Map]) => {
-        const _map = new Map({
-          basemap: SATELLITE_BASEMAP_LAYER,
-        });
+        const _map = new Map();
 
         setMap(_map);
         if (onMapLoad) {
