@@ -5,6 +5,7 @@ import {
   selectUiUrlState,
   selectGlobeUrlState,
 } from 'selectors/location-selectors';
+import { getLandcoverBasemap } from 'selectors/ui-selectors';
 
 import aoiSceneConfig from './config';
 
@@ -55,4 +56,5 @@ export default createStructuredSelector({
   aoiStoredGeometry: getAoiGeometry,
   activeCategoryLayers: getActiveCategoryLayers,
   precalculatedLayerSlug: selectPrecalculatedLayerSlug,
+  landcoverBasemap: getLandcoverBasemap,
 });

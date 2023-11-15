@@ -8,7 +8,7 @@ $section-padding: 0 24px;
 .cardContainer {
   display: none;
   @include backdropBlur();
-  
+
   flex-direction: column;
   width: $sidebar-width;
   height: auto;
@@ -66,7 +66,7 @@ $section-padding: 0 24px;
     @extend %subtitle;
     color: $white;
   }
-  
+
   .arrowIcon {
     fill: $white;
     position: relative;

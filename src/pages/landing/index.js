@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 
 import * as urlActions from 'actions/url-actions';
 
-import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
+import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 
 import { layersConfig } from 'constants/mol-layers-configs';
+
+import { setBasemap } from '../../utils/layer-manager-utils.js';
 
 import LandingComponent from './landing-component.jsx';
 import mapStateToProps from './landing-selectors';
@@ -20,6 +22,7 @@ function LandingContainer(props) {
     setBasemap({
       map,
       surfaceColor: '#070710',
+
       layersArray: [],
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);

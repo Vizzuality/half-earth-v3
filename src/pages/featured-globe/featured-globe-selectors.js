@@ -7,6 +7,7 @@ import {
   selectGlobeUrlState,
   selectUiUrlState,
 } from 'selectors/location-selectors';
+import { getLandcoverBasemap } from 'selectors/ui-selectors';
 
 import initialState from './featured-globe-initial-state';
 
@@ -90,4 +91,5 @@ export default createStructuredSelector({
   isGlobeUpdating: getGlobeUpdating,
   selectedSpecies: getSelectedSpecies,
   openedModal: getHalfEarthModalOpen,
+  landcoverBasemap: getLandcoverBasemap,
 });

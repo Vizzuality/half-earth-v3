@@ -8,7 +8,6 @@ import {
   LAYERS_CATEGORIES,
   layersConfig,
 } from 'constants/mol-layers-configs';
-
 // LEGAGY
 
 // Toggles all the layers passed as ids on the first parameter
@@ -257,16 +256,27 @@ export const addActiveLayersToScene = (activeLayers, _layersConfig, map) => {
   }
 };
 
-export const setBasemap = async ({ map, surfaceColor, layersArray }) => {
+export const setBasemap = async ({
+  map,
+  surfaceColor,
+  layersArray,
+  landcoverBasemap,
+}) => {
   map.ground.surfaceColor = surfaceColor || '#0A212E'; // set surface color, before basemap is loaded
   const baseLayers = await Promise.all(
     layersArray.map(async (layer) => createLayer(layersConfig[layer]))
   );
+
   loadModules(['esri/Basemap']).then(([Basemap]) => {
     const basemap = new Basemap({
       baseLayers,
       title: 'half-earth-basemap',
       id: 'half-earth-basemap',
+      ...(landcoverBasemap && {
+        portalItem: {
+          id: 'aa5922ee948b41e0af7544e21682abcb',
+        },
+      }),
     });
     map.basemap = basemap;
   });

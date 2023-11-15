@@ -45,6 +45,8 @@ const featuredGlobeContainer = (props) => {
     selectedFeaturedMap,
     isFeaturedPlaceCard,
     isFullscreenActive,
+    sceneSettings,
+    landcoverBasemap,
   } = props;
 
   const handleMarkerClick = (viewPoint) => {
@@ -77,7 +79,8 @@ const featuredGlobeContainer = (props) => {
     setBasemap({
       map,
       surfaceColor: '#070710',
-      layersArray: [VIBRANT_BASEMAP_LAYER],
+      landcoverBasemap,
+      layersArray: sceneSettings.basemap.layersArray,
     });
     activateLayersOnLoad(map, _activeLayers, layersConfig);
   };
