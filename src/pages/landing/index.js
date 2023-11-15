@@ -7,6 +7,8 @@ import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 
 import { layersConfig } from 'constants/mol-layers-configs';
 
+import { setBasemap } from '../../utils/layer-manager-utils.js';
+
 import LandingComponent from './landing-component.jsx';
 import mapStateToProps from './landing-selectors';
 
@@ -17,6 +19,11 @@ function LandingContainer(props) {
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
+    setBasemap({
+      map,
+      surfaceColor: '#070710',
+      layersArray: [],
+    });
     activateLayersOnLoad(map, activeLayers, layersConfig);
   };
 

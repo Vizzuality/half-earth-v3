@@ -7,16 +7,24 @@ import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 
 import { layersConfig } from 'constants/mol-layers-configs';
 
+import { setBasemap } from '../../../utils/layer-manager-utils.js';
+
 import Component from './nrc-landing-mobile-component.jsx';
 import mapStateToProps from './nrc-landing-mobile-selectors';
 
 const actions = { ...urlActions };
 
 function NrcLandingMobileContainer(props) {
-  const { changeGlobe } = props;
+  const { changeGlobe, sceneSettings } = props;
+
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
+    setBasemap({
+      map,
+      surfaceColor: '#070710',
+      layersArray: sceneSettings.basemap.layersArray,
+    });
     activateLayersOnLoad(map, activeLayers, layersConfig);
   };
 

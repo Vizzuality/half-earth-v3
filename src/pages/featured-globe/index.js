@@ -19,6 +19,7 @@ import {
 import {
   layerManagerToggle,
   activateLayersOnLoad,
+  setBasemap,
 } from 'utils/layer-manager-utils';
 
 import {
@@ -44,6 +45,7 @@ const featuredGlobeContainer = (props) => {
     selectedFeaturedMap,
     isFeaturedPlaceCard,
     isFullscreenActive,
+    sceneSettings,
   } = props;
 
   const handleMarkerClick = (viewPoint) => {
@@ -73,6 +75,11 @@ const featuredGlobeContainer = (props) => {
   }, [locale]);
 
   const handleMapLoad = (map, _activeLayers) => {
+    setBasemap({
+      map,
+      surfaceColor: '#070710',
+      layersArray: sceneSettings.basemap.layersArray,
+    });
     activateLayersOnLoad(map, _activeLayers, layersConfig);
   };
 

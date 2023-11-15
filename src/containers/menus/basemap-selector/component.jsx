@@ -22,7 +22,7 @@ function BasemapSelector({ blur, landcoverBasemap, setLandcoverBasemap }) {
       onClick={handleBasemapClick}
     >
       <p className={styles.basemapLabel}>
-        {landcoverBasemap ? 'lancover' : 'default'}
+        {landcoverBasemap ? 'landcover' : 'default'}
       </p>
     </button>
   );
