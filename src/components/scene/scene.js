@@ -106,7 +106,6 @@ function SceneContainer(props) {
 
   useEffect(() => {
     if (map) {
-      console.log('USE EFFECT');
       setBasemap({
         map,
         landcoverBasemap,
