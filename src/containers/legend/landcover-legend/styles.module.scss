@@ -8,16 +8,15 @@
   height: 64px;
   position: absolute;
   left: $sidebar-width;
-  margin-left: 60px;
+  margin-left: 46px;
   z-index: $default-z-index;
   max-width: 500px;
   @media #{$tablet-portrait} {
-    bottom: 48px;
+    bottom: 50px;
     max-width: 250px;
   }
 
   @media #{$tablet-landscape} {
-    bottom: 38px;
     max-width: 400px;
   }
 
