@@ -22,7 +22,6 @@ function LandingContainer(props) {
     setBasemap({
       map,
       surfaceColor: '#070710',
-
       layersArray: [],
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);

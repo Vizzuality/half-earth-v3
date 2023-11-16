@@ -4,6 +4,7 @@ import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
 import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graphic-layer';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
+import LandcoverLegend from 'containers/legend/landcover-legend';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import ZoomIntoGeometryManager from 'containers/managers/zoom-into-geometry-manager';
 import BasemapSelector from 'containers/menus/basemap-selector';
@@ -34,6 +35,7 @@ function AoiSceneComponent({
   onboardingStep,
   waitingInteraction,
   activeLayers,
+  landcoverBasemap,
 }) {
   return (
     <Scene
@@ -54,6 +56,7 @@ function AoiSceneComponent({
       <ZoomIntoGeometryManager localGeometry={geometry} />
       <SideMenu activeLayers={activeLayers} />
       {!onboardingType && <BasemapSelector />}
+      {landcoverBasemap && <LandcoverLegend />}
 
       <TerrainExaggerationLayer />
 

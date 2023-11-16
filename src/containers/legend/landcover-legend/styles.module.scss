@@ -1,0 +1,73 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.legendContainer {
+  bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  height: 64px;
+  position: absolute;
+  left: $sidebar-width;
+  margin-left: 46px;
+  z-index: $default-z-index;
+  max-width: 500px;
+  @media #{$tablet-portrait} {
+    bottom: 50px;
+    max-width: 250px;
+  }
+
+  @media #{$tablet-landscape} {
+    max-width: 400px;
+  }
+
+
+  @media #{$desktop} {
+    bottom: 16px;
+    max-width: none;
+  }
+
+
+  .legendTitle {
+    @extend %annotation;
+    color: $white;
+    text-transform: uppercase;
+  }
+
+  .legendItems {
+    display: flex;
+    max-width: 550px;
+    flex-wrap: wrap;
+    height: 12px;
+
+    @media #{$desktop} {
+      max-width: 900px;
+    }
+
+
+    .legendItem {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      height: 12px;
+      margin-bottom: 6px;
+
+      @media #{$desktop} {
+        margin-bottom: 0;
+      }
+
+      .legendColor {
+        border-radius: 1px;
+        opacity: 70%;
+        width: 8px;
+        height: 8px;
+        margin-right: 4px;
+      }
+      .legendItemLabel {
+        @extend %annotation;
+        color: $white;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
