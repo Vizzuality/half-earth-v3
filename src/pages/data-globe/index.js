@@ -15,7 +15,7 @@ import mapStateToProps from './data-globe-selectors';
 const actions = { ...urlActions };
 
 function DataGlobeContainer(props) {
-  const { changeGlobe, landcoverBasemap, sceneSettings } = props;
+  const { changeGlobe, sceneSettings } = props;
 
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
@@ -24,7 +24,6 @@ function DataGlobeContainer(props) {
     setBasemap({
       map,
       surfaceColor: '#070710',
-      landcoverBasemap,
       layersArray: sceneSettings.basemap.layersArray,
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);

@@ -54,6 +54,7 @@ function AoiSceneComponent({
       <ZoomIntoGeometryManager localGeometry={geometry} />
       <SideMenu activeLayers={activeLayers} />
       {!onboardingType && <BasemapSelector />}
+      <div>LEGEND</div>
 
       <TerrainExaggerationLayer />
 
