@@ -1,18 +1,20 @@
 import React from 'react';
 
+import COLORS from 'styles/settings.scss';
+
 import styles from './styles.module';
 
 function LandcoverLegend() {
   const LEGEND_ITEMS = [
-    { label: 'Water', color: '#3972B8' },
-    { label: 'Trees', color: '#175408' },
-    { label: 'Flooded Vegetation', color: '#4FAB6C' },
-    { label: 'Crops', color: '#B89B35' },
-    { label: 'Built area', color: '#FF0066' },
-    { label: 'Bare ground', color: '#5B5A48' },
-    { label: 'Snow/Ice', color: '#F2FAFF' },
-    { label: 'Clouds', color: '#FAFAFA' },
-    { label: 'Reangeland', color: '#EBE0D3' },
+    { label: 'Water', color: COLORS.water },
+    { label: 'Trees', color: COLORS.trees },
+    { label: 'Flooded Vegetation', color: COLORS['flooded-vegetation'] },
+    { label: 'Crops', color: COLORS.crops },
+    { label: 'Built area', color: COLORS['built-area'] },
+    { label: 'Bare ground', color: COLORS['bare-ground'] },
+    { label: 'Snow/Ice', color: COLORS['snow-ice'] },
+    { label: 'Clouds', color: COLORS.clouds },
+    { label: 'Rangeland', color: COLORS.rangeland },
   ];
   return (
     <div className={styles.legendContainer}>
