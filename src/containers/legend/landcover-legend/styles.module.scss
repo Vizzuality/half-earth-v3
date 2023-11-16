@@ -1,0 +1,43 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.legendContainer {
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 64px;
+  position: absolute;
+  left: $sidebar-width;
+  margin-left: 60px;
+  width: 640px;
+  z-index: $default-z-index;
+
+  .legendTitle {
+    @extend %annotation;
+    color: $white;
+    text-transform: uppercase;
+  }
+
+  .legendItems {
+    display: flex;
+    .legendItem {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      height: 10px;
+      .legendColor {
+        border-radius: 1px;
+        opacity: 70%;
+        width: 8px;
+        height: 8px;
+        margin-right: 4px;
+      }
+      .legendItemLabel {
+        @extend %annotation;
+        color: $white;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
