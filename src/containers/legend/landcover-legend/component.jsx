@@ -16,6 +16,7 @@ function LandcoverLegend() {
     { label: 'Clouds', color: COLORS.clouds },
     { label: 'Rangeland', color: COLORS.rangeland },
   ];
+
   return (
     <div className={styles.legendContainer}>
       <p className={styles.legendTitle}>Land cover types</p>

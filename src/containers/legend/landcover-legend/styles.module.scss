@@ -2,15 +2,31 @@
 @import 'styles/typography-extends';
 
 .legendContainer {
-  bottom: 16px;
+  bottom: 28px;
   display: flex;
   flex-direction: column;
   height: 64px;
   position: absolute;
   left: $sidebar-width;
   margin-left: 60px;
-  width: 640px;
   z-index: $default-z-index;
+  max-width: 500px;
+  @media #{$tablet-portrait} {
+    bottom: 48px;
+    max-width: 250px;
+  }
+
+  @media #{$tablet-landscape} {
+    bottom: 48px;
+    max-width: 350px;
+  }
+
+
+  @media #{$desktop} {
+    bottom: 16px;
+    max-width: none;
+  }
+
 
   .legendTitle {
     @extend %annotation;
@@ -20,11 +36,26 @@
 
   .legendItems {
     display: flex;
+    max-width: 550px;
+    flex-wrap: wrap;
+    height: 12px;
+
+    @media #{$desktop} {
+      max-width: 900px;
+    }
+
+
     .legendItem {
       display: flex;
       align-items: center;
       margin-right: 10px;
-      height: 10px;
+      height: 12px;
+      margin-bottom: 6px;
+
+      @media #{$desktop} {
+        margin-bottom: 0;
+      }
+
       .legendColor {
         border-radius: 1px;
         opacity: 70%;
