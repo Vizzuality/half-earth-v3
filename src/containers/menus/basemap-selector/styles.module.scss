@@ -1,0 +1,35 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.basemapContainer {
+  bottom: 16px;
+  border: 2px solid $grey-text;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: 64px;
+  position: absolute;
+  right: 16px;
+  width: 64px;
+  z-index: $default-z-index;
+  transition: 0.3s;
+  &:hover {
+    border: 2px solid $brand-color-main-hover;
+  }
+
+
+  .basemapLabel {
+    @extend %miniAnnotation;
+    color: $white;
+    margin: 1px auto;
+  }
+}
+
+.basemapDefault {
+  background-image: url('/assets/images/mini-default-basemap.png');
+}
+
+.basemapLandcover {
+  background-image: url('/assets/images/mini-landcover-basemap.png');
+}

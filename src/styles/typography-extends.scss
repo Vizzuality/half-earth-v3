@@ -101,3 +101,10 @@
   line-height: 20px;
   text-transform: uppercase;
 }
+
+%miniAnnotation {
+  font-family: $font-family-1;
+  font-size: $font-size-xxxs;
+  text-transform: uppercase;
+  font-weight: $font-weight-bold;
+}

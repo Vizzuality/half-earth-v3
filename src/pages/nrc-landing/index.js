@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 
 import * as urlActions from 'actions/url-actions';
 
-import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
+import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 
-import {
-  FIREFLY_BASEMAP_LAYER,
-  SATELLITE_BASEMAP_LAYER,
-} from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
+
+import { setBasemap } from '../../utils/layer-manager-utils.js';
 
 import Component from './component.jsx';
 import mapStateToProps from './selectors';
@@ -17,18 +15,19 @@ import mapStateToProps from './selectors';
 const actions = { ...urlActions };
 
 function NrcLandingContainer(props) {
-  const { changeGlobe } = props;
+  const { changeGlobe, sceneSettings } = props;
+
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
+
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({
       map,
       surfaceColor: '#070710',
-      layersArray: [FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER],
+      layersArray: sceneSettings.basemap.layersArray,
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);
   };
-
   return (
     <Component
       handleMapLoad={handleMapLoad}

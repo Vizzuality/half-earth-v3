@@ -87,6 +87,18 @@
   $oceania: $tango;
   $south-america: $french-rose;
 
+  // Landcover legend
+  $water: #3972B8;
+  $trees: #175408;
+  $flooded-vegetation: #4FAB6C;
+  $crops: #B89B35;
+  $built-area: #FF0066;
+  $bare-ground: #5B5A48;
+  $snow-ice: #F2FAFF;
+  $clouds: #FAFAFA;
+  $rangeland: #EBE0D3;
+
+
   // Modal
   $modal-light-background: $athens-gray;
 
@@ -95,6 +107,7 @@
   $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
   // Font sizes
+  $font-size-xxxs: 8px;
   $font-size-xxs: 10px;
   $font-size-xs: 12px;
   $font-size-sm: 14px;
@@ -225,6 +238,17 @@
     white-opacity-20: $white-opacity-20;
     athens-gray: $athens-gray;
     oslo-gray: $oslo-gray;
+
+    // Landcover legend
+    water: $water;
+    trees: $trees;
+    flooded-vegetation: $flooded-vegetation;
+    crops: $crops;
+    built-area: $built-area;
+    bare-ground: $bare-ground;
+    snow-ice: $snow-ice;
+    clouds: $clouds;
+    rangeland: $rangeland;
 
     // FONT FAMILIES
     font-family-serif: $font-family-serif;

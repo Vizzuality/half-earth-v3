@@ -12,7 +12,7 @@ $content-height-mobile: 100svh;
 
   .loader {
     margin-top: 25%;
-    width: 100%,
+    width: 100%;
   }
 
   .scrolleableArea {
@@ -20,9 +20,18 @@ $content-height-mobile: 100svh;
     overflow-y: scroll;
   }
 
-  .scrolleableArea::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
+  .scrolleableArea {
+    &::-webkit-scrollbar {
+      background-color: hsla(0, 0%, 96%, 0.2);
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      max-height: 66px;
+      border-radius: 3px;
+      background-color: #dbdbdb;
+      width: 30px;
+    }
   }
 
   .motionView {
@@ -73,7 +82,8 @@ $content-height-mobile: 100svh;
   }
 
   .countryDescriptionContainer {
-    padding: $local-sidebar-top-margin $content-padding $local-sidebar-top-margin 0;
+    padding: $local-sidebar-top-margin $content-padding
+      $local-sidebar-top-margin 0;
 
     .countryDescription {
       @extend %bodyText;
@@ -166,7 +176,11 @@ $content-height-mobile: 100svh;
     width: 100%;
     height: 50px;
     z-index: 9;
-    background-image: linear-gradient(to top, $app-background 0%, rgba(9, 12, 20, 0) 100%);
+    background-image: linear-gradient(
+      to top,
+      $app-background 0%,
+      rgba(9, 12, 20, 0) 100%
+    );
   }
 
   &.mobile {
