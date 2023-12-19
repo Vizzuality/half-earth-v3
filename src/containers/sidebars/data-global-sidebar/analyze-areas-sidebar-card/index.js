@@ -212,16 +212,28 @@ function AnalyzeAreasContainer(props) {
       newSelectedOption === WDPA_OECM_FEATURE_LAYER;
 
     const getLayersToToggle = () => {
-      const formerSelectedSlug = selectedOption.slug;
+      const formerSelectedSlug = selectedOption?.slug;
       const newLayerCategory =
         newSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER
           ? LAYERS_CATEGORIES.PROTECTION
           : undefined;
 
-      let layersToToggle = [
-        { layerId: formerSelectedSlug },
-        { layerId: newSelectedOption, category: newLayerCategory },
-      ];
+      let layersToToggle = [];
+
+      if (newSelectedOption !== 'clear' && formerSelectedSlug !== undefined) {
+        layersToToggle.push({ layerId: formerSelectedSlug });
+        layersToToggle.push({
+          layerId: newSelectedOption,
+          category: newLayerCategory,
+        });
+      } else {
+        activeLayers.forEach((l) => {
+          layersToToggle.push({
+            layerId: l.title,
+            category: LAYERS_CATEGORIES.PROTECTION,
+          });
+        });
+      }
 
       if (protectedAreasSelected) {
         const additionalProtectedAreasLayers = [
@@ -285,8 +297,8 @@ function AnalyzeAreasContainer(props) {
   };
 
   const handleOptionSelection = (option) => {
-    handleLayerToggle(option.slug);
-    changeUI({ selectedAnalysisLayer: option.slug });
+    handleLayerToggle(option?.slug);
+    changeUI({ selectedAnalysisLayer: option?.slug });
     setTooltipIsVisible(false);
   };
 

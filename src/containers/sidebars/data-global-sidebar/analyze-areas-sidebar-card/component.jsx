@@ -68,6 +68,10 @@ function AnalyzeAreasCardComponent({
     setAoiHistoryModalOpen(!isAoiHistoryModalOpen);
   };
 
+  const clearFilters = () => {
+    handleOptionSelection({ slug: 'clear' });
+  };
+
   return (
     <div
       className={cx(styles.sidebarCardContainer, className, {
@@ -75,6 +79,13 @@ function AnalyzeAreasCardComponent({
           onboardingType === 'priority-places' && onboardingStep === 2,
       })}
     >
+      <button
+        type="button"
+        className={styles.clearFilters}
+        onClick={clearFilters}
+      >
+        clear filters
+      </button>
       <h2 className={styles.subtitle}>
         {t('Analyze pre-calculated areas or your own custom area.')}
       </h2>
@@ -128,7 +139,7 @@ function AnalyzeAreasCardComponent({
                 <RadioButton
                   id={option.slug}
                   option={{ ...option, name: option.label }}
-                  checked={selectedOption.slug === option.slug}
+                  checked={selectedOption?.slug === option.slug}
                   onChange={() => handleOptionSelection(option)}
                   theme={radioTheme}
                 />
