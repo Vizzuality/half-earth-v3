@@ -79,13 +79,6 @@ function AnalyzeAreasCardComponent({
           onboardingType === 'priority-places' && onboardingStep === 2,
       })}
     >
-      <button
-        type="button"
-        className={styles.clearFilters}
-        onClick={clearFilters}
-      >
-        clear filters
-      </button>
       <h2 className={styles.subtitle}>
         {t('Analyze pre-calculated areas or your own custom area.')}
       </h2>
@@ -146,6 +139,13 @@ function AnalyzeAreasCardComponent({
               </div>
             );
           })}
+          <button
+            type="button"
+            className={styles.clearFilters}
+            onClick={clearFilters}
+          >
+            clear filters
+          </button>
         </div>
       )}
       {selectedAnalysisTab === 'search' && (
