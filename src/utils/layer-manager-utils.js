@@ -256,23 +256,16 @@ export const addActiveLayersToScene = (activeLayers, _layersConfig, map) => {
   }
 };
 
-export const setBasemap = async ({
-  map,
-  surfaceColor,
-  layersArray,
-  landcoverBasemap,
-}) => {
-  map.ground.surfaceColor = surfaceColor || '#070710'; // set surface color, before basemap is loaded
+export const setBasemap = async ({ map, layersArray, isLandcoverBasemap }) => {
   const baseLayers = await Promise.all(
     layersArray.map(async (layer) => createLayer(layersConfig[layer]))
   );
-
   loadModules(['esri/Basemap']).then(([Basemap]) => {
     const basemap = new Basemap({
       baseLayers,
       title: 'half-earth-basemap',
       id: 'half-earth-basemap',
-      ...(landcoverBasemap && {
+      ...(isLandcoverBasemap && {
         portalItem: {
           id: 'aa5922ee948b41e0af7544e21682abcb',
         },

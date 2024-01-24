@@ -225,7 +225,7 @@ function AOIScene(props) {
     if (loadedMap) {
       setBasemap({
         map: loadedMap,
-        landcoverBasemap,
+        isLandcoverBasemap: landcoverBasemap,
         layersArray: sceneSettings.basemap.layersArray,
       });
     }

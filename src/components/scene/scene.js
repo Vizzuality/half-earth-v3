@@ -89,6 +89,9 @@ function SceneContainer(props) {
       .then(([Map]) => {
         const _map = new Map({
           basemap: SATELLITE_BASEMAP_LAYER,
+          ground: {
+            surfaceColor: '#070710',
+          },
         });
 
         setMap(_map);
