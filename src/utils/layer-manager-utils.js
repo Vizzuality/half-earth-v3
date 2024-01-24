@@ -262,7 +262,7 @@ export const setBasemap = async ({
   layersArray,
   landcoverBasemap,
 }) => {
-  map.ground.surfaceColor = surfaceColor || '#0A212E'; // set surface color, before basemap is loaded
+  map.ground.surfaceColor = surfaceColor || '#070710'; // set surface color, before basemap is loaded
   const baseLayers = await Promise.all(
     layersArray.map(async (layer) => createLayer(layersConfig[layer]))
   );

@@ -23,7 +23,6 @@ function NrcLandingContainer(props) {
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({
       map,
-      surfaceColor: '#070710',
       layersArray: sceneSettings.basemap.layersArray,
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);

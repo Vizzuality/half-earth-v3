@@ -40,7 +40,6 @@ export default {
       components: [],
     },
     basemap: {
-      surfaceColor: '#070710',
       layersArray: [VIBRANT_BASEMAP_LAYER],
     },
   },
