@@ -68,10 +68,6 @@ function AnalyzeAreasCardComponent({
     setAoiHistoryModalOpen(!isAoiHistoryModalOpen);
   };
 
-  const clearFilters = () => {
-    handleOptionSelection({ slug: 'clear' });
-  };
-
   return (
     <div
       className={cx(styles.sidebarCardContainer, className, {
@@ -91,7 +87,7 @@ function AnalyzeAreasCardComponent({
               <button
                 key={tab.slug}
                 // eslint-disable-next-line react/no-unknown-property
-                active={selectedAnalysisTab === tab.slug}
+                active={(selectedAnalysisTab === tab.slug).toString()}
                 className={cx({
                   [styles.tabButton]: true,
                   [styles.tabButtonActive]: selectedAnalysisTab === tab.slug,
@@ -139,13 +135,6 @@ function AnalyzeAreasCardComponent({
               </div>
             );
           })}
-          <button
-            type="button"
-            className={styles.clearFilters}
-            onClick={clearFilters}
-          >
-            clear filters
-          </button>
         </div>
       )}
       {selectedAnalysisTab === 'search' && (

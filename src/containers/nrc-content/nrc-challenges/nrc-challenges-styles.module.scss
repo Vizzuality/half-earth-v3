@@ -63,7 +63,7 @@
           .yAxisIndicator {
             @extend %bodyText;
             color: $alto;
-            font-size: 18px;
+            font-size: $font-size-tick;
           }
         }
       }
@@ -77,7 +77,7 @@
         position: relative;
         bottom: 50%;
         left: 2px;
-        font-size: 18px;
+        font-size: $font-size-tick;
       }
     }
 
@@ -96,7 +96,7 @@
         color: $white;
         display: flex;
         margin: 0;
-        font-size: 18px;
+        font-size: $font-size-tick;
 
         .legendItemColor {
           border-radius: 50%;

@@ -219,9 +219,8 @@ function AnalyzeAreasContainer(props) {
           : undefined;
 
       let layersToToggle = [];
-
-      if (newSelectedOption !== 'clear' && formerSelectedSlug !== undefined) {
-        layersToToggle.push({ layerId: formerSelectedSlug });
+      layersToToggle.push({ layerId: formerSelectedSlug });
+      if (newSelectedOption !== 'CLEAR' && formerSelectedSlug !== undefined) {
         layersToToggle.push({
           layerId: newSelectedOption,
           category: newLayerCategory,
