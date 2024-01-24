@@ -40,7 +40,7 @@
       width: 80%;
       margin-left: 20px;
 
-      .xAxisContainer{
+      .xAxisContainer {
         width: 100%;
 
         .xAxisLabelContainer {
@@ -63,8 +63,8 @@
           .yAxisIndicator {
             @extend %bodyText;
             color: $alto;
+            font-size: $font-size-tick;
           }
-
         }
       }
 
@@ -77,8 +77,8 @@
         position: relative;
         bottom: 50%;
         left: 2px;
+        font-size: $font-size-tick;
       }
-
     }
 
     .scatterPlotLegendWrapper {
@@ -88,7 +88,7 @@
       .legendTitle {
         color: $grey-text;
         font-weight: 300;
-        font-size: 13px;
+        font-size: $font-size-legend;
       }
 
       .legendItem {
@@ -96,6 +96,7 @@
         color: $white;
         display: flex;
         margin: 0;
+        font-size: $font-size-tick;
 
         .legendItemColor {
           border-radius: 50%;
@@ -158,10 +159,9 @@
       .scatterPlotChartWrapper {
         width: 100%;
 
-          .xAxisLabelContainer {
-            padding-left: calc(50% - 165px);
-
-          }
+        .xAxisLabelContainer {
+          padding-left: calc(50% - 165px);
+        }
 
         .yAxisContainer {
           bottom: 300px;
@@ -176,7 +176,6 @@
         width: 90%;
 
         .continentsLegendWrapper {
-
           .legendItemsContainer {
             display: grid;
             grid-template-columns: 1fr 1fr;

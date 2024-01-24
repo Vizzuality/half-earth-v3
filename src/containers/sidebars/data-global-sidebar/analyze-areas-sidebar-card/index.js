@@ -212,7 +212,7 @@ function AnalyzeAreasContainer(props) {
       newSelectedOption === WDPA_OECM_FEATURE_LAYER;
 
     const getLayersToToggle = () => {
-      const formerSelectedSlug = selectedOption.slug;
+      const formerSelectedSlug = selectedOption?.slug;
       const newLayerCategory =
         newSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER
           ? LAYERS_CATEGORIES.PROTECTION
@@ -285,8 +285,8 @@ function AnalyzeAreasContainer(props) {
   };
 
   const handleOptionSelection = (option) => {
-    handleLayerToggle(option.slug);
-    changeUI({ selectedAnalysisLayer: option.slug });
+    handleLayerToggle(option?.slug);
+    changeUI({ selectedAnalysisLayer: option?.slug });
     setTooltipIsVisible(false);
   };
 

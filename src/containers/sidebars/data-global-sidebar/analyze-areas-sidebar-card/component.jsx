@@ -87,7 +87,7 @@ function AnalyzeAreasCardComponent({
               <button
                 key={tab.slug}
                 // eslint-disable-next-line react/no-unknown-property
-                active={selectedAnalysisTab === tab.slug}
+                active={(selectedAnalysisTab === tab.slug).toString()}
                 className={cx({
                   [styles.tabButton]: true,
                   [styles.tabButtonActive]: selectedAnalysisTab === tab.slug,
@@ -128,7 +128,7 @@ function AnalyzeAreasCardComponent({
                 <RadioButton
                   id={option.slug}
                   option={{ ...option, name: option.label }}
-                  checked={selectedOption.slug === option.slug}
+                  checked={selectedOption?.slug === option.slug}
                   onChange={() => handleOptionSelection(option)}
                   theme={radioTheme}
                 />
