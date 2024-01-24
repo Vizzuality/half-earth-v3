@@ -218,12 +218,10 @@ function AnalyzeAreasContainer(props) {
           ? LAYERS_CATEGORIES.PROTECTION
           : undefined;
 
-      let layersToToggle = [];
-      layersToToggle.push({ layerId: formerSelectedSlug });
-      layersToToggle.push({
-        layerId: newSelectedOption,
-        category: newLayerCategory,
-      });
+      let layersToToggle = [
+        { layerId: formerSelectedSlug },
+        { layerId: newSelectedOption, category: newLayerCategory },
+      ];
 
       if (protectedAreasSelected) {
         const additionalProtectedAreasLayers = [
