@@ -220,19 +220,10 @@ function AnalyzeAreasContainer(props) {
 
       let layersToToggle = [];
       layersToToggle.push({ layerId: formerSelectedSlug });
-      if (newSelectedOption !== 'CLEAR' && formerSelectedSlug !== undefined) {
-        layersToToggle.push({
-          layerId: newSelectedOption,
-          category: newLayerCategory,
-        });
-      } else {
-        activeLayers.forEach((l) => {
-          layersToToggle.push({
-            layerId: l.title,
-            category: LAYERS_CATEGORIES.PROTECTION,
-          });
-        });
-      }
+      layersToToggle.push({
+        layerId: newSelectedOption,
+        category: newLayerCategory,
+      });
 
       if (protectedAreasSelected) {
         const additionalProtectedAreasLayers = [
