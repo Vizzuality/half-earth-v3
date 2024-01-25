@@ -17,6 +17,7 @@ import ShapeFileUploader from 'components/shape-file-uploader';
 import {
   getPrecalculatedAOIOptions,
   HIGHER_AREA_SIZE_LIMIT,
+  CLEAR_SELECTIONS,
 } from 'constants/analyze-areas-constants';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
@@ -66,6 +67,14 @@ function AnalyzeAreasCardComponent({
       aoiHistoryModalOpenAnalytics();
     }
     setAoiHistoryModalOpen(!isAoiHistoryModalOpen);
+  };
+
+  const clearFilters = () => {
+    handleOptionSelection({
+      slug: CLEAR_SELECTIONS,
+      label: CLEAR_SELECTIONS,
+      title: CLEAR_SELECTIONS,
+    });
   };
 
   return (
@@ -125,16 +134,25 @@ function AnalyzeAreasCardComponent({
                 className={styles.radioContainer}
                 key={`radio-container-${option.slug}`}
               >
-                <RadioButton
-                  id={option.slug}
-                  option={{ ...option, name: option.label }}
-                  checked={selectedOption?.slug === option.slug}
-                  onChange={() => handleOptionSelection(option)}
-                  theme={radioTheme}
-                />
+                {option.slug !== CLEAR_SELECTIONS && (
+                  <RadioButton
+                    id={option.slug}
+                    option={{ ...option, name: option.label }}
+                    checked={selectedOption?.slug === option.slug}
+                    onChange={() => handleOptionSelection(option)}
+                    theme={radioTheme}
+                  />
+                )}
               </div>
             );
           })}
+          <button
+            type="button"
+            className={styles.clearFilters}
+            onClick={clearFilters}
+          >
+            clear selections
+          </button>
         </div>
       )}
       {selectedAnalysisTab === 'search' && (
