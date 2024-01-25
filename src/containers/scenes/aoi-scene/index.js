@@ -80,6 +80,7 @@ function AOIScene(props) {
     [areReptilesLoaded, areMammalsLoaded, areBirdsLoaded, areAmphibiansLoaded]
   );
 
+  const [loadedMap, setMap] = useState(null);
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [contextualData, setContextualData] = useState(null);
@@ -219,13 +220,19 @@ function AOIScene(props) {
 
   const handleGlobeUpdating = (updating) =>
     changeGlobe({ isGlobeUpdating: updating });
+
+  useEffect(() => {
+    if (loadedMap) {
+      setBasemap({
+        map: loadedMap,
+        isLandcoverBasemap: landcoverBasemap,
+        layersArray: sceneSettings.basemap.layersArray,
+      });
+    }
+  }, [landcoverBasemap]);
+
   const handleMapLoad = (map, initialActiveLayers) => {
-    setBasemap({
-      map,
-      surfaceColor: sceneSettings.basemap.surfaceColor,
-      landcoverBasemap,
-      layersArray: sceneSettings.basemap.layersArray,
-    });
+    setMap(map);
     activateLayersOnLoad(map, initialActiveLayers, layersConfig);
   };
 
