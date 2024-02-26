@@ -23,6 +23,7 @@ import { useSketchWidget } from 'hooks/esri';
 
 import {
   getPrecalculatedAOIOptions,
+  CLEAR_SELECTIONS,
   HIGHER_AREA_SIZE_LIMIT,
 } from 'constants/analyze-areas-constants';
 import {
@@ -218,10 +219,21 @@ function AnalyzeAreasContainer(props) {
           ? LAYERS_CATEGORIES.PROTECTION
           : undefined;
 
-      let layersToToggle = [
-        { layerId: formerSelectedSlug },
-        { layerId: newSelectedOption, category: newLayerCategory },
-      ];
+      let layersToToggle = [];
+      layersToToggle.push({ layerId: formerSelectedSlug });
+      if (
+        newSelectedOption !== CLEAR_SELECTIONS &&
+        formerSelectedSlug !== undefined
+      ) {
+        layersToToggle.push({
+          layerId: newSelectedOption,
+          category: newLayerCategory,
+        });
+      } else {
+        layersToToggle = activeLayers.map((l) => ({
+          layerId: l.title,
+        }));
+      }
 
       if (protectedAreasSelected) {
         const additionalProtectedAreasLayers = [
@@ -236,21 +248,6 @@ function AnalyzeAreasContainer(props) {
             });
           }
         });
-      }
-
-      // Never toggle (remove) future places layer if its active
-      // Future places layer will be activated if we select it at some point
-      // and never toggled unless we do it from the protection checkbox
-      const futureLayerIsActive = activeLayers.some(
-        (l) => l.title === HALF_EARTH_FUTURE_TILE_LAYER
-      );
-      if (
-        futureLayerIsActive &&
-        layersToToggle.some((l) => l.layerId === HALF_EARTH_FUTURE_TILE_LAYER)
-      ) {
-        layersToToggle = layersToToggle.filter(
-          (l) => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER
-        );
       }
 
       return layersToToggle;
