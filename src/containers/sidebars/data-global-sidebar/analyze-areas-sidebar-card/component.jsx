@@ -151,7 +151,7 @@ function AnalyzeAreasCardComponent({
             className={styles.clearFilters}
             onClick={clearFilters}
           >
-            clear selections
+            clear selection
           </button>
         </div>
       )}
