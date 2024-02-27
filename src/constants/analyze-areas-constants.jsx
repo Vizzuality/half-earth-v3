@@ -41,6 +41,7 @@ export const PROTECTED_ATTRIBUTES_SLUG = 'protected_attributes';
 export const SPECIES_SLUG = 'species';
 export const FUTURE_PLACES_SLUG = 'future-places';
 export const SPECIFIC_REGIONS = 'specific-regions';
+export const CLEAR_SELECTIONS = 'clear-selections';
 
 export const ADDITIONAL_PROTECTION_SLUG = 'additional-protection';
 
@@ -92,6 +93,10 @@ export const getPrecalculatedAOIOptions = () => [
     title: FUTURE_PLACES,
     slug: FUTURE_PLACES,
     label: t('Places for a Half-Earth Future'),
+  },
+  {
+    title: CLEAR_SELECTIONS,
+    slug: CLEAR_SELECTIONS,
   },
 ];
 

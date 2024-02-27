@@ -70,6 +70,7 @@ $chart-margin: 14px;
 .tickValue {
   @extend %annotation;
   color: $alto;
+  font-size: $font-size-tick;
 }
 
 .tickValue {
@@ -94,7 +95,7 @@ $chart-margin: 14px;
   border: 2px solid $firefly;
   width: 190px;
   overflow: hidden;
-  .countryLabel{
+  .countryLabel {
     padding: 5px;
     .name {
       @extend %title;
@@ -109,12 +110,11 @@ $chart-margin: 14px;
   }
 }
 
-
 @keyframes pulse {
   0% {
     r: 1%;
     opacity: 0;
-    animation-timing-function:cubic-bezier(1,.01,.91,.46);
+    animation-timing-function: cubic-bezier(1, 0.01, 0.91, 0.46);
   }
   50% {
     r: 1.1%;

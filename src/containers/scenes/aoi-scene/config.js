@@ -34,7 +34,6 @@ export default {
     components: [],
   },
   basemap: {
-    surfaceColor: '#070710',
     layersArray: [FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER],
   },
   constraints: {

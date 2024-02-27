@@ -77,7 +77,6 @@ const featuredGlobeContainer = (props) => {
   const handleMapLoad = (map, _activeLayers) => {
     setBasemap({
       map,
-      surfaceColor: '#070710',
       layersArray: sceneSettings.basemap.layersArray,
     });
     activateLayersOnLoad(map, _activeLayers, layersConfig);
