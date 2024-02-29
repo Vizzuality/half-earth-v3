@@ -117,6 +117,8 @@ import {
   REPTILES_LOOKUP,
   EEZ_MARINE_AND_LAND_BORDERS,
   SEARCH_LOOKUP_TABLE,
+  TREES_RICHNESS,
+  TREES_RARITY,
 } from 'constants/layers-slugs';
 
 const { REACT_APP_VERCEL_ENV } = process.env;
@@ -297,7 +299,7 @@ export const LAYERS_URLS = {
   [ANTS_RARITY_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Ants_mean_rarity_v2_2_1_tif/MapServer',
   // Global biodiversity services
-  /// / Terrestrial Priority services
+  // Terrestrial Priority services
   [ALL_TAXA_PRIORITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_allTaxa_global_025/MapServer',
   [AMPHIB_PRIORITY]:
@@ -308,7 +310,8 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_birds_global_025/MapServer',
   [REPTILES_PRIORITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_reptiles_global_025/MapServer',
-  /// / Terrestrial vertebrates richness and rarity services
+
+  // Terrestrial vertebrates richness and rarity services
   [AMPHIB_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_amphib/MapServer',
   [AMPHIB_RICHNESS]:
@@ -317,6 +320,7 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Ant_Species_Rarity_025_Degree/MapServer',
   [ANTS_RICHNESS_GLOBAL]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Global_Ant_Species_Richness_025_Degree_Scaled/MapServer',
+
   [MAMMALS_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_mammals/MapServer',
   [MAMMALS_RICHNESS]:
@@ -337,8 +341,7 @@ export const LAYERS_URLS = {
   [BUTTERFLIES_RARITY_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Butterfly_Species/MapServer',
 
-  /// / Terrestrial richness and rarity country level services
-
+  // Terrestrial richness and rarity country level services
   [ANTS_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Country_checklists_ants/MapServer',
   [BUTTERFLIES_RICHNESS]:
@@ -348,7 +351,7 @@ export const LAYERS_URLS = {
   [SAPINDALES_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Country_checklists_sapindales/MapServer',
 
-  /// / Plants richness and rarity services
+  // Plants richness and rarity services
   [CACTI_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_cacti/MapServer',
   [CACTI_RICHNESS]:
@@ -359,13 +362,17 @@ export const LAYERS_URLS = {
   [CONIFERS_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_conifers/MapServer',
 
-  /// / All terrestrial richness and rarity services
+  [TREES_RICHNESS]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Tree_Richness_v13a/MapServer',
+  [TREES_RARITY]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Tree_Log_Rarity_v13a/MapServer',
+  // All terrestrial richness and rarity services
   [ALL_TAXA_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_all/MapServer',
   [ALL_TAXA_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_taxa/MapServer',
 
-  /// / Marine priority services, 55km
+  //  Marine priority services, 55km
   [ALL_MARINE_VERTEBRATES_PRIORITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRall_55km/MapServer',
   [FISHES_PRIORITY]:
@@ -373,7 +380,7 @@ export const LAYERS_URLS = {
   [MARINE_MAMMALS_PRIORITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRmammals_55km/MapServer',
 
-  /// / Marine vertebrates richness and rarity services
+  // Marine vertebrates richness and rarity services
   [ALL_MARINE_VERTEBRATES_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_taxa_global55km/MapServer',
   [ALL_MARINE_VERTEBRATES_RARITY]:

@@ -59,6 +59,8 @@ import {
   CACTI_RICHNESS,
   CONIFERS_RARITY,
   CONIFERS_RICHNESS,
+  TREES_RARITY,
+  TREES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
 } from 'constants/layers-slugs';
@@ -222,6 +224,13 @@ export const getLayersToggleConfig = () => ({
           name: t('conifers'),
           title: t('conifers'),
           layer: CONIFERS_RICHNESS,
+          group: t('plants'),
+        },
+        {
+          value: TREES_RICHNESS,
+          name: t('trees'),
+          title: t('trees'),
+          layer: TREES_RICHNESS,
           group: t('plants'),
         },
         {
@@ -434,6 +443,13 @@ export const getLayersToggleConfig = () => ({
           name: t('conifers'),
           title: t('conifers'),
           layer: CONIFERS_RARITY,
+          group: t('plants'),
+        },
+        {
+          value: TREES_RARITY,
+          name: t('trees'),
+          title: t('trees'),
+          layer: TREES_RARITY,
           group: t('plants'),
         },
         {
