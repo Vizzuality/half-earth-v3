@@ -128,6 +128,7 @@ export const LAYERS_CATEGORIES = {
 
 const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
 const AmericaCenteredBbox = [-237.28, -59.58, 77.01, 66.81];
+const SouthAfricaAndSouthEastAsiaBbox = [-31.2, -37, 151, 38.1];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
@@ -457,14 +458,14 @@ export const layersConfig = {
     slug: BIRDS_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BIRDS_RARITY_1KM],
-    bbox: [13, -37, 34, -27.7],
+    bbox: SouthAfricaAndSouthEastAsiaBbox,
   },
   [BIRDS_RICHNESS_1KM]: {
     title: BIRDS_RICHNESS_1KM,
     slug: BIRDS_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BIRDS_RICHNESS_1KM],
-    bbox: [13, -37, 34, -27.7],
+    bbox: SouthAfricaAndSouthEastAsiaBbox,
   },
   [RESTIO_RARITY_1KM]: {
     title: RESTIO_RARITY_1KM,
