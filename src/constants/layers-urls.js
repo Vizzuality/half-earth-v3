@@ -77,6 +77,7 @@ import {
   ALL_TAXA_RARITY,
   ALL_TAXA_RICHNESS,
   ALL_TAXA_PRIORITY,
+  ALL_VERTEBRATES_PRIORITY,
   ALL_MARINE_VERTEBRATES_PRIORITY,
   ALL_MARINE_VERTEBRATES_RICHNESS,
   ALL_MARINE_VERTEBRATES_RARITY,
@@ -117,6 +118,7 @@ import {
   REPTILES_LOOKUP,
   EEZ_MARINE_AND_LAND_BORDERS,
   SEARCH_LOOKUP_TABLE,
+  TREES_PRIORITY,
   TREES_RICHNESS,
   TREES_RARITY,
 } from 'constants/layers-slugs';
@@ -312,15 +314,17 @@ export const LAYERS_URLS = {
   // Global biodiversity services
   // Terrestrial Priority services
   [ALL_TAXA_PRIORITY]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_allTaxa_global_025/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Protection_Priority_All_Taxa/MapServer',
+  [ALL_VERTEBRATES_PRIORITY]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Protection_Priority_All_Vertebrate/MapServer',
   [AMPHIB_PRIORITY]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_amphibians_global_025/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Protection_Priority_Amphibians/MapServer',
   [MAMMALS_PRIORITY]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_mammals_global_025/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Protection_Priority_Mammals/MapServer',
   [BIRDS_PRIORITY]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_birds_global_025/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Protection_Priority_Birds/MapServer',
   [REPTILES_PRIORITY]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_reptiles_global_025/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Protection_Priority_Reptiles/MapServer',
 
   // Terrestrial vertebrates richness and rarity services
   [AMPHIB_RARITY]:
@@ -373,6 +377,8 @@ export const LAYERS_URLS = {
   [CONIFERS_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_conifers/MapServer',
 
+  [TREES_PRIORITY]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Protection_Priority_Trees/MapServer',
   [TREES_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Tree_Richness_Percentile_v13a/MapServer',
   [TREES_RARITY]:
@@ -385,11 +391,11 @@ export const LAYERS_URLS = {
 
   //  Marine priority services, 55km
   [ALL_MARINE_VERTEBRATES_PRIORITY]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRall_55km/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_Protection_Priority_All_Taxa/MapServer',
   [FISHES_PRIORITY]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRfish_55km/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_Protection_Priority_Fish/MapServer',
   [MARINE_MAMMALS_PRIORITY]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRmammals_55km/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_Protection_Priority_Mammal/MapServer',
 
   // Marine vertebrates richness and rarity services
   [ALL_MARINE_VERTEBRATES_RICHNESS]:

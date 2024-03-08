@@ -49,6 +49,7 @@ import {
   ALL_TAXA_RARITY,
   ALL_TAXA_RICHNESS,
   ALL_TAXA_PRIORITY,
+  ALL_VERTEBRATES_PRIORITY,
   ALL_MARINE_VERTEBRATES_PRIORITY,
   ALL_MARINE_VERTEBRATES_RICHNESS,
   ALL_MARINE_VERTEBRATES_RARITY,
@@ -59,6 +60,7 @@ import {
   CACTI_RICHNESS,
   CONIFERS_RARITY,
   CONIFERS_RICHNESS,
+  TREES_PRIORITY,
   TREES_RARITY,
   TREES_RICHNESS,
   HUMMINGBIRDS_RARITY,
@@ -127,10 +129,17 @@ export const getLayersToggleConfig = () => ({
       LOW: [
         {
           value: ALL_TAXA_PRIORITY,
-          name: t('All vertebrates'),
-          title: t('All vertebrates'),
+          name: t('all taxa'),
+          title: t('all taxa'),
           layer: ALL_TAXA_PRIORITY,
           group: ALL_TAXA_PRIORITY,
+        },
+        {
+          value: ALL_VERTEBRATES_PRIORITY,
+          name: t('All vertebrates'),
+          title: t('All vertebrates'),
+          layer: ALL_VERTEBRATES_PRIORITY,
+          group: ALL_VERTEBRATES_PRIORITY,
         },
         {
           value: AMPHIB_PRIORITY,
@@ -159,6 +168,13 @@ export const getLayersToggleConfig = () => ({
           title: t('reptiles'),
           layer: REPTILES_PRIORITY,
           group: t('reptiles'),
+        },
+        {
+          value: TREES_PRIORITY,
+          name: t('trees'),
+          title: t('trees'),
+          layer: TREES_PRIORITY,
+          group: t('trees'),
         },
       ],
     },
@@ -649,8 +665,12 @@ const parseAllGroupLayers = (group, allLayers, label) => {
 
 export const GROUPED_OPTIONS = (layers) => [
   {
+    label: t('All taxa'),
+    options: parseAllGroupLayers(ALL_TAXA_PRIORITY, layers, t('All taxa')),
+  },
+  {
     label: t('All vertebrates'),
-    options: parseAllGroupLayers(ALL_TAXA_PRIORITY, layers),
+    options: parseAllGroupLayers(ALL_VERTEBRATES_PRIORITY, layers),
   },
   {
     label: t('All vertebrates'),
@@ -699,5 +719,9 @@ export const GROUPED_OPTIONS = (layers) => [
   {
     label: t('reptiles'),
     options: parseGroupLayers(t('reptiles'), layers),
+  },
+  {
+    label: t('trees'),
+    options: parseGroupLayers(t('trees'), layers),
   },
 ];

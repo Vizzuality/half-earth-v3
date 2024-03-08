@@ -97,6 +97,7 @@ export const LAND_AND_MARINE_CARBON_LAYER = 'carbon-layer'; // Just for source o
 // Global biodiversity
 
 export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
+export const ALL_VERTEBRATES_PRIORITY = 'all-vertebrates';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
 
@@ -125,6 +126,7 @@ export const CACTI_RARITY = 'cacti-rarity';
 export const CACTI_RICHNESS = 'cacti-richness';
 export const CONIFERS_RARITY = 'conifers-rarity';
 export const CONIFERS_RICHNESS = 'conifers-rich';
+export const TREES_PRIORITY = 'trees-priority';
 export const TREES_RARITY = 'trees-rarity';
 export const TREES_RICHNESS = 'trees-richness';
 export const REPTILES_PRIORITY = 'reptiles-priority';
