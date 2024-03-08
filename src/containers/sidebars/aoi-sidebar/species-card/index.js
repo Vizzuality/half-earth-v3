@@ -248,7 +248,7 @@ function SpeciesCardContainer(props) {
         }
 
         MolService.getSpecies(previousSpeciesName, language).then((results) => {
-          if (results.length > 0) {
+          if (results.length > 0 && results[0].image?.url) {
             setPreviousImage(
               results[0].image
                 ? results[0].image.url
@@ -259,7 +259,7 @@ function SpeciesCardContainer(props) {
           }
         });
         MolService.getSpecies(nextSpeciesName, language).then((results) => {
-          if (results.length > 0) {
+          if (results.length > 0 && results[0].image?.url) {
             setNextImage(
               results[0].image
                 ? results[0].image.url
@@ -279,7 +279,7 @@ function SpeciesCardContainer(props) {
         }
 
         MolService.getSpecies(nextSpeciesName, language).then((results) => {
-          if (results.length > 0) {
+          if (results.length > 0 && results[0].image?.url) {
             setNextImage(
               results[0].image
                 ? results[0].image.url
@@ -307,9 +307,10 @@ function SpeciesCardContainer(props) {
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
-            imageUrl: results[0].image
-              ? results[0].image.url
-              : getPlaceholderSpeciesImage(results[0].taxa),
+            imageUrl:
+              results[0].image && results[0].image.url
+                ? results[0].image.url
+                : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
             SPS_global: individualSPSData.SPS_global,
@@ -317,7 +318,7 @@ function SpeciesCardContainer(props) {
             per_global: individualSPSData.per_global,
           });
 
-          if (results[0].image) {
+          if (results[0].image && results[0].image.url) {
             setPlaceholderText(null);
           } else {
             setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa));
