@@ -151,9 +151,9 @@ export const NRC_MARINE_SPI_DATA_LAYER =
   'https://utility.arcgis.com/usrsvcs/servers/d1d8be859b4844658d9f567b9d6b4194/rest/services/Marine_Species_Protection_Index_by_Country_v2/FeatureServer/0';
 
 const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/1d905beff5b74af18acdb789a94c9ff3/rest/services/gadm0_precalculated_aoi_summaries_SPI/FeatureServer';
+  'https://utility.arcgis.com/usrsvcs/servers/0422de79a176434cac8784154197bcf5/rest/services/gadm0_precalculated_aoi_summaries_updated_20240312/FeatureServer';
 const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/8f42e91efa7b43d1a38afa70dac9684f/rest/services/gadm1_precalculated_aoi_summaries_SPI/FeatureServer';
+  'https://utility.arcgis.com/usrsvcs/servers/a9d3f1bc5e1446eaae1178675c7806f7/rest/services/main_gadm1_precalculated_aoi_summaries_updated_20240312/FeatureServer';
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm_v2/FeatureServer',
@@ -449,22 +449,23 @@ export const LAYERS_URLS = {
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: `${GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL}/0`,
   [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: `${GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL}/0`,
   [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm0_updated/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_with_gadm0_updated_202401/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1_updated/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_with_gadm1_updated_202401/FeatureServer/0',
+  // 99%, 90%, 50% WDPA simplifications
   [WDPA_OECM_FEATURE_LAYER]: [
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification50/FeatureServer/0',
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification90/FeatureServer/0',
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification99/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_202401_Simplification99/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_202401_Simplification90/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_202401_Simplification50/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/f866e163361d4160bb96742186709db7/rest/services/wdpa_precalculated_aoi_summaries_updated/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/19dedcca72ad48e49719b3e5958dc42c/rest/services/wdpa_precalculated_aoi_summaries_updated_20240307/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/5bffd154b48f4723976c46d87f8f6e2a/rest/services/places_precalculated_aoi_summaries_updated/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/cf83b89fd92049e5a325612b08f1aa6b/rest/services/places_precalcuated_aoi_summaries_updated_20240307/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_with_20places_updated/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_with_20places_updated_202401/FeatureServer/0',
   [SPECIFIC_REGIONS_TILE_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/49fdcffd842f4b8a8b1a919ba843a932/rest/services/regions_precalculated_aoi_summaries_updated/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/38ebc7e4517a454eb2dbacd3c4649813/rest/services/regions_precalculated_aoi_summaries_updated_20240307/FeatureServer/0',
   [SPECIFIC_REGIONS_WDPA_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SpecificRegions_wdpa/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SpecificRegions_wdpa_202401/FeatureServer/0',
 };
