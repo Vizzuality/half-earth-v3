@@ -434,13 +434,13 @@ export const LAYERS_URLS = {
   [WDPA_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
   [AMPHIBIAN_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/31b7c16e626141d7aca80f4a6b0bbd48/rest/services/amphibians_lookup_with_SPS/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/d8db590ec45d4d15837628c57bfd634d/rest/services/amphibians_with_SPS_updated/FeatureServer/0',
   [BIRDS_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/0dc45096d41a4939a393b99fe66c78f2/rest/services/birds_lookup__with_SPS/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/8db07a3bdccf45c9859e261fb84b0efb/rest/services/birds_with_SPS_updated/FeatureServer/0',
   [MAMMALS_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/a4981e626dd74adbae6db81359f11bbd/rest/services/mammals_lookup_with_SPS/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/1a38b3cf51c04cdb8d921fff18084c7c/rest/services/mammals_with_SPS_updated/FeatureServer/0',
   [REPTILES_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/3ce09e39d83c415e9f003285bc3400bf/rest/services/reptiles_with_SPS/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/650a7802d7cf4a789c9573acccab8277/rest/services/reptiles_with_SPS_updated/FeatureServer/0',
   // AOIs precalculated layers
   [ADMIN_AREAS_FEATURE_LAYER]: [
     GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL,
