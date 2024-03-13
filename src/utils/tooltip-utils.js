@@ -20,7 +20,7 @@ export const getTooltipContent = (
       : 100, // 100 is for protected areas
   description:
     attributes.DESIG &&
-    `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} ${
+    `${attributes.DESIG}, ${attributes.STATUS?.toLowerCase()} ${
       attributes.STATUS_ ? `${t('in')} ${attributes.STATUS_}` : ''
     }`,
   nspecies: attributes.nspecies,
