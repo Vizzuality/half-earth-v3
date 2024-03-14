@@ -309,7 +309,7 @@ export const getAOIContextualData = () => ({
 // WDPA
 
 export const getWDPATranslations = () => ({
-  // DESIG_T
+  // DESIG_TYPE
   National: t('National'),
   Regional: t('Regional'),
   International: t('International'),

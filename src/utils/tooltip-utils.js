@@ -21,12 +21,12 @@ export const getTooltipContent = (
   description:
     attributes.DESIG &&
     `${attributes.DESIG}, ${attributes.STATUS?.toLowerCase()} ${
-      attributes.STATUS_ ? `${t('in')} ${attributes.STATUS_}` : ''
+      attributes.STATUS_YR ? `${t('in')} ${attributes.STATUS_YR}` : ''
     }`,
   nspecies: attributes.nspecies,
   status: attributes.STATUS,
   // eslint-disable-next-line no-underscore-dangle
-  status_year: attributes.STATUS_,
-  IUCN_type: attributes.IUCN_CA,
-  designation_type: attributes.DESIG_T,
+  status_year: attributes.STATUS_YR,
+  IUCN_type: attributes.IUCN_CAT,
+  designation_type: attributes.DESIG_TYPE,
 });
