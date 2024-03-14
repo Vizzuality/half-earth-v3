@@ -5,7 +5,7 @@ import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import styles from './area-chart-styles.module.scss';
 
 function CustomizedAxisTick(props) {
-  const { x = 0, y, payload, firstTick, lastTick } = props;
+  const { x = 0, y, payload, firstTick, lastTick, isNarrowChart } = props;
 
   const tickAnchor = useMemo(() => {
     if (payload.value === lastTick) return 'end';
@@ -16,7 +16,7 @@ function CustomizedAxisTick(props) {
   return (
     <g transform={`translate(${x},${y})`}>
       <text
-        x={0}
+        x={payload.value === firstTick && isNarrowChart ? -30 : 0}
         y={0}
         dy={10}
         textAnchor={tickAnchor}
@@ -38,6 +38,8 @@ function AreaChartComponent({
   pdf = false,
   domain = [1990, 2020],
 }) {
+  const isNarrowChart =
+    xTicks.length < 3 && xTicks[xTicks.length - 1] - xTicks[0] < 10;
   const renderAreaChart = () => (
     <AreaChart data={data} margin={margin} width={width} height={height}>
       <defs>
@@ -62,6 +64,7 @@ function AreaChartComponent({
           <CustomizedAxisTick
             firstTick={xTicks[0]}
             lastTick={xTicks[xTicks.length - 1]}
+            isNarrowChart={isNarrowChart}
           />
         }
       />

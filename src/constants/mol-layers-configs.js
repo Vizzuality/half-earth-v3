@@ -82,6 +82,7 @@ import {
   ALL_TAXA_RARITY,
   ALL_TAXA_RICHNESS,
   ALL_TAXA_PRIORITY,
+  ALL_VERTEBRATES_PRIORITY,
   ALL_MARINE_VERTEBRATES_PRIORITY,
   ALL_MARINE_VERTEBRATES_RICHNESS,
   ALL_MARINE_VERTEBRATES_RARITY,
@@ -96,6 +97,9 @@ import {
   CACTI_RICHNESS,
   CONIFERS_RARITY,
   CONIFERS_RICHNESS,
+  TREES_PRIORITY,
+  TREES_RARITY,
+  TREES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
   EDUCATOR_AMBASSADORS_LAYER,
@@ -126,6 +130,7 @@ export const LAYERS_CATEGORIES = {
 
 const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
 const AmericaCenteredBbox = [-237.28, -59.58, 77.01, 66.81];
+const SouthAfricaAndSouthEastAsiaBbox = [-31.2, -37, 151, 38.1];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
@@ -455,14 +460,14 @@ export const layersConfig = {
     slug: BIRDS_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BIRDS_RARITY_1KM],
-    bbox: [13, -37, 34, -27.7],
+    bbox: SouthAfricaAndSouthEastAsiaBbox,
   },
   [BIRDS_RICHNESS_1KM]: {
     title: BIRDS_RICHNESS_1KM,
     slug: BIRDS_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BIRDS_RICHNESS_1KM],
-    bbox: [13, -37, 34, -27.7],
+    bbox: SouthAfricaAndSouthEastAsiaBbox,
   },
   [RESTIO_RARITY_1KM]: {
     title: RESTIO_RARITY_1KM,
@@ -751,6 +756,13 @@ export const layersConfig = {
     url: LAYERS_URLS[ALL_TAXA_PRIORITY],
     bbox: null,
   },
+  [ALL_VERTEBRATES_PRIORITY]: {
+    title: ALL_VERTEBRATES_PRIORITY,
+    slug: ALL_VERTEBRATES_PRIORITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_VERTEBRATES_PRIORITY],
+    bbox: null,
+  },
   [ALL_TAXA_RARITY]: {
     title: ALL_TAXA_RARITY,
     slug: ALL_TAXA_RARITY,
@@ -840,6 +852,27 @@ export const layersConfig = {
     slug: CONIFERS_RICHNESS,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[CONIFERS_RICHNESS],
+    bbox: null,
+  },
+  [TREES_PRIORITY]: {
+    title: TREES_PRIORITY,
+    slug: TREES_PRIORITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[TREES_PRIORITY],
+    bbox: null,
+  },
+  [TREES_RARITY]: {
+    title: TREES_RARITY,
+    slug: TREES_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[TREES_RARITY],
+    bbox: null,
+  },
+  [TREES_RICHNESS]: {
+    title: TREES_RICHNESS,
+    slug: TREES_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[TREES_RICHNESS],
     bbox: null,
   },
   [EEZ_MARINE_AND_LAND_BORDERS]: {

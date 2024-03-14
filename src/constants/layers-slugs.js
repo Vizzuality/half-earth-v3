@@ -50,12 +50,11 @@ export const COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER =
   'commercial_fishing_human_pressures';
 export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER =
   'artisanal_fishing_human_pressures';
-/// ///
+
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const MASK_LAYER = 'mask-layer';
 export const GLOBAL_SPI_FEATURE_LAYER = 'spi-feature-layer';
 export const MARINE_SPI_FEATURE_LAYER = 'marine-spi-feature-layer';
-///
 
 export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'nrc-spi-terrestrial';
 export const NRC_MARINE_SPI_DATA_LAYER = 'nrc-spi-marine';
@@ -98,6 +97,7 @@ export const LAND_AND_MARINE_CARBON_LAYER = 'carbon-layer'; // Just for source o
 // Global biodiversity
 
 export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
+export const ALL_VERTEBRATES_PRIORITY = 'all-vertebrates';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
 
@@ -126,6 +126,9 @@ export const CACTI_RARITY = 'cacti-rarity';
 export const CACTI_RICHNESS = 'cacti-richness';
 export const CONIFERS_RARITY = 'conifers-rarity';
 export const CONIFERS_RICHNESS = 'conifers-rich';
+export const TREES_PRIORITY = 'trees-priority';
+export const TREES_RARITY = 'trees-rarity';
+export const TREES_RICHNESS = 'trees-richness';
 export const REPTILES_PRIORITY = 'reptiles-priority';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';

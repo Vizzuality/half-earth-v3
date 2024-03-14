@@ -9,13 +9,6 @@ export const pixelBreakpoints = {
   desktop: 1200,
 };
 export const getRems = (size, base = baseUnit) => `${size / base}rem`;
-export const remBreakpoints = {
-  mobile: getRems(pixelBreakpoints.mobile),
-  portrait: getRems(pixelBreakpoints.portrait),
-  landscape: getRems(pixelBreakpoints.landscape),
-  desktop: getRems(pixelBreakpoints.desktop),
-};
-
 export const useMobile = () => {
   const [value, set] = useState(false);
 
@@ -51,34 +44,33 @@ export const useLandscape = () => {
 };
 
 export function Desktop(props) {
-  return <Responsive {...props} minWidth={remBreakpoints.desktop} />;
+  return <Responsive {...props} minWidth={pixelBreakpoints.desktop} />;
 }
 export function TabletLandscape(props) {
-  return <Responsive {...props} minWidth={remBreakpoints.landscape} />;
+  return <Responsive {...props} minWidth={pixelBreakpoints.landscape} />;
 }
 export function TabletPortrait(props) {
-  return <Responsive {...props} minWidth={remBreakpoints.portrait} />;
+  return <Responsive {...props} minWidth={pixelBreakpoints.portrait} />;
 }
 export function TabletPortraitOnly(props) {
-  return <Responsive {...props} maxWidth={remBreakpoints.landscape} />;
+  return <Responsive {...props} maxWidth={pixelBreakpoints.landscape} />;
 }
 export function TabletLandscapeOnly(props) {
-  return <Responsive {...props} maxWidth={remBreakpoints.desktop} />;
+  return <Responsive {...props} maxWidth={pixelBreakpoints.desktop} />;
 }
+const isChromebook = navigator.userAgent.indexOf('CrOS') !== -1;
 export function MobileOnly(props) {
   const { children, view, map } = props;
-  if (window.screen.width && window.screen.width < pixelBreakpoints.mobile) {
+  if (
+    window.screen.width &&
+    window.screen.width < pixelBreakpoints.mobile &&
+    !isChromebook
+  ) {
     return children;
   }
-  if (
-    window.screen.height &&
-    window.screen.height < pixelBreakpoints.mobile &&
-    window.matchMedia('(orientation: landscape)').matches
-  )
-    return children;
 
   return (
-    <Responsive {...props} maxWidth={remBreakpoints.mobile}>
+    <Responsive {...props} maxWidth={pixelBreakpoints.mobile}>
       {React.Children.map(children || null, (child, i) => {
         return (
           // eslint-disable-next-line react/no-array-index-key
