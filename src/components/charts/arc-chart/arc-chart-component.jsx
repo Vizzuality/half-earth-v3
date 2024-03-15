@@ -53,7 +53,7 @@ function ArcChartComponent({
             y={parentHeight / 2 + 40}
             className={styles.label}
           >
-            {value.toFixed()}
+            {value}
             {isPercentage && (
               <tspan className={styles.labelPercentage}>%</tspan>
             )}

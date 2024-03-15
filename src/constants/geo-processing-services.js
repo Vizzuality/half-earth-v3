@@ -12,7 +12,7 @@ export const CRF_NAMES = {
   MAMMALS: 'mammals_equal_area_20211003',
   POPULATION: 'population2020',
   ECOLOGICAL_LAND_UNITS: 'ELU',
-  PROTECTED_AREA_PERCENTAGE: 'WDPA_Terrestrial_CEA_June2021',
+  PROTECTED_AREA_PERCENTAGE: 'WDPA_Terrestrial_CEA_Jan2024_fixed',
   HUMAN_PRESSURES: 'land_encroachment',
   // Human pressures group
   EXTRACTION: 'Extraction_TimeSeries_Reclassify_20230501',
@@ -139,13 +139,13 @@ export const BIODIVERSITY_CRFS_CONFIG = {
 
 export const GEOPROCESSING_SERVICES_URLS = {
   [BIRDS]:
-    'https://heportal.esri.com/server/rest/services/BirdsProd_SPS/GPServer/BirdsProd_SPS',
+    'https://heportal.esri.com/server/rest/services/BirdsProd_SPS_20240313/GPServer/BirdsProd_SPS',
   [REPTILES]:
-    'https://heportal.esri.com/server/rest/services/ReptilesProd_SPS/GPServer/ReptilesProd_SPS',
+    'https://heportal.esri.com/server/rest/services/ReptilesProd_SPS_20240313/GPServer/ReptilesProd_SPS',
   [MAMMALS]:
-    'https://heportal.esri.com/server/rest/services/MammalsProd_SPS/GPServer/MammalsProd_SPS',
+    'https://heportal.esri.com/server/rest/services/MammalsProd_SPS_20240313/GPServer/MammalsProd_SPS',
   [AMPHIBIANS]:
-    'https://heportal.esri.com/server/rest/services/AmphibiansProd_SPS/GPServer/AmphibiansProd_SPS',
+    'https://heportal.esri.com/server/rest/services/AmphibiansProd_SPS_20240313/GPServer/AmphibiansProd_SPS',
   [CONTEXTUAL_DATA]:
-    'https://heportal.esri.com/server/rest/services/Contextual_Prod3/GPServer/Contextual_Prod3',
+    'https://heportal.esri.com/server/rest/services/Contextual_Prod3_20240313/GPServer/Contextual_Prod3',
 };
