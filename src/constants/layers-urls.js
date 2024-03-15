@@ -154,6 +154,7 @@ const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
   'https://utility.arcgis.com/usrsvcs/servers/0422de79a176434cac8784154197bcf5/rest/services/gadm0_precalculated_aoi_summaries_updated_20240312/FeatureServer';
 const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
   'https://utility.arcgis.com/usrsvcs/servers/a9d3f1bc5e1446eaae1178675c7806f7/rest/services/main_gadm1_precalculated_aoi_summaries_updated_20240312/FeatureServer';
+
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm_v2/FeatureServer',
