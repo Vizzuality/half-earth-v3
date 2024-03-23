@@ -223,7 +223,8 @@ function AnalyzeAreasContainer(props) {
       layersToToggle.push({ layerId: formerSelectedSlug });
       if (
         newSelectedOption !== CLEAR_SELECTIONS &&
-        formerSelectedSlug !== undefined
+        (formerSelectedSlug !== undefined ||
+          formerSelectedSlug !== CLEAR_SELECTIONS)
       ) {
         layersToToggle.push({
           layerId: newSelectedOption,
@@ -254,6 +255,7 @@ function AnalyzeAreasContainer(props) {
     };
 
     const layersToToggle = getLayersToToggle();
+
     const categories = layersToToggle.reduce((acc, layer) => {
       acc[layer.layerId] = layer.category;
       return acc;
@@ -274,10 +276,6 @@ function AnalyzeAreasContainer(props) {
     } else if (sketchTool) {
       setSketchWidgetMode('create'); // Maybe it was in edit mode
       handleSketchToolDestroy();
-    }
-
-    if (selectedTab === 'click') {
-      handleLayerToggle(precalculatedAOIOptions[0]);
     }
   };
 
