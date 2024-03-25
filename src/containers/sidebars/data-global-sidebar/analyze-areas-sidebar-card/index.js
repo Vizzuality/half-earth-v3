@@ -31,6 +31,7 @@ import {
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
+  GRAPHIC_LAYER,
 } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
@@ -234,6 +235,12 @@ function AnalyzeAreasContainer(props) {
         layersToToggle = activeLayers.map((l) => ({
           layerId: l.title,
         }));
+      }
+
+      if (formerSelectedSlug === CLEAR_SELECTIONS) {
+        layersToToggle.push({
+          layerId: GRAPHIC_LAYER,
+        });
       }
 
       if (protectedAreasSelected) {
