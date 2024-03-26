@@ -111,7 +111,6 @@ import {
   AOIS_HISTORIC_PRODUCTION,
   AOIS_HISTORIC_DEVELOPMENT,
   ELU_LOOKUP_TABLE,
-  WDPA_LOOKUP_TABLE,
   AMPHIBIAN_LOOKUP,
   BIRDS_LOOKUP,
   MAMMALS_LOOKUP,
@@ -431,8 +430,6 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/AOI_lookup_table_20240318/FeatureServer/0',
   [ELU_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
-  [WDPA_LOOKUP_TABLE]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
   [AMPHIBIAN_LOOKUP]:
     'https://utility.arcgis.com/usrsvcs/servers/04d64805adcb460aa0ff6face308703a/rest/services/amphibians_with_SPS_updated/FeatureServer/0',
   [BIRDS_LOOKUP]:
