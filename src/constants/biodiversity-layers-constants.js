@@ -93,7 +93,7 @@ export const { TERRESTRIAL_GLOBAL, TERRESTRIAL_REGIONAL, MARINE } =
 export const getResolutionOptions = () => ({
   LOWEST: { label: `${t('~55km')}<sup>2</sup>`, slug: 'LOWEST' },
   LOW: { label: `${t('~27km')}<sup>2</sup>`, slug: 'LOW' },
-  HIGH: { label: `${t('~1km2')}<sup>2</sup>`, slug: 'HIGH' },
+  HIGH: { label: `${t('~1km')}<sup>2</sup>`, slug: 'HIGH' },
   COUNTRY: { label: t('country'), slug: 'COUNTRY' },
 });
 
