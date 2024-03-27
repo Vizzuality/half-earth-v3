@@ -111,7 +111,7 @@ function RankingChart({
             }}
             key={`legend-value-${key}`}
           >
-            {Math.floor(d[name][key] * 100) / 100}%
+            {Math.floor((d[name][key] || 0) * 100) / 100}%
           </div>
         ))}
       </div>

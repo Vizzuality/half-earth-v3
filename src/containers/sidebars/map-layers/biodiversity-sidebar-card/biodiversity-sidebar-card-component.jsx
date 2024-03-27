@@ -4,6 +4,8 @@ import { useLocale, useT } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import parse from 'html-react-parser';
 
 import {
   useOnboardingTooltipRefs,
@@ -190,9 +192,11 @@ function BiodiversitySidebarCardComponent({
           <div className={styles.dropdownSubtitle}>
             <span className={styles.subtitle}>{t('Global layers')}</span>
             <span className={styles.description}>
-              {t('Global layers available at {resolution}.', {
-                resolution: resolutionSentence(TERRESTRIAL_GLOBAL),
-              })}
+              {parse(
+                t('Global layers available at {resolution}.', {
+                  resolution: resolutionSentence(TERRESTRIAL_GLOBAL),
+                })
+              )}
             </span>
           </div>
         </div>
@@ -205,9 +209,11 @@ function BiodiversitySidebarCardComponent({
               <div className={styles.dropdownSubtitle}>
                 <span className={styles.subtitle}>{t('Regional layers')}</span>
                 <span className={styles.description}>
-                  {t('Regional layers available at {resolution}.', {
-                    resolution: resolutionSentence(TERRESTRIAL_REGIONAL),
-                  })}
+                  {parse(
+                    t('Regional layers available at {resolution}.', {
+                      resolution: resolutionSentence(TERRESTRIAL_REGIONAL),
+                    })
+                  )}
                 </span>
               </div>
             </div>
@@ -227,9 +233,11 @@ function BiodiversitySidebarCardComponent({
           <div className={styles.dropdownSubtitle}>
             <span className={styles.subtitle}>{t('Global layers')}</span>
             <span className={styles.description}>
-              {t('Global layers available at {resolution}.', {
-                resolution: resolutionSentence(MARINE),
-              })}
+              {parse(
+                t('Global layers available at {resolution}.', {
+                  resolution: resolutionSentence(MARINE),
+                })
+              )}
             </span>
           </div>
         </div>

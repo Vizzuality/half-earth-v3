@@ -58,8 +58,9 @@ function SpeciesTable({
   };
 
   const renderRow = (index) => {
-    const { species, speciesgroup, NSPS, percentprotected, stewardship } =
+    const { species, speciesgroup, NSPS, percentprotected, stewawrdship } =
       speciesList[index];
+
     const isOpened = expandedRow === index;
     return (
       <div className={styles.tableRowContainer}>
@@ -93,13 +94,16 @@ function SpeciesTable({
               <div className={styles.tableItem}>{NSPS}</div>
               <div
                 className={cx(styles.tableItem, {
-                  [styles.bold]: stewardship === 1,
+                  [styles.bold]: stewawrdship === 1,
                 })}
               >
-                {stewardship === 1 ? (
+                {stewawrdship === 1 ? (
                   t('Endemic')
                 ) : (
-                  <T _str="{stewardship} countries" stewardship={stewardship} />
+                  <T
+                    _str="{stewardship} countries"
+                    stewardship={stewawrdship}
+                  />
                 )}
               </div>
               <ArrowIcon
