@@ -139,7 +139,7 @@ export const BIODIVERSITY_CRFS_CONFIG = {
 
 export const GEOPROCESSING_SERVICES_URLS = {
   [BIRDS]:
-    'https://heportal.esri.com/server/rest/services/BirdsProd_SPS_20240313/GPServer/BirdsProd_SPS',
+    'https://heportal.esri.com/server/rest/services/BirdsProd_SPS_20240327/GPServer/BirdsProd_SPS',
   [REPTILES]:
     'https://heportal.esri.com/server/rest/services/ReptilesProd_SPS_20240313/GPServer/ReptilesProd_SPS',
   [MAMMALS]:
