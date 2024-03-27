@@ -143,9 +143,9 @@ export const GEOPROCESSING_SERVICES_URLS = {
   [REPTILES]:
     'https://heportal.esri.com/server/rest/services/ReptilesProd_SPS_20240313/GPServer/ReptilesProd_SPS',
   [MAMMALS]:
-    'https://heportal.esri.com/server/rest/services/MammalsProd_SPS_20240313/GPServer/MammalsProd_SPS',
+    'https://heportal.esri.com/server/rest/services/MammalsProd_SPS_20240327/GPServer/MammalsProd_SPS',
   [AMPHIBIANS]:
-    'https://heportal.esri.com/server/rest/services/AmphibiansProd_SPS_20240313/GPServer/AmphibiansProd_SPS',
+    'https://heportal.esri.com/server/rest/services/AmphibiansProd_SPS_20240327/GPServer/AmphibiansProd_SPS',
   [CONTEXTUAL_DATA]:
     'https://heportal.esri.com/server/rest/services/Contextual_Prod3_20240313/GPServer/Contextual_Prod3',
 };
