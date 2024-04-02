@@ -4,7 +4,7 @@ import {
   TERRESTRIAL_GLOBAL,
   TERRESTRIAL_REGIONAL,
   MARINE,
-  DEFAULT_RESOLUTIONS,
+  // DEFAULT_RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
@@ -76,10 +76,10 @@ export const useSelectLayersOnTabOrResolutionChange = ({
       .filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY)
       .map((l) => l.title);
     const resolution = selectedResolutions[currentResolutionGroup];
-    const defaultResolutionLayers =
-      layersToggleConfig[biodiversityLayerVariant][currentResolutionGroup][
-        DEFAULT_RESOLUTIONS[currentResolutionGroup]
-      ];
+    // const defaultResolutionLayers =
+    //   layersToggleConfig[biodiversityLayerVariant][currentResolutionGroup][
+    //     DEFAULT_RESOLUTIONS[currentResolutionGroup]
+    //   ];
     const availableLayers =
       layersToggleConfig[biodiversityLayerVariant][currentResolutionGroup][
         resolution
@@ -98,13 +98,14 @@ export const useSelectLayersOnTabOrResolutionChange = ({
     if (hasMatchingLayer) {
       // select matching layer on selected variant
       handleLayerToggle(hasMatchingLayer);
-    } else if (availableLayers) {
+    } else if (availableLayers && layerTaxa !== 'all') {
       // select first element if there's no matching layer
       handleLayerToggle(availableLayers[0]);
-    } else {
-      // select first element if there's no maching resolution
-      handleLayerToggle(defaultResolutionLayers[0]);
     }
+    // else {
+    //   // select first element if there's no maching resolution
+    //   handleLayerToggle(defaultResolutionLayers[0]);
+    // }
   }, [
     biodiversityLayerVariant,
     selectedResolutions,
