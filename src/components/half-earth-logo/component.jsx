@@ -5,8 +5,8 @@ import { t } from '@transifex/native';
 import cx from 'classnames';
 import logoImgBlack from 'logos/eowilson_logo_black.png';
 import logoImgColor from 'logos/eowilson_logo_v3.svg';
-import heLogoImg from 'logos/he_logo.svg';
 import heLogoImgColor from 'logos/he_logo_color.png';
+import heLogoImg from 'logos/he_logo_color_full.png';
 
 import styles from './half-earth-logo-styles.module.scss';
 
@@ -19,7 +19,7 @@ const IMAGES = {
   he: {
     default: heLogoImg,
     black: heLogoImgColor,
-    height: '30px',
+    height: '55px',
   },
 };
 
