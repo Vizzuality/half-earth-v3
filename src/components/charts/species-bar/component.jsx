@@ -43,7 +43,8 @@ function SpeciesBar({
                 <T _str="Protection:" _comment="Protection: 5%" /> {percentage}%
               </div>
               <div>
-                <T _str="Target:" _comment="Target: 5%" /> {barAnnotation}%
+                <T _str="Target:" _comment="Target: 5%" />
+                {Math.round(barAnnotation)}%
               </div>
             </>
           ) : (
