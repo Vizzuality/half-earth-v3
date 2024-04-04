@@ -139,7 +139,11 @@ function AnalyzeAreasCardComponent({
                     id={option.slug}
                     option={{ ...option, name: option.label }}
                     checked={selectedOption?.slug === option.slug}
-                    onChange={() => handleOptionSelection(option)}
+                    onChange={() => {
+                      if (selectedOption?.slug !== option.slug) {
+                        handleOptionSelection(option);
+                      }
+                    }}
                     theme={radioTheme}
                   />
                 )}

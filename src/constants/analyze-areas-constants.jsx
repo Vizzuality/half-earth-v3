@@ -111,7 +111,7 @@ export const getProtectedAttributesConfig = (contextualData) => {
   const protectedAttributes = [
     {
       title: t('Designation'),
-      value: contextualData.DESIG_E,
+      value: contextualData.DESIG_ENG,
       tooltipContent: t(
         'Legal/official designation given at the time a protected area is established.'
       ),
@@ -125,21 +125,21 @@ export const getProtectedAttributesConfig = (contextualData) => {
     },
     {
       title: t('Status year'),
-      value: +contextualData.STATUS_,
+      value: +contextualData.STATUS_YR,
       tooltipContent: t(
         'Year in which the protected area or OECM was proposed, inscribed, adopted, designated or established.'
       ),
     },
     {
       title: t('IUCN category'),
-      value: contextualData.IUCN_CA,
+      value: contextualData.IUCN_CAT,
       tooltipContent: t(
         'Category in which the protected area is classified according to the system developed by the International Union for Conservation of Nature (IUCN).'
       ),
     },
     {
       title: t('Governance'),
-      value: contextualData.GOV_TYP,
+      value: contextualData.GOV_TYPE,
       tooltipContent: t(
         'Entity responsible and accountable for making decisions about how a protected area or OECM is managed.'
       ),

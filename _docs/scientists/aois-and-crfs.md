@@ -53,13 +53,13 @@ arcpy.md.BuildMultidimensionalInfo("land_encroachment", "Variable_new", "SliceNu
 ![](/public/multidimensional_info_table.png)
 
 ### Where do the CRFs live?
-They live in an Azure bucket in the cloud. They are managed using Microsoft Azure Storage Explorer. There are different ways to access the CRFs. 
+They live in an Azure bucket in the cloud. They are managed using Microsoft Azure Storage Explorer. There are different ways to access the CRFs.
 
 ### Accessing the CRFs from ArcGIS Pro
 The Virtual machine  already has the `.acs` file that makes the connection. The `yaleCube.acs` file is located in `Documents/ArcGIS/Projects`. When a new project is created a connection is done via the ribbon (Insert/Connections/Add Cloud Storage Connection). Then, the `yaleCube.acs` appears on the catalog, within the Cloud Stores folder and we can add the CRFs stored there to our map and work with them in ArcGIS Pro.
 
 ### Accessing the CRFs from the webtools
-Once the webtools are created (process explained in the following sections), we can test them and used them calling the CRFs directly from the Azure bucket in the cloud. For that, we need to use the path `/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/` and add thr name of the CRF we need to use. 
+Once the webtools are created (process explained in the following sections), we can test them and used them calling the CRFs directly from the Azure bucket in the cloud. For that, we need to use the path `/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/` and add thr name of the CRF we need to use.
 
 Currently (March 2023), the services in use require these CRFs:
 
@@ -103,7 +103,7 @@ Use the tool `calculate value` as much as possible (this is a Model Builder Util
 
 Avoid using the tool `Calculate field` because it generates problems when publishing the tool due to version incompatibilities between ArcGIS Pro and ArcGIS Enterprise Portal.
 
-Since we are using Multidimensional cubes, it is key to set up the `Parallel processing` to `90%` in any of the geoprocessing tools added to the model. That will speed up the processing. 
+Since we are using Multidimensional cubes, it is key to set up the `Parallel processing` to `90%` in any of the geoprocessing tools added to the model. That will speed up the processing.
 
 **IMPORTANT NOTE:** Take into account the input and output coordinate reference systems. In this case, we are providing a Pseudo Mercator input (the geometry) and we are using it against an Equal Area projection (the crf). The geoprocessing tools automatically serve the output in the raster projection, without us having to manually add a re-projection step to change the crs of the geometry. However, it is a good practice to make explicit the CRS in the `Environments` tab of each of the geoprocessing tools.
 
@@ -160,7 +160,7 @@ In order to check that the GP service is working correctly before passing the UR
 ![](/public/GP_test_Submit_default.png)
 
 #### Fill parameters
-To test the service, we need to provide a `geometry` and the path to the CRFs used by the webtool. 
+To test the service, we need to provide a `geometry` and the path to the CRFs used by the webtool.
 
 - **Geometry**: the geometry needs to have a very specific format. The structure passed is a json that can be obtained by using the tool `Features To Json` in ArcGIS Pro: make sure the output path is set outside of the gdb so it can be accessed easily, and tick the boxes for `Formatted JSON` and `Include Z values`.
 
@@ -282,7 +282,7 @@ This is an example of the geometry you need to add to the box:
 
 - **CRFs:**
 
-Depending on the GP service, we will need to provide the path to one or more than one CRFs. For example, the biodiversity GP services only use one CRF, the one corresponding to their taxa. The Contextual GP service, on the other hand, extracts information from different CRFs, so we need to provide the path to all of them. 
+Depending on the GP service, we will need to provide the path to one or more than one CRFs. For example, the biodiversity GP services only use one CRF, the one corresponding to their taxa. The Contextual GP service, on the other hand, extracts information from different CRFs, so we need to provide the path to all of them.
 
 Note that the default values that appear in the boxes represent the data that was used to publish the service, that is, small subsets of the original CRFs. So if we test the tool using a different geometry but we do not change the default CRF paths, the new geometry will fall outside the extent of the subset data and we will get an error. For that reason, we need to make sure we substitute the default names with the complete path to the Azure bucket `/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft` and the name of the corresponding CRF.
 
@@ -297,7 +297,7 @@ When the process finishes, we get links to the output tables, which provide resu
 
 ## Current GP services in use
 
-The section [AOI_summaries](https://vizzuality.github.io/half-earth-v3/_docs/science/aois-summaries) provides information about the most recent Geoprocessing Services. They were created in March 2023 for the implementation of the AOI richer summaries, which included new calculations such as the SPS and the incorporation of new human pressure layers. 
+The section [AOI_summaries](https://vizzuality.github.io/half-earth-v3/_docs/science/aois-summaries) provides information about the most recent Geoprocessing Services. They were created in March 2023 for the implementation of the AOI richer summaries, which included new calculations such as the SPS and the incorporation of new human pressure layers.
 
 * [AmphibiansProd_SPS](https://heportal.esri.com/portal/home/item.html?id=7063ab2d8bc9477bb72f640f2c3b4108)
 * [BirdsProd_SPS](https://heportal.esri.com/portal/home/item.html?id=13c50ba2eca34926bd7fad29942d3d43)
@@ -311,7 +311,7 @@ The AOIs created by users can be shared with an url. When the urls are created, 
 
 ### Cleaning the historic AOIs service
 
-[The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`.   
+[The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`.
 
 ---
 
@@ -394,7 +394,7 @@ The process of creation of the tables consist on getting the slice number and ma
 | land_cover | ELU.crf|_none_| [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd)|output_table_elu_majority |`MAJORITY` | [agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `lc_type` contains the name of the type of land cover |
 | human_encroachment | land_encroachment.crf |_none_| [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd)|output_table_encroachment| `SliceNumber` has the code of the type of human activity, `percentage_land_encroachment` gives percentage of each type|[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer)|`SliceNumber` to join and then `Name`|
 | Protection_percentage | WDPA_Terrestrial_CEA_June2021.crf | _none_|  [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd) |output_table_wdpa_percentage| percentage_protected |_none_  |_none_ |
-| WDPA list | _none_ | _none_|  [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd) |output_table_wdpa| `ORIG_NA,DESIG_T,IUCN_CA,GOV_TYP,AREA_KM,NAME_0` |[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer) non whitelisted yet|`WDPA_PID` |
+| WDPA list | _none_ | _none_|  [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd) |output_table_wdpa| `ORIG_NAME,DESIG_TYPE,IUCN_CAT,GOV_TYPE,AREA_KM,NAME_0` |[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer) non whitelisted yet|`WDPA_PID` |
 | mammal_data | mammals_equal_area_20211003.crf | `presence` |[GP SampleMamProd20220131](https://heportal.esri.com/server/rest/services/SampleMamProd20220131/GPServer/SampleMamProdRange) | output_table| `SliceNumber` has the code of the species; `per_global` shows the area relative to the global species range; `per_aoi` shows the % area present inside the aoi. |[FS lookup table](https://eowilson.maps.arcgis.com/home/item.html?id=84d3c71caf97479d85f620a4ee217d68)[Whitelisted table](https://utility.arcgis.com/usrsvcs/servers/bc206ff519234e4ab1e9dab1c8c1f601/rest/services/Mammal_CRF_species_table_service/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`has_image`,`common_name` |
 | amphibian_data | amphibians_equal_area_20211003.crf |`amphibians`| [GP SampleAmphProd20220131](https://heportal.esri.com/server/rest/services/SampleAmphProd20220131/GPServer/SampleAmphProdRange) | output_table| `SliceNumber` has the code of the species; `per_global` shows the area relative to the global species range; `per_aoi` shows the % area present inside the aoi. |[FS lookup table](https://eowilson.maps.arcgis.com/home/item.html?id=a641a4cd269345dea93b8bcb1cb66676)[Whitelisted table](https://utility.arcgis.com/usrsvcs/servers/0e80ea09e22f4efaa242854a568d0b18/rest/services/Amphibian_CRF_species_table_service/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`has_image`,`common_name` |
 | bird_data | birds_equal_area_20211003.crf | `birds`|[GP SampleBirdsProd20220131](https://heportal.esri.com/server/rest/services/SampleBirdsProd20220131/GPServer/SampleBirdsProdRange ) | output_table| `SliceNumber` has the code of the species; `per_global` shows the area relative to the global species range; `per_aoi` shows the % area present inside the aoi. |[FS lookup table](https://eowilson.maps.arcgis.com/home/item.html?id=4d8698734b654bb9bb7a61d9af314c76)[Whitelisted table](https://utility.arcgis.com/usrsvcs/servers/d7a4020431dc4ce0b425f33d7cd344c8/rest/services/Bird_CRF_species_table_service/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`has_image`,`common_name` |
@@ -417,5 +417,3 @@ var sqlExpr = 'SliceNumber IN (164, 250)'
 var val = Filter(lay, sqlExpr)
 return val
 ```
-
-

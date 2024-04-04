@@ -52,12 +52,12 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
               <div className={styles.arrowsContainer}>
                 <ArrowUp
                   onClick={() =>
-                    handleSortChange({ value: 'GOV_TYP', ascending: true })
+                    handleSortChange({ value: 'GOV_TYPE', ascending: true })
                   }
                 />
                 <ArrowDown
                   onClick={() =>
-                    handleSortChange({ value: 'GOV_TYP', ascending: false })
+                    handleSortChange({ value: 'GOV_TYPE', ascending: false })
                   }
                 />
               </div>
@@ -86,12 +86,12 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
               <div className={styles.arrowsContainer}>
                 <ArrowUp
                   onClick={() =>
-                    handleSortChange({ value: 'DESIG_T', ascending: true })
+                    handleSortChange({ value: 'DESIG_TYPE', ascending: true })
                   }
                 />
                 <ArrowDown
                   onClick={() =>
-                    handleSortChange({ value: 'DESIG_T', ascending: false })
+                    handleSortChange({ value: 'DESIG_TYPE', ascending: false })
                   }
                 />
               </div>
@@ -120,12 +120,12 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
               <div className={styles.arrowsContainer}>
                 <ArrowUp
                   onClick={() =>
-                    handleSortChange({ value: 'STATUS_', ascending: true })
+                    handleSortChange({ value: 'STATUS_YR', ascending: true })
                   }
                 />
                 <ArrowDown
                   onClick={() =>
-                    handleSortChange({ value: 'STATUS_', ascending: false })
+                    handleSortChange({ value: 'STATUS_YR', ascending: false })
                   }
                 />
               </div>
@@ -137,12 +137,12 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
               <div className={styles.arrowsContainer}>
                 <ArrowUp
                   onClick={() =>
-                    handleSortChange({ value: 'IUCN_CA', ascending: true })
+                    handleSortChange({ value: 'IUCN_CAT', ascending: true })
                   }
                 />
                 <ArrowDown
                   onClick={() =>
-                    handleSortChange({ value: 'IUCN_CA', ascending: false })
+                    handleSortChange({ value: 'IUCN_CAT', ascending: false })
                   }
                 />
               </div>
@@ -200,12 +200,12 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
                   <p className={styles.nameLink}>{row.NAME}</p>
                 </button>
               </td>
-              <td>{translateString(row.GOV_TYP)}</td>
+              <td>{translateString(row.GOV_TYPE)}</td>
               <td>{translateString(row.DESIG)}</td>
-              <td>{translateString(row.DESIG_T)}</td>
+              <td>{translateString(row.DESIG_TYPE)}</td>
               <td>{translateString(row.STATUS)}</td>
-              <td>{row.STATUS_}</td>
-              <td>{translateString(row.IUCN_CA)}</td>
+              <td>{row.STATUS_YR}</td>
+              <td>{translateString(row.IUCN_CAT)}</td>
               <td>{translateCountry(row.NAME_0)}</td>
               <td className={styles.lastColumn}>
                 {`${

@@ -5,6 +5,8 @@ import { T } from '@transifex/react';
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import parse from 'html-react-parser';
 
 import GroupedSelect from 'components/grouped-select';
 import LayerTools from 'components/layer-toggle/layers-tools';
@@ -86,7 +88,7 @@ function BiodiversityLayerToggle({
               <div key={option.slug}>
                 <RadioButton
                   id={option.slug}
-                  option={{ ...option, name: option.label }}
+                  option={{ ...option, name: parse(option.label) }}
                   checked={selectedResolutionOption.slug === option.slug}
                   onChange={(o) => handleResolutionSelection(o.slug)}
                   theme={radioTheme}

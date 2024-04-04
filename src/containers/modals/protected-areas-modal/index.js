@@ -70,8 +70,8 @@ function Container(props) {
           const searchLowerCase = search.toLowerCase();
           return (
             row.NAME.toLowerCase().includes(searchLowerCase) ||
-            row.GOV_TYP.toLowerCase().includes(searchLowerCase) ||
-            row.IUCN_CA.toLowerCase().includes(searchLowerCase) ||
+            row.GOV_TYPE.toLowerCase().includes(searchLowerCase) ||
+            row.IUCN_CAT.toLowerCase().includes(searchLowerCase) ||
             row.DESIG.toLowerCase().includes(searchLowerCase)
           );
         }),
@@ -146,13 +146,13 @@ function Container(props) {
     ) {
       // --------------- PROTECTED AREA SPECIAL CASE --------------
       const areaValue = {
-        DESIG: contextualData.DESIG_E,
-        DESIG_T: contextualData.DESIG_T,
+        DESIG: contextualData.DESIG_ENG,
+        DESIG_TYPE: contextualData.DESIG_TYPE,
         AREA_KM: contextualData.AREA_KM2 || contextualData.AREA_KM,
-        IUCN_CA: contextualData.IUCN_CA,
+        IUCN_CAT: contextualData.IUCN_CAT,
         NAME: contextualData.NAME,
         NAME_0: contextualData.ISO3,
-        GOV_TYP: contextualData.GOV_TYP,
+        GOV_TYPE: contextualData.GOV_TYPE,
       };
       setData([areaValue]);
       setFilteredData([areaValue]);

@@ -94,13 +94,13 @@ const getAreaPopulation = (data) =>
 
 const getProtectedAreasList = (data) =>
   data[CONTEXTUAL_DATA_TABLES[WDPA_LIST]].value.features.map((f) => ({
-    NAME: f.attributes.ORIG_NA,
+    NAME: f.attributes.ORIG_NAME,
     NAME_0: f.attributes.NAME_0,
     AREA_KM: f.attributes.AREA_KM2 || f.attributes.AREA_KM,
-    GOV_TYP: f.attributes.GOV_TYP,
-    DESIG: f.attributes.DESIG_E,
-    IUCN_CA: f.attributes.IUCN_CA,
-    DESIG_T: f.attributes.DESIG_T,
+    GOV_TYPE: f.attributes.GOV_TYPE,
+    DESIG: f.attributes.DESIG_ENG,
+    IUCN_CAT: f.attributes.IUCN_CAT,
+    DESIG_TYPE: f.attributes.DESIG_TYPE,
     MOL_ID: f.attributes.MOL_ID,
   }));
 
