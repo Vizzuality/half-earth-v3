@@ -44,6 +44,9 @@ function RadioButton({
           className={cx({
             'visually-hidden': hideLabel,
           })}
+          style={{
+            'margin-top': Array.isArray(option.name) ? '-4px' : '',
+          }}
         >
           {option && option.name}
         </span>
