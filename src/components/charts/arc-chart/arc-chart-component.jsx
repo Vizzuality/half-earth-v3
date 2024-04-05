@@ -53,7 +53,7 @@ function ArcChartComponent({
             y={parentHeight / 2 + 40}
             className={styles.label}
           >
-            {parseInt(value, 10)}
+            {Math.round(value)}
             {isPercentage && (
               <tspan className={styles.labelPercentage}>%</tspan>
             )}
