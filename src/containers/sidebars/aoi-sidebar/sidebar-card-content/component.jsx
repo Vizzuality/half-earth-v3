@@ -99,9 +99,9 @@ function SidebarCard({
   const isCustom = contextualData?.isCustom;
 
   const underProtectionPercentage = isCustom
-    ? contextualData?.percentage
-    : contextualData?.protectionPercentage;
-  const spi = contextualData?.SPI;
+    ? parseFloat(contextualData?.percentage)
+    : parseFloat(contextualData?.protectionPercentage);
+  const spi = parseFloat(contextualData?.SPI);
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>

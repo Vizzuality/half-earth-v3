@@ -19,6 +19,7 @@ import {
   HIGHER_AREA_SIZE_LIMIT,
   CLEAR_SELECTIONS,
 } from 'constants/analyze-areas-constants';
+import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import radioTheme from 'styles/themes/radio-theme.module.scss';
@@ -53,6 +54,7 @@ function AnalyzeAreasCardComponent({
   sketchTooltipType,
   updatedGeometry,
   setUpdatedGeometry,
+  showProgress,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -147,6 +149,12 @@ function AnalyzeAreasCardComponent({
                     theme={radioTheme}
                   />
                 )}
+                {option.slug === HALF_EARTH_FUTURE_TILE_LAYER &&
+                  showProgress && (
+                    <div className={styles.progressBar}>
+                      <div className={`${styles.circle} ${styles.border}`} />
+                    </div>
+                  )}
               </div>
             );
           })}
