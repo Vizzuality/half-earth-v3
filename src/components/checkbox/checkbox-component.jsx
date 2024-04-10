@@ -4,9 +4,19 @@ import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
+import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
+
 import styles from './checkbox-styles.module.scss';
 
-function Checkbox({ option, onChange, checked, theme, className, disabled }) {
+function Checkbox({
+  option,
+  onChange,
+  checked,
+  theme,
+  className,
+  disabled,
+  showProgress,
+}) {
   return (
     <div
       key={option.value}
@@ -35,6 +45,11 @@ function Checkbox({ option, onChange, checked, theme, className, disabled }) {
           />
         )}
       </label>
+      {option.value === HALF_EARTH_FUTURE_TILE_LAYER && showProgress && (
+        <div className={styles.progressBar}>
+          <div className={`${styles.circle} ${styles.border}`} />
+        </div>
+      )}
     </div>
   );
 }

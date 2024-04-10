@@ -6,6 +6,7 @@ import * as urlActions from 'actions/url-actions';
 
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 
+import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import Component from './protected-areas-sidebar-card-component';
@@ -14,7 +15,10 @@ import mapStateToProps from './protected-areas-sidebar-card-selectors';
 const actions = { ...metadataActions, ...urlActions };
 
 function Container(props) {
-  const { activeLayers, changeGlobe } = props;
+  const { activeLayers, changeGlobe, view } = props;
+
+  const [showProgress, setShowProgress] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const [selectedLayers, setSelectedLayers] = useState([]);
 
@@ -26,6 +30,19 @@ function Container(props) {
     } else {
       setSelectedLayers([...selectedLayers, option.value]);
     }
+
+    if (option.value === HALF_EARTH_FUTURE_TILE_LAYER && isFirstLoad) {
+      setShowProgress(true);
+    }
+
+    view?.on('layerview-create', (event) => {
+      if (event.layer.id === HALF_EARTH_FUTURE_TILE_LAYER) {
+        if (isFirstLoad) {
+          setShowProgress(false);
+          setIsFirstLoad(false);
+        }
+      }
+    });
 
     layerManagerToggle(
       option.value,
@@ -39,6 +56,7 @@ function Container(props) {
     <Component
       selectedLayers={selectedLayers}
       handleLayerToggle={handleLayerToggle}
+      showProgress={showProgress}
       {...props}
     />
   );

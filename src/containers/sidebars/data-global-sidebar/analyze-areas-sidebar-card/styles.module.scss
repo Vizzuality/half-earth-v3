@@ -234,3 +234,38 @@
     background-color: $white;
   }
 }
+
+.radioContainer{
+  display: flex;
+}
+
+.progressBar {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.circle {
+  height: 100%;
+  right: 0px;
+  position: absolute;
+  border: solid 5px  $alto;
+  border-top-color:  $robins-egg-blue;
+  border-radius: 50%;
+}
+
+.border {
+  width: 100%;
+  transform: rotate(135deg);
+  animation: spin 1.3s steps(2) .2s infinite;
+  -webkit-animation: spin 1.3s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
