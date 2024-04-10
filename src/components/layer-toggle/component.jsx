@@ -24,6 +24,7 @@ function LayerToggleComponent({
   handleBringToBackClick,
   handleBringToFrontClick,
   className,
+  showProgress,
 }) {
   return type === 'radio' ? (
     <div
@@ -75,6 +76,7 @@ function LayerToggleComponent({
         onOpacityClick={handleOpacityClick}
         onBringToBackClick={handleBringToBackClick}
         onBringToFrontClick={handleBringToFrontClick}
+        showProgress={showProgress}
       />
     </div>
   );
