@@ -19,7 +19,7 @@ import {
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 
-import { useSketchWidget } from 'hooks/esri';
+import { useSketchWidget, useWatchUtils } from 'hooks/esri';
 
 import {
   getPrecalculatedAOIOptions,
@@ -292,6 +292,8 @@ function AnalyzeAreasContainer(props) {
     }
   };
 
+  const watchUtils = useWatchUtils();
+
   const handleOptionSelection = async (option) => {
     if (option?.slug === HALF_EARTH_FUTURE_TILE_LAYER && isFirstLoad) {
       setShowProgress(true);
@@ -300,14 +302,13 @@ function AnalyzeAreasContainer(props) {
     changeUI({ selectedAnalysisLayer: option?.slug });
     setTooltipIsVisible(false);
 
-    view.on('layerview-create', (event) => {
-      if (event.layer.id === HALF_EARTH_FUTURE_TILE_LAYER) {
-        if (isFirstLoad) {
+    watchUtils.watch(() =>
+      view.map.allLayers.forEach((layer) => {
+        if (layer.id === HALF_EARTH_FUTURE_TILE_LAYER && layer.visible) {
           setShowProgress(false);
-          setIsFirstLoad(false);
         }
-      }
-    });
+      })
+    );
   };
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);

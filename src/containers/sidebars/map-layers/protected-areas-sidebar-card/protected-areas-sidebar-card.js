@@ -6,6 +6,8 @@ import * as urlActions from 'actions/url-actions';
 
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 
+import { useWatchUtils } from 'hooks/esri';
+
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
@@ -18,9 +20,10 @@ function Container(props) {
   const { activeLayers, changeGlobe, view } = props;
 
   const [showProgress, setShowProgress] = useState(false);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const [selectedLayers, setSelectedLayers] = useState([]);
+
+  const watchUtils = useWatchUtils();
 
   const handleLayerToggle = (option) => {
     if (selectedLayers.find((layer) => layer === option.value)) {
@@ -31,18 +34,17 @@ function Container(props) {
       setSelectedLayers([...selectedLayers, option.value]);
     }
 
-    if (option.value === HALF_EARTH_FUTURE_TILE_LAYER && isFirstLoad) {
+    if (option.value === HALF_EARTH_FUTURE_TILE_LAYER) {
       setShowProgress(true);
     }
 
-    view?.on('layerview-create', (event) => {
-      if (event.layer.id === HALF_EARTH_FUTURE_TILE_LAYER) {
-        if (isFirstLoad) {
+    watchUtils.watch(() =>
+      view.map.allLayers.forEach((layer) => {
+        if (layer.id === HALF_EARTH_FUTURE_TILE_LAYER && layer.visible) {
           setShowProgress(false);
-          setIsFirstLoad(false);
         }
-      }
-    });
+      })
+    );
 
     layerManagerToggle(
       option.value,
