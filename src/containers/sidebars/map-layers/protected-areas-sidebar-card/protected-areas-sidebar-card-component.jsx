@@ -42,6 +42,7 @@ function ProtectedAreasSidebarCardComponent({
   onboardingType,
   waitingInteraction,
   changeUI,
+  showProgress,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -146,6 +147,7 @@ function ProtectedAreasSidebarCardComponent({
               type="checkbox"
               variant="light"
               key={layer.value}
+              showProgress={showProgress}
               activeLayers={activeLayers}
               onChange={handleLayerToggle}
               themeCategorySlug={FUTURE_PLACES_SLUG}

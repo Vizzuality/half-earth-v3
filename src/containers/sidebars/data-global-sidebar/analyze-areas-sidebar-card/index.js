@@ -19,7 +19,7 @@ import {
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 
-import { useSketchWidget } from 'hooks/esri';
+import { useSketchWidget, useWatchUtils } from 'hooks/esri';
 
 import {
   getPrecalculatedAOIOptions,
@@ -120,6 +120,8 @@ function AnalyzeAreasContainer(props) {
   const [selectedOption, setSelectedOption] = useState(
     precalculatedAOIOptions[0]
   );
+  const [showProgress, setShowProgress] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [sketchWidgetMode, setSketchWidgetMode] = useState('create');
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
   const [promptModalContent, setPromptModalContent] = useState({
@@ -133,6 +135,10 @@ function AnalyzeAreasContainer(props) {
         (option) => option.title === selectedAnalysisLayer
       )
     );
+
+    if (selectedAnalysisLayer === HALF_EARTH_FUTURE_TILE_LAYER) {
+      setIsFirstLoad(false);
+    }
   }, [selectedAnalysisLayer, precalculatedAOIOptions, setSelectedOption]);
 
   const postDrawCallback = (geometry) => {
@@ -286,10 +292,23 @@ function AnalyzeAreasContainer(props) {
     }
   };
 
-  const handleOptionSelection = (option) => {
+  const watchUtils = useWatchUtils();
+
+  const handleOptionSelection = async (option) => {
+    if (option?.slug === HALF_EARTH_FUTURE_TILE_LAYER && isFirstLoad) {
+      setShowProgress(true);
+    }
     handleLayerToggle(option?.slug);
     changeUI({ selectedAnalysisLayer: option?.slug });
     setTooltipIsVisible(false);
+
+    watchUtils.watch(() =>
+      view.map.allLayers.forEach((layer) => {
+        if (layer.id === HALF_EARTH_FUTURE_TILE_LAYER && layer.visible) {
+          setShowProgress(false);
+        }
+      })
+    );
   };
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
@@ -314,6 +333,7 @@ function AnalyzeAreasContainer(props) {
       setSketchTooltipType={setSketchTooltipType}
       setUpdatedGeometry={setUpdatedGeometry}
       updatedGeometry={updatedGeometry}
+      showProgress={showProgress}
     />
   );
 }

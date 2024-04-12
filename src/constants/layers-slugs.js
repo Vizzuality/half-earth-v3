@@ -2,11 +2,6 @@
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER =
   'protected_areas_vector_tile_layer';
 
-export const TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER =
-  'terrestrial_protected_areas_vector_tile_layer';
-export const MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER =
-  'marine_protected_areas_vector_tile_layer';
-
 export const COMMUNITY_AREAS_VECTOR_TILE_LAYER =
   'community_areas_vector_tile_layer';
 export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE =

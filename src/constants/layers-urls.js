@@ -13,8 +13,6 @@ import {
   SATELLITE_BASEMAP_LAYER,
   PRIORITY_PLACES_POLYGONS,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
-  MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
-  TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   CARBON_LAYER,
   MARINE_CARBON_LAYER,
@@ -204,11 +202,6 @@ export const LAYERS_URLS = {
     'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ProtectedAreas_MeriamNelson_202401/VectorTileServer',
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]:
     'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
-
-  [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_NRC_tiles/MapServer',
-  [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Marine_NRC_tiles/MapServer',
 
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/marine_and_land_grid_55km_prot_prop/FeatureServer',
@@ -456,7 +449,7 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_202401_Simplification99_20240320/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/607f4b28462445e68ef9f5bd9c82efe1/rest/services/wdpa_precalculated_aoi_summaries_updated_20240314/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/a26fcc88e1a8495b9e679565c9e628f6/rest/services/wdpa_precalculated_aoi_summaries_updated_20240408/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/69967ac4027f49f095fd379974bdc3a8/rest/services/places_precalculated_aoi_summaries_updated_20240321/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:

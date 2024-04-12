@@ -31,6 +31,7 @@ function MapLayers({
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         map={map}
+        view={view}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}

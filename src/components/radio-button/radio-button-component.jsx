@@ -45,7 +45,7 @@ function RadioButton({
             'visually-hidden': hideLabel,
           })}
           style={{
-            'margin-top': Array.isArray(option.name) ? '-4px' : '',
+            marginTop: Array.isArray(option.name) ? '-4px' : '',
           }}
         >
           {option && option.name}

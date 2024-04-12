@@ -17,6 +17,7 @@ function CheckboxType({
   onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
+  showProgress,
 }) {
   return (
     <div
@@ -32,6 +33,7 @@ function CheckboxType({
           checked={!disabled && isChecked}
           onChange={onChange}
           className={styles.labelStyles}
+          showProgress={showProgress}
         />
       </div>
       {isChecked && !disabled && (
