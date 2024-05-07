@@ -65,6 +65,7 @@ import {
   TREES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
+  BIRDS_SOUTH_AMERICA,
 } from 'constants/layers-slugs';
 
 export const LAYER_VARIANTS = {
@@ -338,6 +339,13 @@ export const getLayersToggleConfig = () => ({
           title: t('Dragonflies and Damselflies'),
           layer: DRAGONFLIES_RICHNESS_1KM,
           group: t('invertebrates'),
+        },
+        {
+          value: BIRDS_SOUTH_AMERICA,
+          name: t('birds sa'),
+          title: t('birds sa'),
+          layer: BIRDS_SOUTH_AMERICA,
+          group: t('birds'),
         },
         {
           value: HUMMINGBIRDS_RICHNESS,

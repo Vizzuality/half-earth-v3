@@ -151,6 +151,7 @@ export const SUMMER_BIRDS_RARITY_1KM = 'summer-birds-rarity-1km';
 export const WINTER_BIRDS_RARITY_1KM = 'winter-birds-rarity-1km';
 export const RESIDENT_BIRDS_RICHNESS_1KM = 'resident-birds-richness-1km';
 export const RESIDENT_BIRDS_RARITY_1KM = 'resident-birds-rarity-1km';
+export const BIRDS_SOUTH_AMERICA = 'birds-sa';
 export const ANTS_RARITY_1KM = 'ants-rarity-1km';
 export const ANTS_RICHNESS_1KM = 'ants-richness-1km';
 
