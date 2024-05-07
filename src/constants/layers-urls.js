@@ -288,11 +288,9 @@ export const LAYERS_URLS = {
   [MAMMALS_SACA_RICHNESS_TOTAL]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Richness/MapServer',
   [MAMMALS_SACA_RARITY_TOTAL]: [
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Log_Total_Rarity/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Log_Mean_Rarity/MapServer',
   ],
   [BIRDS_SACA_RARITY_TOTAL]: [
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Log_Total_Rarity/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Log_Mean_Rarity/MapServer',
   ],
   [BIRDS_SACA_RICHNESS_TOTAL]:
