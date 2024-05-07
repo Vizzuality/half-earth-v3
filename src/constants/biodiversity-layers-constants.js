@@ -65,6 +65,10 @@ import {
   TREES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
+  BIRDS_SACA_RARITY_TOTAL,
+  BIRDS_SACA_RICHNESS_TOTAL,
+  MAMMALS_SACA_RARITY_TOTAL,
+  MAMMALS_SACA_RICHNESS_TOTAL,
 } from 'constants/layers-slugs';
 
 export const LAYER_VARIANTS = {
@@ -340,6 +344,20 @@ export const getLayersToggleConfig = () => ({
           group: t('invertebrates'),
         },
         {
+          value: BIRDS_SACA_RICHNESS_TOTAL,
+          name: t('birds - Central & South America'),
+          title: t('birds - Central & South America'),
+          layer: BIRDS_SACA_RICHNESS_TOTAL,
+          group: t('birds'),
+        },
+        {
+          value: MAMMALS_SACA_RICHNESS_TOTAL,
+          name: t('mammals - Central & South America'),
+          title: t('mammals - Central & South America'),
+          layer: MAMMALS_SACA_RICHNESS_TOTAL,
+          group: t('mammals'),
+        },
+        {
           value: HUMMINGBIRDS_RICHNESS,
           name: t('hummingbirds'),
           title: t('hummingbirds'),
@@ -569,6 +587,20 @@ export const getLayersToggleConfig = () => ({
           title: t('resident birds'),
           layer: RESIDENT_BIRDS_RARITY_1KM,
           group: t('birds'),
+        },
+        {
+          value: BIRDS_SACA_RARITY_TOTAL,
+          name: t('birds - Central & South America'),
+          title: t('birds - Central & South America'),
+          layer: BIRDS_SACA_RARITY_TOTAL,
+          group: t('birds'),
+        },
+        {
+          value: MAMMALS_SACA_RARITY_TOTAL,
+          name: t('mammals - Central & South America'),
+          title: t('mammals - Central & South America'),
+          layer: MAMMALS_SACA_RARITY_TOTAL,
+          group: t('mammals'),
         },
         {
           value: SUMMER_BIRDS_RARITY_1KM,
