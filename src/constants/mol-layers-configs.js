@@ -100,6 +100,10 @@ import {
   TREES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
+  BIRDS_SACA_RARITY_TOTAL,
+  BIRDS_SACA_RICHNESS_TOTAL,
+  MAMMALS_SACA_RARITY_TOTAL,
+  MAMMALS_SACA_RICHNESS_TOTAL,
   EDUCATOR_AMBASSADORS_LAYER,
   PLEDGES_LAYER,
   ADMIN_AREAS_FEATURE_LAYER,
@@ -128,7 +132,7 @@ export const LAYERS_CATEGORIES = {
 
 const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
 const AmericaCenteredBbox = [-237.28, -59.58, 77.01, 66.81];
-const SouthAfricaAndSouthEastAsiaBbox = [-31.2, -37, 151, 38.1];
+const SouthAfricaAndSouthEastAsiaBbox = [60.2, -20, 151, 38.1];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
@@ -593,6 +597,20 @@ export const layersConfig = {
     url: LAYERS_URLS[ANTS_RICHNESS_GLOBAL],
     bbox: null,
   },
+  [BIRDS_SACA_RICHNESS_TOTAL]: {
+    title: BIRDS_SACA_RICHNESS_TOTAL,
+    slug: BIRDS_SACA_RICHNESS_TOTAL,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[BIRDS_SACA_RICHNESS_TOTAL],
+    bbox: AmericaCenteredBbox,
+  },
+  [BIRDS_SACA_RARITY_TOTAL]: {
+    title: BIRDS_SACA_RARITY_TOTAL,
+    slug: BIRDS_SACA_RARITY_TOTAL,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[BIRDS_SACA_RARITY_TOTAL],
+    bbox: AmericaCenteredBbox,
+  },
   [HUMMINGBIRDS_RARITY]: {
     title: HUMMINGBIRDS_RARITY,
     slug: HUMMINGBIRDS_RARITY,
@@ -711,6 +729,20 @@ export const layersConfig = {
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[MAMMALS_RICHNESS],
     bbox: null,
+  },
+  [MAMMALS_SACA_RARITY_TOTAL]: {
+    title: MAMMALS_SACA_RARITY_TOTAL,
+    slug: MAMMALS_SACA_RARITY_TOTAL,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MAMMALS_SACA_RARITY_TOTAL],
+    bbox: AmericaCenteredBbox,
+  },
+  [MAMMALS_SACA_RICHNESS_TOTAL]: {
+    title: MAMMALS_SACA_RICHNESS_TOTAL,
+    slug: MAMMALS_SACA_RICHNESS_TOTAL,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MAMMALS_SACA_RICHNESS_TOTAL],
+    bbox: AmericaCenteredBbox,
   },
   [BIRDS_PRIORITY]: {
     title: BIRDS_PRIORITY,

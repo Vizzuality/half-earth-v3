@@ -99,14 +99,14 @@ function SidebarCard({
   const isCustom = contextualData?.isCustom;
 
   const underProtectionPercentage = isCustom
-    ? parseFloat(contextualData?.percentage)
-    : parseFloat(contextualData?.protectionPercentage);
+    ? parseFloat(contextualData?.percentage || 0)
+    : parseFloat(contextualData?.protectionPercentage || 0);
   const spi = parseFloat(contextualData?.SPI);
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>{cardTitle}</p>
-        {cardCategory === PROTECTION_SLUG && underProtectionPercentage && (
+        {cardCategory === PROTECTION_SLUG && (
           <div className={styles.protectedAreaChartContainer}>
             <div
               style={{

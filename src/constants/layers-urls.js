@@ -118,6 +118,10 @@ import {
   TREES_PRIORITY,
   TREES_RICHNESS,
   TREES_RARITY,
+  BIRDS_SACA_RARITY_TOTAL,
+  MAMMALS_SACA_RICHNESS_TOTAL,
+  MAMMALS_SACA_RARITY_TOTAL,
+  BIRDS_SACA_RICHNESS_TOTAL,
 } from 'constants/layers-slugs';
 
 const { REACT_APP_VERCEL_ENV } = process.env;
@@ -126,7 +130,7 @@ const isNotProduction =
   REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
 
 const COUNTRIES_DATA_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20240315/FeatureServer';
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20240507/FeatureServer';
 
 const EEZ_MARINE_BORDERS_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Country_boundaries_with_EEZ/FeatureServer';
@@ -280,6 +284,16 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Reptile_Species/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Reptiles_Richness_v1_5_1_20240313/MapServer',
   ],
+  [MAMMALS_SACA_RICHNESS_TOTAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Richness/MapServer',
+  [MAMMALS_SACA_RARITY_TOTAL]: [
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Log_Mean_Rarity/MapServer',
+  ],
+  [BIRDS_SACA_RARITY_TOTAL]: [
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Log_Mean_Rarity/MapServer',
+  ],
+  [BIRDS_SACA_RICHNESS_TOTAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Richness/MapServer',
   [HUMMINGBIRDS_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hb_rarity_raw_tif/MapServer',
   [HUMMINGBIRDS_RICHNESS]:
