@@ -151,7 +151,10 @@ export const SUMMER_BIRDS_RARITY_1KM = 'summer-birds-rarity-1km';
 export const WINTER_BIRDS_RARITY_1KM = 'winter-birds-rarity-1km';
 export const RESIDENT_BIRDS_RICHNESS_1KM = 'resident-birds-richness-1km';
 export const RESIDENT_BIRDS_RARITY_1KM = 'resident-birds-rarity-1km';
-export const BIRDS_SOUTH_AMERICA = 'birds-sa';
+export const BIRDS_SACA_RARITY_TOTAL = 'birds-saca-rarity-total';
+export const BIRDS_SACA_RICHNESS_TOTAL = 'birds-saca-richness-total';
+export const MAMMALS_SACA_RICHNESS_TOTAL = 'mammals-saca-richness-total';
+export const MAMMALS_SACA_RARITY_TOTAL = 'mammals-saca-rarity-total';
 export const ANTS_RARITY_1KM = 'ants-rarity-1km';
 export const ANTS_RICHNESS_1KM = 'ants-richness-1km';
 
