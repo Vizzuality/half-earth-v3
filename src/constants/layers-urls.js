@@ -143,10 +143,8 @@ export const HIGHLIGHTED_COUNTRY_SPECIES_URL =
 export const COUNTRIES_DATA_SERVICE_URL = `${COUNTRIES_DATA_URL}/0`;
 export const COUNTRIES_GEOMETRIES_SERVICE_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0';
-export const NRC_TERRESTRIAL_SPI_DATA_LAYER =
-  'https://utility.arcgis.com/usrsvcs/servers/496871854f434806b93057a171c57e75/rest/services/Terrestrial_SPI_by_country_202401_refine_update_allcountries2_withGID/FeatureServer/0';
-export const NRC_MARINE_SPI_DATA_LAYER =
-  'https://utility.arcgis.com/usrsvcs/servers/4d9ee1ec6fb840ad83cc4fcfe6cc84e5/rest/services/Marine_SPI_by_country_20240314_withGID/FeatureServer/0';
+export const NRC_TERRESTRIAL_SPI_DATA_LAYER = ''; // 'https://utility.arcgis.com/usrsvcs/servers/496871854f434806b93057a171c57e75/rest/services/Terrestrial_SPI_by_country_202401_refine_update_allcountries2_withGID/FeatureServer/0';
+export const NRC_MARINE_SPI_DATA_LAYER = ''; // 'https://utility.arcgis.com/usrsvcs/servers/4d9ee1ec6fb840ad83cc4fcfe6cc84e5/rest/services/Marine_SPI_by_country_20240314_withGID/FeatureServer/0';
 
 const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
   'https://utility.arcgis.com/usrsvcs/servers/f09f7630ec964885bb2a968c7f1a8bea/rest/services/gadm0_aoi_summaries_updated_20240326/FeatureServer';
