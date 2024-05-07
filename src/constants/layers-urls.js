@@ -88,6 +88,7 @@ import {
   REPTILES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
+  BIRDS_SOUTH_AMERICA,
   ANTS_RICHNESS,
   BUTTERFLIES_RICHNESS,
   ODONATES_RICHNESS,
@@ -126,7 +127,7 @@ const isNotProduction =
   REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
 
 const COUNTRIES_DATA_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20240507/FeatureServer';
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20240315/FeatureServer';
 
 const EEZ_MARINE_BORDERS_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Country_boundaries_with_EEZ/FeatureServer';
@@ -280,6 +281,8 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Reptile_Species/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Reptiles_Richness_v1_5_1_20240313/MapServer',
   ],
+  [BIRDS_SOUTH_AMERICA]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_of_Breeding_Bird_Species_of_North_America/MapServer',
   [HUMMINGBIRDS_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hb_rarity_raw_tif/MapServer',
   [HUMMINGBIRDS_RICHNESS]:
