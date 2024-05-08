@@ -98,12 +98,24 @@ const getSelectedFilterSlug = createSelector(
 const getSelectedCountryRelations = createSelector(
   [selectCountriesData, selectCountryIso, getLandMarineSelected],
   (countriesData, selectedCountryIso, landMarineSelection) => {
-    if (!countriesData || !selectedCountryIso) return null;
-    return JSON.parse(
-      countriesData[selectedCountryIso][
-        `filter_${LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection].similar}`
-      ]
-    );
+    if (
+      !countriesData ||
+      !selectedCountryIso ||
+      !countriesData[selectedCountryIso]
+    ) {
+      return null;
+    }
+    let countryRelations = null;
+    try {
+      countryRelations = JSON.parse(
+        countriesData[selectedCountryIso][
+          `filter_${LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection].similar}`
+        ]
+      );
+    } catch (e) {
+      console.error('Error parsing countries data', e);
+    }
+    return countryRelations;
   }
 );
 
@@ -127,7 +139,7 @@ const getFilteredData = createSelector(
     getCountryChallengesSelectedKey,
   ],
   (plotRawData, selectedFilter, selectedCountryRelations, selectedKey) => {
-    if (!plotRawData) return null;
+    if (!plotRawData || !selectedCountryRelations) return null;
     if (!selectedFilter || selectedFilter === 'all') return plotRawData;
     const relatedCountries = selectedCountryRelations[selectedFilter];
     const hasNotNullXValue = (country) =>
