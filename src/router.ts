@@ -11,6 +11,7 @@ export const NATIONAL_REPORT_CARD_LANDING =
   'location/NATIONAL_REPORT_CARD_LANDING';
 export const AREA_OF_INTEREST = 'location/AREA_OF_INTEREST';
 export const MAP_IFRAME = 'location/MAP_IFRAME';
+export const DASHBOARD = 'location/DASHBOARD';
 
 export const routes: RoutesMap<{ path: string; page?: string }> = {
   [LANDING]: {
@@ -36,6 +37,10 @@ export const routes: RoutesMap<{ path: string; page?: string }> = {
   [AREA_OF_INTEREST]: {
     path: '/aoi/:id?',
     page: 'aoi',
+  },
+  [DASHBOARD]: {
+    path: '/dashboard/:iso',
+    page: 'dashboard',
   },
   [NOT_FOUND]: {
     path: '/404',
