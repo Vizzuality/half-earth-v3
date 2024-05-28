@@ -74,7 +74,7 @@ function CountryEntryTooltipComponent({
         content: tooltipref.current,
       });
 
-      view.popup.reposition();
+      // view.popup?.reposition();
       if (view.camera) {
         const camera = view.camera.clone();
         camera.position.latitude += 5;
