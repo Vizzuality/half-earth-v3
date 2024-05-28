@@ -282,16 +282,6 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Reptile_Species/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Reptiles_Richness_v1_5_1_20240313/MapServer',
   ],
-  // [MAMMALS_SACA_RICHNESS_TOTAL]:
-  //   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Richness/MapServer',
-  // [MAMMALS_SACA_RARITY_TOTAL]: [
-  //   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Log_Mean_Rarity/MapServer',
-  // ],
-  // [BIRDS_SACA_RARITY_TOTAL]: [
-  //   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Log_Mean_Rarity/MapServer',
-  // ],
-  // [BIRDS_SACA_RICHNESS_TOTAL]:
-  //   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Richness/MapServer',
   [HUMMINGBIRDS_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hb_rarity_raw_tif/MapServer',
   [HUMMINGBIRDS_RICHNESS]:
@@ -299,7 +289,6 @@ export const LAYERS_URLS = {
   // US, South Africa, South East Asia
   [MAMMALS_RICHNESS_1KM]: [
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mamm_rich_sa_tif/MapServer',
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Mammal_Species_of_North_America/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Mammals_Richness_v1_5_20240313/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NASA_Mammals_Richness/MapServer',
   ],
@@ -313,7 +302,6 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Ants_richness_v2_tif/MapServer',
   // US, South Africa, South East Asia
   [MAMMALS_RARITY_1KM]: [
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Mammal_Species_of_North_America/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mamm_rar_sa_tif/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Mammals_Rarity_v1_5_20240313/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NASA_Mammals_Log_Total_Rarity/MapServer',
