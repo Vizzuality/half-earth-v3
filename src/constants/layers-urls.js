@@ -118,10 +118,6 @@ import {
   TREES_PRIORITY,
   TREES_RICHNESS,
   TREES_RARITY,
-  BIRDS_SACA_RARITY_TOTAL,
-  MAMMALS_SACA_RICHNESS_TOTAL,
-  MAMMALS_SACA_RARITY_TOTAL,
-  BIRDS_SACA_RICHNESS_TOTAL,
 } from 'constants/layers-slugs';
 
 const { REACT_APP_VERCEL_ENV } = process.env;
@@ -258,11 +254,13 @@ export const LAYERS_URLS = {
   [BIRDS_RARITY_1KM]: [
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/birds_rar_sa_tif/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Birds_Rarity_v1_5_1_20240313/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Birds_Log_Total_Rarity/MapServer',
   ],
   // South Africa, South East Asia
   [BIRDS_RICHNESS_1KM]: [
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/birds_rich_sa_tif/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Birds_Richness_v1_5_1_20240313/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NASA_Birds_Richness/MapServer',
   ],
   [RESTIO_RARITY_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/restio_rar_sa_tif/MapServer',
@@ -284,16 +282,16 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Reptile_Species/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Reptiles_Richness_v1_5_1_20240313/MapServer',
   ],
-  [MAMMALS_SACA_RICHNESS_TOTAL]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Richness/MapServer',
-  [MAMMALS_SACA_RARITY_TOTAL]: [
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Log_Mean_Rarity/MapServer',
-  ],
-  [BIRDS_SACA_RARITY_TOTAL]: [
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Log_Mean_Rarity/MapServer',
-  ],
-  [BIRDS_SACA_RICHNESS_TOTAL]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Richness/MapServer',
+  // [MAMMALS_SACA_RICHNESS_TOTAL]:
+  //   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Richness/MapServer',
+  // [MAMMALS_SACA_RARITY_TOTAL]: [
+  //   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Mammals_Log_Mean_Rarity/MapServer',
+  // ],
+  // [BIRDS_SACA_RARITY_TOTAL]: [
+  //   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Log_Mean_Rarity/MapServer',
+  // ],
+  // [BIRDS_SACA_RICHNESS_TOTAL]:
+  //   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SACA_Birds_Richness/MapServer',
   [HUMMINGBIRDS_RARITY]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hb_rarity_raw_tif/MapServer',
   [HUMMINGBIRDS_RICHNESS]:
@@ -303,6 +301,7 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mamm_rich_sa_tif/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Mammal_Species_of_North_America/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Mammals_Richness_v1_5_20240313/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NASA_Mammals_Richness/MapServer',
   ],
   [SUMMER_BIRDS_RICHNESS_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_of_Breeding_Bird_Species_of_North_America/MapServer',
@@ -317,6 +316,7 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Mammal_Species_of_North_America/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mamm_rar_sa_tif/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/SEA_Mammals_Rarity_v1_5_20240313/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NASA_Mammals_Log_Total_Rarity/MapServer',
   ],
   [SUMMER_BIRDS_RARITY_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Breeding_Bird_Species_of_North_America/MapServer',

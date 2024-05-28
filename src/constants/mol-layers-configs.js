@@ -130,9 +130,9 @@ export const LAYERS_CATEGORIES = {
   MARINE_HUMAN_PRESSURES: 'Marine use pressures',
 };
 
-const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
+const USCenteredBbox = [-146.3, 10.2, -20.3, 45.2];
 const AmericaCenteredBbox = [-237.28, -59.58, 77.01, 66.81];
-const SouthAfricaAndSouthEastAsiaBbox = [60.2, -20, 151, 38.1];
+// const SouthAfricaAndSouthEastAsiaBbox = [60.2, -20, 151, 38.1];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
@@ -448,14 +448,14 @@ export const layersConfig = {
     slug: BIRDS_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BIRDS_RARITY_1KM],
-    bbox: SouthAfricaAndSouthEastAsiaBbox,
+    bbox: USCenteredBbox,
   },
   [BIRDS_RICHNESS_1KM]: {
     title: BIRDS_RICHNESS_1KM,
     slug: BIRDS_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BIRDS_RICHNESS_1KM],
-    bbox: SouthAfricaAndSouthEastAsiaBbox,
+    bbox: USCenteredBbox,
   },
   [RESTIO_RARITY_1KM]: {
     title: RESTIO_RARITY_1KM,
