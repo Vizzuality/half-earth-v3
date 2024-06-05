@@ -1,7 +1,6 @@
 import React from 'react';
 
-import styles from './styles.module.scss';
-
+import styles from './dashboard-sidebar-styles.module.scss';
 import DataLayerContainer from './data-layers';
 import SpeciesInfoContainer from './species-info';
 

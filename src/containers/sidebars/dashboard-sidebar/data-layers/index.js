@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DataLayerComponent from './component';
+import DataLayerComponent from './data-layers-component';
 
 function DataLayerContainer(props) {
   return <DataLayerComponent {...props} />;

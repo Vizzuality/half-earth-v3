@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 
 import { loadModules } from 'esri-loader';
 
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 
 import Component from './component';
+import mapStateToProps from './selectors';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const mapViewConstraints = {
-  minZoom: 3,
-  rotationEnabled: false,
-  snapToZoom: false,
-  minScale: 147914381,
-};
-
 function ViewContainer(props) {
-  const { mapId, mapName, onViewLoad } = props;
+  const { mapId, mapName, onMapLoad, onViewLoad, viewSettings } = props;
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
+  const [loadState, setLoadState] = useState('loading');
   const [countryLayer, setCountryLayer] = useState(null);
   const [graphicsLayer, setGraphicsLayer] = useState(null);
   const [groupLayer, setGroupLayer] = useState(null);
@@ -114,9 +110,9 @@ function ViewContainer(props) {
         });
 
         setMap(flatMap);
-        // if (onMapLoad) {
-        //   onMapLoad(flatMap);
-        // }
+        if (onMapLoad) {
+          onMapLoad(flatMap);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -133,7 +129,7 @@ function ViewContainer(props) {
             zoom: 6,
             center: [-3, 42],
             popup: null,
-            constraints: mapViewConstraints,
+            ...viewSettings,
           });
 
           flatView.when(async () => {
@@ -164,13 +160,14 @@ function ViewContainer(props) {
 
   useEffect(() => {
     if (map && view) {
+      setLoadState('loaded');
       if (onViewLoad) {
         onViewLoad(map, view);
       }
     }
   }, [map, view]);
 
-  return <Component map={map} view={view} {...props} />;
+  return <Component map={map} view={view} loadState={loadState} {...props} />;
 }
 
-export default ViewContainer;
+export default connect(mapStateToProps, null)(ViewContainer);
