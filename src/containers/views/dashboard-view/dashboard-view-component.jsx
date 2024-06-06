@@ -35,7 +35,7 @@ function DashboardViewComponent(props) {
     >
       <ArcgisLayerManager activeLayers={updatedActiveLayers} />
 
-      <DashboardSidebar />
+      <DashboardSidebar activeLayers={updatedActiveLayers} />
 
       <CountryLabelsLayer
         sceneMode={sceneMode}

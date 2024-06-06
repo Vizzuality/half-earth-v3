@@ -4,7 +4,8 @@ import styles from './dashboard-sidebar-styles.module.scss';
 import DataLayerContainer from './data-layers';
 import SpeciesInfoContainer from './species-info';
 
-function DashboardSidebar() {
+function DashboardSidebar(props) {
+  const { activeLayers } = props;
   return (
     <div className={styles.container}>
       <SpeciesInfoContainer />
@@ -15,7 +16,7 @@ function DashboardSidebar() {
           <span>BI</span>
           <span>RA</span>
         </div>
-        <DataLayerContainer />
+        <DataLayerContainer activeLayers={activeLayers} />
       </section>
     </div>
   );
