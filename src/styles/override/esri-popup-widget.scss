@@ -23,11 +23,13 @@
   }
 }
 
-.esri-popup__header, .esri-popup__footer {
+.esri-popup__header, .esri-popup__footer, .esri-popup__feature-menu {
   display: none;
 }
 
 .esri-popup__content {
+  width: 100%;
+
   margin: {
     top: 16px;
     bottom: 16px;
@@ -132,5 +134,3 @@
   align-items: center;
   margin: 0;
 }
-
-
