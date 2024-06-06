@@ -34,6 +34,20 @@ export default {
     padding: {
       left: 300,
     },
+    // Remove the extra header on the popup
+    popup: {
+      dockOptions: {
+        buttonEnabled: false,
+      },
+      visibleElements: {
+        actionBar: false,
+        closeButton: false,
+        collapseButton: false,
+        featureNavigation: false,
+        heading: false,
+        spinner: false,
+      },
+    },
     isGlobeUpdating: false,
     environment: {
       atmosphereEnabled: false,
