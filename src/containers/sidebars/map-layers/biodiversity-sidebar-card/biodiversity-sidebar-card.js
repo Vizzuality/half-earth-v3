@@ -22,7 +22,6 @@ import {
   MARINE,
   DEFAULT_RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
-import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import Component from './biodiversity-sidebar-card-component';
@@ -41,7 +40,9 @@ function BiodiversitySidebarCard(props) {
     [RICHNESS]: {},
     [RARITY]: {},
   });
-  const [selectedLayer, setSelectedLayer] = useState(ALL_TAXA_PRIORITY);
+  const [selectedLayer, setSelectedLayer] = useState(
+    activeLayers[activeLayers.length - 1].title
+  );
 
   const [showCard, setShowCard] = useState(true);
   const resolutionOptions = useMemo(() => getResolutionOptions(), [locale]);
