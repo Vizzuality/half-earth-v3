@@ -6,7 +6,7 @@ import SpeciesInfoContainer from './species-info';
 
 function DashboardSidebar() {
   return (
-    <div className={styles.sidebarContainer}>
+    <div className={styles.container}>
       <SpeciesInfoContainer />
 
       <section className={styles.sidenav}>
