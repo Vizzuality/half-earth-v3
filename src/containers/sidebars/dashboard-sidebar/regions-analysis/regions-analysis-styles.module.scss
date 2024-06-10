@@ -1,0 +1,12 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+  width: 100%;
+  color: $white;
+}

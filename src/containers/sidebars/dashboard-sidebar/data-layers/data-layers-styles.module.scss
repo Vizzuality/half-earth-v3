@@ -6,6 +6,8 @@
 .container{
   display: flex;
   flex-direction: column;
+  padding: 5px 10px;
+  width: 100%;
 
   .saveButton {
     color: $dark-text;
@@ -24,7 +26,30 @@
     max-width: 300px;
   }
 
-  h3{
+  .sectionTitle{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.5;
     color: $white;
+
+  .arrowIcon {
+    fill: $white;
+    transform: rotate(90deg);
+
+    &.isOpened {
+      transform:rotate(-90deg);
+    }
+
+    transition: transform 0.2s ease;
+
+    > path {
+      fill: inherit;
+    }
   }
+}
+
 }

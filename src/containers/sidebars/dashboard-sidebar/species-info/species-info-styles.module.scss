@@ -6,6 +6,7 @@
 .species{
   display: flex;
   flex-direction: column;
+  padding: $paragraph-gutter;
 
   .title{
     display: flex;
