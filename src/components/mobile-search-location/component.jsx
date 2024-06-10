@@ -29,6 +29,7 @@ function MobileSearchLocation({ countryName, view }) {
     <>
       <motion.button
         type="button"
+        aria-label="Open Search Location Modal"
         animate={{ opacity: searchLocationModal ? 0 : 1 }}
         transition={{ duration: 0.5 }}
         className={cx({
@@ -70,6 +71,7 @@ function MobileSearchLocation({ countryName, view }) {
         <button
           className={styles.backBtn}
           type="button"
+          aria-label="Close Search Location Modal"
           onClick={() => setSearchLocationModal(false)}
         >
           <BackArrowIcon className={styles.arrowIcon} />
