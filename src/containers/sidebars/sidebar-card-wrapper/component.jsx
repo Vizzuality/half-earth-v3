@@ -21,6 +21,7 @@ function Component({
       {collapsable && (
         <button
           type="button"
+          aria-label="Close card"
           className={styles.closeButton}
           onClick={onCardClose}
         >
