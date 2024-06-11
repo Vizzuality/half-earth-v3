@@ -11,9 +11,17 @@ import mapStateToProps from './selectors';
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function ViewContainer(props) {
-  const { mapId, mapName, onMapLoad, onViewLoad, viewSettings } = props;
+  const {
+    mapId,
+    mapName,
+    onMapLoad,
+    onViewLoad,
+    viewSettings,
+    coordinates,
+    map,
+    setMap,
+  } = props;
 
-  const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
   const [loadState, setLoadState] = useState('loading');
   const [countryLayer, setCountryLayer] = useState(null);
@@ -127,7 +135,7 @@ function ViewContainer(props) {
             map,
             container: `map-container-${mapName || mapId}`,
             zoom: 6,
-            center: [-3, 42],
+            center: coordinates,
             popup: null,
             ...viewSettings,
           });

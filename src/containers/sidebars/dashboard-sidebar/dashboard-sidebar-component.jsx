@@ -13,7 +13,7 @@ import RegionsAnalysisComponent from './regions-analysis/regions-analysis-compon
 import SpeciesInfoContainer from './species-info';
 
 function DashboardSidebar(props) {
-  const { activeLayers } = props;
+  const { activeLayers, map } = props;
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   return (
@@ -51,10 +51,10 @@ function DashboardSidebar(props) {
           </button>
         </div>
         {selectedIndex === 1 && (
-          <DataLayerContainer activeLayers={activeLayers} />
+          <DataLayerContainer activeLayers={activeLayers} map={map} />
         )}
-        {selectedIndex === 2 && <BioDiversityContainer />}
-        {selectedIndex === 3 && <RegionsAnalysisComponent />}
+        {selectedIndex === 2 && <BioDiversityContainer map={map} />}
+        {selectedIndex === 3 && <RegionsAnalysisComponent map={map} />}
       </section>
     </div>
   );

@@ -9,4 +9,36 @@
   padding: 5px 10px;
   width: 100%;
   color: $white;
+
+  .sectionTitle{
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: $white;
+  }
+
+  p{
+    font-size: 12px;
+  }
+
+  .choices{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .search{
+    display: flex;
+    column-gap: 8px;
+    margin-top: 8px;
+
+    .saveButton {
+      color: $dark-text;
+      background-color: $brand-color-main;
+      &:hover {
+        background-color: $brand-color-main-hover;
+      }
+    }
+  }
 }

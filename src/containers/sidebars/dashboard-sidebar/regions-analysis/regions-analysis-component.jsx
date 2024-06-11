@@ -1,6 +1,9 @@
 import React from 'react';
 
 import Button from 'components/button';
+import SearchLocation from 'components/search-location';
+
+import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
@@ -8,7 +11,8 @@ import Checkbox from '../../../../components/checkbox/checkbox-component';
 
 import styles from './regions-analysis-styles.module.scss';
 
-function RegionsAnalysisComponent() {
+function RegionsAnalysisComponent(props) {
+  const { view, selectedOption } = props;
   return (
     <section className={styles.container}>
       <span className={styles.sectionTitle}>Regions Analysis</span>
@@ -37,7 +41,15 @@ function RegionsAnalysisComponent() {
         />
       </div>
       <div className={styles.search}>
-        <input type="text" placeholder="Search for a Region" />
+        <SearchLocation
+          stacked
+          searchType={SEARCH_TYPES.full}
+          view={view}
+          theme="dark"
+          width="full"
+          parentWidth="380px"
+          searchSourceLayerSlug={selectedOption?.slug}
+        />
         <Button
           type="rectangular"
           className={styles.saveButton}

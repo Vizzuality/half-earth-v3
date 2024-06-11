@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -25,17 +25,22 @@ function DashboardViewComponent(props) {
     openedModal,
   } = props;
 
+  const [map, setMap] = useState(null);
+
   return (
     <MapView
       onMapLoad={onMapLoad}
       mapName="dashboard"
       sceneName="dashboard"
       viewSettings={viewSettings}
+      map={map}
+      setMap={setMap}
+      coordinates={[-3, 42]}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     >
       <ArcgisLayerManager activeLayers={updatedActiveLayers} />
 
-      <DashboardSidebar activeLayers={updatedActiveLayers} />
+      <DashboardSidebar activeLayers={updatedActiveLayers} map={map} />
 
       <CountryLabelsLayer
         sceneMode={sceneMode}
