@@ -4,13 +4,20 @@ import cx from 'classnames';
 
 import Button from 'components/button';
 import LayerToggle from 'components/layer-toggle';
-// import SearchInput from 'components/search-input';
 
 import {
   PROTECTION_SLUG,
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG,
 } from 'constants/analyze-areas-constants';
+import {
+  COUNTRIES_LABELS_FEATURE_LAYER,
+  REGIONS_LABELS_LAYER,
+  COUNTRIES_DATA_FEATURE_LAYER,
+  PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  FOOBAR,
+} from 'constants/layers-slugs.js';
+// import SearchInput from 'components/search-input';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
@@ -23,23 +30,23 @@ function DataLayerComponent(props) {
   const speciesPublicLayers = [
     {
       name: 'Point Observations',
-      value: 'countries_labels_layer',
+      value: COUNTRIES_LABELS_FEATURE_LAYER,
     },
     {
       name: 'Habitat Suitable Range',
-      value: 'protected_areas_vector_tile_layer',
+      value: FOOBAR,
     },
     {
       name: 'Local Inventories',
-      value: 'regions_labels_layer',
+      value: REGIONS_LABELS_LAYER,
     },
     {
       name: 'Expert Range Maps',
-      value: 'countries_data_layer',
+      value: COUNTRIES_DATA_FEATURE_LAYER,
     },
     {
       name: 'Regional Checklists',
-      value: 'community_areas_vector_tile_layer',
+      value: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     },
   ];
 

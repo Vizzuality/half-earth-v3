@@ -212,3 +212,5 @@ export const REPTILES_LOOKUP = 'reptiles-lookup-table';
 // NRC Landing Layers
 export const NRC_LANDING_LAYERS_SLUG = 'nrc-landing-layers';
 export const EEZ_MARINE_AND_LAND_BORDERS = 'eez-marine-borders';
+
+export const FOOBAR = 'foobar';

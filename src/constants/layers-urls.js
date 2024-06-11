@@ -122,6 +122,7 @@ import {
   MAMMALS_SACA_RICHNESS_TOTAL,
   MAMMALS_SACA_RARITY_TOTAL,
   BIRDS_SACA_RICHNESS_TOTAL,
+  FOOBAR,
 } from 'constants/layers-slugs';
 
 const { REACT_APP_VERCEL_ENV } = process.env;
@@ -156,6 +157,7 @@ const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
 const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
   'https://utility.arcgis.com/usrsvcs/servers/340d03102060417c8a9f712754708216/rest/services/gadm1_precalculated_aoi_summaries_updated_20240321/FeatureServer';
 
+export const species = 'Accipiter_castanilius';
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_Terrestrial_202403/FeatureServer',
@@ -180,6 +182,7 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Educator_Ambassadors/FeatureServer',
   [COUNTRIES_LABELS_FEATURE_LAYER]: COUNTRIES_DATA_URL,
   [COUNTRIES_DATA_FEATURE_LAYER]: COUNTRIES_DATA_URL,
+  [FOOBAR]: `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/${species}_rangemap/FeatureServer`,
   [LANDSCAPE_FEATURES_LABELS_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/LandscapeUniqueRivers_gadm36/FeatureServer',
   [CITIES_LABELS_LAYER]:
