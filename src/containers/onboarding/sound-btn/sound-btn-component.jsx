@@ -119,6 +119,7 @@ function ButtonIcon({
     pauseIcon ? (
       <button
         type="button"
+        aria-label="Pause audio"
         className={styles.pauseButton}
         onMouseLeave={() => setPauseIcon(false)}
         onClick={() => {
@@ -149,6 +150,7 @@ function ButtonIcon({
       {!waitingInteraction && (waitingStartAudioClick || !playing) ? (
         <button
           type="button"
+          aria-label="Play audio"
           onClick={handlePlay}
           className={styles.playButton}
         >

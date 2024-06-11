@@ -75,6 +75,7 @@ function SpeciesTable({
         <div className={styles.tableRow}>
           <button
             type="button"
+            aria-label="Expand"
             className={styles.expandButton}
             onClick={() => toggleExpand(index)}
           >
@@ -183,6 +184,7 @@ function SpeciesTable({
         <div className={styles.tabs}>
           <button
             type="button"
+            aria-label="Change Land tab"
             onClick={() => handleVertebrateChange(landTab.slug)}
           >
             <p
@@ -200,6 +202,7 @@ function SpeciesTable({
           </button>
           <button
             type="button"
+            aria-label="Change Marine tab"
             onClick={() => handleVertebrateChange(marineTab.slug)}
             disabled={marineSpeciesTotal === 0}
           >

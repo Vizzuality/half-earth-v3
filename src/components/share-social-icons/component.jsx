@@ -12,6 +12,7 @@ function Component({ setShareUrl }) {
       {shareSocialMedia.map((socialMedia) => (
         <button
           type="button"
+          aria-label="Share on social media"
           onClick={() =>
             window.open(
               `${socialMedia.sharePath}${encodeURIComponent(setShareUrl())}`

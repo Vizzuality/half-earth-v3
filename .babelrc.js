@@ -1,4 +1,4 @@
-// jest picks up this babel configuration 
+// jest picks up this babel configuration
 // automatically and applies to the tests
 
 // jest by default sets the node env to be test
@@ -9,6 +9,6 @@ module.exports = {
   plugins: [
     'syntax-dynamic-import',
     'transform-class-properties',
-    '@babel/plugin-proposal-object-rest-spread'
+    "@babel/plugin-transform-private-property-in-object"
   ],
 }
