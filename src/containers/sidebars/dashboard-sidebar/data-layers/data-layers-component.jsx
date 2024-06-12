@@ -13,13 +13,7 @@ import {
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG,
 } from 'constants/analyze-areas-constants';
-import {
-  COUNTRIES_LABELS_FEATURE_LAYER,
-  REGIONS_LABELS_LAYER,
-  COUNTRIES_DATA_FEATURE_LAYER,
-  PROTECTED_AREAS_VECTOR_TILE_LAYER,
-  FOOBAR,
-} from 'constants/layers-slugs.js';
+import { PROTECTED_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs.js';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -40,19 +34,19 @@ function DataLayerComponent(props) {
   const speciesPublicLayers = [
     {
       name: 'Point Observations',
-      value: COUNTRIES_LABELS_FEATURE_LAYER,
+      value: 'PointObservations1',
     },
     {
       name: 'Habitat Suitable Range',
-      value: FOOBAR,
+      value: 'PointObservations2',
     },
     {
       name: 'Local Inventories',
-      value: REGIONS_LABELS_LAYER,
+      value: 'PointObservations3',
     },
     {
       name: 'Expert Range Maps',
-      value: COUNTRIES_DATA_FEATURE_LAYER,
+      value: 'PointObservations4',
     },
     {
       name: 'Regional Checklists',
@@ -96,8 +90,9 @@ function DataLayerComponent(props) {
       whereClause: `taxa = '${taxa}' AND scientificname = '${scientificname}'`,
       returnGeometry: true,
     }).then((features) => {
-      const { layer } = features[0];
+      const { layer, geometry } = features[0];
       map.add(layer);
+      view.center = [geometry.longitude, geometry.latitude];
     });
   };
 

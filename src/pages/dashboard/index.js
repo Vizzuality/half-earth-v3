@@ -13,7 +13,6 @@ import mapStateToProps from './dashboard-selectors';
 function DashboardContainer(props) {
   const { viewSettings } = props;
   const handleMapLoad = (map, activeLayers) => {
-    console.log('map view loaded', map);
     setBasemap({
       map,
       layersArray: viewSettings.basemap.layersArray,

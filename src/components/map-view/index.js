@@ -12,17 +12,18 @@ const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function ViewContainer(props) {
   const {
-    mapId,
-    mapName,
     onMapLoad,
     onViewLoad,
+    mapName,
+    mapId,
     viewSettings,
-    coordinates,
     map,
     setMap,
+    view,
+    setView,
   } = props;
 
-  const [view, setView] = useState(null);
+  // const [view, setView] = useState(null);
   const [loadState, setLoadState] = useState('loading');
   const [countryLayer, setCountryLayer] = useState(null);
   const [graphicsLayer, setGraphicsLayer] = useState(null);
@@ -135,7 +136,6 @@ function ViewContainer(props) {
             map,
             container: `map-container-${mapName || mapId}`,
             zoom: 6,
-            center: coordinates,
             popup: null,
             ...viewSettings,
           });

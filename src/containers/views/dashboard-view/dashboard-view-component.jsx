@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -7,15 +7,18 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import SideMenu from 'containers/menus/sidemenu';
 
+import EsriFeatureService from 'services/esri-feature-service';
+
+import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+
 import MapView from '../../../components/map-view';
 import DashboardSidebar from '../../sidebars/dashboard-sidebar/dashboard-sidebar-component';
 
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function DashboardViewComponent(props) {
   const {
-    updatedActiveLayers,
+    activeLayers,
     onMapLoad,
     sceneMode,
     viewSettings,
@@ -26,40 +29,53 @@ function DashboardViewComponent(props) {
   } = props;
 
   const [map, setMap] = useState(null);
+  const [view, setView] = useState(null);
+
+  useEffect(() => {
+    EsriFeatureService.getFeatures({
+      url: COUNTRIES_DATA_SERVICE_URL,
+      whereClause: `GID_0 = '${countryISO}'`,
+      returnGeometry: true,
+    }).then(
+      (features) => {
+        const { geometry } = features[0];
+        if (geometry) {
+          view.center = [geometry.longitude, geometry.latitude];
+        }
+      },
+      [view, countryISO]
+    );
+  });
 
   return (
     <MapView
       onMapLoad={onMapLoad}
       mapName="dashboard"
-      sceneName="dashboard"
       viewSettings={viewSettings}
       map={map}
       setMap={setMap}
-      coordinates={[-3, 42]}
-      loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+      view={view}
+      setView={setView}
     >
-      <ArcgisLayerManager activeLayers={updatedActiveLayers} />
+      <ArcgisLayerManager activeLayers={activeLayers} />
 
-      <DashboardSidebar activeLayers={updatedActiveLayers} map={map} />
+      <DashboardSidebar activeLayers={activeLayers} map={map} view={view} />
 
       <CountryLabelsLayer
         sceneMode={sceneMode}
         countryISO={countryISO}
         countryName={countryName}
-        activeLayers={updatedActiveLayers}
+        activeLayers={activeLayers}
       />
-      <RegionsLabelsLayer
-        sceneMode={sceneMode}
-        activeLayers={updatedActiveLayers}
-      />
+      <RegionsLabelsLayer sceneMode={sceneMode} activeLayers={activeLayers} />
 
       <SideMenu
         openedModal={openedModal}
-        activeLayers={updatedActiveLayers}
+        activeLayers={activeLayers}
         isFullscreenActive={isFullscreenActive}
       />
 
-      <LabelsLayer activeLayers={updatedActiveLayers} />
+      <LabelsLayer activeLayers={activeLayers} />
     </MapView>
   );
 }
