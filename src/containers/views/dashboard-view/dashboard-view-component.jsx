@@ -4,7 +4,6 @@ import loadable from '@loadable/component';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
-import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import SideMenu from 'containers/menus/sidemenu';
 
 import EsriFeatureService from 'services/esri-feature-service';
@@ -30,22 +29,22 @@ function DashboardViewComponent(props) {
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
+  const [geo, setGeo] = useState(null);
 
   useEffect(() => {
     EsriFeatureService.getFeatures({
       url: COUNTRIES_DATA_SERVICE_URL,
       whereClause: `GID_0 = '${countryISO}'`,
       returnGeometry: true,
-    }).then(
-      (features) => {
-        const { geometry } = features[0];
-        if (geometry) {
-          view.center = [geometry.longitude, geometry.latitude];
-        }
-      },
-      [view, countryISO]
-    );
-  });
+    }).then((features) => {
+      const { geometry } = features[0];
+
+      if (geometry && view) {
+        view.center = [geometry.longitude, geometry.latitude];
+        setGeo(geometry);
+      }
+    });
+  }, [view, countryISO]);
 
   return (
     <MapView
@@ -56,9 +55,8 @@ function DashboardViewComponent(props) {
       setMap={setMap}
       view={view}
       setView={setView}
+      geo={geo}
     >
-      <ArcgisLayerManager activeLayers={activeLayers} />
-
       <DashboardSidebar activeLayers={activeLayers} map={map} view={view} />
 
       <CountryLabelsLayer

@@ -21,6 +21,7 @@ function ViewContainer(props) {
     setMap,
     view,
     setView,
+    geo,
   } = props;
 
   // const [view, setView] = useState(null);
@@ -140,15 +141,6 @@ function ViewContainer(props) {
             ...viewSettings,
           });
 
-          flatView.when(async () => {
-            const query = {
-              geometry: flatView.center,
-              returnGeometry: true,
-              outFields: ['*'],
-            };
-            await highlightCountry(query, flatView.center, flatView);
-          });
-
           flatView.on('click', async (event) => {
             const query = {
               geometry: flatView.toMap(event),
@@ -174,6 +166,15 @@ function ViewContainer(props) {
       }
     }
   }, [map, view]);
+
+  useEffect(() => {
+    const query = {
+      geometry: geo,
+      returnGeometry: true,
+      outFields: ['*'],
+    };
+    highlightCountry(query, query.geometry, view);
+  }, [view, geo]);
 
   return <Component map={map} view={view} loadState={loadState} {...props} />;
 }
