@@ -90,9 +90,8 @@ function DataLayerComponent(props) {
       whereClause: `taxa = '${taxa}' AND scientificname = '${scientificname}'`,
       returnGeometry: true,
     }).then((features) => {
-      const { layer, geometry } = features[0];
+      const { layer } = features[0];
       map.add(layer);
-      view.center = [geometry.longitude, geometry.latitude];
     });
   };
 
