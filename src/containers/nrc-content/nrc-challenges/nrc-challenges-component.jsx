@@ -154,6 +154,7 @@ function Challenges({
               <div className={styles.xAxisLabelContainer}>
                 <button
                   type="button"
+                  aria-label="Previous Indicator"
                   onClick={handleSelectPreviousIndicator}
                   style={{ transform: 'scaleX(-1)' }}
                 >
@@ -162,7 +163,11 @@ function Challenges({
                 <span className={styles.xAxisIndicator}>
                   {indicatorLabels[countryChallengesSelectedKey]}
                 </span>
-                <button type="button" onClick={handleSelectNextIndicator}>
+                <button
+                  type="button"
+                  onClick={handleSelectNextIndicator}
+                  aria-label="Next Indicator"
+                >
                   <ArrowButton className={styles.arrowButton} />
                 </button>
               </div>

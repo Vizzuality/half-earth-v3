@@ -55,6 +55,7 @@ function FeaturedPlaceCardComponent({
             <div className={styles.placesNavigator}>
               <div
                 role="button"
+                aria-label="Previous place"
                 tabIndex={0}
                 className={styles.arrowWrapper}
                 onClick={() => handlePrevPlaceClick(selectedFeaturedPlace)}
@@ -64,6 +65,7 @@ function FeaturedPlaceCardComponent({
               <div className={styles.separator} />
               <div
                 role="button"
+                aria-label="Next place"
                 tabIndex={0}
                 className={styles.arrowWrapper}
                 onClick={() => handleNextPlaceClick(selectedFeaturedPlace)}

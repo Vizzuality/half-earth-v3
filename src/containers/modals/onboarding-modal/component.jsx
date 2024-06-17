@@ -19,13 +19,19 @@ export function OnBoardingModalComponent({
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>{description}</p>
         <div className={styles.buttons}>
-          <button className={styles.backBtn} onClick={handleBack} type="button">
+          <button
+            className={styles.backBtn}
+            onClick={handleBack}
+            type="button"
+            aria-label="Back Home"
+          >
             <T _str="Back home" />
           </button>
           <button
             className={styles.exploreBtn}
             onClick={handleClose}
             type="button"
+            aria-label="Explore"
           >
             <T _str="Explore" />
           </button>

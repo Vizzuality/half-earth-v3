@@ -53,6 +53,7 @@ module.exports = function override(config) {
       assert: require.resolve('assert'),
     },
   };
+
   // Needed for create-react-app 5
   updatedConfig.module.rules = [
     ...config.module.rules,
@@ -63,6 +64,25 @@ module.exports = function override(config) {
       use: ['source-map-loader'],
     },
   ];
+
+  // Needed because of CRA5 bug with cjs files that affects Recharts library (fast-equals inside react-smooth)
+  // https://github.com/facebook/create-react-app/issues/11889
+  updatedConfig.module.rules = updatedConfig.module.rules.map((rule) => {
+    if (rule.oneOf) {
+      return {
+        oneOf: [
+          {
+            test: /\.cjs/,
+            resolve: {
+              fullySpecified: false,
+            },
+          },
+          ...rule.oneOf,
+        ],
+      };
+    }
+    return rule;
+  });
 
   // Process is no longer available in create-react-app (Webpack) 5
   updatedConfig.plugins.push(

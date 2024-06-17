@@ -165,6 +165,7 @@ function Component(props) {
                     // eslint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/click-events-have-key-events
                     <div
                       role="button"
+                      aria-label="Previous species"
                       tabIndex={0}
                       className={styles.arrow_icon_container}
                       onClick={handlePreviousSpeciesSelection}
@@ -190,6 +191,7 @@ function Component(props) {
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                     <div
                       role="button"
+                      aria-label="Next species"
                       tabIndex={0}
                       className={styles.arrow_icon_container}
                       onClick={handleNextSpeciesSelection}

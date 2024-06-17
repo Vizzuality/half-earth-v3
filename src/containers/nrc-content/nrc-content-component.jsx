@@ -280,6 +280,7 @@ function NrcContent({
               <button
                 className={styles.backBtn}
                 type="button"
+                aria-label="Back to main view"
                 onClick={() => setNRCSidebarView(NRCSidebar.main)}
               >
                 <BackArrowIcon className={styles.arrowIcon} />

@@ -100,6 +100,7 @@ function HeroComponent({ className, browsePage }) {
                 href="https://www.half-earthproject.org/contact-us"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="Contact us"
               >
                 <T
                   _str="contact us"

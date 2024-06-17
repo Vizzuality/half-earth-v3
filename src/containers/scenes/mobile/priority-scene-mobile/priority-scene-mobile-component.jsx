@@ -51,6 +51,7 @@ function PriorityMobileComponent({
         <button
           className={styles.backBtn}
           type="button"
+          aria-label="Back"
           onClick={() => handleStepBack()}
         >
           <BackArrowIcon className={styles.arrowIcon} />
