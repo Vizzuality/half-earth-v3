@@ -13,6 +13,8 @@ import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import MapView from '../../../components/map-view';
 import DashboardSidebar from '../../sidebars/dashboard-sidebar/dashboard-sidebar-component';
 
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 function DashboardViewComponent(props) {
@@ -56,6 +58,9 @@ function DashboardViewComponent(props) {
       view={view}
       setView={setView}
       geo={geo}
+      loaderOptions={{
+        url: `https://js.arcgis.com/${API_VERSION}`,
+      }}
     >
       <DashboardSidebar activeLayers={activeLayers} map={map} view={view} />
 
@@ -65,6 +70,7 @@ function DashboardViewComponent(props) {
         countryName={countryName}
         activeLayers={activeLayers}
       />
+
       <RegionsLabelsLayer sceneMode={sceneMode} activeLayers={activeLayers} />
 
       <SideMenu

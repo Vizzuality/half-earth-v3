@@ -8,15 +8,13 @@ import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import Component from './component';
 import mapStateToProps from './selectors';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
-
 function ViewContainer(props) {
   const {
     onMapLoad,
-    onViewLoad,
     mapName,
     mapId,
     viewSettings,
+    loaderOptions,
     map,
     setMap,
     view,
@@ -24,15 +22,10 @@ function ViewContainer(props) {
     geo,
   } = props;
 
-  // const [view, setView] = useState(null);
   const [loadState, setLoadState] = useState('loading');
   const [countryLayer, setCountryLayer] = useState(null);
   const [graphicsLayer, setGraphicsLayer] = useState(null);
   const [groupLayer, setGroupLayer] = useState(null);
-
-  const loaderOptions = {
-    url: `https://js.arcgis.com/${API_VERSION}`,
-  };
 
   const highlightCountry = async (query, zoomGeometry, flatView) => {
     // country symbol - when user clicks on a country
@@ -120,6 +113,7 @@ function ViewContainer(props) {
         });
 
         setMap(flatMap);
+
         if (onMapLoad) {
           onMapLoad(flatMap);
         }
@@ -141,14 +135,14 @@ function ViewContainer(props) {
             ...viewSettings,
           });
 
-          flatView.on('click', async (event) => {
-            const query = {
-              geometry: flatView.toMap(event),
-              returnGeometry: true,
-              outFields: ['*'],
-            };
-            await highlightCountry(query, query.geometry, flatView);
-          });
+          // flatView.on('click', async (event) => {
+          //   // const query = {
+          //   //   geometry: flatView.toMap(event),
+          //   //   returnGeometry: true,
+          //   //   outFields: ['*'],
+          //   // };
+          //   // await highlightCountry(query, query.geometry, flatView);
+          // });
 
           setView(flatView);
         })
@@ -161,19 +155,18 @@ function ViewContainer(props) {
   useEffect(() => {
     if (map && view) {
       setLoadState('loaded');
-      if (onViewLoad) {
-        onViewLoad(map, view);
-      }
     }
   }, [map, view]);
 
   useEffect(() => {
-    const query = {
-      geometry: geo,
-      returnGeometry: true,
-      outFields: ['*'],
-    };
-    highlightCountry(query, query.geometry, view);
+    if (view && geo) {
+      const query = {
+        geometry: geo,
+        returnGeometry: true,
+        outFields: ['*'],
+      };
+      highlightCountry(query, query.geometry, view);
+    }
   }, [view, geo]);
 
   return <Component map={map} view={view} loadState={loadState} {...props} />;

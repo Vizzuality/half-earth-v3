@@ -16,9 +16,12 @@ import {
 import { PROTECTED_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs.js';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
+// import theme from 'styles/themes/checkboxes-theme.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
+
+// import CheckboxType from '../../../../components/layer-toggle/checkbox-type';
 
 import styles from './data-layers-styles.module.scss';
 
@@ -95,6 +98,8 @@ function DataLayerComponent(props) {
     });
   };
 
+  // const [isChecked, setIsChecked] = useState(false);
+
   return (
     <section className={styles.container}>
       <span className={styles.sectionTitle}>Data Layers</span>
@@ -133,6 +138,26 @@ function DataLayerComponent(props) {
         Show Layer
       </button>
 
+      {/* <CheckboxType
+        option={{ value: 'Show stuff', name: 'Stuff' }}
+        checked
+        theme={theme}
+        onChange={() => {
+          setIsChecked(!isChecked);
+        }}
+      /> */}
+
+      {/* <LayerToggle
+        map={map}
+        option={publicLayer}
+        type="checkbox"
+        variant="light"
+        key={publicLayer.name}
+        activeLayers={activeLayers}
+        onChange={showLayer}
+        themeCategorySlug={PROTECTION_SLUG}
+      /> */}
+
       {speciesPublicLayers.map((layer) => (
         <LayerToggle
           map={map}
@@ -140,9 +165,8 @@ function DataLayerComponent(props) {
           type="checkbox"
           variant="light"
           key={layer.value}
-          showProgress={showProgress}
           activeLayers={activeLayers}
-          onChange={handleLayerToggle}
+          onChange={showLayer}
           themeCategorySlug={PROTECTION_SLUG}
         />
       ))}
@@ -169,7 +193,7 @@ function DataLayerComponent(props) {
           showProgress={showProgress}
           activeLayers={activeLayers}
           themeCategorySlug={LAND_HUMAN_PRESSURES_SLUG}
-          onChange={handleLayerToggle}
+          onChange={showLayer}
         />
       ))}
       <hr className={hrTheme.dark} />
