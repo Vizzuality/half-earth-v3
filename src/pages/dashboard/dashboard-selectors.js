@@ -2,7 +2,6 @@
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import {
   selectGlobeUrlState,
   selectUiUrlState,
@@ -54,7 +53,6 @@ const getSidebarVisibility = createSelector(
 
 export default createStructuredSelector({
   viewSettings: getViewSettings,
-  sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,

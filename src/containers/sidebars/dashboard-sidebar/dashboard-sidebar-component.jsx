@@ -24,6 +24,7 @@ function DashboardSidebar(props) {
         <div className={styles.icons}>
           <button
             type="button"
+            aria-label="Data Analysis"
             className={cx({
               [styles.selected]: selectedIndex === 1,
             })}
@@ -33,6 +34,7 @@ function DashboardSidebar(props) {
           </button>
           <button
             type="button"
+            aria-label="Biodiversit Indicators"
             className={cx({
               [styles.selected]: selectedIndex === 2,
             })}
@@ -42,6 +44,7 @@ function DashboardSidebar(props) {
           </button>
           <button
             type="button"
+            aria-label="Regions Analysis"
             className={cx({
               [styles.selected]: selectedIndex === 3,
             })}

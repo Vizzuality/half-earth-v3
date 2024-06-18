@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import cx from 'classnames';
 
@@ -8,97 +8,121 @@ import SearchLocation from 'components/search-location';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
-import {
-  PROTECTION_SLUG,
-  LAND_HUMAN_PRESSURES_SLUG,
-  BIODIVERSITY_SLUG,
-} from 'constants/analyze-areas-constants';
-import { PROTECTED_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs.js';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
-// import theme from 'styles/themes/checkboxes-theme.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
 
-// import CheckboxType from '../../../../components/layer-toggle/checkbox-type';
-
 import styles from './data-layers-styles.module.scss';
 
 function DataLayerComponent(props) {
-  const {
-    map,
-    activeLayers,
-    handleLayerToggle,
-    showProgress,
-    view,
-    selectedOption,
-  } = props;
+  const { map, activeLayers, view, selectedOption } = props;
+
   const speciesPublicLayers = [
     {
       name: 'Point Observations',
-      value: 'PointObservations1',
+      value: 'pointObservations',
+      isChecked: false,
     },
     {
       name: 'Habitat Suitable Range',
-      value: 'PointObservations2',
+      value: 'habitatSuitableRange',
+      isChecked: false,
     },
     {
       name: 'Local Inventories',
-      value: 'PointObservations3',
+      value: 'localInventories',
+      isChecked: false,
     },
     {
       name: 'Expert Range Maps',
-      value: 'PointObservations4',
+      value: 'expertRangeMap',
+      isChecked: false,
     },
     {
       name: 'Regional Checklists',
-      value: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+      value: 'regionalChecklist',
+      isChecked: false,
     },
   ];
 
   const speciesPrivateLayers = [
     {
       name: 'Point Observations',
-      value: 'PointObservations6',
+      value: 'privatePointObservations',
+      isChecked: false,
     },
   ];
 
   const speciesRegionsLayers = [
     {
       name: 'Protected Areas',
-      value: 'PointObservations7',
+      value: 'protectedAreas',
+      isChecked: false,
     },
     {
       name: 'Proposed Protected',
-      value: 'PointObservations8',
+      value: 'proposedProtected',
+      isChecked: false,
     },
     {
       name: 'Administrative Layers',
-      value: 'PointObservations9',
+      value: 'adminLayers',
+      isChecked: false,
     },
   ];
 
+  const [dataLayers, setDataLayers] = useState({});
+  const [speciesLayers, setSpeciesLayers] = useState(speciesPublicLayers);
+
   const isOpened = true;
 
-  const showLayer = () => {
+  const updateOption = (layerName, showHide) => {
+    const visibleLayers = speciesLayers.map((l) => {
+      if (l.value === layerName) {
+        return { ...l, isChecked: showHide };
+      }
+      return l;
+    });
+    setSpeciesLayers(visibleLayers);
+  };
+
+  const displayLayer = (event) => {
+    const layerName = event.value;
     const taxa = 'mammals';
     const scientificname = 'Syncerus caffer';
 
     const url =
       'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/occurrence_202301_alltaxa_drc_test/FeatureServer/0';
 
-    EsriFeatureService.getFeatures({
-      url,
-      whereClause: `taxa = '${taxa}' AND scientificname = '${scientificname}'`,
-      returnGeometry: true,
-    }).then((features) => {
-      const { layer } = features[0];
-      map.add(layer);
-    });
-  };
+    const layerToShow = speciesLayers.find((l) => l.value === layerName);
 
-  // const [isChecked, setIsChecked] = useState(false);
+    if (!layerToShow.isChecked) {
+      EsriFeatureService.getFeatures({
+        url,
+        whereClause: `taxa = '${taxa}' AND scientificname = '${scientificname}'`,
+        returnGeometry: true,
+      }).then((features) => {
+        const { layer } = features[0];
+        setDataLayers({ ...dataLayers, [layerName]: layer });
+
+        updateOption(layerName, true);
+
+        map.add(layer);
+      });
+    } else {
+      const layer = dataLayers[layerName];
+      // get remaining layers from object
+      const { [layerName]: name, ...rest } = dataLayers;
+      // set the update the dataLayers object
+      setDataLayers(rest);
+
+      updateOption(layerName, false);
+
+      map.remove(layer);
+    }
+  };
 
   return (
     <section className={styles.container}>
@@ -133,41 +157,17 @@ function DataLayerComponent(props) {
         />
         <span>Distribute Data: Public</span>
       </button>
-
-      <button type="button" onClick={showLayer}>
-        Show Layer
-      </button>
-
-      {/* <CheckboxType
-        option={{ value: 'Show stuff', name: 'Stuff' }}
-        checked
-        theme={theme}
-        onChange={() => {
-          setIsChecked(!isChecked);
-        }}
-      /> */}
-
-      {/* <LayerToggle
-        map={map}
-        option={publicLayer}
-        type="checkbox"
-        variant="light"
-        key={publicLayer.name}
-        activeLayers={activeLayers}
-        onChange={showLayer}
-        themeCategorySlug={PROTECTION_SLUG}
-      /> */}
-
-      {speciesPublicLayers.map((layer) => (
+      {speciesLayers.map((layer) => (
         <LayerToggle
           map={map}
           option={layer}
           type="checkbox"
           variant="light"
           key={layer.value}
+          isChecked={layer.isChecked}
           activeLayers={activeLayers}
-          onChange={showLayer}
-          themeCategorySlug={PROTECTION_SLUG}
+          onChange={displayLayer}
+          themeCategorySlug={layer.value}
         />
       ))}
       <hr className={hrTheme.dark} />
@@ -190,10 +190,10 @@ function DataLayerComponent(props) {
           type="checkbox"
           variant="light"
           key={layer.value}
-          showProgress={showProgress}
+          isChecked={layer.isChecked}
           activeLayers={activeLayers}
-          themeCategorySlug={LAND_HUMAN_PRESSURES_SLUG}
-          onChange={showLayer}
+          onChange={displayLayer}
+          themeCategorySlug={layer.value}
         />
       ))}
       <hr className={hrTheme.dark} />
@@ -216,10 +216,10 @@ function DataLayerComponent(props) {
           type="checkbox"
           variant="light"
           key={layer.value}
-          showProgress={showProgress}
+          isChecked={layer.isChecked}
           activeLayers={activeLayers}
-          onChange={handleLayerToggle}
-          themeCategorySlug={BIODIVERSITY_SLUG}
+          onChange={displayLayer}
+          themeCategorySlug={layer.value}
         />
       ))}
     </section>
