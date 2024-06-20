@@ -12,8 +12,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
-import ScoreDistributionsContainer from '../../sidebars/dashboard-sidebar/score-distributions';
-import TemporalTrendsContainer from '../../sidebars/dashboard-sidebar/temporal-trends';
+import DashboardTrendsSidebar from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
@@ -64,8 +63,11 @@ function DashboardTrendsViewComponent(props) {
         url: `https://js.arcgis.com/${API_VERSION}`,
       }}
     >
-      <TemporalTrendsContainer />
-      <ScoreDistributionsContainer />
+      <DashboardTrendsSidebar
+        activeLayers={activeLayers}
+        map={map}
+        view={view}
+      />
 
       <CountryLabelsLayer
         sceneMode={sceneMode}

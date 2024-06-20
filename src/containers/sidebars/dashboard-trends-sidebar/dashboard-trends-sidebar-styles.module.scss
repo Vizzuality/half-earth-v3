@@ -1,0 +1,75 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+$top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
+$trends-width: 950px;
+
+.container {
+  @extend %verticalScrollbar;
+  @include backdropBlur();
+  position: absolute;
+  top: $top;
+  left: $site-gutter;
+  display: flex;
+  flex-direction: column;
+  border: $sidebar-border;
+  border-radius: $sidebar-border-radius;
+  height: calc(100vh - #{$top});
+  width: $trends-width;
+  z-index: $bring-to-front;
+}
+
+
+$info-width: 310px;
+
+.trends{
+  display: flex;
+  padding: $paragraph-gutter;
+
+  .info{
+    width: $info-width;
+
+    .title{
+      @extend %display1;
+      display: flex;
+      gap: 10px;
+      color: $white;
+      margin: 0 0 $site-gutter / 2 0;
+      font-size: 24px;
+      line-height: 1.5;
+    }
+
+    .description {
+      @extend %bodyText;
+      color: $white;
+      margin: 0 0 $site-gutter / 2 0;
+      font-size: 14px;
+    }
+
+    .options{
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
+      margin-top: 10px;
+
+      .saveButton {
+        color: $dark-text;
+        background-color: $brand-color-main;
+        &:hover {
+          background-color: $brand-color-main-hover;
+        }
+      }
+
+      .helpText{
+        color: #FFF;
+        font-family: "Open Sans";
+        font-size: 9px;
+        font-style: italic;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+  }
+}
