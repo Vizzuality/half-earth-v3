@@ -11,7 +11,7 @@ import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
-const { REACT_APP_ARGISJS_API_VERSION } = process.env;
+const { VITE_APP_ARGISJS_API_VERSION } = import.meta.env;
 
 function getFeatures({
   url,
@@ -23,8 +23,8 @@ function getFeatures({
 }: GetFeatures) {
   return new Promise((resolve, reject) => {
     if (
-      REACT_APP_ARGISJS_API_VERSION &&
-      parseFloat(REACT_APP_ARGISJS_API_VERSION) > 4.21
+      VITE_APP_ARGISJS_API_VERSION &&
+      parseFloat(VITE_APP_ARGISJS_API_VERSION) > 4.21
     ) {
       loadModules(['esri/layers/FeatureLayer'])
         .then(([FeatureLayer]) => {

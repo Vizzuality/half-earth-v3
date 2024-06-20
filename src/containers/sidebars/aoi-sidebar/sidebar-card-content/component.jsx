@@ -24,13 +24,13 @@ import {
 } from 'constants/analyze-areas-constants';
 import { getWDPATranslations } from 'constants/translation-constants';
 
-import COLORS from 'styles/settings';
+import COLORS from 'styles/settings.scss';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as ExternalLinkIcon } from 'icons/external_link.svg';
-import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
-import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+import ExternalLinkIcon from 'icons/external_link.svg?react';
+import InfoIcon from 'icons/infoTooltip.svg?react';
+import WarningIcon from 'icons/warning.svg?react';
 
 import HumanPressure from './human-pressure-chart';
 

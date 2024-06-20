@@ -2,7 +2,7 @@ import React from 'react';
 
 import { T } from '@transifex/react';
 
-import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+import WarningIcon from 'icons/warning.svg?react';
 
 import styles from './onboarding-disclaimer-styles.module.scss';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import AreaChart from 'components/charts/area-chart';
 
-import COLORS from 'styles/settings';
+import COLORS from 'styles/settings.scss';
 
 import styles from './styles.module.scss';
 

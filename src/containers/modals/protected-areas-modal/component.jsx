@@ -12,7 +12,7 @@ import { getCountryNames } from 'constants/translation-constants';
 
 import styles from './styles.module';
 
-import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
+import SearchIcon from 'icons/search-species.svg?react';
 
 const Spinner = loadable(() => import('components/spinner'));
 

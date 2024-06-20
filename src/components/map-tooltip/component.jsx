@@ -14,7 +14,7 @@ import {
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import CloseIcon from 'icons/close.svg?react';
 
 function MapTooltipComponent({
   img,

@@ -9,7 +9,7 @@ import {
   PolarAngleAxis,
 } from 'recharts';
 
-import COLORS from 'styles/settings';
+import COLORS from 'styles/settings.scss';
 
 import styles from './arc-chart-styles.module.scss';
 

@@ -1,4 +1,4 @@
-import COLORS from 'styles/settings';
+import COLORS from 'styles/settings.scss';
 
 export const CONTINENTS = [
   {

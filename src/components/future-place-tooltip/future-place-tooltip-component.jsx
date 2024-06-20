@@ -9,7 +9,7 @@ import { useClickOutside } from 'utils/ui-utils';
 import cx from 'classnames';
 import { format } from 'd3-format';
 
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import CloseIcon from 'icons/close.svg?react';
 
 import styles from './future-place-tooltip-styles.module.scss';
 

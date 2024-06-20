@@ -46,11 +46,11 @@ import { getSidebarTabs } from 'constants/ui-params';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
-import { ReactComponent as EditIcon } from 'icons/edit.svg';
-import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
-import { ReactComponent as PopulationIcon } from 'icons/population.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import ClimateRegimeIcon from 'icons/climate-regime.svg?react';
+import EditIcon from 'icons/edit.svg?react';
+import LandCoverIcon from 'icons/land-cover.svg?react';
+import PopulationIcon from 'icons/population.svg?react';
+import ShareIcon from 'icons/share.svg?react';
 
 import goalGlobe from 'images/goal-globe.png';
 

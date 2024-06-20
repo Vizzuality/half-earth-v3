@@ -8,7 +8,7 @@ import Button from 'components/button';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
+import CloseIcon from 'icons/menu-close.svg?react';
 
 function Component({ onboardingOverlay, className, handleClose, reference }) {
   const t = useT();

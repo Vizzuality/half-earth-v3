@@ -30,7 +30,7 @@ import {
 } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
-const { REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI } = process.env;
+const { VITE_APP_FEATURE_SPECIFIC_REGIONS_AOI } = import.meta.env;
 
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
@@ -80,7 +80,7 @@ export const getPrecalculatedAOIOptions = () => [
     slug: WDPA_OECM_FEATURE_LAYER,
     label: t('Protected areas'),
   },
-  ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true'
+  ...(VITE_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true'
     ? [
         {
           title: SPECIFIC_REGIONS_TILE_LAYER,
@@ -101,7 +101,7 @@ export const getPrecalculatedAOIOptions = () => [
 ];
 
 export const AOIS_HISTORIC =
-  process.env.NODE_ENV === 'development'
+  import.meta.env.NODE_ENV === 'development'
     ? AOIS_HISTORIC_DEVELOPMENT
     : AOIS_HISTORIC_PRODUCTION;
 

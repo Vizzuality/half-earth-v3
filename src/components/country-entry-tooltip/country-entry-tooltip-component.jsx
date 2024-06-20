@@ -15,7 +15,7 @@ import { LAND_MARINE } from 'constants/country-mode-constants';
 import { useLandscape } from 'constants/responsive';
 import { getCountryNames } from 'constants/translation-constants';
 
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import CloseIcon from 'icons/close.svg?react';
 
 import styles from './country-entry-tooltip-styles.module.scss';
 
@@ -129,7 +129,7 @@ function CountryEntryTooltipComponent({
         <div>
           <img
             className={styles.tooltipFlag}
-            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+            src={`${import.meta.env.PUBLIC_URL}/flags/${countryISO}.svg`}
             alt=""
           />
           <span className={styles.tooltipName}>

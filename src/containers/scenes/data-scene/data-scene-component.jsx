@@ -29,7 +29,7 @@ import styles from './data-scene-styles.module.scss';
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
 function DataSceneComponent({
   sceneMode,

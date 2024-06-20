@@ -6,7 +6,7 @@ import Scene from 'components/scene';
 
 import styles from './landing-scene-mobile-styles.module.scss';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
 function LandingSceneComponent({ sceneSettings }) {
   return (

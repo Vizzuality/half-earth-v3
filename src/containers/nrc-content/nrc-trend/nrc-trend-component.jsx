@@ -8,9 +8,9 @@ import TrendChartTooltip from 'containers/nrc-content/nrc-trend/trend-chart-tool
 
 import TrendChart from 'components/charts/trend-chart';
 
-import COLORS from 'styles/settings';
+import InfoIcon from 'icons/infoDark.svg?react';
 
-import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
+import COLORS from '../../../styles/settings.scss';
 
 import styles from './nrc-trend-styles.module.scss';
 

@@ -7,7 +7,7 @@ import { featureCollectionFromShape } from 'utils/analyze-areas-utils';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as AddShapeIcon } from 'icons/add_shape_icon.svg';
+import AddShapeIcon from 'icons/add_shape_icon.svg?react';
 
 function ShapeFileUploader({ sizeWarning, view, onError, onSuccess }) {
   const t = useT();

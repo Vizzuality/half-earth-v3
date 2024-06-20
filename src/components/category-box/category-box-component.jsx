@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
-import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
+import ArrowExpandIcon from 'icons/arrow_expand.svg?react';
 
 import styles from './category-box-styles.module.scss';
 

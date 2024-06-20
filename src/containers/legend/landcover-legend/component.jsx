@@ -4,6 +4,8 @@ import COLORS from 'styles/settings.scss';
 
 import styles from './styles.module';
 
+console.log('c', COLORS);
+
 function LandcoverLegend() {
   const LEGEND_ITEMS = [
     { label: 'Water', color: COLORS.water },

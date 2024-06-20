@@ -11,7 +11,7 @@ import ShareModal from 'components/share-modal';
 
 import animationStyles from 'styles/common-animations.module.scss';
 
-import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
+import ChevronIcon from 'icons/arrow_right.svg?react';
 
 import styles from './featured-place-card-styles.module';
 

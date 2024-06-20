@@ -15,8 +15,8 @@ import HeaderItem from 'components/header-item';
 
 import { getSpeciesGroup } from 'constants/translation-constants';
 
-import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
-import { ReactComponent as SearchIcon } from 'icons/search.svg';
+import ArrowIcon from 'icons/arrow_right.svg?react';
+import SearchIcon from 'icons/search.svg?react';
 
 import ExpandedInfo from './expanded-info';
 import {

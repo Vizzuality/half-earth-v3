@@ -10,9 +10,9 @@ import LayerOpacityControl from 'components/layer-opacity-control';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as BringToBackIcon } from 'icons/bring_to_back.svg';
-import { ReactComponent as BringToFrontIcon } from 'icons/bring_to_front.svg';
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
+import BringToBackIcon from 'icons/bring_to_back.svg?react';
+import BringToFrontIcon from 'icons/bring_to_front.svg?react';
+import InfoIcon from 'icons/info.svg?react';
 
 function LayersTools({
   option,

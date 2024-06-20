@@ -11,7 +11,7 @@ import IndicatorCard from 'containers/nrc-content/nrc-indicators/indicator-card'
 
 import { useMobile } from 'constants/responsive';
 
-import COLORS from 'styles/settings';
+import COLORS from 'styles/settings.scss';
 
 import styles from './nrc-indicators-styles.module.scss';
 import { getBarStyles } from './nrc-indicators-utils';

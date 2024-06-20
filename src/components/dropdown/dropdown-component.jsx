@@ -9,9 +9,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
-import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
+import IconArrow from 'icons/arrow_right.svg?react';
+import CloseIcon from 'icons/close.svg?react';
+import SearchIcon from 'icons/search-species.svg?react';
 
 import styles from './dropdown-styles.module.scss';
 
