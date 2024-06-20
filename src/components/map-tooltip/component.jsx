@@ -60,12 +60,12 @@ function MapTooltipComponent({
 
   useEffect(() => {
     if (isVisible && tooltip && tooltipPosition) {
-      view.popup.open({
+      view.openPopup({
         location: tooltipPosition.centroid,
         content: tooltipref.current,
       });
     } else {
-      view.popup.close();
+      view.closePopup();
     }
   }, [isVisible, tooltipPosition, tooltip]);
 

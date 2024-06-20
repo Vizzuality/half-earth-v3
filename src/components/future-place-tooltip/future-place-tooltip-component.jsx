@@ -39,12 +39,12 @@ function AOIEntryTooltipComponent({
   useEffect(() => {
     if (tooltipPosition && tooltip && !!tooltipContent) {
       const { latitude, longitude } = tooltipPosition.centroid;
-      view.popup.open({
+      view.openPopup({
         location: { latitude, longitude },
         content: tooltipref.current,
       });
     } else {
-      view.popup.close();
+      view.closePopup();
     }
   }, [tooltipPosition, tooltip, !!tooltipContent]);
 

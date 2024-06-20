@@ -69,7 +69,7 @@ function CountryEntryTooltipComponent({
 
   useEffect(() => {
     if (tooltipPosition && tooltip && mapTooltipIsVisible) {
-      view.popup.open({
+      view.openPopup({
         location: tooltipPosition,
         content: tooltipref.current,
       });
@@ -90,7 +90,7 @@ function CountryEntryTooltipComponent({
         });
       }
     } else {
-      view.popup.close();
+      view.closePopup();
     }
   }, [tooltipPosition, tooltip, mapTooltipIsVisible]);
 
