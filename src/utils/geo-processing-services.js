@@ -203,10 +203,15 @@ export function getCustomAOISpeciesData(crfName, geometry) {
 }
 
 const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
-  const data = JSON.parse(jsonTaxaData);
+  let data;
+  try {
+    data = JSON.parse(jsonTaxaData);
+  } catch (error) {
+    console.error('Error parsing JSON data', error);
+  }
   return new Promise((resolve, reject) => {
     if (!data) {
-      resolve([]);
+      resolve(null);
     }
     const crfSlices = data.reduce(
       (acc, f) => ({
@@ -266,7 +271,7 @@ export const setPrecalculatedSpeciesData = (
   getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
     // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
     setTaxaData(
-      data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955)
+      data?.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955)
     );
     handleLoadedTaxaData('mammals');
   });
