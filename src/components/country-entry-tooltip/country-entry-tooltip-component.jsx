@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 
-import { loadModules } from 'esri-loader';
-
 import { T, useT, useLocale } from '@transifex/react';
 
 import { roundSPI } from 'utils/data-formatting-utils';
@@ -40,7 +38,6 @@ function CountryEntryTooltipComponent({
   const countryNames = useMemo(getCountryNames, [locale]);
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
-  const [tooltip, setTooltip] = useState(null);
   const [activeTab, setActiveTab] = useState('land');
 
   const {
@@ -58,17 +55,8 @@ function CountryEntryTooltipComponent({
     protectionNeededMar,
   } = tooltipContent;
 
-  // Create a new Popup to contain the tooltip
   useEffect(() => {
-    loadModules(['esri/widgets/Popup']).then(([Popup]) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const _tooltip = new Popup({ view, alignment: 'top-center' });
-      setTooltip(_tooltip);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (tooltipPosition && tooltip && mapTooltipIsVisible) {
+    if (tooltipPosition && mapTooltipIsVisible) {
       view.openPopup({
         location: tooltipPosition,
         content: tooltipref.current,
@@ -92,7 +80,7 @@ function CountryEntryTooltipComponent({
     } else {
       view.closePopup();
     }
-  }, [tooltipPosition, tooltip, mapTooltipIsVisible]);
+  }, [tooltipPosition, mapTooltipIsVisible]);
 
   const { overlay: onboardingOverlay } = getOnboardingProps({
     section: 'exploreNRC',
@@ -114,8 +102,7 @@ function CountryEntryTooltipComponent({
 
   const landTab = activeTab === LAND_MARINE.land;
 
-  if (!tooltipPosition || !tooltip) return null;
-
+  if (!tooltipPosition) return null;
   return (
     <div
       ref={tooltipref}

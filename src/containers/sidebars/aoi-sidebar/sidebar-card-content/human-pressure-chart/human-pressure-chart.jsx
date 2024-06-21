@@ -1,8 +1,8 @@
 import React from 'react';
 
-import AreaChart from 'components/charts/area-chart';
+import { getCSSVariable } from 'utils/css-utils';
 
-import COLORS from 'styles/settings.scss';
+import AreaChart from 'components/charts/area-chart';
 
 import styles from './styles.module.scss';
 
@@ -76,7 +76,7 @@ function HumanPressure({ chartDomain, setChartDomain, data }) {
               <AreaChart
                 area={{
                   key: 'value',
-                  stroke: COLORS.gold,
+                  stroke: getCSSVariable('gold'),
                   fill: 'url(#gradientColor)',
                   strokeWidth: 2,
                   type: 'natural',

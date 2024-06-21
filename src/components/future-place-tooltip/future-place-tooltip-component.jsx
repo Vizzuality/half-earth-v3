@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-
-import { loadModules } from 'esri-loader';
+import React, { useEffect, useRef } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -21,23 +19,13 @@ function AOIEntryTooltipComponent({
   onExploreAOIClick,
 }) {
   const tooltipref = useRef(null);
-  const [tooltip, setTooltip] = useState(null);
   const buttonRef = useRef(null);
   const t = useT();
 
   useClickOutside(tooltipref, () => handleTooltipClose(), buttonRef);
 
-  // Create a new Popup to contain the tooltip
   useEffect(() => {
-    loadModules(['esri/widgets/Popup']).then(([Popup]) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const _tooltip = new Popup({ view });
-      setTooltip(_tooltip);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (tooltipPosition && tooltip && !!tooltipContent) {
+    if (tooltipPosition && !!tooltipContent) {
       const { latitude, longitude } = tooltipPosition.centroid;
       view.openPopup({
         location: { latitude, longitude },
@@ -46,7 +34,7 @@ function AOIEntryTooltipComponent({
     } else {
       view.closePopup();
     }
-  }, [tooltipPosition, tooltip, !!tooltipContent]);
+  }, [tooltipPosition, !!tooltipContent]);
 
   const {
     attributes: { MOL_ID, AREA_KM2 },
@@ -56,7 +44,7 @@ function AOIEntryTooltipComponent({
     <div
       ref={tooltipref}
       className={cx(styles.tooltipContainer, {
-        [styles.tooltipVisible]: tooltip && tooltipContent,
+        [styles.tooltipVisible]: tooltipContent,
       })}
     >
       <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose} />

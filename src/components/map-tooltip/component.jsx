@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-
-import { loadModules } from 'esri-loader';
+import React, { useEffect, useRef, useMemo } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 
@@ -39,19 +37,6 @@ function MapTooltipComponent({
   const translateCountry = (data) => CountryNamesTranslations[data] || data;
 
   const tooltipref = useRef(null);
-  const [tooltip, setTooltip] = useState(null);
-
-  // Create a new Popup to contain the tooltip
-  useEffect(() => {
-    loadModules(['esri/widgets/Popup']).then(([Popup]) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const _tooltip = new Popup({ view });
-      setTooltip(_tooltip);
-    });
-    return function cleanUp() {
-      onCloseButtonClick();
-    };
-  }, []);
 
   // Clean up on mount
   useEffect(() => {
@@ -59,7 +44,7 @@ function MapTooltipComponent({
   }, []);
 
   useEffect(() => {
-    if (isVisible && tooltip && tooltipPosition) {
+    if (isVisible && tooltipPosition) {
       view.openPopup({
         location: tooltipPosition.centroid,
         content: tooltipref.current,
@@ -67,7 +52,7 @@ function MapTooltipComponent({
     } else {
       view.closePopup();
     }
-  }, [isVisible, tooltipPosition, tooltip]);
+  }, [isVisible, tooltipPosition]);
 
   return (
     <div

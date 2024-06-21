@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@arcgis/core": "4.29.10",
     "@esri/arcgis-rest-feature-layer": "^3.4.3",
     "@esri/arcgis-rest-request": "^3.4.3",
     "@loadable/component": "^5.10.1",
@@ -61,7 +62,7 @@
     "build": "tsc && vite build && npm run build-service-worker && npm run transifex:push",
     "preview": "vite preview",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
-    "build-service-worker": "node ./src/service-worker-build.js",
+    "build-service-worker": "node ./src/service-worker-build.cjs",
     "cypress:open": "cypress open",
     "docs:serve": "bundle exec jekyll serve",
     "eject": "react-scripts eject",

@@ -1,4 +1,4 @@
-import COLORS from 'styles/settings.scss';
+import { getCSSVariable } from 'utils/css-utils';
 
 export const getBarStyles = ({
   color1,
@@ -8,7 +8,9 @@ export const getBarStyles = ({
   variant = 'dark',
 }) => {
   const backgroundColor =
-    variant === 'dark' ? COLORS['white-opacity'] : COLORS['athens-gray'];
+    variant === 'dark'
+      ? getCSSVariable('white-opacity')
+      : getCSSVariable('athens-gray');
   const str = color2
     ? `linear-gradient(to right,
     ${color1},

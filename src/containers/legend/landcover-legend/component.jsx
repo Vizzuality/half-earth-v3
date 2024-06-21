@@ -1,22 +1,23 @@
 import React from 'react';
 
-import COLORS from 'styles/settings.scss';
+import { getCSSVariable } from 'utils/css-utils';
 
 import styles from './styles.module';
 
-console.log('c', COLORS);
-
 function LandcoverLegend() {
   const LEGEND_ITEMS = [
-    { label: 'Water', color: COLORS.water },
-    { label: 'Trees', color: COLORS.trees },
-    { label: 'Flooded Vegetation', color: COLORS['flooded-vegetation'] },
-    { label: 'Crops', color: COLORS.crops },
-    { label: 'Built area', color: COLORS['built-area'] },
-    { label: 'Bare ground', color: COLORS['bare-ground'] },
-    { label: 'Snow/Ice', color: COLORS['snow-ice'] },
-    { label: 'Clouds', color: COLORS.clouds },
-    { label: 'Rangeland', color: COLORS.rangeland },
+    { label: 'Water', color: getCSSVariable('water') },
+    { label: 'Trees', color: getCSSVariable('trees') },
+    {
+      label: 'Flooded Vegetation',
+      color: getCSSVariable('flooded-vegetation'),
+    },
+    { label: 'Crops', color: getCSSVariable('crops') },
+    { label: 'Built area', color: getCSSVariable('built-area') },
+    { label: 'Bare ground', color: getCSSVariable('bare-ground') },
+    { label: 'Snow/Ice', color: getCSSVariable('snow-ice') },
+    { label: 'Clouds', color: getCSSVariable('clouds') },
+    { label: 'Rangeland', color: getCSSVariable('rangeland') },
   ];
 
   return (

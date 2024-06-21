@@ -2,8 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 
-import { loadModules } from 'esri-loader';
-
 import { useT } from '@transifex/react';
 
 import * as urlActions from 'actions/url-actions';
@@ -11,6 +9,8 @@ import * as urlActions from 'actions/url-actions';
 import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { writeToForageItem } from 'utils/local-forage-utils';
 
+import * as geometryEngine from '@arcgis/core/geometry/geometryEngine';
+import * as jsonUtils from '@arcgis/core/geometry/support/jsonUtils';
 import groupBy from 'lodash/groupBy';
 import orderBy from 'lodash/orderBy';
 import unionBy from 'lodash/unionBy';
@@ -82,9 +82,7 @@ function AOIScene(props) {
 
   const [loadedMap, setMap] = useState(null);
   const [geometry, setGeometry] = useState(null);
-  const [jsonUtils, setJsonUtils] = useState(null);
   const [contextualData, setContextualData] = useState(null);
-  const [geometryEngine, setGeometryEngine] = useState(null);
   const [speciesData, setSpeciesData] = useState(INITIAL_SPECIES_STATE);
   const [storedArea, setStoredArea] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -118,16 +116,6 @@ function AOIScene(props) {
       setUpdatedActiveLayers(activeLayers);
     }
   }, [activeLayers]);
-
-  useEffect(() => {
-    loadModules([
-      'esri/geometry/geometryEngine',
-      'esri/geometry/support/jsonUtils',
-    ]).then(([_geometryEngine, _jsonUtils]) => {
-      setGeometryEngine(_geometryEngine);
-      setJsonUtils(_jsonUtils);
-    });
-  }, []);
 
   // Get PRECALCULATED AOIs
   useEffect(() => {

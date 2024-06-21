@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
 
-import { loadModules } from 'esri-loader';
-
 import {
   findLayerInMap,
   addLayerToActiveLayers,
 } from 'utils/layer-manager-utils';
+
+import LabelClass from '@arcgis/core/layers/support/LabelClass';
 
 import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 
@@ -17,29 +17,23 @@ function CountryLabelsLayerComponent(props) {
   const [countryLabelsLayer, setCountryLabelsLayer] = useState(null);
 
   useEffect(() => {
-    loadModules(['esri/layers/support/LabelClass'])
-      .then(([LabelClass]) => {
-        const _labelingInfo = new LabelClass({
-          labelExpressionInfo: {
-            expression: '$feature.NAME_0',
-          },
-          symbol: {
-            type: 'text',
-            color: [213, 207, 202],
-            font: {
-              family: 'Helvetica',
-              size: 10,
-              weight: 'normal',
-            },
-            haloColor: [0, 0, 0, 255],
-            haloSize: 1,
-          },
-        });
-        setLabelingInfo(_labelingInfo);
-      })
-      .catch((error) => {
-        console.warn(error);
-      });
+    const _labelingInfo = new LabelClass({
+      labelExpressionInfo: {
+        expression: '$feature.NAME_0',
+      },
+      symbol: {
+        type: 'text',
+        color: [213, 207, 202],
+        font: {
+          family: 'Helvetica',
+          size: 10,
+          weight: 'normal',
+        },
+        haloColor: [0, 0, 0, 255],
+        haloSize: 1,
+      },
+    });
+    setLabelingInfo(_labelingInfo);
   }, [countryISO]);
 
   useEffect(() => {

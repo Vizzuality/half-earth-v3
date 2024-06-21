@@ -297,3 +297,41 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
   // FONT FAMILIES
   font-family-serif: $font-family-serif;
 }
+
+:root {
+  // COLORS
+  --shamrock: #{$shamrock};
+  --conifer: #{$conifer};
+  --dark-text: #{$dark-text};
+  --gold: #{$gold};
+  --french-rose: #{$french-rose};
+  --medium-purple: #{$medium-purple};
+  --picton-blue: #{$picton-blue};
+  --protected-areas: #{$protected-areas};
+  --protection-needed: #{$protection-needed};
+  --high-modification: #{$high-modification};
+  --primary: #{$shamrock};
+  --some-modification: #{$some-modification};
+  --tango: #{$tango};
+  --firefly: #{$firefly};
+  --navy: #{$navy-he};
+  --white: #{$white};
+  --white-opacity: #{$white-opacity};
+  --white-opacity-20: #{$white-opacity-20};
+  --athens-gray: #{$athens-gray};
+  --oslo-gray: #{$oslo-gray};
+
+  // Landcover legend
+  --water: #{$water};
+  --trees: #{$trees};
+  --flooded-vegetation: #{$flooded-vegetation};
+  --crops: #{$crops};
+  --built-area: #{$built-area};
+  --bare-ground: #{$bare-ground};
+  --snow-ice: #{$snow-ice};
+  --clouds: #{$clouds};
+  --rangeland: #{$rangeland};
+
+  // FONT FAMILIES
+  --font-family-serif: #{$font-family-serif};
+}

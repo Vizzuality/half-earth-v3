@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import React, { useMemo, useState } from 'react';
 
-import cx from 'classnames';
+import { getCSSVariable } from 'utils/css-utils';
 
-import COLORS from 'styles/settings.scss';
+import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
@@ -75,8 +75,12 @@ function SpsChart({
             <stop offset="100%" stopColor="#00A548" />
           </linearGradient>
           <radialGradient id="radial-gradient" cy="100%">
-            <stop offset="30%" stopColor={COLORS.firefly} />
-            <stop offset="100%" stopOpacity={0.3} stopColor={COLORS.firefly} />
+            <stop offset="30%" stopColor={getCSSVariable('firefly')} />
+            <stop
+              offset="100%"
+              stopOpacity={0.3}
+              stopColor={getCSSVariable('firefly')}
+            />
           </radialGradient>
         </defs>
       </svg>

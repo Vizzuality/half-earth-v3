@@ -21,7 +21,6 @@ import {
 
 const createNewCustomAOI = ({
   aoiStoredGeometry,
-  geometryEngine,
   aoiId,
   jsonUtils,
   setContextualData,
@@ -32,7 +31,7 @@ const createNewCustomAOI = ({
   t,
 }) => {
   const areaName = t('Custom area');
-  const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
+  const area = calculateGeometryArea(aoiStoredGeometry);
   const contextualData = {
     area,
     areaName,

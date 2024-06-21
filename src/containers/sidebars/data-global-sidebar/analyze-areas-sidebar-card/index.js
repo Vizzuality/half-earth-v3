@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
-import { loadModules } from 'esri-loader';
-
 import { AREA_OF_INTEREST } from 'router';
 
 import { useLocale, useT } from '@transifex/react';
@@ -18,6 +16,8 @@ import {
 } from 'utils/analyze-areas-utils';
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
+
+import Polygon from '@arcgis/core/geometry/Polygon';
 
 import { useSketchWidget, useWatchUtils } from 'hooks/esri';
 
@@ -149,28 +149,23 @@ function AnalyzeAreasContainer(props) {
   };
 
   const onShapeUploadSuccess = (response) => {
-    loadModules(['esri/geometry/Polygon', 'esri/geometry/geometryEngine']).then(
-      ([Polygon, geometryEngine]) => {
-        const featureSetGeometry =
-          response.data.featureCollection.layers[0].featureSet.features[0]
-            .geometry;
-        const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
-        if (area > HIGHER_AREA_SIZE_LIMIT) {
-          setPromptModalContent({
-            title: warningMessages.area.title,
-            description: warningMessages.area.description(area),
-          });
-          setPromptModalOpen(true);
-          shapeUploadTooBigAnalytics();
-        } else {
-          const geometryInstance = new Polygon(featureSetGeometry);
-          const hash = createHashFromGeometry(geometryInstance);
-          setAoiGeometry({ hash, geometry: geometryInstance });
-          shapeUploadSuccessfulAnalytics();
-          browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
-        }
-      }
-    );
+    const featureSetGeometry =
+      response.data.featureCollection.layers[0].featureSet.features[0].geometry;
+    const area = calculateGeometryArea(featureSetGeometry);
+    if (area > HIGHER_AREA_SIZE_LIMIT) {
+      setPromptModalContent({
+        title: warningMessages.area.title,
+        description: warningMessages.area.description(area),
+      });
+      setPromptModalOpen(true);
+      shapeUploadTooBigAnalytics();
+    } else {
+      const geometryInstance = new Polygon(featureSetGeometry);
+      const hash = createHashFromGeometry(geometryInstance);
+      setAoiGeometry({ hash, geometry: geometryInstance });
+      shapeUploadSuccessfulAnalytics();
+      browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
+    }
   };
 
   const onShapeUploadError = (error) => {

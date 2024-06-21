@@ -2,6 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import { getCSSVariable } from 'utils/css-utils';
+
 import {
   RadialBar,
   RadialBarChart,
@@ -9,12 +11,10 @@ import {
   PolarAngleAxis,
 } from 'recharts';
 
-import COLORS from 'styles/settings.scss';
-
 import styles from './arc-chart-styles.module.scss';
 
 function ArcChartComponent({
-  color = COLORS['protected-areas'],
+  color = getCSSVariable('protected-areas'),
   parentHeight,
   parentWidth,
   value,
@@ -45,7 +45,7 @@ function ArcChartComponent({
           background
           dataKey="percentage"
           cornerRadius={30 / 2}
-          fill={COLORS['athens-gray']}
+          fill={getCSSVariable('athens-gray')}
         />
         {value && (
           <text
@@ -76,7 +76,7 @@ ArcChartComponent.propTypes = {
 };
 
 ArcChartComponent.defaultProps = {
-  color: COLORS['protected-areas'],
+  color: getCSSVariable('protected-areas'),
   parentHeight: 100,
   parentWidth: 320,
   isPercentage: false,

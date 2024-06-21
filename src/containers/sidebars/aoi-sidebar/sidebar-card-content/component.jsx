@@ -3,6 +3,8 @@ import ReactMarkdown from 'react-markdown';
 
 import { T, useT, useLocale } from '@transifex/react';
 
+import { getCSSVariable } from 'utils/css-utils';
+
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 
@@ -23,8 +25,6 @@ import {
   getProtectedAttributesConfig,
 } from 'constants/analyze-areas-constants';
 import { getWDPATranslations } from 'constants/translation-constants';
-
-import COLORS from 'styles/settings.scss';
 
 import styles from './styles.module.scss';
 
@@ -180,7 +180,7 @@ function SidebarCard({
                 }}
               >
                 <ArcChart
-                  color={COLORS.primary}
+                  color={getCSSVariable('primary')}
                   parentHeight={areaChartHeight}
                   parentWidth={areaChartWidth}
                   value={spi}

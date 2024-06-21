@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
-import { loadModules } from 'esri-loader';
-
 import { useLocale } from '@transifex/react';
 
 import { readStoryAnalytics } from 'actions/google-analytics-actions';
@@ -21,6 +19,8 @@ import {
   activateLayersOnLoad,
   setBasemap,
 } from 'utils/layer-manager-utils';
+
+import * as scheduling from '@arcgis/core/core/scheduling';
 
 import {
   FEATURED_PLACES_LAYER,
@@ -83,16 +83,14 @@ const featuredGlobeContainer = (props) => {
   };
 
   const spinGlobe = (view) => {
-    loadModules(['esri/core/scheduling']).then(([scheduling]) => {
-      const camera = view.camera.clone();
-      const spinningGlobe = scheduling.addFrameTask({
-        update() {
-          camera.position.longitude -= 0.2;
-          view.camera = camera;
-        },
-      });
-      setHandle(spinningGlobe);
+    const camera = view.camera.clone();
+    const spinningGlobe = scheduling.addFrameTask({
+      update() {
+        camera.position.longitude -= 0.2;
+        view.camera = camera;
+      },
     });
+    setHandle(spinningGlobe);
   };
   const handleGlobeUpdating = (updating) =>
     props.changeGlobe({ isGlobeUpdating: updating });
