@@ -44,7 +44,6 @@ function PriorityPlacesPolygonsLayer({
     if (selectedFeaturedMap === 'priorPlaces') {
       if (!priorityPolygonsLayer) {
         const layerConfig = layersConfig[PRIORITY_PLACES_POLYGONS];
-        console.log('layerConfig', layerConfig);
         const getLayer = () => {
           switch (layerConfig.type) {
             case 'FeatureLayer':

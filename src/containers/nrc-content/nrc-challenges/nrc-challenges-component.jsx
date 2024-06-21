@@ -184,19 +184,21 @@ function Challenges({
           <div className={styles.continentsLegendWrapper}>
             <h5 className={styles.legendTitle}>{t('Continent')}</h5>
             <div className={styles.legendItemsContainer}>
-              {CONTINENTS.map((c) => (
-                <div key={c.color} className={styles.legendItem}>
-                  <div
-                    className={styles.legendItemColor}
-                    style={{
-                      background: c.color,
-                    }}
-                  />
-                  <p className={styles.legendItemLabel}>
-                    {CONTINENT_LABELS[c.slug]}
-                  </p>
-                </div>
-              ))}
+              {CONTINENTS.map(
+                (c) =>
+                  <div key={c.color} className={styles.legendItem}>
+                      <div
+                        className={styles.legendItemColor}
+                        style={{
+                          background: c.color,
+                        }}
+                      />
+                      <p className={styles.legendItemLabel}>
+                        {CONTINENT_LABELS[c.slug]}
+                      </p>
+                    </div>
+                  )
+              )}
             </div>
           </div>
           <div>

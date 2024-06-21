@@ -1,2 +1,1 @@
-export const getCSSVariable = (varName) =>
-  getComputedStyle(document.documentElement).getPropertyValue(varName)?.trim();
+export const getCSSVariable = (varName) => getComputedStyle(document.documentElement).getPropertyValue(`--${varName}`)?.trim();

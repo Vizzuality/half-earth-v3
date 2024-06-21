@@ -13,7 +13,7 @@ import GlobePageIndicator from 'containers/menus/globe-page-indicator';
 import GlobesMenu from 'containers/menus/globes-menu';
 import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
-// import OnboardingTooltip from 'containers/onboarding/tooltip';
+import OnboardingTooltip from 'containers/onboarding/tooltip';
 import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
 
 import MapTooltip from 'components/map-tooltip';
@@ -87,7 +87,7 @@ function DataSceneComponent({
       })}
     >
       {!!onboardingType && <SoundButton />}
-      {/* <OnboardingTooltip /> */}
+      <OnboardingTooltip />
 
       <ArcgisLayerManager activeLayers={updatedActiveLayers} />
 
