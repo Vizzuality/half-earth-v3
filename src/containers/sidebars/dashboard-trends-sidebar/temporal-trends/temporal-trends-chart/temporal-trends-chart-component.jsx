@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bubble } from 'react-chartjs-2';
+import { Bubble, Doughnut } from 'react-chartjs-2';
 import Select from 'react-select';
 
 import { faker } from '@faker-js/faker';
@@ -7,23 +7,18 @@ import {
   Chart as ChartJS,
   LinearScale,
   PointElement,
+  ArcElement,
   Tooltip,
   Legend,
 } from 'chart.js';
-
-import ArcChart from 'components/charts/arc-chart';
 
 import COLORS from 'styles/settings';
 
 import styles from './temporal-trends-chart-styles.module.scss';
 
-ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
+ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function TemporalTrendsChartComponent() {
-  const areaChartHeight = 100;
-  const areaChartWidth = 220;
-  const spi = 48.55;
-
   const provinces = [
     { value: 'Mai-Ndombe', label: 'Mai-Ndombe' },
     { value: 'Équateur', label: 'Équateur' },
@@ -62,6 +57,45 @@ function TemporalTrendsChartComponent() {
     ],
   };
 
+  const doughnutOptions = {
+    cutout: '80%',
+    radius: '100%',
+    rotation: -90,
+    responsive: true,
+    circumference: 180,
+    hoverOffset: 5,
+    animation: {
+      animateRotate: true,
+      animateScale: false,
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    layout: {
+      padding: {
+        left: 5,
+        right: 5,
+        top: 5,
+        bottom: 5,
+      },
+    },
+  };
+
+  const birdData = {
+    labels: ['Birds', 'Remaining'],
+    datasets: [
+      {
+        label: '',
+        data: [49, 51],
+        backgroundColor: [COLORS.primary, COLORS['white-opacity-20']],
+        borderColor: [COLORS.primary, COLORS['white-opacity-20']],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.info}>
@@ -90,18 +124,9 @@ function TemporalTrendsChartComponent() {
             <b>2024</b>
             <span>Year</span>
           </div>
-          <div
-            style={{
-              height: areaChartHeight,
-              width: areaChartWidth,
-            }}
-          >
-            <ArcChart
-              color={COLORS.primary}
-              parentHeight={areaChartHeight}
-              parentWidth={areaChartWidth}
-              value={spi}
-            />
+          <div className={styles.spi}>
+            <Doughnut data={birdData} options={doughnutOptions} />
+            <span className={styles.score}>49</span>
           </div>
           <div className={styles.stats}>
             <b>19.58</b>

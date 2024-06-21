@@ -4,7 +4,9 @@ import Button from 'components/button';
 
 import styles from '../dashboard-trends-sidebar-styles.module.scss';
 
-function ScoreDistributionsComponent() {
+import ScoreDistributionChartContainer from './score-distributions-chart';
+
+function ScoreDistributionsComponent(props) {
   return (
     <div className={styles.trends}>
       <div className={styles.info}>
@@ -27,6 +29,8 @@ function ScoreDistributionsComponent() {
           </span>
         </div>
       </div>
+
+      <ScoreDistributionChartContainer {...props} />
     </div>
   );
 }

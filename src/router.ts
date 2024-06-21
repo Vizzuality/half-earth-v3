@@ -40,7 +40,7 @@ export const routes: RoutesMap<{ path: string; page?: string }> = {
     page: 'aoi',
   },
   [DASHBOARD_TRENDS]: {
-    path: '/dashboard/:iso/:trends?',
+    path: '/dashboard/:iso/trends',
     page: 'dashboard-trends',
   },
   [DASHBOARD]: {

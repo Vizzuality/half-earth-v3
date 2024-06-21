@@ -1,0 +1,57 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  display: flex;
+  flex-direction: column;
+  padding: 10px 26px;
+  flex-grow: 1;
+  align-items: center;
+
+  .title{
+    color: $white;
+    font-family: "Open Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+  }
+
+  .spis{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1.5px solid $brand-color-main;
+    box-shadow: -2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding-top: 15px;
+    margin-top: 8px;
+
+    .spi{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .score{
+        color: #FFF;
+        text-align: center;
+        font-family: "Open Sans";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: -20px;
+      }
+    }
+  }
+
+  .barChart{
+    width: 100%;
+  }
+}
