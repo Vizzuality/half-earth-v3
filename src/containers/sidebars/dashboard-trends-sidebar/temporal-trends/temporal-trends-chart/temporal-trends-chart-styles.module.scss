@@ -6,7 +6,8 @@
 .container{
   display: flex;
   flex-direction: column;
-  padding: 10px 26px;
+  padding: 10px 5px 10px 26px;
+  flex-grow: 1;
 
   .info{
     display: flex;
@@ -39,7 +40,11 @@
     .arcChart{
       display: flex;
       height: 100px;
-      align-items: flex-end;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-grow: 1;
+      border-radius: 5px;
+      border: 1.5px solid $brand-color-main;
 
       .spi{
         display: flex;
@@ -55,7 +60,7 @@
           font-style: normal;
           font-weight: 700;
           line-height: normal;
-          margin-top: -20px;
+          margin-top: -25px;
         }
       }
 
@@ -84,5 +89,9 @@
         }
       }
     }
+  }
+  .chart{
+    width: 100%;
+    margin-top: 25px;
   }
 }

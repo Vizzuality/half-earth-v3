@@ -27,9 +27,44 @@ function TemporalTrendsChartComponent() {
   ];
 
   const options = {
+    plugins: {
+      title: {
+        display: false,
+      },
+      legend: {
+        display: false,
+      },
+    },
     scales: {
+      x: {
+        beginAtZero: false,
+        display: true,
+        title: {
+          display: true,
+          text: 'Total Area (1000 km2)',
+          color: COLORS['oslo-gray'],
+        },
+        grid: {
+          color: COLORS['oslo-gray'],
+        },
+        ticks: {
+          color: COLORS['oslo-gray'],
+        },
+      },
       y: {
         beginAtZero: true,
+        display: true,
+        title: {
+          display: true,
+          text: 'Species Protection Index',
+          color: COLORS['oslo-gray'],
+        },
+        grid: {
+          color: COLORS['oslo-gray'],
+        },
+        ticks: {
+          color: COLORS['oslo-gray'],
+        },
       },
     },
   };
@@ -37,22 +72,40 @@ function TemporalTrendsChartComponent() {
   const data = {
     datasets: [
       {
-        label: 'Red dataset',
-        data: Array.from({ length: 50 }, () => ({
-          x: faker.datatype.number({ min: -100, max: 100 }),
-          y: faker.datatype.number({ min: -100, max: 100 }),
+        label: 'Birds',
+        data: Array.from({ length: 5 }, () => ({
+          x: faker.datatype.number({ min: 0, max: 200 }),
+          y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: COLORS.primary,
       },
       {
-        label: 'Blue dataset',
-        data: Array.from({ length: 50 }, () => ({
-          x: faker.datatype.number({ min: -100, max: 100 }),
-          y: faker.datatype.number({ min: -100, max: 100 }),
+        label: 'Mammals',
+        data: Array.from({ length: 5 }, () => ({
+          x: faker.datatype.number({ min: 0, max: 200 }),
+          y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        backgroundColor: COLORS.tango,
+      },
+      {
+        label: 'Reptiles',
+        data: Array.from({ length: 5 }, () => ({
+          x: faker.datatype.number({ min: 0, max: 200 }),
+          y: faker.datatype.number({ min: 0, max: 100 }),
+          r: faker.datatype.number({ min: 5, max: 20 }),
+        })),
+        backgroundColor: COLORS['medium-purple'],
+      },
+      {
+        label: 'Amphibians',
+        data: Array.from({ length: 5 }, () => ({
+          x: faker.datatype.number({ min: 0, max: 200 }),
+          y: faker.datatype.number({ min: 0, max: 100 }),
+          r: faker.datatype.number({ min: 5, max: 20 }),
+        })),
+        backgroundColor: COLORS['french-rose'],
       },
     ],
   };
@@ -61,7 +114,7 @@ function TemporalTrendsChartComponent() {
     cutout: '80%',
     radius: '100%',
     rotation: -90,
-    responsive: true,
+    responsive: false,
     circumference: 180,
     hoverOffset: 5,
     animation: {
@@ -125,7 +178,12 @@ function TemporalTrendsChartComponent() {
             <span>Year</span>
           </div>
           <div className={styles.spi}>
-            <Doughnut data={birdData} options={doughnutOptions} />
+            <Doughnut
+              data={birdData}
+              options={doughnutOptions}
+              width="125x"
+              height="75px"
+            />
             <span className={styles.score}>49</span>
           </div>
           <div className={styles.stats}>
@@ -134,7 +192,9 @@ function TemporalTrendsChartComponent() {
           </div>
         </div>
       </div>
-      <Bubble options={options} data={data} />
+      <div className={styles.chart}>
+        <Bubble options={options} data={data} />
+      </div>
     </div>
   );
 }
