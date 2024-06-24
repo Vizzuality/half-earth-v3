@@ -78,7 +78,7 @@ function TemporalTrendsChartComponent() {
           y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.birds,
       },
       {
         label: 'Mammals',
@@ -87,7 +87,7 @@ function TemporalTrendsChartComponent() {
           y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: COLORS.tango,
+        backgroundColor: COLORS.mammals,
       },
       {
         label: 'Reptiles',
@@ -96,7 +96,7 @@ function TemporalTrendsChartComponent() {
           y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: COLORS['medium-purple'],
+        backgroundColor: COLORS.reptiles,
       },
       {
         label: 'Amphibians',
@@ -105,7 +105,7 @@ function TemporalTrendsChartComponent() {
           y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: COLORS['french-rose'],
+        backgroundColor: COLORS.amphibians,
       },
     ],
   };
@@ -141,9 +141,9 @@ function TemporalTrendsChartComponent() {
     datasets: [
       {
         label: '',
-        data: [49, 51],
-        backgroundColor: [COLORS.primary, COLORS['white-opacity-20']],
-        borderColor: [COLORS.primary, COLORS['white-opacity-20']],
+        data: [48.55, 51.45],
+        backgroundColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
+        borderColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
         borderWidth: 1,
       },
     ],
@@ -172,7 +172,23 @@ function TemporalTrendsChartComponent() {
             <b>#16</b> in size
           </span>
         </div>
-        <div className={styles.arcChart}>
+        <div className={styles.arcGrid}>
+          <b>2024</b>
+          <div className={styles.spi}>
+            <Doughnut
+              data={birdData}
+              options={doughnutOptions}
+              width="125x"
+              height="75px"
+            />
+            <span className={styles.score}>48.55</span>
+          </div>
+          <b>19.58</b>
+          <span>Year</span>
+          <span>SPI</span>
+          <span>Area Protected</span>
+        </div>
+        {/* <div className={styles.arcChart}>
           <div className={styles.stats}>
             <b>2024</b>
             <span>Year</span>
@@ -184,13 +200,13 @@ function TemporalTrendsChartComponent() {
               width="125x"
               height="75px"
             />
-            <span className={styles.score}>49</span>
+            <span className={styles.score}>48.55</span>
           </div>
           <div className={styles.stats}>
             <b>19.58</b>
             <span>Area Protected</span>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className={styles.chart}>
         <Bubble options={options} data={data} />

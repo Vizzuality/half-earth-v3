@@ -289,6 +289,13 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
   athens-gray: $athens-gray;
   oslo-gray: $oslo-gray;
 
+  // TRENDS
+  birds: $birds-color;
+  mammals:$mammals-color;
+  reptiles:$reptiles-color;
+  amphibians: $amphibians-color;
+  temporal-spi: $regionalChecklist;
+
   // Landcover legend
   water: $water;
   trees: $trees;
