@@ -54,7 +54,7 @@ function ScoreDistributionChartComponent() {
         title: {
           display: true,
           text: 'Protection Score',
-          color: COLORS['oslo-gray'],
+          color: COLORS.white,
         },
         grid: {
           color: COLORS['oslo-gray'],
@@ -69,7 +69,7 @@ function ScoreDistributionChartComponent() {
         title: {
           display: true,
           text: 'Number of Species',
-          color: COLORS['oslo-gray'],
+          color: COLORS.white,
         },
         grid: {
           color: COLORS['oslo-gray'],

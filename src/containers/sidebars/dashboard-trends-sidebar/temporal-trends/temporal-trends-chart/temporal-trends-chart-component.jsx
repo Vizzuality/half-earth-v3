@@ -20,10 +20,32 @@ ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function TemporalTrendsChartComponent() {
   const provinces = [
-    { value: 'Mai-Ndombe', label: 'Mai-Ndombe' },
+    { value: 'Bas-Uélé', label: 'Bas-Uélé' },
+    { value: 'Haut-Uélé', label: 'Haut-Uélé' },
+    { value: 'Ituri', label: 'Ituri' },
+    { value: 'Bas-Congo', label: 'Bas-Congo' },
     { value: 'Équateur', label: 'Équateur' },
-    { value: 'Kasaï', label: 'Kasaï' },
+    { value: 'Haut-Lomami', label: 'Haut-Lomami' },
+    { value: 'Haut-Katanga', label: 'Haut-Katanga' },
+    { value: 'Haut-Kasaï', label: 'Haut-Kasaï' },
+    { value: 'Kwango', label: 'Kwango' },
+    { value: 'Kwilu', label: 'Kwilu' },
+    { value: 'Lomami', label: 'Lomami' },
+    { value: 'Lualaba', label: 'Lualaba' },
+    { value: 'Mai-Ndombe', label: 'Mai-Ndombe' },
+    { value: 'Maniema', label: 'Maniema' },
+    { value: 'Mongala', label: 'Mongala' },
+    { value: 'Nord-Kivu', label: 'Nord-Kivu' },
+    { value: 'Nord-Ubangi', label: 'Nord-Ubangi' },
     { value: 'Sankuru', label: 'Sankuru' },
+    { value: 'Sud-Kivu', label: 'Sud-Kivu' },
+    { value: 'Sud-Ubangi', label: 'Sud-Ubangi' },
+    { value: 'Tanganyika', label: 'Tanganyika' },
+    { value: 'Tshopo', label: 'Tshopo' },
+    { value: 'Tshuapa', label: 'Tshuapa' },
+    { value: 'Kinshasa', label: 'Kinshasa' },
+    { value: 'Kasaï Central', label: 'Kasaï Central' },
+    { value: 'Kasaï Oriental', label: 'Kasaï Oriental' },
   ];
 
   const options = {
@@ -42,7 +64,7 @@ function TemporalTrendsChartComponent() {
         title: {
           display: true,
           text: 'Total Area (1000 km2)',
-          color: COLORS['oslo-gray'],
+          color: COLORS.white,
         },
         grid: {
           color: COLORS['oslo-gray'],
@@ -57,7 +79,7 @@ function TemporalTrendsChartComponent() {
         title: {
           display: true,
           text: 'Species Protection Index',
-          color: COLORS['oslo-gray'],
+          color: COLORS.white,
         },
         grid: {
           color: COLORS['oslo-gray'],
