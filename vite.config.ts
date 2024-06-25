@@ -59,7 +59,12 @@ export default defineConfig({
   build: {
     outDir: 'build',
     rollupOptions: {
-      external: ['react/jsx-dev-runtime', 'react/jsx-runtime'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-dev-runtime',
+        'react/jsx-runtime',
+      ],
     },
   },
   plugins: [
@@ -76,7 +81,10 @@ export default defineConfig({
         });
       },
     },
-    react(),
+    react({
+      jsxRuntime: 'automatic',
+      jsxImportSource: 'react',
+    }),
     viteTsconfigPaths(),
     directoryNamedResolver(),
     moduleScssResolver(),
@@ -84,6 +92,7 @@ export default defineConfig({
   ],
   optimizeDeps: {
     force: true,
+    include: ['react', 'react-dom'],
     esbuildOptions: {
       loader: {
         '.js': 'jsx',
@@ -96,6 +105,9 @@ export default defineConfig({
     open: true,
     // this sets a default port to 3000
     port: 3000,
+  },
+  define: {
+    'process.env': process.env,
   },
   resolve: {
     alias: {
@@ -126,6 +138,7 @@ export default defineConfig({
       sounds: path.resolve(__dirname, 'src/assets/sounds'),
       'store-middleware': path.resolve(__dirname, 'src/store/store-middleware'),
       process: 'process/browser',
+      'react/jsx-runtime': 'react/jsx-runtime.js',
     },
   },
 });
