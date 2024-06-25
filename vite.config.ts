@@ -56,6 +56,9 @@ function moduleScssResolver() {
 export default defineConfig({
   // depending on your application, base can also be "/"
   base: '',
+  build: {
+    outDir: 'build',
+  },
   plugins: [
     {
       name: 'treat-js-files-as-jsx',

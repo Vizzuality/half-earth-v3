@@ -7,7 +7,6 @@
 
 # production
 /build
-/dist
 
 # local jekyll docs
 /_site
