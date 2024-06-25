@@ -58,6 +58,9 @@ export default defineConfig({
   base: '',
   build: {
     outDir: 'build',
+    rollupOptions: {
+      external: ['react/jsx-dev-runtime', 'react/jsx-runtime'],
+    },
   },
   plugins: [
     {
