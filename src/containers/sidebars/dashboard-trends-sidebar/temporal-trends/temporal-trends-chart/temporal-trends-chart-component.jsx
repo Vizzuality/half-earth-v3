@@ -1,5 +1,5 @@
-import React from 'react';
-import { Bubble, Doughnut } from 'react-chartjs-2';
+import React, { useEffect, useState } from 'react';
+import { Bubble } from 'react-chartjs-2';
 import Select from 'react-select';
 
 import { faker } from '@faker-js/faker';
@@ -12,13 +12,30 @@ import {
   Legend,
 } from 'chart.js';
 
+import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
+
 import COLORS from 'styles/settings';
 
 import styles from './temporal-trends-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
-function TemporalTrendsChartComponent() {
+function TemporalTrendsChartComponent(props) {
+  const { countryData } = props;
+  const blankData = {
+    labels: ['Global SPI', 'Remaining'],
+    datasets: [
+      {
+        label: '',
+        data: [0, 0],
+        backgroundColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
+        borderColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
+        borderWidth: 1,
+      },
+    ],
+  };
+  const [spiData, setSpiData] = useState(blankData);
+
   const provinces = [
     { value: 'Bas-Uélé', label: 'Bas-Uélé' },
     { value: 'Haut-Uélé', label: 'Haut-Uélé' },
@@ -132,44 +149,30 @@ function TemporalTrendsChartComponent() {
     ],
   };
 
-  const doughnutOptions = {
-    cutout: '80%',
-    radius: '100%',
-    rotation: -90,
-    responsive: false,
-    circumference: 180,
-    hoverOffset: 5,
-    animation: {
-      animateRotate: true,
-      animateScale: false,
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    layout: {
-      padding: {
-        left: 5,
-        right: 5,
-        top: 5,
-        bottom: 5,
-      },
-    },
-  };
+  useEffect(() => {
+    if (countryData) {
+      const spi = {
+        labels: ['Global SPI', 'Remaining'],
+        datasets: [
+          {
+            label: '',
+            data: [
+              countryData.Global_SPI_ter,
+              100 - countryData.Global_SPI_ter,
+            ],
+            backgroundColor: [
+              COLORS['temporal-spi'],
+              COLORS['white-opacity-20'],
+            ],
+            borderColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
+            borderWidth: 1,
+          },
+        ],
+      };
 
-  const birdData = {
-    labels: ['Birds', 'Remaining'],
-    datasets: [
-      {
-        label: '',
-        data: [48.55, 51.45],
-        backgroundColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
-        borderColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
-        borderWidth: 1,
-      },
-    ],
-  };
+      setSpiData(spi);
+    }
+  }, [countryData]);
 
   return (
     <div className={styles.container}>
@@ -196,39 +199,17 @@ function TemporalTrendsChartComponent() {
         </div>
         <div className={styles.arcGrid}>
           <b>2024</b>
-          <div className={styles.spi}>
-            <Doughnut
-              data={birdData}
-              options={doughnutOptions}
-              width="125x"
-              height="75px"
-            />
-            <span className={styles.score}>48.55</span>
-          </div>
-          <b>19.58</b>
+          <SpiArcChartComponent
+            width="125x"
+            height="75px"
+            data={spiData}
+            value={countryData?.Global_SPI_ter}
+          />
+          <b>{countryData?.prop_protected_ter}</b>
           <span>Year</span>
           <span>SPI</span>
           <span>Area Protected</span>
         </div>
-        {/* <div className={styles.arcChart}>
-          <div className={styles.stats}>
-            <b>2024</b>
-            <span>Year</span>
-          </div>
-          <div className={styles.spi}>
-            <Doughnut
-              data={birdData}
-              options={doughnutOptions}
-              width="125x"
-              height="75px"
-            />
-            <span className={styles.score}>48.55</span>
-          </div>
-          <div className={styles.stats}>
-            <b>19.58</b>
-            <span>Area Protected</span>
-          </div>
-        </div> */}
       </div>
       <div className={styles.chart}>
         <Bubble options={options} data={data} />

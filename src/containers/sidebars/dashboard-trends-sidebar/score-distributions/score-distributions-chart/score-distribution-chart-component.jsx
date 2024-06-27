@@ -1,5 +1,6 @@
-import React from 'react';
-import { Bar, Doughnut } from 'react-chartjs-2';
+/* eslint-disable camelcase */
+import React, { useEffect, useState } from 'react';
+import { Bar } from 'react-chartjs-2';
 
 import { faker } from '@faker-js/faker';
 import {
@@ -13,6 +14,8 @@ import {
   Legend,
 } from 'chart.js';
 
+import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
+
 import COLORS from 'styles/settings';
 
 import Amphibians from 'images/amphibians.svg';
@@ -20,7 +23,7 @@ import Birds from 'images/birds.svg';
 import Mammals from 'images/mammals.svg';
 import Reptiles from 'images/reptiles.svg';
 
-import styles from './score-distribution-styles.module.scss';
+import styles from './score-distribution-chart-styles.module.scss';
 
 ChartJS.register(
   CategoryScale,
@@ -32,7 +35,71 @@ ChartJS.register(
   Legend
 );
 
-function ScoreDistributionChartComponent() {
+function ScoreDistributionChartComponent(props) {
+  const { countryData } = props;
+  const [scores, setScores] = useState({
+    birds: {
+      count: 0,
+      total: 0,
+      percentage: 0,
+    },
+    mammals: {
+      count: 0,
+      total: 0,
+      percentage: 0,
+    },
+    reptiles: {
+      count: 0,
+      total: 0,
+      percentage: 0,
+    },
+    amphibians: {
+      count: 0,
+      total: 0,
+      percentage: 0,
+    },
+  });
+
+  const getPercentage = (species) => {
+    const { count, total } = scores[species];
+    const percent = (count / total) * 100 || 0;
+    return [percent, 100 - percent];
+  };
+
+  useEffect(() => {
+    if (countryData) {
+      const {
+        endemic_birds,
+        birds,
+        endemic_mammals,
+        mammals,
+        endemic_reptiles,
+        reptiles,
+        endemic_amphibians,
+        amphibians,
+      } = countryData;
+
+      setScores({
+        birds: {
+          count: endemic_birds,
+          total: birds,
+        },
+        mammals: {
+          count: endemic_mammals,
+          total: mammals,
+        },
+        reptiles: {
+          count: endemic_reptiles,
+          total: reptiles,
+        },
+        amphibians: {
+          count: endemic_amphibians,
+          total: amphibians,
+        },
+      });
+    }
+  }, [countryData]);
+
   const options = {
     plugins: {
       title: {
@@ -121,38 +188,12 @@ function ScoreDistributionChartComponent() {
     ],
   };
 
-  const doughnutOptions = {
-    cutout: '80%',
-    radius: '100%',
-    rotation: -90,
-    responsive: false,
-    circumference: 180,
-    hoverOffset: 5,
-    animation: {
-      animateRotate: true,
-      animateScale: false,
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    layout: {
-      padding: {
-        left: 5,
-        right: 5,
-        top: 5,
-        bottom: 5,
-      },
-    },
-  };
-
   const birdData = {
     labels: ['Birds', 'Remaining'],
     datasets: [
       {
         label: '',
-        data: [69.87, 30.13],
+        data: getPercentage('birds'),
         backgroundColor: [COLORS.birds, COLORS['white-opacity-20']],
         borderColor: [COLORS.birds, COLORS['white-opacity-20']],
         borderWidth: 1,
@@ -165,7 +206,7 @@ function ScoreDistributionChartComponent() {
     datasets: [
       {
         label: '',
-        data: [60.98, 39.02],
+        data: getPercentage('mammals'),
         backgroundColor: [COLORS.mammals, COLORS['white-opacity-20']],
         borderColor: [COLORS.mammals, COLORS['white-opacity-20']],
         borderWidth: 1,
@@ -178,7 +219,7 @@ function ScoreDistributionChartComponent() {
     datasets: [
       {
         label: '',
-        data: [63.45, 36.55],
+        data: getPercentage('reptiles'),
         backgroundColor: [COLORS.reptiles, COLORS['white-opacity-20']],
         borderColor: [COLORS.reptiles, COLORS['white-opacity-20']],
         borderWidth: 1,
@@ -191,7 +232,7 @@ function ScoreDistributionChartComponent() {
     datasets: [
       {
         label: '',
-        data: [49.02, 49.98],
+        data: getPercentage('amphibians'),
         backgroundColor: [COLORS.amphibians, COLORS['white-opacity-20']],
         borderColor: [COLORS.amphibians, COLORS['white-opacity-20']],
         borderWidth: 1,
@@ -199,69 +240,37 @@ function ScoreDistributionChartComponent() {
     ],
   };
 
-  const areaChartHeight = 100;
-  const areaChartWidth = 120;
-
   return (
     <div className={styles.container}>
       <div className={styles.title}>NATIONAL SPI BY TAXONOMIC GROUP</div>
       <div className={styles.spis}>
-        <div className={styles.spi}>
-          <span className={styles.score}>69.87</span>
-          <Doughnut
-            data={birdData}
-            options={doughnutOptions}
-            width={areaChartWidth}
-            height={areaChartHeight}
-          />
-          <div className={styles.taxoGroup}>
-            <img src={Birds} width={40} height={40} alt="Birds" />
-            <div className={styles.richness}>Species Richness:</div>
-            <div className={styles.score}>1058 Birds</div>
-          </div>
-        </div>
-        <div className={styles.spi}>
-          <span className={styles.score}>60.98</span>
-          <Doughnut
-            data={mammalsData}
-            options={doughnutOptions}
-            width={areaChartWidth}
-            height={areaChartHeight}
-          />
-          <div className={styles.taxoGroup}>
-            <img src={Mammals} width={40} height={40} alt="Mammals" />
-            <div className={styles.richness}>Species Richness:</div>
-            <div className={styles.score}>498 Mammals</div>
-          </div>
-        </div>
-        <div className={styles.spi}>
-          <span className={styles.score}>63.45</span>
-          <Doughnut
-            data={reptilesData}
-            options={doughnutOptions}
-            width={areaChartWidth}
-            height={areaChartHeight}
-          />
-          <div className={styles.taxoGroup}>
-            <img src={Reptiles} width={40} height={40} alt="Reptiles" />
-            <div className={styles.richness}>Species Richness:</div>
-            <div className={styles.score}>362 Reptiles</div>
-          </div>
-        </div>
-        <div className={styles.spi}>
-          <span className={styles.score}>49.02</span>
-          <Doughnut
-            data={amphibianData}
-            options={doughnutOptions}
-            width={areaChartWidth}
-            height={areaChartHeight}
-          />
-          <div className={styles.taxoGroup}>
-            <img src={Amphibians} width={40} height={40} alt="Amphibians" />
-            <div className={styles.richness}>Species Richness:</div>
-            <div className={styles.score}>228 Amphibians</div>
-          </div>
-        </div>
+        <SpiArcChartComponent
+          scores={scores}
+          data={birdData}
+          img={Birds}
+          species="birds"
+        />
+
+        <SpiArcChartComponent
+          scores={scores}
+          data={mammalsData}
+          img={Mammals}
+          species="mammals"
+        />
+
+        <SpiArcChartComponent
+          scores={scores}
+          data={reptilesData}
+          img={Reptiles}
+          species="reptiles"
+        />
+
+        <SpiArcChartComponent
+          scores={scores}
+          data={amphibianData}
+          img={Amphibians}
+          species="amphibians"
+        />
       </div>
 
       <div className={styles.chart}>

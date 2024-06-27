@@ -33,21 +33,43 @@ function DashboardTrendsViewComponent(props) {
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
   const [geo, setGeo] = useState(null);
+  const [countryData, setCountryData] = useState(null);
 
+  const url =
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_Terrestrial_202403/FeatureServer/0';
+
+  // find and zoom to region
   useEffect(() => {
     EsriFeatureService.getFeatures({
       url: COUNTRIES_DATA_SERVICE_URL,
       whereClause: `GID_0 = '${countryISO}'`,
       returnGeometry: true,
     }).then((features) => {
-      const { geometry } = features[0];
+      const { geometry, attributes } = features[0];
+      console.log(features);
 
       if (geometry && view) {
         view.center = [geometry.longitude, geometry.latitude];
         setGeo(geometry);
+        setCountryData(attributes);
+        console.log(attributes);
       }
     });
   }, [view, countryISO]);
+
+  // SPI layer
+  useEffect(() => {
+    EsriFeatureService.getFeatures({
+      url,
+      whereClause: `GID_0 = '${countryISO}'`,
+      returnGeometry: true,
+    }).then((features) => {
+      if (map) {
+        const { layer } = features[0];
+        map.add(layer);
+      }
+    });
+  }, [map, view]);
 
   return (
     <MapView
@@ -67,6 +89,8 @@ function DashboardTrendsViewComponent(props) {
         activeLayers={activeLayers}
         map={map}
         view={view}
+        countryISO={countryISO}
+        countryData={countryData}
       />
 
       <CountryLabelsLayer

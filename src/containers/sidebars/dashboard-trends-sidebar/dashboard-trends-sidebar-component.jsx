@@ -5,16 +5,15 @@ import ScoreDistributionsContainer from './score-distributions';
 import TemporalTrendsContainer from './temporal-trends';
 
 function DashboardTrendsSidebar(props) {
-  const { activeLayers, map, view } = props;
+  const { countryISO, countryData } = props;
 
   return (
     <div className={styles.container}>
-      <TemporalTrendsContainer
-        activeLayers={activeLayers}
-        map={map}
-        view={view}
+      <TemporalTrendsContainer countryData={countryData} />
+      <ScoreDistributionsContainer
+        countryISO={countryISO}
+        countryData={countryData}
       />
-      <ScoreDistributionsContainer />
     </div>
   );
 }
