@@ -56,10 +56,6 @@ function moduleScssResolver() {
 export default defineConfig({
   // depending on your application, base can also be "/"
   base: '',
-  build: {
-    outDir: '../build',
-    emptyOutDir: true,
-  },
   plugins: [
     {
       name: 'treat-js-files-as-jsx',
@@ -74,10 +70,7 @@ export default defineConfig({
         });
       },
     },
-    react({
-      jsxRuntime: 'automatic',
-      jsxImportSource: 'react',
-    }),
+    react(),
     viteTsconfigPaths(),
     directoryNamedResolver(),
     moduleScssResolver(),
