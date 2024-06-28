@@ -51,6 +51,8 @@ function ViewContainer(props) {
       flatView.goTo(
         {
           target: zoomGeometry,
+          center: [zoomGeometry.longitude - 15, zoomGeometry.latitude],
+          zoom: 5.5,
           extent: feature.geometry.clone(),
         },
         { duration: 1000 }
@@ -136,12 +138,12 @@ function ViewContainer(props) {
           });
 
           // flatView.on('click', async (event) => {
-          //   // const query = {
-          //   //   geometry: flatView.toMap(event),
-          //   //   returnGeometry: true,
-          //   //   outFields: ['*'],
-          //   // };
-          //   // await highlightCountry(query, query.geometry, flatView);
+          //   const query = {
+          //     geometry: flatView.toMap(event),
+          //     returnGeometry: true,
+          //     outFields: ['*'],
+          //   };
+          //   await highlightCountry(query, query.geometry, flatView);
           // });
 
           setView(flatView);

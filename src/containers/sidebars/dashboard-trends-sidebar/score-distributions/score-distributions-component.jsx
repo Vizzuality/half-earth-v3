@@ -48,7 +48,7 @@ function ScoreDistributionsComponent(props) {
         <ul className={styles.spsSpecies}>
           {spsSpecies.map((species) => {
             return (
-              <li>
+              <li key={species.scientificname}>
                 <img src="https://place-hold.it/50x50" alt="species" />
                 <div className={styles.spsInfo}>
                   <span className={styles.name}>{species.name}</span>

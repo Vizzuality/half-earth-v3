@@ -7,7 +7,7 @@ import {
   selectUiUrlState,
 } from 'selectors/location-selectors';
 
-import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
+import dashboardViewConfig from '../../containers/views/dashboard-trends-view/dashboard-trends-view-config';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 
