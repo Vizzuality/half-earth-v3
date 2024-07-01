@@ -7,7 +7,7 @@ import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
+import InfoIcon from 'icons/infoTooltip.svg?react';
 
 function SpeciesBar({
   title,

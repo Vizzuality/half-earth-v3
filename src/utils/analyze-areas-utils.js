@@ -1,7 +1,7 @@
-import { loadModules } from 'esri-loader';
-
 import { percentageFormat } from 'utils/data-formatting-utils';
 
+import * as geometryEngine from '@arcgis/core/geometry/geometryEngine';
+import esriRequest from '@arcgis/core/request';
 import sha1 from 'sha1';
 
 import amphibiansPlaceholder from 'images/no-amphibian.png';
@@ -10,18 +10,16 @@ import mammalsPlaceholder from 'images/no-mammal.png';
 import reptilesPlaceholder from 'images/no-reptile.png';
 
 export function logGeometryArea(geometry) {
-  loadModules(['esri/geometry/geometryEngine']).then(([geometryEngine]) => {
-    const SQ_KM_WKID = 109414;
-    const area = geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
-    console.info('AREA', area, 'KM2');
-  });
+  const SQ_KM_WKID = 109414;
+  const area = geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
+  console.info('AREA', area, 'KM2');
 }
 
 export function roundUpPercentage(value) {
   return value > 0.5 ? Math.round(value) : '<1';
 }
 
-export function calculateGeometryArea(geometry, geometryEngine) {
+export function calculateGeometryArea(geometry) {
   const SQ_KM_WKID = 109414;
   return geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
 }
@@ -40,19 +38,14 @@ export function featureCollectionFromShape(body, view, onSucces, onError) {
     }),
     f: 'json',
   };
-  loadModules(['esri/request']).then(([esriRequest]) => {
-    esriRequest(
-      'https://www.arcgis.com/sharing/rest/content/features/generate',
-      {
-        query: generateRequestParams,
-        body,
-        method: 'post',
-        responseType: 'json',
-      }
-    )
-      .then((response) => onSucces(response))
-      .catch((error) => onError(error));
-  });
+  esriRequest('https://www.arcgis.com/sharing/rest/content/features/generate', {
+    query: generateRequestParams,
+    body,
+    method: 'post',
+    responseType: 'json',
+  })
+    .then((response) => onSucces(response))
+    .catch((error) => onError(error));
 }
 
 export const getTotalPressures = (pressures) => {

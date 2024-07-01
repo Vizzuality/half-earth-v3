@@ -13,14 +13,14 @@ import Cards from 'components/mobile-cards';
 import MobileSearchLocation from 'components/mobile-search-location';
 import Scene from 'components/scene';
 
-import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
+import BackArrowIcon from 'icons/back_arrow.svg?react';
 
 import styles from './priority-scene-mobile-styles.module.scss';
 
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
 function PriorityMobileComponent({
   activeLayers,

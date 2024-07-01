@@ -29,10 +29,10 @@ import { useMobile } from 'constants/responsive';
 
 import uiStyles from 'styles/ui.module.scss';
 
-import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
-import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
-import { ReactComponent as DownloadIcon } from 'icons/download.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import AnalyzeAreasIcon from 'icons/analyze_areas.svg?react';
+import BackArrowIcon from 'icons/back_arrow.svg?react';
+import DownloadIcon from 'icons/download.svg?react';
+import ShareIcon from 'icons/share.svg?react';
 
 import { NRCSidebar } from './nrc-content';
 import styles from './nrc-content-styles.module.scss';
@@ -153,7 +153,7 @@ function NrcContent({
             <div className={styles.flagWrapper}>
               <img
                 className={styles.flag}
-                src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+                src={`${import.meta.env.PUBLIC_URL}/flags/${countryISO}.svg`}
                 alt=""
               />
               {countryName && (

@@ -109,7 +109,7 @@
     display: flex;
     padding-bottom: $site-gutter;
 
-    &:last-child() {
+    &:last-child {
       padding: 0;
     }
 

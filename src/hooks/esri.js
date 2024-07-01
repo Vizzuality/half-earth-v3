@@ -2,34 +2,32 @@
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 
-import { loadModules } from 'esri-loader';
-
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
+
+import * as watchUtils from '@arcgis/core/core/reactiveUtils.js';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import * as Locator from '@arcgis/core/rest/locator.js';
+import Search from '@arcgis/core/widgets/Search';
+import SketchViewModel from '@arcgis/core/widgets/Sketch/SketchViewModel';
+import Sketch from '@arcgis/core/widgets/Sketch.js';
 
 import { HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
 import { LAYERS_URLS } from 'constants/layers-urls';
-
 // Load watchUtils module to follow esri map changes
 export const useWatchUtils = () => {
-  const [watchUtils, setWatchUtils] = useState(null);
-  useEffect(() => {
-    loadModules(['esri/core/reactiveUtils']).then(([loadedWatchUtils]) => {
-      setWatchUtils(loadedWatchUtils);
-    });
-  }, []);
+  // TODO: Move reactiveUtils import to each component that uses it
   return watchUtils;
 };
 
 export const useFeatureLayer = ({ layerSlug, outFields = ['*'] }) => {
   const [layer, setLayer] = useState(null);
   useEffect(() => {
-    loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
-      const updatedLayer = new FeatureLayer({
-        url: LAYERS_URLS[layerSlug],
-        outFields,
-      });
-      setLayer(updatedLayer);
+    const updatedLayer = new FeatureLayer({
+      url: LAYERS_URLS[layerSlug],
+      outFields,
     });
+    setLayer(updatedLayer);
   }, []);
   return layer;
 };
@@ -40,31 +38,11 @@ export const useSearchWidgetLogic = (
   searchWidgetConfig,
   isSimpleSearch
 ) => {
-  const { REACT_APP_ARGISJS_API_VERSION } = process.env;
-
   const [searchWidget, setSearchWidget] = useState(null);
   const { searchSources, postSearchCallback, searchResultsCallback } =
     searchWidgetConfig || {};
-  const [esriConstructors, setEsriConstructors] = useState();
-
-  useEffect(() => {
-    loadModules([
-      'esri/widgets/Search',
-      'esri/layers/FeatureLayer',
-      REACT_APP_ARGISJS_API_VERSION &&
-      parseFloat(REACT_APP_ARGISJS_API_VERSION) > 4.21
-        ? 'esri/rest/locator'
-        : 'esri/tasks/Locator',
-    ])
-      .then(([Search, FeatureLayer, Locator]) => {
-        setEsriConstructors({ Search, FeatureLayer, Locator });
-      })
-      .catch((err) => console.error(err));
-  }, []);
 
   const handleOpenSearch = () => {
-    if (!esriConstructors) return null;
-    const { Search, FeatureLayer, Locator } = esriConstructors;
     if (searchWidget === null) {
       const sWidget = new Search({
         view,
@@ -83,7 +61,6 @@ export const useSearchWidgetLogic = (
 
   const updateSources = (searchSourcesFunction) => {
     if (searchWidget) {
-      const { FeatureLayer, Locator } = esriConstructors;
       searchWidget.sources = searchSourcesFunction(FeatureLayer, Locator);
     }
   };
@@ -153,57 +130,38 @@ export const useSketchWidget = ({
   const [updatedGeometry, setUpdatedGeometry] = useState(null);
   const { postDrawCallback } = sketchWidgetConfig;
 
-  const [Constructors, setConstructors] = useState(null);
-  useEffect(() => {
-    loadModules([
-      'esri/widgets/Sketch/SketchViewModel',
-      'esri/geometry/geometryEngine',
-    ]).then(([SketchViewModel, geometryEngine]) => {
-      setConstructors({
-        geometryEngine,
-        SketchViewModel,
-      });
-    });
-  }, []);
-
   const handleSketchToolActivation = () => {
-    loadModules([
-      'esri/widgets/Sketch',
-      'esri/widgets/Sketch/SketchViewModel',
-      'esri/layers/GraphicsLayer',
-    ]).then(([Sketch, SketchViewModel, GraphicsLayer]) => {
-      const _sketchLayer = new GraphicsLayer({
-        elevationInfo: { mode: 'on-the-ground' },
-      });
-      setSketchLayer(_sketchLayer);
-      view.map.add(_sketchLayer);
+    const _sketchLayer = new GraphicsLayer({
+      elevationInfo: { mode: 'on-the-ground' },
+    });
+    setSketchLayer(_sketchLayer);
+    view.map.add(_sketchLayer);
 
-      const _sketchTool = new Sketch({
+    const _sketchTool = new Sketch({
+      view,
+      layer: _sketchLayer,
+      visibleElements: {
+        settingsMenu: false,
+      },
+      createTools: {
+        point: false,
+      },
+      availableCreateTools: ['polygon', 'rectangle', 'circle'],
+      viewModel: new SketchViewModel({
         view,
         layer: _sketchLayer,
-        visibleElements: {
-          settingsMenu: false,
+        defaultCreateOptions: { hasZ: false },
+        defaultUpdateOptions: {
+          enableZ: false,
+          multipleSelectionEnabled: false,
+          toggleToolOnClick: true,
         },
-        createTools: {
-          point: false,
-        },
-        availableCreateTools: ['polygon', 'rectangle', 'circle'],
-        viewModel: new SketchViewModel({
-          view,
-          layer: _sketchLayer,
-          defaultCreateOptions: { hasZ: false },
-          defaultUpdateOptions: {
-            enableZ: false,
-            multipleSelectionEnabled: false,
-            toggleToolOnClick: true,
-          },
-          polygonSymbol: VALID_SYMBOL,
-        }),
-      });
-
-      setSketchTool(_sketchTool);
-      setSketchTooltipType('polygon');
+        polygonSymbol: VALID_SYMBOL,
+      }),
     });
+
+    setSketchTool(_sketchTool);
+    setSketchTooltipType('polygon');
   };
 
   const handleSketchToolDestroy = () => {
@@ -221,9 +179,7 @@ export const useSketchWidget = ({
 
   useEffect(() => {
     const isNotValidArea = (graphic) => {
-      const area =
-        graphic &&
-        calculateGeometryArea(graphic.geometry, Constructors.geometryEngine);
+      const area = graphic && calculateGeometryArea(graphic.geometry);
       return area > HIGHER_AREA_SIZE_LIMIT;
     };
 
@@ -304,10 +260,7 @@ export const useSketchWidget = ({
     if (sketchWidgetMode === 'finished') {
       const graphic =
         sketchLayer.graphics.items && sketchLayer.graphics.items[0];
-      const area = calculateGeometryArea(
-        graphic.geometry,
-        Constructors.geometryEngine
-      );
+      const area = calculateGeometryArea(graphic.geometry);
       if (area > HIGHER_AREA_SIZE_LIMIT) {
         setPromptModalContent({
           title: warningMessages.area.title,

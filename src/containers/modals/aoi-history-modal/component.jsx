@@ -18,9 +18,9 @@ import ShareSocialIcons from 'components/share-social-icons';
 // icons
 import styles from './styles.module';
 
-import { ReactComponent as BinIcon } from 'icons/bin.svg';
-import { ReactComponent as EditIcon } from 'icons/edit.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import BinIcon from 'icons/bin.svg?react';
+import EditIcon from 'icons/edit.svg?react';
+import ShareIcon from 'icons/share.svg?react';
 
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));

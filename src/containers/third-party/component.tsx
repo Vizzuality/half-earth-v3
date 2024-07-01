@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Cookies from 'components/cookies';
 
-const { REACT_APP_GA_MEASUREMENT_ID } = process.env;
+const { VITE_APP_GA_MEASUREMENT_ID } = import.meta.env;
 const consentCookieName = 'HE_COOKIES_CONSENT';
 function ThirdParty() {
   const [isOpenCookies, setOpen] = useState(false);
@@ -12,7 +12,7 @@ function ThirdParty() {
   useEffect(() => {
     if (consentCookie === 'true' && !scriptAdded) {
       const script1 = document.createElement('script');
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=${REACT_APP_GA_MEASUREMENT_ID}`;
+      script1.src = `https://www.googletagmanager.com/gtag/js?id=${VITE_APP_GA_MEASUREMENT_ID}`;
       script1.async = true;
 
       const script2 = document.createElement('script');
@@ -20,7 +20,7 @@ function ThirdParty() {
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', '${REACT_APP_GA_MEASUREMENT_ID}');
+      gtag('config', '${VITE_APP_GA_MEASUREMENT_ID}');
       `;
       script2.async = true;
 

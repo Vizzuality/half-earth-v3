@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
-import { ReactComponent as SearchIcon } from 'icons/search-input.svg';
+import SearchIcon from 'icons/search-input.svg?react';
 
 import styles from './search-input-styles.module';
 

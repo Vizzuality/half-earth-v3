@@ -1,7 +1,7 @@
 // Explanation  of this hook: https://usehooks.com/useEventListener/
 import { useRef, useEffect } from 'react';
 
-const useEventListener = (eventName, handler, element = global) => {
+const useEventListener = (eventName, handler, element = window) => {
   const savedHandler = useRef();
 
   useEffect(() => {

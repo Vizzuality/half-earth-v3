@@ -11,7 +11,7 @@ import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graph
 
 import Button from 'components/button';
 
-import { ReactComponent as CheckIcon } from 'icons/check.svg';
+import CheckIcon from 'icons/check.svg?react';
 
 import styles from './sketch-widget.styles.module.scss';
 

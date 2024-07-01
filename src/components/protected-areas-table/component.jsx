@@ -9,8 +9,8 @@ import {
   getCountryNames,
 } from 'constants/translation-constants';
 
-import { ReactComponent as ArrowDown } from 'icons/arrow_down.svg';
-import { ReactComponent as ArrowUp } from 'icons/arrow_up.svg';
+import ArrowDown from 'icons/arrow_down.svg?react';
+import ArrowUp from 'icons/arrow_up.svg?react';
 
 import styles from './protected-areas-table-styles.module.scss';
 

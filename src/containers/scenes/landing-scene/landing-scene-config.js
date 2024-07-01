@@ -1,6 +1,5 @@
 export default {
   globe: {
-    camera: null,
     zoom: 0,
     padding: {
       left: 250,

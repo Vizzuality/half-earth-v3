@@ -1,4 +1,4 @@
-import { loadModules } from 'esri-loader';
+import * as geoprocessor from '@arcgis/core/rest/geoprocessor.js';
 
 import EsriFeatureService from 'services/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/biodiversity';
@@ -28,13 +28,9 @@ import { ELU_LOOKUP_TABLE } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
 export function getJobInfo(url, params) {
-  return new Promise((resolve, reject) => {
-    loadModules(['esri/rest/geoprocessor'])
-      .then(async ([geoprocessor]) => {
-        const jobInfo = await geoprocessor.submitJob(url, params);
-        resolve(jobInfo);
-      })
-      .catch((error) => reject(error));
+  return new Promise((resolve) => {
+    const jobInfo = geoprocessor.submitJob(url, params);
+    resolve(jobInfo);
   });
 }
 
@@ -203,10 +199,15 @@ export function getCustomAOISpeciesData(crfName, geometry) {
 }
 
 const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
-  const data = JSON.parse(jsonTaxaData);
+  let data;
+  try {
+    data = JSON.parse(jsonTaxaData);
+  } catch (error) {
+    console.error('Error parsing JSON data', error);
+  }
   return new Promise((resolve, reject) => {
     if (!data) {
-      resolve([]);
+      resolve(null);
     }
     const crfSlices = data.reduce(
       (acc, f) => ({
@@ -266,7 +267,7 @@ export const setPrecalculatedSpeciesData = (
   getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
     // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
     setTaxaData(
-      data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955)
+      data?.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955)
     );
     handleLoadedTaxaData('mammals');
   });

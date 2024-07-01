@@ -3,9 +3,9 @@ import { useEffect, useMemo, useCallback } from 'react';
 
 import { useT } from '@transifex/react';
 
-import { arc, scaleLinear, selectAll, select, Selection, BaseType } from 'd3';
+import { getCSSVariable } from 'utils/css-utils';
 
-import COLORS from 'styles/settings.scss';
+import { arc, scaleLinear, selectAll, select, Selection, BaseType } from 'd3';
 
 import type { Range, SPSData, SpeciesData } from '../types';
 
@@ -58,7 +58,7 @@ const getHighlightedColor = (
 ) => {
   const { per_global, SPS_global, id } = d;
   if (id === selectedSpeciesId) {
-    return COLORS.white;
+    return getCSSVariable('white');
   }
 
   return isHighlighted({
@@ -67,8 +67,8 @@ const getHighlightedColor = (
     SPSSelected,
     globalRangeSelected,
   })
-    ? COLORS.white
-    : COLORS['oslo-gray'];
+    ? getCSSVariable('white')
+    : getCSSVariable('oslo-gray');
 };
 
 export const useD3Effect = ({
@@ -148,7 +148,7 @@ export const useD3Effect = ({
       // Labels arc
       angleAxis
         .append('path')
-        .attr('fill', COLORS.firefly)
+        .attr('fill', getCSSVariable('firefly'))
         .attr('id', 'label-arc')
         .attr('d', (d) => arcGenerator(d, radius + ARC_LABEL_PADDING, radius));
 
@@ -164,7 +164,7 @@ export const useD3Effect = ({
         .append('line')
         .attr('x1', INNER_RADIUS)
         .attr('x2', radius + ARC_LABEL_PADDING)
-        .attr('stroke', COLORS.navy);
+        .attr('stroke', getCSSVariable('navy'));
 
       const angleAxisLabelGroups = angleAxis
         .append('g')
@@ -214,7 +214,7 @@ export const useD3Effect = ({
       // // Radial arcs ticks
       radialAxisGroups
         .append('path')
-        .attr('stroke', COLORS.white)
+        .attr('stroke', getCSSVariable('white'))
         .attr('stroke-opacity', 0.5)
         .attr('stroke-dasharray', '0 2 0')
         .attr('d', (d) => {
@@ -298,7 +298,7 @@ export const useD3Effect = ({
     // Center arc
     radialAxis
       .append('path')
-      .attr('fill', COLORS.navy)
+      .attr('fill', getCSSVariable('navy'))
       .attr('d', (d) => arcGenerator(d, INNER_RADIUS, 0));
 
     renderRadialAxis(radialAxis);

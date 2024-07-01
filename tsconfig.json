@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "target": "ES6",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "checkJs": false,
@@ -43,5 +43,6 @@
     }
   },
   "include": ["declarations/**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.d.ts"],
-  "exclude": ["node_modules", "cypress"]
+  "exclude": ["node_modules", "cypress"],
+  "types": ["vite/client"]
 }

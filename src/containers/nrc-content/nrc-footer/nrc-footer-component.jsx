@@ -6,7 +6,7 @@ import cx from 'classnames';
 
 import Button from 'components/button';
 
-import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
+import AnalyzeAreasIcon from 'icons/analyze_areas.svg?react';
 
 import styles from './nrc-footer-styles.module.scss';
 

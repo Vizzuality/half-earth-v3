@@ -47,6 +47,20 @@ export default {
     basemap: {
       layersArray: [FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER],
     },
+    // Remove the extra header on the popup
+    popup: {
+      dockOptions: {
+        buttonEnabled: false,
+      },
+      visibleElements: {
+        actionBar: false,
+        closeButton: false,
+        collapseButton: false,
+        featureNavigation: false,
+        heading: false,
+        spinner: false,
+      },
+    },
   },
   ui: {
     isSidebarOpen: false,

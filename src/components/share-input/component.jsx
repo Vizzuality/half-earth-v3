@@ -12,7 +12,7 @@ import cx from 'classnames';
 
 import styles from './styles.module';
 
-import { ReactComponent as CopyIcon } from 'icons/copy.svg';
+import CopyIcon from 'icons/copy.svg?react';
 
 const LINK = 'link';
 const EMBED = 'embed';

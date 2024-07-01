@@ -14,12 +14,12 @@ import { useMobile } from 'constants/responsive';
 
 import uiStyles from 'styles/ui.module.scss';
 
-import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
-import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
-import { ReactComponent as FishesIcon } from 'icons/taxa_fishes.svg';
-import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
-import { ReactComponent as MammalsMarIcon } from 'icons/taxa_marine_mammals.svg';
-import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
+import AmphibiansIcon from 'icons/taxa_amphibians.svg?react';
+import BirdsIcon from 'icons/taxa_birds.svg?react';
+import FishesIcon from 'icons/taxa_fishes.svg?react';
+import MammalsIcon from 'icons/taxa_mammals.svg?react';
+import MammalsMarIcon from 'icons/taxa_marine_mammals.svg?react';
+import ReptilesIcon from 'icons/taxa_reptiles.svg?react';
 
 import styles from './nrc-vertebrates-styles.module.scss';
 

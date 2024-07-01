@@ -97,7 +97,7 @@ $gap: 20pt;
       margin-bottom: 5pt;
 
       .countryName {
-        margin-left: $gap / 2;
+        margin-left: calc($gap / 2);
       }
     }
 
@@ -121,10 +121,10 @@ $gap: 20pt;
       grid-area: ind;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
-      grid-gap: $gap / 2;
+      grid-gap: calc($gap / 2);
 
       .bar {
-        height: $gap / 2;
+        height: calc($gap / 2);
         width: 100%;
       }
 

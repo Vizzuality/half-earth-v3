@@ -1,4 +1,4 @@
-import { loadModules } from 'esri-loader';
+import Polygon from '@arcgis/core/geometry/Polygon';
 
 export const createGraphicLayer = (
   GraphicsLayer,
@@ -54,13 +54,7 @@ export const createGraphic = (Graphic, graphicStyles, geometry) => {
 };
 
 export const createPolygonGeometry = (gridCell) => {
-  return loadModules(['esri/geometry/Polygon'])
-    .then(([Polygon]) => {
-      return new Polygon(gridCell);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  return new Polygon(gridCell);
 };
 
 export const simplePictureMarker = (asset, symbol = {}) => ({

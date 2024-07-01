@@ -8,10 +8,10 @@ import cx from 'classnames';
 import ScatterPlot from 'components/charts/scatter-plot';
 import Dropdown from 'components/dropdown';
 
-import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
-import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
+import ArrowButton from 'icons/arrow_right.svg?react';
+import InfoIcon from 'icons/infoDark.svg?react';
 
-import { ReactComponent as CountryAreaImage } from 'images/country-area.svg';
+import CountryAreaImage from 'images/country-area.svg?react';
 
 import { CONTINENTS } from './nrc-challenges-constants';
 import styles from './nrc-challenges-styles.module.scss';

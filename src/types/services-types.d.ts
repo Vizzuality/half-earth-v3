@@ -123,7 +123,7 @@ export interface GetCrfData {
 export interface GetFeatures {
   geometry?: IFeature.geometry;
   outFields: string[];
-  outSpatialReference?: number;
+  outSpatialReference?: IFeature.outSpatialReference;
   returnGeometry: boolean;
   url: string;
   whereClause?: string;

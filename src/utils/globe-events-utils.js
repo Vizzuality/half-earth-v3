@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { get } from 'lodash';
 
-import { loadModules } from 'esri-loader';
+import Point from '@arcgis/core/geometry/Point';
 
 const markerDefaultStyles =
   'overflow: hidden; border-radius: 20px; position: absolute; display: none; width: 40px; height: 40px; pointer-events: none; background-size: cover;';
@@ -61,14 +61,12 @@ export const setAvatarImage = (
     const slug = get(layerFeatures, '[0].graphic.attributes.nam_slg');
     const featureMapPlace = featuredMapPlaces.data[selectedFeaturedMap][slug];
     const imageUrl = featureMapPlace && featureMapPlace.imageUrl;
-    loadModules(['esri/geometry/Point']).then(([Point]) => {
-      const point = new Point({ latitude, longitude });
-      const screenCoords = view.toScreen(point);
-      marker.setAttribute(
-        'style',
-        `${markerDefaultStyles} left: ${screenCoords.x}px; top: ${screenCoords.y}px; transform: translate(-20px, -20px); display: block; border: 1px solid white; background-image: url(${imageUrl})`
-      );
-    });
+    const point = new Point({ latitude, longitude });
+    const screenCoords = view.toScreen(point);
+    marker.setAttribute(
+      'style',
+      `${markerDefaultStyles} left: ${screenCoords.x}px; top: ${screenCoords.y}px; transform: translate(-20px, -20px); display: block; border: 1px solid white; background-image: url(${imageUrl})`
+    );
   } else {
     removeAvatarImage(marker);
     setDefaultCursor();

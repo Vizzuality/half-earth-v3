@@ -120,10 +120,10 @@ import {
   TREES_RARITY,
 } from 'constants/layers-slugs';
 
-const { REACT_APP_VERCEL_ENV } = process.env;
+const { VITE_APP_VERCEL_ENV } = import.meta.env;
 
 const isNotProduction =
-  REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
+  VITE_APP_VERCEL_ENV === 'development' || VITE_APP_VERCEL_ENV === 'preview';
 
 const COUNTRIES_DATA_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20240507/FeatureServer';
