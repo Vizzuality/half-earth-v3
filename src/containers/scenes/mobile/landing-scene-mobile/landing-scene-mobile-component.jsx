@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Hero from 'containers/mobile/landing/hero';
 
 import Scene from 'components/scene';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { T } from '@transifex/react';
 
 import { Modal } from 'he-components';

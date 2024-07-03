@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 import { tx } from '@transifex/native';
 import { useLanguages, useLocale } from '@transifex/react';

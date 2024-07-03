@@ -1,5 +1,3 @@
-import React from 'react';
-
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
 import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graphic-layer';

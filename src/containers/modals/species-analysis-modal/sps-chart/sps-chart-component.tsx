@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { getCSSVariable } from 'utils/css-utils';
 

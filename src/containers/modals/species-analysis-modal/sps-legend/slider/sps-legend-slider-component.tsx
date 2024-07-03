@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 
 import cx from 'classnames';
 import { scaleLinear, ScaleLinear } from 'd3';

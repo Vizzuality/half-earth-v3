@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 
 import { T, useLocale, useT } from '@transifex/react';

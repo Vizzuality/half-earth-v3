@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-underscore-dangle */
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 

@@ -1,6 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
-
 import { t } from '@transifex/native';
 import { T } from '@transifex/react';
 

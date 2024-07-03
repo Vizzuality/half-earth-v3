@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { getCSSVariable } from 'utils/css-utils';
 
 import AreaChart from 'components/charts/area-chart';

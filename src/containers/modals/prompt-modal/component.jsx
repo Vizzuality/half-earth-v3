@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Modal } from 'he-components';
 
 import styles from './styles.module';

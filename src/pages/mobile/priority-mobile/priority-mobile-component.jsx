@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import PriorityMobileScene from 'scenes/mobile/priority-scene-mobile';
 

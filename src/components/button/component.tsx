@@ -1,13 +1,11 @@
-import React from 'react';
-
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-
+import { FC, SVGProps } from 'react';
 import styles from './styles.module.scss';
 
 interface ButtonProps {
   type: 'rectangular' | 'rectangular-primary' | 'icon' | 'icon-square';
-  Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  Icon?: FC<SVGProps<SVGSVGElement>>;
   label?: string;
   active?: boolean;
   className?: string;

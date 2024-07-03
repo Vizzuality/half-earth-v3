@@ -1,5 +1,5 @@
 import 'he-components/dist/main.css';
-import React, { Suspense, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import loadable from '@loadable/component';

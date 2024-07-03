@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { NATIONAL_REPORT_CARD } from 'router';
 
 import loadable from '@loadable/component';

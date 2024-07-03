@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 

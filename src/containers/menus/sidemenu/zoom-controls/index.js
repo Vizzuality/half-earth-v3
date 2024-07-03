@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import ZoomVM from '@arcgis/core/widgets/Zoom/ZoomViewModel.js';
 

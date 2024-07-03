@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useEffect } from 'react';
+import { useState, forwardRef, useEffect } from 'react';
 
 import { useT } from '@transifex/react';
 

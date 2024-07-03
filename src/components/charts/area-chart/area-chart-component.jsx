@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 

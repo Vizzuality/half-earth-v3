@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styles from './styles.module';
 
 // team members to show on About Us modal

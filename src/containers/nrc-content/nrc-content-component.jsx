@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { useT } from '@transifex/react';

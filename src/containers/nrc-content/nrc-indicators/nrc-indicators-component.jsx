@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-import React from 'react';
-
 import { T, useT, useLocale } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';

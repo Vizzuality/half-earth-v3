@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import loadable from '@loadable/component';
 

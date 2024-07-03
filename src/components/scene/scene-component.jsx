@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
-
 import cx from 'classnames';
-
+import { Children } from 'react';
 import Spinner from 'components/spinner';
 
 import styles from 'styles/themes/scene-theme.module.scss';
@@ -47,7 +45,7 @@ function SceneComponent({
       >
         {disabled && <div className={styles.veil} />}
         <div id={`scene-container-${sceneName || sceneId}`}>
-          {React.Children.map(children || null, (child, i) => {
+          {Children.map(children || null, (child, i) => {
             return (
               child && (
                 // eslint-disable-next-line react/no-array-index-key

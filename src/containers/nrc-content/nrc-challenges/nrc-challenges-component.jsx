@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { T, useT } from '@transifex/react';
 
 import Tooltip from '@tippyjs/react';
