@@ -61,7 +61,7 @@ export const getSortedSpeciesList = createSelector(
       speciesModalSort && speciesModalSort.split('-')[0].toLowerCase();
 
     if (sortedCategory === 'stewardship') {
-      sortedCategory = 'stewawrdship';
+      sortedCategory = 'stewardship';
     }
 
     const direction = speciesModalSort && speciesModalSort.split('-')[1];
