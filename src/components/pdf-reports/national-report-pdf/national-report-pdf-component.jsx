@@ -435,7 +435,7 @@ function NationalReportPdf({
         <div className={styles.nameWrapper}>
           <img
             className={styles.flag}
-            src={`${import.meta.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+            src={`/flags/${countryISO}.svg`}
             alt=""
           />
           <span className={styles.countryName}>{translatedCountryName}</span>

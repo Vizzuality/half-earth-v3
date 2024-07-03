@@ -116,7 +116,7 @@ function CountryEntryTooltipComponent({
         <div>
           <img
             className={styles.tooltipFlag}
-            src={`${import.meta.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+            src={`/flags/${countryISO}.svg`}
             alt=""
           />
           <span className={styles.tooltipName}>

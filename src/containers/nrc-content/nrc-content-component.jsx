@@ -65,8 +65,7 @@ function NrcContent({
   const t = useT();
   const isMobile = useMobile();
   const dataIsLoaded =
-    trendChartData && countryData && chartData && challengesInfo;
-
+    !!trendChartData && !!countryData && !!chartData && !!challengesInfo;
   const { source: challengesSources } = challengesInfo;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
@@ -153,7 +152,7 @@ function NrcContent({
             <div className={styles.flagWrapper}>
               <img
                 className={styles.flag}
-                src={`${import.meta.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+                src={`/flags/${countryISO}.svg`}
                 alt=""
               />
               {countryName && (
