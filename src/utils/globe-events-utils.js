@@ -59,7 +59,7 @@ export const setAvatarImage = (
   if (layerFeatures && layerFeatures.length) {
     const { latitude, longitude } = layerFeatures[0].graphic.geometry;
     const slug = get(layerFeatures, '[0].graphic.attributes.nam_slg');
-    const featureMapPlace = featuredMapPlaces.data[selectedFeaturedMap][slug];
+    const featureMapPlace = featuredMapPlaces?.data[selectedFeaturedMap][slug];
     const imageUrl = featureMapPlace && featureMapPlace.imageUrl;
     const point = new Point({ latitude, longitude });
     const screenCoords = view.toScreen(point);
