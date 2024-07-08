@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Tooltip from '@tippyjs/react';
 
 import styles from './styles.module.scss';

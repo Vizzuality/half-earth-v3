@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-
-import { loadModules } from 'esri-loader';
+import { useEffect, useRef, useMemo } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 
@@ -14,7 +12,7 @@ import {
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import CloseIcon from 'icons/close.svg?react';
 
 function MapTooltipComponent({
   img,
@@ -39,19 +37,6 @@ function MapTooltipComponent({
   const translateCountry = (data) => CountryNamesTranslations[data] || data;
 
   const tooltipref = useRef(null);
-  const [tooltip, setTooltip] = useState(null);
-
-  // Create a new Popup to contain the tooltip
-  useEffect(() => {
-    loadModules(['esri/widgets/Popup']).then(([Popup]) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const _tooltip = new Popup({ view });
-      setTooltip(_tooltip);
-    });
-    return function cleanUp() {
-      onCloseButtonClick();
-    };
-  }, []);
 
   // Clean up on mount
   useEffect(() => {
@@ -59,15 +44,15 @@ function MapTooltipComponent({
   }, []);
 
   useEffect(() => {
-    if (isVisible && tooltip && tooltipPosition) {
-      view.popup.open({
+    if (isVisible && tooltipPosition) {
+      view.openPopup({
         location: tooltipPosition.centroid,
         content: tooltipref.current,
       });
     } else {
-      view.popup.close();
+      view.closePopup();
     }
-  }, [isVisible, tooltipPosition, tooltip]);
+  }, [isVisible, tooltipPosition]);
 
   return (
     <div

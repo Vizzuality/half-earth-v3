@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import { useT } from '@transifex/react';
@@ -7,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import ShareIcon from 'icons/share.svg?react';
 
 import styles from './share-button-styles.module';
 

@@ -1,5 +1,5 @@
 import 'he-components/dist/main.css';
-import React, { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import loadable from '@loadable/component';
@@ -37,7 +37,7 @@ const mapStateToProps = ({ location }) => ({
   lang: location.query && location.query.lang,
 });
 
-const { REACT_APP_TRANSIFEX_TOKEN } = process.env;
+const { VITE_APP_TRANSIFEX_TOKEN } = import.meta.env;
 
 function AppLayout(props) {
   const { route } = props;
@@ -72,8 +72,8 @@ const queryClient = new QueryClient();
 function App(props) {
   useEffect(() => {
     tx.init({
-      token: REACT_APP_TRANSIFEX_TOKEN,
-      ...(process.env.NODE_ENV === 'development'
+      token: VITE_APP_TRANSIFEX_TOKEN,
+      ...(import.meta.NODE_ENV === 'development'
         ? { missingPolicy: new PseudoTranslationPolicy() }
         : {}),
     });
@@ -89,7 +89,9 @@ function App(props) {
   return (
     <QueryClientProvider client={queryClient}>
       <div className={styles.app}>
-        <AppLayout {...props} />
+        <Suspense fallback={null}>
+          <AppLayout {...props} />
+        </Suspense>
         <ThirdParty />
       </div>
     </QueryClientProvider>

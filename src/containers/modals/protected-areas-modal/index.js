@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { AREA_OF_INTEREST } from 'router';
@@ -103,22 +103,24 @@ function Container(props) {
     } else if (
       precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.futurePlaces
     ) {
-      EsriFeatureService.getFeatures({
-        url,
-        whereClause: `places = '${contextualData.cluster}'`,
-        returnGeometry: false,
-      }).then((results) => {
-        if (results) {
-          const tempData = results.map((f) => f.attributes);
-          tempData.sort(sortFunction);
-          setData(tempData);
-          setFilteredData([...tempData]);
-        } else {
-          setData([]);
-          setFilteredData([]);
-        }
-        setLoading(false);
-      });
+      if (contextualData.cluster) {
+        EsriFeatureService.getFeatures({
+          url,
+          whereClause: `cluster = '${contextualData.cluster}'`,
+          returnGeometry: false,
+        }).then((results) => {
+          if (results) {
+            const tempData = results.map((f) => f.attributes);
+            tempData.sort(sortFunction);
+            setData(tempData);
+            setFilteredData([...tempData]);
+          } else {
+            setData([]);
+            setFilteredData([]);
+          }
+          setLoading(false);
+        });
+      }
     } else if (
       precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.specificRegions
     ) {

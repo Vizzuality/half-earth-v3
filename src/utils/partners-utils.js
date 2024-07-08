@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { t } from '@transifex/native';
 
 import burtsLogo from 'logos/BB_Foundation_logo_stacked.png';

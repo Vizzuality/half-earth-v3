@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import NationalReportCardLandingScene from 'scenes/mobile/nrc-landing-scene-mobile';
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, Children } from 'react';
 import Responsive from 'react-responsive';
 
 export const baseUnit = 16;
@@ -71,7 +71,7 @@ export function MobileOnly(props) {
 
   return (
     <Responsive {...props} maxWidth={pixelBreakpoints.mobile}>
-      {React.Children.map(children || null, (child, i) => {
+      {Children.map(children || null, (child, i) => {
         return (
           // eslint-disable-next-line react/no-array-index-key
           child && <child.type {...child.props} key={i} view={view} map={map} />

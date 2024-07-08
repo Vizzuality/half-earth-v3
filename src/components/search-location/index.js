@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 

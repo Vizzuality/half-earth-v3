@@ -1,10 +1,9 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './app';
 import store from './store/store';
-import 'styles/base';
+import './styles/base.scss';
 
 function Root() {
   return (

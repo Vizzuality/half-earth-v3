@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { tx } from '@transifex/native';
 import { useLanguages, useLocale } from '@transifex/react';
@@ -7,7 +7,7 @@ import cx from 'classnames';
 
 import styles from './language-switcher.module.scss';
 
-const { REACT_APP_FEATURE_ALLOWED_LANGUAGES } = process.env;
+const { VITE_APP_FEATURE_ALLOWED_LANGUAGES } = import.meta.env;
 
 function LanguageSwitcher(props) {
   const { route, changeLang } = props;
@@ -17,8 +17,8 @@ function LanguageSwitcher(props) {
     () =>
       languages.filter(
         (l) =>
-          !REACT_APP_FEATURE_ALLOWED_LANGUAGES ||
-          REACT_APP_FEATURE_ALLOWED_LANGUAGES.split(',').includes(l.code)
+          !VITE_APP_FEATURE_ALLOWED_LANGUAGES ||
+          VITE_APP_FEATURE_ALLOWED_LANGUAGES.split(',').includes(l.code)
       ),
     [languages]
   );

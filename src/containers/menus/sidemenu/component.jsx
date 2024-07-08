@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -16,9 +16,9 @@ import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module';
 
-import { ReactComponent as HelpIcon } from 'icons/help.svg';
-import { ReactComponent as SearchIcon } from 'icons/search-menu.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import HelpIcon from 'icons/help.svg?react';
+import SearchIcon from 'icons/search-menu.svg?react';
+import ShareIcon from 'icons/share.svg?react';
 
 function SideMenu({
   map,

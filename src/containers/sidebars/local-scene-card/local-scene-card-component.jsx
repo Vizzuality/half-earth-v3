@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './local-scene-card-styles.module.scss';
 
 const LocalSceneCardComponent = ({ children }) => {

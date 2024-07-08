@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-
-import { loadModules } from 'esri-loader';
+import { useEffect, useState, useRef, useMemo } from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 
@@ -15,7 +13,7 @@ import { LAND_MARINE } from 'constants/country-mode-constants';
 import { useLandscape } from 'constants/responsive';
 import { getCountryNames } from 'constants/translation-constants';
 
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import CloseIcon from 'icons/close.svg?react';
 
 import styles from './country-entry-tooltip-styles.module.scss';
 
@@ -40,7 +38,6 @@ function CountryEntryTooltipComponent({
   const countryNames = useMemo(getCountryNames, [locale]);
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
-  const [tooltip, setTooltip] = useState(null);
   const [activeTab, setActiveTab] = useState('land');
 
   const {
@@ -58,18 +55,9 @@ function CountryEntryTooltipComponent({
     protectionNeededMar,
   } = tooltipContent;
 
-  // Create a new Popup to contain the tooltip
   useEffect(() => {
-    loadModules(['esri/widgets/Popup']).then(([Popup]) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const _tooltip = new Popup({ view, alignment: 'top-center' });
-      setTooltip(_tooltip);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (tooltipPosition && tooltip && mapTooltipIsVisible) {
-      view.popup.open({
+    if (tooltipPosition && mapTooltipIsVisible) {
+      view.openPopup({
         location: tooltipPosition,
         content: tooltipref.current,
       });
@@ -90,9 +78,9 @@ function CountryEntryTooltipComponent({
         });
       }
     } else {
-      view.popup.close();
+      view.closePopup();
     }
-  }, [tooltipPosition, tooltip, mapTooltipIsVisible]);
+  }, [tooltipPosition, mapTooltipIsVisible]);
 
   const { overlay: onboardingOverlay } = getOnboardingProps({
     section: 'exploreNRC',
@@ -114,8 +102,7 @@ function CountryEntryTooltipComponent({
 
   const landTab = activeTab === LAND_MARINE.land;
 
-  if (!tooltipPosition || !tooltip) return null;
-
+  if (!tooltipPosition) return null;
   return (
     <div
       ref={tooltipref}
@@ -129,7 +116,7 @@ function CountryEntryTooltipComponent({
         <div>
           <img
             className={styles.tooltipFlag}
-            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+            src={`/flags/${countryISO}.svg`}
             alt=""
           />
           <span className={styles.tooltipName}>

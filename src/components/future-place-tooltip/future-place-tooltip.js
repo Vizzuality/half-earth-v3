@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import mapTooltipActions from 'redux_modules/map-tooltip';

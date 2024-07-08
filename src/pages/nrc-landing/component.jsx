@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { NATIONAL_REPORT_CARD_LANDING } from 'router';
 

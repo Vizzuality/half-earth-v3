@@ -105,12 +105,6 @@ module.exports = {
             pattern: 'redux_modules/**',
             group: 'builtin',
           },
-
-          {
-            pattern: 'esri-loader',
-            group: 'builtin',
-            position: 'after',
-          },
           {
             pattern: 'router',
             group: 'builtin',

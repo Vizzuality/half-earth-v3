@@ -1,10 +1,8 @@
-import React from 'react';
-
 import { Modal } from 'he-components';
 
 import styles from './styles.module';
 
-import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+import WarningIcon from 'icons/warning.svg?react';
 
 // Modal to display warnings and other alerts
 function PromptModalComponent({ title, isOpen, description, handleClose }) {

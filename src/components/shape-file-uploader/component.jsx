@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { useT } from '@transifex/react';
@@ -7,7 +7,7 @@ import { featureCollectionFromShape } from 'utils/analyze-areas-utils';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as AddShapeIcon } from 'icons/add_shape_icon.svg';
+import AddShapeIcon from 'icons/add_shape_icon.svg?react';
 
 function ShapeFileUploader({ sizeWarning, view, onError, onSuccess }) {
   const t = useT();

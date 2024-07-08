@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { connect } from 'react-redux';
 
 import { useLocale } from '@transifex/react';
@@ -12,9 +12,9 @@ import { getSidebarTabs } from 'constants/ui-params';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
-import { ReactComponent as AnalyzeAreasSelectedIcon } from 'icons/analyze_areas_selected.svg';
-import { ReactComponent as MapLayersIcon } from 'icons/map_layers.svg';
+import AnalyzeAreasIcon from 'icons/analyze_areas.svg?react';
+import AnalyzeAreasSelectedIcon from 'icons/analyze_areas_selected.svg?react';
+import MapLayersIcon from 'icons/map_layers.svg?react';
 
 import mapStateToProps from './selectors';
 

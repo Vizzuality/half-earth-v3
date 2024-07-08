@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
 
@@ -23,8 +23,8 @@ import {
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
-import { ReactComponent as IconSearch } from 'icons/search.svg';
+import CloseIcon from 'icons/menu-close.svg?react';
+import IconSearch from 'icons/search.svg?react';
 
 const getLayerTypeText = (layer, _t) =>
   ({

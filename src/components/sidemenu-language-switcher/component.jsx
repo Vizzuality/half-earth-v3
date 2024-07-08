@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 import { tx } from '@transifex/native';
 import { useLanguages, useLocale } from '@transifex/react';
@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 import styles from './styles.module.scss';
 
-const { REACT_APP_FEATURE_ALLOWED_LANGUAGES } = process.env;
+const { VITE_APP_FEATURE_ALLOWED_LANGUAGES } = import.meta.env;
 
 function SideMenuLanguageSwitcher(props) {
   const { changeLang } = props;
@@ -16,8 +16,8 @@ function SideMenuLanguageSwitcher(props) {
     () =>
       languages.filter(
         (l) =>
-          !REACT_APP_FEATURE_ALLOWED_LANGUAGES ||
-          REACT_APP_FEATURE_ALLOWED_LANGUAGES.split(',').includes(l.code)
+          !VITE_APP_FEATURE_ALLOWED_LANGUAGES ||
+          VITE_APP_FEATURE_ALLOWED_LANGUAGES.split(',').includes(l.code)
       ),
     [languages]
   );

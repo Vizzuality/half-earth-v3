@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { useT, T } from '@transifex/react';
@@ -12,7 +12,7 @@ import cx from 'classnames';
 
 import styles from './styles.module';
 
-import { ReactComponent as CopyIcon } from 'icons/copy.svg';
+import CopyIcon from 'icons/copy.svg?react';
 
 const LINK = 'link';
 const EMBED = 'embed';

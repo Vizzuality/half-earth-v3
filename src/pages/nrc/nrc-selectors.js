@@ -19,7 +19,7 @@ const selectMetadataData = ({ metadata }) =>
   metadata && (!isEmpty(metadata.data) || null);
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const selectCountriesData = ({ countryData }) =>
-  countryData && countryData.data;
+  countryData && (countryData.data || null);
 
 const selectActiveView = ({ location }) =>
   location.payload.view || NRC_UI_DEFAULTS.view;
@@ -113,6 +113,7 @@ export default createStructuredSelector({
   countryISO: selectCountryIso,
   countryId: getCountryId,
   countryName: getCountryName,
+  countriesData: selectCountriesData,
   openedModal: getHalfEarthModalOpen,
   hasMetadata: selectMetadataData,
   speciesCategories: selectBiodiversityData,

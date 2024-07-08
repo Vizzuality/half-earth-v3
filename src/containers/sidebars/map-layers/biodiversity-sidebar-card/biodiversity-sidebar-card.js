@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import metadataActions from 'redux_modules/metadata';
 

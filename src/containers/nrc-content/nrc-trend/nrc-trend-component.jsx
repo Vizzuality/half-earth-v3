@@ -1,6 +1,6 @@
-import React from 'react';
-
 import { T, useT } from '@transifex/react';
+
+import { getCSSVariable } from 'utils/css-utils';
 
 import Tooltip from '@tippyjs/react';
 
@@ -8,9 +8,7 @@ import TrendChartTooltip from 'containers/nrc-content/nrc-trend/trend-chart-tool
 
 import TrendChart from 'components/charts/trend-chart';
 
-import COLORS from 'styles/settings';
-
-import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
+import InfoIcon from 'icons/infoDark.svg?react';
 
 import styles from './nrc-trend-styles.module.scss';
 
@@ -60,14 +58,14 @@ function Trend({
         <TrendChart
           area1={{
             key: 'spi',
-            stroke: COLORS.white,
+            stroke: getCSSVariable('white'),
             strokeWidth: 0.5,
             label: 'SPI',
             labelOffset: isShrunken ? 7 : 18,
           }}
           area2={{
             key: 'protected',
-            stroke: COLORS.white,
+            stroke: getCSSVariable('white'),
             strokeWidth: 0.7,
             strokeDasharray: '3 3 3 3',
             label: t('% Protected areas'),
