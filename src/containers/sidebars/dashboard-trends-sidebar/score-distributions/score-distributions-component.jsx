@@ -1,5 +1,7 @@
 import React from 'react';
 
+import cx from 'classnames';
+
 import Button from 'components/button';
 
 import styles from '../dashboard-trends-sidebar-styles.module.scss';
@@ -45,6 +47,7 @@ function ScoreDistributionsComponent(props) {
         <span className={styles.spsSpeciesTitle}>
           Species with SPS between <b>0.5:</b>
         </span>
+        <hr />
         <ul className={styles.spsSpecies}>
           {spsSpecies.map((species) => {
             return (
@@ -67,7 +70,7 @@ function ScoreDistributionsComponent(props) {
         <div className={styles.options}>
           <Button
             type="rectangular"
-            className={styles.saveButton}
+            className={cx(styles.saveButton, styles.notActive)}
             label="view full table"
           />
           <span className={styles.helpText}>

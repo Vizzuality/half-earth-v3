@@ -125,6 +125,7 @@ function ScoreDistributionChartComponent(props) {
         },
         grid: {
           color: COLORS['oslo-gray'],
+          display: false,
         },
         ticks: {
           color: COLORS['oslo-gray'],

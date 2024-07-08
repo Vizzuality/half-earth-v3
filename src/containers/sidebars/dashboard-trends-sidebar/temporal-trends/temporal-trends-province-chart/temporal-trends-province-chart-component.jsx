@@ -16,11 +16,11 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 
 import COLORS from 'styles/settings';
 
-import styles from './temporal-trends-chart-styles.module.scss';
+import styles from './temporal-trends-province-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
-function TemporalTrendsChartComponent(props) {
+function TemporalTrendsProvinceChartComponent(props) {
   const { countryData } = props;
   const blankData = {
     labels: ['Global SPI', 'Remaining'],
@@ -218,4 +218,4 @@ function TemporalTrendsChartComponent(props) {
   );
 }
 
-export default TemporalTrendsChartComponent;
+export default TemporalTrendsProvinceChartComponent;
