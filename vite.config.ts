@@ -55,7 +55,7 @@ function moduleScssResolver() {
 
 export default defineConfig({
   // depending on your application, base can also be "/"
-  base: '',
+  base: '/',
   plugins: [
     {
       name: 'treat-js-files-as-jsx',
@@ -90,6 +90,16 @@ export default defineConfig({
     open: true,
     // this sets a default port to 3000
     port: 3000,
+  },
+  preview: {
+    port: 3000,
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+     },
+    },
   },
   resolve: {
     alias: {
