@@ -21,12 +21,11 @@ function IndicatorCard({
       <div className={styles.description}>{description}</div>
       <div className={styles.children}>{children}</div>
       {tooltipInfo && (
-        <span className={styles.iconWrapper}>
+        <span onClick={() => console.log('hey')} className={styles.iconWrapper}>
           <Tooltip
             content={<div className={styles.tooltip}>{tooltipInfo}</div>}
-            position="top"
-          >
-            <InfoIcon className={styles.icon} />
+            >
+            <span className={styles.icon}><InfoIcon /></span>
           </Tooltip>
         </span>
       )}

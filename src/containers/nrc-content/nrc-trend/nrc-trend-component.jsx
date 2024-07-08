@@ -49,7 +49,7 @@ function Trend({
             delay={100}
             placement="top"
           >
-            <InfoIcon className={styles.icon} />
+            <span className={styles.icon}><InfoIcon /></span>
           </Tooltip>
         </span>
       </div>
