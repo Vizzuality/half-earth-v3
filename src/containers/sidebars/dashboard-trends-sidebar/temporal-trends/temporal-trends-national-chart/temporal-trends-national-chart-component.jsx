@@ -12,7 +12,7 @@ import {
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
-import COLORS from 'styles/settings';
+import { getCSSVariable } from 'utils/css-utils';
 
 import styles from './temporal-trends-national-chart-styles.module.scss';
 
@@ -26,8 +26,8 @@ function TemporalTrendsNationalChartComponent(props) {
       {
         label: '',
         data: [0, 0],
-        backgroundColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
-        borderColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
+        backgroundColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+        borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
         borderWidth: 1,
       },
     ],
@@ -50,13 +50,13 @@ function TemporalTrendsNationalChartComponent(props) {
         title: {
           display: true,
           text: 'Year',
-          color: COLORS.white,
+          color: getCSSVariable('white'),
         },
         grid: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
         ticks: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
       },
       y: {
@@ -65,13 +65,13 @@ function TemporalTrendsNationalChartComponent(props) {
         title: {
           display: true,
           text: 'SPI / Percent of Area Protected',
-          color: COLORS.white,
+          color: getCSSVariable('white'),
         },
         grid: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
         ticks: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
       },
     },
@@ -94,12 +94,12 @@ function TemporalTrendsNationalChartComponent(props) {
       {
         label: 'SPI',
         data: [20, 20, 20, 30, 30, 38, 38, 43, 45, 60],
-        borderColor: COLORS.birds,
+        borderColor: getCSSVariable('birds'),
       },
       {
         label: 'Area protected',
         data: [10, 10, 10, 14, 15, 18, 25, 28, 30, 50],
-        borderColor: COLORS.mammals,
+        borderColor: getCSSVariable('mammals'),
       },
     ],
   };
@@ -116,10 +116,10 @@ function TemporalTrendsNationalChartComponent(props) {
               100 - countryData.Global_SPI_ter,
             ],
             backgroundColor: [
-              COLORS['temporal-spi'],
-              COLORS['white-opacity-20'],
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
             ],
-            borderColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
+            borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
             borderWidth: 1,
           },
         ],

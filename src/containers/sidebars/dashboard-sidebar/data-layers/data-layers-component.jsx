@@ -12,7 +12,7 @@ import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
-import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
+import ArrowIcon from 'icons/arrow_right.svg?react';
 
 import styles from './data-layers-styles.module.scss';
 

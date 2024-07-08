@@ -14,7 +14,7 @@ import {
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
-import COLORS from 'styles/settings';
+import { getCSSVariable } from 'utils/css-utils';
 
 import styles from './temporal-trends-province-chart-styles.module.scss';
 
@@ -28,8 +28,8 @@ function TemporalTrendsProvinceChartComponent(props) {
       {
         label: '',
         data: [0, 0],
-        backgroundColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
-        borderColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
+        backgroundColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+        borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
         borderWidth: 1,
       },
     ],
@@ -81,13 +81,13 @@ function TemporalTrendsProvinceChartComponent(props) {
         title: {
           display: true,
           text: 'Total Area (1000 km2)',
-          color: COLORS.white,
+          color: getCSSVariable('white'),
         },
         grid: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
         ticks: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
       },
       y: {
@@ -96,13 +96,13 @@ function TemporalTrendsProvinceChartComponent(props) {
         title: {
           display: true,
           text: 'Species Protection Index',
-          color: COLORS.white,
+          color: getCSSVariable('white'),
         },
         grid: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
         ticks: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
       },
     },
@@ -161,10 +161,10 @@ function TemporalTrendsProvinceChartComponent(props) {
               100 - countryData.Global_SPI_ter,
             ],
             backgroundColor: [
-              COLORS['temporal-spi'],
-              COLORS['white-opacity-20'],
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
             ],
-            borderColor: [COLORS['temporal-spi'], COLORS['white-opacity-20']],
+            borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
             borderWidth: 1,
           },
         ],

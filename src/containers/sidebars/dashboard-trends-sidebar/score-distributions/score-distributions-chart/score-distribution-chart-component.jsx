@@ -16,7 +16,7 @@ import {
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
-import COLORS from 'styles/settings';
+import { getCSSVariable } from 'utils/css-utils';
 
 import Amphibians from 'images/amphibians.svg';
 import Birds from 'images/birds.svg';
@@ -121,14 +121,14 @@ function ScoreDistributionChartComponent(props) {
         title: {
           display: true,
           text: 'Protection Score',
-          color: COLORS.white,
+          color: getCSSVariable('white'),
         },
         grid: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
           display: false,
         },
         ticks: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
       },
       y: {
@@ -137,13 +137,13 @@ function ScoreDistributionChartComponent(props) {
         title: {
           display: true,
           text: 'Number of Species',
-          color: COLORS.white,
+          color: getCSSVariable('white'),
         },
         grid: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
         ticks: {
-          color: COLORS['oslo-gray'],
+          color: getCSSVariable('oslo-gray'),
         },
       },
     },
@@ -165,25 +165,25 @@ function ScoreDistributionChartComponent(props) {
       {
         label: 'Dataset 1',
         data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-        backgroundColor: COLORS.birds,
+        backgroundColor: getCSSVariable('birds'),
         stack: 'Stack 0',
       },
       {
         label: 'Dataset 2',
         data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-        backgroundColor: COLORS.mammals,
+        backgroundColor: getCSSVariable('mammals'),
         stack: 'Stack 0',
       },
       {
         label: 'Dataset 3',
         data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-        backgroundColor: COLORS.reptiles,
+        backgroundColor: getCSSVariable('reptiles'),
         stack: 'Stack 0',
       },
       {
         label: 'Dataset 4',
         data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-        backgroundColor: COLORS.amphibians,
+        backgroundColor: getCSSVariable('amphibians'),
         stack: 'Stack 0',
       },
     ],
@@ -195,8 +195,8 @@ function ScoreDistributionChartComponent(props) {
       {
         label: '',
         data: getPercentage('birds'),
-        backgroundColor: [COLORS.birds, COLORS['white-opacity-20']],
-        borderColor: [COLORS.birds, COLORS['white-opacity-20']],
+        backgroundColor: [getCSSVariable('birds'), getCSSVariable('white-opacity-20')],
+        borderColor: [getCSSVariable('birds'), getCSSVariable('white-opacity-20')],
         borderWidth: 1,
       },
     ],
@@ -208,8 +208,8 @@ function ScoreDistributionChartComponent(props) {
       {
         label: '',
         data: getPercentage('mammals'),
-        backgroundColor: [COLORS.mammals, COLORS['white-opacity-20']],
-        borderColor: [COLORS.mammals, COLORS['white-opacity-20']],
+        backgroundColor: [getCSSVariable('mammals'), getCSSVariable('white-opacity-20')],
+        borderColor: [getCSSVariable('mammals'), getCSSVariable('white-opacity-20')],
         borderWidth: 1,
       },
     ],
@@ -221,8 +221,8 @@ function ScoreDistributionChartComponent(props) {
       {
         label: '',
         data: getPercentage('reptiles'),
-        backgroundColor: [COLORS.reptiles, COLORS['white-opacity-20']],
-        borderColor: [COLORS.reptiles, COLORS['white-opacity-20']],
+        backgroundColor: [getCSSVariable('reptiles'), getCSSVariable('white-opacity-20')],
+        borderColor: [getCSSVariable('reptiles'), getCSSVariable('white-opacity-20')],
         borderWidth: 1,
       },
     ],
@@ -234,8 +234,8 @@ function ScoreDistributionChartComponent(props) {
       {
         label: '',
         data: getPercentage('amphibians'),
-        backgroundColor: [COLORS.amphibians, COLORS['white-opacity-20']],
-        borderColor: [COLORS.amphibians, COLORS['white-opacity-20']],
+        backgroundColor: [getCSSVariable('amphibians'), getCSSVariable('white-opacity-20')],
+        borderColor: [getCSSVariable('amphibians'), getCSSVariable('white-opacity-20')],
         borderWidth: 1,
       },
     ],

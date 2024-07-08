@@ -14,7 +14,7 @@ import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
 import DashboardSidebar from '../../sidebars/dashboard-sidebar/dashboard-sidebar-component';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 

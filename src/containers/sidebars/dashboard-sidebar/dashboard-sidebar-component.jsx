@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import cx from 'classnames';
 
-import { ReactComponent as AnalyticsIcon } from 'icons/analytics.svg';
-import { ReactComponent as StacksIcon } from 'icons/stacks.svg';
-import { ReactComponent as TimeLineIcon } from 'icons/timeline.svg';
+import AnalyticsIcon from 'icons/analytics.svg?react';
+import StacksIcon from 'icons/stacks.svg?react';
+import TimeLineIcon from 'icons/timeline.svg?react';
 
 import BioDiversityContainer from './biodiversity-indicators';
 import styles from './dashboard-sidebar-styles.module.scss';

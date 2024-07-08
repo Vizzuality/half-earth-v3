@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { loadModules } from 'esri-loader';
-
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+
+import Map from '@arcgis/core/Map';
+import MapView from '@arcgis/core/views/MapView';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import TileLayer from '@arcgis/core/layers/TileLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
+
 
 import Component from './component';
 import mapStateToProps from './selectors';
@@ -65,17 +71,17 @@ function ViewContainer(props) {
   };
 
   useEffect(() => {
-    loadModules(
-      [
-        'esri/Map',
-        'esri/layers/FeatureLayer',
-        'esri/layers/GraphicsLayer',
-        'esri/layers/GroupLayer',
-        'esri/layers/TileLayer',
-      ],
-      loaderOptions
-    )
-      .then(([Map, FeatureLayer, GraphicsLayer, GroupLayer, TileLayer]) => {
+    // loadModules(
+    //   [
+    //     'esri/Map',
+    //     'esri/layers/FeatureLayer',
+    //     'esri/layers/GraphicsLayer',
+    //     'esri/layers/GroupLayer',
+    //     'esri/layers/TileLayer',
+    //   ],
+    //   loaderOptions
+    // )
+      // .then(([Map, FeatureLayer, GraphicsLayer, GroupLayer, TileLayer]) => {
         const countries = new FeatureLayer({
           portalItem: {
             id: '53a1e68de7e4499cad77c80daba46a94',
@@ -119,16 +125,16 @@ function ViewContainer(props) {
         if (onMapLoad) {
           onMapLoad(flatMap);
         }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      // })
+      // .catch((err) => {
+      //   console.error(err);
+      // });
   }, []);
 
   useEffect(() => {
     if (map) {
-      loadModules(['esri/views/MapView'], loaderOptions)
-        .then(([MapView]) => {
+      // loadModules(['esri/views/MapView'], loaderOptions)
+      //   .then(([MapView]) => {
           const flatView = new MapView({
             map,
             container: `map-container-${mapName || mapId}`,
@@ -147,10 +153,10 @@ function ViewContainer(props) {
           // });
 
           setView(flatView);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+        // })
+        // .catch((err) => {
+        //   console.error(err);
+        // });
     }
   }, [map]);
 
