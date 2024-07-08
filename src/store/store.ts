@@ -10,6 +10,9 @@ import  { reduxConfig as countryDataReduxConfig } from 'store/redux-modules/coun
 import  { reduxConfig as uiReduxConfig } from 'store/redux-modules/ui'
 import  { reduxConfig as featureMapsListReduxConfig } from 'store/redux-modules/featured-maps-list/featured-maps-list'
 import  { reduxConfig as featuredMapPlacesReduxConfig } from 'store/redux-modules/featured-map-places/featured-map-places'
+import { reduxConfig as AOIsGeometriesReduxConfig } from 'store/redux-modules/aois-geometries';
+import { reduxConfig as metadataReduxConfig } from 'store/redux-modules/metadata/metadata';
+
 import router from '../router';
 
 import reducerRegistry from './reducerRegistry';
@@ -26,6 +29,8 @@ reducerRegistry.registerModule('countryData', countryDataReduxConfig);
 reducerRegistry.registerModule('ui', uiReduxConfig);
 reducerRegistry.registerModule('featuredMapsList', featureMapsListReduxConfig);
 reducerRegistry.registerModule('featuredMapPlaces', featuredMapPlacesReduxConfig);
+reducerRegistry.registerModule('aoisGeometries', AOIsGeometriesReduxConfig);
+reducerRegistry.registerModule('metadata', metadataReduxConfig);
 
 const initialReducers = combineReducers(reducerRegistry.getReducers());
 
