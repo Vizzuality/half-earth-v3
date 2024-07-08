@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
-import React from 'react';
-
 import { T, useT, useLocale } from '@transifex/react';
 
+import { getCSSVariable } from 'utils/css-utils';
 import { getLocaleNumber, roundSPI } from 'utils/data-formatting-utils';
 
 import cx from 'classnames';
@@ -10,8 +9,6 @@ import cx from 'classnames';
 import IndicatorCard from 'containers/nrc-content/nrc-indicators/indicator-card';
 
 import { useMobile } from 'constants/responsive';
-
-import COLORS from 'styles/settings';
 
 import styles from './nrc-indicators-styles.module.scss';
 import { getBarStyles } from './nrc-indicators-utils';
@@ -128,8 +125,8 @@ function Indicators({ countryData, landMarineSelection }) {
       <IndicatorCard
         color={
           noProtectedAreas
-            ? COLORS['protection-needed']
-            : COLORS['protected-areas']
+            ? getCSSVariable('protection-needed')
+            : getCSSVariable('protected-areas')
         }
         indicator={getIndicator()}
         description={getDescription()}
@@ -141,9 +138,9 @@ function Indicators({ countryData, landMarineSelection }) {
           className={styles.bar}
           style={{
             backgroundImage: getBarStyles({
-              color1: COLORS['protected-areas'],
+              color1: getCSSVariable('protected-areas'),
               value1: Math.round(prop_protected),
-              color2: COLORS['protection-needed'],
+              color2: getCSSVariable('protection-needed'),
               value2: protectionNeeded,
             }),
           }}
@@ -249,8 +246,8 @@ function Indicators({ countryData, landMarineSelection }) {
       <IndicatorCard
         color={
           noVeryHighHumanModification
-            ? COLORS['some-modification']
-            : COLORS['high-modification']
+            ? getCSSVariable('some-modification')
+            : getCSSVariable('high-modification')
         }
         indicator={getIndicator()}
         description={getDescription()}
@@ -262,9 +259,9 @@ function Indicators({ countryData, landMarineSelection }) {
           className={styles.bar}
           style={{
             backgroundImage: getBarStyles({
-              color1: COLORS['high-modification'],
+              color1: getCSSVariable('high-modification'),
               value1: hm_vh,
-              color2: COLORS['some-modification'],
+              color2: getCSSVariable('some-modification'),
               value2: hm,
             }),
           }}
@@ -306,7 +303,7 @@ function Indicators({ countryData, landMarineSelection }) {
         </div>
       </IndicatorCard>
       <IndicatorCard
-        color={COLORS.gold}
+        color={getCSSVariable('gold')}
         indicator={total_endemic_ter && getLocaleNumber(total_endemic, locale)}
         description={
           <p>
@@ -350,7 +347,7 @@ function Indicators({ countryData, landMarineSelection }) {
           className={styles.bar}
           style={{
             backgroundImage: getBarStyles({
-              color1: COLORS.gold,
+              color1: getCSSVariable('gold'),
               value1: (total_endemic * 100) / nspecies,
             }),
           }}

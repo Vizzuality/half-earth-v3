@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 

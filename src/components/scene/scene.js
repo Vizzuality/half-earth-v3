@@ -1,13 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import sceneActions from 'redux_modules/scene';
-
-import { loadModules } from 'esri-loader';
 
 import urlActions from 'actions/url-actions';
 
 import useIsSafari from 'utils/user-agent-utils';
+
+import ArcGISMap from '@arcgis/core/Map';
+import SceneView from '@arcgis/core/views/SceneView';
 
 import { useWatchUtils } from 'hooks/esri';
 
@@ -83,25 +84,18 @@ function SceneContainer(props) {
   );
   // eslint-disable-next-line no-undef
   const hasSceneRotated = useMemo(() => localStorage.getItem(rotationKey), []);
-
   useEffect(() => {
-    loadModules(['esri/Map'], loaderOptions)
-      .then(([Map]) => {
-        const _map = new Map({
-          basemap: SATELLITE_BASEMAP_LAYER,
-          ground: {
-            surfaceColor: '#070710',
-          },
-        });
+    const _map = new ArcGISMap({
+      basemap: SATELLITE_BASEMAP_LAYER,
+      ground: {
+        surfaceColor: '#070710',
+      },
+    });
 
-        setMap(_map);
-        if (onMapLoad) {
-          onMapLoad(_map);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    setMap(_map);
+    if (onMapLoad) {
+      onMapLoad(_map);
+    }
   }, []);
 
   const mobileCustomPan = (mapView) => {
@@ -150,28 +144,22 @@ function SceneContainer(props) {
 
   useEffect(() => {
     if (map) {
-      loadModules(['esri/views/SceneView'], loaderOptions)
-        .then(([SceneView]) => {
-          const _view = new SceneView({
-            map,
-            container: `scene-container-${sceneName || sceneId}`,
-            navigation: {
-              ...(isMobile
-                ? { browserTouchPanEnabled: false, momentumEnabled: false }
-                : {}),
-            },
-            ...sceneSettings,
-            ...(isMobile ? { qualityProfile: 'low' } : {}),
-          });
+      const _view = new SceneView({
+        map,
+        container: `scene-container-${sceneName || sceneId}`,
+        navigation: {
+          ...(isMobile
+            ? { browserTouchPanEnabled: false, momentumEnabled: false }
+            : {}),
+        },
+        ...sceneSettings,
+        ...(isMobile ? { qualityProfile: 'low' } : {}),
+      });
 
-          // disable browserTouchPan and create a custom pan as it was not working properly for touch interaction
-          mobileCustomPan(_view);
+      // disable browserTouchPan and create a custom pan as it was not working properly for touch interaction
+      mobileCustomPan(_view);
 
-          setView(_view);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      setView(_view);
     }
   }, [map]);
 

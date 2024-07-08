@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 
 import { T, useLocale, useT } from '@transifex/react';
@@ -15,8 +15,8 @@ import HeaderItem from 'components/header-item';
 
 import { getSpeciesGroup } from 'constants/translation-constants';
 
-import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
-import { ReactComponent as SearchIcon } from 'icons/search.svg';
+import ArrowIcon from 'icons/arrow_right.svg?react';
+import SearchIcon from 'icons/search.svg?react';
 
 import ExpandedInfo from './expanded-info';
 import {
@@ -58,7 +58,7 @@ function SpeciesTable({
   };
 
   const renderRow = (index) => {
-    const { species, speciesgroup, NSPS, percentprotected, stewawrdship } =
+    const { species, speciesgroup, NSPS, percentprotected, stewardship } =
       speciesList[index];
 
     const isOpened = expandedRow === index;
@@ -95,15 +95,15 @@ function SpeciesTable({
               <div className={styles.tableItem}>{NSPS}</div>
               <div
                 className={cx(styles.tableItem, {
-                  [styles.bold]: stewawrdship === 1,
+                  [styles.bold]: stewardship === 1,
                 })}
               >
-                {stewawrdship === 1 ? (
+                {stewardship === 1 ? (
                   t('Endemic')
                 ) : (
                   <T
                     _str="{stewardship} countries"
-                    stewardship={stewawrdship}
+                    stewardship={stewardship}
                   />
                 )}
               </div>

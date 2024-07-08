@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useT } from '@transifex/react';
 
 import PropTypes from 'prop-types';
@@ -8,11 +6,11 @@ import { Modal } from 'he-components';
 
 import styles from './styles.module';
 
-import { ReactComponent as GlobeIcon } from 'icons/globe.svg';
-import { ReactComponent as LandscapeIcon } from 'icons/landscape.svg';
-import { ReactComponent as PanMouseIcon } from 'icons/pan_mouse.svg';
-import { ReactComponent as RotateMouseIcon } from 'icons/rotate_mouse.svg';
-import { ReactComponent as ZoomMouseIcon } from 'icons/zoom_mouse.svg';
+import GlobeIcon from 'icons/globe.svg?react';
+import LandscapeIcon from 'icons/landscape.svg?react';
+import PanMouseIcon from 'icons/pan_mouse.svg?react';
+import RotateMouseIcon from 'icons/rotate_mouse.svg?react';
+import ZoomMouseIcon from 'icons/zoom_mouse.svg?react';
 
 function HelpModal({ handleClose, isOpen }) {
   const t = useT();

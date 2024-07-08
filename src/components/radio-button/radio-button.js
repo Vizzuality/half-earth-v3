@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Component from './radio-button-component';
 
 function RadioButton(props) {

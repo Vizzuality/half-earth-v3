@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
-import { loadModules } from 'esri-loader';
-
 import * as urlActions from 'actions/url-actions';
 
 import {
@@ -15,6 +13,8 @@ import {
 } from 'utils/globe-events-utils';
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 
+import Graphic from '@arcgis/core/Graphic';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import debounce from 'lodash/debounce';
 
 // CONSTANTS
@@ -38,27 +38,23 @@ function FeatureHighlightLayerContainer(props) {
   // Create the graphics layer on mount
   useEffect(() => {
     if (!graphicsLayer) {
-      loadModules(['esri/Graphic', 'esri/layers/GraphicsLayer']).then(
-        ([Graphic, GraphicsLayer]) => {
-          const _selectedCountryBorderGraphic = createGraphic(
-            Graphic,
-            GRID_CELL_STYLES
-          );
-          const _hoveredCountryBorderGraphic = createGraphic(
-            Graphic,
-            GRID_CELL_STYLES
-          );
-          const _graphicsLayer = createGraphicLayer(
-            GraphicsLayer,
-            [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic],
-            GRAPHIC_LAYER
-          );
-          setGraphicsLayer(_graphicsLayer);
-          setSelectedCountryGraphic(_selectedCountryBorderGraphic);
-          setHoveredCountryGraphic(_hoveredCountryBorderGraphic);
-          view.map.add(_graphicsLayer);
-        }
+      const _selectedCountryBorderGraphic = createGraphic(
+        Graphic,
+        GRID_CELL_STYLES
       );
+      const _hoveredCountryBorderGraphic = createGraphic(
+        Graphic,
+        GRID_CELL_STYLES
+      );
+      const _graphicsLayer = createGraphicLayer(
+        GraphicsLayer,
+        [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic],
+        GRAPHIC_LAYER
+      );
+      setGraphicsLayer(_graphicsLayer);
+      setSelectedCountryGraphic(_selectedCountryBorderGraphic);
+      setHoveredCountryGraphic(_hoveredCountryBorderGraphic);
+      view.map.add(_graphicsLayer);
     }
     return function cleanUp() {
       if (selectedCountryBorderGraphic)

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useT } from '@transifex/react';
 
 import cx from 'classnames';

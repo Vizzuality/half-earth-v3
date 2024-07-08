@@ -1,7 +1,7 @@
-import { ReactComponent as FacebookIcon } from 'icons/facebook.svg';
-import { ReactComponent as InstagramIcon } from 'icons/instagram.svg';
-import { ReactComponent as MailIcon } from 'icons/mail.svg';
-import { ReactComponent as TwitterIcon } from 'icons/twitter.svg';
+import FacebookIcon  from 'icons/facebook.svg?react';
+import InstagramIcon  from 'icons/instagram.svg?react';
+import MailIcon  from 'icons/mail.svg?react';
+import TwitterIcon  from 'icons/twitter.svg?react';
 
 const facebook = {
   projectLink: 'https://www.facebook.com/halfearth/',

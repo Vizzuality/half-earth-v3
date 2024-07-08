@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 
+import { getCSSVariable } from 'utils/css-utils';
 import { getLocaleNumber, roundSPI } from 'utils/data-formatting-utils';
 
 import IndicatorCard from 'containers/nrc-content/nrc-indicators/indicator-card';
@@ -14,14 +15,12 @@ import Logo from 'components/half-earth-logo';
 import { LAND_MARINE } from 'constants/country-mode-constants';
 import { getCountryNames } from 'constants/translation-constants';
 
-import COLORS from 'styles/settings';
-
-import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
-import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
-import { ReactComponent as FishesIcon } from 'icons/taxa_fishes.svg';
-import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
-import { ReactComponent as MammalsMarIcon } from 'icons/taxa_marine_mammals.svg';
-import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
+import AmphibiansIcon from 'icons/taxa_amphibians.svg?react';
+import BirdsIcon from 'icons/taxa_birds.svg?react';
+import FishesIcon from 'icons/taxa_fishes.svg?react';
+import MammalsIcon from 'icons/taxa_mammals.svg?react';
+import MammalsMarIcon from 'icons/taxa_marine_mammals.svg?react';
+import ReptilesIcon from 'icons/taxa_reptiles.svg?react';
 
 import styles from './national-report-pdf.module.scss';
 
@@ -110,7 +109,7 @@ function NationalReportPdf({
         </IndicatorCard>
         <IndicatorCard
           className={styles.indicatorCard}
-          color={COLORS.gold}
+          color={getCSSVariable('gold')}
           indicator={
             total_endemic_ter && getLocaleNumber(total_endemic, locale)
           }
@@ -152,7 +151,7 @@ function NationalReportPdf({
             className={styles.bar}
             style={{
               backgroundImage: getBarStyles({
-                color1: COLORS.gold,
+                color1: getCSSVariable('gold'),
                 value1: (total_endemic * 100) / nspecies,
                 variant: 'light',
               }),
@@ -161,7 +160,7 @@ function NationalReportPdf({
         </IndicatorCard>
         <IndicatorCard
           className={styles.indicatorCard}
-          color={COLORS['protected-areas']}
+          color={getCSSVariable('protected-areas')}
           indicator={prop_protected && `${Math.round(prop_protected)}%`}
           description={
             <p>
@@ -197,9 +196,9 @@ function NationalReportPdf({
             className={styles.bar}
             style={{
               backgroundImage: getBarStyles({
-                color1: COLORS['protected-areas'],
+                color1: getCSSVariable('protected-areas'),
                 value1: prop_protected,
-                color2: COLORS['protection-needed'],
+                color2: getCSSVariable('protection-needed'),
                 value2: prop_protected + protection_needed,
                 variant: 'light',
               }),
@@ -208,7 +207,7 @@ function NationalReportPdf({
         </IndicatorCard>
         <IndicatorCard
           className={styles.indicatorCard}
-          color={COLORS['high-modification']}
+          color={getCSSVariable('high-modification')}
           indicator={`${Math.round(hm_vh)}%`}
           description={
             <p>
@@ -248,9 +247,9 @@ function NationalReportPdf({
             className={styles.bar}
             style={{
               backgroundImage: getBarStyles({
-                color1: COLORS['high-modification'],
+                color1: getCSSVariable('high-modification'),
                 value1: hm_vh,
-                color2: COLORS['some-modification'],
+                color2: getCSSVariable('some-modification'),
                 value2: hm,
                 variant: 'light',
               }),
@@ -409,13 +408,13 @@ function NationalReportPdf({
       <TrendChart
         area1={{
           key: 'spi',
-          stroke: COLORS['dark-text'],
+          stroke: getCSSVariable('dark-text'),
           strokeWidth: 0.5,
           label: 'SPI',
         }}
         area2={{
           key: 'protected',
-          stroke: COLORS['dark-text'],
+          stroke: getCSSVariable('dark-text'),
           strokeWidth: 0.7,
           strokeDasharray: '3 3 3 3',
           label: '% Protected areas',
@@ -436,7 +435,7 @@ function NationalReportPdf({
         <div className={styles.nameWrapper}>
           <img
             className={styles.flag}
-            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+            src={`/flags/${countryISO}.svg`}
             alt=""
           />
           <span className={styles.countryName}>{translatedCountryName}</span>

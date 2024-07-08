@@ -1,5 +1,3 @@
-import React from 'react';
-
 import cx from 'classnames';
 
 import styles from './step-arcs-styles.module.scss';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { NATIONAL_REPORT_CARD } from 'router';
 
 import loadable from '@loadable/component';
@@ -24,7 +22,7 @@ import RankingChart from 'components/ranking-chart';
 
 import uiStyles from 'styles/ui.module.scss';
 
-import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
+import ArrowExpandIcon from 'icons/arrow_expand.svg?react';
 
 import nrcBackground from 'images/nrc-background.png';
 

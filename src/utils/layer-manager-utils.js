@@ -1,5 +1,9 @@
-import { loadModules } from 'esri-loader';
-
+import Basemap from '@arcgis/core/Basemap.js';
+import Extent from '@arcgis/core/geometry/Extent';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import TileLayer from '@arcgis/core/layers/TileLayer';
+import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
+import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import intersection from 'lodash/intersection';
 
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
@@ -187,24 +191,36 @@ export const bringLayerToBack = (layerTitle, map) => {
 
 export const createLayer = (layerConfig) => {
   const { url, slug, type, opacity, renderer } = layerConfig;
-  const layerType = type || 'WebTileLayer';
-
-  return loadModules([`esri/layers/${layerType}`]).then(([Layer]) => {
-    const newLayer = new Layer({
-      url,
-      urlTemplate: url,
-      title: slug,
-      id: slug,
-      outFields: ['*'],
-      opacity: opacity || DEFAULT_OPACITY,
-    });
-
-    if (renderer) {
-      newLayer.renderer = renderer;
+  const getLayer = () => {
+    switch (type) {
+      case 'FeatureLayer':
+        return FeatureLayer;
+      case 'TileLayer':
+        return TileLayer;
+      case 'WebTileLayer':
+        return WebTileLayer;
+      case 'VectorTileLayer':
+        return VectorTileLayer;
+      default:
+        console.warn('Invalid layer type', type);
+        return WebTileLayer;
     }
-
-    return newLayer;
+  };
+  const Layer = getLayer();
+  const newLayer = new Layer({
+    url,
+    urlTemplate: url,
+    title: slug,
+    id: slug,
+    outFields: ['*'],
+    opacity: opacity || DEFAULT_OPACITY,
   });
+
+  if (renderer) {
+    newLayer.renderer = renderer;
+  }
+
+  return newLayer;
 };
 export const addLayerToMap = (mapLayer, map) =>
   new Promise((resolve) => {
@@ -260,19 +276,17 @@ export const setBasemap = async ({ map, layersArray, isLandcoverBasemap }) => {
   const baseLayers = await Promise.all(
     layersArray.map(async (layer) => createLayer(layersConfig[layer]))
   );
-  loadModules(['esri/Basemap']).then(([Basemap]) => {
-    const basemap = new Basemap({
-      baseLayers,
-      title: 'half-earth-basemap',
-      id: 'half-earth-basemap',
-      ...(isLandcoverBasemap && {
-        portalItem: {
-          id: 'aa5922ee948b41e0af7544e21682abcb',
-        },
-      }),
-    });
-    map.basemap = basemap;
+  const basemap = new Basemap({
+    baseLayers,
+    title: 'half-earth-basemap',
+    id: 'half-earth-basemap',
+    ...(isLandcoverBasemap && {
+      portalItem: {
+        id: 'aa5922ee948b41e0af7544e21682abcb',
+      },
+    }),
   });
+  map.basemap = basemap;
 };
 
 export const getActiveLayersFromLayerGroup = (layerGroup, activeLayers) =>
@@ -282,19 +296,17 @@ export const getActiveLayersFromLayerGroup = (layerGroup, activeLayers) =>
   );
 
 export const flyToLayerExtent = (bbox, view) => {
-  loadModules(['esri/geometry/Extent']).then(([Extent]) => {
-    const [xmin, ymin, xmax, ymax] = bbox;
-    const target = new Extent({
-      xmin,
-      xmax,
-      ymin,
-      ymax,
-    });
-    view.goTo({ target }).catch((error) => {
-      // Avoid displaying console errors when transition is aborted by user interacions
-      if (error.name !== 'AbortError') {
-        console.error(error);
-      }
-    });
+  const [xmin, ymin, xmax, ymax] = bbox;
+  const target = new Extent({
+    xmin,
+    xmax,
+    ymin,
+    ymax,
+  });
+  view.goTo({ target }).catch((error) => {
+    // Avoid displaying console errors when transition is aborted by user interacions
+    if (error.name !== 'AbortError') {
+      console.error(error);
+    }
   });
 };

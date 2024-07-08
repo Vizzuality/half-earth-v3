@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
 import { T, useT } from '@transifex/react';

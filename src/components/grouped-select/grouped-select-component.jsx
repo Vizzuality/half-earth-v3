@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Select from 'react-select';
 
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
-import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
+import IconArrow from 'icons/arrow_right.svg?react';
 
 import styles from './grouped-select-styles.module.scss';
 import { customStyles } from './style-constants';

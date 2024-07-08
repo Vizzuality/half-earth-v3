@@ -41,4 +41,18 @@ export default {
       max: 60,
     },
   },
+  // Remove the extra header on the popup
+  popup: {
+    dockOptions: {
+      buttonEnabled: false,
+    },
+    visibleElements: {
+      actionBar: false,
+      closeButton: false,
+      collapseButton: false,
+      featureNavigation: false,
+      heading: false,
+      spinner: false,
+    },
+  },
 };

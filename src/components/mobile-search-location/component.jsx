@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -12,8 +12,8 @@ import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
-import { ReactComponent as IconSearch } from 'icons/search.svg';
+import BackArrowIcon from 'icons/back_arrow.svg?react';
+import IconSearch from 'icons/search.svg?react';
 
 function MobileSearchLocation({ countryName, view }) {
   const t = useT();

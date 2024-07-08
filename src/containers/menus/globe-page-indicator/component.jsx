@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { routes, DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
 import PropTypes from 'prop-types';

@@ -5,5 +5,6 @@ declare module '*.scss' {
 
 declare module '*.svg';
 declare module '*.svg?sprite';
+declare module '*.svg?react';
 declare module '*.png';
 declare module '*.jpg';

@@ -1,9 +1,7 @@
-import React from 'react';
-
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 
-import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
+import InfoIcon from 'icons/infoDark.svg?react';
 
 import styles from './indicator-card-styles.module.scss';
 

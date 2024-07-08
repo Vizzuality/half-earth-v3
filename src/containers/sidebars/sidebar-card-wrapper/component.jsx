@@ -1,10 +1,8 @@
-import React from 'react';
-
 import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import CloseIcon from 'icons/close.svg?react';
 
 function Component({
   children,

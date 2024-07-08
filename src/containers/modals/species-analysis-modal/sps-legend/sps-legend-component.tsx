@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { T } from '@transifex/react';
 
@@ -7,7 +7,7 @@ import groupBy from 'lodash/groupBy';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as DragIcon } from 'icons/hand-drag.svg';
+import DragIcon from 'icons/hand-drag.svg?react';
 
 import type { SPSData } from '../types';
 

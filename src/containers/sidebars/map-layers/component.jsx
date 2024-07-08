@@ -1,5 +1,3 @@
-import React from 'react';
-
 import BiodiversitySidebarCard from 'containers/sidebars/map-layers/biodiversity-sidebar-card';
 import CarbonSidebarCard from 'containers/sidebars/map-layers/carbon-sidebar-card';
 import HumanImpactSidebarCard from 'containers/sidebars/map-layers/human-impact-sidebar-card';
