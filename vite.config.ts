@@ -54,7 +54,6 @@ function moduleScssResolver() {
 }
 
 export default defineConfig({
-  // depending on your application, base can also be "/"
   base: '/',
   plugins: [
     {
@@ -93,13 +92,6 @@ export default defineConfig({
   },
   preview: {
     port: 3000,
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: undefined,
-     },
-    },
   },
   resolve: {
     alias: {
