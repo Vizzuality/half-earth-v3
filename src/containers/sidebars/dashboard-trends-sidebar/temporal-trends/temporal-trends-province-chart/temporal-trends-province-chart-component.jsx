@@ -117,7 +117,7 @@ function TemporalTrendsProvinceChartComponent(props) {
           y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: COLORS.birds,
+        backgroundColor: getCSSVariable('birds'),
       },
       {
         label: 'Mammals',
@@ -126,7 +126,7 @@ function TemporalTrendsProvinceChartComponent(props) {
           y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: COLORS.mammals,
+        backgroundColor: getCSSVariable('mammals'),
       },
       {
         label: 'Reptiles',
@@ -135,7 +135,7 @@ function TemporalTrendsProvinceChartComponent(props) {
           y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: COLORS.reptiles,
+        backgroundColor: getCSSVariable('reptiles'),
       },
       {
         label: 'Amphibians',
@@ -144,7 +144,7 @@ function TemporalTrendsProvinceChartComponent(props) {
           y: faker.datatype.number({ min: 0, max: 100 }),
           r: faker.datatype.number({ min: 5, max: 20 }),
         })),
-        backgroundColor: COLORS.amphibians,
+        backgroundColor: getCSSVariable('amphibians'),
       },
     ],
   };

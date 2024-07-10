@@ -290,11 +290,11 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
   --oslo-gray: #{$oslo-gray};
 
   // TRENDS
-  birds: $birds-color;
-  mammals:$mammals-color;
-  reptiles:$reptiles-color;
-  amphibians: $amphibians-color;
-  temporal-spi: $regionalChecklist;
+  --birds: #{$birds-color};
+  --mammals:#{$mammals-color};
+  --reptiles:#{$reptiles-color};
+  --amphibians: #{$amphibians-color};
+  --temporal-spi: #{$regionalChecklist};
 
   // Landcover legend
   --water: #{$water};
