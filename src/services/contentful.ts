@@ -3,18 +3,18 @@ import { Config, FeaturePlaceItem, GenericItem } from 'types/services-types';
 
 import fetchWithCache from 'services/fetch';
 
-const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
-const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
+const { VITE_APP_CONTENTFUL_SPACE_ID } = import.meta.env;
+const { VITE_APP_CONTENTFUL_TOKEN } = import.meta.env;
 
 const contentfulClient = createClient({
-  space: REACT_APP_CONTENTFUL_SPACE_ID,
-  accessToken: REACT_APP_CONTENTFUL_TOKEN,
+  space: VITE_APP_CONTENTFUL_SPACE_ID,
+  accessToken: VITE_APP_CONTENTFUL_TOKEN,
 });
 
 const config: Config = {
   baseUrl: 'https://cdn.contentful.com',
-  space: REACT_APP_CONTENTFUL_SPACE_ID,
-  token: REACT_APP_CONTENTFUL_TOKEN,
+  space: VITE_APP_CONTENTFUL_SPACE_ID,
+  token: VITE_APP_CONTENTFUL_TOKEN,
   env: 'master',
 };
 

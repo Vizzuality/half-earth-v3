@@ -1,5 +1,3 @@
-import React from 'react';
-
 import LandingScene from 'scenes/mobile/landing-scene-mobile';
 
 import Logo from 'components/half-earth-logo';

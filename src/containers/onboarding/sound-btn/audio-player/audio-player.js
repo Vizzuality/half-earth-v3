@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { memo } from 'react';
 import Component from './audio-player-component';
 
 function areEqual(prevProps, nextProps) {
@@ -19,4 +18,4 @@ function areEqual(prevProps, nextProps) {
   return true;
 }
 
-export default React.memo(Component, areEqual);
+export default memo(Component, areEqual);

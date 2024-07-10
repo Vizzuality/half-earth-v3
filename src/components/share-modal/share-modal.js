@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Component from './share-modal-component';
 
 function ShareModalContainer(props) {

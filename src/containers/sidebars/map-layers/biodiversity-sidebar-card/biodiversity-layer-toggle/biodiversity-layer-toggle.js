@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
 import metadataActions from 'redux_modules/metadata';
 

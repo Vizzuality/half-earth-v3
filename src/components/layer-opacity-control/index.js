@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { layerManagerOpacity } from 'utils/layer-manager-utils';
 
 import Component from './component';

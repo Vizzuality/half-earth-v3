@@ -1,5 +1,3 @@
-import React from 'react';
-
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import SourceAnnotation from 'components/source-annotation';

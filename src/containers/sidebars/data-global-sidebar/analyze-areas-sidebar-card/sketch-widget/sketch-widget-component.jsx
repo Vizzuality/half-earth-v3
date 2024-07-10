@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { useT } from '@transifex/react';
@@ -11,7 +11,7 @@ import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graph
 
 import Button from 'components/button';
 
-import { ReactComponent as CheckIcon } from 'icons/check.svg';
+import CheckIcon from 'icons/check.svg?react';
 
 import styles from './sketch-widget.styles.module.scss';
 

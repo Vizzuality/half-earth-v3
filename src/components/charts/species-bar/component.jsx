@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { T } from '@transifex/react';
 
 import Tooltip from '@tippyjs/react';
@@ -7,7 +5,7 @@ import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
+import InfoIcon from 'icons/infoTooltip.svg?react';
 
 function SpeciesBar({
   title,
@@ -27,7 +25,7 @@ function SpeciesBar({
           delay={100}
           position="bottom"
         >
-          <InfoIcon className={styles.icon} />
+          <span className={styles.icon}><InfoIcon /></span>
         </Tooltip>
       </span>
     </div>

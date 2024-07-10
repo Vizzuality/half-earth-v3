@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 import { useT, useLocale } from '@transifex/react';

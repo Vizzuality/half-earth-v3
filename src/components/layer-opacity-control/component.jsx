@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useEffect } from 'react';
+import { useState, forwardRef, useEffect } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -8,7 +8,7 @@ import Slider from 'rc-slider';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as OpacityIcon } from 'icons/opacity.svg';
+import OpacityIcon from 'icons/opacity.svg?react';
 
 const railStyle = {
   backgroundColor: 'rgba(255,255,255,0.3)',

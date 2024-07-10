@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styles from './dummy-blur-workaround-styles.module.scss';
 
 function DummyBlurWorkaround() {

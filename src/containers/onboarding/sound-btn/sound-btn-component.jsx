@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import { LANDING } from 'router';
 
@@ -33,12 +33,12 @@ import {
   NRC_STEPS,
 } from 'constants/onboarding-constants';
 
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
-import { ReactComponent as DotsIcon } from 'icons/dots.svg';
-import { ReactComponent as MuteIcon } from 'icons/mute.svg';
-import { ReactComponent as MutedIcon } from 'icons/muted.svg';
-import { ReactComponent as PauseIcon } from 'icons/pause.svg';
-import { ReactComponent as PlayIcon } from 'icons/play.svg';
+import CloseIcon from 'icons/close.svg?react';
+import DotsIcon from 'icons/dots.svg?react';
+import MuteIcon from 'icons/mute.svg?react';
+import MutedIcon from 'icons/muted.svg?react';
+import PauseIcon from 'icons/pause.svg?react';
+import PlayIcon from 'icons/play.svg?react';
 
 import StepsArcs from '../step-arcs';
 

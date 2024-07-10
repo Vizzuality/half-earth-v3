@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { t as tNative } from '@transifex/native';
 import { useT, useLocale } from '@transifex/react';
@@ -23,10 +23,10 @@ import {
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
-import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
-import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
-import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+import ArrowIconLeft from 'icons/arrow_left.svg?react';
+import ArrowIconRight from 'icons/arrow_right.svg?react';
+import InfoIcon from 'icons/infoTooltip.svg?react';
+import WarningIcon from 'icons/warning.svg?react';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
 
@@ -218,7 +218,7 @@ function Component(props) {
                         delay={100}
                         position="bottom"
                       >
-                        <InfoIcon className={styles.icon} />
+                        <span className={styles.icon}><InfoIcon /></span>
                       </Tooltip>
                     </span>
                   </div>
@@ -269,7 +269,7 @@ function Component(props) {
                         delay={100}
                         position="bottom"
                       >
-                        <InfoIcon className={styles.icon} />
+                        <span className={styles.icon}><InfoIcon /></span>
                       </Tooltip>
                     </span>
                   </div>
@@ -296,7 +296,7 @@ function Component(props) {
                         delay={100}
                         position="bottom"
                       >
-                        <InfoIcon className={styles.icon} />
+                        <span className={styles.icon}><InfoIcon /></span>
                       </Tooltip>
                     </span>
                   </div>

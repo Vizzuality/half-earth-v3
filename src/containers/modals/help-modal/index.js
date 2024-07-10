@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Component from './component';
 
 function HelpModalContainer(props) {

@@ -1,15 +1,13 @@
-import React from 'react';
-
 import { t } from '@transifex/native';
 
 import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as AoisClickIcon } from 'icons/aois_click.svg';
-import { ReactComponent as AoisDrawIcon } from 'icons/aois_draw.svg';
-import { ReactComponent as AoisSearchIcon } from 'icons/aois_search.svg';
-import { ReactComponent as AoisUploadIcon } from 'icons/aois_upload.svg';
+import AoisClickIcon  from 'icons/aois_click.svg?react';
+import AoisDrawIcon  from 'icons/aois_draw.svg?react';
+import AoisSearchIcon  from 'icons/aois_search.svg?react';
+import AoisUploadIcon  from 'icons/aois_upload.svg?react';
 
 export const getTabs = () => (tab) =>
   [

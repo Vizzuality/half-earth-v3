@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { T } from '@transifex/react';
 
 import { Modal } from 'he-components';
@@ -7,7 +5,7 @@ import { Modal } from 'he-components';
 import ShareInput from 'components/share-input';
 import ShareSocialIcons from 'components/share-social-icons';
 
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import ShareIcon from 'icons/share.svg?react';
 
 import styles from './share-modal-styles.module';
 

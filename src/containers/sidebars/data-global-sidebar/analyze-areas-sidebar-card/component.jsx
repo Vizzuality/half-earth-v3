@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 
@@ -26,7 +26,7 @@ import radioTheme from 'styles/themes/radio-theme.module.scss';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
+import AreasHistoryIcon from 'icons/areas_history_icon.svg?react';
 
 import { getTabs } from './constants';
 import SketchTooltip from './sketch-tooltip';

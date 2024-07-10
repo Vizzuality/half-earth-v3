@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { T } from '@transifex/react';
 
 import { motion } from 'framer-motion';
@@ -13,7 +11,7 @@ import { useMobile } from 'constants/responsive';
 
 import styles from './landing-scene-styles.module.scss';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
 function LandingSceneComponent({ sceneSettings, browsePage }) {
   const isMobile = useMobile();

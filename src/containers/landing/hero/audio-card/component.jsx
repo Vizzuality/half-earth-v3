@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useT } from '@transifex/react';
 
 import PropTypes from 'prop-types';
@@ -8,7 +6,7 @@ import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
-import { ReactComponent as VolumeControl } from 'icons/volume-control.svg';
+import VolumeControl from 'icons/volume-control.svg?react';
 
 function AudioCard({
   className,

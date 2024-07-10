@@ -1,8 +1,8 @@
-import React from 'react';
-
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
+// TODO: he-components is outdated and using componentWillMount, which is deprecated and will not work on React 18.
+// We should create Loading and Modal components in the application and not depend on he-components.
 import { Modal } from 'he-components';
 
 import styles from './styles.module';

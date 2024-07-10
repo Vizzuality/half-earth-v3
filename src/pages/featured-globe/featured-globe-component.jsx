@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -25,7 +25,7 @@ const FeaturedPlaceCard = loadable(() =>
   import('containers/sidebars/featured-place-card')
 );
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
 function FeaturedGlobe({
   sceneSettings,
