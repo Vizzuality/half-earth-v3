@@ -14,8 +14,9 @@ import ProvinceChartContainer from './province-chart';
 
 
 function TemporalTrendsSpiComponent(props) {
-  const { activeTrend, updateActiveTrend, countryData, selectedIndex } = props;
+  const { countryData } = props;
 
+  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
   const [nationalChartData, setNationalChartData] = useState({ area_values: [], spi_values: [] });
 
   const getNationalData = async () => {
@@ -29,13 +30,14 @@ function TemporalTrendsSpiComponent(props) {
     setNationalChartData({ area_values, spi_values });
   }
 
+
   useEffect(() => {
     getNationalData();
   }, []);
 
 
   const handleActionChange = (event) => {
-    updateActiveTrend(event.currentTarget.innerText);
+    setActiveTrend(event.currentTarget.innerText);
   };
 
 

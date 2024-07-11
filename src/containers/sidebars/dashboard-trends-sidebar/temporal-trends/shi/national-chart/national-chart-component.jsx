@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
+import { getCSSVariable } from 'utils/css-utils';
+
 import {
   Chart as ChartJS,
   LinearScale,
@@ -12,8 +14,6 @@ import {
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
-import { getCSSVariable } from 'utils/css-utils';
-
 import styles from './national-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
@@ -21,7 +21,6 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 function NationalChartComponent(props) {
   const { countryData, nationalChartData } = props;
   const [data, setData] = useState();
-  const [areaProtected, setAreaProtected] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
 
   const blankData = {
@@ -30,8 +29,14 @@ function NationalChartComponent(props) {
       {
         label: '',
         data: [0, 0],
-        backgroundColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
-        borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+        backgroundColor: [
+          getCSSVariable('temporal-spi'),
+          getCSSVariable('white-opacity-20'),
+        ],
+        borderColor: [
+          getCSSVariable('temporal-spi'),
+          getCSSVariable('white-opacity-20'),
+        ],
         borderWidth: 1,
       },
     ],
@@ -111,46 +116,48 @@ function NationalChartComponent(props) {
     if (nationalChartData.area_values.length) {
       console.log(nationalChartData);
       setData({
-        labels: nationalChartData.spi_values.map(item => item[0]),
+        labels: nationalChartData.spi_values.map((item) => item[0]),
         datasets: [
           {
             label: 'SHI',
-            data: nationalChartData.spi_values.map(item => item[1]),
+            data: nationalChartData.spi_values.map((item) => item[1]),
             borderColor: getCSSVariable('birds'),
           },
           {
             label: 'Area protected',
-            data: nationalChartData.area_values.map(item => item[1]),
+            data: nationalChartData.area_values.map((item) => item[1]),
             borderColor: getCSSVariable('mammals'),
           },
         ],
       });
-      const spiVal = nationalChartData.spi_values[nationalChartData.spi_values.length - 1][1];
+      const spiVal =
+        nationalChartData.spi_values[
+        nationalChartData.spi_values.length - 1
+        ][1];
 
       const spi = {
         labels: ['Global SPI', 'Remaining'],
         datasets: [
           {
             label: '',
-            data: [
-              spiVal,
-              100 - spiVal,
-            ],
+            data: [spiVal, 100 - spiVal],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
               getCSSVariable('white-opacity-20'),
             ],
-            borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+            borderColor: [
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
+            ],
             borderWidth: 1,
           },
         ],
       };
 
-
       setSpiValue(spiVal);
       setSpiData(spi);
     }
-  }, [nationalChartData])
+  }, [nationalChartData]);
 
   return (
     <div className={styles.container}>
@@ -173,9 +180,11 @@ function NationalChartComponent(props) {
           <span>Global Ranking</span>
         </div>
       </div>
-      {data && <div className={styles.chart}>
-        <Line options={options} data={data} />
-      </div>}
+      {data && (
+        <div className={styles.chart}>
+          <Line options={options} data={data} />
+        </div>
+      )}
     </div>
   );
 }

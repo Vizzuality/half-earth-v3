@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Bubble } from 'react-chartjs-2';
 import Select from 'react-select';
 
+import { getCSSVariable } from 'utils/css-utils';
+
 import { faker } from '@faker-js/faker';
 import {
   Chart as ChartJS,
@@ -13,8 +15,6 @@ import {
 } from 'chart.js';
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
-
-import { getCSSVariable } from 'utils/css-utils';
 
 import styles from './province-chart-styles.module.scss';
 
@@ -28,8 +28,14 @@ function ProvinceChartComponent(props) {
       {
         label: '',
         data: [0, 0],
-        backgroundColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
-        borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+        backgroundColor: [
+          getCSSVariable('temporal-spi'),
+          getCSSVariable('white-opacity-20'),
+        ],
+        borderColor: [
+          getCSSVariable('temporal-spi'),
+          getCSSVariable('white-opacity-20'),
+        ],
         borderWidth: 1,
       },
     ],
@@ -164,7 +170,10 @@ function ProvinceChartComponent(props) {
               getCSSVariable('temporal-spi'),
               getCSSVariable('white-opacity-20'),
             ],
-            borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+            borderColor: [
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
+            ],
             borderWidth: 1,
           },
         ],

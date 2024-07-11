@@ -12,12 +12,6 @@ function DashboardTrendsSidebar(props) {
   const { countryISO, countryData } = props;
   const [selectedIndex, setSelectedIndex] = useState(1);
 
-  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
-
-  const handleActiveTrendUpdate = (trend) => {
-    setActiveTrend(trend);
-  };
-
   return (
     <div className={styles.container}>
       <header>
@@ -61,13 +55,10 @@ function DashboardTrendsSidebar(props) {
       <TemporalTrendsContainer
         selectedIndex={selectedIndex}
         countryData={countryData}
-        activeTrend={activeTrend}
-        updateActiveTrend={handleActiveTrendUpdate}
       />
       <ScoreDistributionsContainer
         countryISO={countryISO}
         countryData={countryData}
-        activeTrend={activeTrend}
       />
     </div>
   );

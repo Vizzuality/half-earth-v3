@@ -9,13 +9,16 @@ import {
   PROVINCE_TREND,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
-import NationalChartContainer from './national-chart';
 
+import NationalChartContainer from './national-chart';
 
 function TemporalTrendsShiComponent(props) {
   const { activeTrend, updateActiveTrend, countryData, selectedIndex } = props;
 
-  const [nationalChartData, setNationalChartData] = useState({ area_values: [], spi_values: [] });
+  const [nationalChartData, setNationalChartData] = useState({
+    area_values: [],
+    spi_values: [],
+  });
 
   const getNationalData = async () => {
     const region_id = '90b03e87-3880-4164-a310-339994e3f919';
@@ -26,28 +29,29 @@ function TemporalTrendsShiComponent(props) {
     const data = await response.json();
     const { area_values, spi_values } = data[0].values;
     setNationalChartData({ area_values, spi_values });
-  }
+  };
 
   useEffect(() => {
     getNationalData();
   }, []);
 
-
   const handleActionChange = (event) => {
     updateActiveTrend(event.currentTarget.innerText);
   };
-
-
 
   return (
     <div className={styles.trends}>
       <div className={styles.info}>
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>
-          Since 2001, the terrestrial vertebrate species of the Democratic Republic of the Congo have lost an average of 1.37% of their suitable habitat, leading to the country having a Species Habitat Index of 98.63.
+          Since 2001, the terrestrial vertebrate species of the Democratic
+          Republic of the Congo have lost an average of 1.37% of their suitable
+          habitat, leading to the country having a Species Habitat Index of
+          98.63.
         </p>
         <p className={styles.description}>
-          The Area Score addresses changes in habitat extent while the Connectivity Score addresses changes in the fragmentation of habitat.
+          The Area Score addresses changes in habitat extent while the
+          Connectivity Score addresses changes in the fragmentation of habitat.
         </p>
         <div className={styles.options}>
           <div className={styles.trendTypes}>
@@ -74,7 +78,10 @@ function TemporalTrendsShiComponent(props) {
           </span>
         </div>
       </div>
-      <NationalChartContainer nationalChartData={nationalChartData} {...props} />
+      <NationalChartContainer
+        nationalChartData={nationalChartData}
+        {...props}
+      />
     </div>
   );
 }

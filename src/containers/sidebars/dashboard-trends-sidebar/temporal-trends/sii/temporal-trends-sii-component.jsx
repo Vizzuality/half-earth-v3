@@ -4,60 +4,48 @@ import cx from 'classnames';
 
 import Button from 'components/button';
 
-import {
-  NATIONAL_TREND,
-  PROVINCE_TREND,
-} from '../../dashboard-trends-sidebar-component';
+import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
+
 import NationalChartContainer from './national-chart';
 
-
 function TemporalTrendsSiiComponent(props) {
-  const { activeTrend, updateActiveTrend, countryData, selectedIndex } = props;
-
-  const [nationalChartData, setNationalChartData] = useState({ area_values: [], spi_values: [] });
+  const [nationalChartData, setNationalChartData] = useState({
+    area_values: [],
+    spi_values: [],
+  });
 
   const getNationalData = async () => {
-    const region_id = '90b03e87-3880-4164-a310-339994e3f919';
+    const regionId = '90b03e87-3880-4164-a310-339994e3f919';
     const taxa = 'all_terr_verts';
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=${region_id}&taxa=${taxa}`;
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=${regionId}&taxa=${taxa}`;
 
     const response = await fetch(url);
     const data = await response.json();
     const { area_values, spi_values } = data[0].values;
     setNationalChartData({ area_values, spi_values });
-  }
+  };
 
   useEffect(() => {
     getNationalData();
   }, []);
-
-
-  const handleActionChange = (event) => {
-    updateActiveTrend(event.currentTarget.innerText);
-  };
-
-
 
   return (
     <div className={styles.trends}>
       <div className={styles.info}>
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>
-          Since 1980, the <b>{countryData?.NAME_0}</b> has added 328357 km2
-          of land into its protected area network, representing 14% of the total
-          land in the country, increasing its Species Protection Index from
-          27.21 in 1980 to 63 in 2023.
+          Species data coverage remains low in Democratic Republic of Congo. In
+          2023, 0.44% of the expected ranges of terrestrial vertebrate species
+          here had a recorded observation of that species. Since 1950, the
+          annual SII has fluctuated between 1.6 and 0.0.
         </p>
         <div className={styles.options}>
           <div className={styles.trendTypes}>
             <Button
               type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === PROVINCE_TREND,
-              })}
+              className={styles.saveButton}
               label={NATIONAL_TREND}
-              handleClick={handleActionChange}
             />
           </div>
           <span className={styles.helpText}>
@@ -74,7 +62,10 @@ function TemporalTrendsSiiComponent(props) {
           </span>
         </div>
       </div>
-      <NationalChartContainer nationalChartData={nationalChartData} {...props} />
+      <NationalChartContainer
+        nationalChartData={nationalChartData}
+        {...props}
+      />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
+import { getCSSVariable } from 'utils/css-utils';
+
 import {
   Chart as ChartJS,
   LinearScale,
@@ -11,8 +13,6 @@ import {
 } from 'chart.js';
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
-
-import { getCSSVariable } from 'utils/css-utils';
 
 import styles from './national-chart-styles.module.scss';
 
@@ -30,8 +30,14 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       {
         label: '',
         data: [0, 0],
-        backgroundColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
-        borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+        backgroundColor: [
+          getCSSVariable('temporal-spi'),
+          getCSSVariable('white-opacity-20'),
+        ],
+        borderColor: [
+          getCSSVariable('temporal-spi'),
+          getCSSVariable('white-opacity-20'),
+        ],
         borderWidth: 1,
       },
     ],
@@ -112,38 +118,44 @@ function TemporalTrendsSpiNationalChartComponent(props) {
     if (nationalChartData.area_values.length) {
       console.log(nationalChartData);
       setData({
-        labels: nationalChartData.spi_values.map(item => item[0]),
+        labels: nationalChartData.spi_values.map((item) => item[0]),
         datasets: [
           {
             label: 'SPI',
-            data: nationalChartData.spi_values.map(item => item[1]),
+            data: nationalChartData.spi_values.map((item) => item[1]),
             borderColor: getCSSVariable('birds'),
           },
           {
             label: 'Area protected',
-            data: nationalChartData.area_values.map(item => item[1]),
+            data: nationalChartData.area_values.map((item) => item[1]),
             borderColor: getCSSVariable('mammals'),
           },
         ],
       });
 
-      const areaProtected = nationalChartData.area_values[nationalChartData.area_values.length - 1][1];
-      const spiVal = nationalChartData.spi_values[nationalChartData.spi_values.length - 1][1];
+      const areaProtected =
+        nationalChartData.area_values[
+        nationalChartData.area_values.length - 1
+        ][1];
+      const spiVal =
+        nationalChartData.spi_values[
+        nationalChartData.spi_values.length - 1
+        ][1];
 
       const spi = {
         labels: ['Global SPI', 'Remaining'],
         datasets: [
           {
             label: '',
-            data: [
-              spiVal,
-              100 - spiVal,
-            ],
+            data: [spiVal, 100 - spiVal],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
               getCSSVariable('white-opacity-20'),
             ],
-            borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+            borderColor: [
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
+            ],
             borderWidth: 1,
           },
         ],
@@ -154,15 +166,15 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         datasets: [
           {
             label: '',
-            data: [
-              areaProtected,
-              100 - areaProtected,
-            ],
+            data: [areaProtected, 100 - areaProtected],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
               getCSSVariable('white-opacity-20'),
             ],
-            borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+            borderColor: [
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
+            ],
             borderWidth: 1,
           },
         ],
@@ -173,7 +185,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       setAreaProtected(areaProtected);
       setAreaProtectedData(areaProt);
     }
-  }, [nationalChartData])
+  }, [nationalChartData]);
 
   return (
     <div className={styles.container}>
@@ -199,9 +211,11 @@ function TemporalTrendsSpiNationalChartComponent(props) {
           <span>Global Ranking</span>
         </div>
       </div>
-      {data && <div className={styles.chart}>
-        <Line options={options} data={data} />
-      </div>}
+      {data && (
+        <div className={styles.chart}>
+          <Line options={options} data={data} />
+        </div>
+      )}
     </div>
   );
 }
