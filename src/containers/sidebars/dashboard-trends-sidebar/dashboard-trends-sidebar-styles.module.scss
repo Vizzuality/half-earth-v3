@@ -19,6 +19,62 @@ $trends-width: 950px;
   height: calc(100vh - #{$top});
   width: $trends-width;
   z-index: $bring-to-front;
+
+  header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+
+    .title{
+      display: flex;
+      flex-direction: column;
+      width: 310px;
+      color: $white;
+    }
+
+    .tabs{
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: 10px;
+      padding-left: 26px;
+      padding-right: 5px;
+      flex-grow: 1;
+
+      button{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 10px;
+
+        label{
+          color: #000;
+          text-align: center;
+          font-family: "Roboto Flex";
+          font-size: 22px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+
+        span{
+          color: #000;
+          text-align: center;
+          font-family: "Roboto Condensed";
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+        }
+
+        &.selected{
+          background-color: $white;
+        }
+      }
+    }
+  }
 }
 
 
@@ -36,7 +92,7 @@ $info-width: 310px;
       display: flex;
       gap: 10px;
       color: $white;
-      margin: 0 0 $site-gutter / 2 0;
+      margin: 0 0 calc($site-gutter / 2) 0;
       font-size: 24px;
       line-height: 1.5;
     }
@@ -44,7 +100,7 @@ $info-width: 310px;
     .description {
       @extend %bodyText;
       color: $white;
-      margin: 0 0 $site-gutter / 2 0;
+      margin: 0 0 calc($site-gutter / 2) 0;
       font-size: 14px;
     }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -9,10 +9,10 @@ import styles from '../dashboard-trends-sidebar-styles.module.scss';
 import ScoreDistributionChartContainer from './score-distributions-chart';
 
 function ScoreDistributionsComponent(props) {
+  const {countryISO} = props;
+
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
-
-  // const value = 0.56;
 
   const spsSpecies = [
     {
@@ -32,6 +32,22 @@ function ScoreDistributionsComponent(props) {
       scientificname: 'Dasypeltis palmarum',
     },
   ];
+
+  const [scoreDistributionData, setScoreDistributionData] = useState()
+
+  const getScoreDistributionData = async () => {
+    const year = '2023';
+    const taxa = 'all_terr_verts';
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${year}&taxa=${taxa}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+    setScoreDistributionData(data.map(item => [item.protection_score]));
+  }
+
+  useEffect(() => {
+    getScoreDistributionData();
+  }, []);
 
   return (
     <div className={styles.trends}>
@@ -80,7 +96,7 @@ function ScoreDistributionsComponent(props) {
         </div>
       </div>
 
-      <ScoreDistributionChartContainer {...props} />
+      <ScoreDistributionChartContainer scoreDistributionData={scoreDistributionData} {...props} />
     </div>
   );
 }

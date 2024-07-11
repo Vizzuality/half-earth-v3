@@ -36,7 +36,7 @@ ChartJS.register(
 );
 
 function ScoreDistributionChartComponent(props) {
-  const { countryData } = props;
+  const { countryData, scoreDistributionData } = props;
   const [scores, setScores] = useState({
     birds: {
       count: 0,
@@ -60,11 +60,17 @@ function ScoreDistributionChartComponent(props) {
     },
   });
 
+  const [data, setData] = useState();
+
   const getPercentage = (species) => {
     const { count, total } = scores[species];
     const percent = (count / total) * 100 || 0;
     return [percent, 100 - percent];
   };
+
+  const labels = [
+      '0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'
+    ];
 
   useEffect(() => {
     if (countryData) {
@@ -99,6 +105,18 @@ function ScoreDistributionChartComponent(props) {
       });
     }
   }, [countryData]);
+
+  useEffect(() => {
+    if(scoreDistributionData){
+      setData({
+        labels,
+        datasets: [{
+          data: scoreDistributionData.map(item => item[0]),
+          backgroundColor: getCSSVariable('birds'),
+        }]
+      });
+    }
+  }, [scoreDistributionData]);
 
   const options = {
     plugins: {
@@ -149,45 +167,39 @@ function ScoreDistributionChartComponent(props) {
     },
   };
 
-  const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-  ];
+  // const labels = [
+  //   '0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'
+  // ];
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-        backgroundColor: getCSSVariable('birds'),
-        stack: 'Stack 0',
-      },
-      {
-        label: 'Dataset 2',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-        backgroundColor: getCSSVariable('mammals'),
-        stack: 'Stack 0',
-      },
-      {
-        label: 'Dataset 3',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-        backgroundColor: getCSSVariable('reptiles'),
-        stack: 'Stack 0',
-      },
-      {
-        label: 'Dataset 4',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-        backgroundColor: getCSSVariable('amphibians'),
-        stack: 'Stack 0',
-      },
-    ],
-  };
+  // const data = {
+  //   labels,
+    // datasets: [
+    //   {
+    //     label: 'Dataset 1',
+    //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
+    //     backgroundColor: getCSSVariable('birds'),
+    //     stack: 'Stack 0',
+    //   },
+    //   {
+    //     label: 'Dataset 2',
+    //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
+    //     backgroundColor: getCSSVariable('mammals'),
+    //     stack: 'Stack 0',
+    //   },
+    //   {
+    //     label: 'Dataset 3',
+    //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
+    //     backgroundColor: getCSSVariable('reptiles'),
+    //     stack: 'Stack 0',
+    //   },
+    //   {
+    //     label: 'Dataset 4',
+    //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
+    //     backgroundColor: getCSSVariable('amphibians'),
+    //     stack: 'Stack 0',
+    //   },
+    // ],
+  // };
 
   const birdData = {
     labels: ['Birds', 'Remaining'],
@@ -274,9 +286,9 @@ function ScoreDistributionChartComponent(props) {
         />
       </div>
 
-      <div className={styles.chart}>
+      {data && <div className={styles.chart}>
         <Bar options={options} data={data} />
-      </div>
+      </div>}
     </div>
   );
 }

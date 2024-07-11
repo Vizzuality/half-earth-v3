@@ -14,12 +14,16 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 
 import { getCSSVariable } from 'utils/css-utils';
 
-import styles from './temporal-trends-national-chart-styles.module.scss';
+import styles from './national-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
-function TemporalTrendsNationalChartComponent(props) {
-  const { countryData } = props;
+function NationalChartComponent(props) {
+  const { countryData, nationalChartData } = props;
+  const [data, setData] = useState();
+  const [areaProtected, setAreaProtected] = useState(0);
+  const [spiValue, setSpiValue] = useState(0);
+
   const blankData = {
     labels: ['Global SPI', 'Remaining'],
     datasets: [
@@ -64,7 +68,7 @@ function TemporalTrendsNationalChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'SPI / Percent of Area Protected',
+          text: 'Species Habitat Index',
           color: getCSSVariable('white'),
         },
         grid: {
@@ -77,43 +81,60 @@ function TemporalTrendsNationalChartComponent(props) {
     },
   };
 
-  const data = {
-    labels: [
-      '1980',
-      '1985',
-      '1990',
-      '1995',
-      '2000',
-      '2005',
-      '2010',
-      '2015',
-      '2020',
-      '2025',
-    ],
-    datasets: [
-      {
-        label: 'SPI',
-        data: [20, 20, 20, 30, 30, 38, 38, 43, 45, 60],
-        borderColor: getCSSVariable('birds'),
-      },
-      {
-        label: 'Area protected',
-        data: [10, 10, 10, 14, 15, 18, 25, 28, 30, 50],
-        borderColor: getCSSVariable('mammals'),
-      },
-    ],
-  };
+  // useEffect(() => {
+  //   console.log(countryData)
+  //   if (countryData) {
+  //     const spi = {
+  //       labels: ['Global SPI', 'Remaining'],
+  //       datasets: [
+  //         {
+  //           label: '',
+  //           data: [
+  //             countryData.Global_SPI_ter,
+  //             100 - countryData.Global_SPI_ter,
+  //           ],
+  //           backgroundColor: [
+  //             getCSSVariable('temporal-spi'),
+  //             getCSSVariable('white-opacity-20'),
+  //           ],
+  //           borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
+  //           borderWidth: 1,
+  //         },
+  //       ],
+  //     };
+
+  //     setSpiData(spi);
+  //   }
+  // }, [countryData]);
 
   useEffect(() => {
-    if (countryData) {
+    if (nationalChartData.area_values.length) {
+      console.log(nationalChartData);
+      setData({
+        labels: nationalChartData.spi_values.map(item => item[0]),
+        datasets: [
+          {
+            label: 'SHI',
+            data: nationalChartData.spi_values.map(item => item[1]),
+            borderColor: getCSSVariable('birds'),
+          },
+          {
+            label: 'Area protected',
+            data: nationalChartData.area_values.map(item => item[1]),
+            borderColor: getCSSVariable('mammals'),
+          },
+        ],
+      });
+      const spiVal = nationalChartData.spi_values[nationalChartData.spi_values.length - 1][1];
+
       const spi = {
         labels: ['Global SPI', 'Remaining'],
         datasets: [
           {
             label: '',
             data: [
-              countryData.Global_SPI_ter,
-              100 - countryData.Global_SPI_ter,
+              spiVal,
+              100 - spiVal,
             ],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
@@ -125,39 +146,38 @@ function TemporalTrendsNationalChartComponent(props) {
         ],
       };
 
+
+      setSpiValue(spiVal);
       setSpiData(spi);
     }
-  }, [countryData]);
+  }, [nationalChartData])
 
   return (
     <div className={styles.container}>
       <div className={styles.info}>
         <div className={styles.arcGrid}>
           <b>2024</b>
+          <b>98.37</b>
           <SpiArcChartComponent
             width="125x"
             height="75px"
             data={spiData}
-            value={countryData?.Global_SPI_ter}
+            value={spiValue}
           />
-          <SpiArcChartComponent
-            width="125x"
-            height="75px"
-            data={spiData}
-            value={countryData?.Global_SPI_ter}
-          />
+          <b>98.88</b>
           <b>{countryData?.prop_protected_ter}</b>
           <span>Year</span>
-          <span>SPI</span>
-          <span>Area Protected</span>
+          <span>Area Score</span>
+          <span>SHI</span>
+          <span>Connectivity Score</span>
           <span>Global Ranking</span>
         </div>
       </div>
-      <div className={styles.chart}>
+      {data && <div className={styles.chart}>
         <Line options={options} data={data} />
-      </div>
+      </div>}
     </div>
   );
 }
 
-export default TemporalTrendsNationalChartComponent;
+export default NationalChartComponent;
