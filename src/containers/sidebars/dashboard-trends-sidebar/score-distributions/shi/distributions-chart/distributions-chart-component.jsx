@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 
-import { faker } from '@faker-js/faker';
+import { getCSSVariable } from 'utils/css-utils';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,17 +14,19 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+// import cx from 'classnames';
 
+// import Button from 'components/button';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
-
-import { getCSSVariable } from 'utils/css-utils';
 
 import Amphibians from 'images/amphibians.svg';
 import Birds from 'images/birds.svg';
 import Mammals from 'images/mammals.svg';
 import Reptiles from 'images/reptiles.svg';
 
-import styles from './score-distribution-chart-styles.module.scss';
+// import dashStyles from '../../../dashboard-trends-sidebar-styles.module.scss';
+
+import styles from './distributions-chart-styles.module.scss';
 
 ChartJS.register(
   CategoryScale,
@@ -35,7 +38,7 @@ ChartJS.register(
   Legend
 );
 
-function ScoreDistributionChartComponent(props) {
+function DistributionsChartComponent(props) {
   const { countryData, scoreDistributionData } = props;
   const [scores, setScores] = useState({
     birds: {
@@ -69,8 +72,18 @@ function ScoreDistributionChartComponent(props) {
   };
 
   const labels = [
-      '0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'
-    ];
+    '0',
+    '10',
+    '20',
+    '30',
+    '40',
+    '50',
+    '60',
+    '70',
+    '80',
+    '90',
+    '100',
+  ];
 
   useEffect(() => {
     if (countryData) {
@@ -107,13 +120,15 @@ function ScoreDistributionChartComponent(props) {
   }, [countryData]);
 
   useEffect(() => {
-    if(scoreDistributionData){
+    if (scoreDistributionData) {
       setData({
         labels,
-        datasets: [{
-          data: scoreDistributionData.map(item => item[0]),
-          backgroundColor: getCSSVariable('birds'),
-        }]
+        datasets: [
+          {
+            data: scoreDistributionData.map((item) => item[0]),
+            backgroundColor: getCSSVariable('birds'),
+          },
+        ],
       });
     }
   }, [scoreDistributionData]);
@@ -173,32 +188,32 @@ function ScoreDistributionChartComponent(props) {
 
   // const data = {
   //   labels,
-    // datasets: [
-    //   {
-    //     label: 'Dataset 1',
-    //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-    //     backgroundColor: getCSSVariable('birds'),
-    //     stack: 'Stack 0',
-    //   },
-    //   {
-    //     label: 'Dataset 2',
-    //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-    //     backgroundColor: getCSSVariable('mammals'),
-    //     stack: 'Stack 0',
-    //   },
-    //   {
-    //     label: 'Dataset 3',
-    //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-    //     backgroundColor: getCSSVariable('reptiles'),
-    //     stack: 'Stack 0',
-    //   },
-    //   {
-    //     label: 'Dataset 4',
-    //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-    //     backgroundColor: getCSSVariable('amphibians'),
-    //     stack: 'Stack 0',
-    //   },
-    // ],
+  // datasets: [
+  //   {
+  //     label: 'Dataset 1',
+  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
+  //     backgroundColor: getCSSVariable('birds'),
+  //     stack: 'Stack 0',
+  //   },
+  //   {
+  //     label: 'Dataset 2',
+  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
+  //     backgroundColor: getCSSVariable('mammals'),
+  //     stack: 'Stack 0',
+  //   },
+  //   {
+  //     label: 'Dataset 3',
+  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
+  //     backgroundColor: getCSSVariable('reptiles'),
+  //     stack: 'Stack 0',
+  //   },
+  //   {
+  //     label: 'Dataset 4',
+  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
+  //     backgroundColor: getCSSVariable('amphibians'),
+  //     stack: 'Stack 0',
+  //   },
+  // ],
   // };
 
   const birdData = {
@@ -207,8 +222,14 @@ function ScoreDistributionChartComponent(props) {
       {
         label: '',
         data: getPercentage('birds'),
-        backgroundColor: [getCSSVariable('birds'), getCSSVariable('white-opacity-20')],
-        borderColor: [getCSSVariable('birds'), getCSSVariable('white-opacity-20')],
+        backgroundColor: [
+          getCSSVariable('birds'),
+          getCSSVariable('white-opacity-20'),
+        ],
+        borderColor: [
+          getCSSVariable('birds'),
+          getCSSVariable('white-opacity-20'),
+        ],
         borderWidth: 1,
       },
     ],
@@ -220,8 +241,14 @@ function ScoreDistributionChartComponent(props) {
       {
         label: '',
         data: getPercentage('mammals'),
-        backgroundColor: [getCSSVariable('mammals'), getCSSVariable('white-opacity-20')],
-        borderColor: [getCSSVariable('mammals'), getCSSVariable('white-opacity-20')],
+        backgroundColor: [
+          getCSSVariable('mammals'),
+          getCSSVariable('white-opacity-20'),
+        ],
+        borderColor: [
+          getCSSVariable('mammals'),
+          getCSSVariable('white-opacity-20'),
+        ],
         borderWidth: 1,
       },
     ],
@@ -233,8 +260,14 @@ function ScoreDistributionChartComponent(props) {
       {
         label: '',
         data: getPercentage('reptiles'),
-        backgroundColor: [getCSSVariable('reptiles'), getCSSVariable('white-opacity-20')],
-        borderColor: [getCSSVariable('reptiles'), getCSSVariable('white-opacity-20')],
+        backgroundColor: [
+          getCSSVariable('reptiles'),
+          getCSSVariable('white-opacity-20'),
+        ],
+        borderColor: [
+          getCSSVariable('reptiles'),
+          getCSSVariable('white-opacity-20'),
+        ],
         borderWidth: 1,
       },
     ],
@@ -246,8 +279,14 @@ function ScoreDistributionChartComponent(props) {
       {
         label: '',
         data: getPercentage('amphibians'),
-        backgroundColor: [getCSSVariable('amphibians'), getCSSVariable('white-opacity-20')],
-        borderColor: [getCSSVariable('amphibians'), getCSSVariable('white-opacity-20')],
+        backgroundColor: [
+          getCSSVariable('amphibians'),
+          getCSSVariable('white-opacity-20'),
+        ],
+        borderColor: [
+          getCSSVariable('amphibians'),
+          getCSSVariable('white-opacity-20'),
+        ],
         borderWidth: 1,
       },
     ],
@@ -255,7 +294,6 @@ function ScoreDistributionChartComponent(props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>NATIONAL SPI BY TAXONOMIC GROUP</div>
       <div className={styles.spis}>
         <SpiArcChartComponent
           scores={scores}
@@ -286,11 +324,13 @@ function ScoreDistributionChartComponent(props) {
         />
       </div>
 
-      {data && <div className={styles.chart}>
-        <Bar options={options} data={data} />
-      </div>}
+      {data && (
+        <div className={styles.chart}>
+          <Bar options={options} data={data} />
+        </div>
+      )}
     </div>
   );
 }
 
-export default ScoreDistributionChartComponent;
+export default DistributionsChartComponent;

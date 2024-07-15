@@ -9,15 +9,18 @@ import {
   PROVINCE_TREND,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
+
 import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
-
 
 function TemporalTrendsSpiComponent(props) {
   const { countryData } = props;
 
   const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
-  const [nationalChartData, setNationalChartData] = useState({ area_values: [], spi_values: [] });
+  const [nationalChartData, setNationalChartData] = useState({
+    area_values: [],
+    spi_values: [],
+  });
 
   const getNationalData = async () => {
     const region_id = '90b03e87-3880-4164-a310-339994e3f919';
@@ -28,32 +31,28 @@ function TemporalTrendsSpiComponent(props) {
     const data = await response.json();
     const { area_values, spi_values } = data[0].values;
     setNationalChartData({ area_values, spi_values });
-  }
-
+  };
 
   useEffect(() => {
     getNationalData();
   }, []);
 
-
   const handleActionChange = (event) => {
     setActiveTrend(event.currentTarget.innerText);
   };
-
-
 
   return (
     <div className={styles.trends}>
       <div className={styles.info}>
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>
-          Since 1980, the <b>{countryData?.NAME_0}</b> has added 328357 km2
-          of land into its protected area network, representing 14% of the total
+          Since 1980, the <b>{countryData?.NAME_0}</b> has added 328357 km2 of
+          land into its protected area network, representing 14% of the total
           land in the country, increasing its Species Protection Index from
           27.21 in 1980 to 63 in 2023.
         </p>
         <div className={styles.options}>
-          <div className={styles.trendTypes}>
+          <div className={styles.btnGroup}>
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
@@ -100,11 +99,12 @@ function TemporalTrendsSpiComponent(props) {
       </div>
 
       {activeTrend === NATIONAL_TREND && (
-        <NationalChartContainer nationalChartData={nationalChartData} {...props} />
+        <NationalChartContainer
+          nationalChartData={nationalChartData}
+          {...props}
+        />
       )}
-      {activeTrend === PROVINCE_TREND && (
-        <ProvinceChartContainer {...props} />
-      )}
+      {activeTrend === PROVINCE_TREND && <ProvinceChartContainer {...props} />}
     </div>
   );
 }

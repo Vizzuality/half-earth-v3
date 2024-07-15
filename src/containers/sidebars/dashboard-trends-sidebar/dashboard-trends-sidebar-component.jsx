@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
+import cx from 'classnames';
+
 import styles from './dashboard-trends-sidebar-styles.module.scss';
 import ScoreDistributionsContainer from './score-distributions';
 import TemporalTrendsContainer from './temporal-trends';
-import cx from 'classnames';
 
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
@@ -26,7 +27,8 @@ function DashboardTrendsSidebar(props) {
             className={cx({
               [styles.selected]: selectedIndex === 1,
             })}
-            onClick={() => setSelectedIndex(1)}>
+            onClick={() => setSelectedIndex(1)}
+          >
             <label>98.63</label>
             <span>Species Habitat Index</span>
           </button>
@@ -36,7 +38,8 @@ function DashboardTrendsSidebar(props) {
             className={cx({
               [styles.selected]: selectedIndex === 2,
             })}
-            onClick={() => setSelectedIndex(2)}>
+            onClick={() => setSelectedIndex(2)}
+          >
             <label>62.73</label>
             <span>Species Protection Index</span>
           </button>
@@ -46,7 +49,8 @@ function DashboardTrendsSidebar(props) {
             className={cx({
               [styles.selected]: selectedIndex === 3,
             })}
-            onClick={() => setSelectedIndex(3)}>
+            onClick={() => setSelectedIndex(3)}
+          >
             <label>0.49</label>
             <span>Species Information Index</span>
           </button>
@@ -57,6 +61,7 @@ function DashboardTrendsSidebar(props) {
         countryData={countryData}
       />
       <ScoreDistributionsContainer
+        selectedIndex={selectedIndex}
         countryISO={countryISO}
         countryData={countryData}
       />

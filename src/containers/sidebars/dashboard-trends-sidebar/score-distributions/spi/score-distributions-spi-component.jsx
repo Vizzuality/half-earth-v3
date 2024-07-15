@@ -4,12 +4,12 @@ import cx from 'classnames';
 
 import Button from 'components/button';
 
-import styles from '../dashboard-trends-sidebar-styles.module.scss';
+import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
-import ScoreDistributionChartContainer from './score-distributions-chart';
+import ScoreDistributionsChartContainer from './score-distributions-chart';
 
-function ScoreDistributionsComponent(props) {
-  const {countryISO} = props;
+function ScoreDistributionsSpiComponent(props) {
+  const { countryISO } = props;
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -33,7 +33,7 @@ function ScoreDistributionsComponent(props) {
     },
   ];
 
-  const [scoreDistributionData, setScoreDistributionData] = useState()
+  const [scoreDistributionData, setScoreDistributionData] = useState();
 
   const getScoreDistributionData = async () => {
     const year = '2023';
@@ -42,8 +42,8 @@ function ScoreDistributionsComponent(props) {
 
     const response = await fetch(url);
     const data = await response.json();
-    setScoreDistributionData(data.map(item => [item.protection_score]));
-  }
+    setScoreDistributionData(data.map((item) => [item.protection_score]));
+  };
 
   useEffect(() => {
     getScoreDistributionData();
@@ -96,9 +96,12 @@ function ScoreDistributionsComponent(props) {
         </div>
       </div>
 
-      <ScoreDistributionChartContainer scoreDistributionData={scoreDistributionData} {...props} />
+      <ScoreDistributionsChartContainer
+        scoreDistributionData={scoreDistributionData}
+        {...props}
+      />
     </div>
   );
 }
 
-export default ScoreDistributionsComponent;
+export default ScoreDistributionsSpiComponent;

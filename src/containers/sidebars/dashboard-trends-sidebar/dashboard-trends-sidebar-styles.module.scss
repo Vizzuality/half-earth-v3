@@ -78,11 +78,12 @@ $trends-width: 950px;
 }
 
 
-$info-width: 310px;
+$info-width: 300px;
 
 .trends{
   display: flex;
   padding: $paragraph-gutter;
+  gap: 10px;
 
   .info{
     width: $info-width;
@@ -179,32 +180,6 @@ $info-width: 310px;
       row-gap: 8px;
       margin-top: 10px;
 
-      .trendTypes{
-        display: flex;
-        gap: 3px;
-        padding: 2px;
-        border: 1px solid $brand-color-main;
-        border-radius: 5px;
-
-        .saveButton{
-          border: none;
-        }
-      }
-
-      .saveButton {
-        color: $dark-text;
-        background-color: $brand-color-main;
-        &:hover {
-          background-color: $brand-color-main-hover;
-        }
-      }
-
-      .notActive{
-        background-color: transparent;
-        color: $white;
-        border: 1px solid $brand-color-main;
-      }
-
       .helpText{
         color: $white;
         font-family: "Open Sans";
@@ -214,5 +189,31 @@ $info-width: 310px;
         line-height: normal;
       }
     }
+  }
+
+  .btnGroup{
+    display: flex;
+    gap: 3px;
+    padding: 2px;
+    border: 1px solid $brand-color-main;
+    border-radius: 5px;
+
+    .saveButton{
+      border: none;
+    }
+  }
+
+  .saveButton {
+    color: $dark-text;
+    background-color: $brand-color-main;
+    &:hover {
+      background-color: $brand-color-main-hover;
+    }
+  }
+
+  .notActive{
+    background-color: transparent;
+    color: $white;
+    border: 1px solid $brand-color-main;
   }
 }

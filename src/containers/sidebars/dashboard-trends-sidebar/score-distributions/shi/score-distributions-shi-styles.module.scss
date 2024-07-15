@@ -1,0 +1,11 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.chartArea{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}

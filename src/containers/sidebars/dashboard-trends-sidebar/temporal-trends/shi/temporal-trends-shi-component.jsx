@@ -54,16 +54,13 @@ function TemporalTrendsShiComponent(props) {
           Connectivity Score addresses changes in the fragmentation of habitat.
         </p>
         <div className={styles.options}>
-          <div className={styles.trendTypes}>
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === PROVINCE_TREND,
-              })}
-              label={NATIONAL_TREND}
-              handleClick={handleActionChange}
-            />
-          </div>
+          <Button
+            type="rectangular"
+            className={styles.saveButton}
+            label={NATIONAL_TREND}
+            handleClick={handleActionChange}
+          />
+
           <span className={styles.helpText}>
             Toggle national SPI and province-level breakdown.
           </span>
