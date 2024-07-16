@@ -19,7 +19,7 @@ import styles from './national-chart-styles.module.scss';
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
-  const { countryData, nationalChartData } = props;
+  const { countryData, nationalChartData, chartData } = props;
   const [data, setData] = useState();
   const [spiValue, setSpiValue] = useState(0);
 
@@ -66,6 +66,7 @@ function NationalChartComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
+          maxTicksLimit: 8
         },
       },
       y: {
@@ -86,50 +87,10 @@ function NationalChartComponent(props) {
     },
   };
 
-  // useEffect(() => {
-  //   console.log(countryData)
-  //   if (countryData) {
-  //     const spi = {
-  //       labels: ['Global SPI', 'Remaining'],
-  //       datasets: [
-  //         {
-  //           label: '',
-  //           data: [
-  //             countryData.Global_SPI_ter,
-  //             100 - countryData.Global_SPI_ter,
-  //           ],
-  //           backgroundColor: [
-  //             getCSSVariable('temporal-spi'),
-  //             getCSSVariable('white-opacity-20'),
-  //           ],
-  //           borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
-  //           borderWidth: 1,
-  //         },
-  //       ],
-  //     };
-
-  //     setSpiData(spi);
-  //   }
-  // }, [countryData]);
 
   useEffect(() => {
     if (nationalChartData.area_values.length) {
       console.log(nationalChartData);
-      setData({
-        labels: nationalChartData.spi_values.map((item) => item[0]),
-        datasets: [
-          {
-            label: 'SHI',
-            data: nationalChartData.spi_values.map((item) => item[1]),
-            borderColor: getCSSVariable('birds'),
-          },
-          {
-            label: 'Area protected',
-            data: nationalChartData.area_values.map((item) => item[1]),
-            borderColor: getCSSVariable('mammals'),
-          },
-        ],
-      });
       const spiVal =
         nationalChartData.spi_values[
         nationalChartData.spi_values.length - 1
@@ -158,6 +119,33 @@ function NationalChartComponent(props) {
       setSpiData(spi);
     }
   }, [nationalChartData]);
+
+  useEffect(() => {
+    if (chartData) {
+      setData({
+        labels: chartData.map((item) => item.year),
+        datasets: [
+          {
+            label: 'Average Area Score',
+            data: chartData.map((item) => item.avg_area),
+            borderColor: getCSSVariable('birds'),
+          },
+          {
+            label: 'Average Connectivity Score',
+            data: chartData.map((item) => item.avg_conn),
+            borderColor: getCSSVariable('mammals'),
+          },
+          {
+            label: 'Average Habitat Score',
+            data: chartData.map((item) => (item.avg_area + item.avg_conn) / 2),
+            borderColor: getCSSVariable('reptiles'),
+          },
+        ],
+      });
+    }
+
+  }, [chartData])
+
 
   return (
     <div className={styles.container}>

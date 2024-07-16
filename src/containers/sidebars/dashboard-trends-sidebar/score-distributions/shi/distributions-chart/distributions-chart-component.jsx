@@ -14,17 +14,12 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-// import cx from 'classnames';
-
-// import Button from 'components/button';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import Amphibians from 'images/amphibians.svg';
 import Birds from 'images/birds.svg';
 import Mammals from 'images/mammals.svg';
 import Reptiles from 'images/reptiles.svg';
-
-// import dashStyles from '../../../dashboard-trends-sidebar-styles.module.scss';
 
 import styles from './distributions-chart-styles.module.scss';
 
@@ -39,7 +34,7 @@ ChartJS.register(
 );
 
 function DistributionsChartComponent(props) {
-  const { countryData, scoreDistributionData } = props;
+  const { countryData, scoreDistributionData, chartData, chartType } = props;
   const [scores, setScores] = useState({
     birds: {
       count: 0,
@@ -71,22 +66,9 @@ function DistributionsChartComponent(props) {
     return [percent, 100 - percent];
   };
 
-  const labels = [
-    '0',
-    '10',
-    '20',
-    '30',
-    '40',
-    '50',
-    '60',
-    '70',
-    '80',
-    '90',
-    '100',
-  ];
-
   useEffect(() => {
-    if (countryData) {
+    if (chartData) {
+
       const {
         endemic_birds,
         birds,
@@ -117,21 +99,75 @@ function DistributionsChartComponent(props) {
         },
       });
     }
-  }, [countryData]);
+  }, [chartData]);
 
   useEffect(() => {
-    if (scoreDistributionData) {
+    if (chartData) {
+      const ampSet = getHistogramData('AMPHIBIA');
+      const mamSet = getHistogramData('MAMMALIA');
+      const repSet = getHistogramData('REPTILIA');
+      const birdSet = getHistogramData('AVES');
+
+      const taxaSet = {};
+
+      chartData.forEach(a => {
+        let floorScore;
+        if (chartType === 'area') {
+          floorScore = Math.floor(a.area_score);
+        } else if (chartType === 'habitat score') {
+          floorScore = Math.floor((a.area_score + a.connectivity_score) / 2);
+        } else if (chartType === 'connectivity') {
+          floorScore = Math.floor(a.connectivity_score);
+        }
+
+        if (!taxaSet.hasOwnProperty(floorScore)) {
+          taxaSet[floorScore] = 1;
+        } else {
+          taxaSet[floorScore] += 1;
+        }
+      });
+
       setData({
-        labels,
         datasets: [
+          // {
+          //   label: '# of occurance',
+          //   data: ampSet,
+          //   backgroundColor: getCSSVariable('amphibians'),
+          //   stack: 'Stack 0',
+          //   barPercentage: 1,
+          // },
+          // {
+          //   label: '# of occurance',
+          //   data: mamSet,
+          //   backgroundColor: getCSSVariable('mammals'),
+          //   stack: 'Stack 0',
+          //   barPercentage: 1,
+          // },
+          // {
+          //   label: '# of occurance',
+          //   data: repSet,
+          //   backgroundColor: getCSSVariable('reptiles'),
+          //   stack: 'Stack 0',
+          //   barPercentage: 1,
+          // },
+          // {
+          //   label: '# of occurance',
+          //   data: birdSet,
+          //   backgroundColor: getCSSVariable('birds'),
+          //   stack: 'Stack 0',
+          //   barPercentage: 1,
+          // },
           {
-            data: scoreDistributionData.map((item) => item[0]),
+            label: '# of occurance',
+            data: taxaSet,
             backgroundColor: getCSSVariable('birds'),
+            stack: 'Stack 0',
+            barPercentage: 1,
           },
         ],
       });
     }
-  }, [scoreDistributionData]);
+  }, [chartData, chartType]);
 
   const options = {
     plugins: {
@@ -149,6 +185,8 @@ function DistributionsChartComponent(props) {
     },
     scales: {
       x: {
+        type: 'linear',
+        offset: false,
         stacked: true,
         display: true,
         title: {
@@ -159,9 +197,11 @@ function DistributionsChartComponent(props) {
         grid: {
           color: getCSSVariable('oslo-gray'),
           display: false,
+          offset: false,
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
+          stepSize: 25,
         },
       },
       y: {
@@ -177,44 +217,11 @@ function DistributionsChartComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
+          stepSize: 10,
         },
       },
     },
   };
-
-  // const labels = [
-  //   '0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'
-  // ];
-
-  // const data = {
-  //   labels,
-  // datasets: [
-  //   {
-  //     label: 'Dataset 1',
-  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-  //     backgroundColor: getCSSVariable('birds'),
-  //     stack: 'Stack 0',
-  //   },
-  //   {
-  //     label: 'Dataset 2',
-  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-  //     backgroundColor: getCSSVariable('mammals'),
-  //     stack: 'Stack 0',
-  //   },
-  //   {
-  //     label: 'Dataset 3',
-  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-  //     backgroundColor: getCSSVariable('reptiles'),
-  //     stack: 'Stack 0',
-  //   },
-  //   {
-  //     label: 'Dataset 4',
-  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-  //     backgroundColor: getCSSVariable('amphibians'),
-  //     stack: 'Stack 0',
-  //   },
-  // ],
-  // };
 
   const birdData = {
     labels: ['Birds', 'Remaining'],
@@ -291,6 +298,21 @@ function DistributionsChartComponent(props) {
       },
     ],
   };
+
+  const getHistogramData = (taxa) => {
+    const taxaGroup = chartData.filter(item => item.taxa === taxa);
+    const taxaSet = {};
+
+    taxaGroup.forEach(a => {
+      const floorScore = Math.floor(a.area_score);
+      if (!taxaSet.hasOwnProperty(floorScore)) {
+        taxaSet[floorScore] = 1;
+      } else {
+        taxaSet[floorScore] += 1;
+      }
+    });
+    return taxaSet;
+  }
 
   return (
     <div className={styles.container}>

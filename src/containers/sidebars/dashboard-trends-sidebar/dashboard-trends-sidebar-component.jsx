@@ -59,6 +59,7 @@ function DashboardTrendsSidebar(props) {
       <TemporalTrendsContainer
         selectedIndex={selectedIndex}
         countryData={countryData}
+        countryISO={countryISO}
       />
       <ScoreDistributionsContainer
         selectedIndex={selectedIndex}

@@ -35,6 +35,7 @@ function ScoreDistributionsShiComponent(props) {
   ];
 
   const [scoreDistributionData, setScoreDistributionData] = useState();
+  const [chartData, setChartData] = useState();
 
   const getScoreDistributionData = async () => {
     const year = '2023';
@@ -43,12 +44,23 @@ function ScoreDistributionsShiComponent(props) {
 
     const response = await fetch(url);
     const data = await response.json();
+
     setScoreDistributionData(data.map((item) => [item.protection_score]));
-    console.log(scoreDistributionData);
   };
+
+  const getChartData = async () => {
+    const year = '2021';
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/shs/values?iso=${countryISO}&year=${year}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    setChartData(data);
+  }
 
   useEffect(() => {
     getScoreDistributionData();
+    getChartData();
   }, []);
 
   const [activeScore, setActiveScore] = useState('area');
@@ -103,7 +115,7 @@ function ScoreDistributionsShiComponent(props) {
         </div>
       </div>
       <div className={compStyles.chartArea}>
-        <div className={styles.btnGroup}>
+        <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
           <Button
             type="rectangular"
             className={cx(styles.saveButton, {
@@ -132,6 +144,8 @@ function ScoreDistributionsShiComponent(props) {
 
         <DistributionsChartComponent
           scoreDistributionData={scoreDistributionData}
+          chartData={chartData}
+          chartType={activeScore}
           {...props}
         />
       </div>

@@ -13,12 +13,14 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 
 function TemporalTrendsShiComponent(props) {
-  const { activeTrend, updateActiveTrend, countryData, selectedIndex } = props;
+  const { activeTrend, updateActiveTrend, countryData, selectedIndex, countryISO } = props;
 
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
     spi_values: [],
   });
+
+  const [chartData, setChartData] = useState();
 
   const getNationalData = async () => {
     const region_id = '90b03e87-3880-4164-a310-339994e3f919';
@@ -31,8 +33,18 @@ function TemporalTrendsShiComponent(props) {
     setNationalChartData({ area_values, spi_values });
   };
 
+  const getChartData = async () => {
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/shs/trend?iso=${countryISO}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    setChartData(data);
+  }
+
   useEffect(() => {
     getNationalData();
+    getChartData();
   }, []);
 
   const handleActionChange = (event) => {
@@ -77,6 +89,7 @@ function TemporalTrendsShiComponent(props) {
       </div>
       <NationalChartContainer
         nationalChartData={nationalChartData}
+        chartData={chartData}
         {...props}
       />
     </div>
