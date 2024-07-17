@@ -1,9 +1,11 @@
-/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-
+import styles from './species-richness-styles.module.scss';
+import SpiArcChartComponent from '../charts/spi-arc-chart/spi-arc-chart-component';
+import Amphibians from 'images/amphibians.svg';
+import Birds from 'images/birds.svg';
+import Mammals from 'images/mammals.svg';
 import { getCSSVariable } from 'utils/css-utils';
-
+import Reptiles from 'images/reptiles.svg';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,15 +17,6 @@ import {
   Legend,
 } from 'chart.js';
 
-import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
-
-import Amphibians from 'images/amphibians.svg';
-import Birds from 'images/birds.svg';
-import Mammals from 'images/mammals.svg';
-import Reptiles from 'images/reptiles.svg';
-
-import styles from './score-distributions-chart-styles.module.scss';
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -34,8 +27,9 @@ ChartJS.register(
   Legend
 );
 
-function ScoreDistributionsChartComponent(props) {
-  const { countryData, scoreDistributionData } = props;
+function SpeciesRichnessComponent(props) {
+  const { countryData } = props;
+
   const [scores, setScores] = useState({
     birds: {
       count: 0,
@@ -59,27 +53,11 @@ function ScoreDistributionsChartComponent(props) {
     },
   });
 
-  const [data, setData] = useState();
-
   const getPercentage = (species) => {
     const { count, total } = scores[species];
     const percent = (count / total) * 100 || 0;
     return [percent, 100 - percent];
   };
-
-  const labels = [
-    '0',
-    '10',
-    '20',
-    '30',
-    '40',
-    '50',
-    '60',
-    '70',
-    '80',
-    '90',
-    '100',
-  ];
 
   useEffect(() => {
     if (countryData) {
@@ -114,103 +92,6 @@ function ScoreDistributionsChartComponent(props) {
       });
     }
   }, [countryData]);
-
-  useEffect(() => {
-    if (scoreDistributionData) {
-      setData({
-        labels,
-        datasets: [
-          {
-            data: scoreDistributionData.map((item) => item[0]),
-            backgroundColor: getCSSVariable('birds'),
-          },
-        ],
-      });
-    }
-  }, [scoreDistributionData]);
-
-  const options = {
-    plugins: {
-      title: {
-        display: false,
-      },
-      legend: {
-        display: false,
-      },
-    },
-    responsive: true,
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
-    scales: {
-      x: {
-        stacked: true,
-        display: true,
-        title: {
-          display: true,
-          text: 'Protection Score',
-          color: getCSSVariable('white'),
-        },
-        grid: {
-          color: getCSSVariable('oslo-gray'),
-          display: false,
-        },
-        ticks: {
-          color: getCSSVariable('oslo-gray'),
-        },
-      },
-      y: {
-        stacked: true,
-        display: true,
-        title: {
-          display: true,
-          text: 'Number of Species',
-          color: getCSSVariable('white'),
-        },
-        grid: {
-          color: getCSSVariable('oslo-gray'),
-        },
-        ticks: {
-          color: getCSSVariable('oslo-gray'),
-        },
-      },
-    },
-  };
-
-  // const labels = [
-  //   '0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'
-  // ];
-
-  // const data = {
-  //   labels,
-  // datasets: [
-  //   {
-  //     label: 'Dataset 1',
-  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-  //     backgroundColor: getCSSVariable('birds'),
-  //     stack: 'Stack 0',
-  //   },
-  //   {
-  //     label: 'Dataset 2',
-  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-  //     backgroundColor: getCSSVariable('mammals'),
-  //     stack: 'Stack 0',
-  //   },
-  //   {
-  //     label: 'Dataset 3',
-  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-  //     backgroundColor: getCSSVariable('reptiles'),
-  //     stack: 'Stack 0',
-  //   },
-  //   {
-  //     label: 'Dataset 4',
-  //     data: labels.map(() => faker.datatype.number({ min: 0, max: 250 })),
-  //     backgroundColor: getCSSVariable('amphibians'),
-  //     stack: 'Stack 0',
-  //   },
-  // ],
-  // };
 
   const birdData = {
     labels: ['Birds', 'Remaining'],
@@ -290,7 +171,6 @@ function ScoreDistributionsChartComponent(props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>NATIONAL SPI BY TAXONOMIC GROUP</div>
       <div className={styles.spis}>
         <SpiArcChartComponent
           scores={scores}
@@ -320,14 +200,8 @@ function ScoreDistributionsChartComponent(props) {
           species="amphibians"
         />
       </div>
-
-      {data && (
-        <div className={styles.chart}>
-          <Bar options={options} data={data} />
-        </div>
-      )}
     </div>
-  );
+  )
 }
 
-export default ScoreDistributionsChartComponent;
+export default SpeciesRichnessComponent

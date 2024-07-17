@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 
 import Button from 'components/button';
-
+import { getCSSVariable } from 'utils/css-utils';
+import compStyles from './score-distributions-sii-styles.module.scss';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
+import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
+import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 
 function ScoreDistributionsSiiComponent(props) {
-  const { countryISO } = props;
+  const { countryISO, countryData } = props;
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -31,21 +34,95 @@ function ScoreDistributionsSiiComponent(props) {
     },
   ];
 
-  const [scoreDistributionData, setScoreDistributionData] = useState();
+  const [chartData, setChartData] = useState();
+  const [showTable, setShowTable] = useState(false);
 
-  const getScoreDistributionData = async () => {
+  const getChartData = async () => {
     const year = '2023';
     const taxa = 'all_terr_verts';
     const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${year}&taxa=${taxa}`;
 
     const response = await fetch(url);
     const data = await response.json();
-    setScoreDistributionData(data.map((item) => [item.protection_score]));
+    const taxaSet = {};
+
+    data.forEach(a => {
+      let floorScore = Math.floor(+a.protection_score)
+      if (!taxaSet.hasOwnProperty(floorScore)) {
+        taxaSet[floorScore] = 1;
+      } else {
+        taxaSet[floorScore] += 1;
+      }
+    });
+
+    setChartData({
+      datasets: [
+        {
+          label: 'Items',
+          data: taxaSet,
+          backgroundColor: getCSSVariable('birds'),
+        },
+      ],
+    });
   };
 
   useEffect(() => {
-    getScoreDistributionData();
+    getChartData();
   }, []);
+
+  const options = {
+    plugins: {
+      title: {
+        display: false,
+      },
+      legend: {
+        display: false,
+      },
+    },
+    responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    scales: {
+      x: {
+        type: 'linear',
+        offset: false,
+        stacked: true,
+        display: true,
+        title: {
+          display: true,
+          text: 'Protection Score',
+          color: getCSSVariable('white'),
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+          display: false,
+          offset: false,
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+          stepSize: 25,
+        },
+      },
+      y: {
+        stacked: true,
+        display: true,
+        title: {
+          display: true,
+          text: 'Number of Species',
+          color: getCSSVariable('white'),
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+          stepSize: 10,
+        },
+      },
+    },
+  };
 
   return (
     <div className={styles.trends}>
@@ -86,12 +163,28 @@ function ScoreDistributionsSiiComponent(props) {
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="view full table"
+            handleClick={() => setShowTable(true)}
           />
           <span className={styles.helpText}>
             Open and download a full table of species SPS and relevant traits at
             national and province levels for a selected year.
           </span>
         </div>
+      </div>
+      <div className={compStyles.chartArea}>
+        {!showTable && (<>
+          <SpeciesRichnessComponent countryData={countryData} />
+          <DistributionsChartComponent
+            data={chartData}
+            options={options}
+            {...props}
+          />
+        </>)}
+        {showTable && (<>
+          <SpeciesRichnessComponent countryData={countryData} />
+          {/* <DistributionsTableContainer chartData={chartData}
+            {...props} /> */}
+        </>)}
       </div>
     </div>
   );

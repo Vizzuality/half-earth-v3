@@ -82,6 +82,7 @@ function NationalChartComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
+          maxTicksLimit: 4
         },
       },
     },
@@ -90,7 +91,6 @@ function NationalChartComponent(props) {
 
   useEffect(() => {
     if (nationalChartData.area_values.length) {
-      console.log(nationalChartData);
       const spiVal =
         nationalChartData.spi_values[
         nationalChartData.spi_values.length - 1

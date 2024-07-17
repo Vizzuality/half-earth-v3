@@ -113,22 +113,21 @@ function NationalChartComponent(props) {
   // }, [countryData]);
 
   useEffect(() => {
-    if (nationalChartData.area_values.length) {
-      console.log(nationalChartData);
+    if (nationalChartData.length) {
       setData({
-        labels: nationalChartData.spi_values.map((item) => item[0]),
+        labels: nationalChartData.map((item) => item[0]),
         datasets: [
           {
             label: 'SII',
-            data: nationalChartData.spi_values.map((item) => item[1]),
+            data: nationalChartData.map((item) => item[1]),
             borderColor: getCSSVariable('birds'),
           },
         ],
       });
-      const spiVal =
-        nationalChartData.spi_values[
-        nationalChartData.spi_values.length - 1
-        ][1];
+      const spiVal = 0;
+      // nationalChartData.spi_values[
+      // nationalChartData.spi_values.length - 1
+      // ][1];
 
       const spi = {
         labels: ['Global SPI', 'Remaining'],

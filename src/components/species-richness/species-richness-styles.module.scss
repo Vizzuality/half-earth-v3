@@ -12,16 +12,6 @@
   gap: 8px;
   width: 100%;
 
-  .title{
-    color: $white;
-    font-family: "Open Sans";
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    text-transform: uppercase;
-  }
-
   .spis{
     display: flex;
     gap: 10px;
@@ -74,10 +64,5 @@
         }
       }
     }
-  }
-
-  .chart{
-    width: 100%;
-    margin-top: 25px;
   }
 }

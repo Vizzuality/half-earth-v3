@@ -46,13 +46,11 @@ function DashboardTrendsViewComponent(props) {
       returnGeometry: true,
     }).then((features) => {
       const { geometry, attributes } = features[0];
-      console.log(features);
 
       if (geometry && view) {
         view.center = [geometry.longitude, geometry.latitude];
         setGeo(geometry);
         setCountryData(attributes);
-        console.log(attributes);
       }
     });
   }, [view, countryISO]);

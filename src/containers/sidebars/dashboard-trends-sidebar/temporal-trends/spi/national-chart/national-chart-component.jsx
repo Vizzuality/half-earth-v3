@@ -116,7 +116,6 @@ function TemporalTrendsSpiNationalChartComponent(props) {
 
   useEffect(() => {
     if (nationalChartData.area_values.length) {
-      console.log(nationalChartData);
       setData({
         labels: nationalChartData.spi_values.map((item) => item[0]),
         datasets: [

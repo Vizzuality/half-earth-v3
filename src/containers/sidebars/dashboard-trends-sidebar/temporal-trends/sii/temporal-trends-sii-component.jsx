@@ -15,15 +15,19 @@ function TemporalTrendsSiiComponent(props) {
     spi_values: [],
   });
 
+
+  const taxa = 'all_terr_verts';
+
   const getNationalData = async () => {
     const regionId = '90b03e87-3880-4164-a310-339994e3f919';
-    const taxa = 'all_terr_verts';
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=${regionId}&taxa=${taxa}`;
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/completeness?region_id=${regionId}&indicator=richness&version=2020&weight=national`;
 
     const response = await fetch(url);
     const data = await response.json();
-    const { area_values, spi_values } = data[0].values;
-    setNationalChartData({ area_values, spi_values });
+    const { groups } = data[0];
+    const allVertValues = groups.filter(group => group.taxa === taxa);
+
+    setNationalChartData(allVertValues[0].values);
   };
 
   useEffect(() => {

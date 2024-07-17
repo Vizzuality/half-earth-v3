@@ -3,18 +3,19 @@ import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 
 import Button from 'components/button';
-
+import { getCSSVariable } from 'utils/css-utils';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
+import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 
-import DistributionsChartComponent from './distributions-chart/distributions-chart-component';
 import compStyles from './score-distributions-shi-styles.module.scss';
+import DistributionsTableContainer from './distributions-table';
+import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 
 function ScoreDistributionsShiComponent(props) {
-  const { countryISO } = props;
+  const { countryISO, countryData } = props;
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
-
   const spsSpecies = [
     {
       name: 'Black-collared Apalis',
@@ -34,19 +35,10 @@ function ScoreDistributionsShiComponent(props) {
     },
   ];
 
-  const [scoreDistributionData, setScoreDistributionData] = useState();
   const [chartData, setChartData] = useState();
-
-  const getScoreDistributionData = async () => {
-    const year = '2023';
-    const taxa = 'all_terr_verts';
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${year}&taxa=${taxa}`;
-
-    const response = await fetch(url);
-    const data = await response.json();
-
-    setScoreDistributionData(data.map((item) => [item.protection_score]));
-  };
+  const [responseData, setResponseData] = useState();
+  const [showTable, setShowTable] = useState(false);
+  const [activeScore, setActiveScore] = useState('area');
 
   const getChartData = async () => {
     const year = '2021';
@@ -54,18 +46,154 @@ function ScoreDistributionsShiComponent(props) {
 
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
-    setChartData(data);
+
+    setResponseData(data);
+    displayData(data, activeScore);
+  }
+
+  const displayData = (data, activeScore) => {
+    // const ampSet = getHistogramData('AMPHIBIA');
+    // const mamSet = getHistogramData('MAMMALIA');
+    // const repSet = getHistogramData('REPTILIA');
+    // const birdSet = getHistogramData('AVES');
+    const taxaSet = {};
+
+    data.forEach(a => {
+      let floorScore;
+      if (activeScore === 'area') {
+        floorScore = Math.floor(a.area_score);
+      } else if (activeScore === 'habitat score') {
+        floorScore = Math.floor((a.area_score + a.connectivity_score) / 2);
+      } else if (activeScore === 'connectivity') {
+        floorScore = Math.floor(a.connectivity_score);
+      }
+
+      if (!taxaSet.hasOwnProperty(floorScore)) {
+        taxaSet[floorScore] = 1;
+      } else {
+        taxaSet[floorScore] += 1;
+      }
+    });
+
+    setChartData({
+      datasets: [
+        // {
+        //   label: '# of occurance',
+        //   data: ampSet,
+        //   backgroundColor: getCSSVariable('amphibians'),
+        //   stack: 'Stack 0',
+        //   barPercentage: 1,
+        // },
+        // {
+        //   label: '# of occurance',
+        //   data: mamSet,
+        //   backgroundColor: getCSSVariable('mammals'),
+        //   stack: 'Stack 0',
+        //   barPercentage: 1,
+        // },
+        // {
+        //   label: '# of occurance',
+        //   data: repSet,
+        //   backgroundColor: getCSSVariable('reptiles'),
+        //   stack: 'Stack 0',
+        //   barPercentage: 1,
+        // },
+        // {
+        //   label: '# of occurance',
+        //   data: birdSet,
+        //   backgroundColor: getCSSVariable('birds'),
+        //   stack: 'Stack 0',
+        //   barPercentage: 1,
+        // },
+        {
+          label: '# of occurance',
+          data: taxaSet,
+          backgroundColor: getCSSVariable('birds'),
+          stack: 'Stack 0',
+          barPercentage: 1,
+        },
+      ],
+    });
   }
 
   useEffect(() => {
-    getScoreDistributionData();
     getChartData();
   }, []);
 
-  const [activeScore, setActiveScore] = useState('area');
+
+  const getHistogramData = (taxa) => {
+    const taxaGroup = chartData.filter(item => item.taxa === taxa);
+    const taxaSet = {};
+
+    taxaGroup.forEach(a => {
+      const floorScore = Math.floor(a.area_score);
+      if (!taxaSet.hasOwnProperty(floorScore)) {
+        taxaSet[floorScore] = 1;
+      } else {
+        taxaSet[floorScore] += 1;
+      }
+    });
+    return taxaSet;
+  }
+
+
   const handleActiveChange = (event) => {
     setActiveScore(event.currentTarget.innerText.toLowerCase());
+    displayData(responseData, event.currentTarget.innerText.toLowerCase());
+  };
+
+  const options = {
+    plugins: {
+      title: {
+        display: false,
+      },
+      legend: {
+        display: false,
+      },
+    },
+    responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    scales: {
+      x: {
+        type: 'linear',
+        offset: false,
+        stacked: true,
+        display: true,
+        title: {
+          display: true,
+          text: 'Protection Score',
+          color: getCSSVariable('white'),
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+          display: false,
+          offset: false,
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+          stepSize: 25,
+        },
+      },
+      y: {
+        stacked: true,
+        display: true,
+        title: {
+          display: true,
+          text: 'Number of Species',
+          color: getCSSVariable('white'),
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+          stepSize: 10,
+        },
+      },
+    },
   };
 
   return (
@@ -107,6 +235,7 @@ function ScoreDistributionsShiComponent(props) {
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="view full table"
+            handleClick={() => setShowTable(true)}
           />
           <span className={styles.helpText}>
             Open and download a full table of species SPS and relevant traits at
@@ -115,39 +244,45 @@ function ScoreDistributionsShiComponent(props) {
         </div>
       </div>
       <div className={compStyles.chartArea}>
-        <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
-          <Button
-            type="rectangular"
-            className={cx(styles.saveButton, {
-              [styles.notActive]: activeScore !== 'area',
-            })}
-            label="Area"
-            handleClick={handleActiveChange}
+        {!showTable && (<>
+          <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeScore !== 'area',
+              })}
+              label="Area"
+              handleClick={handleActiveChange}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeScore !== 'habitat score',
+              })}
+              label="Habitat Score"
+              handleClick={handleActiveChange}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeScore !== 'connectivity',
+              })}
+              label="Connectivity"
+              handleClick={handleActiveChange}
+            />
+          </div>
+          <SpeciesRichnessComponent countryData={countryData} />
+          <DistributionsChartComponent
+            data={chartData}
+            options={options}
+            {...props}
           />
-          <Button
-            type="rectangular"
-            className={cx(styles.saveButton, {
-              [styles.notActive]: activeScore !== 'habitat score',
-            })}
-            label="Habitat Score"
-            handleClick={handleActiveChange}
-          />
-          <Button
-            type="rectangular"
-            className={cx(styles.saveButton, {
-              [styles.notActive]: activeScore !== 'connectivity',
-            })}
-            label="Connectivity"
-            handleClick={handleActiveChange}
-          />
-        </div>
-
-        <DistributionsChartComponent
-          scoreDistributionData={scoreDistributionData}
-          chartData={chartData}
-          chartType={activeScore}
-          {...props}
-        />
+        </>)}
+        {showTable && (<>
+          <SpeciesRichnessComponent countryData={countryData} />
+          <DistributionsTableContainer chartData={responseData}
+            {...props} />
+        </>)}
       </div>
     </div>
   );
