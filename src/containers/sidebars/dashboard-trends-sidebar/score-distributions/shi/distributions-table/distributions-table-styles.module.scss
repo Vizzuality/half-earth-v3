@@ -17,10 +17,14 @@
     height: 300px;
     overflow-y: auto;
 
-    th{
-      span{
-        color: $white;
-        text-align: center;
+    table{
+      font-size: 10px;
+
+      th{
+        span{
+          color: $white;
+          text-align: center;
+        }
       }
     }
   }

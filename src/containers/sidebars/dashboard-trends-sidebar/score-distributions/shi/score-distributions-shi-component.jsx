@@ -58,6 +58,24 @@ function ScoreDistributionsShiComponent(props) {
     // const birdSet = getHistogramData('AVES');
     const taxaSet = {};
 
+    // data.forEach(a => {
+    //   let floorScore;
+    //   if (activeScore === 'area') {
+    //     floorScore = Math.floor(a.area_score);
+    //   } else if (activeScore === 'habitat score') {
+    //     floorScore = Math.floor((a.area_score + a.connectivity_score) / 2);
+    //   } else if (activeScore === 'connectivity') {
+    //     floorScore = Math.floor(a.connectivity_score);
+    //   }
+
+    //   if (!taxaSet.hasOwnProperty(floorScore)) {
+    //     taxaSet[floorScore] = 1;
+    //   } else {
+    //     taxaSet[floorScore] += 1;
+    //   }
+    // });
+
+    // Loop through each number and place it in the appropriate bucket
     data.forEach(a => {
       let floorScore;
       if (activeScore === 'area') {
@@ -68,14 +86,20 @@ function ScoreDistributionsShiComponent(props) {
         floorScore = Math.floor(a.connectivity_score);
       }
 
-      if (!taxaSet.hasOwnProperty(floorScore)) {
-        taxaSet[floorScore] = 1;
+      // Determine the bucket index based on the floor value of the number
+      let bucketIndex = Math.floor(floorScore / 5);
+
+      if (!taxaSet.hasOwnProperty(bucketIndex)) {
+        taxaSet[bucketIndex] = 1;
       } else {
-        taxaSet[floorScore] += 1;
+        taxaSet[bucketIndex] += 1;
       }
     });
 
+    const labels = Object.keys(taxaSet).map(key => key * 5);
+
     setChartData({
+      labels,
       datasets: [
         // {
         //   label: '# of occurance',
@@ -107,7 +131,7 @@ function ScoreDistributionsShiComponent(props) {
         // },
         {
           label: '# of occurance',
-          data: taxaSet,
+          data: Object.values(taxaSet),
           backgroundColor: getCSSVariable('birds'),
           stack: 'Stack 0',
           barPercentage: 1,
@@ -174,7 +198,7 @@ function ScoreDistributionsShiComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          stepSize: 25,
+          stepSize: 5,
         },
       },
       y: {
@@ -231,12 +255,18 @@ function ScoreDistributionsShiComponent(props) {
           })}
         </ul>
         <div className={styles.options}>
-          <Button
+          {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="view full table"
             handleClick={() => setShowTable(true)}
-          />
+          />}
+          {showTable && <Button
+            type="rectangular"
+            className={cx(styles.saveButton, styles.notActive)}
+            label="Close full table"
+            handleClick={() => setShowTable(false)}
+          />}
           <span className={styles.helpText}>
             Open and download a full table of species SPS and relevant traits at
             national and province levels for a selected year.

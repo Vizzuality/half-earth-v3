@@ -16,6 +16,8 @@ function ScoreDistributionsSpiComponent(props) {
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
 
+  const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
+
   const spsSpecies = [
     {
       name: 'Black-collared Apalis',
@@ -47,28 +49,47 @@ function ScoreDistributionsSpiComponent(props) {
     const data = await response.json();
     const taxaSet = {};
 
+    // Loop through each number and place it in the appropriate bucket
     data.forEach(a => {
-      let floorScore = Math.floor(+a.protection_score)
-      if (!taxaSet.hasOwnProperty(floorScore)) {
-        taxaSet[floorScore] = 1;
+      const number = +a.protection_score;
+      // Determine the bucket index based on the floor value of the number
+      let bucketIndex = Math.floor(number / 5);
+
+      if (!taxaSet.hasOwnProperty(bucketIndex)) {
+        taxaSet[bucketIndex] = 1;
       } else {
-        taxaSet[floorScore] += 1;
+        taxaSet[bucketIndex] += 1;
       }
     });
 
+    const labels = Object.keys(taxaSet).map(key => +key * 5);
 
     setChartData({
+      labels,
       datasets: [
         {
           label: 'Items',
-          data: taxaSet,
+          data: Object.values(taxaSet),
           backgroundColor: getCSSVariable('birds'),
         },
       ],
     });
   };
 
+  const getTaxaData = async () => {
+    const taxaCalls = await Promise.all(
+      taxas.map(async (taxa) => {
+        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
+        const data = await response.json();
+        return data;
+      })
+    );
+
+    console.log(taxaCalls);
+  }
+
   useEffect(() => {
+    getTaxaData();
     getChartData();
   }, []);
 
@@ -104,7 +125,7 @@ function ScoreDistributionsSpiComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          stepSize: 25,
+          stepSize: 10,
         },
       },
       y: {
@@ -120,7 +141,7 @@ function ScoreDistributionsSpiComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          stepSize: 10,
+          stepSize: 100,
         },
       },
     },
@@ -161,12 +182,18 @@ function ScoreDistributionsSpiComponent(props) {
           })}
         </ul>
         <div className={styles.options}>
-          <Button
+          {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="view full table"
             handleClick={() => setShowTable(true)}
-          />
+          />}
+          {showTable && <Button
+            type="rectangular"
+            className={cx(styles.saveButton, styles.notActive)}
+            label="Close full table"
+            handleClick={() => setShowTable(false)}
+          />}
           <span className={styles.helpText}>
             Open and download a full table of species SPS and relevant traits at
             national and province levels for a selected year.

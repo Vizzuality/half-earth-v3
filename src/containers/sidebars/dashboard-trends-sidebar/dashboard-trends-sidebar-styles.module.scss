@@ -45,12 +45,10 @@ $trends-width: 950px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
         padding: 10px;
 
         label{
-          color: #000;
+          color: $white;
           text-align: center;
           font-family: "Roboto Flex";
           font-size: 22px;
@@ -60,7 +58,7 @@ $trends-width: 950px;
         }
 
         span{
-          color: #000;
+          color: $white;
           text-align: center;
           font-family: "Roboto Condensed";
           font-size: 12px;
@@ -70,7 +68,7 @@ $trends-width: 950px;
         }
 
         &.selected{
-          background-color: $white;
+          background-color: $brand-color-main;
         }
       }
     }

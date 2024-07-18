@@ -21,6 +21,7 @@ function TemporalTrendsShiComponent(props) {
   });
 
   const [chartData, setChartData] = useState();
+  const [lostAvg, setLostAvg] = useState(0)
 
   const getNationalData = async () => {
     const region_id = '90b03e87-3880-4164-a310-339994e3f919';
@@ -31,6 +32,8 @@ function TemporalTrendsShiComponent(props) {
     const data = await response.json();
     const { area_values, spi_values } = data[0].values;
     setNationalChartData({ area_values, spi_values });
+
+    setLostAvg(100 - spi_values[spi_values.length - 1][1]);
   };
 
   const getChartData = async () => {
@@ -56,7 +59,7 @@ function TemporalTrendsShiComponent(props) {
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>
           Since 2001, the terrestrial vertebrate species of the Democratic
-          Republic of the Congo have lost an average of 1.37% of their suitable
+          Republic of the Congo have lost an average of <b>{lostAvg}</b>% of their suitable
           habitat, leading to the country having a Species Habitat Index of
           98.63.
         </p>

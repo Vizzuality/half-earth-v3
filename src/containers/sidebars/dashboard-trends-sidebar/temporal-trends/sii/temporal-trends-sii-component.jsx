@@ -26,8 +26,9 @@ function TemporalTrendsSiiComponent(props) {
     const data = await response.json();
     const { groups } = data[0];
     const allVertValues = groups.filter(group => group.taxa === taxa);
+    console.log(allVertValues[0]);
 
-    setNationalChartData(allVertValues[0].values);
+    setNationalChartData(allVertValues[0]);
   };
 
   useEffect(() => {

@@ -113,18 +113,21 @@ function NationalChartComponent(props) {
   // }, [countryData]);
 
   useEffect(() => {
-    if (nationalChartData.length) {
+    if (nationalChartData && nationalChartData.values?.length) {
+      console.log(nationalChartData);
+      const values = nationalChartData.values;
+
       setData({
-        labels: nationalChartData.map((item) => item[0]),
+        labels: values.map((item) => item[0]),
         datasets: [
           {
             label: 'SII',
-            data: nationalChartData.map((item) => item[1]),
+            data: values.map((item) => (item[1] * 100)),
             borderColor: getCSSVariable('birds'),
           },
         ],
       });
-      const spiVal = 0;
+      const spiVal = nationalChartData.metrics[0] * 100;
       // nationalChartData.spi_values[
       // nationalChartData.spi_values.length - 1
       // ][1];
@@ -164,7 +167,7 @@ function NationalChartComponent(props) {
             data={spiData}
             value={spiValue}
           />
-          <b>{countryData?.prop_protected_ter}</b>
+          <b>{nationalChartData.metrics?.[1]}</b>
           <span>Year</span>
           <span>SII</span>
           <span>Global Ranking</span>

@@ -46,20 +46,27 @@ function ScoreDistributionsSiiComponent(props) {
     const data = await response.json();
     const taxaSet = {};
 
+    // Loop through each number and place it in the appropriate bucket
     data.forEach(a => {
-      let floorScore = Math.floor(+a.protection_score)
-      if (!taxaSet.hasOwnProperty(floorScore)) {
-        taxaSet[floorScore] = 1;
+      const number = +a.protection_score;
+      // Determine the bucket index based on the floor value of the number
+      let bucketIndex = Math.floor(number / 5);
+
+      if (!taxaSet.hasOwnProperty(bucketIndex)) {
+        taxaSet[bucketIndex] = 1;
       } else {
-        taxaSet[floorScore] += 1;
+        taxaSet[bucketIndex] += 1;
       }
     });
 
+    const labels = Object.keys(taxaSet).map(key => +key * 5);
+
     setChartData({
+      labels,
       datasets: [
         {
           label: 'Items',
-          data: taxaSet,
+          data: Object.values(taxaSet),
           backgroundColor: getCSSVariable('birds'),
         },
       ],
@@ -102,7 +109,7 @@ function ScoreDistributionsSiiComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          stepSize: 25,
+          stepSize: 10,
         },
       },
       y: {
@@ -159,12 +166,18 @@ function ScoreDistributionsSiiComponent(props) {
           })}
         </ul>
         <div className={styles.options}>
-          <Button
+          {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="view full table"
             handleClick={() => setShowTable(true)}
-          />
+          />}
+          {showTable && <Button
+            type="rectangular"
+            className={cx(styles.saveButton, styles.notActive)}
+            label="Close full table"
+            handleClick={() => setShowTable(false)}
+          />}
           <span className={styles.helpText}>
             Open and download a full table of species SPS and relevant traits at
             national and province levels for a selected year.

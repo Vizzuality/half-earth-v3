@@ -22,6 +22,7 @@ function NationalChartComponent(props) {
   const { countryData, nationalChartData, chartData } = props;
   const [data, setData] = useState();
   const [spiValue, setSpiValue] = useState(0);
+  const [nationalScores, setNationalScores] = useState({ areaScore: 0, connecivityScore: 0, year: 2001 })
 
   const blankData = {
     labels: ['Global SPI', 'Remaining'],
@@ -142,6 +143,13 @@ function NationalChartComponent(props) {
           },
         ],
       });
+
+      const lastValues = chartData[chartData.length - 1];
+      setNationalScores({
+        areaScore: lastValues.avg_area,
+        connecivityScore: lastValues.avg_conn,
+        year: lastValues.year
+      });
     }
 
   }, [chartData])
@@ -151,15 +159,15 @@ function NationalChartComponent(props) {
     <div className={styles.container}>
       <div className={styles.info}>
         <div className={styles.arcGrid}>
-          <b>2024</b>
-          <b>98.37</b>
+          <b>{nationalScores.year}</b>
+          <b>{nationalScores.areaScore}</b>
           <SpiArcChartComponent
             width="125x"
             height="75px"
             data={spiData}
             value={spiValue}
           />
-          <b>98.88</b>
+          <b>{nationalScores.connecivityScore}</b>
           <b>{countryData?.prop_protected_ter}</b>
           <span>Year</span>
           <span>Area Score</span>
