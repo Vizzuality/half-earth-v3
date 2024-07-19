@@ -19,7 +19,7 @@ import styles from './national-chart-styles.module.scss';
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
-  const { countryData, nationalChartData, chartData } = props;
+  const { countryData, chartData } = props;
   const [data, setData] = useState();
   const [shiValue, setShiValue] = useState(0);
   const [nationalScores, setNationalScores] = useState({ areaScore: 0, connecivityScore: 0, year: 2001 })
@@ -89,35 +89,6 @@ function NationalChartComponent(props) {
     },
   };
 
-
-  useEffect(() => {
-    if (nationalChartData.area_values.length) {
-      const shiVal = (nationalScores.areaScore + nationalScores.connecivityScore) / 2;
-
-      const shi = {
-        labels: ['Global SHI', 'Remaining'],
-        datasets: [
-          {
-            label: '',
-            data: [shiVal, 100 - shiVal],
-            backgroundColor: [
-              getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
-            ],
-            borderColor: [
-              getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      setShiValue(shiVal);
-      setShiData(shi);
-    }
-  }, [nationalChartData]);
-
   useEffect(() => {
     if (chartData) {
       setData({
@@ -147,6 +118,30 @@ function NationalChartComponent(props) {
         connecivityScore: lastValues.avg_conn,
         year: lastValues.year
       });
+
+      const shiVal = (lastValues.avg_area + lastValues.avg_conn) / 2;
+
+      const shi = {
+        labels: ['Global SHI', 'Remaining'],
+        datasets: [
+          {
+            label: '',
+            data: [shiVal, 100 - shiVal],
+            backgroundColor: [
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
+            ],
+            borderColor: [
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      setShiValue(shiVal);
+      setShiData(shi);
     }
 
   }, [chartData])

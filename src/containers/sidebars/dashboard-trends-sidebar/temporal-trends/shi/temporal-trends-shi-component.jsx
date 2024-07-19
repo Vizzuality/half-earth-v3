@@ -13,7 +13,7 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 
 function TemporalTrendsShiComponent(props) {
-  const { updateActiveTrend, shiTrendData, shiNationalData } = props;
+  const { updateActiveTrend, shiTrendsData, shiNationalData } = props;
 
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
@@ -78,7 +78,7 @@ function TemporalTrendsShiComponent(props) {
       </div>
       <NationalChartContainer
         nationalChartData={nationalChartData}
-        chartData={shiTrendData}
+        chartData={shiTrendsData}
         {...props}
       />
     </div>

@@ -12,7 +12,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
-import DashboardTrendsSidebar from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
+import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
@@ -83,7 +83,7 @@ function DashboardTrendsViewComponent(props) {
         url: `https://js.arcgis.com/${API_VERSION}`,
       }}
     >
-      <DashboardTrendsSidebar
+      <DashboardTrendsSidebarContainer
         activeLayers={activeLayers}
         map={map}
         view={view}
