@@ -11,12 +11,9 @@ function DashboardTrendsSidebarContainer(props) {
   const [spiValue, setSpiValue] = useState(0);
   const [siiValue, setSiiValue] = useState(0);
 
-  const [shiTrendsData, setShiTrendsData] = useState();
-  const [shiScoresData, setShiScoresData] = useState();
-  const [spiTrendsData, setSpiTrendsData] = useState();
-  const [spiScoresData, setSpiScoresData] = useState();
-  const [siiTrendsData, setSiiTrendsData] = useState();
-  const [siiScoresData, setSiiScoresData] = useState();
+  const [shiData, setShiData] = useState({trendData: [], scoresData: []});
+  const [spiData, setSpiData] = useState({trendData: [], scoresData: []});
+  const [siiData, setSiiData] = useState({trendData: [], scoresData: []});
 
   const getData = async () => {
     const year = '2021';
@@ -43,25 +40,25 @@ function DashboardTrendsSidebarContainer(props) {
       return data;
     }));
 
-    setShiTrendsData(apiResponses[0]);
-    const shiTD = apiResponses[0];
+    const [shiTrendData, shiScoresData, spiTrendData, spiScoresData, siiTrendData, siiScoresData] = apiResponses;
+
+    const shiTD = shiTrendData;
     const lastValues = shiTD[shiTD.length - 1];
-    setShiScoresData(apiResponses[1]);
-    const shi = (lastValues.avg_area + lastValues.avg_conn) / 2;
+    const shi = ((lastValues.avg_area + lastValues.avg_conn) / 2).toFixed(2);
     setShiValue(shi);
 
-    setSpiTrendsData(apiResponses[2]);
-    const spiTD = apiResponses[2];
+    const spiTD = spiTrendData;
     const spiTrendsValues = spiTD[0].values;
     const spiValues = spiTrendsValues.spi_values;
     const spi = spiValues[spiValues.length - 1][1];
     setSpiValue(spi);
-    setSpiScoresData(apiResponses[3]);
 
-    const siiTD = apiResponses[4];
+    const siiTD = siiTrendData;
     setSiiValue((siiTD[0].all_taxa_avg * 100).toFixed(2));
-    setSiiTrendsData(apiResponses[4]);
-    setSiiScoresData(apiResponses[5]);
+
+    setShiData({trendData: shiTrendData, scoresData: shiScoresData});
+    setSpiData({trendData: spiTrendData, scoresData: spiScoresData});
+    setSiiData({trendData: siiTrendData, scoresData: siiScoresData});
   }
 
   useEffect(() => {
@@ -75,12 +72,9 @@ function DashboardTrendsSidebarContainer(props) {
       shiValue={shiValue}
       spiValue={spiValue}
       siiValue={siiValue}
-      shiTrendsData={shiTrendsData}
-      shiScoresData={shiScoresData}
-      spiTrendsData={spiTrendsData}
-      spiScoresData={spiScoresData}
-      siiTrendsData={siiTrendsData}
-      siiScoresData={siiScoresData}
+      shiData={shiData}
+      spiData={spiData}
+      siiData={siiData}
       {...props}
     />
   );

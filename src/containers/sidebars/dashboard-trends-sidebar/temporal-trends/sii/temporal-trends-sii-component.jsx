@@ -10,18 +10,17 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 
 function TemporalTrendsSiiComponent(props) {
-  const { siiTrendsData } = props;
+  const { siiData } = props;
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
     spi_values: [],
   });
 
-
   const taxa = 'all_terr_verts';
 
   const getNationalData = async () => {
-    if (siiTrendsData) {
-      const data = siiTrendsData;
+    if (siiData.trendData.length) {
+      const data = siiData.trendData;
       const { groups } = data[0];
       const allVertValues = groups.filter(group => group.taxa === taxa);
 
@@ -31,7 +30,7 @@ function TemporalTrendsSiiComponent(props) {
 
   useEffect(() => {
     getNationalData();
-  }, [siiTrendsData]);
+  }, [siiData]);
 
   return (
     <div className={styles.trends}>

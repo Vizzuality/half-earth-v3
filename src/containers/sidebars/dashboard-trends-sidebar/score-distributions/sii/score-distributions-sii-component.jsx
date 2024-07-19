@@ -10,7 +10,7 @@ import SpeciesRichnessComponent from 'components/species-richness/species-richne
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 
 function ScoreDistributionsSiiComponent(props) {
-  const { countryData, siiScoresData } = props;
+  const { countryData, siiData } = props;
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -38,8 +38,8 @@ function ScoreDistributionsSiiComponent(props) {
   const [showTable, setShowTable] = useState(false);
 
   const getChartData = async () => {
-    if (siiScoresData) {
-      const data = siiScoresData; //await response.json();
+    if (siiData.scoresData.length) {
+      const data = siiData.scoresData;
       const taxaSet = {};
 
       // Loop through each number and place it in the appropriate bucket
@@ -72,7 +72,7 @@ function ScoreDistributionsSiiComponent(props) {
 
   useEffect(() => {
     getChartData();
-  }, [siiScoresData]);
+  }, [siiData]);
 
   const options = {
     plugins: {

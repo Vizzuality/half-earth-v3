@@ -12,7 +12,7 @@ import DistributionsTableContainer from './distributions-table';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 
 function ScoreDistributionsShiComponent(props) {
-  const { countryData, shiScoresData } = props;
+  const { countryData, shiData } = props;
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -41,8 +41,8 @@ function ScoreDistributionsShiComponent(props) {
   const [activeScore, setActiveScore] = useState('area');
 
   const getChartData = async () => {
-    if (shiScoresData) {
-      const data = shiScoresData;//await response.json();
+    if (shiData.scoresData.length) {
+      const data = shiData.scoresData;
 
       setResponseData(data);
       displayData(data, activeScore);
@@ -140,7 +140,7 @@ function ScoreDistributionsShiComponent(props) {
 
   useEffect(() => {
     getChartData();
-  }, [shiScoresData]);
+  }, [shiData]);
 
 
   const getHistogramData = (taxa) => {

@@ -90,7 +90,7 @@ function NationalChartComponent(props) {
   };
 
   useEffect(() => {
-    if (chartData) {
+    if (chartData.length) {
       setData({
         labels: chartData.map((item) => item.year),
         datasets: [

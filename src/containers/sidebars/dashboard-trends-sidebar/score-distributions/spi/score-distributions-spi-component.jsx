@@ -11,7 +11,7 @@ import compStyles from './score-distributions-spi-styles.module.scss';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 
 function ScoreDistributionsSpiComponent(props) {
-  const { countryData, spiScoresData } = props;
+  const { countryData, spiData } = props;
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -41,8 +41,8 @@ function ScoreDistributionsSpiComponent(props) {
   const [showTable, setShowTable] = useState(false);
 
   const getChartData = async () => {
-    if (spiScoresData) {
-      const data = spiScoresData;//await response.json();
+    if (spiData.scoresData.length) {
+      const data = spiData.scoresData;
       const taxaSet = {};
 
       // Loop through each number and place it in the appropriate bucket
@@ -86,7 +86,7 @@ function ScoreDistributionsSpiComponent(props) {
   useEffect(() => {
     getTaxaData();
     getChartData();
-  }, [spiScoresData]);
+  }, [spiData]);
 
   const options = {
     plugins: {
