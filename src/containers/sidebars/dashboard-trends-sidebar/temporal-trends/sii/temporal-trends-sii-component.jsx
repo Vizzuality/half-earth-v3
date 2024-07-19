@@ -10,6 +10,7 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 
 function TemporalTrendsSiiComponent(props) {
+  const { siiTrendsData } = props;
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
     spi_values: [],
@@ -19,21 +20,18 @@ function TemporalTrendsSiiComponent(props) {
   const taxa = 'all_terr_verts';
 
   const getNationalData = async () => {
-    const regionId = '90b03e87-3880-4164-a310-339994e3f919';
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/completeness?region_id=${regionId}&indicator=richness&version=2020&weight=national`;
+    if (siiTrendsData) {
+      const data = siiTrendsData;
+      const { groups } = data[0];
+      const allVertValues = groups.filter(group => group.taxa === taxa);
 
-    const response = await fetch(url);
-    const data = await response.json();
-    const { groups } = data[0];
-    const allVertValues = groups.filter(group => group.taxa === taxa);
-    console.log(allVertValues[0]);
-
-    setNationalChartData(allVertValues[0]);
+      setNationalChartData(allVertValues[0]);
+    }
   };
 
   useEffect(() => {
     getNationalData();
-  }, []);
+  }, [siiTrendsData]);
 
   return (
     <div className={styles.trends}>

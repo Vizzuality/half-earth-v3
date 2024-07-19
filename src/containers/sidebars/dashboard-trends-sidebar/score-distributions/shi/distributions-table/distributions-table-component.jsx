@@ -11,8 +11,6 @@ function DistributionsTableComponent(props) {
   const t = useT();
   const locale = useLocale();
 
-  console.log(chartData)
-
   return (
     <div className={styles.container}>
       <div className={styles.tableWrapper}>

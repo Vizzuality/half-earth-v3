@@ -114,7 +114,6 @@ function NationalChartComponent(props) {
 
   useEffect(() => {
     if (nationalChartData && nationalChartData.values?.length) {
-      console.log(nationalChartData);
       const values = nationalChartData.values;
 
       setData({

@@ -13,41 +13,28 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 
 function TemporalTrendsShiComponent(props) {
-  const { activeTrend, updateActiveTrend, countryData, selectedIndex, countryISO } = props;
+  const { updateActiveTrend, shiTrendData, shiNationalData } = props;
 
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
     spi_values: [],
   });
 
-  const [chartData, setChartData] = useState();
+  // const [chartData, setChartData] = useState();
   const [lostAvg, setLostAvg] = useState(0)
 
   const getNationalData = async () => {
-    const region_id = '90b03e87-3880-4164-a310-339994e3f919';
-    const taxa = 'all_terr_verts';
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=${region_id}&taxa=${taxa}`;
+    if (shiNationalData) {
+      const { area_values, spi_values } = shiNationalData[0].values;
+      setNationalChartData({ area_values, spi_values });
 
-    const response = await fetch(url);
-    const data = await response.json();
-    const { area_values, spi_values } = data[0].values;
-    setNationalChartData({ area_values, spi_values });
-
-    setLostAvg(100 - spi_values[spi_values.length - 1][1]);
+      setLostAvg(100 - spi_values[spi_values.length - 1][1]);
+    }
   };
-
-  const getChartData = async () => {
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/shs/trend?iso=${countryISO}`;
-
-    const response = await fetch(url);
-    const data = await response.json();
-    setChartData(data);
-  }
 
   useEffect(() => {
     getNationalData();
-    getChartData();
-  }, []);
+  }, [shiNationalData]);
 
   const handleActionChange = (event) => {
     updateActiveTrend(event.currentTarget.innerText);
@@ -91,7 +78,7 @@ function TemporalTrendsShiComponent(props) {
       </div>
       <NationalChartContainer
         nationalChartData={nationalChartData}
-        chartData={chartData}
+        chartData={shiTrendData}
         {...props}
       />
     </div>

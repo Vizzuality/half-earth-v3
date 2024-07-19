@@ -12,7 +12,7 @@ import DistributionsTableContainer from './distributions-table';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 
 function ScoreDistributionsShiComponent(props) {
-  const { countryISO, countryData } = props;
+  const { countryData, shiScoresData } = props;
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -41,14 +41,12 @@ function ScoreDistributionsShiComponent(props) {
   const [activeScore, setActiveScore] = useState('area');
 
   const getChartData = async () => {
-    const year = '2021';
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/shs/values?iso=${countryISO}&year=${year}`;
+    if (shiScoresData) {
+      const data = shiScoresData;//await response.json();
 
-    const response = await fetch(url);
-    const data = await response.json();
-
-    setResponseData(data);
-    displayData(data, activeScore);
+      setResponseData(data);
+      displayData(data, activeScore);
+    }
   }
 
   const displayData = (data, activeScore) => {
@@ -142,7 +140,7 @@ function ScoreDistributionsShiComponent(props) {
 
   useEffect(() => {
     getChartData();
-  }, []);
+  }, [shiScoresData]);
 
 
   const getHistogramData = (taxa) => {
@@ -159,7 +157,6 @@ function ScoreDistributionsShiComponent(props) {
     });
     return taxaSet;
   }
-
 
   const handleActiveChange = (event) => {
     setActiveScore(event.currentTarget.innerText.toLowerCase());

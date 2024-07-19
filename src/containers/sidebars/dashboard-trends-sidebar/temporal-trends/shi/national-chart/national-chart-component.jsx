@@ -21,7 +21,7 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 function NationalChartComponent(props) {
   const { countryData, nationalChartData, chartData } = props;
   const [data, setData] = useState();
-  const [spiValue, setSpiValue] = useState(0);
+  const [shiValue, setShiValue] = useState(0);
   const [nationalScores, setNationalScores] = useState({ areaScore: 0, connecivityScore: 0, year: 2001 })
 
   const blankData = {
@@ -42,7 +42,7 @@ function NationalChartComponent(props) {
       },
     ],
   };
-  const [spiData, setSpiData] = useState(blankData);
+  const [shiData, setShiData] = useState(blankData);
 
   const options = {
     plugins: {
@@ -92,17 +92,14 @@ function NationalChartComponent(props) {
 
   useEffect(() => {
     if (nationalChartData.area_values.length) {
-      const spiVal =
-        nationalChartData.spi_values[
-        nationalChartData.spi_values.length - 1
-        ][1];
+      const shiVal = (nationalScores.areaScore + nationalScores.connecivityScore) / 2;
 
-      const spi = {
-        labels: ['Global SPI', 'Remaining'],
+      const shi = {
+        labels: ['Global SHI', 'Remaining'],
         datasets: [
           {
             label: '',
-            data: [spiVal, 100 - spiVal],
+            data: [shiVal, 100 - shiVal],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
               getCSSVariable('white-opacity-20'),
@@ -116,8 +113,8 @@ function NationalChartComponent(props) {
         ],
       };
 
-      setSpiValue(spiVal);
-      setSpiData(spi);
+      setShiValue(shiVal);
+      setShiData(shi);
     }
   }, [nationalChartData]);
 
@@ -164,8 +161,8 @@ function NationalChartComponent(props) {
           <SpiArcChartComponent
             width="125x"
             height="75px"
-            data={spiData}
-            value={spiValue}
+            data={shiData}
+            value={shiValue}
           />
           <b>{nationalScores.connecivityScore}</b>
           <b>{countryData?.prop_protected_ter}</b>

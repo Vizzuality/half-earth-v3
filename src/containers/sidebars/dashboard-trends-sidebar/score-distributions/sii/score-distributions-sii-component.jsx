@@ -10,7 +10,7 @@ import SpeciesRichnessComponent from 'components/species-richness/species-richne
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 
 function ScoreDistributionsSiiComponent(props) {
-  const { countryISO, countryData } = props;
+  const { countryData, siiScoresData } = props;
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -38,44 +38,41 @@ function ScoreDistributionsSiiComponent(props) {
   const [showTable, setShowTable] = useState(false);
 
   const getChartData = async () => {
-    const year = '2023';
-    const taxa = 'all_terr_verts';
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${year}&taxa=${taxa}`;
+    if (siiScoresData) {
+      const data = siiScoresData; //await response.json();
+      const taxaSet = {};
 
-    const response = await fetch(url);
-    const data = await response.json();
-    const taxaSet = {};
+      // Loop through each number and place it in the appropriate bucket
+      data.forEach(a => {
+        const number = +a.protection_score;
+        // Determine the bucket index based on the floor value of the number
+        let bucketIndex = Math.floor(number / 5);
 
-    // Loop through each number and place it in the appropriate bucket
-    data.forEach(a => {
-      const number = +a.protection_score;
-      // Determine the bucket index based on the floor value of the number
-      let bucketIndex = Math.floor(number / 5);
+        if (!taxaSet.hasOwnProperty(bucketIndex)) {
+          taxaSet[bucketIndex] = 1;
+        } else {
+          taxaSet[bucketIndex] += 1;
+        }
+      });
 
-      if (!taxaSet.hasOwnProperty(bucketIndex)) {
-        taxaSet[bucketIndex] = 1;
-      } else {
-        taxaSet[bucketIndex] += 1;
-      }
-    });
+      const labels = Object.keys(taxaSet).map(key => +key * 5);
 
-    const labels = Object.keys(taxaSet).map(key => +key * 5);
-
-    setChartData({
-      labels,
-      datasets: [
-        {
-          label: 'Items',
-          data: Object.values(taxaSet),
-          backgroundColor: getCSSVariable('birds'),
-        },
-      ],
-    });
+      setChartData({
+        labels,
+        datasets: [
+          {
+            label: 'Items',
+            data: Object.values(taxaSet),
+            backgroundColor: getCSSVariable('birds'),
+          },
+        ],
+      });
+    }
   };
 
   useEffect(() => {
     getChartData();
-  }, []);
+  }, [siiScoresData]);
 
   const options = {
     plugins: {

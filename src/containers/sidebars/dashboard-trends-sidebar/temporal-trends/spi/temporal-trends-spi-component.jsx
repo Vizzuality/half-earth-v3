@@ -14,7 +14,7 @@ import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
 
 function TemporalTrendsSpiComponent(props) {
-  const { countryData } = props;
+  const { countryData, spiTrendsData } = props;
 
   const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
   const [nationalChartData, setNationalChartData] = useState({
@@ -23,19 +23,14 @@ function TemporalTrendsSpiComponent(props) {
   });
 
   const getNationalData = async () => {
-    const region_id = '90b03e87-3880-4164-a310-339994e3f919';
-    const taxa = 'all_terr_verts';
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=${region_id}&taxa=${taxa}`;
-
-    const response = await fetch(url);
-    const data = await response.json();
+    const data = spiTrendsData;
     const { area_values, spi_values } = data[0].values;
     setNationalChartData({ area_values, spi_values });
   };
 
   useEffect(() => {
     getNationalData();
-  }, []);
+  }, [spiTrendsData]);
 
   const handleActionChange = (event) => {
     setActiveTrend(event.currentTarget.innerText);
