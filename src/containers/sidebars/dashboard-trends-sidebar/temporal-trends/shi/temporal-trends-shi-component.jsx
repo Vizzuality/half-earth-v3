@@ -13,28 +13,15 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 
 function TemporalTrendsShiComponent(props) {
-  const { updateActiveTrend, shiData, shiNationalData } = props;
-
-  const [nationalChartData, setNationalChartData] = useState({
-    area_values: [],
-    spi_values: [],
-  });
+  const { updateActiveTrend, shiData, shiValue } = props;
 
   // const [chartData, setChartData] = useState();
   const [lostAvg, setLostAvg] = useState(0)
 
-  const getNationalData = async () => {
-    if (shiNationalData) {
-      const { area_values, spi_values } = shiNationalData[0].values;
-      setNationalChartData({ area_values, spi_values });
-
-      setLostAvg(100 - spi_values[spi_values.length - 1][1]);
-    }
-  };
-
   useEffect(() => {
-    getNationalData();
-  }, [shiNationalData]);
+    setLostAvg((100 - shiValue).toFixed(2));
+
+  }, []);
 
   const handleActionChange = (event) => {
     updateActiveTrend(event.currentTarget.innerText);
@@ -46,13 +33,11 @@ function TemporalTrendsShiComponent(props) {
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>
           Since 2001, the terrestrial vertebrate species of the Democratic
-          Republic of the Congo have lost an average of <b>{lostAvg}</b>% of their suitable
-          habitat, leading to the country having a Species Habitat Index of
-          98.63.
+          Republic of the Congo have <b>lost an average of {lostAvg}%</b> of their suitable
+          habitat, leading to the country having a <b>Species Habitat Index of {shiValue}.</b>
         </p>
         <p className={styles.description}>
-          The Area Score addresses changes in habitat extent while the
-          Connectivity Score addresses changes in the fragmentation of habitat.
+          The <b>Area Score</b> addresses changes in habitat extent while the <b>Connectivity Score</b> addresses changes in the fragmentation of habitat.
         </p>
         <div className={styles.options}>
           <Button
@@ -77,7 +62,6 @@ function TemporalTrendsShiComponent(props) {
         </div>
       </div>
       <NationalChartContainer
-        nationalChartData={nationalChartData}
         chartData={shiData.trendData}
         {...props}
       />

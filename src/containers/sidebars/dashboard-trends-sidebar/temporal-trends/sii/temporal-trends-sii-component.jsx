@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import last from 'lodash/last';
 
 import cx from 'classnames';
 
@@ -10,11 +11,12 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 
 function TemporalTrendsSiiComponent(props) {
-  const { siiData } = props;
+  const { countryData, siiData } = props;
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
     spi_values: [],
   });
+  const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 })
 
   const taxa = 'all_terr_verts';
 
@@ -25,6 +27,9 @@ function TemporalTrendsSiiComponent(props) {
       const allVertValues = groups.filter(group => group.taxa === taxa);
 
       setNationalChartData(allVertValues[0]);
+
+      const { values } = allVertValues[0];
+      setLatestValues({ year: last(values)[0], spi: (last(values)[1] * 100).toFixed(2) })
     }
   };
 
@@ -37,8 +42,7 @@ function TemporalTrendsSiiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>
-          Species data coverage remains low in Democratic Republic of Congo. In
-          2023, 0.44% of the expected ranges of terrestrial vertebrate species
+          Species data coverage remains low in <b>{countryData?.NAME_0}</b>. In {latestValues.year}, {latestValues.spi}% of the expected ranges of terrestrial vertebrate species
           here had a recorded observation of that species. Since 1950, the
           annual SII has fluctuated between 1.6 and 0.0.
         </p>

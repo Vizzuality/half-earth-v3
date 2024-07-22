@@ -134,13 +134,12 @@ function ScoreDistributionsSiiComponent(props) {
         <span className={styles.title}>Score Distributions</span>
 
         <p className={styles.description}>
-          View the distribution of the individual Species Protection Scores for
-          all terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average
-          protection score while <b>{highAvg}</b> have the highest.
+          View the distribution of the individual Species Information Scores for all
+          terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average information score while <b>{highAvg}</b> have the highest.
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          Species with SPS between <b>0.5:</b>
+          Species with SIS between <b>0-5:</b>
         </span>
         <hr />
         <ul className={styles.spsSpecies}>

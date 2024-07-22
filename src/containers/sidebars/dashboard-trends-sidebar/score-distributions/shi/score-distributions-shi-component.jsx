@@ -223,13 +223,12 @@ function ScoreDistributionsShiComponent(props) {
         <span className={styles.title}>Score Distributions</span>
 
         <p className={styles.description}>
-          View the distribution of the individual Species Protection Scores for
-          all terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average
-          protection score while <b>{highAvg}</b> have the highest.
+          View the distribution of the individual Species Habitat Scores,
+          including the two components Area and Connectivity, for all terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average habitat score while <b>{highAvg}</b> have the highest.
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          Species with SPS between <b>0.5:</b>
+          Species with SHS between <b>35-45:</b>
         </span>
         <hr />
         <ul className={styles.spsSpecies}>
@@ -246,7 +245,7 @@ function ScoreDistributionsShiComponent(props) {
                     Add to map
                   </button>
                 </div>
-                <span className={styles.spsScore}>SPS: 0.04</span>
+                <span className={styles.spsScore}>SHS: 0.04</span>
               </li>
             );
           })}

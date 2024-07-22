@@ -12,26 +12,35 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
+import last from 'lodash/last';
 
 function TemporalTrendsSpiComponent(props) {
   const { countryData, spiData } = props;
 
+  const areaProtected = (328357).toLocaleString();
+
   const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
+  const [spiInfo, setSpiInfo] = useState();
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
     spi_values: [],
   });
+  const [areaProtectedPercent, setAreaProtectedPercent] = useState(0);
 
   const getNationalData = async () => {
     if (spiData.trendData.length) {
       const data = spiData.trendData;
       const { area_values, spi_values } = data[0].values;
       setNationalChartData({ area_values, spi_values });
+
+      setSpiInfo(`${spi_values?.[0][1]} in ${spi_values?.[0][0]} to ${last(spi_values)[1]} in ${last(spi_values)[0]}`);
+      setAreaProtectedPercent(area_values[area_values.length - 1][1]);
     }
   };
 
   useEffect(() => {
     getNationalData();
+
   }, [spiData]);
 
   const handleActionChange = (event) => {
@@ -43,10 +52,9 @@ function TemporalTrendsSpiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>
-          Since 1980, the <b>{countryData?.NAME_0}</b> has added 328357 km2 of
-          land into its protected area network, representing 14% of the total
-          land in the country, increasing its Species Protection Index from
-          27.21 in 1980 to 63 in 2023.
+          Since 1980, the {countryData?.NAME_0} has added <b>{areaProtected} km<sup>2</sup></b> of
+          land into its protected area network, representing <b>{areaProtectedPercent}%</b> of the total
+          land in the country, increasing its Species Protection Index from <b>{spiInfo}</b>.
         </p>
         <div className={styles.options}>
           <div className={styles.btnGroup}>
