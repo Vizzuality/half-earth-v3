@@ -25,6 +25,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
   const [areaProtected, setAreaProtected] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
   const { lightMode } = useContext(LightModeContext);
+  const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
 
   const blankData = {
     labels: ['Global SPI', 'Remaining'],
@@ -34,11 +35,11 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         data: [0, 0],
         backgroundColor: [
           getCSSVariable('temporal-spi'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderColor: [
           getCSSVariable('temporal-spi'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderWidth: 1,
       },
@@ -151,11 +152,11 @@ function TemporalTrendsSpiNationalChartComponent(props) {
             data: [spiVal, 100 - spiVal],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
+              emptyArcColor,
             ],
             borderColor: [
               getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
+              emptyArcColor,
             ],
             borderWidth: 1,
           },
@@ -170,11 +171,11 @@ function TemporalTrendsSpiNationalChartComponent(props) {
             data: [areaProtected, 100 - areaProtected],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
+              emptyArcColor,
             ],
             borderColor: [
               getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
+              emptyArcColor,
             ],
             borderWidth: 1,
           },

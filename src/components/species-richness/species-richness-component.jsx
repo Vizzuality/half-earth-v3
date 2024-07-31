@@ -96,6 +96,8 @@ function SpeciesRichnessComponent(props) {
     }
   }, [countryData]);
 
+  const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
+
   const birdData = {
     labels: ['Birds', 'Remaining'],
     datasets: [
@@ -104,11 +106,11 @@ function SpeciesRichnessComponent(props) {
         data: getPercentage('birds'),
         backgroundColor: [
           getCSSVariable('birds'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderColor: [
           getCSSVariable('birds'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderWidth: 1,
       },
@@ -123,11 +125,11 @@ function SpeciesRichnessComponent(props) {
         data: getPercentage('mammals'),
         backgroundColor: [
           getCSSVariable('mammals'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderColor: [
           getCSSVariable('mammals'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderWidth: 1,
       },
@@ -142,11 +144,11 @@ function SpeciesRichnessComponent(props) {
         data: getPercentage('reptiles'),
         backgroundColor: [
           getCSSVariable('reptiles'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderColor: [
           getCSSVariable('reptiles'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderWidth: 1,
       },
@@ -161,11 +163,11 @@ function SpeciesRichnessComponent(props) {
         data: getPercentage('amphibians'),
         backgroundColor: [
           getCSSVariable('amphibians'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderColor: [
           getCSSVariable('amphibians'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderWidth: 1,
       },

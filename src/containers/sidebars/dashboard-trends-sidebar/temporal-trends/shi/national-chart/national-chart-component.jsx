@@ -25,7 +25,7 @@ function NationalChartComponent(props) {
   const [data, setData] = useState();
   const [shiValue, setShiValue] = useState(0);
   const [nationalScores, setNationalScores] = useState({ areaScore: 0, connecivityScore: 0, year: 2001 })
-
+  const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
   const blankData = {
     labels: ['Global SPI', 'Remaining'],
     datasets: [
@@ -34,11 +34,11 @@ function NationalChartComponent(props) {
         data: [0, 0],
         backgroundColor: [
           getCSSVariable('temporal-spi'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderColor: [
           getCSSVariable('temporal-spi'),
-          getCSSVariable('white-opacity-20'),
+          emptyArcColor,
         ],
         borderWidth: 1,
       },
@@ -131,11 +131,11 @@ function NationalChartComponent(props) {
             data: [shiVal, 100 - shiVal],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
+              emptyArcColor,
             ],
             borderColor: [
               getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
+              emptyArcColor,
             ],
             borderWidth: 1,
           },
