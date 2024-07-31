@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -13,6 +13,7 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
 import last from 'lodash/last';
+import { LightModeContext } from '../../../../../context/light-mode';
 
 function TemporalTrendsSpiComponent(props) {
   const { countryData, spiData } = props;
@@ -26,6 +27,7 @@ function TemporalTrendsSpiComponent(props) {
     spi_values: [],
   });
   const [areaProtectedPercent, setAreaProtectedPercent] = useState(0);
+  const { lightMode } = useContext(LightModeContext);
 
   const getNationalData = async () => {
     if (spiData.trendData.length) {
@@ -48,7 +50,7 @@ function TemporalTrendsSpiComponent(props) {
   };
 
   return (
-    <div className={styles.trends}>
+    <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>

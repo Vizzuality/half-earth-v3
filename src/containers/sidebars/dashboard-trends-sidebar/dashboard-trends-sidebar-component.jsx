@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
 
 import styles from './dashboard-trends-sidebar-styles.module.scss';
 import ScoreDistributionsContainer from './score-distributions';
 import TemporalTrendsContainer from './temporal-trends';
+import { LightModeContext } from '../../../context/light-mode';
 
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
@@ -14,14 +15,16 @@ function DashboardTrendsSidebar(props) {
 
   const [selectedIndex, setSelectedIndex] = useState(1);
 
+  const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   return (
-    <div className={styles.container}>
+    <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <header>
         <div className={styles.title}>
           <b>Conservation Metrics</b>
           <label>Democratic Republic of Congo</label>
         </div>
+        <button type="button" onClick={() => toggleLightMode()}>Bright</button>
         <div className={styles.tabs}>
           <button
             type="button"

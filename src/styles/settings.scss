@@ -52,6 +52,10 @@ $birds-color: $saffron-mango;
 $fishes-color: #38e5db;
 $reptiles-color: $conifer;
 
+// mol colors
+$mol-blue: #243474;
+$mol-green: #317D56;
+
 // layers
 $carbon-layer: #ff9500;
 
@@ -309,4 +313,8 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
   // FONT FAMILIES
   --font-family-serif: #{$font-family-serif};
+
+  // MOL colors
+  --mol-blue: #{$mol-blue};
+  --mol-green: #{$mol-green};
 }

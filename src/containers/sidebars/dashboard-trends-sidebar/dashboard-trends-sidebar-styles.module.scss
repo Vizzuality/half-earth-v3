@@ -19,6 +19,15 @@ $trends-width: 950px;
   height: calc(100vh - #{$top});
   width: $trends-width;
   z-index: $bring-to-front;
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --selected-font-color: #{$white};
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    @include lightBackdropBlur();
+  }
 
   header{
     display: flex;
@@ -30,7 +39,7 @@ $trends-width: 950px;
       display: flex;
       flex-direction: column;
       width: 310px;
-      color: $white;
+      color: var(--font-color);
     }
 
     .tabs{
@@ -48,7 +57,7 @@ $trends-width: 950px;
         padding: 10px;
 
         label{
-          color: $white;
+          color: var(--font-color);
           text-align: center;
           font-family: "Roboto Flex";
           font-size: 22px;
@@ -58,7 +67,7 @@ $trends-width: 950px;
         }
 
         span{
-          color: $white;
+          color: var(--font-color);
           text-align: center;
           font-family: "Roboto Condensed";
           font-size: 12px;
@@ -68,7 +77,12 @@ $trends-width: 950px;
         }
 
         &.selected{
-          background-color: $brand-color-main;
+          background-color: var(--border-color);
+
+          label,
+          span{
+            color: var(--selected-font-color);
+          }
         }
       }
     }
@@ -83,6 +97,18 @@ $info-width: 300px;
   padding: $paragraph-gutter;
   gap: 10px;
 
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --save-button-text: #{$dark-text};
+  --border-color-hover: #{$brand-color-main-hover};
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    --save-button-text: #{$white};
+    --border-color-hover: #{$mol-blue};
+  }
+
   .info{
     width: $info-width;
 
@@ -90,7 +116,7 @@ $info-width: 300px;
       @extend %display1;
       display: flex;
       gap: 10px;
-      color: $white;
+      color: var(--font-color);
       margin: 0 0 calc($site-gutter / 2) 0;
       font-size: 24px;
       line-height: 1.5;
@@ -98,13 +124,13 @@ $info-width: 300px;
 
     .description {
       @extend %bodyText;
-      color: $white;
+      color: var(--font-color);
       margin: 0 0 calc($site-gutter / 2) 0;
       font-size: 14px;
     }
 
     .spsSpeciesTitle{
-      color: $white;
+      color: var(--font-color);
       font-family: "Open Sans";
       font-size: 15px;
       font-style: normal;
@@ -116,7 +142,7 @@ $info-width: 300px;
       list-style: none;
       margin: 0;
       padding: 0;
-      color: $white;
+      color: var(--font-color);
 
       li{
         display: flex;
@@ -129,7 +155,7 @@ $info-width: 300px;
           flex-grow: 1;
 
           .name{
-            color: $white;
+            color: var(--font-color);
             font-family: "Open Sans";
             font-size: 12px;
             font-style: normal;
@@ -138,7 +164,7 @@ $info-width: 300px;
           }
 
           .scientificname{
-            color: $white;
+            color: var(--font-color);
             font-family: "Open Sans";
             font-size: 11px;
             font-style: italic;
@@ -148,7 +174,7 @@ $info-width: 300px;
           }
 
           .addToMap{
-            color: $white;
+            color: var(--font-color);
             font-family: "Roboto Mono";
             font-size: 9px;
             font-style: normal;
@@ -162,7 +188,7 @@ $info-width: 300px;
         }
 
         .spsScore{
-          color: $white;
+          color: var(--font-color);
           font-family: "Open Sans";
           font-size: 14px;
           font-style: normal;
@@ -179,7 +205,7 @@ $info-width: 300px;
       margin-top: 10px;
 
       .helpText{
-        color: $white;
+        color: var(--font-color);
         font-family: "Open Sans";
         font-size: 9px;
         font-style: italic;
@@ -193,7 +219,7 @@ $info-width: 300px;
     display: flex;
     gap: 3px;
     padding: 2px;
-    border: 1px solid $brand-color-main;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
 
     .saveButton{
@@ -202,16 +228,17 @@ $info-width: 300px;
   }
 
   .saveButton {
-    color: $dark-text;
-    background-color: $brand-color-main;
+    color: var(--save-button-text);
+    background-color: var(--border-color);
     &:hover {
-      background-color: $brand-color-main-hover;
+      background-color: var(--border-color-hover);
+      color: var(--save-button-text);
     }
   }
 
   .notActive{
     background-color: transparent;
-    color: $white;
-    border: 1px solid $brand-color-main;
+    color: var(--font-color);
+    border: 1px solid var(--border-color);
   }
 }

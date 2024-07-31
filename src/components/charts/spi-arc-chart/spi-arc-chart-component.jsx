@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
-
+import cx from 'classnames';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 
 import styles from './spi-arc-chart-styles.module.scss';
+import { LightModeContext } from '../../../context/light-mode';
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +25,7 @@ ChartJS.register(
 
 function SpiArcChartComponent(props) {
   const { scores, width, height, data, img, species, value } = props;
-
+  const { lightMode } = useContext(LightModeContext);
   const [score, setScore] = useState(0);
 
   const doughnutOptions = {
@@ -69,7 +70,7 @@ function SpiArcChartComponent(props) {
   }, [value]);
 
   return (
-    <div className={styles.spi}>
+    <div className={cx(lightMode ? styles.light : '', styles.spi)}>
       {scores && (
         <span className={styles.score}>{getPercentage()[0].toFixed(2)}</span>
       )}

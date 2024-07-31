@@ -9,8 +9,14 @@
   justify-content: center;
   align-items: center;
 
+  --font-color: #{$white};
+
+  &.light{
+    --font-color: #{$black};
+  }
+
   .score{
-    color: $white;
+    color: var(--font-color);
     text-align: center;
     font-family: "Open Sans";
     font-size: 20px;
@@ -21,7 +27,7 @@
   }
 
   .globalScore{
-    color: #FFF;
+    color: var(--font-color);
     text-align: center;
     font-family: "Open Sans";
     font-size: 20px;
@@ -38,7 +44,7 @@
     align-items: center;
 
     .richness{
-      color: $white;
+      color: var(--font-color);
       text-align: center;
       font-family: "Open Sans";
       font-size: 11px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import last from 'lodash/last';
 
 import cx from 'classnames';
@@ -7,8 +7,8 @@ import Button from 'components/button';
 
 import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
-
 import NationalChartContainer from './national-chart';
+import { LightModeContext } from '../../../../../context/light-mode';
 
 function TemporalTrendsSiiComponent(props) {
   const { countryData, siiData } = props;
@@ -17,7 +17,7 @@ function TemporalTrendsSiiComponent(props) {
     spi_values: [],
   });
   const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 })
-
+  const { lightMode } = useContext(LightModeContext);
   const taxa = 'all_terr_verts';
 
   const getNationalData = async () => {
@@ -38,7 +38,7 @@ function TemporalTrendsSiiComponent(props) {
   }, [siiData]);
 
   return (
-    <div className={styles.trends}>
+    <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>

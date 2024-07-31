@@ -6,11 +6,11 @@ function DashboardTrendsView(props) {
   const { activeLayers, viewSettings } = props;
 
   return (
-    <Component
-      updatedActiveLayers={activeLayers}
-      viewSettings={viewSettings}
-      {...props}
-    />
+      <Component
+        updatedActiveLayers={activeLayers}
+        viewSettings={viewSettings}
+        {...props}
+      />
   );
 }
 

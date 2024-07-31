@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-
+import cx from 'classnames';
 import { getCSSVariable } from 'utils/css-utils';
 
 import {
@@ -15,11 +15,13 @@ import {
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import styles from './national-chart-styles.module.scss';
+import { LightModeContext } from '../../../../../../context/light-mode';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const { countryData, chartData } = props;
+  const { lightMode } = useContext(LightModeContext);
   const [data, setData] = useState();
   const [shiValue, setShiValue] = useState(0);
   const [nationalScores, setNationalScores] = useState({ areaScore: 0, connecivityScore: 0, year: 2001 })
@@ -60,7 +62,7 @@ function NationalChartComponent(props) {
         title: {
           display: true,
           text: 'Year',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -76,7 +78,7 @@ function NationalChartComponent(props) {
         title: {
           display: true,
           text: 'Species Habitat Index',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -148,7 +150,7 @@ function NationalChartComponent(props) {
 
 
   return (
-    <div className={styles.container}>
+    <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.info}>
         <div className={styles.arcGrid}>
           <b>{nationalScores.year}</b>

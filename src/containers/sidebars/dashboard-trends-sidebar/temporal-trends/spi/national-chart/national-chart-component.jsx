@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-
+import cx from 'classnames';
 import { getCSSVariable } from 'utils/css-utils';
 
 import {
@@ -15,6 +15,7 @@ import {
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import styles from './national-chart-styles.module.scss';
+import { LightModeContext } from '../../../../../../context/light-mode';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
@@ -23,6 +24,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
   const [data, setData] = useState();
   const [areaProtected, setAreaProtected] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
+  const { lightMode } = useContext(LightModeContext);
 
   const blankData = {
     labels: ['Global SPI', 'Remaining'],
@@ -61,7 +63,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         title: {
           display: true,
           text: 'Year',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -76,7 +78,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         title: {
           display: true,
           text: 'SPI / Percent of Area Protected',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -187,7 +189,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
   }, [nationalChartData]);
 
   return (
-    <div className={styles.container}>
+    <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.info}>
         <div className={styles.arcGrid}>
           <b>2024</b>

@@ -13,6 +13,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
+import { LightModeProvider } from '../../../context/light-mode';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
@@ -34,6 +35,8 @@ function DashboardTrendsViewComponent(props) {
   const [view, setView] = useState(null);
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState(null);
+
+  const getCountryInfo = 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/search?lang=en&search_term=japa&region_dataset_id=&limit=1';
 
   const url =
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_Terrestrial_202403/FeatureServer/0';
@@ -83,13 +86,15 @@ function DashboardTrendsViewComponent(props) {
         url: `https://js.arcgis.com/${API_VERSION}`,
       }}
     >
-      <DashboardTrendsSidebarContainer
-        activeLayers={activeLayers}
-        map={map}
-        view={view}
-        countryISO={countryISO}
-        countryData={countryData}
-      />
+      <LightModeProvider>
+        <DashboardTrendsSidebarContainer
+          activeLayers={activeLayers}
+          map={map}
+          view={view}
+          countryISO={countryISO}
+          countryData={countryData}
+        />
+      </LightModeProvider>
 
       <CountryLabelsLayer
         sceneMode={sceneMode}

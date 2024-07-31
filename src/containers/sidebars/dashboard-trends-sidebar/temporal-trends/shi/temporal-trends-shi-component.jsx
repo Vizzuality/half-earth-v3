@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -11,24 +11,26 @@ import {
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
+import { LightModeContext } from '../../../../../context/light-mode';
 
 function TemporalTrendsShiComponent(props) {
   const { updateActiveTrend, shiData, shiValue } = props;
 
   // const [chartData, setChartData] = useState();
-  const [lostAvg, setLostAvg] = useState(0)
+  const [lostAvg, setLostAvg] = useState(0);
+  const { lightMode } = useContext(LightModeContext);
 
   useEffect(() => {
     setLostAvg((100 - shiValue).toFixed(2));
 
-  }, []);
+  }, [shiValue]);
 
   const handleActionChange = (event) => {
     updateActiveTrend(event.currentTarget.innerText);
   };
 
   return (
-    <div className={styles.trends}>
+    <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>Temporal Trends</span>
         <p className={styles.description}>
