@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './species-richness-styles.module.scss';
 import SpiArcChartComponent from '../charts/spi-arc-chart/spi-arc-chart-component';
 import Amphibians from 'images/amphibians.svg';
@@ -6,6 +6,7 @@ import Birds from 'images/birds.svg';
 import Mammals from 'images/mammals.svg';
 import { getCSSVariable } from 'utils/css-utils';
 import Reptiles from 'images/reptiles.svg';
+import cx from 'classnames';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,6 +17,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { LightModeContext } from '../../context/light-mode';
 
 ChartJS.register(
   CategoryScale,
@@ -30,6 +32,7 @@ ChartJS.register(
 function SpeciesRichnessComponent(props) {
   const { countryData } = props;
 
+  const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
     birds: {
       count: 0,
@@ -170,7 +173,7 @@ function SpeciesRichnessComponent(props) {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.spis}>
         <SpiArcChartComponent
           scores={scores}

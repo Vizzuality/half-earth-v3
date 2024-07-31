@@ -9,12 +9,18 @@
   align-items: center;
   flex-grow: 1;
 
+  --font-color: #{$white};
+
+  &.light{
+    --font-color: #{$black};
+  }
+
   .btnGroup{
     width: 75%;
   }
 
   .title{
-    color: $white;
+    color: var(--font-color);
     font-family: "Open Sans";
     font-size: 15px;
     font-style: normal;

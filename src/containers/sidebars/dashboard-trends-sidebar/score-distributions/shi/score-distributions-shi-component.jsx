@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -10,6 +10,7 @@ import SpeciesRichnessComponent from 'components/species-richness/species-richne
 import compStyles from './score-distributions-shi-styles.module.scss';
 import DistributionsTableContainer from './distributions-table';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
+import { LightModeContext } from '../../../../../context/light-mode';
 
 function ScoreDistributionsShiComponent(props) {
   const { countryData, shiData } = props;
@@ -39,6 +40,8 @@ function ScoreDistributionsShiComponent(props) {
   const [responseData, setResponseData] = useState();
   const [showTable, setShowTable] = useState(false);
   const [activeScore, setActiveScore] = useState('area');
+
+  const { lightMode } = useContext(LightModeContext);
 
   const getChartData = async () => {
     if (shiData.scoresData.length) {
@@ -218,7 +221,7 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   return (
-    <div className={styles.trends}>
+    <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>Score Distributions</span>
 

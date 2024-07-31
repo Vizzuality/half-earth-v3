@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import cx from 'classnames';
 
@@ -8,9 +8,11 @@ import compStyles from './score-distributions-sii-styles.module.scss';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
+import { LightModeContext } from '../../../../../context/light-mode';
 
 function ScoreDistributionsSiiComponent(props) {
   const { countryData, siiData } = props;
+  const { lightMode } = useContext(LightModeContext);
 
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -97,7 +99,7 @@ function ScoreDistributionsSiiComponent(props) {
         title: {
           display: true,
           text: 'Protection Score',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -115,7 +117,7 @@ function ScoreDistributionsSiiComponent(props) {
         title: {
           display: true,
           text: 'Number of Species',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -129,7 +131,7 @@ function ScoreDistributionsSiiComponent(props) {
   };
 
   return (
-    <div className={styles.trends}>
+    <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>Score Distributions</span>
 

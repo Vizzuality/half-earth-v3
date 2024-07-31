@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -9,10 +9,11 @@ import SpeciesRichnessComponent from 'components/species-richness/species-richne
 
 import compStyles from './score-distributions-spi-styles.module.scss';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
+import { LightModeContext } from '../../../../../context/light-mode';
 
 function ScoreDistributionsSpiComponent(props) {
   const { countryData, spiData } = props;
-
+  const { lightMode } = useContext(LightModeContext);
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
 
@@ -111,7 +112,7 @@ function ScoreDistributionsSpiComponent(props) {
         title: {
           display: true,
           text: 'Protection Score',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -129,7 +130,7 @@ function ScoreDistributionsSpiComponent(props) {
         title: {
           display: true,
           text: 'Number of Species',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -143,7 +144,7 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   return (
-    <div className={styles.trends}>
+    <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>Score Distributions</span>
 
@@ -195,7 +196,7 @@ function ScoreDistributionsSpiComponent(props) {
           </span>
         </div>
       </div>
-      <div className={compStyles.chartArea}>
+      <div className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}>
         {!showTable && (<>
           <div className={compStyles.title}>NATIONAL SPI BY TAXONOMIC GROUP</div>
           <SpeciesRichnessComponent countryData={countryData} />
