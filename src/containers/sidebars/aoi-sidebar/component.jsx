@@ -142,7 +142,7 @@ function AOISidebar({
       if (!aoiId) return browsePage({ type: DATA });
       changeUI({ aoiId });
     }
-    return () => {};
+    return () => { };
   }, [sidebarTabActive]);
 
   const areaName =
@@ -195,7 +195,6 @@ function AOISidebar({
                   {!isEditingName && !protectedAreaAOILoading && (
                     <p className={styles.areaName}>{areaName}</p>
                   )}
-
                   {(!areaName || !!protectedAreaAOILoading) && (
                     <div className={styles.loadingAreaName} />
                   )}
@@ -260,11 +259,10 @@ function AOISidebar({
                 </TitleTooltip>
 
                 <TitleTooltip
-                  content={`${t('Land cover: ')}${
-                    AOIContextualTranslations[
-                      landCover && landCover.toLowerCase()
-                    ] || landCover
-                  }`}
+                  content={`${t('Land cover: ')}${AOIContextualTranslations[
+                    landCover && landCover.toLowerCase()
+                  ] || landCover
+                    }`}
                 >
                   <div className={styles.contextualIndicator}>
                     <LandCoverIcon />
@@ -283,11 +281,10 @@ function AOISidebar({
                 </TitleTooltip>
 
                 <TitleTooltip
-                  content={`${t('Climate regime: ')}${
-                    AOIContextualTranslations[
-                      climateRegime && climateRegime.toLowerCase()
-                    ] || climateRegime
-                  }`}
+                  content={`${t('Climate regime: ')}${AOIContextualTranslations[
+                    climateRegime && climateRegime.toLowerCase()
+                  ] || climateRegime
+                    }`}
                 >
                   <div className={styles.contextualIndicator}>
                     <ClimateRegimeIcon />
