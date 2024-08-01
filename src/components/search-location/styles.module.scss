@@ -18,6 +18,8 @@
 
 .searchResultsList {
   z-index: $bring-to-front;
+  height: 300px;
+  overflow-y: auto;
 }
 
 .searchResultsListMobile {
@@ -63,6 +65,10 @@
   padding: $sidebar-paddings 0;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
+
+  &.longList{
+    border-bottom-right-radius: 0;
+  }
 
   &.fullWidth {
     width: 100%;

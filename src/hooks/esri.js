@@ -50,6 +50,7 @@ export const useSearchWidgetLogic = (
         // do not show the Use current location box when clicking in the input field
         popupEnabled: false, // hide location popup
         resultGraphicEnabled: false, // hide location pin
+        maxSuggestions: 500,
         sources: !isSimpleSearch && searchSources(FeatureLayer, Locator),
         includeDefaultSources: isSimpleSearch,
         goToOverride: isSimpleSearch ? undefined : () => {}, // Go to will be done on the callback
