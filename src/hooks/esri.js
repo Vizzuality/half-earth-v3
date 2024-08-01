@@ -71,7 +71,7 @@ export const useSearchWidgetLogic = (
 
   const handleSearchInputChange = (event) => {
     if (searchWidget) {
-      searchWidget.suggest(event.target.value);
+      searchWidget.suggest(`%${event.target.value}`);
     }
   };
 
