@@ -27,6 +27,7 @@ $trends-width: 950px;
     --font-color: #{$black};
     --border-color: #{$mol-blue};
     @include lightBackdropBlur();
+    border: none;
   }
 
   header{

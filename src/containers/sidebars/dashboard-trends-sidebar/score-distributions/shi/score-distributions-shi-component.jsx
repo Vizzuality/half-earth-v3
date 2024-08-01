@@ -189,7 +189,7 @@ function ScoreDistributionsShiComponent(props) {
         title: {
           display: true,
           text: 'Protection Score',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -207,7 +207,7 @@ function ScoreDistributionsShiComponent(props) {
         title: {
           display: true,
           text: 'Number of Species',
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
