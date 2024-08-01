@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -11,13 +11,16 @@ import styles from './dashboard-sidebar-styles.module.scss';
 import DataLayerContainer from './data-layers';
 import RegionsAnalysisComponent from './regions-analysis/regions-analysis-component';
 import SpeciesInfoContainer from './species-info';
+import { LightModeContext } from '../../../context/light-mode';
 
 function DashboardSidebar(props) {
   const { activeLayers, map, view } = props;
   const [selectedIndex, setSelectedIndex] = useState(1);
+  const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   return (
-    <div className={styles.container}>
+    <div className={cx(lightMode ? styles.light : '', styles.container)}>
+      <button type="button" onClick={() => toggleLightMode()}>Bright</button>
       <SpeciesInfoContainer />
 
       <section className={styles.sidenav}>

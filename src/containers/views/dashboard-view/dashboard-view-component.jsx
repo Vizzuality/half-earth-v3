@@ -5,7 +5,7 @@ import loadable from '@loadable/component';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
-
+import { LightModeProvider } from '../../../context/light-mode';
 import MapView from 'components/map-view';
 
 import EsriFeatureService from 'services/esri-feature-service';
@@ -63,8 +63,9 @@ function DashboardViewComponent(props) {
         url: `https://js.arcgis.com/${API_VERSION}`,
       }}
     >
-      <DashboardSidebar activeLayers={activeLayers} map={map} view={view} />
-
+      <LightModeProvider>
+        <DashboardSidebar activeLayers={activeLayers} map={map} view={view} />
+      </LightModeProvider>
       <CountryLabelsLayer
         sceneMode={sceneMode}
         countryISO={countryISO}

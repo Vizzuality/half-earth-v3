@@ -19,35 +19,49 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
   height: calc(100vh - #{$top});
   width: $sidebar-width;
   z-index: $bring-to-front;
-}
 
-.sidenav{
-  display: flex;
-  height: 100%;
+  --nav-button-bg: #{$white};
+  --svg-fill: #{$white};
+  --svg-selected-fill: #{$black};
 
-  .icons{
+  &.light{
+    --nav-button-bg: #{$black};
+    --svg-fill: #{$black};
+    --svg-selected-fill: #{$white};
+    @include lightBackdropBlur();
+    border: none;
+  }
+
+  .sidenav{
     display: flex;
-    flex-direction: column;
     height: 100%;
-    border-right: 1px solid;
 
-    button{
-      width: 50px;
-      height: 50px;
+    .icons{
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border-right: 1px solid;
 
-      svg{
-        width: 30px;
-        height: 30px;
-      }
-
-      &.selected,
-      &:hover{
-        background: $white;
+      button{
+        width: 50px;
+        height: 50px;
 
         svg{
-          fill: $black;
+          width: 30px;
+          height: 30px;
+          fill: var(--svg-fill);
+        }
+
+        &.selected,
+        &:hover{
+          background: var(--nav-button-bg);
+
+          svg{
+            fill: var(--svg-selected-fill);
+          }
         }
       }
     }
   }
+
 }

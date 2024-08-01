@@ -8,6 +8,12 @@
   flex-direction: column;
   padding: $paragraph-gutter;
 
+  --font-color: #{$white};
+
+  &.light{
+    --font-color: #{$black};
+  }
+
   .title{
     display: flex;
     gap: 10px;
@@ -22,7 +28,7 @@
       display: flex;
       flex-direction: column;
       gap: 3px;
-      color: $white;
+      color: var(--font-color);
       margin: 0 0 calc($site-gutter / 2) 0;
 
       .commonName{
@@ -46,7 +52,7 @@
 
   .description {
     @extend %bodyText;
-    color: $white;
+    color: var(--font-color);
     margin: 0 0 calc($site-gutter / 2) 0;
     font-size: 14px;
   }

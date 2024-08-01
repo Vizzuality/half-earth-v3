@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -15,9 +15,11 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 import ArrowIcon from 'icons/arrow_right.svg?react';
 
 import styles from './data-layers-styles.module.scss';
+import { LightModeContext } from '../../../../context/light-mode';
 
 function DataLayerComponent(props) {
   const { map, activeLayers, view, selectedOption } = props;
+  const { lightMode } = useContext(LightModeContext);
 
   const speciesPublicLayers = [
     {
@@ -125,7 +127,7 @@ function DataLayerComponent(props) {
   };
 
   return (
-    <section className={styles.container}>
+    <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <span className={styles.sectionTitle}>Data Layers</span>
       <hr className={hrTheme.dark} />
       <div className={styles.data}>
@@ -148,7 +150,7 @@ function DataLayerComponent(props) {
       <button
         className={styles.distributionTitle}
         type="button"
-        onClick={() => {}}
+        onClick={() => { }}
       >
         <ArrowIcon
           className={cx(styles.arrowIcon, {
@@ -174,7 +176,7 @@ function DataLayerComponent(props) {
       <button
         className={styles.distributionTitle}
         type="button"
-        onClick={() => {}}
+        onClick={() => { }}
       >
         <ArrowIcon
           className={cx(styles.arrowIcon, {
@@ -200,7 +202,7 @@ function DataLayerComponent(props) {
       <button
         className={styles.distributionTitle}
         type="button"
-        onClick={() => {}}
+        onClick={() => { }}
       >
         <ArrowIcon
           className={cx(styles.arrowIcon, {

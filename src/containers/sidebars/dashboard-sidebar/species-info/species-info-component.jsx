@@ -1,10 +1,12 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import cx from 'classnames';
 import styles from './species-info-styles.module.scss';
+import { LightModeContext } from '../../../../context/light-mode';
 
 function SpeciesInfoComponent() {
+  const { lightMode } = useContext(LightModeContext);
   return (
-    <div className={styles.species}>
+    <div className={cx(lightMode ? styles.light : '', styles.species)}>
       <div className={styles.title}>
         <img src="https://place-hold.it/130x130" alt="species" />
         <div className={styles.info}>

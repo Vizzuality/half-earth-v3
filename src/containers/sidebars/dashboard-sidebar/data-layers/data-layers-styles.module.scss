@@ -9,12 +9,26 @@
   padding: 5px 10px;
   width: 100%;
 
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --selected-font-color: #{$white};
+  --save-button-text: #{$dark-text};
+  --border-color-hover: #{$brand-color-main-hover};
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    --selected-font-color: #{$white};
+    --save-button-text: #{$white};
+    --border-color-hover: #{$mol-blue};
+  }
+
   .sectionTitle{
     font-size: 18px;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1.5;
-    color: $white;
+    color: var(--font-color);
   }
 
   .data{
@@ -23,10 +37,11 @@
     row-gap: 10px;
 
     .saveButton {
-      color: $dark-text;
-      background-color: $brand-color-main;
+      color: var(--save-button-text);
+      background-color: var(--border-color);
       &:hover {
-        background-color: $brand-color-main-hover;
+        background-color: var(--border-color-hover);
+        color: var(--save-button-text);
       }
     }
   }
@@ -35,7 +50,7 @@
     @extend %display2;
     background-color: transparent;
     border-width: 0 0 2px 0;
-    color: $white;
+    color: var(--font-color);
     margin: 0;
     max-width: 300px;
   }
@@ -45,7 +60,7 @@
     min-width: 300px;
     border: none;
     margin-left: 1em;
-    color: $white;
+    color: var(--font-color);
     &::placeholder {
       color: $grey-text;
       text-transform: uppercase;
@@ -53,29 +68,29 @@
   }
 
   .distributionTitle{
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 1.5;
-    color: $white;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.5;
+      color: var(--font-color);
 
-  .arrowIcon {
-    fill: $white;
-    transform: rotate(90deg);
+    .arrowIcon {
+      fill: var(--font-color);
+      transform: rotate(90deg);
 
-    &.isOpened {
-      transform:rotate(-90deg);
+      &.isOpened {
+        transform:rotate(-90deg);
+      }
+
+      transition: transform 0.2s ease;
+
+      > path {
+        fill: inherit;
+      }
     }
-
-    transition: transform 0.2s ease;
-
-    > path {
-      fill: inherit;
-    }
-  }
   }
 }
 

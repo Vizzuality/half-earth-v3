@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import cx from 'classnames';
 import Button from 'components/button';
 import SearchLocation from 'components/search-location';
 
@@ -10,11 +10,14 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 import Checkbox from '../../../../components/checkbox/checkbox-component';
 
 import styles from './regions-analysis-styles.module.scss';
+import { LightModeContext } from '../../../../context/light-mode';
 
 function RegionsAnalysisComponent(props) {
   const { view, selectedOption } = props;
+  const { lightMode } = useContext(LightModeContext);
+
   return (
-    <section className={styles.container}>
+    <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <span className={styles.sectionTitle}>Regions Analysis</span>
       <hr className={hrTheme.dark} />
       <p>
