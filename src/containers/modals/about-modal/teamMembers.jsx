@@ -50,7 +50,6 @@ const teams = [
       { name: 'Sofía Aldabet', title: 'Data Management' },
       { name: 'Ángel Arcones', title: 'Data Management' },
       { name: 'Álvaro Leal', title: 'Full-stack Developer' },
-      { name: 'Ana Montiaga', title: 'Full-stack Developer' },
       { name: 'Andreia Ribeiro', title: 'Designer' },
       { name: 'María Relea', title: 'Project Manager' },
     ],
