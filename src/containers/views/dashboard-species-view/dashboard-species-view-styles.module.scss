@@ -1,0 +1,17 @@
+.container{
+
+}@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+$top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
+
+.container{
+  position:absolute;
+  top: $top;
+  left: $site-gutter;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}

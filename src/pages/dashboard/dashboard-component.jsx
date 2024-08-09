@@ -12,12 +12,6 @@ function DashboardComponent(props) {
   const {
     countryISO,
     countryName,
-    activeLayers,
-    handleMapLoad,
-    viewSettings,
-    isSidebarOpen,
-    selectedSpecies,
-    isBiodiversityActive,
   } = props;
   return (
     <>
@@ -25,12 +19,6 @@ function DashboardComponent(props) {
       <DashboardView
         countryISO={countryISO}
         countryName={countryName}
-        activeLayers={activeLayers}
-        viewSettings={viewSettings}
-        isSidebarOpen={isSidebarOpen}
-        isBiodiversityActive={isBiodiversityActive}
-        selectedSpecies={selectedSpecies}
-        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         {...props}
       />
     </>

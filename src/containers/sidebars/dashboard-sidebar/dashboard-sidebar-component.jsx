@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -14,14 +14,21 @@ import SpeciesInfoContainer from './species-info';
 import { LightModeContext } from '../../../context/light-mode';
 
 function DashboardSidebar(props) {
-  const { activeLayers, map, view } = props;
+  const { activeLayers, map, view, speciesInfo, data } = props;
   const [selectedIndex, setSelectedIndex] = useState(1);
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data])
+
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <button type="button" onClick={() => toggleLightMode()}>Bright</button>
-      <SpeciesInfoContainer />
+      <SpeciesInfoContainer speciesInfo={speciesInfo} />
 
       <section className={styles.sidenav}>
         <div className={styles.icons}>
@@ -63,7 +70,7 @@ function DashboardSidebar(props) {
             view={view}
           />
         )}
-        {selectedIndex === 2 && <BioDiversityContainer map={map} />}
+        {selectedIndex === 2 && <BioDiversityContainer data={data} {...props} />}
         {selectedIndex === 3 && <RegionsAnalysisComponent map={map} />}
       </section>
     </div>

@@ -25,7 +25,7 @@ function ViewContainer(props) {
     setMap,
     view,
     setView,
-    geo,
+    geometry,
   } = props;
 
   const [loadState, setLoadState] = useState('loading');
@@ -167,15 +167,15 @@ function ViewContainer(props) {
   }, [map, view]);
 
   useEffect(() => {
-    if (view && geo) {
+    if (view && geometry) {
       const query = {
-        geometry: geo,
+        geometry,
         returnGeometry: true,
         outFields: ['*'],
       };
       highlightCountry(query, query.geometry, view);
     }
-  }, [view, geo]);
+  }, [view, geometry]);
 
   return <Component map={map} view={view} loadState={loadState} {...props} />;
 }

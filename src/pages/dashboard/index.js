@@ -1,26 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import { activateLayersOnLoad } from 'utils/layer-manager-utils';
-
-import { layersConfig } from 'constants/mol-layers-configs';
-
-import { setBasemap } from '../../utils/layer-manager-utils.js';
+import mapStateToProps from './dashboard-selectors';
+import * as urlActions from 'actions/url-actions';
 
 import DashboardComponent from './dashboard-component';
-import mapStateToProps from './dashboard-selectors';
+const actions = { ...urlActions };
 
 function DashboardContainer(props) {
-  const { viewSettings } = props;
-  const handleMapLoad = (map, activeLayers) => {
-    setBasemap({
-      map,
-      layersArray: viewSettings.basemap.layersArray,
-    });
-    activateLayersOnLoad(map, activeLayers, layersConfig);
-  };
 
-  return <DashboardComponent handleMapLoad={handleMapLoad} {...props} />;
+  return <DashboardComponent {...props} />;
 }
 
-export default connect(mapStateToProps, null)(DashboardContainer);
+export default connect(mapStateToProps, actions)(DashboardContainer);

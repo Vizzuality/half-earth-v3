@@ -5,6 +5,7 @@
 
 
 $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
+$sidebar-species-width: 500px;
 
 .container {
   @extend %verticalScrollbar;
@@ -17,7 +18,7 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
   height: calc(100vh - #{$top});
-  width: $sidebar-width;
+  width: $sidebar-species-width;
   z-index: $bring-to-front;
 
   --nav-button-bg: #{$white};

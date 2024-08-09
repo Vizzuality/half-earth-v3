@@ -20,7 +20,7 @@ export default {
       { title: ADMIN_AREAS_FEATURE_LAYER },
     ],
     padding: {
-      left: 100,
+      left: 0,
     },
     environment: {
       atmosphereEnabled: false,
