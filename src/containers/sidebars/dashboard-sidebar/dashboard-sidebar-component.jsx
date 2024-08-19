@@ -44,7 +44,7 @@ function DashboardSidebar(props) {
           </button>
           <button
             type="button"
-            aria-label="Biodiversit Indicators"
+            aria-label="Biodiversity Indicators"
             className={cx({
               [styles.selected]: selectedIndex === 2,
             })}

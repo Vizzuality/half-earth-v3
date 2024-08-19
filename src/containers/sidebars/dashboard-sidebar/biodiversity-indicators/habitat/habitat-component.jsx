@@ -13,6 +13,9 @@ import {
   CategoryScale,
 } from 'chart.js';
 import { LightModeContext } from '../../../../../context/light-mode';
+import ArrowUpward from 'icons/arrow-up-solid.svg?react';
+import ArrowDownward from 'icons/arrow-down-solid.svg?react';
+import Stable from 'icons/minus-solid.svg?react';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend, CategoryScale);
 
@@ -23,36 +26,16 @@ function HabitatComponent(props) {
   const [selectedCountry, setSelectedCountry] = useState('Global');
   const [shiCountries, setShiCountries] = useState([]);
   const [chartData, setChartData] = useState();
+  const [globalTrend, setGlobalTrend] = useState('');
+  const [countryTrend, setCountryTrend] = useState('');
+  const [globalTrendIcon, setGlobalTrendIcon] = useState(<Stable />);
+  const [countryTrendIcon, setCountryTrendIcon] = useState(<Stable />);
 
-  const onCountryChange = (event) => {
-    setSelectedCountry(event.currentTarget.value);
-    getChartData(event.currentTarget.value);
-  }
-
-  useEffect(() => {
-    if (habitatTableData.length) {
-      const countries = habitatTableData.map(item => item.country);
-
-      const sortedCountries = countries.sort((a, b) => {
-        const nameA = a.toUpperCase();
-        const nameB = b.toUpperCase();
-        if (nameA === 'GLOBAL' || nameB === 'GLOBAL') {
-          return -2;
-        }
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-
-      setShiCountries(sortedCountries);
-
-      getChartData('Global');
-    }
-  }, [habitatTableData]);
+  const TRENDS = {
+    UPWARD: 'arrow_upward',
+    DOWNWARD: 'arrow_downward',
+    STABLE: '',
+  };
 
   const options = {
     plugins: {
@@ -96,6 +79,39 @@ function HabitatComponent(props) {
       },
     },
   };
+
+  useEffect(() => {
+    if (habitatTableData.length) {
+      const countries = habitatTableData.map(item => item.country);
+
+      const sortedCountries = countries.sort((a, b) => {
+        const nameA = a.toUpperCase();
+        const nameB = b.toUpperCase();
+        if (nameA === 'GLOBAL' || nameB === 'GLOBAL') {
+          return -2;
+        }
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+
+      setShiCountries(sortedCountries);
+
+      getChartData('Global');
+
+      setTrendArrows();
+    }
+  }, [habitatTableData]);
+
+
+  const onCountryChange = (event) => {
+    setSelectedCountry(event.currentTarget.value);
+    getChartData(event.currentTarget.value);
+  }
 
   const getChartData = (countrySelected) => {
     const dates = [];
@@ -219,6 +235,36 @@ function HabitatComponent(props) {
     getChartData(country.value);
   }
 
+  const setTrendArrows = () => {
+    const hs = habitatScore;
+    const gs = globalHabitatScore;
+
+    if (hs < 100) {
+      setCountryTrend(TRENDS.DOWNWARD);
+      setCountryTrendIcon(<ArrowDownward />);
+    } else if (hs > 100) {
+      setCountryTrend(TRENDS.UPWARD);
+      setCountryTrendIcon(<ArrowUpward />);
+    } else {
+      setCountryTrend(TRENDS.STABLE);
+      setCountryTrendIcon(<Stable />);
+    }
+
+    if (gs < 100) {
+      setGlobalTrend(TRENDS.DOWNWARD);
+      setGlobalTrendIcon(<ArrowDownward />);
+    } else if (gs > 100) {
+      setGlobalTrend(TRENDS.DOWNWARD);
+      setGlobalTrendIcon(<ArrowUpward />);
+    } else {
+      setGlobalTrend(TRENDS.DOWNWARD);
+      setGlobalTrendIcon(<Stable />);
+    }
+
+    // this.countryHabitatScoreTitle = this.translate.instant('habitat_change', { change: this.countryHabitatChange, country: this.country, year: 2001 });
+    // this.globalHabitatScoreTitle = this.translate.instant('habitat_global_change', { change: this.globalHabitatChange, year: 2001 });
+  }
+
 
   return (
     <div className={styles.container}>
@@ -230,8 +276,8 @@ function HabitatComponent(props) {
         <div className={styles.metric}>
           <label>Guinea</label>
           <div className={styles.score}>
-            <span className={cx(styles['material-symbols-outlined'], styles.arrow_downward)}>
-              Down
+            <span className={cx(styles['material-symbols-outlined'], styles[countryTrend])}>
+              {countryTrendIcon}
             </span>
             <div className={styles.results}>
               <b>{habitatScore}%</b>
@@ -242,11 +288,11 @@ function HabitatComponent(props) {
         <div className={styles.metric}>
           <label>Globally</label>
           <div className={styles.score}>
-            <span className={cx(styles['material-symbols-outlined'], styles.arrow_upward)}>
-              Up
+            <span className={cx(styles['material-symbols-outlined'], styles[globalTrend])}>
+              {globalTrendIcon}
             </span>
             <div className={styles.results}>
-              <b>{(globalHabitatScore - 100).toFixed(2)}%</b>
+              <b>{(globalHabitatScore).toFixed(2)}%</b>
               <span className={styles.desc}>Suitable habitat lost globally since 2001</span>
             </div>
           </div>

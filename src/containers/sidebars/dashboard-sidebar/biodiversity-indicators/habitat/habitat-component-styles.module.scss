@@ -11,6 +11,10 @@
   --border-color-hover: #{$brand-color-main-hover};
   --small-font: 14px;
 
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
   &.light{
     --font-color: #{$black};
     --border-color: #{$mol-blue};
@@ -29,15 +33,15 @@
       align-items: flex-start;
 
       .material-symbols-outlined {
-        font-size: 48px;
-        color: #ffff33;
+        width: 32px;
+        fill: #ffff33;
 
         &.arrow_downward {
-          color: #c72929;
+          fill: #c72929;
         }
 
         &.arrow_upward {
-          color: #228d19;
+          fill: #228d19;
         }
       }
 
@@ -53,6 +57,7 @@
 
       .score {
         display: flex;
+        gap: 0.5rem;
 
         .results {
           display: flex;
@@ -86,14 +91,14 @@
   .chart {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
     align-items: center;
 
     .compareWrap{
       display: flex;
       align-items: center;
       width: 75%;
-      gap: 0.5rem;
+      gap: 0.75rem;
 
       .compare {
         color: var(--font-color);
@@ -172,11 +177,10 @@
 
   .dataTable {
     border-collapse: collapse;
-    width: 90%;
+    width: 100%;
 
     th,
     td {
-      color: var(--save-button-text);
       font-family: STIX Two Text;
       font-size: var(--small-font);
       font-style: normal;
@@ -202,6 +206,7 @@
 
     th {
       vertical-align: bottom;
+      color: var(--font-color);
     }
 
     tbody {
@@ -236,6 +241,7 @@
       }
 
       td {
+        color: var(--save-button-text);
         padding: 0 5px;
       }
     }

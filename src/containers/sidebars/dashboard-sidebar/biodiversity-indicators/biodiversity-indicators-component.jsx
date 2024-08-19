@@ -67,11 +67,18 @@ function BioDiversityComponent(props) {
     const tableData = [];
 
     Object.keys(dataByCountry).forEach(country => {
+      const habitatCountry = dataByCountry[countryName];
+
+      // const countrySHS = country?.shs;
+      const startYearValue = habitatCountry?.frag[0].gisfrag;
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      const lastCountryYearValue = habitatCountry?.shs.length - 1;
       const countryData = dataByCountry[country];
       const global2001 = dataByCountry.Global?.shs[0]?.val || 0;
       const country2001 = roundUpNumber(countryData.shs[0]?.val || 0);
       const stewardship = (country2001 / global2001) * 100;
-      const { countryAreaScore, countryConnectivityScore } = getCountryScores(countryData);
+
+      const { countryAreaScore, countryConnectivityScore } = getCountryScores(countryData, lastCountryYearValue, startYearValue);
       const shs = ((countryAreaScore + countryConnectivityScore) / 2) * 100;
 
       if (!Number.isNaN(shs)) {
