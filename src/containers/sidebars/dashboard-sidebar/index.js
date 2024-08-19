@@ -7,18 +7,14 @@ import mapStateToProps from './selectors';
 function DashboardSidebarContainer(props) {
   const {scientificName, countryName} = props;
 
-  const [data, setData] = useState({});
-  const [dataByCountry, setDataByCountry] = useState({frag: [], shs: []});
+  const [data, setData] = useState(null);
+  const [dataByCountry, setDataByCountry] = useState(null);
 
   useEffect(() => {
     getData();
   }, [scientificName]);
 
-  useEffect(() => {
-    const habitatScore = getHabitatScore();
 
-    console.log(habitatScore);
-  }, [dataByCountry])
 
   const getData = async () => {
     const speciesPreferences = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/habitat?scientificname=${scientificName}`;
@@ -87,42 +83,7 @@ function DashboardSidebarContainer(props) {
     setDataByCountry(countryData);
   }
 
-  const getHabitatScore = () => {
-    const country = dataByCountry[countryName];
-
-    // const countrySHS = country?.shs;
-    const startYearValue = country?.frag[0].gisfrag;
-    // eslint-disable-next-line no-unsafe-optional-chaining
-    const lastCountryYearValue = country?.shs.length - 1;
-
-    const { countryAreaScore, countryConnectivityScore } = getCountryScores(country, lastCountryYearValue, startYearValue);
-
-    // if (dataByCountry.Global?.shs[lastCountryYearValue]) {
-    //   this.globalAreaScore = this.dataByCountry.Global?.shs[this.lastCountryYearValue].propchange;
-    //   this.globalConnectivityScore = (
-    //   // eslint-disable-next-line no-unsafe-optional-chaining
-    //     this.dataByCountry.Global?.frag[this.lastCountryYearValue].gisfrag / this.startYearValue
-    //   );
-    // }
-
-    return ((countryAreaScore + countryConnectivityScore) / 2) * 100;
-    // this.globalHabitatScore = ((this.globalAreaScore + this.globalConnectivityScore) / 2) * 100;
-  }
-
-  const getCountryScores = (country, lastCountryYearValue, startYearValue) => {
-    if (country?.shs[lastCountryYearValue]) {
-      const countryAreaScore = country?.shs[lastCountryYearValue].propchange;
-      const countryConnectivityScore = (
-      // eslint-disable-next-line no-unsafe-optional-chaining
-        country?.frag[lastCountryYearValue]?.gisfrag / startYearValue
-      );
-
-      return { countryAreaScore, countryConnectivityScore };
-    }
-    return { countryAreaScore: 0, countryConnectivityScore: 0 };
-  }
-
-  return <Component data={data} {...props}/>;
+  return <Component data={data} dataByCountry={dataByCountry} {...props}/>;
 }
 
 export default connect(mapStateToProps, null)(DashboardSidebarContainer);
