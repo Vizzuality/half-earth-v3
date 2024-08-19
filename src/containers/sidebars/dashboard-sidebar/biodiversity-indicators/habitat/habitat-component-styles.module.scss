@@ -23,6 +23,10 @@
     --border-color-hover: #{$mol-blue};
   }
 
+  p{
+    color: var(--font-color);
+  }
+
   .scores {
     display: flex;
     justify-content: space-between;
@@ -146,7 +150,7 @@
     }
 
     label {
-      color: var(--font-color);;
+      color: var(--font-color);
       font-family: STIX Two Text;
       font-size: var(--small-font);
       font-style: normal;
@@ -235,13 +239,13 @@
           background-color: rgba(0, 0, 0, 0.4);
 
           td{
-            color: var(--font-color);
+            color: #{$white};
           }
         }
       }
 
       td {
-        color: var(--save-button-text);
+        color: #{$black};
         padding: 0 5px;
       }
     }

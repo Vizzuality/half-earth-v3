@@ -267,7 +267,7 @@ function HabitatComponent(props) {
 
 
   return (
-    <div className={styles.container}>
+    <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <p>
         *The Species Habitat Score is calculated using the habitat suitable
         range map and remote sensing layers.
