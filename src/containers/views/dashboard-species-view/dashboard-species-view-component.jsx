@@ -7,14 +7,13 @@ import Button from 'components/button';
 function DashboardSpeciesViewComponent(props) {
   const {
     countryISO,
-    countryName,
     browsePage
   } = props;
 
   return (
     <LightModeProvider>
       <div className={styles.container}>
-        The Species of {countryName}
+        The Species of {countryISO}
         <Button
           type="rectangular"
           label="Cercopithecus hamlyni"

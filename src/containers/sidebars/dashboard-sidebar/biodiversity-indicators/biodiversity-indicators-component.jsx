@@ -6,6 +6,7 @@ import styles from './biodiversity-indicators-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import country_attrs from '../mol-country-attributes.json';
 import HabitatContainer from './habitat';
+import ProtectionContainer from './protection';
 
 function BioDiversityComponent(props) {
   const { data, countryName, dataByCountry } = props
@@ -15,13 +16,12 @@ function BioDiversityComponent(props) {
   const [habitatTableData, setHabitatTableData] = useState([]);
   const [globalHabitatScore, setGlobalHabitatScore] = useState(0);
   const [protectionScore, setProtectionScore] = useState('0.00');
+  const [globalProtectionScore, setGlobalProtectionScore] = useState('0.00');
+  const [protectionTableData, setProtectionTableData] = useState([]);
+  const [protectionArea, setProtectionArea] = useState('0');
+  const [globalProtectionArea, setGlobalProtectionArea] = useState('0');
 
-  useEffect(() => {
-    console.log(data);
-    console.log(dataByCountry);
-    console.log(countryName);
-  }, [data]);
-
+  // get habitat score information
   useEffect(() => {
     if (dataByCountry && data) {
       const { habitatScore, globalHabitatScore } = getHabitatScore();
@@ -29,12 +29,18 @@ function BioDiversityComponent(props) {
       setGlobalHabitatScore(globalHabitatScore);
 
       getHabitatTableData();
-
-      const { protectionScore, globalProtectionScore } = getProtectionScore(data.reserveCoverageData, data.habitatMetricesData);
-      console.log('global protection score', globalProtectionScore)
-      setProtectionScore(protectionScore);
     }
-  }, [dataByCountry, data])
+  }, [dataByCountry, data]);
+
+  // get protection score information
+  useEffect(() => {
+    if (data && habitatTableData && dataByCountry) {
+      const { protectionScore, globalProtectionScore } = getProtectionScore(data.reserveCoverageData, data.habitatMetricesData);
+      setProtectionScore(protectionScore);
+      setGlobalProtectionScore(globalProtectionScore);
+      getProtectionTableData(data.reserveCoverageData, data.habitatMetricesData);
+    }
+  }, [habitatTableData])
 
   const getHabitatScore = () => {
     const country = dataByCountry[countryName];
@@ -91,19 +97,6 @@ function BioDiversityComponent(props) {
     setHabitatTableData(tableData);
   }
 
-  const getCountryScores = (country, lastCountryYearValue, startYearValue) => {
-    if (country?.shs[lastCountryYearValue]) {
-      const countryAreaScore = country?.shs[lastCountryYearValue].propchange;
-      const countryConnectivityScore = (
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        country?.frag[lastCountryYearValue]?.gisfrag / startYearValue
-      );
-
-      return { countryAreaScore, countryConnectivityScore };
-    }
-    return { countryAreaScore: 0, countryConnectivityScore: 0 };
-  }
-
   const getProtectionScore = (protection, hdm) => {
     const cattr = country_attrs.filter(
       r => r.NAME === countryName,
@@ -127,6 +120,9 @@ function BioDiversityComponent(props) {
       .map(r => r.sum)
       .reduce((a, b) => a + b, 0);
 
+    setProtectionArea(protectionArea);
+    setGlobalProtectionArea(globalProtectionArea);
+
     const area = (protectionArea / protectionTargetArea);
     const globalArea = (globalProtectionArea / globalProtectionTargetArea);
 
@@ -136,6 +132,62 @@ function BioDiversityComponent(props) {
     }
 
     return scores;
+  }
+
+  const getProtectionTableData = (protection, hdm) => {
+    const tableData = [];
+
+    Object.keys(dataByCountry).forEach(country => {
+      let { refined_range_size } = hdm;
+      let reserves = protection;
+
+      if (country.toLowerCase() !== 'global') {
+        const cattr = country_attrs.filter(
+          r => r.NAME === country,
+        )[0];
+
+        reserves = protection.filter(item => item.ISO3 === cattr.ISO3);
+
+        refined_range_size = hdm.refined_grouped_stats.filter(
+          r => r.ZONEID === cattr.GEO_ID,
+        )[0].sum;
+      }
+
+      const targetArea = targetProtectedArea(refined_range_size);
+      const allArea = reserves.map(r => r.sum).reduce((a, b) => a + b, 0);
+      const sps = Math.min((allArea / targetArea) * 100, 100);
+
+      const habitatStewardShip = habitatTableData.filter(
+        item => item.country === country,
+      )?.[0];
+      const stewardship = habitatStewardShip ? habitatStewardShip.stewardship : 0;
+
+      if (!Number.isNaN(sps)) {
+        // grab stewardship value from habitat table data
+        tableData.push({
+          country,
+          stewardship,
+          rangeProtected: allArea > 1000 ? parseInt(allArea, 10) : allArea,
+          targetProtected: targetArea > 1000 ? parseInt(targetArea, 10) : targetArea,
+          sps,
+        });
+      }
+    });
+
+    setProtectionTableData(tableData);
+  }
+
+  const getCountryScores = (country, lastCountryYearValue, startYearValue) => {
+    if (country?.shs[lastCountryYearValue]) {
+      const countryAreaScore = country?.shs[lastCountryYearValue].propchange;
+      const countryConnectivityScore = (
+        // eslint-disable-next-line no-unsafe-optional-chaining
+        country?.frag[lastCountryYearValue]?.gisfrag / startYearValue
+      );
+
+      return { countryAreaScore, countryConnectivityScore };
+    }
+    return { countryAreaScore: 0, countryConnectivityScore: 0 };
   }
 
   const targetProtectedArea = (rs) => {
@@ -165,7 +217,6 @@ function BioDiversityComponent(props) {
     }
     return val;
   }
-
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -210,6 +261,15 @@ function BioDiversityComponent(props) {
           habitatScore={habitatScore}
           globalHabitatScore={globalHabitatScore}
           habitatTableData={habitatTableData}
+          {...props} />
+      }
+      {selectedIndex === 2 &&
+        <ProtectionContainer
+          protectionScore={protectionScore}
+          globalProtectionScore={globalProtectionScore}
+          protectionTableData={protectionTableData}
+          protectionArea={protectionArea}
+          globalProtectionArea={globalProtectionArea}
           {...props} />
       }
     </section>

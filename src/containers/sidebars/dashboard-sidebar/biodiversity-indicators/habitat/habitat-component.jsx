@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './habitat-component-styles.module.scss';
-import { Line } from 'react-chartjs-2';
+
 import cx from 'classnames';
 import { getCSSVariable } from 'utils/css-utils';
 import {
@@ -12,6 +12,7 @@ import {
   Legend,
   CategoryScale,
 } from 'chart.js';
+import { Line } from 'react-chartjs-2';
 import { LightModeContext } from '../../../../../context/light-mode';
 import ArrowUpward from 'icons/arrow-up-solid.svg?react';
 import ArrowDownward from 'icons/arrow-down-solid.svg?react';
@@ -142,11 +143,6 @@ function HabitatComponent(props) {
           selectedCountryScores.connectivity.push((row.gisfrag / selectedFragYear) * 100);
         });
       }
-
-      // countryScore = (currentCountry.shs[currentCountry.shs.length - 1].val - 100);
-      // globalScore = (globalCountry.shs[globalCountry.shs.length - 1].val - 100);
-
-      // setTrendArrows();
 
       for (let index = 0; index < dates.length; index += 1) {
         const dcTotal = (defaultCountryScores.area[index] +
@@ -292,7 +288,7 @@ function HabitatComponent(props) {
               {globalTrendIcon}
             </span>
             <div className={styles.results}>
-              <b>{(globalHabitatScore).toFixed(2)}%</b>
+              <b>{(globalHabitatScore).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</b>
               <span className={styles.desc}>Suitable habitat lost globally since 2001</span>
             </div>
           </div>
@@ -336,14 +332,14 @@ function HabitatComponent(props) {
                   className={(selectedCountry === row.country || countryName === row.country) ? styles.highlighted : ''}
                 >
                   <td>{row.country}</td>
-                  <td className={styles.textCenter}>{row.stewardship.toFixed(2)}%</td>
+                  <td className={styles.textCenter}>{row.stewardship.toLocaleString(undefined, { maximumFractionDigits: 2 })}%</td>
                   <td className={styles.textCenter}>
-                    {(row.countryConnectivityScore * 100).toFixed(2)}
+                    {(row.countryConnectivityScore * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}
                   </td>
                   <td className={styles.textCenter}>
-                    {(row.countryAreaScore * 100).toFixed(2)}
+                    {(row.countryAreaScore * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}
                   </td>
-                  <td className={styles.textCenter}>{row.shs.toFixed(2)}%</td>
+                  <td className={styles.textCenter}>{row.shs.toLocaleString(undefined, { maximumFractionDigits: 2 })}%</td>
                 </tr>
               ))}
             </tbody>

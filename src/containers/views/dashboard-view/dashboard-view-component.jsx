@@ -4,13 +4,13 @@ import styles from './dashboard-view-styles.module.scss';
 import Button from 'components/button';
 
 function DashboardViewComponent(props) {
-  const { browsePage, countryISO, countryName } = props;
+  const { browsePage, countryISO } = props;
 
   return (
     <>
       {/* <LightModeProvider> */}
       <div className={styles.container}>
-        Democratic Republic of the Congo Biodiversity Dashboard
+        {countryISO}
         <div className={styles.navigation}>
           <Button
             type="rectangular"
