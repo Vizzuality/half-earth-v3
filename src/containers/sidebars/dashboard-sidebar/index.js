@@ -5,7 +5,7 @@ import Component from './dashboard-sidebar-component.jsx';
 import mapStateToProps from './selectors';
 
 function DashboardSidebarContainer(props) {
-  const {scientificName, countryName} = props;
+  const {scientificName} = props;
 
   const [data, setData] = useState(null);
   const [dataByCountry, setDataByCountry] = useState(null);
@@ -13,8 +13,6 @@ function DashboardSidebarContainer(props) {
   useEffect(() => {
     getData();
   }, [scientificName]);
-
-
 
   const getData = async () => {
     const speciesPreferences = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/habitat?scientificname=${scientificName}`;

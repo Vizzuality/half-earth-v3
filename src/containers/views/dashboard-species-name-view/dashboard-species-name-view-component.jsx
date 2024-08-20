@@ -24,8 +24,6 @@ function DashboardSpeciesNameViewComponent(props) {
     countryName,
     isFullscreenActive,
     openedModal,
-    scientificName,
-    speciesInfo,
     geometry
   } = props;
 
@@ -54,11 +52,8 @@ function DashboardSpeciesNameViewComponent(props) {
     >
       <LightModeProvider>
         <DashboardSidebarContainer
-          activeLayers={activeLayers}
           map={map}
           view={view}
-          speciesInfo={speciesInfo}
-          scientificName={scientificName}
           {...props} />
       </LightModeProvider>
       <CountryLabelsLayer

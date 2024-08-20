@@ -36,10 +36,7 @@ export const getActiveLayers = createSelector(
   getViewSettings,
   (viewSettings) => viewSettings.activeLayers
 );
-const getSelectedSpecies = createSelector(
-  getViewSettings,
-  (viewSettings) => viewSettings.selectedSpecies
-);
+
 export const getCountryISO = createSelector(
   selectCountryIso,
   (countryISO) => countryISO
@@ -81,5 +78,4 @@ export default createStructuredSelector({
   isSidebarOpen: getSidebarVisibility,
   speciesCategories: selectBiodiversityData,
   hasMetadata: selectMetadataData,
-  selectedSpecies: getSelectedSpecies,
 });

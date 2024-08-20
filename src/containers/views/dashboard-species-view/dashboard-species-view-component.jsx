@@ -16,10 +16,10 @@ function DashboardSpeciesViewComponent(props) {
         The Species of {countryISO}
         <Button
           type="rectangular"
-          label="Cercopithecus hamlyni"
+          label="Afrixalus Dorsalis"
           handleClick={() => browsePage({
             type: DASHBOARD_SPECIES_NAME,
-            payload: { iso: countryISO.toLowerCase(), scientificname: 'Cercopithecus hamlyni' }
+            payload: { iso: countryISO.toLowerCase(), scientificname: 'Afrixalus Dorsalis' }
           })}
         />
       </div>

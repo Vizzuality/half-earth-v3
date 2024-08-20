@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import styles from './protection-component-styles.module.scss';
 import cx from 'classnames';
-import { getCSSVariable } from 'utils/css-utils';
-import { LightModeContext } from '../../../../../context/light-mode';
+
 import {
   Chart as ChartJS,
   LinearScale,
@@ -19,163 +18,19 @@ function ProtectionComponent(props) {
   const {
     protectionTableData,
     countryName,
-    dataByCountry,
     protectionScore,
     globalProtectionScore,
     protectionArea,
-    globalProtectionArea
+    globalProtectionArea,
+    lightMode,
+    selectedCountry,
+    updateCountry,
+    onCountryChange,
+    shiCountries,
+    chartData,
+    chartOptions
   } = props;
-  const [selectedCountry, setSelectedCountry] = useState('Global');
-  const [shiCountries, setShiCountries] = useState([]);
-  const [globalScore, setGlobalScore] = useState(0);
-  const [chartData, setChartData] = useState();
-  const { lightMode } = useContext(LightModeContext);
 
-  useEffect(() => {
-    if (protectionTableData.length) {
-      const countries = protectionTableData.map(item => item.country);
-
-      const sortedCountries = countries.sort((a, b) => {
-        const nameA = a.toUpperCase();
-        const nameB = b.toUpperCase();
-        if (nameA === 'GLOBAL' || nameB === 'GLOBAL') {
-          return -2;
-        }
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-
-      setShiCountries(sortedCountries);
-      getChartData('Global');
-    }
-
-  }, [protectionTableData])
-
-
-  const options = {
-    plugins: {
-      title: {
-        display: false,
-      },
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      x: {
-        beginAtZero: false,
-        display: true,
-        title: {
-          display: true,
-          text: 'Year',
-          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
-        },
-        grid: {
-          color: getCSSVariable('oslo-gray'),
-        },
-        ticks: {
-          color: getCSSVariable('oslo-gray'),
-        },
-      },
-      y: {
-        beginAtZero: false,
-        display: true,
-        title: {
-          display: true,
-          text: 'Species Habitat Score',
-          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
-        },
-        grid: {
-          color: getCSSVariable('oslo-gray'),
-        },
-        ticks: {
-          color: getCSSVariable('oslo-gray'),
-        },
-      },
-    },
-  };
-
-  const onCountryChange = (event) => {
-    setSelectedCountry(event.currentTarget.value);
-    getChartData(event.currentTarget.value);
-  }
-
-  const getChartData = (countrySelected) => {
-    const dates = [];
-    const currentCountry = dataByCountry[countryName];
-    const globalCountry = dataByCountry.Global;
-
-    const defaultCountryScores = { values: [] };
-    const selectedCountryScores = { values: [] };
-
-    if (currentCountry) {
-      currentCountry.shs?.forEach(row => {
-        defaultCountryScores.values.push(row.propchange * 100);
-      });
-
-      dataByCountry[countrySelected]?.shs.forEach(row => {
-        dates.push(row.year);
-        selectedCountryScores.values.push(row.propchange * 100);
-      });
-
-      setGlobalScore(globalCountry.shs[globalCountry.shs.length - 1].val - 100);
-    }
-
-    setChartData({
-      labels: dates,
-      datasets: [
-        {
-          label: `${countryName}`,
-          fill: false,
-          backgroundColor: '#2F2CAE',
-          borderColor: '#2F2CAE',
-          pointBackgroundColor: '#2F2CAE',
-          pointBorderColor: '#2F2CAE',
-          pointStyle: false,
-          data: defaultCountryScores.values,
-        },
-        {
-          label: `${countrySelected}`,
-          fill: false,
-          backgroundColor: '#228D19',
-          borderColor: '#228D19',
-          pointBackgroundColor: '#228D19',
-          pointBorderColor: '#228D19',
-          pointStyle: false,
-          data: selectedCountryScores.values,
-        },
-      ],
-    });
-
-    // suitableCountryProtectedArea = this.translate.instant(
-    //   'suitable_protected_area_km',
-    //   {
-    //     countryArea: this.protectionTargetArea.toLocaleString(
-    //       [],
-    //       { maximumFractionDigits: 0 },
-    //     ),
-    //   },
-    // );
-    // this.suitableGlobalProtectedArea = this.translate.instant(
-    //   'suitable_protected_area_km',
-    //   {
-    //     countryArea: this.globalProtectionTargetArea.toLocaleString(
-    //       [],
-    //       { maximumFractionDigits: 0 },
-    //     ),
-    //   },
-    // );
-  }
-
-  const updateCountry = (country) => {
-    setSelectedCountry(country.value);
-    getChartData(country.value);
-  }
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -230,7 +85,7 @@ function ProtectionComponent(props) {
           <div className={cx(styles.legendBox, styles.green)}></div>
           <label>{selectedCountry}</label>
         </div>
-        {chartData && <Line options={options} data={chartData} />}
+        {chartData && <Line options={chartOptions} data={chartData} />}
         {protectionTableData.length &&
           <table className={styles.dataTable}>
             <thead>

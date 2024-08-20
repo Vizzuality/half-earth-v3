@@ -14,7 +14,7 @@ import SpeciesInfoContainer from './species-info';
 import { LightModeContext } from '../../../context/light-mode';
 
 function DashboardSidebar(props) {
-  const { activeLayers, map, view, speciesInfo, data } = props;
+  const { speciesInfo, data } = props;
   const [selectedIndex, setSelectedIndex] = useState(1);
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
@@ -64,14 +64,10 @@ function DashboardSidebar(props) {
           </button>
         </div>
         {selectedIndex === 1 && (
-          <DataLayerContainer
-            activeLayers={activeLayers}
-            map={map}
-            view={view}
-          />
+          <DataLayerContainer {...props} />
         )}
-        {selectedIndex === 2 && <BioDiversityContainer data={data} {...props} />}
-        {selectedIndex === 3 && <RegionsAnalysisComponent map={map} />}
+        {selectedIndex === 2 && <BioDiversityContainer {...props} />}
+        {selectedIndex === 3 && <RegionsAnalysisComponent {...props} />}
       </section>
     </div>
   );
