@@ -44,6 +44,7 @@ function BioDiversityContainer(props) {
     const country = dataByCountry[countryName];
 
     // const countrySHS = country?.shs;
+    // TODO: handle no frag values
     const startYearValue = country?.frag[0].gisfrag;
     // eslint-disable-next-line no-unsafe-optional-chaining
     const lastCountryYearValue = country?.shs.length - 1;

@@ -43,18 +43,26 @@ function DashboardSpeciesViewComponent(props) {
           />
           <Button
             type="rectangular"
-            label="Afrixalus Dorsalis"
+            label="Acherontia atropos"
             handleClick={() => browsePage({
               type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Afrixalus Dorsalis' }
+              payload: { iso: countryISO.toLowerCase(), scientificname: 'Acherontia atropos' }
             })}
           />
           <Button
             type="rectangular"
-            label="Afrixalus Dorsalis"
+            label="Accipiter melanoleucus"
             handleClick={() => browsePage({
               type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Afrixalus Dorsalis' }
+              payload: { iso: countryISO.toLowerCase(), scientificname: 'Accipiter melanoleucus' }
+            })}
+          />
+          <Button
+            type="rectangular"
+            label="Cercopithecus campbelli"
+            handleClick={() => browsePage({
+              type: DASHBOARD_SPECIES_NAME,
+              payload: { iso: countryISO.toLowerCase(), scientificname: 'Cercopithecus campbelli' }
             })}
           />
         </div>

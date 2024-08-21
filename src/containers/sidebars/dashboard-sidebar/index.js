@@ -18,9 +18,11 @@ function DashboardSidebarContainer(props) {
     const speciesPreferences = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/habitat?scientificname=${scientificName}`;
     const res = await fetch(speciesPreferences);
     const ps = await res.json();
+    // TODO: figure out what to do is ps.prefs are null
     const preferences = getPreferenceQuery(ps.prefs);
     const params = new URLSearchParams(preferences);
 
+    // TODO: Some responses have no frag results
     const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
     const reserveCoverageMetricsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/reserve-coverage/metrics?scientificname=${scientificName}&${params}`;
     const habitatMetricesUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-distribution/metrics?scientificname=${scientificName}&${params}`;
@@ -55,6 +57,8 @@ function DashboardSidebarContainer(props) {
 
   const getDataByCountry = (d) => {
     let countryData;
+
+    // TODO: figure out what to do when no shs is returned
     if (d.shs) {
       countryData = d.shs.reduce((acc, obj) => {
         const key = obj.country;
