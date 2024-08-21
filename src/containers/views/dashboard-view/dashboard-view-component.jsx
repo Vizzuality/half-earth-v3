@@ -4,13 +4,13 @@ import styles from './dashboard-view-styles.module.scss';
 import Button from 'components/button';
 
 function DashboardViewComponent(props) {
-  const { browsePage, countryISO } = props;
+  const { browsePage, countryISO, countryName } = props;
 
   return (
     <>
       {/* <LightModeProvider> */}
-      <div className={styles.container}>
-        {countryISO}
+      <section className={styles.container}>
+        <h1>{countryName} Biodiversity Dashboard</h1>
         <div className={styles.navigation}>
           <Button
             type="rectangular"
@@ -27,7 +27,7 @@ function DashboardViewComponent(props) {
             handleClick={() => browsePage({ type: DASHBOARD_TRENDS, payload: { iso: countryISO.toLowerCase() } })}
           />
         </div>
-      </div>
+      </section>
       {/* </LightModeProvider> */}
     </>
   );

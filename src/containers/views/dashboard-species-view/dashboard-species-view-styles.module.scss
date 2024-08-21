@@ -1,17 +1,69 @@
-.container{
-
-}@import 'styles/ui.module';
+@import 'styles/ui.module';
 @import 'styles/settings';
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-$top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
-
 .container{
-  position:absolute;
-  top: $top;
-  left: $site-gutter;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 10px;
+  margin: 10px;
+  gap: 2rem;
+
+  --border-color: #{$brand-color-main};
+
+  h1{
+    font-size: 2rem;
+    width: 500px;
+    text-align: center;
+  }
+
+  .explore{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    .search{
+      border: 1px solid var(--border-color);
+      padding: 5px;
+      border-radius: 8px;
+      width: 500px;
+      background: white;
+
+      input[type="text"]{
+        color: var(--border-color);
+      }
+
+      ::placeholder{
+        color: var(--border-color);
+      }
+
+      svg{
+        fill: var(--border-color);
+        color: var(--border-color);
+
+        path{
+          fill: var(--border-color);
+          color: var(--border-color);
+        }
+      }
+    }
+  }
+
+  .navigation{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    button{
+      width: 150px;
+      height: 150px;
+      border: 1px solid black;
+      border-radius: 10px;
+    }
+  }
 }

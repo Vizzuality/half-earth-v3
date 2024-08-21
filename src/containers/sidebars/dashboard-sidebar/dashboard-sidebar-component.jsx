@@ -14,7 +14,7 @@ import SpeciesInfoContainer from './species-info';
 import { LightModeContext } from '../../../context/light-mode';
 
 function DashboardSidebar(props) {
-  const { speciesInfo, data } = props;
+  const { speciesInfo, data, countryName } = props;
   const [selectedIndex, setSelectedIndex] = useState(1);
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 

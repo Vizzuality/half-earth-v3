@@ -6,8 +6,8 @@ import EsriFeatureService from 'services/esri-feature-service';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import { setBasemap } from '../../utils/layer-manager-utils.js';
-import countryDataActions from 'redux_modules/country-data';
 import * as urlActions from 'actions/url-actions';
+import countryDataActions from 'redux_modules/country-data';
 import DashboardSpeciesNameComponent from './dashboard-species-name-component';
 import mapStateToProps from './dashboard-species-name-selectors';
 
@@ -30,7 +30,7 @@ function DashboardSpeciesNameContainer(props) {
   const [geometry, setGeometry] = useState(null);
   const [speciesInfo, setSpeciesInfo] = useState(null);
 
-   // Get Country information, allows to get country name
+  // Get Country information, allows to get country name
   useEffect(() => {
     setCountryDataLoading();
     EsriFeatureService.getFeatures({
@@ -41,11 +41,11 @@ function DashboardSpeciesNameContainer(props) {
       .then((features) => {
         const { geometry } = features[0];
 
+        setCountryDataReady(features);
         if (geometry) {
           setGeometry(geometry);
         }
 
-        setCountryDataReady(features);
       })
       .catch((error) => {
         setCountryDataError(error);

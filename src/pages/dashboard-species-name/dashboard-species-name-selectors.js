@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import {
@@ -10,13 +9,9 @@ import {
 import dashboardViewConfig from '../../containers/views/dashboard-species-name-view/dashboard-species-name-view-config';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
-const selectScientificName = ({ location }) => location.payload.scientificname.toUpperCase();
 const selectCountriesData = ({ countryData }) =>
   countryData && (countryData.data || null);
-const selectBiodiversityData = ({ biodiversityData }) =>
-  biodiversityData && (biodiversityData.data || null);
-const selectMetadataData = ({ metadata }) =>
-  metadata && (!isEmpty(metadata.data) || null);
+const selectScientificName = ({ location }) => location.payload.scientificname.toUpperCase();
 
 const getViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
   return {
@@ -41,6 +36,7 @@ export const getCountryISO = createSelector(
   selectCountryIso,
   (countryISO) => countryISO
 );
+
 const getCountryData = createSelector(
   [selectCountriesData, selectCountryIso],
   (countriesData, countryISO) => {
@@ -50,6 +46,7 @@ const getCountryData = createSelector(
     return countriesData[countryISO];
   }
 );
+
 const getCountryName = createSelector(
   [getCountryData],
   (countryData) => {
@@ -59,10 +56,12 @@ const getCountryName = createSelector(
     return countryData.NAME_0;
   }
 );
+
 const getScientificName = createSelector(
   selectScientificName,
   (scientificName) => scientificName
 );
+
 const getSidebarVisibility = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.isSidebarOpen
@@ -72,10 +71,7 @@ export default createStructuredSelector({
   viewSettings: getViewSettings,
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
-  countriesData: selectCountriesData,
   countryName: getCountryName,
   scientificName: getScientificName,
   isSidebarOpen: getSidebarVisibility,
-  speciesCategories: selectBiodiversityData,
-  hasMetadata: selectMetadataData,
 });
