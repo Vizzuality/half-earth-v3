@@ -15,6 +15,7 @@ export const useSelectLayersOnTabOrResolutionChange = ({
   previousSelectedResolutions,
   layersToggleConfig,
   category,
+  selectedCategory,
   isChecked,
   allActiveLayerTitles,
   activeLayers,
@@ -95,13 +96,14 @@ export const useSelectLayersOnTabOrResolutionChange = ({
       availableLayers &&
       availableLayers.find((layer) => layer.value.includes(layerTaxa));
 
-    if (hasMatchingLayer) {
+    if (hasMatchingLayer && selectedCategory === category) {
       // select matching layer on selected variant
       handleLayerToggle(hasMatchingLayer);
-    } else if (availableLayers && layerTaxa !== 'all') {
-      // select first element if there's no matching layer
-      handleLayerToggle(availableLayers[0]);
     }
+    // else if (availableLayers && layerTaxa !== 'all') {
+    //   // select first element if there's no matching layer
+    //   handleLayerToggle(availableLayers[0]);
+    // }
     // else {
     //   // select first element if there's no maching resolution
     //   handleLayerToggle(defaultResolutionLayers[0]);
