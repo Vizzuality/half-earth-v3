@@ -44,7 +44,7 @@ function BiodiversityLayerToggle(props) {
   const locale = useLocale();
   const layersToggleConfig = useMemo(() => getLayersToggleConfig(), [locale]);
   const [isChecked, setIsChecked] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedCategory, setSelectedCategory] = useState('terrestrial-global');
   useEffect(() => {
     const newChecked =
       selectedLayerOption &&
