@@ -100,7 +100,7 @@ export const useSelectLayersOnTabOrResolutionChange = ({
       // select matching layer on selected variant
       handleLayerToggle(hasMatchingLayer);
     } else if(hasMatchingLayer && category === TERRESTRIAL_GLOBAL){
-      handleLayerToggle(hasMatchingLayer);
+      handleLayerToggle(availableLayers[0]);
     } else if(!hasMatchingLayer && category === TERRESTRIAL_GLOBAL){
       if(availableLayers){
         handleLayerToggle(availableLayers[0]);
