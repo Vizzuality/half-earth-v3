@@ -36,3 +36,8 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [build](https://vitejs.dev/guide/build) for more information.
+
+
+### `yarn start`
+
+Runs the preview mode of Vite from the build that has to be run before. It will run on [http://localhost:3000](http://localhost:3000)

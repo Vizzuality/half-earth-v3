@@ -27,11 +27,11 @@ import CloseIcon from 'icons/menu-close.svg?react';
 import IconSearch from 'icons/search.svg?react';
 
 const getLayerTypeText = (layer, _t) =>
-  ({
-    [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: _t('Political boundary'),
-    [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: _t('Political boundary'),
-    [WDPA_OECM_FEATURE_LAYER]: _t('Protected area'),
-  }[layer]);
+({
+  [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: _t('Political boundary'),
+  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: _t('Political boundary'),
+  [WDPA_OECM_FEATURE_LAYER]: _t('Protected area'),
+}[layer]);
 
 function SearchLocation({
   width,
@@ -162,6 +162,7 @@ function SearchLocation({
                 className={cx(styles.optionsList, {
                   [styles.fullWidth]: width === 'full',
                   [styles.mobile]: mobile,
+                  [styles.longList]: searchResults.length > 8
                 })}
                 ref={searchOptionsListRef}
               >
@@ -185,8 +186,8 @@ function SearchLocation({
                   <li className={styles.emptyOption}>
                     {searchType === 'full'
                       ? t(
-                          'No results found. Please search another place or draw a custom area.'
-                        )
+                        'No results found. Please search another place or draw a custom area.'
+                      )
                       : t('No results found. Please search another place.')}
                   </li>
                 )}

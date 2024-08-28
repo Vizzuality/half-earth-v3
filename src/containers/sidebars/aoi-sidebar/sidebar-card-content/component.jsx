@@ -221,7 +221,7 @@ function SidebarCard({
                       delay={100}
                       position="bottom"
                     >
-                      <InfoIcon className={styles.icon} />
+                      <span className={styles.icon}><InfoIcon /></span>
                     </Tooltip>
                   </span>
                 </div>
