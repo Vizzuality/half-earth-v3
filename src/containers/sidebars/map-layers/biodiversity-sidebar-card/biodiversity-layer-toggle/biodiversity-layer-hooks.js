@@ -99,15 +99,11 @@ export const useSelectLayersOnTabOrResolutionChange = ({
     if (hasMatchingLayer && selectedCategory === category) {
       // select matching layer on selected variant
       handleLayerToggle(hasMatchingLayer);
+    } else if(hasMatchingLayer && category === TERRESTRIAL_GLOBAL){
+      handleLayerToggle(hasMatchingLayer)
+    } else if(!hasMatchingLayer && category === TERRESTRIAL_GLOBAL){
+      handleLayerToggle(availableLayers[0])
     }
-    // else if (availableLayers && layerTaxa !== 'all') {
-    //   // select first element if there's no matching layer
-    //   handleLayerToggle(availableLayers[0]);
-    // }
-    // else {
-    //   // select first element if there's no maching resolution
-    //   handleLayerToggle(defaultResolutionLayers[0]);
-    // }
   }, [
     biodiversityLayerVariant,
     selectedResolutions,
