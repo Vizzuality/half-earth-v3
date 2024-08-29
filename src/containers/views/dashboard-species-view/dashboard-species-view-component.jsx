@@ -29,40 +29,40 @@ function DashboardSpeciesViewComponent(props) {
             label="Explore all Species"
             handleClick={() => browsePage({
               type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Afrixalus Dorsalis' }
+              payload: { iso: countryISO.toLowerCase(), scientificname: 'Cossypha polioptera' }
             })} />
         </div>
         <div className={styles.navigation}>
           <Button
             type="rectangular"
-            label="Afrixalus Dorsalis"
+            label="Grey Winged Robin Chat"
             handleClick={() => browsePage({
               type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Afrixalus Dorsalis' }
+              payload: { iso: countryISO.toLowerCase(), scientificname: 'Cossypha polioptera' }
             })}
           />
           <Button
             type="rectangular"
-            label="Acherontia atropos"
+            label="Piliocolobus parmentieri"
             handleClick={() => browsePage({
               type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Acherontia atropos' }
+              payload: { iso: countryISO.toLowerCase(), scientificname: 'Piliocolobus parmentieri' }
             })}
           />
           <Button
             type="rectangular"
-            label="Accipiter melanoleucus"
+            label="Palm Egg Eater"
             handleClick={() => browsePage({
               type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Accipiter melanoleucus' }
+              payload: { iso: countryISO.toLowerCase(), scientificname: 'Dasypeltis palmarum' }
             })}
           />
           <Button
             type="rectangular"
-            label="Cercopithecus campbelli"
+            label="Caconda Grassland Frog"
             handleClick={() => browsePage({
               type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Cercopithecus campbelli' }
+              payload: { iso: countryISO.toLowerCase(), scientificname: 'Ptychadena bunoderma' }
             })}
           />
         </div>

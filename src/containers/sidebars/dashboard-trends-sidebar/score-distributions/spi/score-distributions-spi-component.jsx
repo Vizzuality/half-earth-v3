@@ -22,7 +22,7 @@ function ScoreDistributionsSpiComponent(props) {
   const spsSpecies = [
     {
       name: 'Black-collared Apalis',
-      scientificname: 'Oreolais puncher',
+      scientificname: 'Oreolais pulcher',
     },
     {
       name: 'Lomami Red Colobus',

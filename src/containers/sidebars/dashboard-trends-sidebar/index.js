@@ -5,7 +5,7 @@ import Component from './dashboard-trends-sidebar-component.jsx';
 import mapStateToProps from './selectors';
 
 function DashboardTrendsSidebarContainer(props) {
-  const { countryISO, countryData } = props;
+  const { countryISO } = props;
 
   const [shiValue, setShiValue] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
@@ -68,7 +68,6 @@ function DashboardTrendsSidebarContainer(props) {
   return (
     <Component
       countryISO={countryISO}
-      countryData={countryData}
       shiValue={shiValue}
       spiValue={spiValue}
       siiValue={siiValue}

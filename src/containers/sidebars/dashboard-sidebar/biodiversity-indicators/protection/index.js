@@ -101,7 +101,9 @@ function ProtectionContainer(props) {
         selectedCountryScores.values.push(row.propchange * 100);
       });
 
-      setGlobalScore(globalCountry.shs[globalCountry.shs.length - 1].val - 100);
+      if (globalCountry.shs.length) {
+        setGlobalScore(globalCountry.shs[globalCountry.shs.length - 1].val - 100);
+      }
     }
 
     setChartData({

@@ -71,6 +71,7 @@ function DashboardSidebarContainer(props) {
     }
 
     if (d.frag) {
+
       countryData = d.frag.reduce((acc, obj) => {
         const key = obj.country;
         if (!acc[key]) {
@@ -79,7 +80,7 @@ function DashboardSidebarContainer(props) {
 
         acc[key].frag.push(obj);
         return acc;
-      }, countryData);
+      }, countryData || {});
     }
 
     setDataByCountry(countryData);
