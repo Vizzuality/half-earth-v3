@@ -83,8 +83,9 @@ const getGroupedLayerOptions = createSelector(
 const getSelectedLayerOption = createSelector(
   [getCategoryLayerOptions, getSelectedLayer],
   (options, selectedLayer) => {
+    const allTaxaIndex = options.findIndex(item => item.name === 'all taxa');
     const optionsSelectedLayer =
-      options.find((l) => l.value === selectedLayer) || options[0];
+      options.find((l) => l.value === selectedLayer) || options[allTaxaIndex] || options[0];
     if (!optionsSelectedLayer) return null;
 
     // label is needed for grouped layer option

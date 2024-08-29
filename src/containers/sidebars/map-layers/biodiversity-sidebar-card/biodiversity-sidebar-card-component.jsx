@@ -71,6 +71,7 @@ function BiodiversitySidebarCardComponent({
   const firstStep = onboardingStep === 0;
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(TERRESTRIAL_GLOBAL);
   const handleBoxClick = () => setOpen(!isOpen);
 
   // --- Onboarding
@@ -115,6 +116,8 @@ function BiodiversitySidebarCardComponent({
         activeLayers={activeLayers}
         selectedLayer={selectedLayer}
         setSelectedLayer={setSelectedLayer}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
         selectedResolutions={selectedResolutions}
         resolutionOptions={categoryResolutionOptions}
         selectedResolutionOption={selectedResolutionOptions[category]}
