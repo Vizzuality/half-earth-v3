@@ -232,10 +232,6 @@ function AnalyzeAreasContainer(props) {
           layerId: newSelectedOption,
           category: newLayerCategory,
         });
-      } else {
-        layersToToggle = activeLayers.map((l) => ({
-          layerId: l.title,
-        }));
       }
 
       if (formerSelectedSlug === CLEAR_SELECTIONS) {
