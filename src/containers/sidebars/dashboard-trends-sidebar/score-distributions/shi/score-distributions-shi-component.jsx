@@ -19,20 +19,20 @@ function ScoreDistributionsShiComponent(props) {
   const highAvg = 'birds';
   const spsSpecies = [
     {
-      name: 'Black-collared Apalis',
-      scientificname: 'Oreolais puncher',
-    },
-    {
-      name: 'Lomami Red Colobus',
-      scientificname: 'Piliocolobus parmentieri',
-    },
-    {
-      name: 'Grey-Winged Robin-Chat',
+      name: 'Grey Winged Robin Chat',
       scientificname: 'Cossypha polioptera',
     },
     {
-      name: 'Palm Egg-Eater',
+      name: 'Piliocolobus parmentieri',
+      scientificname: 'Piliocolobus parmentieri',
+    },
+    {
+      name: 'Palm Egg Eater',
       scientificname: 'Dasypeltis palmarum',
+    },
+    {
+      name: 'Caconda Grassland Frog',
+      scientificname: 'Ptychadena bunoderma',
     },
   ];
 
