@@ -40,6 +40,8 @@ function BiodiversityLayerToggle(props) {
     setSelectedLayer,
     allActiveLayerTitles,
     category,
+    setSelectedCategory,
+    selectedCategory
   } = props;
   const locale = useLocale();
   const layersToggleConfig = useMemo(() => getLayersToggleConfig(), [locale]);
@@ -60,6 +62,7 @@ function BiodiversityLayerToggle(props) {
   const previousSelectedResolutions = usePrevious(selectedResolutions);
 
   const handleLayerToggle = (option) => {
+    setSelectedCategory(category);
     const layer = layersConfig[option.layer];
     if (!allActiveLayerTitles) {
       // Add layer to empty selection
@@ -113,6 +116,7 @@ function BiodiversityLayerToggle(props) {
     isChecked,
     allActiveLayerTitles,
     activeLayers,
+    selectedCategory,
     handleLayerToggle,
   });
 
