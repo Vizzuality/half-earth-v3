@@ -1,26 +1,28 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import cx from 'classnames';
 import styles from './species-info-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 
 function SpeciesInfoComponent(props) {
   const { speciesInfo } = props;
+  const [taxaImage, setTaxaImage] = useState('')
 
   const { lightMode } = useContext(LightModeContext);
   useEffect(() => {
-    console.log(speciesInfo);
+    if (speciesInfo) {
+      setTaxaImage(`https://mol.org/static/img/groups/taxa_${speciesInfo?.taxa}.png`);
+    }
 
-
-  }, [])
+  }, [speciesInfo])
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.species)}>
       <div className={styles.title}>
-        <img src="https://place-hold.it/130x130" alt="species" />
+        <img src={speciesInfo?.image.url} alt="species" />
         <div className={styles.info}>
           <span className={styles.commonName}>{speciesInfo?.commonname}</span>
           <span className={styles.taxa}>{speciesInfo?.scientificname}</span>
-          <img src="https://place-hold.it/60x60" alt="taxa" />
+          <img src={taxaImage} alt="taxa" />
         </div>
       </div>
       <p className={styles.description}>
