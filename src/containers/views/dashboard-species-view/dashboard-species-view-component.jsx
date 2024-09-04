@@ -33,38 +33,46 @@ function DashboardSpeciesViewComponent(props) {
             })} />
         </div>
         <div className={styles.navigation}>
-          <Button
-            type="rectangular"
-            label="Grey Winged Robin Chat"
-            handleClick={() => browsePage({
-              type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Cossypha polioptera' }
-            })}
-          />
-          <Button
-            type="rectangular"
-            label="Piliocolobus parmentieri"
-            handleClick={() => browsePage({
-              type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Piliocolobus parmentieri' }
-            })}
-          />
-          <Button
-            type="rectangular"
-            label="Palm Egg Eater"
-            handleClick={() => browsePage({
-              type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Dasypeltis palmarum' }
-            })}
-          />
-          <Button
-            type="rectangular"
-            label="Caconda Grassland Frog"
-            handleClick={() => browsePage({
-              type: DASHBOARD_SPECIES_NAME,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Ptychadena bunoderma' }
-            })}
-          />
+          <div className={styles.navCard} onClick={() => browsePage({
+            type: DASHBOARD_SPECIES_NAME,
+            payload: { iso: countryISO.toLowerCase(), scientificname: 'Cossypha polioptera' }
+          })} >
+            <div className={styles.outline}></div>
+            <label>Grey Winged Robin Chat</label>
+            <p>
+              Cossypha polioptera
+            </p>
+          </div>
+          <div className={styles.navCard} onClick={() => browsePage({
+            type: DASHBOARD_SPECIES_NAME,
+            payload: { iso: countryISO.toLowerCase(), scientificname: 'Piliocolobus parmentieri' }
+          })} >
+            <div className={styles.outline}></div>
+            <label>Piliocolobus parmentieri</label>
+            <p>
+              Piliocolobus parmentieri
+            </p>
+          </div>
+          <div className={styles.navCard} onClick={() => browsePage({
+            type: DASHBOARD_SPECIES_NAME,
+            payload: { iso: countryISO.toLowerCase(), scientificname: 'Dasypeltis palmarum' }
+          })} >
+            <div className={styles.outline}></div>
+            <label>Palm Egg Eater</label>
+            <p>
+              Dasypeltis palmarum
+            </p>
+          </div>
+          <div className={styles.navCard} onClick={() => browsePage({
+            type: DASHBOARD_SPECIES_NAME,
+            payload: { iso: countryISO.toLowerCase(), scientificname: 'Ptychadena bunoderma' }
+          })} >
+            <div className={styles.outline}></div>
+            <label>Caconda Grassland Frog</label>
+            <p>
+              Ptychadena bunoderma
+            </p>
+          </div>
         </div>
       </section>
 

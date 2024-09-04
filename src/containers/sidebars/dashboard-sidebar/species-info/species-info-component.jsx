@@ -5,7 +5,7 @@ import { LightModeContext } from '../../../../context/light-mode';
 
 function SpeciesInfoComponent(props) {
   const { speciesInfo } = props;
-  const [taxaImage, setTaxaImage] = useState('')
+  const [taxaImage, setTaxaImage] = useState()
 
   const { lightMode } = useContext(LightModeContext);
   useEffect(() => {
@@ -13,7 +13,7 @@ function SpeciesInfoComponent(props) {
       setTaxaImage(`https://mol.org/static/img/groups/taxa_${speciesInfo?.taxa}.png`);
     }
 
-  }, [speciesInfo])
+  }, [speciesInfo]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.species)}>
