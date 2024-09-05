@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-section{
+.wrapper{
   display: flex;
   flex-direction: column;
   gap: 10px;

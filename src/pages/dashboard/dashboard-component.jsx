@@ -7,10 +7,10 @@ import PartnersContainer from '../../components/partners';
 
 function DashboardComponent(props) {
   return (
-    <section>
+    <div className={styles.wrapper}>
       <DashboardView {...props} className={styles.dashboardView} />
       <PartnersContainer />
-    </section>
+    </div>
   );
 }
 

@@ -9,6 +9,7 @@
   align-items: center;
   padding: 10px;
   gap: 2rem;
+  flex-grow: 1;
 
   --border-color: #{$brand-color-main};
   --font-color: #{$white};
