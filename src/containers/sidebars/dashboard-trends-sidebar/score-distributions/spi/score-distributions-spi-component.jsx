@@ -168,9 +168,6 @@ function ScoreDistributionsSpiComponent(props) {
                   <span className={styles.scientificname}>
                     {species.scientificname}
                   </span>
-                  <button className={styles.addToMap} type="button">
-                    Add to map
-                  </button>
                 </div>
                 <span className={styles.spsScore}>SPS: 0.04</span>
               </li>

@@ -244,9 +244,6 @@ function ScoreDistributionsShiComponent(props) {
                   <span className={styles.scientificname}>
                     {species.scientificname}
                   </span>
-                  <button className={styles.addToMap} type="button">
-                    Add to map
-                  </button>
                 </div>
                 <span className={styles.spsScore}>SHS: 0.04</span>
               </li>
