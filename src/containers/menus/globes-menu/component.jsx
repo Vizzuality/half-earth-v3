@@ -1,4 +1,4 @@
-import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
+import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING, DASHBOARD_TRENDS } from 'router';
 
 import { useT } from '@transifex/react';
 
@@ -51,7 +51,7 @@ function GlobesMenu({ browsePage, className, landing = false, onMouseLeave }) {
         )}
         globeImage={globeExplore}
         center
-        handleClick={() => browsePage({ type: DATA })}
+        handleClick={() => browsePage({ type: DASHBOARD_TRENDS, payload: { iso: 'cod' } })}
       />
       <Globe
         title={t('National Report Cards')}
@@ -75,7 +75,7 @@ GlobesMenu.propTypes = {
 GlobesMenu.defaultProps = {
   className: '',
   landing: false,
-  onMouseLeave: () => {},
+  onMouseLeave: () => { },
 };
 
 export default GlobesMenu;
