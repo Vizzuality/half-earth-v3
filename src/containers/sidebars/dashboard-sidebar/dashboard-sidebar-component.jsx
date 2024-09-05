@@ -12,11 +12,10 @@ import BioDiversityContainer from './biodiversity-indicators';
 import styles from './dashboard-sidebar-styles.module.scss';
 import DataLayerContainer from './data-layers';
 import RegionsAnalysisComponent from './regions-analysis/regions-analysis-component';
-import SpeciesInfoContainer from './species-info';
 import { LightModeContext } from '../../../context/light-mode';
 
 function DashboardSidebar(props) {
-  const { speciesInfo, data } = props;
+  const { data } = props;
   const [selectedIndex, setSelectedIndex] = useState(1);
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
@@ -33,7 +32,6 @@ function DashboardSidebar(props) {
         {!lightMode && <SunIcon className={styles.icon} />}
         {lightMode && <MoonIcon className={styles.icon} />}
       </button>
-      <SpeciesInfoContainer speciesInfo={speciesInfo} />
 
       <section className={styles.sidenav}>
         <div className={styles.icons}>
@@ -69,7 +67,9 @@ function DashboardSidebar(props) {
           </button>
         </div>
         {selectedIndex === 1 && (
-          <DataLayerContainer {...props} />
+          <>
+            <DataLayerContainer {...props} />
+          </>
         )}
         {selectedIndex === 2 && <BioDiversityContainer {...props} />}
         {selectedIndex === 3 && <RegionsAnalysisComponent {...props} />}

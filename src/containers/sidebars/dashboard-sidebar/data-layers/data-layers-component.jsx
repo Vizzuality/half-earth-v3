@@ -5,7 +5,7 @@ import cx from 'classnames';
 import Button from 'components/button';
 import LayerToggle from 'components/layer-toggle';
 import SearchLocation from 'components/search-location';
-
+import SpeciesInfoContainer from '../species-info';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { SEARCH_TYPES } from 'constants/search-location-constants';
@@ -18,7 +18,7 @@ import styles from './data-layers-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 
 function DataLayerComponent(props) {
-  const { map, activeLayers, view, selectedOption } = props;
+  const { map, activeLayers, view, selectedOption, speciesInfo } = props;
   const { lightMode } = useContext(LightModeContext);
 
   const speciesPublicLayers = [
@@ -130,20 +130,13 @@ function DataLayerComponent(props) {
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <span className={styles.sectionTitle}>Data Layers</span>
       <hr className={hrTheme.dark} />
+
+      <SpeciesInfoContainer speciesInfo={speciesInfo} />
       <div className={styles.data}>
         <Button
           type="rectangular"
           className={styles.saveButton}
           label="download data"
-        />
-        <SearchLocation
-          stacked
-          searchType={SEARCH_TYPES.full}
-          view={view}
-          theme="dark"
-          width="full"
-          parentWidth="380px"
-          searchSourceLayerSlug={selectedOption?.slug}
         />
       </div>
       <hr className={hrTheme.dark} />
