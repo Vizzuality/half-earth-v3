@@ -1,0 +1,102 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+  width: 100%;
+
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --selected-font-color: #{$white};
+  --save-button-text: #{$dark-text};
+  --border-color-hover: #{$brand-color-main-hover};
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    --selected-font-color: #{$white};
+    --save-button-text: #{$white};
+    --border-color-hover: #{$mol-blue};
+  }
+
+  .sectionTitle{
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: var(--font-color);
+  }
+
+  .tabs{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    padding-left: 26px;
+    padding-right: 5px;
+
+    button{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+
+      label{
+        color: var(--font-color);
+        text-align: center;
+        font-family: "Roboto Flex";
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+
+      span{
+        color: var(--font-color);
+        text-align: center;
+        font-family: "Roboto Condensed";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+
+      &.selected{
+        background-color: var(--border-color);
+
+        label,
+        span{
+          color: var(--selected-font-color);
+        }
+      }
+    }
+  }
+
+  p{
+    font-size: 12px;
+    color: var(--font-color);
+  }
+
+  .choices{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .search{
+    display: flex;
+    column-gap: 8px;
+    margin-top: 8px;
+
+    .saveButton {
+      color: var(--save-button-text);
+      background-color: var(--border-color);
+      &:hover {
+        background-color: var(--border-color-hover);
+      }
+    }
+  }
+}
