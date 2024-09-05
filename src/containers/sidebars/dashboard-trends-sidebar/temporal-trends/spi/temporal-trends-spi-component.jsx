@@ -20,7 +20,7 @@ function TemporalTrendsSpiComponent(props) {
 
   const areaProtected = (328357).toLocaleString();
 
-  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
+  const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
   const [spiInfo, setSpiInfo] = useState();
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
@@ -63,24 +63,24 @@ function TemporalTrendsSpiComponent(props) {
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === PROVINCE_TREND,
+                [styles.notActive]: activeTrend === NATIONAL_TREND,
               })}
-              label={NATIONAL_TREND}
+              label={PROVINCE_TREND}
               handleClick={handleActionChange}
             />
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === NATIONAL_TREND,
+                [styles.notActive]: activeTrend === PROVINCE_TREND,
               })}
-              label={PROVINCE_TREND}
+              label={NATIONAL_TREND}
               handleClick={handleActionChange}
             />
           </div>
           <span className={styles.helpText}>
             Toggle national SPI and province-level breakdown.
           </span>
-          <Button
+          {/* <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="play animation"
@@ -88,7 +88,7 @@ function TemporalTrendsSpiComponent(props) {
           <span className={styles.helpText}>
             View how the percent of area protected, SPI, and score distributions
             have changed over time.
-          </span>
+          </span> */}
           {activeTrend !== NATIONAL_TREND && (
             <>
               <Button

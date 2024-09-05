@@ -6,37 +6,31 @@ import styles from './dashboard-trends-sidebar-styles.module.scss';
 import ScoreDistributionsContainer from './score-distributions';
 import TemporalTrendsContainer from './temporal-trends';
 import { LightModeContext } from '../../../context/light-mode';
+import SunIcon from 'icons/sun-regular.svg?react';
+import MoonIcon from 'icons/moon-regular.svg?react';
 
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 
 function DashboardTrendsSidebar(props) {
-  const { shiValue, siiValue, spiValue } = props;
+  const { shiValue, siiValue, spiValue, countryName } = props;
 
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(2);
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
+      <button type="button" className={styles.darkMode} title={lightMode ? 'Switch to Dark mode' : 'Switch to Light mode'} onClick={() => toggleLightMode()}>
+        {!lightMode && <SunIcon className={styles.icon} />}
+        {lightMode && <MoonIcon className={styles.icon} />}
+      </button>
       <header>
         <div className={styles.title}>
           <b>Conservation Metrics</b>
-          <label>Democratic Republic of Congo</label>
+          <label>{countryName}</label>
         </div>
-        <button type="button" onClick={() => toggleLightMode()}>Bright</button>
         <div className={styles.tabs}>
-          <button
-            type="button"
-            aria-label="Species Habitat Index"
-            className={cx({
-              [styles.selected]: selectedIndex === 1,
-            })}
-            onClick={() => setSelectedIndex(1)}
-          >
-            <label>{shiValue}</label>
-            <span>Species Habitat Index</span>
-          </button>
           <button
             type="button"
             aria-label="Species Protection Index"
@@ -48,6 +42,18 @@ function DashboardTrendsSidebar(props) {
             <label>{spiValue}</label>
             <span>Species Protection Index</span>
           </button>
+          <button
+            type="button"
+            aria-label="Species Habitat Index"
+            className={cx({
+              [styles.selected]: selectedIndex === 1,
+            })}
+            onClick={() => setSelectedIndex(1)}
+          >
+            <label>{shiValue}</label>
+            <span>Species Habitat Index</span>
+          </button>
+
           <button
             type="button"
             aria-label="Species Information Index"

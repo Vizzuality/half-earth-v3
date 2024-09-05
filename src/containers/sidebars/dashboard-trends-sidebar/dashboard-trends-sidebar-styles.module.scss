@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-$top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
+$top: 25px;
 $trends-width: 950px;
 
 .container {
@@ -22,12 +22,26 @@ $trends-width: 950px;
   --font-color: #{$white};
   --border-color: #{$brand-color-main};
   --selected-font-color: #{$white};
+  --svg-fill: #{$white};
 
   &.light{
     --font-color: #{$black};
     --border-color: #{$mol-blue};
+    --svg-fill: #{$black};
     @include lightBackdropBlur();
     border: none;
+  }
+
+  .darkMode{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+
+    svg{
+      width: 20px;
+      height: 20px;
+      fill: var(--svg-fill);
+    }
   }
 
   header{

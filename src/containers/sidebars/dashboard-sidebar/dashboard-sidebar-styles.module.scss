@@ -4,7 +4,7 @@
 @import 'styles/common-animations.module';
 
 
-$top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
+$top: 25px;
 $sidebar-species-width: 500px;
 
 .container {
@@ -31,6 +31,18 @@ $sidebar-species-width: 500px;
     --svg-selected-fill: #{$white};
     @include lightBackdropBlur();
     border: none;
+  }
+
+  .darkMode{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+
+    svg{
+      width: 20px;
+      height: 20px;
+      fill: var(--svg-fill);
+    }
   }
 
   .sidenav{

@@ -1,11 +1,5 @@
 import React from 'react';
 
-import cx from 'classnames';
-
-import Logo from 'components/half-earth-logo';
-
-import uiStyles from 'styles/ui.module.scss';
-
 import DashboardTrendsView from '../../containers/views/dashboard-trends-view/dashboard-trends-view';
 
 function DashboardTrendsComponent(props) {
@@ -21,7 +15,6 @@ function DashboardTrendsComponent(props) {
   } = props;
   return (
     <>
-      <Logo className={cx(uiStyles.halfEarthLogoTopLeft)} />
       <DashboardTrendsView
         countryISO={countryISO}
         countryName={countryName}
