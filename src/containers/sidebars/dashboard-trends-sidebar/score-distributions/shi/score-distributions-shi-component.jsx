@@ -39,7 +39,7 @@ function ScoreDistributionsShiComponent(props) {
   const [chartData, setChartData] = useState();
   const [responseData, setResponseData] = useState();
   const [showTable, setShowTable] = useState(false);
-  const [activeScore, setActiveScore] = useState('area');
+  const [activeScore, setActiveScore] = useState('habitat score');
 
   const { lightMode } = useContext(LightModeContext);
 
@@ -188,7 +188,7 @@ function ScoreDistributionsShiComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Protection Score',
+          text: 'Score',
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -275,17 +275,17 @@ function ScoreDistributionsShiComponent(props) {
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeScore !== 'area',
+                [styles.notActive]: activeScore !== 'habitat score',
               })}
-              label="Area"
+              label="Habitat Score"
               handleClick={handleActiveChange}
             />
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeScore !== 'habitat score',
+                [styles.notActive]: activeScore !== 'area',
               })}
-              label="Habitat Score"
+              label="Area"
               handleClick={handleActiveChange}
             />
             <Button
