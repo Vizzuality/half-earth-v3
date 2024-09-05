@@ -1,0 +1,30 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+$top: 25px;
+$trends-width: 950px;
+
+section{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+
+  .dashboardView{
+    flex-grow: 1;
+  }
+
+  .partners{
+    display: flex;
+    gap: 25px;
+    align-self: flex-end;
+    margin: 0 10px 10px 0;
+
+    img{
+      height: 40px;
+      max-width: 100%;
+    }
+  }
+}
