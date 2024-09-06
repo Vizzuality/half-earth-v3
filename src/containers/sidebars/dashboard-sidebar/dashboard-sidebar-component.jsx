@@ -15,6 +15,7 @@ import styles from './dashboard-sidebar-styles.module.scss';
 import DataLayerContainer from './data-layers';
 import RegionsAnalysisComponent from './regions-analysis/regions-analysis-component';
 import { LightModeContext } from '../../../context/light-mode';
+import FilterContainer from '../../../components/filters';
 
 function DashboardSidebar(props) {
   const { data, browsePage, countryISO } = props;
@@ -66,7 +67,7 @@ function DashboardSidebar(props) {
         />
       </div>
       {activeTrend === tabs.REGIONS &&
-        <div> REgions</div>
+        <FilterContainer {...props} />
       }
       {activeTrend === tabs.SPECIES &&
         <section className={styles.sidenav}>
