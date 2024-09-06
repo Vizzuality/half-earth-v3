@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-
+import { DASHBOARD } from 'router';
 import cx from 'classnames';
 
 import AnalyticsIcon from 'icons/analytics.svg?react';
@@ -7,6 +7,7 @@ import StacksIcon from 'icons/stacks.svg?react';
 import TimeLineIcon from 'icons/timeline.svg?react';
 import SunIcon from 'icons/sun-regular.svg?react';
 import MoonIcon from 'icons/moon-regular.svg?react';
+import HomeIcon from 'icons/house-solid.svg?react';
 
 import BioDiversityContainer from './biodiversity-indicators';
 import styles from './dashboard-sidebar-styles.module.scss';
@@ -15,7 +16,7 @@ import RegionsAnalysisComponent from './regions-analysis/regions-analysis-compon
 import { LightModeContext } from '../../../context/light-mode';
 
 function DashboardSidebar(props) {
-  const { data } = props;
+  const { data, browsePage, countryISO } = props;
   const [selectedIndex, setSelectedIndex] = useState(1);
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
@@ -35,6 +36,16 @@ function DashboardSidebar(props) {
 
       <section className={styles.sidenav}>
         <div className={styles.icons}>
+          <button
+            type="button"
+            aria-label="Home"
+            onClick={() => browsePage({
+              type: DASHBOARD,
+              payload: { iso: countryISO.toLowerCase() }
+            })}
+          >
+            <HomeIcon className={styles.icon} />
+          </button>
           <button
             type="button"
             aria-label="Data Analysis"

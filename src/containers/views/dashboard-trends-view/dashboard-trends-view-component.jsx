@@ -93,6 +93,7 @@ function DashboardTrendsViewComponent(props) {
           view={view}
           countryISO={countryISO}
           countryData={countryData}
+          {...props}
         />
       </LightModeProvider>
 

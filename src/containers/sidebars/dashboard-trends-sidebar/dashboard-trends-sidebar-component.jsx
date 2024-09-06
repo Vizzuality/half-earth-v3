@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-
+import { DASHBOARD } from 'router';
 import cx from 'classnames';
 
 import styles from './dashboard-trends-sidebar-styles.module.scss';
@@ -8,12 +8,13 @@ import TemporalTrendsContainer from './temporal-trends';
 import { LightModeContext } from '../../../context/light-mode';
 import SunIcon from 'icons/sun-regular.svg?react';
 import MoonIcon from 'icons/moon-regular.svg?react';
+import HomeIcon from 'icons/house-solid.svg?react';
 
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 
 function DashboardTrendsSidebar(props) {
-  const { shiValue, siiValue, spiValue, countryName } = props;
+  const { shiValue, siiValue, spiValue, countryName, countryISO, browsePage } = props;
 
   const [selectedIndex, setSelectedIndex] = useState(2);
 
@@ -21,6 +22,16 @@ function DashboardTrendsSidebar(props) {
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
+      <button
+        type="button"
+        aria-label="Home"
+        onClick={() => browsePage({
+          type: DASHBOARD,
+          payload: { iso: countryISO.toLowerCase() }
+        })}
+      >
+        <HomeIcon className={styles.icon} />
+      </button>
       <button type="button" className={styles.darkMode} title={lightMode ? 'Switch to Dark mode' : 'Switch to Light mode'} onClick={() => toggleLightMode()}>
         {!lightMode && <SunIcon className={styles.icon} />}
         {lightMode && <MoonIcon className={styles.icon} />}
