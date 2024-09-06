@@ -24,11 +24,19 @@ $sidebar-species-width: 500px;
   --nav-button-bg: #{$white};
   --svg-fill: #{$white};
   --svg-selected-fill: #{$black};
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --save-button-text: #{$dark-text};
+  --border-color-hover: #{$brand-color-main-hover};
 
   &.light{
     --nav-button-bg: #{$black};
     --svg-fill: #{$black};
     --svg-selected-fill: #{$white};
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    --save-button-text: #{$white};
+    --border-color-hover: #{$mol-blue};
     @include lightBackdropBlur();
     border: none;
   }
@@ -75,6 +83,33 @@ $sidebar-species-width: 500px;
         }
       }
     }
+  }
+
+  .btnGroup{
+    display: flex;
+    gap: 3px;
+    padding: 0 2px;
+    border-bottom: 1px solid var(--border-color);
+    margin-top: 30px;
+
+    .saveButton{
+      border: none;
+    }
+  }
+
+  .saveButton {
+    color: var(--save-button-text);
+    background-color: var(--border-color);
+    &:hover {
+      background-color: var(--border-color-hover);
+      color: var(--save-button-text);
+    }
+  }
+
+  .notActive{
+    background-color: transparent;
+    color: var(--font-color);
+    border: 1px solid var(--border-color);
   }
 
 }
