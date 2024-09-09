@@ -1,12 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'components/button';
-import styles from './filter-component-styles.module.scss'
+import styles from './filter-component-styles.module.scss';
 import { Chip } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import cx from 'classnames';
 import { LightModeContext } from '../../context/light-mode';
 
-function FilterComponent() {
+function FilterComponent(props) {
+  const { setFilteredTaxaList, selectedTaxa, setSelectedTaxa } = props;
+
   const filterStart = [
     {
       name: 'dataset',
@@ -96,8 +98,6 @@ function FilterComponent() {
   const speciesListUrl = 'https://dev-api.mol.org/2.x/spatial/species/list';
   const [filters, setFilters] = useState(filterStart);
   const [taxaList, setTaxaList] = useState([]);
-  const [selectedTaxa, setSelectedTaxa] = useState('');
-  const [filteredList, setFilteredList] = useState([]);
   const [anyActive, setAnyActive] = useState(false);
   const { lightMode } = useContext(LightModeContext);
 
@@ -109,6 +109,11 @@ function FilterComponent() {
     if (!taxaList.length) return;
     refreshCounts();
   }, [taxaList]);
+
+  useEffect(() => {
+    refreshCounts();
+  }, [selectedTaxa])
+
 
 
   const getSpeciesList = async () => {
@@ -200,7 +205,7 @@ function FilterComponent() {
   }
 
   const clearCounts = () => {
-    setFilteredList([]);
+    setFilteredTaxaList([]);
     filters.forEach(f => {
       const filters = f;
       filters.filters.forEach(ff => {
@@ -218,13 +223,12 @@ function FilterComponent() {
       allTaxa = allTaxa.filter(taxa => taxa.taxa === selectedTaxa);
     }
 
-    setFilteredList([]);
     const filtered = [];
     allTaxa.species = [];
-    setAnyActive(false);
+    let isAnyActive = false;
 
     filters.forEach(f => f.filters.forEach(ff => {
-      if (ff.active) setAnyActive(true);
+      if (ff.active) isAnyActive = true;
     }));
 
     allTaxa.forEach(taxa => {
@@ -237,7 +241,7 @@ function FilterComponent() {
           filterGroup.filters.forEach(filter => {
             const result = filter.test(species);
             filter.result = result;
-            if (anyActive && filter.active) {
+            if (isAnyActive && filter.active) {
               if (filter.type === 'and') {
                 speciesFilters.push(result);
               } else if (filter.type === 'or') {
@@ -249,7 +253,7 @@ function FilterComponent() {
         const allAnd = speciesFilters.every(x => x) && speciesFilters.length > 0;
         const anyOr = speciesOrFilters.indexOf(true) !== -1;
         let inCandidate = false;
-        if (!anyActive) {
+        if (!isAnyActive) {
           inCandidate = true;
           candidateSpecies.push(species);
           // only ands
@@ -282,9 +286,8 @@ function FilterComponent() {
       filtered.push(candidateTaxa);
     });
 
-    setFilteredList(filtered);
-
-    // if (emit) this.filtersUpdated.emit(this.filteredList);
+    setAnyActive(isAnyActive);
+    setFilteredTaxaList(filtered);
   }
 
   const activateFilter = (filter) => {

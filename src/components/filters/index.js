@@ -7,4 +7,4 @@ function FilterContainer(props) {
   )
 }
 
-export default FilterContainer
+export default FilterContainer;
