@@ -1,0 +1,253 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.filters {
+  width: 50%;
+
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --selected-font-color: #{$white};
+  --save-button-text: #{$dark-text};
+  --border-color-hover: #{$brand-color-main-hover};
+  color: var(--font-color);
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    --selected-font-color: #{$white};
+    --save-button-text: #{$white};
+    --border-color-hover: #{$mol-blue};
+  }
+
+  .titleRow {
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 36px;
+    border-bottom: 2px solid;
+    padding-bottom: 5px;
+  }
+
+  .close{
+    color: var(--font-color);
+  }
+
+  .filterGroupTitle {
+    font-size: 16px;
+    padding: 15px 0 8px;
+  }
+
+  .filterbox {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  border-bottom: 2px solid;
+  padding-bottom: 5px;
+
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+}
+
+.taxaList {
+  max-width: 400px;
+  margin-top: 15px;
+
+  .thumb {
+    height: 32px;
+    width: 32px;
+  }
+  .title {
+    cursor: pointer;
+    padding: 0 5px;
+  }
+}
+.spinner {
+  max-height: 32px;
+}
+.datasetList {
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  a:hover,
+  a:focus {
+    background-color: unset;
+    color: black;
+  }
+  img {
+    margin: 2px !important;
+    height: 25px !important;
+    max-width: 25px !important;
+  }
+}
+.title {
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  justify-content: flex-start;
+  align-items: center;
+  .header {
+    padding-left: 7px;
+  }
+}
+.filterCount {
+  margin-left: auto;
+  text-align: right;
+  margin-right: 15px;
+  font-size: 12px;
+}
+
+.paginatior {
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  // flex-direction: row;
+  .pageButton {
+    cursor: pointer;
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    &.num {
+      max-width: 45px;
+    }
+    &.left {
+      border-radius: 5px 0 0 5px;
+    }
+    &.right {
+      border-radius: 0 5px 5px 0;
+    }
+    &:disabled {
+      cursor: default;
+      background-color: #ddd;
+      color: #888;
+    }
+    &.focus {
+      z-index: 2;
+      color: #fff;
+      cursor: default;
+      background-color: #337ab7;
+      border-color: #337ab7;
+    }
+  }
+}
+
+.speciesList {
+  padding-top: 5px;
+  height: calc(100vh - 280px);
+  overflow-y: hidden;
+  width: 280px;
+
+  .filterResults {
+    margin-top: 8px;
+    overflow-y: auto;
+    max-height: calc(100vh - 315px);
+  }
+
+  .speciesFilter {
+    padding: 10px 0;
+    line-height: 32px;
+    justify-content: center;
+    input {
+      width: 90%;
+      line-height: 32px;
+      margin-left: 2.5%;
+    }
+  }
+  .familyTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding-bottom: 3px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    .sci {
+      padding-left: 10px;
+    }
+  }
+  .listBox {
+    min-height: calc(100% - 170px);
+  }
+  .name {
+    // line-height: 23px;
+    .sci {
+      font-weight: 300;
+      font-size: 14px;
+      font-style: italic;
+    }
+    .common {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+  .speciesBox {
+    display: flex;
+    flex-direction: row;
+    // border: solid black 1px;
+    // max-height: 100px;
+    margin: 3px;
+    .name {
+      padding: 5px 10px;
+    }
+
+    cursor: pointer;
+    .imgBox {
+      width: 32px;
+      max-width: 32px;
+      min-width: 32px;
+      padding: 3px;
+      text-align: center;
+      overflow: hidden;
+      object-fit: cover;
+    }
+    img {
+      max-width: 32px;
+      min-width: 32px;
+      margin: 0 auto;
+      height: 32px;
+      border-radius: 2px;
+    }
+    .speciesText {
+      display: flex;
+      flex-direction: column;
+    }
+    .openDataset {
+      text-decoration: underline;
+      font-size: 14px;
+    }
+  }
+  .close {
+    margin: 10px 15px 10px 10px;
+  }
+}
+

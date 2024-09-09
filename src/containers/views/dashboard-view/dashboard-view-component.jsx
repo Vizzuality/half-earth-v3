@@ -1,12 +1,10 @@
 import React from 'react';
-import { DASHBOARD_SPECIES, DASHBOARD_TRENDS } from 'router';
+import { DASHBOARD_SPECIES, DASHBOARD_TRENDS, DASHBOARD_SPECIES_NAME } from 'router';
 import styles from './dashboard-view-styles.module.scss';
 import cx from 'classnames';
 
 function DashboardViewComponent(props) {
   const { browsePage, countryISO, countryName } = props;
-
-
 
   return (
     <>
@@ -21,7 +19,7 @@ function DashboardViewComponent(props) {
               Explore species distribution, trait, and conservation data
             </p>
           </div>
-          <div className={cx(styles.navCard, styles.regions)} onClick={() => browsePage({ type: DASHBOARD_SPECIES, payload: { iso: countryISO.toLowerCase() } })} >
+          <div className={cx(styles.navCard, styles.regions)} onClick={() => browsePage({ type: DASHBOARD_SPECIES_NAME, payload: { iso: countryISO.toLowerCase(), scientificname: 'regions' } })} >
             <div className={styles.outline}></div>
             <label>Regions</label>
             <p>

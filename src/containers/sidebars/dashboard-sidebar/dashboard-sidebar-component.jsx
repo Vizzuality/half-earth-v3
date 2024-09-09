@@ -15,9 +15,11 @@ import styles from './dashboard-sidebar-styles.module.scss';
 import DataLayerContainer from './data-layers';
 import RegionsAnalysisComponent from './regions-analysis/regions-analysis-component';
 import { LightModeContext } from '../../../context/light-mode';
+import FilterContainer from '../../../components/filters';
+import SpeciesListContainer from '../../../components/speciesList';
 
 function DashboardSidebar(props) {
-  const { data, browsePage, countryISO } = props;
+  const { data, browsePage, countryISO, countryName, scientificName } = props;
 
   const tabs = {
     REGIONS: 'REGIONS',
@@ -26,6 +28,8 @@ function DashboardSidebar(props) {
 
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [activeTrend, setActiveTrend] = useState(tabs.REGIONS);
+  const [selectedTaxa, setSelectedTaxa] = useState('');
+  const [filteredTaxaList, setFilteredTaxaList] = useState();
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
 
@@ -46,6 +50,7 @@ function DashboardSidebar(props) {
         {!lightMode && <SunIcon className={styles.icon} />}
         {lightMode && <MoonIcon className={styles.icon} />}
       </button>
+      <h1>{countryName}</h1>
 
       <div className={styles.btnGroup}>
         <Button
@@ -56,17 +61,30 @@ function DashboardSidebar(props) {
           label={tabs.REGIONS}
           handleClick={handleActionChange}
         />
-        <Button
-          type="rectangular"
-          className={cx(styles.saveButton, {
-            [styles.notActive]: activeTrend === tabs.REGIONS,
-          })}
-          label={tabs.SPECIES}
-          handleClick={handleActionChange}
-        />
+        {scientificName.toUpperCase() !== tabs.REGIONS &&
+          <Button
+            type="rectangular"
+            className={cx(styles.saveButton, {
+              [styles.notActive]: activeTrend === tabs.REGIONS,
+            })}
+            label={tabs.SPECIES}
+            handleClick={handleActionChange}
+          />}
       </div>
+
       {activeTrend === tabs.REGIONS &&
-        <div> REgions</div>
+        <div className={styles.regionFilter}>
+          <FilterContainer
+            selectedTaxa={selectedTaxa}
+            setFilteredTaxaList={setFilteredTaxaList}
+            setSelectedTaxa={setSelectedTaxa}
+            {...props} />
+          <SpeciesListContainer
+            taxaList={filteredTaxaList}
+            selectedTaxa={selectedTaxa}
+            setSelectedTaxa={setSelectedTaxa}
+            {...props} />
+        </div>
       }
       {activeTrend === tabs.SPECIES &&
         <section className={styles.sidenav}>
