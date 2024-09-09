@@ -19,7 +19,7 @@ import FilterContainer from '../../../components/filters';
 import SpeciesListContainer from '../../../components/speciesList';
 
 function DashboardSidebar(props) {
-  const { data, browsePage, countryISO, countryName } = props;
+  const { data, browsePage, countryISO, countryName, scientificName } = props;
 
   const tabs = {
     REGIONS: 'REGIONS',
@@ -61,14 +61,15 @@ function DashboardSidebar(props) {
           label={tabs.REGIONS}
           handleClick={handleActionChange}
         />
-        <Button
-          type="rectangular"
-          className={cx(styles.saveButton, {
-            [styles.notActive]: activeTrend === tabs.REGIONS,
-          })}
-          label={tabs.SPECIES}
-          handleClick={handleActionChange}
-        />
+        {scientificName.toUpperCase() !== tabs.REGIONS &&
+          <Button
+            type="rectangular"
+            className={cx(styles.saveButton, {
+              [styles.notActive]: activeTrend === tabs.REGIONS,
+            })}
+            label={tabs.SPECIES}
+            handleClick={handleActionChange}
+          />}
       </div>
 
       {activeTrend === tabs.REGIONS &&
