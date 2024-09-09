@@ -14,6 +14,7 @@ export const MAP_IFRAME = 'location/MAP_IFRAME';
 export const DASHBOARD = 'location/DASHBOARD';
 export const DASHBOARD_TRENDS = 'location/DASHBOARD_TRENDS';
 export const DASHBOARD_SPECIES = 'location/DASHBOARD_SPECIES';
+export const DASHBOARD_REGIONS = 'location/DASHBOARD_REGIONS';
 export const DASHBOARD_SPECIES_NAME = 'location/DASHBOARD_SPECIES_NAME';
 
 export const routes: RoutesMap<{ path: string; page?: string }> = {
@@ -52,6 +53,10 @@ export const routes: RoutesMap<{ path: string; page?: string }> = {
   [DASHBOARD_SPECIES]: {
     path: '/dashboard/:iso/species',
     page: 'dashboard-species',
+  },
+  [DASHBOARD_REGIONS]: {
+    path: '/dashboard/:iso/species/:scientificname',
+    page: 'dashboard-species-name',
   },
   [DASHBOARD]: {
     path: '/dashboard/:iso',
