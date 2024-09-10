@@ -3,10 +3,12 @@ import styles from './speciesList-component-styles.module.scss';
 import cx from 'classnames';
 import Button from 'components/button';
 import { LightModeContext } from '../../context/light-mode';
+import SpeciesGroupContainer from '../species-group';
+import SpeciesGroupTitleContainer from '../species-group-title';
 
 
 function SpeciesListComponent(props) {
-  const { taxaList, selectedTaxa, setSelectedTaxa } = props
+  const { selectedTaxa, setSelectedTaxa, filteredTaxaList } = props
 
   const { lightMode } = useContext(LightModeContext);
   const SPHINGID_MOTHS = /Sphingid moths/gi;
@@ -15,25 +17,17 @@ function SpeciesListComponent(props) {
   const [inFilter, setInFilter] = useState(0);
   const [familyCounts, setFamilyCounts] = useState({});
   const [selectedTaxaObj, setSelectedTaxaObj] = useState();
+  let prevName = 'zoo';
 
   useEffect(() => {
     if (!selectedTaxa) return;
-    console.log(selectedTaxa);
     updateSelectedTaxa(selectedTaxa);
-
   }, []);
-
-  useEffect(() => {
-    if (!taxaList) return;
-    console.log(taxaList);
-  }, [taxaList]);
 
   useEffect(() => {
     if (!selectedTaxaObj) return;
     applyFilter();
   }, [selectedTaxaObj])
-
-
 
   const getTaxaTitle = (label, taxa) => {
     const taxaToCheck = [
@@ -64,7 +58,7 @@ function SpeciesListComponent(props) {
     setFilter('');
     setSelectedTaxa(taxa);
 
-    const sto = taxaList.find(t => t.taxa === taxa);
+    const sto = filteredTaxaList.find(t => t.taxa === taxa);
     if (sto === undefined) return;
 
     setInFilter(sto?.species?.length);
@@ -163,7 +157,6 @@ function SpeciesListComponent(props) {
     }
 
     selectedTaxaObj.filteredSpecies = groupByFamily;
-    console.log(selectedTaxaObj)
   }
 
   const clearSelection = () => {
@@ -182,6 +175,14 @@ function SpeciesListComponent(props) {
     });
   }
 
+  const checkPrevName = (sp) => {
+    if (prevName !== sp) {
+      prevName = sp;
+      return true;
+    }
+    return false;
+  }
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.filters)}>
       <div className={styles.titleRow}>
@@ -193,7 +194,7 @@ function SpeciesListComponent(props) {
         />}
       </div>
       <div className={styles.taxaList}>
-        {taxaList?.map((taxa, index) => {
+        {filteredTaxaList?.map((taxa, index) => {
           return (
             <div className={styles.title} key={index} onClick={() => updateSelectedTaxa(taxa.taxa)}>
               <img className={styles.thumb}
@@ -208,24 +209,22 @@ function SpeciesListComponent(props) {
       {selectedTaxa && selectedTaxaObj && <div className={styles.speciesList}>
         <input type="search" placeholder={`Filter ${selectedTaxa}`} />
         <div className={styles.filterResults}>
-          {
-            selectedTaxaObj.species.map((sp, index) => {
-              return (<div className={styles.speciesBox} key={index}>
-                <div className={styles.imgBox}>
-                  <img loading="lazy" src={`https://mol.org/static/img/groups/taxa_${selectedTaxaObj.taxa}.png`} />
-                </div>
-                <div className={cx(styles.speciesText, styles.name)}>
-                  <div className={styles.common}>{sp.common}</div>
-                  <div className={styles.sci}>{sp.scientificname}</div>
-                </div>
-              </div>)
+          {selectedTaxaObj.filteredSpecies &&
+            Object.keys(selectedTaxaObj.filteredSpecies).map((sp, index) => {
+              return <div key={index}>
+                {checkPrevName(sp) && selectedTaxaObj.filteredSpecies[sp].length > 0 &&
+                  <SpeciesGroupTitleContainer species={selectedTaxaObj.filteredSpecies[sp][0]} filter={filter} />
+                }
+                {selectedTaxaObj.filteredSpecies[sp].map((v, idx) => (
+                  v.visible && <SpeciesGroupContainer species={v} key={idx} selectedTaxaObj={selectedTaxaObj} {...props} />
+                ))}
+              </div>
             })
           }
         </div>
       </div>
       }
     </div>
-  )
+  );
 }
-
 export default SpeciesListComponent

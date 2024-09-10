@@ -1,0 +1,42 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.speciesBox {
+  display: flex;
+  flex-direction: row;
+  margin: 3px;
+
+  .name {
+    padding: 5px 10px;
+  }
+
+  cursor: pointer;
+  .imgBox {
+    width: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    padding: 3px;
+    text-align: center;
+    overflow: hidden;
+    object-fit: cover;
+  }
+  img {
+    max-width: 32px;
+    min-width: 32px;
+    margin: 0 auto;
+    height: 32px;
+    border-radius: 2px;
+  }
+  .speciesText {
+    display: flex;
+    flex-direction: column;
+  }
+  .openDataset {
+    text-decoration: underline;
+    font-size: 14px;
+  }
+}
+
+

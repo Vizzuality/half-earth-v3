@@ -19,7 +19,17 @@ import FilterContainer from '../../../components/filters';
 import SpeciesListContainer from '../../../components/speciesList';
 
 function DashboardSidebar(props) {
-  const { data, browsePage, countryISO, countryName, scientificName } = props;
+  const {
+    data,
+    browsePage,
+    countryISO,
+    countryName,
+    scientificName,
+    taxaList,
+    filteredTaxaList,
+    setFilteredTaxaList,
+    selectedTaxa,
+    setSelectedTaxa } = props;
 
   const tabs = {
     REGIONS: 'REGIONS',
@@ -28,10 +38,8 @@ function DashboardSidebar(props) {
 
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [activeTrend, setActiveTrend] = useState(tabs.REGIONS);
-  const [selectedTaxa, setSelectedTaxa] = useState('');
-  const [filteredTaxaList, setFilteredTaxaList] = useState();
-  const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
+  const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   useEffect(() => {
     if (data) {
@@ -39,10 +47,15 @@ function DashboardSidebar(props) {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (!scientificName) return;
+
+    setActiveTrend(tabs.SPECIES);
+  }, [scientificName])
+
   const handleActionChange = (event) => {
     setActiveTrend(event.currentTarget.innerText);
   };
-
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -61,7 +74,7 @@ function DashboardSidebar(props) {
           label={tabs.REGIONS}
           handleClick={handleActionChange}
         />
-        {scientificName.toUpperCase() !== tabs.REGIONS &&
+        {scientificName &&
           <Button
             type="rectangular"
             className={cx(styles.saveButton, {
@@ -75,13 +88,14 @@ function DashboardSidebar(props) {
       {activeTrend === tabs.REGIONS &&
         <div className={styles.regionFilter}>
           <FilterContainer
+            taxaList={taxaList}
             selectedTaxa={selectedTaxa}
             setFilteredTaxaList={setFilteredTaxaList}
             setSelectedTaxa={setSelectedTaxa}
             {...props} />
           <SpeciesListContainer
-            taxaList={filteredTaxaList}
             selectedTaxa={selectedTaxa}
+            filteredTaxaList={filteredTaxaList}
             setSelectedTaxa={setSelectedTaxa}
             {...props} />
         </div>

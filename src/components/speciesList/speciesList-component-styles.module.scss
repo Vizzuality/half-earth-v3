@@ -89,11 +89,11 @@
   max-width: 280px;
   display: flex;
   flex-direction: column;
-  color: black;
+  color: var(--font-color);
   a:hover,
   a:focus {
     background-color: unset;
-    color: black;
+    color: var(--font-color);
   }
   img {
     margin: 2px !important;
@@ -181,71 +181,7 @@
       margin-left: 2.5%;
     }
   }
-  .familyTitle {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid black;
-    padding-bottom: 3px;
-    margin-left: 10px;
-    margin-right: 10px;
 
-    .sci {
-      padding-left: 10px;
-    }
-  }
-  .listBox {
-    min-height: calc(100% - 170px);
-  }
-  .name {
-    // line-height: 23px;
-    .sci {
-      font-weight: 300;
-      font-size: 14px;
-      font-style: italic;
-    }
-    .common {
-      font-size: 16px;
-      font-weight: 500;
-    }
-  }
-  .speciesBox {
-    display: flex;
-    flex-direction: row;
-    // border: solid black 1px;
-    // max-height: 100px;
-    margin: 3px;
-    .name {
-      padding: 5px 10px;
-    }
-
-    cursor: pointer;
-    .imgBox {
-      width: 32px;
-      max-width: 32px;
-      min-width: 32px;
-      padding: 3px;
-      text-align: center;
-      overflow: hidden;
-      object-fit: cover;
-    }
-    img {
-      max-width: 32px;
-      min-width: 32px;
-      margin: 0 auto;
-      height: 32px;
-      border-radius: 2px;
-    }
-    .speciesText {
-      display: flex;
-      flex-direction: column;
-    }
-    .openDataset {
-      text-decoration: underline;
-      font-size: 14px;
-    }
-  }
   .close {
     margin: 10px 15px 10px 10px;
   }

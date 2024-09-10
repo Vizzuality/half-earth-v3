@@ -7,7 +7,7 @@ import cx from 'classnames';
 import { LightModeContext } from '../../context/light-mode';
 
 function FilterComponent(props) {
-  const { setFilteredTaxaList, selectedTaxa, setSelectedTaxa } = props;
+  const { setFilteredTaxaList, selectedTaxa, taxaList } = props;
 
   const filterStart = [
     {
@@ -95,15 +95,9 @@ function FilterComponent(props) {
     },
   ];
 
-  const speciesListUrl = 'https://dev-api.mol.org/2.x/spatial/species/list';
   const [filters, setFilters] = useState(filterStart);
-  const [taxaList, setTaxaList] = useState([]);
   const [anyActive, setAnyActive] = useState(false);
   const { lightMode } = useContext(LightModeContext);
-
-  useEffect(() => {
-    getSpeciesList();
-  }, []);
 
   useEffect(() => {
     if (!taxaList.length) return;
@@ -113,96 +107,6 @@ function FilterComponent(props) {
   useEffect(() => {
     refreshCounts();
   }, [selectedTaxa])
-
-
-
-  const getSpeciesList = async () => {
-    // TODO: Use mol-country-attribute.json file to find MOL Region ID for ISO value
-    const params = makeSpeciesListParams({
-      region_id: '44b3bc0a-e617-4785-9123-7e6e5349b07d',
-    });
-    const response = await fetch(speciesListUrl, {
-      method: 'POST',
-      body: JSON.stringify(params),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json, text/plain, */*'
-      }
-    });
-    const data = await response.json();
-
-
-    const seasons = [
-      '',
-      'Resident',
-      'Breeding',
-      'Non-breeding',
-      'Passage',
-      '',
-    ];
-
-    data.taxas.forEach(taxa => {
-      const taxaDatasetSet = new Set();
-      taxa.species.forEach(species => {
-        const speciesDatasets = Object.keys(species.dataset);
-        speciesDatasets.forEach(d => {
-          taxaDatasetSet.add(d);
-        });
-        const speciesDataset2 = {};
-        speciesDatasets.forEach(k => {
-          speciesDataset2[data.datasets[k].dataset_id] =
-            species.dataset[k];
-        });
-        species.datasetList = speciesDatasets.map(dsid => ({
-          dataset_id: data.datasets[dsid].dataset_id,
-          product_type: data.datasets[dsid].product_type,
-          title: data.datasets[dsid].title,
-          seasonality: species.dataset[dsid],
-          seasonalityString: species.dataset[dsid]
-            .map(s => (s === null ? 'Resident' : seasons[s]))
-            .filter(s => s.length > 0)
-            .join(', '),
-        }));
-        species.dataset = speciesDataset2;
-      });
-      taxa.datasets = {};
-      Array.from(taxaDatasetSet).forEach((d) => {
-        const ds = data.datasets[d];
-        taxa.datasets[ds.dataset_id] = ds;
-      });
-    });
-
-    const taxa = sortTaxaList(data.taxas);
-    setTaxaList(taxa);
-  }
-
-  const makeSpeciesListParams = (args, summary = false) => {
-    const params = {};
-    params.lang = 'en';
-    if (args.lat) {
-      params.lat = args.lat.toString();
-    }
-    if (args.lng) {
-      params.lng = args.lng.toString();
-    }
-    if (args.radius) {
-      params.radius = args.radius.toString();
-    }
-    if (args.wkt) {
-      params.wkt = args.wkt;
-    }
-
-    if (args.geojson) {
-      params.geojson = args.geojson;
-    }
-    if (args.region_id) {
-      params.region_id = args.region_id;
-    }
-    if (summary) {
-      params.summary = 'true';
-    }
-    return params;
-  }
 
   const clearCounts = () => {
     setFilteredTaxaList([]);
@@ -302,18 +206,6 @@ function FilterComponent(props) {
     refreshCounts();
   }
 
-  const sortTaxaList = (taxa) => {
-    return taxa.sort((a, b) => {
-      if (a.sortby < b.sortby) {
-        return -1;
-      }
-      if (a.sortby > b.sortby) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
   return (
     <div className={cx(lightMode ? styles.light : '', styles.filters)}>
       <div className={styles.titleRow}>
@@ -332,7 +224,7 @@ function FilterComponent(props) {
             {filterGroup.filters.map((filter, idx) => {
               return (
                 <Chip key={idx}
-                  icon={filter.active ? <DoneIcon /> : ''}
+                  icon={filter.active ? <DoneIcon /> : <></>}
                   color={filter.active ? "success" : "primary"}
                   label={`${filter.name}: ${filter.count}`}
                   onClick={() => activateFilter(filter)}></Chip>

@@ -8,9 +8,19 @@ function DashboardSidebarContainer(props) {
   const {scientificName} = props;
 
   const [data, setData] = useState(null);
+  const [taxaList, setTaxaList] = useState([])
   const [dataByCountry, setDataByCountry] = useState(null);
+  const [selectedTaxa, setSelectedTaxa] = useState('');
+  const [filteredTaxaList, setFilteredTaxaList] = useState();
+
+  const speciesListUrl = 'https://dev-api.mol.org/2.x/spatial/species/list';
 
   useEffect(() => {
+    getSpeciesList();
+  }, [])
+
+  useEffect(() => {
+    if(!scientificName) return;
     getData();
   }, [scientificName]);
 
@@ -39,6 +49,94 @@ function DashboardSidebarContainer(props) {
     getDataByCountry(habitatTrendData);
 
     setData({habitatTrendData, reserveCoverageData, habitatMetricesData});
+  }
+
+  const getSpeciesList = async () => {
+    // TODO: Use mol-country-attribute.json file to find MOL Region ID for ISO value
+    const params = makeSpeciesListParams({
+      region_id: '44b3bc0a-e617-4785-9123-7e6e5349b07d',
+    });
+    const response = await fetch(speciesListUrl, {
+      method: 'POST',
+      body: JSON.stringify(params),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json, text/plain, */*'
+      }
+    });
+    const data = await response.json();
+
+
+    const seasons = [
+      '',
+      'Resident',
+      'Breeding',
+      'Non-breeding',
+      'Passage',
+      '',
+    ];
+
+    data.taxas.forEach(taxa => {
+      const taxaDatasetSet = new Set();
+      taxa.species.forEach(species => {
+        const speciesDatasets = Object.keys(species.dataset);
+        speciesDatasets.forEach(d => {
+          taxaDatasetSet.add(d);
+        });
+        const speciesDataset2 = {};
+        speciesDatasets.forEach(k => {
+          speciesDataset2[data.datasets[k].dataset_id] =
+            species.dataset[k];
+        });
+        species.datasetList = speciesDatasets.map(dsid => ({
+          dataset_id: data.datasets[dsid].dataset_id,
+          product_type: data.datasets[dsid].product_type,
+          title: data.datasets[dsid].title,
+          seasonality: species.dataset[dsid],
+          seasonalityString: species.dataset[dsid]
+            .map(s => (s === null ? 'Resident' : seasons[s]))
+            .filter(s => s.length > 0)
+            .join(', '),
+        }));
+        species.dataset = speciesDataset2;
+      });
+      taxa.datasets = {};
+      Array.from(taxaDatasetSet).forEach((d) => {
+        const ds = data.datasets[d];
+        taxa.datasets[ds.dataset_id] = ds;
+      });
+    });
+
+    const taxa = sortTaxaList(data.taxas);
+    setTaxaList(taxa);
+  }
+
+  const makeSpeciesListParams = (args, summary = false) => {
+    const params = {};
+    params.lang = 'en';
+    if (args.lat) {
+      params.lat = args.lat.toString();
+    }
+    if (args.lng) {
+      params.lng = args.lng.toString();
+    }
+    if (args.radius) {
+      params.radius = args.radius.toString();
+    }
+    if (args.wkt) {
+      params.wkt = args.wkt;
+    }
+
+    if (args.geojson) {
+      params.geojson = args.geojson;
+    }
+    if (args.region_id) {
+      params.region_id = args.region_id;
+    }
+    if (summary) {
+      params.summary = 'true';
+    }
+    return params;
   }
 
   const getPreferenceQuery = (preferences) => {
@@ -86,7 +184,27 @@ function DashboardSidebarContainer(props) {
     setDataByCountry(countryData);
   }
 
-  return <Component data={data} dataByCountry={dataByCountry} {...props}/>;
+  const sortTaxaList = (taxa) => {
+    return taxa.sort((a, b) => {
+      if (a.sortby < b.sortby) {
+        return -1;
+      }
+      if (a.sortby > b.sortby) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  return <Component
+            data={data}
+            dataByCountry={dataByCountry}
+            taxaList={taxaList}
+            selectedTaxa={selectedTaxa}
+            setSelectedTaxa={setSelectedTaxa}
+            filteredTaxaList={filteredTaxaList}
+            setFilteredTaxaList={setFilteredTaxaList}
+          {...props}/>;
 }
 
 export default connect(mapStateToProps, null)(DashboardSidebarContainer);

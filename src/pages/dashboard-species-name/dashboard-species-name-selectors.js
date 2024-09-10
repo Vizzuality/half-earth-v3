@@ -11,7 +11,7 @@ import dashboardViewConfig from '../../containers/views/dashboard-species-name-v
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const selectCountriesData = ({ countryData }) =>
   countryData && (countryData.data || null);
-const selectScientificName = ({ location }) => location.payload.scientificname.toUpperCase();
+const selectScientificName = ({ location }) => location.payload.scientificname;
 
 const getViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
   return {
