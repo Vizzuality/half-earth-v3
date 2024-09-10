@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DASHBOARD_SPECIES_NAME } from 'router';
+import { DASHBOARD_REGIONS } from 'router';
 import styles from './dashboard-species-view-styles.module.scss';
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
@@ -26,13 +26,13 @@ function DashboardSpeciesViewComponent(props) {
         <Button type="rectangular"
           label="Explore all Species"
           handleClick={() => browsePage({
-            type: DASHBOARD_SPECIES_NAME,
+            type: DASHBOARD_REGIONS,
             payload: { iso: countryISO.toLowerCase(), scientificname: 'Cossypha polioptera' }
           })} />
       </div>
       <div className={styles.navigation}>
         <div className={styles.navCard} onClick={() => browsePage({
-          type: DASHBOARD_SPECIES_NAME,
+          type: DASHBOARD_REGIONS,
           payload: { iso: countryISO.toLowerCase(), scientificname: 'Cossypha polioptera' }
         })} >
           <div className={styles.outline}></div>
@@ -42,7 +42,7 @@ function DashboardSpeciesViewComponent(props) {
           </p>
         </div>
         <div className={styles.navCard} onClick={() => browsePage({
-          type: DASHBOARD_SPECIES_NAME,
+          type: DASHBOARD_REGIONS,
           payload: { iso: countryISO.toLowerCase(), scientificname: 'Piliocolobus parmentieri' }
         })} >
           <div className={styles.outline}></div>
@@ -52,7 +52,7 @@ function DashboardSpeciesViewComponent(props) {
           </p>
         </div>
         <div className={styles.navCard} onClick={() => browsePage({
-          type: DASHBOARD_SPECIES_NAME,
+          type: DASHBOARD_REGIONS,
           payload: { iso: countryISO.toLowerCase(), scientificname: 'Dasypeltis palmarum' }
         })} >
           <div className={styles.outline}></div>
@@ -62,7 +62,7 @@ function DashboardSpeciesViewComponent(props) {
           </p>
         </div>
         <div className={styles.navCard} onClick={() => browsePage({
-          type: DASHBOARD_SPECIES_NAME,
+          type: DASHBOARD_REGIONS,
           payload: { iso: countryISO.toLowerCase(), scientificname: 'Ptychadena bunoderma' }
         })} >
           <div className={styles.outline}></div>

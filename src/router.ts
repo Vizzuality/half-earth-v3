@@ -14,7 +14,7 @@ export const MAP_IFRAME = 'location/MAP_IFRAME';
 export const DASHBOARD = 'location/DASHBOARD';
 export const DASHBOARD_TRENDS = 'location/DASHBOARD_TRENDS';
 export const DASHBOARD_SPECIES = 'location/DASHBOARD_SPECIES';
-export const DASHBOARD_REGIONS = 'location/DASHBOARD_SPECIES_NAME';
+export const DASHBOARD_REGIONS = 'location/DASHBOARD_REGIONS';
 
 export const routes: RoutesMap<{ path: string; page?: string }> = {
   [LANDING]: {
