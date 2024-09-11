@@ -14,7 +14,7 @@ function SpeciesGroupComponent(props) {
         iso: countryISO.toLowerCase(),
         scientificname: species.scientificname
       }
-    })
+    });
   }
 
   return (

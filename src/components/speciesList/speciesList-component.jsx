@@ -8,26 +8,35 @@ import SpeciesGroupTitleContainer from '../species-group-title';
 
 
 function SpeciesListComponent(props) {
-  const { selectedTaxa, setSelectedTaxa, filteredTaxaList } = props
+  const {
+    selectedTaxa,
+    setSelectedTaxa,
+    filteredTaxaList,
+    filter,
+    setFilter,
+  } = props
 
   const { lightMode } = useContext(LightModeContext);
   const SPHINGID_MOTHS = /Sphingid moths/gi;
 
-  const [filter, setFilter] = useState();
   const [inFilter, setInFilter] = useState(0);
   const [familyCounts, setFamilyCounts] = useState({});
+  const [, setUpdate] = useState()
+
   const [selectedTaxaObj, setSelectedTaxaObj] = useState();
-  let prevName = 'zoo';
+
 
   useEffect(() => {
     if (!selectedTaxa) return;
     updateSelectedTaxa(selectedTaxa);
-  }, []);
+  }, [selectedTaxa]);
 
   useEffect(() => {
     if (!selectedTaxaObj) return;
+
     applyFilter();
-  }, [selectedTaxaObj])
+    setUpdate('');
+  }, [selectedTaxaObj]);
 
   const getTaxaTitle = (label, taxa) => {
     const taxaToCheck = [
@@ -57,13 +66,12 @@ function SpeciesListComponent(props) {
 
     setFilter('');
     setSelectedTaxa(taxa);
+    setFamilyCounts({});
 
     const sto = filteredTaxaList.find(t => t.taxa === taxa);
     if (sto === undefined) return;
 
     setInFilter(sto?.species?.length);
-
-    setFamilyCounts({});
 
     const transformer = sp => ({
       ...sp,
@@ -175,14 +183,6 @@ function SpeciesListComponent(props) {
     });
   }
 
-  const checkPrevName = (sp) => {
-    if (prevName !== sp) {
-      prevName = sp;
-      return true;
-    }
-    return false;
-  }
-
   return (
     <div className={cx(lightMode ? styles.light : '', styles.filters)}>
       <div className={styles.titleRow}>
@@ -194,7 +194,7 @@ function SpeciesListComponent(props) {
         />}
       </div>
       <div className={styles.taxaList}>
-        {filteredTaxaList?.map((taxa, index) => {
+        {!selectedTaxa && filteredTaxaList?.map((taxa, index) => {
           return (
             <div className={styles.title} key={index} onClick={() => updateSelectedTaxa(taxa.taxa)}>
               <img className={styles.thumb}
@@ -206,23 +206,27 @@ function SpeciesListComponent(props) {
           )
         })}
       </div>
-      {selectedTaxa && selectedTaxaObj && <div className={styles.speciesList}>
-        <input type="search" placeholder={`Filter ${selectedTaxa}`} />
-        <div className={styles.filterResults}>
-          {selectedTaxaObj.filteredSpecies &&
-            Object.keys(selectedTaxaObj.filteredSpecies).map((sp, index) => {
-              return <div key={index}>
-                {checkPrevName(sp) && selectedTaxaObj.filteredSpecies[sp].length > 0 &&
-                  <SpeciesGroupTitleContainer species={selectedTaxaObj.filteredSpecies[sp][0]} filter={filter} />
-                }
-                {selectedTaxaObj.filteredSpecies[sp].map((v, idx) => (
-                  v.visible && <SpeciesGroupContainer species={v} key={idx} selectedTaxaObj={selectedTaxaObj} {...props} />
-                ))}
-              </div>
-            })
-          }
+      {selectedTaxa && selectedTaxaObj &&
+        <div className={styles.speciesList}>
+          <div className={styles.header}>
+            {selectedTaxaObj.count}&nbsp;{getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
+          </div>
+          <input type="search" placeholder={`Filter ${selectedTaxa}`} />
+          <div className={styles.filterResults}>
+            {selectedTaxaObj.filteredSpecies &&
+              Object.keys(selectedTaxaObj.filteredSpecies).map((sp, index) => {
+                return <div key={index}>
+                  {selectedTaxaObj.filteredSpecies[sp].length > 0 &&
+                    <SpeciesGroupTitleContainer species={selectedTaxaObj.filteredSpecies[sp][0]} filter={filter} />
+                  }
+                  {selectedTaxaObj.filteredSpecies[sp].map((v, idx) => (
+                    v.visible && <SpeciesGroupContainer species={v} key={idx} selectedTaxaObj={selectedTaxaObj} {...props} />
+                  ))}
+                </div>
+              })
+            }
+          </div>
         </div>
-      </div>
       }
     </div>
   );

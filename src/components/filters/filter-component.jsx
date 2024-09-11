@@ -7,95 +7,8 @@ import cx from 'classnames';
 import { LightModeContext } from '../../context/light-mode';
 
 function FilterComponent(props) {
-  const { setFilteredTaxaList, selectedTaxa, taxaList } = props;
+  const { setFilteredTaxaList, selectedTaxa, taxaList, filters } = props;
 
-  const filterStart = [
-    {
-      name: 'dataset',
-      title: 'Expected Sources',
-      filters: [
-        {
-          name: 'Expert Range Map',
-          active: false,
-          test: species => species.datasetList.map(d => d.product_type).indexOf('range') > -1,
-          count: 0,
-          type: 'and',
-          result: false,
-        },
-      ],
-    },
-    {
-      name: 'dataset',
-      title: 'Recorded Sources',
-      filters: [
-        {
-          name: 'Occurrence',
-          active: false,
-          test: species => species.datasetList.map(d => d.product_type).indexOf('points') > -1,
-          count: 0,
-          result: false,
-          type: 'and',
-        },
-        {
-          name: 'Local Inventory',
-          active: false,
-          test: species => species.datasetList.map(d => d.product_type).indexOf('localinv') >
-            -1,
-          result: false,
-          count: 0,
-          type: 'and',
-        },
-      ],
-    },
-    {
-      name: 'threat',
-      title: 'IUCN Status',
-      filters: [
-        {
-          name: 'Critically Endangered',
-          active: false,
-          test: species => species.traits?.threat_status_code === 'CR',
-          count: 0,
-          result: false,
-          type: 'or',
-        },
-        {
-          name: 'Endangered',
-          result: false,
-          active: false,
-          test: species => species.traits?.threat_status_code === 'EN',
-          count: 0,
-          type: 'or',
-        },
-        {
-          name: 'Vulnerable',
-          active: false,
-          test: species => species.traits?.threat_status_code === 'VU',
-          count: 0,
-          type: 'or',
-          result: false,
-        },
-        {
-          name: 'Least Concern',
-          active: false,
-          test: species => species.traits?.threat_status_code === 'LC',
-          count: 0,
-          type: 'or',
-          result: false,
-        },
-        {
-          name: 'Unknown',
-          active: false,
-          result: false,
-          test: species => species.traits?.threat_status_code === undefined,
-          count: 0,
-          type: 'or',
-        },
-      ],
-    },
-  ];
-
-  const [filters, setFilters] = useState(filterStart);
   const [anyActive, setAnyActive] = useState(false);
   const { lightMode } = useContext(LightModeContext);
 
@@ -106,7 +19,7 @@ function FilterComponent(props) {
 
   useEffect(() => {
     refreshCounts();
-  }, [selectedTaxa])
+  }, [selectedTaxa]);
 
   const clearCounts = () => {
     setFilteredTaxaList([]);
