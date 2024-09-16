@@ -61,30 +61,30 @@ $sidebar-species-width: 600px;
   .sidenav{
     display: flex;
     height: 100%;
+  }
 
-    .icons{
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      border-right: 1px solid;
+  .icons{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-right: 1px solid;
 
-      button{
-        width: 50px;
-        height: 50px;
+    button{
+      width: 50px;
+      height: 50px;
+
+      svg{
+        width: 30px;
+        height: 30px;
+        fill: var(--svg-fill);
+      }
+
+      &.selected,
+      &:hover{
+        background: var(--nav-button-bg);
 
         svg{
-          width: 30px;
-          height: 30px;
-          fill: var(--svg-fill);
-        }
-
-        &.selected,
-        &:hover{
-          background: var(--nav-button-bg);
-
-          svg{
-            fill: var(--svg-selected-fill);
-          }
+          fill: var(--svg-selected-fill);
         }
       }
     }
@@ -118,7 +118,11 @@ $sidebar-species-width: 600px;
 
   .regionFilter{
     display: flex;
-    gap: 20px;
-    margin: 15px;
+
+    .filters{
+      padding: 5px 10px;
+      gap: 20px;
+      display: flex;
+    }
   }
 }

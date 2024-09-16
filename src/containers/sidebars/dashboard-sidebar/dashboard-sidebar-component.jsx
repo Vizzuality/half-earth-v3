@@ -177,23 +177,37 @@ function DashboardSidebar(props) {
 
       {activeTrend === tabs.REGIONS &&
         <div className={styles.regionFilter}>
-          <FilterContainer
-            taxaList={taxaList}
-            selectedTaxa={selectedTaxa}
-            setFilteredTaxaList={setFilteredTaxaList}
-            setSelectedTaxa={setSelectedTaxa}
-            filters={filters}
-            setFilters={setFilters}
-            {...props} />
-          <SpeciesListContainer
-            selectedTaxa={selectedTaxa}
-            filteredTaxaList={filteredTaxaList}
-            setFilteredTaxaList={setFilteredTaxaList}
-            taxaList={taxaList}
-            setSelectedTaxa={setSelectedTaxa}
-            filter={filter}
-            setFilter={setFilter}
-            {...props} />
+          <div className={styles.icons}>
+            <button
+              type="button"
+              aria-label="Home"
+              onClick={() => browsePage({
+                type: DASHBOARD,
+                payload: { iso: countryISO.toLowerCase() }
+              })}
+            >
+              <HomeIcon className={styles.icon} />
+            </button>
+          </div>
+          <div className={styles.filters}>
+            <FilterContainer
+              taxaList={taxaList}
+              selectedTaxa={selectedTaxa}
+              setFilteredTaxaList={setFilteredTaxaList}
+              setSelectedTaxa={setSelectedTaxa}
+              filters={filters}
+              setFilters={setFilters}
+              {...props} />
+            <SpeciesListContainer
+              selectedTaxa={selectedTaxa}
+              filteredTaxaList={filteredTaxaList}
+              setFilteredTaxaList={setFilteredTaxaList}
+              taxaList={taxaList}
+              setSelectedTaxa={setSelectedTaxa}
+              filter={filter}
+              setFilter={setFilter}
+              {...props} />
+          </div>
         </div>
       }
       {activeTrend === tabs.SPECIES &&
