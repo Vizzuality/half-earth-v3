@@ -27,7 +27,7 @@ function DashboardSpeciesViewComponent(props) {
           label="Explore all Species"
           handleClick={() => browsePage({
             type: DASHBOARD_REGIONS,
-            payload: { iso: countryISO.toLowerCase(), scientificname: 'Cossypha polioptera' }
+            payload: { iso: countryISO.toLowerCase() }
           })} />
       </div>
       <div className={styles.navigation}>

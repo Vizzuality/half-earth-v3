@@ -29,17 +29,6 @@ function BioDiversityComponent(props) {
       <div className={styles.tabs}>
         <button
           type="button"
-          aria-label="Species Habitat Index"
-          className={cx({
-            [styles.selected]: selectedIndex === 1,
-          })}
-          onClick={() => setSelectedIndex(1)}
-        >
-          <span>{habitatScore}%</span>
-          <span>Habitat Score</span>
-        </button>
-        <button
-          type="button"
           aria-label="Species Protection Index"
           className={cx({
             [styles.selected]: selectedIndex === 2,
@@ -48,6 +37,17 @@ function BioDiversityComponent(props) {
         >
           <span>{protectionScore}%</span>
           <span>Protection Score</span>
+        </button>
+        <button
+          type="button"
+          aria-label="Species Habitat Index"
+          className={cx({
+            [styles.selected]: selectedIndex === 1,
+          })}
+          onClick={() => setSelectedIndex(1)}
+        >
+          <span>{habitatScore}%</span>
+          <span>Habitat Score</span>
         </button>
         <button
           type="button"

@@ -24,6 +24,7 @@ function DashboardTrendsSidebar(props) {
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <button
         type="button"
+        className={styles.homeButton}
         aria-label="Home"
         onClick={() => browsePage({
           type: DASHBOARD,

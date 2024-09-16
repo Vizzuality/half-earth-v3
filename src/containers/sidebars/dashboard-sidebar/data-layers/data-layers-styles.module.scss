@@ -76,21 +76,26 @@
       text-transform: uppercase;
       line-height: 1.5;
       color: var(--font-color);
+  }
 
-    .arrowIcon {
-      fill: var(--font-color);
-      transform: rotate(90deg);
+  .arrowIcon {
+    fill: var(--font-color);
+    transform: rotate(0deg);
 
-      &.isOpened {
-        transform:rotate(-90deg);
-      }
-
-      transition: transform 0.2s ease;
-
-      > path {
-        fill: inherit;
-      }
+    &.isOpened {
+      transform:rotate(90deg);
     }
+
+    transition: transform 0.2s ease;
+
+    > path {
+      fill: inherit;
+    }
+  }
+
+  .productTypeLogo {
+    height: 25px;
+    width: 25px;
   }
 }
 

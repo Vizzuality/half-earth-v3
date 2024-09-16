@@ -37,7 +37,19 @@ function DashboardSidebarContainer(props) {
     const reserveCoverageMetricsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/reserve-coverage/metrics?scientificname=${scientificName}&${params}`;
     const habitatMetricesUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-distribution/metrics?scientificname=${scientificName}&${params}`;
 
-    const apiCalls = [habitatTrendUrl, reserveCoverageMetricsUrl, habitatMetricesUrl];
+    const dataLayerParams = {
+      scientificname: scientificName,
+      group: 'movement'
+    };
+    const dparams = new URLSearchParams(dataLayerParams);
+    const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
+
+    const apiCalls = [
+      habitatTrendUrl,
+      reserveCoverageMetricsUrl,
+      habitatMetricesUrl,
+      dataLayersURL
+    ];
 
     const apiResponses = await Promise.all(apiCalls.map(async (url) => {
       const response = await fetch(url);
@@ -45,10 +57,10 @@ function DashboardSidebarContainer(props) {
       return data;
     }));
 
-    const [habitatTrendData, reserveCoverageData, habitatMetricesData] = apiResponses;
+    const [habitatTrendData, reserveCoverageData, habitatMetricesData, dataLayersData] = apiResponses;
     getDataByCountry(habitatTrendData);
 
-    setData({habitatTrendData, reserveCoverageData, habitatMetricesData});
+    setData({habitatTrendData, reserveCoverageData, habitatMetricesData, dataLayersData});
   }
 
   const getSpeciesList = async () => {

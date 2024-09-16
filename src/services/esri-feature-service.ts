@@ -1,15 +1,12 @@
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import * as query from '@arcgis/core/rest/query';
-import {
-  addFeatures,
-  queryFeatures,
-  applyEdits,
-  IQueryFeaturesResponse,
-} from '@esri/arcgis-rest-feature-layer';
-import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
-
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
+
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
+import {
+    addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
+} from '@esri/arcgis-rest-feature-layer';
 
 function getFeatures({
   url,
@@ -41,6 +38,12 @@ function getFeatures({
       }
       resolve(null);
     });
+  });
+}
+
+function getGeoJsonLayer(){
+  return new GeoJSONLayer({
+    url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson'
   });
 }
 
@@ -89,4 +92,5 @@ export default {
   getFeatures,
   getLayer,
   addFeature,
+  getGeoJsonLayer,
 };
