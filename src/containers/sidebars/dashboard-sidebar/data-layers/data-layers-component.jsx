@@ -19,37 +19,9 @@ import { LightModeContext } from '../../../../context/light-mode';
 import DataLayersGroupedList from './grouped-list';
 
 function DataLayerComponent(props) {
-  const { map, activeLayers, view, selectedOption, speciesInfo, data } = props;
+  const { map, activeLayers, view, selectedOption, speciesInfo, dataLayerData } = props;
 
   const { lightMode } = useContext(LightModeContext);
-
-  const speciesPublicLayers = [
-    {
-      name: 'Point Observations',
-      value: 'pointObservations',
-      isChecked: false,
-    },
-    {
-      name: 'Habitat Suitable Range',
-      value: 'habitatSuitableRange',
-      isChecked: false,
-    },
-    {
-      name: 'Local Inventories',
-      value: 'localInventories',
-      isChecked: false,
-    },
-    {
-      name: 'Expert Range Maps',
-      value: 'expertRangeMap',
-      isChecked: false,
-    },
-    {
-      name: 'Regional Checklists',
-      value: 'regionalChecklist',
-      isChecked: false,
-    },
-  ];
 
   const speciesPrivateLayers = [
     {
@@ -80,16 +52,13 @@ function DataLayerComponent(props) {
   const isOpened = true;
 
   const [dataLayers, setDataLayers] = useState({});
-  const [speciesLayers, setSpeciesLayers] = useState(speciesPublicLayers);
   const [dataPoints, setDataPoints] = useState();
 
   useEffect(() => {
-    if (!data) return;
-    const { dataLayersData } = data;
-    console.log('Data layer ', dataLayersData);
-    setDataPoints(groupByTypeTitle(dataLayersData));
+    if (!dataLayerData) return;
+    setDataPoints(groupByTypeTitle(dataLayerData));
 
-  }, [data]);
+  }, [dataLayerData]);
 
   useEffect(() => {
     if (!dataPoints) return;

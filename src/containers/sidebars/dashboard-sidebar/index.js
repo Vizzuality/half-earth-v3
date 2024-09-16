@@ -8,6 +8,7 @@ function DashboardSidebarContainer(props) {
   const {scientificName} = props;
 
   const [data, setData] = useState(null);
+  const [dataLayerData, setDataLayerData] = useState(null);
   const [taxaList, setTaxaList] = useState([])
   const [dataByCountry, setDataByCountry] = useState(null);
   const [selectedTaxa, setSelectedTaxa] = useState('');
@@ -21,8 +22,33 @@ function DashboardSidebarContainer(props) {
 
   useEffect(() => {
     if(!scientificName) return;
+    getDataLayersData();
     getData();
   }, [scientificName]);
+
+
+  const getDataLayersData = async () => {
+    const dataLayerParams = {
+      scientificname: scientificName,
+      group: 'movement'
+    };
+    const dparams = new URLSearchParams(dataLayerParams);
+    const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
+
+    const apiCalls = [
+      dataLayersURL
+    ];
+
+    const apiResponses = await Promise.all(apiCalls.map(async (url) => {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    }));
+
+    const [dataLayersData] = apiResponses;
+
+    setDataLayerData(dataLayersData);
+  }
 
   const getData = async () => {
     const speciesPreferences = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/habitat?scientificname=${scientificName}`;
@@ -37,18 +63,17 @@ function DashboardSidebarContainer(props) {
     const reserveCoverageMetricsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/reserve-coverage/metrics?scientificname=${scientificName}&${params}`;
     const habitatMetricesUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-distribution/metrics?scientificname=${scientificName}&${params}`;
 
-    const dataLayerParams = {
-      scientificname: scientificName,
-      group: 'movement'
-    };
-    const dparams = new URLSearchParams(dataLayerParams);
-    const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
+    // const dataLayerParams = {
+    //   scientificname: scientificName,
+    //   group: 'movement'
+    // };
+    // const dparams = new URLSearchParams(dataLayerParams);
+    // const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
 
     const apiCalls = [
       habitatTrendUrl,
       reserveCoverageMetricsUrl,
       habitatMetricesUrl,
-      dataLayersURL
     ];
 
     const apiResponses = await Promise.all(apiCalls.map(async (url) => {
@@ -57,10 +82,10 @@ function DashboardSidebarContainer(props) {
       return data;
     }));
 
-    const [habitatTrendData, reserveCoverageData, habitatMetricesData, dataLayersData] = apiResponses;
+    const [habitatTrendData, reserveCoverageData, habitatMetricesData] = apiResponses;
     getDataByCountry(habitatTrendData);
 
-    setData({habitatTrendData, reserveCoverageData, habitatMetricesData, dataLayersData});
+    setData({habitatTrendData, reserveCoverageData, habitatMetricesData});
   }
 
   const getSpeciesList = async () => {
@@ -210,6 +235,7 @@ function DashboardSidebarContainer(props) {
 
   return <Component
             data={data}
+            dataLayerData={dataLayerData}
             dataByCountry={dataByCountry}
             taxaList={taxaList}
             selectedTaxa={selectedTaxa}
