@@ -149,7 +149,7 @@ function DataLayerComponent(props) {
             [styles.isOpened]: isOpened,
           })}
         /> */}
-        <span>{t('Distributional Data: Public')}</span>
+        <span>{t('Species Data: Public')}</span>
       </button>
       {dataPoints && <DataLayersGroupedList
         dataPoints={dataPoints}
@@ -167,7 +167,7 @@ function DataLayerComponent(props) {
             [styles.isOpened]: isOpened,
           })}
         />
-        <span>{t('Distributional Data: Private')}</span>
+        <span>{t('Species Data: Private')}</span>
       </button>
       {speciesPrivateLayers.map((layer) => (
         <LayerToggle
