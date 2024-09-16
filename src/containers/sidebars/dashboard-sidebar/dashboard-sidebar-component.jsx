@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DASHBOARD } from 'router';
 import cx from 'classnames';
-
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AnalyticsIcon from 'icons/analytics.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
 import TimeLineIcon from 'icons/timeline.svg?react';
-import SunIcon from 'icons/sun-regular.svg?react';
-import MoonIcon from 'icons/moon-regular.svg?react';
 import HomeIcon from 'icons/house-solid.svg?react';
 import Button from 'components/button';
 
@@ -149,8 +148,8 @@ function DashboardSidebar(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <button type="button" className={styles.darkMode} title={lightMode ? 'Switch to Dark mode' : 'Switch to Light mode'} onClick={() => toggleLightMode()}>
-        {!lightMode && <SunIcon className={styles.icon} />}
-        {lightMode && <MoonIcon className={styles.icon} />}
+        {!lightMode && <LightModeIcon className={styles.icon} />}
+        {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
       <h1>{countryName}</h1>
 

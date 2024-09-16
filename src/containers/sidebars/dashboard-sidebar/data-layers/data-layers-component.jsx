@@ -137,13 +137,6 @@ function DataLayerComponent(props) {
       <hr className={hrTheme.dark} />
 
       <SpeciesInfoContainer speciesInfo={speciesInfo} />
-      <div className={styles.data}>
-        <Button
-          type="rectangular"
-          className={styles.saveButton}
-          label="download data"
-        />
-      </div>
       <hr className={hrTheme.dark} />
       <button
         className={styles.distributionTitle}
@@ -162,7 +155,7 @@ function DataLayerComponent(props) {
         map={map}
         setDataPoints={setDataPoints} />}
 
-      {/* <hr className={hrTheme.dark} />
+      <hr className={hrTheme.dark} />
       <button
         className={styles.distributionTitle}
         type="button"
@@ -213,7 +206,7 @@ function DataLayerComponent(props) {
           onChange={updateLayer}
           themeCategorySlug={layer.value}
         />
-      ))} */}
+      ))}
     </section>
   );
 }

@@ -6,8 +6,8 @@ import styles from './dashboard-trends-sidebar-styles.module.scss';
 import ScoreDistributionsContainer from './score-distributions';
 import TemporalTrendsContainer from './temporal-trends';
 import { LightModeContext } from '../../../context/light-mode';
-import SunIcon from 'icons/sun-regular.svg?react';
-import MoonIcon from 'icons/moon-regular.svg?react';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import HomeIcon from 'icons/house-solid.svg?react';
 
 export const NATIONAL_TREND = 'NATIONAL';
@@ -34,8 +34,8 @@ function DashboardTrendsSidebar(props) {
         <HomeIcon className={styles.icon} />
       </button>
       <button type="button" className={styles.darkMode} title={lightMode ? 'Switch to Dark mode' : 'Switch to Light mode'} onClick={() => toggleLightMode()}>
-        {!lightMode && <SunIcon className={styles.icon} />}
-        {lightMode && <MoonIcon className={styles.icon} />}
+        {!lightMode && <LightModeIcon className={styles.icon} />}
+        {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
       <header>
         <div className={styles.title}>
