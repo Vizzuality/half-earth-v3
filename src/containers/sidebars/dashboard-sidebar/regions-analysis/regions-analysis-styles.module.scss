@@ -40,6 +40,11 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    color: var(--font-color);
+
+    span{
+      color: var(--font-color);
+    }
   }
 
   .search{
