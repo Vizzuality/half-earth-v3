@@ -9,8 +9,10 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 function ScoreDistributionsSiiComponent(props) {
+  const t = useT();
   const { countryData, siiData } = props;
   const { lightMode } = useContext(LightModeContext);
 
@@ -133,7 +135,7 @@ function ScoreDistributionsSiiComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
-        <span className={styles.title}>Score Distributions</span>
+        <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
           View the distribution of the individual Species Information Scores for all
@@ -141,7 +143,7 @@ function ScoreDistributionsSiiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          Species with SIS between <b>0-5:</b>
+          {t('Species with SIS between')} <b>0-5:</b>
         </span>
         <hr />
         <ul className={styles.spsSpecies}>
@@ -164,18 +166,17 @@ function ScoreDistributionsSiiComponent(props) {
           {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
-            label="view full table"
+            label={t('View full table')}
             handleClick={() => setShowTable(true)}
           />}
           {showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
-            label="Close full table"
+            label={t('Close full table')}
             handleClick={() => setShowTable(false)}
           />}
           <span className={styles.helpText}>
-            Open and download a full table of species SPS and relevant traits at
-            national and province levels for a selected year.
+            {t('Open and download a full table of species SPS and relevant traits at national and province levels for a selected year.')}
           </span>
         </div>
       </div>

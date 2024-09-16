@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './speciesList-component-styles.module.scss';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
 import Button from 'components/button';
 import { LightModeContext } from '../../context/light-mode';
 import SpeciesGroupContainer from '../species-group';
@@ -8,6 +9,7 @@ import SpeciesGroupTitleContainer from '../species-group-title';
 
 
 function SpeciesListComponent(props) {
+  const t = useT();
   const {
     selectedTaxa,
     setSelectedTaxa,
@@ -186,11 +188,11 @@ function SpeciesListComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.filters)}>
       <div className={styles.titleRow}>
-        <div className={styles.title}>Species</div>
+        <div className={styles.title}>{t('Species')}</div>
         {selectedTaxa && <Button
           className={styles.close}
           handleClick={clearSelection}
-          label="Clear Selection"
+          label={t('Clear Selection')}
         />}
       </div>
       <div className={styles.taxaList}>
@@ -211,7 +213,7 @@ function SpeciesListComponent(props) {
           <div className={styles.header}>
             {selectedTaxaObj.count}&nbsp;{getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
           </div>
-          <input type="search" placeholder={`Filter ${selectedTaxa}`} />
+          <input type="search" placeholder={`${t('Filter')} ${selectedTaxa}`} />
           <div className={styles.filterResults}>
             {selectedTaxaObj.filteredSpecies &&
               Object.keys(selectedTaxaObj.filteredSpecies).map((sp, index) => {

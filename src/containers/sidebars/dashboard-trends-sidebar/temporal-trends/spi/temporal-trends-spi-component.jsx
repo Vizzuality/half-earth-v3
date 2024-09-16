@@ -14,8 +14,10 @@ import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
 import last from 'lodash/last';
 import { LightModeContext } from '../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 function TemporalTrendsSpiComponent(props) {
+  const t = useT();
   const { countryData, spiData } = props;
 
   const areaProtected = (328357).toLocaleString();
@@ -52,7 +54,7 @@ function TemporalTrendsSpiComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
-        <span className={styles.title}>Temporal Trends</span>
+        <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
           Since 1980, the {countryData?.NAME_0} has added <b>{areaProtected} km<sup>2</sup></b> of
           land into its protected area network, representing <b>{areaProtectedPercent}%</b> of the total
@@ -78,7 +80,7 @@ function TemporalTrendsSpiComponent(props) {
             />
           </div>
           <span className={styles.helpText}>
-            Toggle national SPI and province-level breakdown.
+            {t('Toggle national SPI and province-level breakdown.')}
           </span>
           {/* <Button
             type="rectangular"
@@ -97,8 +99,7 @@ function TemporalTrendsSpiComponent(props) {
                 label="view full table"
               />
               <span className={styles.helpText}>
-                Open and download a full table of annual national and province
-                level SPI over time.
+                {t('Open and download a full table of annual national and province level SPI over time.')}
               </span>
             </>
           )}

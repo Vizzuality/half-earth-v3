@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DASHBOARD } from 'router';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -18,6 +19,7 @@ import FilterContainer from '../../../components/filters';
 import SpeciesListContainer from '../../../components/speciesList';
 
 function DashboardSidebar(props) {
+  const t = useT();
   const {
     data,
     browsePage,
@@ -147,7 +149,7 @@ function DashboardSidebar(props) {
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      <button type="button" className={styles.darkMode} title={lightMode ? 'Switch to Dark mode' : 'Switch to Light mode'} onClick={() => toggleLightMode()}>
+      <button type="button" className={styles.darkMode} title={lightMode ? t('Switch to Dark mode') : t('Switch to Light mode')} onClick={() => toggleLightMode()}>
         {!lightMode && <LightModeIcon className={styles.icon} />}
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>

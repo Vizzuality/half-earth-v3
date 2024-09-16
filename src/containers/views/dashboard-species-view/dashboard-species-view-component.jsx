@@ -3,8 +3,11 @@ import { DASHBOARD_REGIONS } from 'router';
 import styles from './dashboard-species-view-styles.module.scss';
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
+import { useT } from '@transifex/react';
 
 function DashboardSpeciesViewComponent(props) {
+  const t = useT();
+
   const {
     countryISO,
     countryName,
@@ -19,12 +22,12 @@ function DashboardSpeciesViewComponent(props) {
 
   return (
     <section className={styles.container}>
-      <h1>The Species of {countryName}</h1>
-      <p>Explore species spatial data, view conservation status, and analyze regions where a species occurs</p>
+      <h1>{`${t('The Species of')} ${countryName}`}</h1>
+      <p>{t('Explore species spatial data, view conservation status, and analyze regions where a species occurs')}</p>
       <div className={styles.explore}>
-        <SearchInput className={styles.search} placeholder="Search for a species by name" onChange={handleSearch} value={searchInput} />
+        <SearchInput className={styles.search} placeholder={t('Search for a species by name')} onChange={handleSearch} value={searchInput} />
         <Button type="rectangular"
-          label="Explore all Species"
+          label={t('Explore all Species')}
           handleClick={() => browsePage({
             type: DASHBOARD_REGIONS,
             payload: { iso: countryISO.toLowerCase() }

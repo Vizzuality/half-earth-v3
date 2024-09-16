@@ -16,10 +16,12 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 
 import styles from './national-chart-styles.module.scss';
 import { LightModeContext } from '../../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function TemporalTrendsSpiNationalChartComponent(props) {
+  const t = useT();
   const { countryData, nationalChartData } = props;
   const [data, setData] = useState();
   const [areaProtected, setAreaProtected] = useState(0);
@@ -28,7 +30,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
   const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
 
   const blankData = {
-    labels: ['Global SPI', 'Remaining'],
+    labels: [t('Global SPI'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -78,7 +80,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'SPI / Percent of Area Protected',
+          text: t('SPI / Percent of Area Protected'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -128,7 +130,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
             borderColor: getCSSVariable('birds'),
           },
           {
-            label: 'Area protected',
+            label: t('Area protected'),
             data: nationalChartData.area_values.map((item) => item[1]),
             borderColor: getCSSVariable('mammals'),
           },
@@ -145,7 +147,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         ][1];
 
       const spi = {
-        labels: ['Global SPI', 'Remaining'],
+        labels: [t('Global SPI'), t('Remaining')],
         datasets: [
           {
             label: '',
@@ -164,7 +166,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       };
 
       const areaProt = {
-        labels: ['Area Protected', 'Remaining'],
+        labels: [t('Area Protected'), t('Remaining')],
         datasets: [
           {
             label: '',
@@ -207,10 +209,10 @@ function TemporalTrendsSpiNationalChartComponent(props) {
             value={areaProtected}
           />
           <b>{countryData?.prop_protected_ter}</b>
-          <span>Year</span>
+          <span>{t('Year')}</span>
           <span>SPI</span>
-          <span>Area Protected</span>
-          <span>Global Ranking</span>
+          <span>{t('Area Protected')}</span>
+          <span>{t('Global Ranking')}</span>
         </div>
       </div>
       {data && (

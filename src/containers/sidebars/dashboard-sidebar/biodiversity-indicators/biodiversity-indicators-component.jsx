@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import styles from './biodiversity-indicators-styles.module.scss';
@@ -9,6 +10,7 @@ import HabitatContainer from './habitat';
 import ProtectionContainer from './protection';
 
 function BioDiversityComponent(props) {
+  const t = useT();
   const {
     lightMode,
     selectedIndex,
@@ -24,7 +26,7 @@ function BioDiversityComponent(props) {
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
-      <span className={styles.sectionTitle}>Biodiversity Indicators</span>
+      <span className={styles.sectionTitle}>{t('Biodiversity Indicators')}</span>
       <hr className={hrTheme.dark} />
       <div className={styles.tabs}>
         <button
@@ -36,7 +38,7 @@ function BioDiversityComponent(props) {
           onClick={() => setSelectedIndex(2)}
         >
           <span>{protectionScore}%</span>
-          <span>Protection Score</span>
+          <span>{t('Protection Score')}</span>
         </button>
         <button
           type="button"
@@ -47,7 +49,7 @@ function BioDiversityComponent(props) {
           onClick={() => setSelectedIndex(1)}
         >
           <span>{habitatScore}%</span>
-          <span>Habitat Score</span>
+          <span>{t('Habitat Score')}</span>
         </button>
         <button
           type="button"
@@ -57,7 +59,7 @@ function BioDiversityComponent(props) {
           })}
           onClick={() => setSelectedIndex(3)}
         >
-          <span>Information Score</span>
+          <span>{t('Information Score')}</span>
         </button>
       </div>
       {selectedIndex === 1 &&

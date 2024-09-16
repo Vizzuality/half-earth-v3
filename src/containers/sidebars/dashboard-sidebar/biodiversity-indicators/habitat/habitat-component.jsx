@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './habitat-component-styles.module.scss';
-
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 
 import {
@@ -17,6 +17,7 @@ import { Line } from 'react-chartjs-2';
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend, CategoryScale);
 
 function HabitatComponent(props) {
+  const t = useT();
   const {
     habitatScore,
     globalHabitatScore,
@@ -37,8 +38,7 @@ function HabitatComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <p>
-        *The Species Habitat Score is calculated using the habitat suitable
-        range map and remote sensing layers.
+        {t('*The Species Habitat Score is calculated using the habitat suitable range map and remote sensing layers.')}
       </p>
       <div className={styles.scores}>
         <div className={styles.metric}>
@@ -54,7 +54,7 @@ function HabitatComponent(props) {
           </div>
         </div>
         <div className={styles.metric}>
-          <label>Globally</label>
+          <label>{t('Globally')}</label>
           <div className={styles.score}>
             <span className={cx(styles['material-symbols-outlined'], styles[globalTrend])}>
               {globalTrendIcon}
@@ -68,7 +68,7 @@ function HabitatComponent(props) {
       </div>
       <div className={styles.chart}>
         <div className={styles.compareWrap}>
-          <label className={styles.compare}>Compare</label>
+          <label className={styles.compare}>{t('Compare')}</label>
           <select value={selectedCountry} onChange={onCountryChange}>
             {shiCountries.map(item => (
               <option key={item} value={item}>{item}</option>
@@ -76,9 +76,9 @@ function HabitatComponent(props) {
           </select>
         </div>
         <div className={styles.labels}>
-          <label className={styles.dashed}>Area</label>
-          <label className={styles.dotted}>Connectivity</label>
-          <label className={styles.solid}>Total</label>
+          <label className={styles.dashed}>{t('Area')}</label>
+          <label className={styles.dotted}>{t('Connectivity')}</label>
+          <label className={styles.solid}>{t('Total')}</label>
         </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.blue)}></div>
@@ -91,11 +91,11 @@ function HabitatComponent(props) {
           <table className={styles.dataTable}>
             <thead>
               <tr>
-                <th className={cx(styles.textLeft, styles.w28)}>Country</th>
-                <th className={cx(styles.textCenter, styles.w14)}>Stewardship</th>
-                <th className={cx(styles.textCenter, styles.w14)}>Connectivity Score</th>
-                <th className={cx(styles.textCenter, styles.w14)}>Area Score</th>
-                <th className={cx(styles.textCenter, styles.w14)}>Total SHS</th>
+                <th className={cx(styles.textLeft, styles.w28)}>{t('Country')}</th>
+                <th className={cx(styles.textCenter, styles.w14)}>{t('Stewardship')}</th>
+                <th className={cx(styles.textCenter, styles.w14)}>{t('Connectivity Score')}</th>
+                <th className={cx(styles.textCenter, styles.w14)}>{t('Area Score')}</th>
+                <th className={cx(styles.textCenter, styles.w14)}>{t('Total SHS')}</th>
               </tr>
             </thead>
             <tbody>

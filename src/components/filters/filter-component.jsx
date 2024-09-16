@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'components/button';
+import { useT } from '@transifex/react';
 import styles from './filter-component-styles.module.scss';
 import { Chip } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
@@ -7,6 +8,7 @@ import cx from 'classnames';
 import { LightModeContext } from '../../context/light-mode';
 
 function FilterComponent(props) {
+  const t = useT();
   const { setFilteredTaxaList, selectedTaxa, taxaList, filters } = props;
 
   const [anyActive, setAnyActive] = useState(false);
@@ -122,11 +124,11 @@ function FilterComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.filters)}>
       <div className={styles.titleRow}>
-        <div className={styles.title}>Filters</div>
+        <div className={styles.title}>{t('Filters')}</div>
         {anyActive && <Button
           className={styles.close}
           handleClick={clearFilters}
-          label="Clear Filters"
+          label={t('Clear Filters')}
         />}
       </div>
 

@@ -10,8 +10,10 @@ import SpeciesRichnessComponent from 'components/species-richness/species-richne
 import compStyles from './score-distributions-spi-styles.module.scss';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 function ScoreDistributionsSpiComponent(props) {
+  const t = useT();
   const { countryData, spiData } = props;
   const { lightMode } = useContext(LightModeContext);
   const lowAvg = 'Amphibians';
@@ -146,7 +148,7 @@ function ScoreDistributionsSpiComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
-        <span className={styles.title}>Score Distributions</span>
+        <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
           View the distribution of the individual Species Protection Scores for
@@ -155,7 +157,7 @@ function ScoreDistributionsSpiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          Species with SPS between <b>0.5:</b>
+          {t('Species with SPS between')} <b>0.5:</b>
         </span>
         <hr />
         <ul className={styles.spsSpecies}>
@@ -178,24 +180,23 @@ function ScoreDistributionsSpiComponent(props) {
           {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
-            label="view full table"
+            label={t('View full table')}
             handleClick={() => setShowTable(true)}
           />}
           {showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
-            label="Close full table"
+            label={t('Close full table')}
             handleClick={() => setShowTable(false)}
           />}
           <span className={styles.helpText}>
-            Open and download a full table of species SPS and relevant traits at
-            national and province levels for a selected year.
+            {t('Open and download a full table of species SPS and relevant traits at national and province levels for a selected year.')}
           </span>
         </div>
       </div>
       <div className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}>
         {!showTable && (<>
-          <div className={compStyles.title}>NATIONAL SPI BY TAXONOMIC GROUP</div>
+          <div className={compStyles.title}>{t('NATIONAL SPI BY TAXONOMIC GROUP')}</div>
           <SpeciesRichnessComponent countryData={countryData} />
           <DistributionsChartComponent options={options} data={chartData} />
         </>)}

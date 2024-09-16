@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DASHBOARD } from 'router';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 
 import styles from './dashboard-trends-sidebar-styles.module.scss';
@@ -14,6 +15,7 @@ export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 
 function DashboardTrendsSidebar(props) {
+  const t = useT();
   const { shiValue, siiValue, spiValue, countryName, countryISO, browsePage } = props;
 
   const [selectedIndex, setSelectedIndex] = useState(2);
@@ -33,13 +35,13 @@ function DashboardTrendsSidebar(props) {
       >
         <HomeIcon className={styles.icon} />
       </button>
-      <button type="button" className={styles.darkMode} title={lightMode ? 'Switch to Dark mode' : 'Switch to Light mode'} onClick={() => toggleLightMode()}>
+      <button type="button" className={styles.darkMode} title={lightMode ? t('Switch to Dark mode') : t('Switch to Light mode')} onClick={() => toggleLightMode()}>
         {!lightMode && <LightModeIcon className={styles.icon} />}
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
       <header>
         <div className={styles.title}>
-          <b>Conservation Metrics</b>
+          <b>{t('Conservation Metrics')}</b>
           <label>{countryName}</label>
         </div>
         <div className={styles.tabs}>
@@ -52,7 +54,7 @@ function DashboardTrendsSidebar(props) {
             onClick={() => setSelectedIndex(2)}
           >
             <label>{spiValue}</label>
-            <span>Species Protection Index</span>
+            <span>{t('Species Protection Index')}</span>
           </button>
           <button
             type="button"
@@ -63,7 +65,7 @@ function DashboardTrendsSidebar(props) {
             onClick={() => setSelectedIndex(1)}
           >
             <label>{shiValue}</label>
-            <span>Species Habitat Index</span>
+            <span>{t('Species Habitat Index')}</span>
           </button>
 
           <button
@@ -75,7 +77,7 @@ function DashboardTrendsSidebar(props) {
             onClick={() => setSelectedIndex(3)}
           >
             <label>{siiValue}</label>
-            <span>Species Information Index</span>
+            <span>{t('Species Information Index')}</span>
           </button>
         </div>
       </header>

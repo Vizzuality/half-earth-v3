@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 
 import Button from 'components/button';
@@ -19,6 +19,7 @@ import { LightModeContext } from '../../../../context/light-mode';
 import DataLayersGroupedList from './grouped-list';
 
 function DataLayerComponent(props) {
+  const t = useT();
   const { map, activeLayers, view, selectedOption, speciesInfo, dataLayerData } = props;
 
   const { lightMode } = useContext(LightModeContext);
@@ -133,7 +134,7 @@ function DataLayerComponent(props) {
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
-      <span className={styles.sectionTitle}>Data Layers</span>
+      <span className={styles.sectionTitle}>{t('Data Layers')}</span>
       <hr className={hrTheme.dark} />
 
       <SpeciesInfoContainer speciesInfo={speciesInfo} />
@@ -148,7 +149,7 @@ function DataLayerComponent(props) {
             [styles.isOpened]: isOpened,
           })}
         /> */}
-        <span>Distribute Data: Public</span>
+        <span>{t('Distribute Data: Public')}</span>
       </button>
       {dataPoints && <DataLayersGroupedList
         dataPoints={dataPoints}
@@ -166,7 +167,7 @@ function DataLayerComponent(props) {
             [styles.isOpened]: isOpened,
           })}
         />
-        <span>Distribute Data: Private</span>
+        <span>{t('Distribute Data: Private')}</span>
       </button>
       {speciesPrivateLayers.map((layer) => (
         <LayerToggle
@@ -192,7 +193,7 @@ function DataLayerComponent(props) {
             [styles.isOpened]: isOpened,
           })}
         />
-        <span>Regions Data</span>
+        <span>{t('Regions Data')}</span>
       </button>
       {speciesRegionsLayers.map((layer) => (
         <LayerToggle

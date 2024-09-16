@@ -17,13 +17,15 @@ import {
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import styles from './province-chart-styles.module.scss';
+import { useT } from '@transifex/react';
 
 ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function ProvinceChartComponent(props) {
+  const t = useT();
   const { countryData } = props;
   const blankData = {
-    labels: ['Global SPI', 'Remaining'],
+    labels: [t('Global SPI'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -86,7 +88,7 @@ function ProvinceChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Total Area (1000 km2)',
+          text: t('Total Area (1000 km2)'),
           color: getCSSVariable('white'),
         },
         grid: {
@@ -101,7 +103,7 @@ function ProvinceChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Species Protection Index',
+          text: t('Species Protection Index'),
           color: getCSSVariable('white'),
         },
         grid: {
@@ -117,7 +119,7 @@ function ProvinceChartComponent(props) {
   const data = {
     datasets: [
       {
-        label: 'Birds',
+        label: t('Birds'),
         data: Array.from({ length: 5 }, () => ({
           x: faker.datatype.number({ min: 0, max: 200 }),
           y: faker.datatype.number({ min: 0, max: 100 }),
@@ -126,7 +128,7 @@ function ProvinceChartComponent(props) {
         backgroundColor: getCSSVariable('birds'),
       },
       {
-        label: 'Mammals',
+        label: t('Mammals'),
         data: Array.from({ length: 5 }, () => ({
           x: faker.datatype.number({ min: 0, max: 200 }),
           y: faker.datatype.number({ min: 0, max: 100 }),
@@ -135,7 +137,7 @@ function ProvinceChartComponent(props) {
         backgroundColor: getCSSVariable('mammals'),
       },
       {
-        label: 'Reptiles',
+        label: t('Reptiles'),
         data: Array.from({ length: 5 }, () => ({
           x: faker.datatype.number({ min: 0, max: 200 }),
           y: faker.datatype.number({ min: 0, max: 100 }),
@@ -144,7 +146,7 @@ function ProvinceChartComponent(props) {
         backgroundColor: getCSSVariable('reptiles'),
       },
       {
-        label: 'Amphibians',
+        label: t('Amphibians'),
         data: Array.from({ length: 5 }, () => ({
           x: faker.datatype.number({ min: 0, max: 200 }),
           y: faker.datatype.number({ min: 0, max: 100 }),
@@ -158,7 +160,7 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (countryData) {
       const spi = {
-        labels: ['Global SPI', 'Remaining'],
+        labels: [t('Global SPI'), t('Remaining')],
         datasets: [
           {
             label: '',
@@ -197,13 +199,13 @@ function ProvinceChartComponent(props) {
             options={provinces}
           />
           <span>
-            <b>#13</b> in Species Protection Index
+            <b>#13</b> {t('in Species Protection Index')}
           </span>
           <span>
-            <b>#1</b> in vertebrate species richness
+            <b>#1</b> {t('in vertebrate species richness')}
           </span>
           <span>
-            <b>#16</b> in size
+            <b>#16</b> {t('in size')}
           </span>
         </div>
         <div className={styles.arcGrid}>
@@ -215,9 +217,9 @@ function ProvinceChartComponent(props) {
             value={countryData?.Global_SPI_ter}
           />
           <b>{countryData?.prop_protected_ter}</b>
-          <span>Year</span>
-          <span>SPI</span>
-          <span>Area Protected</span>
+          <span>{t('Year')}</span>
+          <span>{t('SPI')}</span>
+          <span>{t('Area Protected')}</span>
         </div>
       </div>
       <div className={styles.chart}>

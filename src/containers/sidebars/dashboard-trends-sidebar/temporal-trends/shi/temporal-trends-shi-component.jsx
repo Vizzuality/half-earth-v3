@@ -12,8 +12,10 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
 import { LightModeContext } from '../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 function TemporalTrendsShiComponent(props) {
+  const t = useT();
   const { updateActiveTrend, shiData, shiValue } = props;
 
   // const [chartData, setChartData] = useState();
@@ -32,7 +34,7 @@ function TemporalTrendsShiComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
-        <span className={styles.title}>Temporal Trends</span>
+        <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
           Since 2001, the terrestrial vertebrate species of the Democratic
           Republic of the Congo have <b>lost an average of {lostAvg}%</b> of their suitable
@@ -50,7 +52,7 @@ function TemporalTrendsShiComponent(props) {
           />
 
           <span className={styles.helpText}>
-            Toggle national SPI and province-level breakdown.
+            {t('Toggle national SPI and province-level breakdown.')}
           </span>
           <Button
             type="rectangular"
@@ -58,8 +60,7 @@ function TemporalTrendsShiComponent(props) {
             label="play animation"
           />
           <span className={styles.helpText}>
-            View how the percent of area protected, SPI, and score distributions
-            have changed over time.
+            {t('View how the percent of area protected, SPI, and score distributions have changed over time.')}
           </span>
         </div>
       </div>

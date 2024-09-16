@@ -16,10 +16,12 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 
 import styles from './national-chart-styles.module.scss';
 import { LightModeContext } from '../../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
+  const t = useT();
   const { countryData, nationalChartData } = props;
   const [data, setData] = useState();
   const [spiValue, setSpiValue] = useState(0);
@@ -27,7 +29,7 @@ function NationalChartComponent(props) {
   const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
 
   const blankData = {
-    labels: ['Global SPI', 'Remaining'],
+    labels: [t('Global SPI'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -76,7 +78,7 @@ function NationalChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Species Information Index',
+          text: t('Species Information Index'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -123,7 +125,7 @@ function NationalChartComponent(props) {
         labels: values.map((item) => item[0]),
         datasets: [
           {
-            label: 'SII',
+            label: t('SII'),
             data: values.map((item) => (item[1] * 100)),
             borderColor: getCSSVariable('birds'),
           },
@@ -135,7 +137,7 @@ function NationalChartComponent(props) {
       // ][1];
 
       const spi = {
-        labels: ['Global SPI', 'Remaining'],
+        labels: [t('Global SPI'), t('Remaining')],
         datasets: [
           {
             label: '',
@@ -170,9 +172,9 @@ function NationalChartComponent(props) {
             value={spiValue}
           />
           <b>{nationalChartData.metrics?.[1]}</b>
-          <span>Year</span>
+          <span>{t('Year')}</span>
           <span>SII</span>
-          <span>Global Ranking</span>
+          <span>{t('Global Ranking')}</span>
         </div>
       </div>
       {data && (

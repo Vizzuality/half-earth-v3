@@ -16,10 +16,12 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 
 import styles from './national-chart-styles.module.scss';
 import { LightModeContext } from '../../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
+  const t = useT();
   const { countryData, chartData } = props;
   const { lightMode } = useContext(LightModeContext);
   const [data, setData] = useState();
@@ -97,17 +99,17 @@ function NationalChartComponent(props) {
         labels: chartData.map((item) => item.year),
         datasets: [
           {
-            label: 'Average Area Score',
+            label: t('Average Area Score'),
             data: chartData.map((item) => item.avg_area),
             borderColor: getCSSVariable('birds'),
           },
           {
-            label: 'Average Connectivity Score',
+            label: t('Average Connectivity Score'),
             data: chartData.map((item) => item.avg_conn),
             borderColor: getCSSVariable('mammals'),
           },
           {
-            label: 'Average Habitat Score',
+            label: t('Average Habitat Score'),
             data: chartData.map((item) => (item.avg_area + item.avg_conn) / 2),
             borderColor: getCSSVariable('reptiles'),
           },
@@ -124,7 +126,7 @@ function NationalChartComponent(props) {
       const shiVal = (lastValues.avg_area + lastValues.avg_conn) / 2;
 
       const shi = {
-        labels: ['Global SHI', 'Remaining'],
+        labels: [t('Global SHI'), t('Remaining')],
         datasets: [
           {
             label: '',
@@ -163,11 +165,11 @@ function NationalChartComponent(props) {
           />
           <b>{nationalScores.connecivityScore}</b>
           <b>{countryData?.prop_protected_ter}</b>
-          <span>Year</span>
-          <span>Area Score</span>
-          <span>SHI</span>
-          <span>Connectivity Score</span>
-          <span>Global Ranking</span>
+          <span>{t('Year')}</span>
+          <span>{t('Area Score')}</span>
+          <span>{t('SHI')}</span>
+          <span>{t('Connectivity Score')}</span>
+          <span>{t('Global Ranking')}</span>
         </div>
       </div>
       {data && (

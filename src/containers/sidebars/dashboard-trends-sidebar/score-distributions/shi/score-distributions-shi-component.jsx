@@ -11,8 +11,10 @@ import compStyles from './score-distributions-shi-styles.module.scss';
 import DistributionsTableContainer from './distributions-table';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 function ScoreDistributionsShiComponent(props) {
+  const t = useT();
   const { countryData, shiData } = props;
 
   const lowAvg = 'Amphibians';
@@ -131,7 +133,7 @@ function ScoreDistributionsShiComponent(props) {
         //   barPercentage: 1,
         // },
         {
-          label: '# of occurance',
+          label: t('# of occurance'),
           data: Object.values(taxaSet),
           backgroundColor: getCSSVariable('birds'),
           stack: 'Stack 0',
@@ -223,7 +225,7 @@ function ScoreDistributionsShiComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
-        <span className={styles.title}>Score Distributions</span>
+        <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
           View the distribution of the individual Species Habitat Scores,
@@ -231,7 +233,7 @@ function ScoreDistributionsShiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          Species with SHS between <b>35-45:</b>
+          {t('Species with SHS between')} <b>35-45:</b>
         </span>
         <hr />
         <ul className={styles.spsSpecies}>
@@ -254,18 +256,17 @@ function ScoreDistributionsShiComponent(props) {
           {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
-            label="view full table"
+            label={t('View full table')}
             handleClick={() => setShowTable(true)}
           />}
           {showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
-            label="Close full table"
+            label={t('Close full table')}
             handleClick={() => setShowTable(false)}
           />}
           <span className={styles.helpText}>
-            Open and download a full table of species SPS and relevant traits at
-            national and province levels for a selected year.
+            {t('Open and download a full table of species SPS and relevant traits at national and province levels for a selected year.')}
           </span>
         </div>
       </div>
@@ -277,7 +278,7 @@ function ScoreDistributionsShiComponent(props) {
               className={cx(styles.saveButton, {
                 [styles.notActive]: activeScore !== 'habitat score',
               })}
-              label="Habitat Score"
+              label={t('Habitat Score')}
               handleClick={handleActiveChange}
             />
             <Button
@@ -285,7 +286,7 @@ function ScoreDistributionsShiComponent(props) {
               className={cx(styles.saveButton, {
                 [styles.notActive]: activeScore !== 'area',
               })}
-              label="Area"
+              label={t('Area')}
               handleClick={handleActiveChange}
             />
             <Button
@@ -293,7 +294,7 @@ function ScoreDistributionsShiComponent(props) {
               className={cx(styles.saveButton, {
                 [styles.notActive]: activeScore !== 'connectivity',
               })}
-              label="Connectivity"
+              label={t('Connectivity')}
               handleClick={handleActiveChange}
             />
           </div>

@@ -13,6 +13,7 @@ import {
 
 import styles from './spi-arc-chart-styles.module.scss';
 import { LightModeContext } from '../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 ChartJS.register(
   CategoryScale,
@@ -24,6 +25,7 @@ ChartJS.register(
 );
 
 function SpiArcChartComponent(props) {
+  const t = useT();
   const { scores, width, height, data, img, species, value } = props;
   const { lightMode } = useContext(LightModeContext);
   const [score, setScore] = useState(0);
@@ -84,7 +86,7 @@ function SpiArcChartComponent(props) {
       {scores && (
         <div className={styles.taxoGroup}>
           <img src={img} width={40} height={40} alt={species} />
-          <div className={styles.richness}>Species Richness:</div>
+          <div className={styles.richness}>{t('Species Richness:')}</div>
           <div className={styles.score}>
             {scores[species].total} {species}
           </div>

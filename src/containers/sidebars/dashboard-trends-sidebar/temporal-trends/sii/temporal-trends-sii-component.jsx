@@ -9,8 +9,10 @@ import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 import { LightModeContext } from '../../../../../context/light-mode';
+import { useT } from '@transifex/react';
 
 function TemporalTrendsSiiComponent(props) {
+  const t = useT();
   const { countryData, siiData } = props;
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
@@ -40,7 +42,7 @@ function TemporalTrendsSiiComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
-        <span className={styles.title}>Temporal Trends</span>
+        <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
           Species data coverage remains low in <b>{countryData?.NAME_0}</b>. In {latestValues.year}, {latestValues.spi}% of the expected ranges of terrestrial vertebrate species
           here had a recorded observation of that species. Since 1950, the
@@ -55,7 +57,7 @@ function TemporalTrendsSiiComponent(props) {
             />
           </div>
           <span className={styles.helpText}>
-            Toggle national SPI and province-level breakdown.
+            {t('Toggle national SPI and province-level breakdown.')}
           </span>
           <Button
             type="rectangular"
@@ -63,8 +65,7 @@ function TemporalTrendsSiiComponent(props) {
             label="play animation"
           />
           <span className={styles.helpText}>
-            View how the percent of area protected, SPI, and score distributions
-            have changed over time.
+            {t('View how the percent of area protected, SPI, and score distributions have changed over time.')}
           </span>
         </div>
       </div>

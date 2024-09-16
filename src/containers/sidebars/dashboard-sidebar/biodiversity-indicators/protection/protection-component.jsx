@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './protection-component-styles.module.scss';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 
 import {
@@ -15,6 +16,7 @@ import { Line } from 'react-chartjs-2';
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend, CategoryScale);
 
 function ProtectionComponent(props) {
+  const t = useT();
   const {
     protectionTableData,
     countryName,
@@ -35,7 +37,7 @@ function ProtectionComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <p>
-        *The Species Protection Score is calculated using the species expert range map and the WDPA Protected Areas.
+        {t('*The Species Protection Score is calculated using the species expert range map and the WDPA Protected Areas.')}
       </p>
       <div className={styles.scores}>
         <div className={styles.metric}>
@@ -53,7 +55,7 @@ function ProtectionComponent(props) {
           </div>
         </div>
         <div className={styles.metric}>
-          <label>Globally</label>
+          <label>{t('Globally')}</label>
           <div className={styles.score}>
             <div className={styles.chartWrapper}>
               <b>{globalProtectionScore}</b>
@@ -67,7 +69,7 @@ function ProtectionComponent(props) {
       </div>
       <div className={styles.chart}>
         <div className={styles.compareWrap}>
-          <label className={styles.compare}>Compare</label>
+          <label className={styles.compare}>{t('Compare')}</label>
           <select value={selectedCountry} onChange={onCountryChange}>
             {shiCountries.map(item => (
               <option key={item} value={item}>{item}</option>
@@ -75,9 +77,9 @@ function ProtectionComponent(props) {
           </select>
         </div>
         <div className={styles.labels}>
-          <label className={styles.dashed}>Area</label>
-          <label className={styles.dotted}>Connectivity</label>
-          <label className={styles.solid}>Total</label>
+          <label className={styles.dashed}>{t('Area')}</label>
+          <label className={styles.dotted}>{t('Connectivity')}</label>
+          <label className={styles.solid}>{t('Total')}</label>
         </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.blue)}></div>
@@ -90,11 +92,11 @@ function ProtectionComponent(props) {
           <table className={styles.dataTable}>
             <thead>
               <tr>
-                <th className={cx(styles.textLeft, styles.w20)}>Country</th>
-                <th className={cx(styles.textCenter)}>Stewardship</th>
-                <th className={cx(styles.textCenter, styles.w28)}>Range Protected</th>
-                <th className={cx(styles.textCenter, styles.w28)}>Target Protected</th>
-                <th className={cx(styles.textCenter, styles.w12)}>Total SPS</th>
+                <th className={cx(styles.textLeft, styles.w20)}>{t('Country')}</th>
+                <th className={cx(styles.textCenter)}>{t('Stewardship')}</th>
+                <th className={cx(styles.textCenter, styles.w28)}>{t('Range Protected')}</th>
+                <th className={cx(styles.textCenter, styles.w28)}>{t('Target Protected')}</th>
+                <th className={cx(styles.textCenter, styles.w12)}>{t('Total SPS')}</th>
               </tr>
             </thead>
             <tbody>
