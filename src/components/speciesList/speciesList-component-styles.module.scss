@@ -30,9 +30,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 36px;
-    border-bottom: 2px solid;
-    padding-bottom: 5px;
   }
 
   .close{
@@ -58,14 +55,11 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  height: 36px;
-  border-bottom: 2px solid;
-  padding-bottom: 5px;
 
   .title {
     font-size: 18px;
     font-weight: 700;
-    text-transform: capitalize;
+    text-transform: uppercase;
     cursor: default;
   }
 }
@@ -108,7 +102,6 @@
   font-size: 16px;
   display: flex;
   flex-direction: row;
-  height: 40px;
   justify-content: flex-start;
   align-items: center;
   .header {

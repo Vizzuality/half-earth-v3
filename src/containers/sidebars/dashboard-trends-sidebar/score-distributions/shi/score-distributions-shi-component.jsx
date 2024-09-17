@@ -17,6 +17,7 @@ function ScoreDistributionsShiComponent(props) {
   const t = useT();
   const { countryData, shiData } = props;
 
+  const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
   const spsSpecies = [
@@ -42,6 +43,7 @@ function ScoreDistributionsShiComponent(props) {
   const [responseData, setResponseData] = useState();
   const [showTable, setShowTable] = useState(false);
   const [activeScore, setActiveScore] = useState('habitat score');
+  const [taxaData, setTaxaData] = useState();
 
   const { lightMode } = useContext(LightModeContext);
 
@@ -145,7 +147,21 @@ function ScoreDistributionsShiComponent(props) {
 
   useEffect(() => {
     getChartData();
+    getTaxaData();
   }, [shiData]);
+
+  const getTaxaData = async () => {
+    const taxaCallsResponses = await Promise.all(
+      taxas.map(async (taxa) => {
+        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
+        const data = await response.json();
+        return data;
+      })
+    );
+
+    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
+    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
+  }
 
 
   const getHistogramData = (taxa) => {
@@ -190,7 +206,7 @@ function ScoreDistributionsShiComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Score',
+          text: t('Score'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -208,7 +224,7 @@ function ScoreDistributionsShiComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Number of Species',
+          text: t('Number of Species'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -298,7 +314,7 @@ function ScoreDistributionsShiComponent(props) {
               handleClick={handleActiveChange}
             />
           </div>
-          <SpeciesRichnessComponent countryData={countryData} />
+          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           <DistributionsChartComponent
             data={chartData}
             options={options}
@@ -306,7 +322,7 @@ function ScoreDistributionsShiComponent(props) {
           />
         </>)}
         {showTable && (<>
-          <SpeciesRichnessComponent countryData={countryData} />
+          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           <DistributionsTableContainer chartData={responseData}
             {...props} />
         </>)}

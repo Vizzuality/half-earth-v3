@@ -1,0 +1,152 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container {
+  --font-color: #{$white};
+  --dark-color: #{$black};
+
+  &.light{
+    --font-color: #{$black};
+    --dark-color: #{$white};
+  }
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 5px 10px;
+
+  .content{
+    flex-grow: 1;
+    height: 100%;
+    color: var(--font-color);
+
+    .sectionTitle{
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.5;
+      color: var(--font-color);
+    }
+
+    p{
+      color: var(--font-color);
+    }
+
+    .explore{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 20px;
+
+      .search{
+        border: 1px solid var(--border-color);
+        padding: 5px;
+        border-radius: 8px;
+        flex-grow: 1;
+        background: white;
+
+        input[type="text"]{
+          color: var(--border-color);
+          width: 100%;
+        }
+
+        ::placeholder{
+          color: var(--border-color);
+        }
+
+        svg{
+          fill: var(--border-color);
+          color: var(--border-color);
+
+          path{
+            fill: var(--border-color);
+            color: var(--border-color);
+          }
+        }
+      }
+
+      button{
+        width:auto;
+        color: var(--save-button-text);
+        background-color: var(--border-color);
+        &:hover {
+          background-color: var(--border-color-hover);
+        }
+      }
+    }
+
+    .mostPopular{
+      .species{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 10px;
+
+        .navCard{
+          display: flex;
+          flex-direction: column;
+          border-radius: 15px;
+          height: 200px;
+          width: 200px;
+          cursor: pointer;
+          background-position: center top;
+          background-repeat: no-repeat;
+          background-size: 200px;
+          background-image: url('../../../../assets/images/okapi_Derek_Keats_Flickr_CC-BY-2_0.jpg');
+
+          &.regions{
+            background-image: url('../../../../assets/images/drc_region_logos.jpg');
+          }
+
+          &.trends{
+              background-image: url('../../../../assets/images/drc_metrics_logos.jpg');
+          }
+
+          .outline{
+            border: 2px solid var(--font-color);
+            border-bottom: none;
+            height: 100%;
+            margin: 12px 12px 0;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            outline-style: none;
+          }
+
+          label{
+            font-weight: 600;
+            letter-spacing: 0em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--font-color);
+            margin: 0 12px;
+            border-left: 2px solid var(--font-color);
+            border-right: 2px solid var(--font-color);
+            transition: color .3s;
+            cursor: pointer;
+          }
+
+          p{
+            background-color: var(--font-color);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            padding: 5px 15px 9px;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-color);
+          }
+        }
+      }
+    }
+  }
+}

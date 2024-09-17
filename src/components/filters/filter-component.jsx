@@ -6,6 +6,7 @@ import { Chip } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import cx from 'classnames';
 import { LightModeContext } from '../../context/light-mode';
+import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 function FilterComponent(props) {
   const t = useT();
@@ -131,7 +132,7 @@ function FilterComponent(props) {
           label={t('Clear Filters')}
         />}
       </div>
-
+      <hr className={hrTheme.dark} />
       {filters.map((filterGroup, index) => {
         return (<div className={styles.filterList} key={index}>
           <div className={styles.filterGroupTitle}>{filterGroup.title}</div>

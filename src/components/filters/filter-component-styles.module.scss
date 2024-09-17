@@ -25,13 +25,11 @@
     .title {
       font-size: 18px;
       font-weight: 700;
+      text-transform: uppercase;
     }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 36px;
-    border-bottom: 2px solid;
-    padding-bottom: 5px;
   }
 
   .close{

@@ -15,7 +15,7 @@ function ScoreDistributionsSiiComponent(props) {
   const t = useT();
   const { countryData, siiData } = props;
   const { lightMode } = useContext(LightModeContext);
-
+  const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
 
@@ -39,6 +39,7 @@ function ScoreDistributionsSiiComponent(props) {
   ];
 
   const [chartData, setChartData] = useState();
+  const [taxaData, setTaxaData] = useState();
   const [showTable, setShowTable] = useState(false);
 
   const getChartData = async () => {
@@ -74,8 +75,23 @@ function ScoreDistributionsSiiComponent(props) {
     }
   };
 
+  // TODO: Using hard coded region id for Congo
+  const getTaxaData = async () => {
+    const taxaCallsResponses = await Promise.all(
+      taxas.map(async (taxa) => {
+        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
+        const data = await response.json();
+        return data;
+      })
+    );
+
+    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
+    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
+  }
+
   useEffect(() => {
     getChartData();
+    getTaxaData();
   }, [siiData]);
 
   const options = {
@@ -100,7 +116,7 @@ function ScoreDistributionsSiiComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Protection Score',
+          text: t('Protection Score'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -118,7 +134,7 @@ function ScoreDistributionsSiiComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Number of Species',
+          text: t('Number of Species'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -182,7 +198,7 @@ function ScoreDistributionsSiiComponent(props) {
       </div>
       <div className={compStyles.chartArea}>
         {!showTable && (<>
-          <SpeciesRichnessComponent countryData={countryData} />
+          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           <DistributionsChartComponent
             data={chartData}
             options={options}
@@ -190,7 +206,7 @@ function ScoreDistributionsSiiComponent(props) {
           />
         </>)}
         {showTable && (<>
-          <SpeciesRichnessComponent countryData={countryData} />
+          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           {/* <DistributionsTableContainer chartData={chartData}
             {...props} /> */}
         </>)}

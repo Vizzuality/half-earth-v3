@@ -18,6 +18,7 @@ import {
   Legend,
 } from 'chart.js';
 import { LightModeContext } from '../../context/light-mode';
+import { useT } from '@transifex/react';
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +31,8 @@ ChartJS.register(
 );
 
 function SpeciesRichnessComponent(props) {
-  const { countryData } = props;
+  const t = useT();
+  const { countryData, taxaData } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
@@ -58,48 +60,73 @@ function SpeciesRichnessComponent(props) {
 
   const getPercentage = (species) => {
     const { count, total } = scores[species];
-    const percent = (count / total) * 100 || 0;
-    return [percent, 100 - percent];
+    // const percent = (count / total) * 100 || 0;
+    // return [percent, 100 - percent];
+
+    return [count, 100 - count];
   };
 
-  useEffect(() => {
-    if (countryData) {
-      const {
-        endemic_birds,
-        birds,
-        endemic_mammals,
-        mammals,
-        endemic_reptiles,
-        reptiles,
-        endemic_amphibians,
-        amphibians,
-      } = countryData;
+  // useEffect(() => {
+  //   if (countryData) {
+  //     const {
+  //       endemic_birds,
+  //       birds,
+  //       endemic_mammals,
+  //       mammals,
+  //       endemic_reptiles,
+  //       reptiles,
+  //       endemic_amphibians,
+  //       amphibians,
+  //     } = countryData;
 
-      setScores({
-        birds: {
-          count: endemic_birds,
-          total: birds,
-        },
-        mammals: {
-          count: endemic_mammals,
-          total: mammals,
-        },
-        reptiles: {
-          count: endemic_reptiles,
-          total: reptiles,
-        },
-        amphibians: {
-          count: endemic_amphibians,
-          total: amphibians,
-        },
-      });
-    }
-  }, [countryData]);
+  //     setScores({
+  //       birds: {
+  //         count: endemic_birds,
+  //         total: birds,
+  //       },
+  //       mammals: {
+  //         count: endemic_mammals,
+  //         total: mammals,
+  //       },
+  //       reptiles: {
+  //         count: endemic_reptiles,
+  //         total: reptiles,
+  //       },
+  //       amphibians: {
+  //         count: endemic_amphibians,
+  //         total: amphibians,
+  //       },
+  //     });
+  //   }
+  // }, [countryData]);
+
+  useEffect(() => {
+    if (!taxaData) return;
+    setScores({
+      birds: {
+        count: taxaData.birdData[0].values.spi_values[taxaData.birdData[0].values.spi_values.length - 1][1],
+        total: taxaData.birdData[0].nspecies,
+      },
+      mammals: {
+        count: taxaData.mammalData[0].values.spi_values[taxaData.mammalData[0].values.spi_values.length - 1][1],
+        total: taxaData.mammalData[0].nspecies,
+      },
+      reptiles: {
+        count: taxaData.reptileData[0].values.spi_values[taxaData.reptileData[0].values.spi_values.length - 1][1],
+        total: taxaData.reptileData[0].nspecies,
+      },
+      amphibians: {
+        count: taxaData.amphibianData[0].values.spi_values[taxaData.amphibianData[0].values.spi_values.length - 1][1],
+        total: taxaData.amphibianData[0].nspecies,
+      },
+    });
+
+  }, [taxaData])
 
   const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
 
   const birdData = {
-    labels: ['Birds', 'Remaining'],
+    labels: [t('Birds'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -118,7 +145,7 @@ function SpeciesRichnessComponent(props) {
   };
 
   const mammalsData = {
-    labels: ['Mammals', 'Remaining'],
+    labels: [t('Mammals'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -137,7 +164,7 @@ function SpeciesRichnessComponent(props) {
   };
 
   const reptilesData = {
-    labels: ['Reptiles', 'Remaining'],
+    labels: [t('Reptiles'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -156,7 +183,7 @@ function SpeciesRichnessComponent(props) {
   };
 
   const amphibianData = {
-    labels: ['Amphibians', 'Remaining'],
+    labels: [t('Amphibians'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -178,27 +205,28 @@ function SpeciesRichnessComponent(props) {
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.spis}>
         <SpiArcChartComponent
+          value={scores.birds.count}
           scores={scores}
           data={birdData}
           img={Birds}
           species="birds"
         />
-
         <SpiArcChartComponent
+          value={scores.mammals.count}
           scores={scores}
           data={mammalsData}
           img={Mammals}
           species="mammals"
         />
-
         <SpiArcChartComponent
+          value={scores.reptiles.count}
           scores={scores}
           data={reptilesData}
           img={Reptiles}
           species="reptiles"
         />
-
         <SpiArcChartComponent
+          value={scores.amphibians.count}
           scores={scores}
           data={amphibianData}
           img={Amphibians}
