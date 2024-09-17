@@ -45,17 +45,17 @@ export const routes: RoutesMap<{ path: string; page?: string }> = {
     path: '/dashboard/:iso/trends',
     page: 'dashboard-trends',
   },
-  [DASHBOARD_REGIONS]: {
-    path: '/dashboard/:iso/regions/:scientificname?',
-    page: 'dashboard-species-name',
-  },
-  [DASHBOARD_SPECIES]: {
-    path: '/dashboard/:iso/species',
-    page: 'dashboard-species',
-  },
+  // [DASHBOARD_REGIONS]: {
+  //   path: '/dashboard/:iso/regions/:scientificname?',
+  //   page: 'dashboard-species-name',
+  // },
+  // [DASHBOARD_SPECIES]: {
+  //   path: '/dashboard/:iso/species',
+  //   page: 'dashboard-species',
+  // },
   [DASHBOARD]: {
-    path: '/dashboard/:iso',
-    page: 'dashboard',
+    path: '/dashboard/:iso/:scientificname?',
+    page: 'dashboard-species-name',
   },
   [NOT_FOUND]: {
     path: '/404',

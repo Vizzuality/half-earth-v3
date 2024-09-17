@@ -42,6 +42,7 @@ function ScoreDistributionsSpiComponent(props) {
 
   const [chartData, setChartData] = useState();
   const [showTable, setShowTable] = useState(false);
+  const [taxaData, setTaxaData] = useState();
 
   const getChartData = async () => {
     if (spiData.scoresData.length) {
@@ -67,7 +68,7 @@ function ScoreDistributionsSpiComponent(props) {
         labels,
         datasets: [
           {
-            label: 'Items',
+            label: t('Items'),
             data: Object.values(taxaSet),
             backgroundColor: getCSSVariable('birds'),
           },
@@ -76,14 +77,18 @@ function ScoreDistributionsSpiComponent(props) {
     }
   };
 
+  // TODO: Using hard coded region id for Congo
   const getTaxaData = async () => {
-    const taxaCalls = await Promise.all(
+    const taxaCallsResponses = await Promise.all(
       taxas.map(async (taxa) => {
         const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
         const data = await response.json();
         return data;
       })
     );
+
+    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
+    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
   }
 
   useEffect(() => {
@@ -113,7 +118,7 @@ function ScoreDistributionsSpiComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Protection Score',
+          text: t('Protection Score'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -131,7 +136,7 @@ function ScoreDistributionsSpiComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Number of Species',
+          text: t('Number of Species'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -197,11 +202,11 @@ function ScoreDistributionsSpiComponent(props) {
       <div className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}>
         {!showTable && (<>
           <div className={compStyles.title}>{t('NATIONAL SPI BY TAXONOMIC GROUP')}</div>
-          <SpeciesRichnessComponent countryData={countryData} />
+          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           <DistributionsChartComponent options={options} data={chartData} />
         </>)}
         {showTable && (<>
-          <SpeciesRichnessComponent countryData={countryData} />
+          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           {/* <DistributionsTableContainer chartData={chartData}
             {...props} /> */}
         </>)}

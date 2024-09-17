@@ -6,7 +6,7 @@ import Button from 'components/button';
 import { LightModeContext } from '../../context/light-mode';
 import SpeciesGroupContainer from '../species-group';
 import SpeciesGroupTitleContainer from '../species-group-title';
-
+import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 function SpeciesListComponent(props) {
   const t = useT();
@@ -195,6 +195,7 @@ function SpeciesListComponent(props) {
           label={t('Clear Selection')}
         />}
       </div>
+      <hr className={hrTheme.dark} />
       <div className={styles.taxaList}>
         {!selectedTaxa && filteredTaxaList?.map((taxa, index) => {
           return (

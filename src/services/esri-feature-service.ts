@@ -47,6 +47,10 @@ function getGeoJsonLayer(){
   });
 }
 
+function getVectorTileLayer(url){
+
+}
+
 function getLayer({ slug, outFields = ['*'] }: GetLayer) {
   return new FeatureLayer({
     url: LAYERS_URLS[slug],

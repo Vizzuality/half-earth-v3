@@ -2,19 +2,22 @@ import React from 'react'
 import cx from 'classnames';
 import { DASHBOARD_REGIONS } from 'router';
 import styles from './species-group-component.module.scss';
+import { NAVIGATION } from '../dashboard-nav/dashboard-nav-component';
 
 function SpeciesGroupComponent(props) {
-  const { species, selectedTaxaObj, browsePage, countryISO } = props;
+  const { species, selectedTaxaObj, setSelectedIndex, setSpeciesName } = props;
   const { asset_url, common, scientificname } = species;
 
   const selectSpecies = (species) => {
-    browsePage({
-      type: DASHBOARD_REGIONS,
-      payload: {
-        iso: countryISO.toLowerCase(),
-        scientificname: species.scientificname
-      }
-    });
+    setSelectedIndex(NAVIGATION.DATA_LAYER);
+    setSpeciesName(species.scientificname);
+    // browsePage({
+    //   type: DASHBOARD_REGIONS,
+    //   payload: {
+    //     iso: countryISO.toLowerCase(),
+    //     scientificname: species.scientificname
+    //   }
+    // });
   }
 
   return (

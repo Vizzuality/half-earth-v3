@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Bubble } from 'react-chartjs-2';
 import Select from 'react-select';
-
+import cx from 'classnames';
 import { getCSSVariable } from 'utils/css-utils';
 
 import { faker } from '@faker-js/faker';
@@ -18,12 +18,14 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 
 import styles from './province-chart-styles.module.scss';
 import { useT } from '@transifex/react';
+import { LightModeContext } from '../../../../../../context/light-mode';
 
 ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function ProvinceChartComponent(props) {
   const t = useT();
   const { countryData } = props;
+  const { lightMode } = useContext(LightModeContext);
   const blankData = {
     labels: [t('Global SPI'), t('Remaining')],
     datasets: [
@@ -89,7 +91,7 @@ function ProvinceChartComponent(props) {
         title: {
           display: true,
           text: t('Total Area (1000 km2)'),
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -104,7 +106,7 @@ function ProvinceChartComponent(props) {
         title: {
           display: true,
           text: t('Species Protection Index'),
-          color: getCSSVariable('white'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -186,7 +188,7 @@ function ProvinceChartComponent(props) {
   }, [countryData]);
 
   return (
-    <div className={styles.container}>
+    <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.info}>
         <div className={styles.specs}>
           <Select

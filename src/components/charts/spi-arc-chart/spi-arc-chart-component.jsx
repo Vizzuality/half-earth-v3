@@ -61,8 +61,13 @@ function SpiArcChartComponent(props) {
 
   const getPercentage = () => {
     const { count, total } = scores[species];
-    const percent = (count / total) * 100 || 0;
-    return [percent, 100 - percent];
+
+    if (!value) {
+      const percent = (count / total) * 100 || 0;
+      return [percent, 100 - percent];
+    } else {
+      return [count, 100 - count];
+    }
   };
 
   useEffect(() => {
@@ -76,7 +81,6 @@ function SpiArcChartComponent(props) {
       {scores && (
         <span className={styles.score}>{getPercentage()[0].toFixed(2)}</span>
       )}
-
       <Doughnut
         data={data}
         options={doughnutOptions}

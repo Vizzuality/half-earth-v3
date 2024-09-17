@@ -9,6 +9,14 @@
   padding: 10px 5px 10px 26px;
   flex-grow: 1;
 
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+  }
+
   .info{
     display: flex;
     gap: 15px;
@@ -19,7 +27,7 @@
       row-gap: 8px;
 
       span{
-        color: #FFF;
+        color: var(--font-color);
         font-family: "Open Sans";
         font-size: 13px;
         font-style: italic;
@@ -27,7 +35,7 @@
         line-height: normal;
 
         b{
-          color: #FFF;
+          color: var(--font-color);
           font-family: "Open Sans";
           font-size: 14px;
           font-style: normal;
@@ -53,7 +61,7 @@
         align-items: center;
 
         .score{
-          color: #FFF;
+          color: var(--font-color);
           text-align: center;
           font-family: "Open Sans";
           font-size: 20px;
@@ -65,7 +73,7 @@
       }
 
         b {
-          color: #FFF;
+          color: var(--font-color);
           font-family: "Open Sans";
           font-size: 16px;
           font-style: normal;
@@ -75,7 +83,7 @@
         }
 
         span{
-          color: #FFF;
+          color: var(--font-color);
           font-family: "Open Sans";
           font-size: 12px;
           font-style: italic;

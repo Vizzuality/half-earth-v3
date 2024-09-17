@@ -33,6 +33,6 @@ const getCountryName = createSelector(
 export default createStructuredSelector({
   countryISO: getCountryISO,
   countriesData: selectCountriesData,
-  countryName: getCountryName
+  countryName: getCountryName,
 });
 

@@ -1,14 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { DASHBOARD } from 'router';
 import { useT } from '@transifex/react';
 import cx from 'classnames';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import AnalyticsIcon from 'icons/analytics.svg?react';
-import StacksIcon from 'icons/stacks.svg?react';
-import TimeLineIcon from 'icons/timeline.svg?react';
-import HomeIcon from 'icons/house-solid.svg?react';
-import Button from 'components/button';
 
 import BioDiversityContainer from './biodiversity-indicators';
 import styles from './dashboard-sidebar-styles.module.scss';
@@ -17,25 +11,22 @@ import RegionsAnalysisComponent from './regions-analysis/regions-analysis-compon
 import { LightModeContext } from '../../../context/light-mode';
 import FilterContainer from '../../../components/filters';
 import SpeciesListContainer from '../../../components/speciesList';
+import DashboardNav from '../../../components/dashboard-nav';
+import { NAVIGATION } from '../../../components/dashboard-nav/dashboard-nav-component';
+import DashboardHomeContainer from './dashboard-home';
 
 function DashboardSidebar(props) {
   const t = useT();
   const {
     data,
-    browsePage,
-    countryISO,
     countryName,
-    scientificName,
     taxaList,
     filteredTaxaList,
     setFilteredTaxaList,
     selectedTaxa,
+    selectedIndex,
+    setSelectedIndex,
     setSelectedTaxa } = props;
-
-  const tabs = {
-    REGIONS: 'REGIONS',
-    SPECIES: 'SPECIES'
-  }
 
   const filterStart = [
     {
@@ -126,9 +117,6 @@ function DashboardSidebar(props) {
   const [filters, setFilters] = useState(filterStart);
 
   const [filter, setFilter] = useState();
-  const [selectedIndex, setSelectedIndex] = useState(1);
-  const [activeTrend, setActiveTrend] = useState(tabs.REGIONS);
-
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   useEffect(() => {
@@ -136,16 +124,6 @@ function DashboardSidebar(props) {
       console.log(data);
     }
   }, [data]);
-
-  useEffect(() => {
-    if (!scientificName) return;
-
-    setActiveTrend(tabs.SPECIES);
-  }, [scientificName])
-
-  const handleActionChange = (event) => {
-    setActiveTrend(event.currentTarget.innerText);
-  };
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -155,40 +133,10 @@ function DashboardSidebar(props) {
       </button>
       <h1>{countryName}</h1>
 
-      <div className={styles.btnGroup}>
-        <Button
-          type="rectangular"
-          className={cx(styles.saveButton, {
-            [styles.notActive]: activeTrend === tabs.SPECIES,
-          })}
-          label={tabs.REGIONS}
-          handleClick={handleActionChange}
-        />
-        {scientificName &&
-          <Button
-            type="rectangular"
-            className={cx(styles.saveButton, {
-              [styles.notActive]: activeTrend === tabs.REGIONS,
-            })}
-            label={tabs.SPECIES}
-            handleClick={handleActionChange}
-          />}
-      </div>
-
-      {activeTrend === tabs.REGIONS &&
-        <div className={styles.regionFilter}>
-          <div className={styles.icons}>
-            <button
-              type="button"
-              aria-label="Home"
-              onClick={() => browsePage({
-                type: DASHBOARD,
-                payload: { iso: countryISO.toLowerCase() }
-              })}
-            >
-              <HomeIcon className={styles.icon} />
-            </button>
-          </div>
+      <div className={styles.regionFilter}>
+        <DashboardNav selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} {...props} />
+        {selectedIndex === NAVIGATION.HOME && <DashboardHomeContainer {...props} />}
+        {selectedIndex === NAVIGATION.REGION &&
           <div className={styles.filters}>
             <FilterContainer
               taxaList={taxaList}
@@ -206,63 +154,16 @@ function DashboardSidebar(props) {
               setSelectedTaxa={setSelectedTaxa}
               filter={filter}
               setFilter={setFilter}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
               {...props} />
           </div>
-        </div>
-      }
-      {activeTrend === tabs.SPECIES &&
-        <section className={styles.sidenav}>
-          <div className={styles.icons}>
-            <button
-              type="button"
-              aria-label="Home"
-              onClick={() => browsePage({
-                type: DASHBOARD,
-                payload: { iso: countryISO.toLowerCase() }
-              })}
-            >
-              <HomeIcon className={styles.icon} />
-            </button>
-            <button
-              type="button"
-              aria-label="Data Analysis"
-              className={cx({
-                [styles.selected]: selectedIndex === 1,
-              })}
-              onClick={() => setSelectedIndex(1)}
-            >
-              <StacksIcon className={styles.icon} />
-            </button>
-            <button
-              type="button"
-              aria-label="Biodiversity Indicators"
-              className={cx({
-                [styles.selected]: selectedIndex === 2,
-              })}
-              onClick={() => setSelectedIndex(2)}
-            >
-              <TimeLineIcon className={styles.icon} />
-            </button>
-            <button
-              type="button"
-              aria-label="Regions Analysis"
-              className={cx({
-                [styles.selected]: selectedIndex === 3,
-              })}
-              onClick={() => setSelectedIndex(3)}
-            >
-              <AnalyticsIcon className={styles.icon} />
-            </button>
-          </div>
-          {selectedIndex === 1 && (
-            <>
-              <DataLayerContainer {...props} />
-            </>
-          )}
-          {selectedIndex === 2 && <BioDiversityContainer {...props} />}
-          {selectedIndex === 3 && <RegionsAnalysisComponent {...props} />}
-        </section>
-      }
+        }
+        {selectedIndex === NAVIGATION.SPECIES || selectedIndex === NAVIGATION.DATA_LAYER && <DataLayerContainer {...props} />}
+        {selectedIndex === NAVIGATION.BIO_IND && <BioDiversityContainer {...props} />}
+        {selectedIndex === NAVIGATION.REGION_ANALYSIS && <RegionsAnalysisComponent {...props} />}
+
+      </div>
     </div>
   );
 }
