@@ -14,6 +14,7 @@ import SpeciesListContainer from '../../../components/speciesList';
 import DashboardNav from '../../../components/dashboard-nav';
 import { NAVIGATION } from '../../../components/dashboard-nav/dashboard-nav-component';
 import DashboardHomeContainer from './dashboard-home';
+import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
 
 function DashboardSidebar(props) {
   const t = useT();
@@ -126,7 +127,7 @@ function DashboardSidebar(props) {
   }, [data]);
 
   return (
-    <div className={cx(lightMode ? styles.light : '', styles.container)}>
+    <div className={cx(lightMode ? styles.light : '', selectedIndex === NAVIGATION.TRENDS ? styles.trends : '', styles.container)}>
       <button type="button" className={styles.darkMode} title={lightMode ? t('Switch to Dark mode') : t('Switch to Light mode')} onClick={() => toggleLightMode()}>
         {!lightMode && <LightModeIcon className={styles.icon} />}
         {lightMode && <DarkModeIcon className={styles.icon} />}
@@ -162,7 +163,9 @@ function DashboardSidebar(props) {
         {selectedIndex === NAVIGATION.SPECIES || selectedIndex === NAVIGATION.DATA_LAYER && <DataLayerContainer {...props} />}
         {selectedIndex === NAVIGATION.BIO_IND && <BioDiversityContainer {...props} />}
         {selectedIndex === NAVIGATION.REGION_ANALYSIS && <RegionsAnalysisComponent {...props} />}
-
+        {selectedIndex === NAVIGATION.TRENDS && <DashboardTrendsSidebarContainer
+          {...props}
+        />}
       </div>
     </div>
   );

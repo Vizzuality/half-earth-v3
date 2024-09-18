@@ -4,65 +4,11 @@
 @import 'styles/common-animations.module';
 
 $top: 25px;
-$trends-width: 950px;
+$trends-width: 1000px;
+$info-width: 300px;
 
-.container {
-  @extend %verticalScrollbar;
-  @include backdropBlur();
-  position: absolute;
-  top: $top;
-  left: $site-gutter;
-  display: flex;
-  flex-direction: column;
-  border: $sidebar-border;
-  border-radius: $sidebar-border-radius;
-  height: calc(100vh - #{$top});
+.container{
   width: $trends-width;
-  z-index: $bring-to-front;
-  --font-color: #{$white};
-  --border-color: #{$brand-color-main};
-  --selected-font-color: #{$white};
-  --svg-fill: #{$white};
-
-  &.light{
-    --font-color: #{$black};
-    --border-color: #{$mol-blue};
-    --svg-fill: #{$black};
-    @include lightBackdropBlur();
-    border: none;
-  }
-
-  .darkMode{
-    position: absolute;
-    top: 3px;
-    right: 3px;
-
-    svg{
-      width: 20px;
-      height: 20px;
-      fill: var(--svg-fill);
-    }
-  }
-
-  .homeButton{
-    width: 50px;
-    height: 50px;
-
-    svg{
-      width: 30px;
-      height: 30px;
-      fill: var(--svg-fill);
-    }
-
-    &.selected,
-    &:hover{
-      background: var(--nav-button-bg);
-
-      svg{
-        fill: var(--svg-selected-fill);
-      }
-    }
-  }
 
   header{
     display: flex;
@@ -123,9 +69,6 @@ $trends-width: 950px;
     }
   }
 }
-
-
-$info-width: 300px;
 
 .trends{
   display: flex;

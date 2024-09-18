@@ -160,6 +160,7 @@ function ProvinceChartComponent(props) {
   };
 
   useEffect(() => {
+    console.log(countryData)
     if (countryData) {
       const spi = {
         labels: [t('Global SPI'), t('Remaining')],

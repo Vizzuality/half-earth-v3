@@ -5,15 +5,15 @@ import ScoreDistributionsSiiComponent from './sii/score-distributions-sii-compon
 import ScoreDistributionsSpiComponent from './spi/score-distributions-spi-component';
 
 function ScoreDistributionsContainer(props) {
-  const { selectedIndex } = props;
+  const { trendOption } = props;
 
-  if (selectedIndex === 1) {
+  if (trendOption === 1) {
     return <ScoreDistributionsShiComponent {...props} />;
   }
-  if (selectedIndex === 2) {
+  if (trendOption === 2) {
     return <ScoreDistributionsSpiComponent {...props} />;
   }
-  if (selectedIndex === 3) {
+  if (trendOption === 3) {
     return <ScoreDistributionsSiiComponent {...props} />;
   }
   return <ScoreDistributionsShiComponent {...props} />;

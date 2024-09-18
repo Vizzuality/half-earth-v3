@@ -318,7 +318,6 @@ function ScoreDistributionsShiComponent(props) {
           <DistributionsChartComponent
             data={chartData}
             options={options}
-            {...props}
           />
         </>)}
         {showTable && (<>

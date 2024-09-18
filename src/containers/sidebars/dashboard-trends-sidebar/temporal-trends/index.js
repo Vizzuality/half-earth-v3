@@ -5,15 +5,15 @@ import TemporalTrendsSiiComponent from './sii/temporal-trends-sii-component';
 import TemporalTrendsSpiComponent from './spi/temporal-trends-spi-component';
 
 function TemporalTrendsContainer(props) {
-  const { selectedIndex } = props;
+  const { trendOption } = props;
 
-  if (selectedIndex === 1) {
+  if (trendOption === 1) {
     return <TemporalTrendsShiComponent {...props} />;
   }
-  if (selectedIndex === 2) {
+  if (trendOption === 2) {
     return <TemporalTrendsSpiComponent {...props} />;
   }
-  if (selectedIndex === 3) {
+  if (trendOption === 3) {
     return <TemporalTrendsSiiComponent {...props} />;
   }
   return <TemporalTrendsShiComponent {...props} />;

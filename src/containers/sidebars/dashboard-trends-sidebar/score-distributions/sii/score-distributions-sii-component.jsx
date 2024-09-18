@@ -202,7 +202,6 @@ function ScoreDistributionsSiiComponent(props) {
           <DistributionsChartComponent
             data={chartData}
             options={options}
-            {...props}
           />
         </>)}
         {showTable && (<>

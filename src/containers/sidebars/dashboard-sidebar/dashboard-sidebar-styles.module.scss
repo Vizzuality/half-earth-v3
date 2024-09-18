@@ -3,9 +3,9 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-
 $top: 25px;
 $sidebar-species-width: 600px;
+$trends-width: 1000px;
 
 .container {
   @extend %verticalScrollbar;
@@ -20,6 +20,10 @@ $sidebar-species-width: 600px;
   height: calc(100vh - #{$top});
   width: $sidebar-species-width;
   z-index: $bring-to-front;
+
+  &.trends{
+    width: $trends-width
+  }
 
   --nav-button-bg: #{$white};
   --svg-fill: #{$white};

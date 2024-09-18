@@ -102,10 +102,7 @@ function DashboardNavComponent(props) {
           className={cx({
             [styles.selected]: selectedIndex === NAVIGATION.TRENDS,
           })}
-          onClick={() => browsePage({
-            type: DASHBOARD_TRENDS,
-            payload: { iso: countryISO.toLowerCase() }
-          })}
+          onClick={() => setSelectedIndex(NAVIGATION.TRENDS)}
         >
           <WhatshotIcon className={styles.icon} />
         </button>
