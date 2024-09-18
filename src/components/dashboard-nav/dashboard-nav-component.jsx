@@ -11,20 +11,12 @@ import { useT } from '@transifex/react';
 import cx from 'classnames';
 import { DASHBOARD_TRENDS } from 'router';
 import { LightModeContext } from '../../context/light-mode';
+import { NAVIGATION } from '../../utils/dashboard-utils';
 
-export const NAVIGATION = {
-  HOME: 1,
-  REGION: 2,
-  SPECIES: 3,
-  DATA_LAYER: 4,
-  BIO_IND: 5,
-  REGION_ANALYSIS: 6,
-  TRENDS: 7,
-}
 
 function DashboardNavComponent(props) {
   const t = useT();
-  const { countryISO, selectedIndex, setSelectedIndex, browsePage } = props;
+  const { selectedIndex, setSelectedIndex, } = props;
   const { lightMode, } = useContext(LightModeContext);
 
   return (
@@ -58,7 +50,6 @@ function DashboardNavComponent(props) {
           })}
           onClick={() => {
             setSelectedIndex(NAVIGATION.DATA_LAYER);
-            setShowSpeciesOptions(!showSpeciesOptions)
           }}
         >
           <EmojiNatureIcon className={styles.icon} />

@@ -41,7 +41,8 @@ function GroupedListComponent(props) {
   }
 
   const displaySingleLayer = (item) => {
-    const blah = EsriFeatureService.getGeoJsonLayer();
+    // const blah = EsriFeatureService.getGeoJsonLayer();
+    const blah = EsriFeatureService.getXYZLayer();
     //https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/species/detailed/3857/{z}/{x}/{y}.mvt?scientificname=Accipiter%20badius&dsids=704898e7-b945-4721-b201-9286bd00c0a9,d542e050-2ae5-457e-8476-027741538965
     map.add(blah);
 

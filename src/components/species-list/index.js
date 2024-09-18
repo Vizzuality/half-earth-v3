@@ -1,5 +1,5 @@
 import React from 'react';
-import SpeciesListComponent from './speciesList-component';
+import SpeciesListComponent from './species-list-component';
 
 function SpeciesListContainer(props) {
   return (

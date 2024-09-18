@@ -7,11 +7,12 @@ import {
 } from 'selectors/location-selectors';
 
 import dashboardViewConfig from '../../containers/views/dashboard-species-name-view/dashboard-species-name-view-config';
+import { SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const selectCountriesData = ({ countryData }) =>
   countryData && (countryData.data || null);
-const selectScientificName = ({ location }) => location.payload.scientificname;
+const selectScientificName = ({ location }) => location.payload.scientificname ?? localStorage.getItem(SPECIES_SELECTED_COOKIE);
 
 const getViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
   return {

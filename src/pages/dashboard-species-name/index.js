@@ -14,7 +14,8 @@ import mapStateToProps from './dashboard-species-name-selectors';
 import {
   COUNTRIES_DATA_SERVICE_URL
 } from 'constants/layers-urls';
-import { NAVIGATION } from '../../components/dashboard-nav/dashboard-nav-component.jsx';
+import { NAVIGATION } from '../../utils/dashboard-utils.js';
+
 
 const actions = { ...countryDataActions, ...urlActions };
 
@@ -67,8 +68,8 @@ function DashboardSpeciesNameContainer(props) {
 
   useEffect(() => {
     if(!scientificName) return;
+    localStorage.setItem('selected_species', scientificName);
     setSpeciesName(scientificName);
-    setSelectedIndex(NAVIGATION.DATA_LAYER);
   }, [scientificName])
 
 

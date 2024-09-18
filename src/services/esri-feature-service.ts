@@ -4,6 +4,7 @@ import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
+import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import {
     addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
 } from '@esri/arcgis-rest-feature-layer';
@@ -47,9 +48,12 @@ function getGeoJsonLayer(){
   });
 }
 
-function getVectorTileLayer(url){
-
+function getXYZLayer(){
+  return new WebTileLayer({
+    urlTemplate: 'https://earthengine.googleapis.com/v1/projects/map-of-life/maps/974cd092f1d222cd5ad9f26eaeaaa974-20d1f1ec2257362d28e5de6dcf970908/tiles/{z}/{x}/{y}'
+  })
 }
+
 
 function getLayer({ slug, outFields = ['*'] }: GetLayer) {
   return new FeatureLayer({
@@ -97,4 +101,5 @@ export default {
   getLayer,
   addFeature,
   getGeoJsonLayer,
+  getXYZLayer,
 };

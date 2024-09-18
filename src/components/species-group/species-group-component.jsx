@@ -2,15 +2,18 @@ import React from 'react'
 import cx from 'classnames';
 import { DASHBOARD_REGIONS } from 'router';
 import styles from './species-group-component.module.scss';
-import { NAVIGATION } from '../dashboard-nav/dashboard-nav-component';
+
+import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
 
 function SpeciesGroupComponent(props) {
-  const { species, selectedTaxaObj, setSelectedIndex, setSpeciesName } = props;
+  const { species, selectedTaxaObj, setSelectedIndex, setSpeciesName, countryISO } = props;
   const { asset_url, common, scientificname } = species;
 
   const selectSpecies = (species) => {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setSpeciesName(species.scientificname);
+    localStorage.setItem(SPECIES_SELECTED_COOKIE, species.scientificname);
+    // window.history.pushState({}, '', `${species.scientificname}`);
     // browsePage({
     //   type: DASHBOARD_REGIONS,
     //   payload: {

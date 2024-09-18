@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import styles from './speciesList-component-styles.module.scss';
+import styles from './species-list-component-styles.module.scss';
 import cx from 'classnames';
 import { useT } from '@transifex/react';
 import Button from 'components/button';

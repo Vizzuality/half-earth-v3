@@ -10,11 +10,13 @@ import DataLayerContainer from './data-layers';
 import RegionsAnalysisComponent from './regions-analysis/regions-analysis-component';
 import { LightModeContext } from '../../../context/light-mode';
 import FilterContainer from '../../../components/filters';
-import SpeciesListContainer from '../../../components/speciesList';
+import SpeciesListContainer from '../../../components/species-list';
 import DashboardNav from '../../../components/dashboard-nav';
-import { NAVIGATION } from '../../../components/dashboard-nav/dashboard-nav-component';
+
 import DashboardHomeContainer from './dashboard-home';
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
+import { NAVIGATION } from '../../../utils/dashboard-utils';
+
 
 function DashboardSidebar(props) {
   const t = useT();
