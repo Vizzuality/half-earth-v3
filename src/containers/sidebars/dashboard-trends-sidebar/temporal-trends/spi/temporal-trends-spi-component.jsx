@@ -43,7 +43,6 @@ function TemporalTrendsSpiComponent(props) {
   };
 
   useEffect(() => {
-    console.log(countryData)
     getNationalData();
 
   }, [spiData]);
