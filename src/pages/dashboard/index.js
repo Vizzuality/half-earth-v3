@@ -1,31 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import mapStateToProps from './dashboard-selectors';
+
+import { activateLayersOnLoad } from 'utils/layer-manager-utils';
+import EsriFeatureService from 'services/esri-feature-service';
+import { layersConfig } from 'constants/mol-layers-configs';
+
+import { setBasemap } from '../../utils/layer-manager-utils.js';
 import * as urlActions from 'actions/url-actions';
 import countryDataActions from 'redux_modules/country-data';
-import EsriFeatureService from 'services/esri-feature-service';
-import DashboardComponent from './dashboard-component';
+import DashboardComponent from './dashboard-component.jsx';
+import mapStateToProps from './dashboard-selectors.js';
+
 import {
   COUNTRIES_DATA_SERVICE_URL
 } from 'constants/layers-urls';
+import { NAVIGATION } from '../../utils/dashboard-utils.js';
+
 
 const actions = { ...countryDataActions, ...urlActions };
 
 function DashboardContainer(props) {
   const {
+    viewSettings,
     countryISO,
+    scientificName,
     setCountryDataLoading,
     setCountryDataReady,
     setCountryDataError,
-    scientificName
   } = props;
 
+  const [geometry, setGeometry] = useState(null);
+  const [speciesInfo, setSpeciesInfo] = useState(null);
   const [data, setData] = useState(null);
   const [dataLayerData, setDataLayerData] = useState(null);
   const [taxaList, setTaxaList] = useState([])
   const [dataByCountry, setDataByCountry] = useState(null);
   const [selectedTaxa, setSelectedTaxa] = useState('');
   const [filteredTaxaList, setFilteredTaxaList] = useState();
+  const [speciesName, setSpeciesName] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
 
   const speciesListUrl = 'https://dev-api.mol.org/2.x/spatial/species/list';
 
@@ -35,27 +48,58 @@ function DashboardContainer(props) {
     EsriFeatureService.getFeatures({
       url: COUNTRIES_DATA_SERVICE_URL,
       whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: false,
+      returnGeometry: true,
     })
       .then((features) => {
+        const { geometry } = features[0];
+
         setCountryDataReady(features);
+        if (geometry) {
+          setGeometry(geometry);
+        }
+
       })
       .catch((error) => {
         setCountryDataError(error);
       });
 
-    getSpeciesList();
-  }, [])
+      getSpeciesList();
+  }, []);
 
   useEffect(() => {
     if(!scientificName) return;
+    localStorage.setItem('selected_species', scientificName);
+    setSpeciesName(scientificName);
+  }, [scientificName])
+
+
+  useEffect(() => {
+    if(!speciesName) return;
+    getSpeciesData();
     getDataLayersData();
     getData();
-  }, [scientificName]);
+  }, [speciesName]);
+
+  useEffect(() => {
+    // Function to handle back navigation
+    const handleBackButton = (event) => {
+      // Implement custom behavior here
+      setSelectedIndex(window.history.state?.selectedIndex ?? 1);
+    };
+
+    // Add event listener for popstate event
+    window.addEventListener('popstate', handleBackButton);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, []);
+
 
   const getDataLayersData = async () => {
     const dataLayerParams = {
-      scientificname: scientificName,
+      scientificname: speciesName,
       group: 'movement'
     };
     const dparams = new URLSearchParams(dataLayerParams);
@@ -77,7 +121,7 @@ function DashboardContainer(props) {
   }
 
   const getData = async () => {
-    const speciesPreferences = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/habitat?scientificname=${scientificName}`;
+    const speciesPreferences = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/habitat?scientificname=${speciesName}`;
     const res = await fetch(speciesPreferences);
     const ps = await res.json();
     // TODO: figure out what to do is ps.prefs are null
@@ -85,9 +129,9 @@ function DashboardContainer(props) {
     const params = new URLSearchParams(preferences);
 
     // TODO: Some responses have no frag results
-    const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
-    const reserveCoverageMetricsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/reserve-coverage/metrics?scientificname=${scientificName}&${params}`;
-    const habitatMetricesUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-distribution/metrics?scientificname=${scientificName}&${params}`;
+    const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${speciesName}`;
+    const reserveCoverageMetricsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/reserve-coverage/metrics?scientificname=${speciesName}&${params}`;
+    const habitatMetricesUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-distribution/metrics?scientificname=${speciesName}&${params}`;
 
     // const dataLayerParams = {
     //   scientificname: scientificName,
@@ -259,16 +303,38 @@ function DashboardContainer(props) {
     });
   }
 
+  const getSpeciesData = async () => {
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${speciesName}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    setSpeciesInfo(data[0]);
+  }
+
+  const handleMapLoad = (map, activeLayers) => {
+    setBasemap({
+      map,
+      layersArray: viewSettings.basemap.layersArray,
+    });
+    activateLayersOnLoad(map, activeLayers, layersConfig);
+  };
+
   return <DashboardComponent
-            data={data}
-            dataLayerData={dataLayerData}
-            dataByCountry={dataByCountry}
-            taxaList={taxaList}
-            selectedTaxa={selectedTaxa}
-            setSelectedTaxa={setSelectedTaxa}
-            filteredTaxaList={filteredTaxaList}
-            setFilteredTaxaList={setFilteredTaxaList}
-            {...props} />;
+    handleMapLoad={handleMapLoad}
+    geometry={geometry}
+    speciesInfo={speciesInfo}
+    data={data}
+    dataLayerData={dataLayerData}
+    dataByCountry={dataByCountry}
+    taxaList={taxaList}
+    selectedTaxa={selectedTaxa}
+    setSelectedTaxa={setSelectedTaxa}
+    filteredTaxaList={filteredTaxaList}
+    setFilteredTaxaList={setFilteredTaxaList}
+    speciesName={speciesName}
+    setSpeciesName={setSpeciesName}
+    selectedIndex={selectedIndex}
+    setSelectedIndex={setSelectedIndex}
+    {...props} />;
 }
 
 export default connect(mapStateToProps, actions)(DashboardContainer);

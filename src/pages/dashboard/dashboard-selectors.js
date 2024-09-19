@@ -1,9 +1,37 @@
 /* eslint-disable max-len */
 import { createSelector, createStructuredSelector } from 'reselect';
 
+import {
+  selectGlobeUrlState,
+  selectUiUrlState,
+} from 'selectors/location-selectors';
+
+import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
+import { SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
+
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const selectCountriesData = ({ countryData }) =>
   countryData && (countryData.data || null);
+const selectScientificName = ({ location }) => location.payload.scientificname ?? localStorage.getItem(SPECIES_SELECTED_COOKIE);
+
+const getViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
+  return {
+    ...dashboardViewConfig.view,
+    ...globeUrlState,
+  };
+});
+
+const getUiSettings = createSelector(selectUiUrlState, (uiUrlState) => {
+  return {
+    ...dashboardViewConfig.ui,
+    ...uiUrlState,
+  };
+});
+
+export const getActiveLayers = createSelector(
+  getViewSettings,
+  (viewSettings) => viewSettings.activeLayers
+);
 
 export const getCountryISO = createSelector(
   selectCountryIso,
@@ -30,9 +58,21 @@ const getCountryName = createSelector(
   }
 );
 
-export default createStructuredSelector({
-  countryISO: getCountryISO,
-  countriesData: selectCountriesData,
-  countryName: getCountryName,
-});
+const getScientificName = createSelector(
+  selectScientificName,
+  (scientificName) => scientificName
+);
 
+const getSidebarVisibility = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.isSidebarOpen
+);
+
+export default createStructuredSelector({
+  viewSettings: getViewSettings,
+  activeLayers: getActiveLayers,
+  countryISO: getCountryISO,
+  countryName: getCountryName,
+  scientificName: getScientificName,
+  isSidebarOpen: getSidebarVisibility,
+});

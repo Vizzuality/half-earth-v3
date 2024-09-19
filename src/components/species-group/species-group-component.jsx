@@ -1,6 +1,5 @@
 import React from 'react'
 import cx from 'classnames';
-import { DASHBOARD_REGIONS } from 'router';
 import styles from './species-group-component.module.scss';
 
 import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
@@ -13,14 +12,6 @@ function SpeciesGroupComponent(props) {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setSpeciesName(species.scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, species.scientificname);
-    // window.history.pushState({}, '', `${species.scientificname}`);
-    // browsePage({
-    //   type: DASHBOARD_REGIONS,
-    //   payload: {
-    //     iso: countryISO.toLowerCase(),
-    //     scientificname: species.scientificname
-    //   }
-    // });
   }
 
   return (

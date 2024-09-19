@@ -1,42 +1,78 @@
-import React from 'react';
-import { DASHBOARD_SPECIES, DASHBOARD_TRENDS, DASHBOARD_REGIONS } from 'router';
-import styles from './dashboard-view-styles.module.scss';
-import cx from 'classnames';
-import { useT } from '@transifex/react';
+import React, { useEffect, useState } from 'react';
+
+import loadable from '@loadable/component';
+
+import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
+import SideMenu from 'containers/menus/sidemenu';
+import { LightModeProvider } from '../../../context/light-mode';
+import MapView from 'components/map-view';
+
+import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
+
+const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
+
+const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 function DashboardViewComponent(props) {
-  const t = useT();
-  const { browsePage, countryISO, countryName } = props;
+  const {
+    activeLayers,
+    onMapLoad,
+    sceneMode,
+    viewSettings,
+    countryISO,
+    countryName,
+    isFullscreenActive,
+    openedModal,
+    geometry
+  } = props;
+
+  const [map, setMap] = useState(null);
+  const [view, setView] = useState(null);
+
+  useEffect(() => {
+    if (geometry && view) {
+      view.center = [geometry.longitude, geometry.latitude];
+    }
+  }, [view, geometry]);
 
   return (
-    <>
-      {/* <LightModeProvider> */}
-      <section className={styles.container}>
-        <h1>{`${countryName} ${t('Biodiversity Dashboard')}`}</h1>
-        <div className={styles.navigation}>
-          <div className={styles.navCard} onClick={() => browsePage({ type: DASHBOARD_SPECIES, payload: { iso: countryISO.toLowerCase() } })} >
-            <div className={styles.outline}></div>
-            <label>{t('Species')}</label>
-            <p>{t('Explore species distribution, trait, and conservation data')}</p>
-          </div>
-          <div className={cx(styles.navCard, styles.regions)} onClick={() => browsePage({ type: DASHBOARD_REGIONS, payload: { iso: countryISO.toLowerCase() } })} >
-            <div className={styles.outline}></div>
-            <label>{t('Regions')}</label>
-            <p>
-              {t('Explore high quality biodiversity expectations for any area of interest')}
-            </p>
-          </div>
-          <div className={cx(styles.navCard, styles.trends)} onClick={() => browsePage({ type: DASHBOARD_TRENDS, payload: { iso: countryISO.toLowerCase() } })} >
-            <div className={styles.outline}></div>
-            <label>{t('View Indicators')}</label>
-            <p>
-              {t('Explore national biodiversity indicators: the Species Habitat, Protection, and Information Indices')}
-            </p>
-          </div>
-        </div>
-      </section >
-      {/* </LightModeProvider> */}
-    </>
+    <MapView
+      onMapLoad={onMapLoad}
+      mapName="dashboard"
+      viewSettings={viewSettings}
+      map={map}
+      setMap={setMap}
+      view={view}
+      setView={setView}
+      geometry={geometry}
+      loaderOptions={{
+        url: `https://js.arcgis.com/${API_VERSION}`,
+      }}
+    >
+      <LightModeProvider>
+        <DashboardSidebarContainer
+          map={map}
+          view={view}
+          {...props} />
+      </LightModeProvider>
+      <CountryLabelsLayer
+        sceneMode={sceneMode}
+        countryISO={countryISO}
+        countryName={countryName}
+        activeLayers={activeLayers}
+      />
+
+      <RegionsLabelsLayer sceneMode={sceneMode} activeLayers={activeLayers} />
+
+      <SideMenu
+        openedModal={openedModal}
+        activeLayers={activeLayers}
+        isFullscreenActive={isFullscreenActive}
+      />
+
+      <LabelsLayer activeLayers={activeLayers} />
+    </MapView>
   );
 }
 

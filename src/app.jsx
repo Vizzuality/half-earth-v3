@@ -35,12 +35,6 @@ const DashboardComponent = loadable(() => import('pages/dashboard'));
 const DashboardTrendsComponent = loadable(() =>
   import('pages/dashboard-trends')
 );
-const DashboardSpeciesComponent = loadable(() =>
-  import('pages/dashboard-species')
-);
-const DashboardSpeciesNameComponent = loadable(() =>
-  import('pages/dashboard-species-name')
-);
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type],
@@ -78,8 +72,6 @@ function AppLayout(props) {
       return <DashboardTrendsComponent />;
     case 'dashboard-species':
       return <DashboardSpeciesComponent />;
-    case 'dashboard-species-name':
-      return <DashboardSpeciesNameComponent />;
     default:
       return isMobile ? <LandingMobile /> : <Landing />;
   }
