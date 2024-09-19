@@ -3,6 +3,7 @@ import { useT } from '@transifex/react';
 import cx from 'classnames';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { Loading } from 'he-components';
 
 import BioDiversityContainer from './biodiversity-indicators';
 import styles from './dashboard-sidebar-styles.module.scss';
@@ -118,7 +119,7 @@ function DashboardSidebar(props) {
   ];
 
   const [filters, setFilters] = useState(filterStart);
-
+  const [isLoading, setIsloading] = useState(true);
   const [filter, setFilter] = useState();
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
@@ -127,6 +128,12 @@ function DashboardSidebar(props) {
       console.log(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (!filteredTaxaList) return;
+    console.log(filteredTaxaList)
+    setIsLoading(false);
+  }, [filteredTaxaList])
 
   return (
     <div className={cx(lightMode ? styles.light : '', selectedIndex === NAVIGATION.TRENDS ? styles.trends : '', styles.container)}>
@@ -141,25 +148,29 @@ function DashboardSidebar(props) {
         {selectedIndex === NAVIGATION.HOME && <DashboardHomeContainer {...props} />}
         {selectedIndex === NAVIGATION.REGION &&
           <div className={styles.filters}>
-            <FilterContainer
-              taxaList={taxaList}
-              selectedTaxa={selectedTaxa}
-              setFilteredTaxaList={setFilteredTaxaList}
-              setSelectedTaxa={setSelectedTaxa}
-              filters={filters}
-              setFilters={setFilters}
-              {...props} />
-            <SpeciesListContainer
-              selectedTaxa={selectedTaxa}
-              filteredTaxaList={filteredTaxaList}
-              setFilteredTaxaList={setFilteredTaxaList}
-              taxaList={taxaList}
-              setSelectedTaxa={setSelectedTaxa}
-              filter={filter}
-              setFilter={setFilter}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-              {...props} />
+            {isLoading && <Loading height={200} />}
+            {!isLoading && <>
+              <FilterContainer
+                taxaList={taxaList}
+                selectedTaxa={selectedTaxa}
+                setFilteredTaxaList={setFilteredTaxaList}
+                setSelectedTaxa={setSelectedTaxa}
+                filters={filters}
+                setFilters={setFilters}
+                {...props} />
+              <SpeciesListContainer
+                selectedTaxa={selectedTaxa}
+                filteredTaxaList={filteredTaxaList}
+                setFilteredTaxaList={setFilteredTaxaList}
+                taxaList={taxaList}
+                setSelectedTaxa={setSelectedTaxa}
+                filter={filter}
+                setFilter={setFilter}
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
+                {...props} />
+            </>
+            }
           </div>
         }
         {selectedIndex === NAVIGATION.SPECIES || selectedIndex === NAVIGATION.DATA_LAYER && <DataLayerContainer {...props} />}

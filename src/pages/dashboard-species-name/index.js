@@ -80,6 +80,23 @@ function DashboardSpeciesNameContainer(props) {
     getData();
   }, [speciesName]);
 
+  useEffect(() => {
+    // Function to handle back navigation
+    const handleBackButton = (event) => {
+      // Implement custom behavior here
+      setSelectedIndex(window.history.state?.selectedIndex ?? 1);
+    };
+
+    // Add event listener for popstate event
+    window.addEventListener('popstate', handleBackButton);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, []);
+
+
   const getDataLayersData = async () => {
     const dataLayerParams = {
       scientificname: speciesName,
