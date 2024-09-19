@@ -27,7 +27,7 @@ function DashboardNavComponent(props) {
   }
 
   const updateHistory = (page, title) => {
-    window.history.pushState({ selectedIndex: page }, '', `${title}`);
+    window.history.pushState({ selectedIndex: page }, '', `?page=${title}`);
     setSelectedIndex(page);
   }
 

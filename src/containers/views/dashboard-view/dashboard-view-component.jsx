@@ -9,6 +9,7 @@ import { LightModeProvider } from '../../../context/light-mode';
 import MapView from 'components/map-view';
 
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
+import TopMenuContainer from '../../../components/top-menu';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 
@@ -51,6 +52,7 @@ function DashboardViewComponent(props) {
       }}
     >
       <LightModeProvider>
+        <TopMenuContainer />
         <DashboardSidebarContainer
           map={map}
           view={view}
