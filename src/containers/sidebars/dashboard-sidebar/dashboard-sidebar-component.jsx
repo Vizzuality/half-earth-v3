@@ -119,7 +119,7 @@ function DashboardSidebar(props) {
   ];
 
   const [filters, setFilters] = useState(filterStart);
-  const [isLoading, setIsloading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState();
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
@@ -131,7 +131,6 @@ function DashboardSidebar(props) {
 
   useEffect(() => {
     if (!filteredTaxaList) return;
-    console.log(filteredTaxaList)
     setIsLoading(false);
   }, [filteredTaxaList])
 
