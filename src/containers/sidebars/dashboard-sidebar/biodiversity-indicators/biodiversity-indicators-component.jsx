@@ -13,8 +13,8 @@ function BioDiversityComponent(props) {
   const t = useT();
   const {
     lightMode,
-    selectedIndex,
-    setSelectedIndex,
+    selectedTab,
+    setSelectedTab,
     habitatScore,
     habitatTableData,
     globalHabitatScore,
@@ -33,9 +33,9 @@ function BioDiversityComponent(props) {
           type="button"
           aria-label="Species Protection Index"
           className={cx({
-            [styles.selected]: selectedIndex === 2,
+            [styles.selected]: selectedTab === 2,
           })}
-          onClick={() => setSelectedIndex(2)}
+          onClick={() => setSelectedTab(2)}
         >
           <span>{protectionScore}%</span>
           <span>{t('Protection Score')}</span>
@@ -44,9 +44,9 @@ function BioDiversityComponent(props) {
           type="button"
           aria-label="Species Habitat Index"
           className={cx({
-            [styles.selected]: selectedIndex === 1,
+            [styles.selected]: selectedTab === 1,
           })}
-          onClick={() => setSelectedIndex(1)}
+          onClick={() => setSelectedTab(1)}
         >
           <span>{habitatScore}%</span>
           <span>{t('Habitat Score')}</span>
@@ -55,21 +55,21 @@ function BioDiversityComponent(props) {
           type="button"
           aria-label="Species Information Index"
           className={cx({
-            [styles.selected]: selectedIndex === 3,
+            [styles.selected]: selectedTab === 3,
           })}
-          onClick={() => setSelectedIndex(3)}
+          onClick={() => setSelectedTab(3)}
         >
           <span>{t('Information Score')}</span>
         </button>
       </div>
-      {selectedIndex === 1 &&
+      {selectedTab === 1 &&
         <HabitatContainer
           habitatScore={habitatScore}
           globalHabitatScore={globalHabitatScore}
           habitatTableData={habitatTableData}
           {...props} />
       }
-      {selectedIndex === 2 &&
+      {selectedTab === 2 &&
         <ProtectionContainer
           protectionScore={protectionScore}
           globalProtectionScore={globalProtectionScore}

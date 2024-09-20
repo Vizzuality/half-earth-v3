@@ -5,26 +5,27 @@ import Component from './dashboard-sidebar-component.jsx';
 import mapStateToProps from './selectors';
 
 function DashboardSidebarContainer(props) {
-  const {scientificName} = props;
+  // const {scientificName} = props;
 
-  const [data, setData] = useState(null);
-  const [dataLayerData, setDataLayerData] = useState(null);
-  const [taxaList, setTaxaList] = useState([])
-  const [dataByCountry, setDataByCountry] = useState(null);
-  const [selectedTaxa, setSelectedTaxa] = useState('');
-  const [filteredTaxaList, setFilteredTaxaList] = useState();
+  // const [data, setData] = useState(null);
+  // const [dataLayerData, setDataLayerData] = useState(null);
+  // const [taxaList, setTaxaList] = useState([])
+  // const [dataByCountry, setDataByCountry] = useState(null);
+  // const [selectedTaxa, setSelectedTaxa] = useState('');
+  // const [filteredTaxaList, setFilteredTaxaList] = useState();
 
-  const speciesListUrl = 'https://dev-api.mol.org/2.x/spatial/species/list';
+  // const speciesListUrl = 'https://dev-api.mol.org/2.x/spatial/species/list';
 
   useEffect(() => {
-    getSpeciesList();
+    // console.log('why this calling')
+    // getSpeciesList();
   }, [])
 
   useEffect(() => {
-    if(!scientificName) return;
-    getDataLayersData();
-    getData();
-  }, [scientificName]);
+    // if(!scientificName) return;
+    // getDataLayersData();
+    // getData();
+  }, []);
 
 
   const getDataLayersData = async () => {
@@ -234,14 +235,14 @@ function DashboardSidebarContainer(props) {
   }
 
   return <Component
-            data={data}
-            dataLayerData={dataLayerData}
-            dataByCountry={dataByCountry}
-            taxaList={taxaList}
-            selectedTaxa={selectedTaxa}
-            setSelectedTaxa={setSelectedTaxa}
-            filteredTaxaList={filteredTaxaList}
-            setFilteredTaxaList={setFilteredTaxaList}
+            // data={data}
+            // dataLayerData={dataLayerData}
+            // dataByCountry={dataByCountry}
+            // taxaList={taxaList}
+            // selectedTaxa={selectedTaxa}
+            // setSelectedTaxa={setSelectedTaxa}
+            // filteredTaxaList={filteredTaxaList}
+            // setFilteredTaxaList={setFilteredTaxaList}
           {...props}/>;
 }
 

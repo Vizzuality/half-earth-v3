@@ -130,9 +130,9 @@ function DashboardSidebar(props) {
   }, [data]);
 
   useEffect(() => {
-    if (!filteredTaxaList) return;
+    if (!taxaList.length) return;
     setIsLoading(false);
-  }, [filteredTaxaList])
+  }, [taxaList])
 
   return (
     <div className={cx(lightMode ? styles.light : '', selectedIndex === NAVIGATION.TRENDS ? styles.trends : '', styles.container)}>

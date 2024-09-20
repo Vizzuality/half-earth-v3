@@ -8,7 +8,7 @@ function BioDiversityContainer(props) {
   const { data, countryName, dataByCountry } = props;
 
   const { lightMode } = useContext(LightModeContext);
-  const [selectedIndex, setSelectedIndex] = useState(2);
+  const [selectedTab, setSelectedTab] = useState(2);
   const [habitatScore, setHabitatScore] = useState('0.00');
   const [habitatTableData, setHabitatTableData] = useState([]);
   const [globalHabitatScore, setGlobalHabitatScore] = useState(0);
@@ -219,8 +219,8 @@ function BioDiversityContainer(props) {
 
   return <BioDiversityComponent
             lightMode={lightMode}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
             habitatScore={habitatScore}
             habitatTableData={habitatTableData}
             globalHabitatScore={globalHabitatScore}

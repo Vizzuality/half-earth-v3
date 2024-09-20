@@ -40,7 +40,7 @@ function DashboardContainer(props) {
   const [speciesName, setSpeciesName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
 
-  const speciesListUrl = 'https://dev-api.mol.org/2.x/spatial/species/list';
+  const speciesListUrl = 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list';
 
   // Get Country information, allows to get country name
   useEffect(() => {
@@ -62,7 +62,7 @@ function DashboardContainer(props) {
       .catch((error) => {
         setCountryDataError(error);
       });
-
+console.log('calling this')
       getSpeciesList();
   }, []);
 
