@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useT } from '@transifex/react';
 import cx from 'classnames';
-
+import { Loading } from 'he-components';
 import Button from 'components/button';
 import LayerToggle from 'components/layer-toggle';
 import SearchLocation from 'components/search-location';
@@ -54,6 +54,7 @@ function DataLayerComponent(props) {
 
   const [dataLayers, setDataLayers] = useState({});
   const [dataPoints, setDataPoints] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!dataLayerData) return;
@@ -63,10 +64,9 @@ function DataLayerComponent(props) {
 
   useEffect(() => {
     if (!dataPoints) return;
-
+    setIsLoading(false);
     console.log(dataPoints);
-  }, [dataPoints])
-
+  }, [dataPoints]);
 
   const groupByTypeTitle = (arr) => {
     return arr.reduce((acc, obj) => {
@@ -139,6 +139,7 @@ function DataLayerComponent(props) {
 
       <SpeciesInfoContainer speciesInfo={speciesInfo} />
       <hr className={hrTheme.dark} />
+      {isLoading && <Loading height={200} />}
       <button
         className={styles.distributionTitle}
         type="button"
@@ -151,7 +152,7 @@ function DataLayerComponent(props) {
         /> */}
         <span>{t('Species Data: Public')}</span>
       </button>
-      {dataPoints && <DataLayersGroupedList
+      {!isLoading && dataPoints && <DataLayersGroupedList
         dataPoints={dataPoints}
         map={map}
         setDataPoints={setDataPoints} />}

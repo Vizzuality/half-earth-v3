@@ -12,7 +12,7 @@ function BioDiversityContainer(props) {
   const [habitatScore, setHabitatScore] = useState('0.00');
   const [habitatTableData, setHabitatTableData] = useState([]);
   const [globalHabitatScore, setGlobalHabitatScore] = useState(0);
-  const [protectionScore, setProtectionScore] = useState('0.00');
+  const [protectionScore, setProtectionScore] = useState();
   const [globalProtectionScore, setGlobalProtectionScore] = useState('0.00');
   const [protectionTableData, setProtectionTableData] = useState([]);
   const [protectionArea, setProtectionArea] = useState('0');
