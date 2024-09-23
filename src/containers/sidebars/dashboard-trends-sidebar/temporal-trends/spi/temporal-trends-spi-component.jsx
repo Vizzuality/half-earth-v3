@@ -14,6 +14,7 @@ import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
 import { LightModeContext } from '../../../../../context/light-mode';
 import { useT } from '@transifex/react';
+import TrendTableComponent from './trend-table/trend-table-component';
 
 function TemporalTrendsSpiComponent(props) {
   const t = useT();
@@ -21,7 +22,7 @@ function TemporalTrendsSpiComponent(props) {
   const { countryName, spiData } = props;
 
   const areaProtected = (328357).toLocaleString();
-
+  const [showTable, setShowTable] = useState(false);
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
   const [spiInfo, setSpiInfo] = useState();
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
@@ -76,22 +77,20 @@ function TemporalTrendsSpiComponent(props) {
           <span className={styles.helpText}>
             {t('Toggle national SPI and province-level breakdown.')}
           </span>
-          {/* <Button
-            type="rectangular"
-            className={cx(styles.saveButton, styles.notActive)}
-            label="play animation"
-          />
-          <span className={styles.helpText}>
-            View how the percent of area protected, SPI, and score distributions
-            have changed over time.
-          </span> */}
           {activeTrend !== NATIONAL_TREND && (
             <>
-              <Button
+              {!showTable && <Button
                 type="rectangular"
                 className={cx(styles.saveButton, styles.notActive)}
-                label="view full table"
-              />
+                label={t('View full table')}
+                handleClick={() => setShowTable(true)}
+              />}
+              {showTable && <Button
+                type="rectangular"
+                className={cx(styles.saveButton, styles.notActive)}
+                label={t('Close full table')}
+                handleClick={() => setShowTable(false)}
+              />}
               <span className={styles.helpText}>
                 {t('Open and download a full table of annual national and province level SPI over time.')}
               </span>
@@ -99,11 +98,16 @@ function TemporalTrendsSpiComponent(props) {
           )}
         </div>
       </div>
-      {activeTrend === NATIONAL_TREND && (
-        <NationalChartContainer {...props} />
-      )}
-      {activeTrend === PROVINCE_TREND && <ProvinceChartContainer {...props} />}
-    </div>
+      {!showTable && <>
+        {activeTrend === NATIONAL_TREND && (
+          <NationalChartContainer {...props} />
+        )}
+        {activeTrend === PROVINCE_TREND && <ProvinceChartContainer {...props} />}
+      </>}
+      {
+        showTable && <TrendTableComponent {...props} />
+      }
+    </div >
   );
 }
 
