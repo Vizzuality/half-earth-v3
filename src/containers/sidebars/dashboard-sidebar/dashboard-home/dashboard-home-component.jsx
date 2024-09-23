@@ -61,6 +61,12 @@ function DashboardHomeComponent(props) {
     setSearchResults(results);
   }
 
+  const selectSpecies = (scientificname) => {
+    setSelectedIndex(NAVIGATION.DATA_LAYER);
+    setSpeciesName(scientificname);
+    localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
+  }
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.content}>
@@ -87,40 +93,28 @@ function DashboardHomeComponent(props) {
         <div className={styles.mostPopular}>
           <span className={styles.sectionTitle}>{t('Popular Species')}</span>
           <div className={styles.species}>
-            <div className={styles.navCard} onClick={() => browsePage({
-              type: DASHBOARD_REGIONS,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Cossypha polioptera' }
-            })} >
+            <div className={cx(styles.navCard, styles.chat)} onClick={() => selectSpecies('Cossypha polioptera')} >
               <div className={styles.outline}></div>
               <label>Grey Winged Robin Chat</label>
               <p>
                 Cossypha polioptera
               </p>
             </div>
-            <div className={styles.navCard} onClick={() => browsePage({
-              type: DASHBOARD_REGIONS,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Piliocolobus parmentieri' }
-            })} >
+            <div className={cx(styles.navCard, styles.pilio)} onClick={() => selectSpecies('Piliocolobus parmentieri')} >
               <div className={styles.outline}></div>
               <label>Piliocolobus parmentieri</label>
               <p>
                 Piliocolobus parmentieri
               </p>
             </div>
-            <div className={styles.navCard} onClick={() => browsePage({
-              type: DASHBOARD_REGIONS,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Dasypeltis palmarum' }
-            })} >
+            <div className={cx(styles.navCard, styles.egg)} onClick={() => selectSpecies('Dasypeltis palmarum')} >
               <div className={styles.outline}></div>
               <label>Palm Egg Eater</label>
               <p>
                 Dasypeltis palmarum
               </p>
             </div>
-            <div className={styles.navCard} onClick={() => browsePage({
-              type: DASHBOARD_REGIONS,
-              payload: { iso: countryISO.toLowerCase(), scientificname: 'Ptychadena bunoderma' }
-            })} >
+            <div className={cx(styles.navCard, styles.frog)} onClick={() => selectSpecies('Ptychadena bunoderma')} >
               <div className={styles.outline}></div>
               <label>Caconda Grassland Frog</label>
               <p>

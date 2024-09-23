@@ -121,8 +121,24 @@
           cursor: pointer;
           background-position: center top;
           background-repeat: no-repeat;
-          background-size: 200px;
-          background-image: url('../../../../assets/images/okapi_Derek_Keats_Flickr_CC-BY-2_0.jpg');
+          background-size: cover;
+
+          &.chat{
+            background-image: url('../../../../assets/images/Grey-winged_Robin-Chat_imported_from_iNaturalist_photo_4170503_on_23_February_2024.jpg');
+          }
+
+          &.pilio{
+            background-image: url('../../../../assets/images/pilio.jpg');
+          }
+
+          &.egg{
+            background-image: url('../../../../assets/images/egg.jpeg');
+          }
+
+          &.frog{
+            background-image: url('../../../../assets/images/frog.jpg');
+          }
+
 
           &.regions{
             background-image: url('../../../../assets/images/drc_region_logos.jpg');
@@ -155,6 +171,7 @@
             border-right: 2px solid var(--font-color);
             transition: color .3s;
             cursor: pointer;
+            text-shadow: 1px 1px var(--dark-color)
           }
 
           p{
@@ -169,6 +186,7 @@
             justify-content: center;
             align-items: center;
             color: var(--dark-color);
+            font-size: 14px;
           }
         }
       }
