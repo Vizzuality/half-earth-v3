@@ -68,6 +68,11 @@
             color: var(--border-color);
           }
         }
+
+        &.showResults{
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
       }
 
       .searchResults{
@@ -75,11 +80,11 @@
         top: 100%;
         left: 5px;
         background-color: var(--border-color);
-        width: 328px;
+        width: 329px;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
         padding: 8px 10px 5px;
-        margin: 0;
+        margin: -2px 0 0 -1px;
         list-style: none;
 
         li{

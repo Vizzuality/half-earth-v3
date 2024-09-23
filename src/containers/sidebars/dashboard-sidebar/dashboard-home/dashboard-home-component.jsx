@@ -75,14 +75,14 @@ function DashboardHomeComponent(props) {
         <p>{t('Explore species spatial data, view conservation status, and analyze regions where a species occurs')}</p>
         <div className={styles.explore}>
           <SearchInput
-            className={styles.search}
+            className={cx(styles.search, searchInput && searchResults.length > 0 ? styles.showResults : '')}
             placeholder={t('Search for a species by name')}
             onChange={handleSearch}
             value={searchInput} />
           {(searchInput && searchResults.length > 0) &&
             <ul className={styles.searchResults}>
-              {searchResults.map(item => (
-                <li onClick={() => handleSearchSelect(item)}>{item.scientificname}</li>
+              {searchResults.map((item, index) => (
+                <li key={index} onClick={() => handleSearchSelect(item)}>{item.scientificname}</li>
               ))}
             </ul>
           }
