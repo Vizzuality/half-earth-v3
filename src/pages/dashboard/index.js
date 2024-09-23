@@ -62,7 +62,7 @@ function DashboardContainer(props) {
       .catch((error) => {
         setCountryDataError(error);
       });
-console.log('calling this')
+
       getSpeciesList();
   }, []);
 

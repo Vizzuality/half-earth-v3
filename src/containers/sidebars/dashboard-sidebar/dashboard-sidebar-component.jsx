@@ -22,15 +22,9 @@ import { NAVIGATION } from '../../../utils/dashboard-utils';
 function DashboardSidebar(props) {
   const t = useT();
   const {
-    data,
     countryName,
     taxaList,
-    filteredTaxaList,
-    setFilteredTaxaList,
-    selectedTaxa,
-    selectedIndex,
-    setSelectedIndex,
-    setSelectedTaxa } = props;
+    selectedIndex } = props;
 
   const filterStart = [
     {
@@ -124,12 +118,6 @@ function DashboardSidebar(props) {
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
-
-  useEffect(() => {
     if (!taxaList.length) return;
     setIsLoading(false);
   }, [taxaList]);
@@ -143,30 +131,19 @@ function DashboardSidebar(props) {
       <h1>{countryName}</h1>
 
       <div className={styles.regionFilter}>
-        <DashboardNav selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} {...props} />
+        <DashboardNav {...props} />
         {selectedIndex === NAVIGATION.HOME && <DashboardHomeContainer {...props} />}
         {selectedIndex === NAVIGATION.REGION &&
           <div className={styles.filters}>
             {isLoading && <Loading height={200} />}
             {!isLoading && <>
               <FilterContainer
-                taxaList={taxaList}
-                selectedTaxa={selectedTaxa}
-                setFilteredTaxaList={setFilteredTaxaList}
-                setSelectedTaxa={setSelectedTaxa}
                 filters={filters}
                 setFilters={setFilters}
                 {...props} />
               <SpeciesListContainer
-                selectedTaxa={selectedTaxa}
-                filteredTaxaList={filteredTaxaList}
-                setFilteredTaxaList={setFilteredTaxaList}
-                taxaList={taxaList}
-                setSelectedTaxa={setSelectedTaxa}
                 filter={filter}
                 setFilter={setFilter}
-                selectedIndex={selectedIndex}
-                setSelectedIndex={setSelectedIndex}
                 {...props} />
             </>
             }

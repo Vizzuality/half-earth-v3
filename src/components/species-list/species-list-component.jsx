@@ -23,21 +23,20 @@ function SpeciesListComponent(props) {
 
   const [inFilter, setInFilter] = useState(0);
   const [familyCounts, setFamilyCounts] = useState({});
-  const [, setUpdate] = useState()
-
   const [selectedTaxaObj, setSelectedTaxaObj] = useState();
+  const [filteredSpecies, setFilteredSpecies] = useState({});
+
 
 
   useEffect(() => {
     if (!selectedTaxa) return;
     updateSelectedTaxa(selectedTaxa);
-  }, [selectedTaxa]);
+  }, [selectedTaxa, filteredTaxaList]);
 
   useEffect(() => {
     if (!selectedTaxaObj) return;
 
     applyFilter();
-    setUpdate('');
   }, [selectedTaxaObj]);
 
   const getTaxaTitle = (label, taxa) => {
@@ -68,7 +67,7 @@ function SpeciesListComponent(props) {
 
     setFilter('');
     setSelectedTaxa(taxa);
-    setFamilyCounts({});
+    let fc = {};
 
     const sto = filteredTaxaList.find(t => t.taxa === taxa);
     if (sto === undefined) return;
@@ -85,22 +84,22 @@ function SpeciesListComponent(props) {
     const transformed = [];
     sto?.species?.forEach(sp => {
       let species = sp;
-      if (!familyCounts[species.family]) {
-        familyCounts[species.family] = {
+      if (!fc[species.family]) {
+        fc[species.family] = {
           total: 1,
           visibleCount: 0,
         };
         species.first = true;
       } else {
         species.first = false;
-        familyCounts[species.family].total += 1;
+        fc[species.family].total += 1;
       }
       species = transformer(species);
-      species.familyObj = familyCounts[species.family];
+      species.familyObj = fc[species.family];
       transformed.push(species);
     });
     sto.species = transformed;
-    setFamilyCounts(familyCounts);
+    setFamilyCounts(fc);
     setSelectedTaxaObj(sto);
   }
 
@@ -166,7 +165,8 @@ function SpeciesListComponent(props) {
       groupByFamily = { ...groupByFamily, __blank: noNameGroup };
     }
 
-    selectedTaxaObj.filteredSpecies = groupByFamily;
+
+    setFilteredSpecies(groupByFamily);
   }
 
   const clearSelection = () => {
@@ -212,21 +212,20 @@ function SpeciesListComponent(props) {
       {selectedTaxa && selectedTaxaObj &&
         <div className={styles.speciesList}>
           <div className={styles.header}>
-            {selectedTaxaObj.count}&nbsp;{getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
+            {selectedTaxaObj?.count}&nbsp;{getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
           </div>
           <input type="search" placeholder={`${t('Filter')} ${selectedTaxa}`} />
           <div className={styles.filterResults}>
-            {selectedTaxaObj.filteredSpecies &&
-              Object.keys(selectedTaxaObj.filteredSpecies).map((sp, index) => {
-                return <div key={index}>
-                  {selectedTaxaObj.filteredSpecies[sp].length > 0 &&
-                    <SpeciesGroupTitleContainer species={selectedTaxaObj.filteredSpecies[sp][0]} filter={filter} />
-                  }
-                  {selectedTaxaObj.filteredSpecies[sp].map((v, idx) => (
-                    v.visible && <SpeciesGroupContainer species={v} key={idx} selectedTaxaObj={selectedTaxaObj} {...props} />
-                  ))}
-                </div>
-              })
+            {Object.keys(filteredSpecies).map((sp, index) => {
+              return <div key={index}>
+                {filteredSpecies[sp].length > 0 &&
+                  <SpeciesGroupTitleContainer species={filteredSpecies[sp][0]} filter={filter} />
+                }
+                {filteredSpecies[sp].map((v, idx) => (
+                  v.visible && <SpeciesGroupContainer species={v} key={idx} selectedTaxaObj={selectedTaxaObj} {...props} />
+                ))}
+              </div>
+            })
             }
           </div>
         </div>

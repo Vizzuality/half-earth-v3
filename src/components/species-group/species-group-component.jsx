@@ -5,7 +5,7 @@ import styles from './species-group-component.module.scss';
 import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
 
 function SpeciesGroupComponent(props) {
-  const { species, selectedTaxaObj, setSelectedIndex, setSpeciesName, countryISO } = props;
+  const { species, selectedTaxaObj, setSelectedIndex, setSpeciesName } = props;
   const { asset_url, common, scientificname } = species;
 
   const selectSpecies = (species) => {
