@@ -12,7 +12,6 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
-import last from 'lodash/last';
 import { LightModeContext } from '../../../../../context/light-mode';
 import { useT } from '@transifex/react';
 
@@ -34,11 +33,13 @@ function TemporalTrendsSpiComponent(props) {
   const getNationalData = async () => {
     if (spiData.trendData.length) {
       const data = spiData.trendData;
-      const { area_values, spi_values } = data[0].values;
-      setNationalChartData({ area_values, spi_values });
+      const { country_scores } = data[0];
+      // setNationalChartData({ area_values, spi_values });
+      const firstScore = country_scores[0];
+      const currentScore = country_scores[country_scores.length - 1];
 
-      setSpiInfo(`${spi_values?.[0][1]} in ${spi_values?.[0][0]} to ${last(spi_values)[1]} in ${last(spi_values)[0]}`);
-      setAreaProtectedPercent(area_values[area_values.length - 1][1]);
+      setSpiInfo(`${firstScore.spi_all.toFixed(2)} in ${firstScore.year} to ${currentScore.spi_all.toFixed(2)} in ${currentScore.year}`);
+      // setAreaProtectedPercent(area_values[area_values.length - 1][1]);
     }
   };
 

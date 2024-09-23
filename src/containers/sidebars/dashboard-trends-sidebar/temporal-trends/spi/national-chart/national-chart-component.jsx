@@ -22,11 +22,14 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function TemporalTrendsSpiNationalChartComponent(props) {
   const t = useT();
-  const { countryData, nationalChartData } = props;
-  const [data, setData] = useState();
-  const [areaProtected, setAreaProtected] = useState(0);
-  const [spiValue, setSpiValue] = useState(0);
   const { lightMode } = useContext(LightModeContext);
+
+  const { nationalChartData, spiData } = props;
+
+  const [data, setData] = useState();
+  const [currentScore, setCurrentScore] = useState();
+  const [areaProtected, setAreaProtected] = useState(0);
+
   const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
 
   const blankData = {
@@ -47,7 +50,8 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       },
     ],
   };
-  const [spiData, setSpiData] = useState(blankData);
+
+  const [spiArcData, setSpiArcData] = useState(blankData);
   const [areaProtectedData, setAreaProtectedData] = useState(blankData);
 
   const options = {
@@ -93,127 +97,103 @@ function TemporalTrendsSpiNationalChartComponent(props) {
     },
   };
 
-  // useEffect(() => {
-  //   console.log(countryData)
-  //   if (countryData) {
-  //     const spi = {
-  //       labels: ['Global SPI', 'Remaining'],
-  //       datasets: [
-  //         {
-  //           label: '',
-  //           data: [
-  //             countryData.Global_SPI_ter,
-  //             100 - countryData.Global_SPI_ter,
-  //           ],
-  //           backgroundColor: [
-  //             getCSSVariable('temporal-spi'),
-  //             getCSSVariable('white-opacity-20'),
-  //           ],
-  //           borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
-  //           borderWidth: 1,
-  //         },
-  //       ],
-  //     };
+  useEffect(() => {
+    if (!spiData.trendData.length) return;
 
-  //     setSpiData(spi);
-  //   }
-  // }, [countryData]);
+    const data = spiData.trendData;
+    const { country_scores } = data[0];
+
+    setCurrentScore(country_scores[country_scores.length - 1]);
+  }, [spiData.trendData]);
 
   useEffect(() => {
-    if (nationalChartData.area_values.length) {
-      setData({
-        labels: nationalChartData.spi_values.map((item) => item[0]),
-        datasets: [
-          {
-            label: 'SPI',
-            data: nationalChartData.spi_values.map((item) => item[1]),
-            borderColor: getCSSVariable('birds'),
-          },
-          {
-            label: t('Area protected'),
-            data: nationalChartData.area_values.map((item) => item[1]),
-            borderColor: getCSSVariable('mammals'),
-          },
-        ],
-      });
+    if (!currentScore) return;
+    const spi = {
+      labels: [t('Global SPI'), t('Remaining')],
+      datasets: [
+        {
+          label: '',
+          data: [currentScore.spi_all, 100 - currentScore.spi_all],
+          backgroundColor: [
+            getCSSVariable('temporal-spi'),
+            emptyArcColor,
+          ],
+          borderColor: [
+            getCSSVariable('temporal-spi'),
+            emptyArcColor,
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
 
-      const areaProtected =
-        nationalChartData.area_values[
-        nationalChartData.area_values.length - 1
-        ][1];
-      const spiVal =
-        nationalChartData.spi_values[
-        nationalChartData.spi_values.length - 1
-        ][1];
+    const areaProt = {
+      labels: [t('Area Protected'), t('Remaining')],
+      datasets: [
+        {
+          label: '',
+          data: [currentScore.percentprotected_all, 100 - currentScore.percentprotected_all],
+          backgroundColor: [
+            getCSSVariable('temporal-spi'),
+            emptyArcColor,
+          ],
+          borderColor: [
+            getCSSVariable('temporal-spi'),
+            emptyArcColor,
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
 
-      const spi = {
-        labels: [t('Global SPI'), t('Remaining')],
-        datasets: [
-          {
-            label: '',
-            data: [spiVal, 100 - spiVal],
-            backgroundColor: [
-              getCSSVariable('temporal-spi'),
-              emptyArcColor,
-            ],
-            borderColor: [
-              getCSSVariable('temporal-spi'),
-              emptyArcColor,
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
+    const data = spiData.trendData;
+    const { country_scores } = data[0];
 
-      const areaProt = {
-        labels: [t('Area Protected'), t('Remaining')],
-        datasets: [
-          {
-            label: '',
-            data: [areaProtected, 100 - areaProtected],
-            backgroundColor: [
-              getCSSVariable('temporal-spi'),
-              emptyArcColor,
-            ],
-            borderColor: [
-              getCSSVariable('temporal-spi'),
-              emptyArcColor,
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      setSpiValue(spiVal);
-      setSpiData(spi);
-      setAreaProtected(areaProtected);
-      setAreaProtectedData(areaProt);
-    }
-  }, [nationalChartData]);
+    setData({
+      labels: country_scores.map((item) => item.year),
+      datasets: [
+        {
+          label: 'SPI',
+          data: country_scores.map((item) => item.spi_all),
+          borderColor: getCSSVariable('birds'),
+        },
+        {
+          label: t('Area protected'),
+          data: country_scores.map((item) => item.percentprotected_all),
+          borderColor: getCSSVariable('mammals'),
+        },
+      ],
+    });
+    setSpiArcData(spi);
+    setAreaProtected(currentScore.percentprotected_all);
+    setAreaProtectedData(areaProt);
+  }, [currentScore]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.info}>
-        <div className={styles.arcGrid}>
-          <b>2024</b>
-          <SpiArcChartComponent
-            width="125x"
-            height="75px"
-            data={spiData}
-            value={spiValue}
-          />
-          <SpiArcChartComponent
-            width="125x"
-            height="75px"
-            data={areaProtectedData}
-            value={areaProtected}
-          />
-          <b>{countryData?.prop_protected_ter}</b>
-          <span>{t('Year')}</span>
-          <span>SPI</span>
-          <span>{t('Area Protected')}</span>
-          <span>{t('Global Ranking')}</span>
-        </div>
+        {currentScore &&
+          <div className={styles.arcGrid}>
+            <b>{currentScore?.year}</b>
+            <SpiArcChartComponent
+              width="125x"
+              height="75px"
+              data={spiArcData}
+              value={currentScore.spi_all}
+            />
+            <SpiArcChartComponent
+              width="125x"
+              height="75px"
+              data={areaProtectedData}
+              value={areaProtected}
+            />
+            <b>{currentScore?.national_rank}</b>
+            <span>{t('Year')}</span>
+            <span>SPI</span>
+            <span>{t('Area Protected')}</span>
+            <span>{t('Global Ranking')}</span>
+          </div>
+        }
       </div>
       {data && (
         <div className={styles.chart}>

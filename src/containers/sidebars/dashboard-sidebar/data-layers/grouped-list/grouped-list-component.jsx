@@ -71,6 +71,7 @@ function GroupedListComponent(props) {
   const checkIfAllChecked = (key) => {
     const items = dataPoints[key].items
     const typeItems = items.every(item => item.isActive === true);
+    dataPoints[key].isActive = typeItems;
     return typeItems;
   }
 

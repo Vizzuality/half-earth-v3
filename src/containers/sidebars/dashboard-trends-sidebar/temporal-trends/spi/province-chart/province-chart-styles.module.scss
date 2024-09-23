@@ -25,6 +25,8 @@
       display: flex;
       flex-direction: column;
       row-gap: 8px;
+      max-width: 180px;
+      min-width: 180px;
 
       span{
         color: var(--font-color);

@@ -4,7 +4,6 @@ import Select from 'react-select';
 import cx from 'classnames';
 import { getCSSVariable } from 'utils/css-utils';
 
-import { faker } from '@faker-js/faker';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -24,8 +23,8 @@ ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function ProvinceChartComponent(props) {
   const t = useT();
-  const { countryData } = props;
   const { lightMode } = useContext(LightModeContext);
+  const { countryData, spiData } = props;
   const blankData = {
     labels: [t('Global SPI'), t('Remaining')],
     datasets: [
@@ -44,36 +43,6 @@ function ProvinceChartComponent(props) {
       },
     ],
   };
-  const [spiData, setSpiData] = useState(blankData);
-
-  const provinces = [
-    { value: 'Bas-Uélé', label: 'Bas-Uélé' },
-    { value: 'Haut-Uélé', label: 'Haut-Uélé' },
-    { value: 'Ituri', label: 'Ituri' },
-    { value: 'Bas-Congo', label: 'Bas-Congo' },
-    { value: 'Équateur', label: 'Équateur' },
-    { value: 'Haut-Lomami', label: 'Haut-Lomami' },
-    { value: 'Haut-Katanga', label: 'Haut-Katanga' },
-    { value: 'Haut-Kasaï', label: 'Haut-Kasaï' },
-    { value: 'Kwango', label: 'Kwango' },
-    { value: 'Kwilu', label: 'Kwilu' },
-    { value: 'Lomami', label: 'Lomami' },
-    { value: 'Lualaba', label: 'Lualaba' },
-    { value: 'Mai-Ndombe', label: 'Mai-Ndombe' },
-    { value: 'Maniema', label: 'Maniema' },
-    { value: 'Mongala', label: 'Mongala' },
-    { value: 'Nord-Kivu', label: 'Nord-Kivu' },
-    { value: 'Nord-Ubangi', label: 'Nord-Ubangi' },
-    { value: 'Sankuru', label: 'Sankuru' },
-    { value: 'Sud-Kivu', label: 'Sud-Kivu' },
-    { value: 'Sud-Ubangi', label: 'Sud-Ubangi' },
-    { value: 'Tanganyika', label: 'Tanganyika' },
-    { value: 'Tshopo', label: 'Tshopo' },
-    { value: 'Tshuapa', label: 'Tshuapa' },
-    { value: 'Kinshasa', label: 'Kinshasa' },
-    { value: 'Kasaï Central', label: 'Kasaï Central' },
-    { value: 'Kasaï Oriental', label: 'Kasaï Oriental' },
-  ];
 
   const options = {
     plugins: {
@@ -118,57 +87,30 @@ function ProvinceChartComponent(props) {
     },
   };
 
-  const data = {
-    datasets: [
-      {
-        label: t('Birds'),
-        data: Array.from({ length: 5 }, () => ({
-          x: faker.datatype.number({ min: 0, max: 200 }),
-          y: faker.datatype.number({ min: 0, max: 100 }),
-          r: faker.datatype.number({ min: 5, max: 20 }),
-        })),
-        backgroundColor: getCSSVariable('birds'),
-      },
-      {
-        label: t('Mammals'),
-        data: Array.from({ length: 5 }, () => ({
-          x: faker.datatype.number({ min: 0, max: 200 }),
-          y: faker.datatype.number({ min: 0, max: 100 }),
-          r: faker.datatype.number({ min: 5, max: 20 }),
-        })),
-        backgroundColor: getCSSVariable('mammals'),
-      },
-      {
-        label: t('Reptiles'),
-        data: Array.from({ length: 5 }, () => ({
-          x: faker.datatype.number({ min: 0, max: 200 }),
-          y: faker.datatype.number({ min: 0, max: 100 }),
-          r: faker.datatype.number({ min: 5, max: 20 }),
-        })),
-        backgroundColor: getCSSVariable('reptiles'),
-      },
-      {
-        label: t('Amphibians'),
-        data: Array.from({ length: 5 }, () => ({
-          x: faker.datatype.number({ min: 0, max: 200 }),
-          y: faker.datatype.number({ min: 0, max: 100 }),
-          r: faker.datatype.number({ min: 5, max: 20 }),
-        })),
-        backgroundColor: getCSSVariable('amphibians'),
-      },
-    ],
-  };
+  const [provinces, setProvinces] = useState([]);
+  const [bubbleData, setBubbleData] = useState();
+  const [currentYear, setCurrentYear] = useState()
+  const [spiArcData, setSpiArcData] = useState(blankData);
+  const [countrySPI, setCountrySPI] = useState();
+  const [countryRegions, setCountryRegions] = useState();
+  const [selectedRegionScores, setSelectedRegionScores] = useState()
 
   useEffect(() => {
     if (countryData) {
+      const { country_scores, regions } = spiData.trendData[0];
+      setCountryRegions(regions);
+
+      const { spi_all } = country_scores[country_scores.length - 1];
+      setCountrySPI(spi_all);
+
       const spi = {
         labels: [t('Global SPI'), t('Remaining')],
         datasets: [
           {
             label: '',
             data: [
-              countryData.Global_SPI_ter,
-              100 - countryData.Global_SPI_ter,
+              spi_all,
+              100 - spi_all,
             ],
             backgroundColor: [
               getCSSVariable('temporal-spi'),
@@ -183,9 +125,55 @@ function ProvinceChartComponent(props) {
         ],
       };
 
-      setSpiData(spi);
+      setSpiArcData(spi);
     }
-  }, [countryData]);
+  }, [spiData]);
+
+  useEffect(() => {
+    if (!countryRegions) return;
+    getProvinces();
+
+  }, [countryRegions])
+
+
+  useEffect(() => {
+    if (!spiData.trendData.length) return;
+
+    getChartData();
+  }, [spiData.trendData]);
+
+  const getProvinces = () => {
+    const prov = countryRegions.map(region => {
+      return { value: region.region_name, label: region.region_name }
+    });
+
+    setProvinces(prov);
+  }
+
+  const getProvinceScores = (province) => {
+    const foundRegion = countryRegions.filter(region => region.region_name === province.value);
+    const scores = foundRegion[0].regional_scores[foundRegion[0].regional_scores.length - 1];
+    setSelectedRegionScores(scores);
+  }
+
+  const getChartData = () => {
+    const { regions } = spiData.trendData[0];
+    const data = [];
+
+    setCurrentYear(regions[0].regional_scores[regions[0].regional_scores.length - 1].year);
+
+    regions.map(region => {
+      const { regional_scores, region_name } = region;
+      const { nspecies, spi_all } = regional_scores[regional_scores.length - 1];
+      data.push({
+        label: region_name,
+        data: [{ x: nspecies, y: spi_all, r: 10 }],
+        backgroundColor: getCSSVariable('birds'),
+      })
+    });
+
+    setBubbleData({ datasets: data });
+  }
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -199,24 +187,27 @@ function ProvinceChartComponent(props) {
             isSearchable
             name="provinces"
             options={provinces}
+            onChange={getProvinceScores}
           />
-          <span>
-            <b>#13</b> {t('in Species Protection Index')}
-          </span>
-          <span>
+          {selectedRegionScores && <>
+            <span>
+              <b>#{selectedRegionScores.spi_all.toFixed(2)}</b> {t('in SPI')}
+            </span>
+            {/* <span>
             <b>#1</b> {t('in vertebrate species richness')}
-          </span>
-          <span>
-            <b>#16</b> {t('in size')}
-          </span>
+          </span> */}
+            <span>
+              <b>#{selectedRegionScores.spi_all.toFixed(2)}</b> {t('in size')}
+            </span>
+          </>}
         </div>
         <div className={styles.arcGrid}>
-          <b>2024</b>
+          <b>{currentYear}</b>
           <SpiArcChartComponent
             width="125x"
             height="75px"
-            data={spiData}
-            value={countryData?.Global_SPI_ter}
+            data={spiArcData}
+            value={countrySPI}
           />
           <b>{countryData?.prop_protected_ter}</b>
           <span>{t('Year')}</span>
@@ -225,7 +216,7 @@ function ProvinceChartComponent(props) {
         </div>
       </div>
       <div className={styles.chart}>
-        <Bubble options={options} data={data} />
+        {bubbleData && <Bubble options={options} data={bubbleData} />}
       </div>
     </div>
   );

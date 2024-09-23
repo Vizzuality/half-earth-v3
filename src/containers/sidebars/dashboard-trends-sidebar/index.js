@@ -33,7 +33,8 @@ function DashboardTrendsSidebarContainer(props) {
     const shiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/shs/values?iso=${countryISO}&year=${year}`;
 
     // SPI calls
-    const spiTrendsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=${regionId}&taxa=${taxa}`;
+    const spiTrendsUrl = `https://next-api.mol.org/2.x/indicators/regional_spi_scores?iso3=${countryISO}`;
+    // const spiTrendsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=${regionId}&taxa=${taxa}`;
     const spiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${year}&taxa=${taxa}`;
 
     // SII calls
@@ -56,9 +57,8 @@ function DashboardTrendsSidebarContainer(props) {
     setShiValue(shi);
 
     const spiTD = spiTrendData;
-    const spiTrendsValues = spiTD[0].values;
-    const spiValues = spiTrendsValues.spi_values;
-    const spi = spiValues[spiValues.length - 1][1];
+    const spiTrendsValues = spiTD[0].country_scores;
+    const spi = (spiTrendsValues[spiTrendsValues.length - 1].spi_all).toFixed(2);
     setSpiValue(spi);
 
     const siiTD = siiTrendData;
