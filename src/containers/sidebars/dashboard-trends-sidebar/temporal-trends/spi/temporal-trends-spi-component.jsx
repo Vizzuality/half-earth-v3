@@ -27,7 +27,7 @@ function TemporalTrendsSpiComponent(props) {
     area_values: [],
     spi_values: [],
   });
-  const [areaProtectedPercent, setAreaProtectedPercent] = useState(0);
+  const [areaProtectedPercent, setAreaProtectedPercent] = useState();
   const { lightMode } = useContext(LightModeContext);
 
   const getNationalData = async () => {
@@ -37,7 +37,7 @@ function TemporalTrendsSpiComponent(props) {
       // setNationalChartData({ area_values, spi_values });
       const firstScore = country_scores[0];
       const currentScore = country_scores[country_scores.length - 1];
-
+      setAreaProtectedPercent(currentScore.percentprotected_all.toFixed(2))
       setSpiInfo(`${firstScore.spi_all.toFixed(2)} in ${firstScore.year} to ${currentScore.spi_all.toFixed(2)} in ${currentScore.year}`);
       // setAreaProtectedPercent(area_values[area_values.length - 1][1]);
     }

@@ -92,7 +92,9 @@ function ProvinceChartComponent(props) {
   const [currentYear, setCurrentYear] = useState()
   const [spiArcData, setSpiArcData] = useState(blankData);
   const [countrySPI, setCountrySPI] = useState();
+  const [countryProtected, setCountryProtected] = useState();
   const [countryRegions, setCountryRegions] = useState();
+  const [spiRank, setSpiRank] = useState(0);
   const [selectedRegionScores, setSelectedRegionScores] = useState()
 
   useEffect(() => {
@@ -100,8 +102,9 @@ function ProvinceChartComponent(props) {
       const { country_scores, regions } = spiData.trendData[0];
       setCountryRegions(regions);
 
-      const { spi_all } = country_scores[country_scores.length - 1];
+      const { spi_all, percentprotected_all } = country_scores[country_scores.length - 1];
       setCountrySPI(spi_all);
+      setCountryProtected(percentprotected_all);
 
       const spi = {
         labels: [t('Global SPI'), t('Remaining')],
@@ -147,12 +150,25 @@ function ProvinceChartComponent(props) {
       return { value: region.region_name, label: region.region_name }
     });
 
-    setProvinces(prov);
+    const sortProvinces = prov.sort((a, b) => {
+      const nameA = a.label.toUpperCase();
+      const nameB = b.label.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    setProvinces(sortProvinces);
   }
 
   const getProvinceScores = (province) => {
     const foundRegion = countryRegions.filter(region => region.region_name === province.value);
     const scores = foundRegion[0].regional_scores[foundRegion[0].regional_scores.length - 1];
+    setSpiRank(sortProvincesBySPI(province));
     setSelectedRegionScores(scores);
   }
 
@@ -175,6 +191,26 @@ function ProvinceChartComponent(props) {
     setBubbleData({ datasets: data });
   }
 
+  const sortProvincesBySPI = (province) => {
+    const sorted = countryRegions.sort((a, b) => {
+      const spi_A = a.regional_scores[a.regional_scores.length - 1].spi_all;
+      const spi_B = b.regional_scores[b.regional_scores.length - 1].spi_all;
+      if (spi_A > spi_B) {
+        return -1;
+      }
+      if (spi_A < spi_B) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return (sorted.findIndex(prov => prov.region_name === province.value) + 1)
+  }
+
+  const sortProvincesByArea = () => {
+
+  }
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.info}>
@@ -191,7 +227,7 @@ function ProvinceChartComponent(props) {
           />
           {selectedRegionScores && <>
             <span>
-              <b>#{selectedRegionScores.spi_all.toFixed(2)}</b> {t('in SPI')}
+              <b>#{spiRank}</b> {t('in SPI')}
             </span>
             {/* <span>
             <b>#1</b> {t('in vertebrate species richness')}
@@ -209,7 +245,7 @@ function ProvinceChartComponent(props) {
             data={spiArcData}
             value={countrySPI}
           />
-          <b>{countryData?.prop_protected_ter}</b>
+          <b>{countryProtected?.toFixed(2)}</b>
           <span>{t('Year')}</span>
           <span>{t('SPI')}</span>
           <span>{t('Area Protected')}</span>
