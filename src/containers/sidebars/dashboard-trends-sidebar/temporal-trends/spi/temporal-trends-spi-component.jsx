@@ -17,36 +17,29 @@ import { useT } from '@transifex/react';
 
 function TemporalTrendsSpiComponent(props) {
   const t = useT();
-  const { countryData, spiData } = props;
+  const { lightMode } = useContext(LightModeContext);
+  const { countryName, spiData } = props;
 
   const areaProtected = (328357).toLocaleString();
 
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
   const [spiInfo, setSpiInfo] = useState();
-  const [nationalChartData, setNationalChartData] = useState({
-    area_values: [],
-    spi_values: [],
-  });
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
-  const { lightMode } = useContext(LightModeContext);
 
   const getNationalData = async () => {
     if (spiData.trendData.length) {
       const data = spiData.trendData;
       const { country_scores } = data[0];
-      // setNationalChartData({ area_values, spi_values });
       const firstScore = country_scores[0];
       const currentScore = country_scores[country_scores.length - 1];
       setAreaProtectedPercent(currentScore.percentprotected_all.toFixed(2))
       setSpiInfo(`${firstScore.spi_all.toFixed(2)} in ${firstScore.year} to ${currentScore.spi_all.toFixed(2)} in ${currentScore.year}`);
-      // setAreaProtectedPercent(area_values[area_values.length - 1][1]);
     }
   };
 
   useEffect(() => {
     getNationalData();
-
-  }, [spiData]);
+  }, [spiData.trendData]);
 
   const handleActionChange = (event) => {
     setActiveTrend(event.currentTarget.innerText);
@@ -57,7 +50,7 @@ function TemporalTrendsSpiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
-          Since 1980, the {countryData?.NAME_0} has added <b>{areaProtected} km<sup>2</sup></b> of
+          Since 1980, the {countryName} has added <b>{areaProtected} km<sup>2</sup></b> of
           land into its protected area network, representing <b>{areaProtectedPercent}%</b> of the total
           land in the country, increasing its Species Protection Index from <b>{spiInfo}</b>.
         </p>
@@ -106,12 +99,8 @@ function TemporalTrendsSpiComponent(props) {
           )}
         </div>
       </div>
-
       {activeTrend === NATIONAL_TREND && (
-        <NationalChartContainer
-          nationalChartData={nationalChartData}
-          {...props}
-        />
+        <NationalChartContainer {...props} />
       )}
       {activeTrend === PROVINCE_TREND && <ProvinceChartContainer {...props} />}
     </div>

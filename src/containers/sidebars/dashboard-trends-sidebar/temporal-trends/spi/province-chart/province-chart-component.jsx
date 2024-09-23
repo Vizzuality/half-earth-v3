@@ -3,7 +3,7 @@ import { Bubble } from 'react-chartjs-2';
 import Select from 'react-select';
 import cx from 'classnames';
 import { getCSSVariable } from 'utils/css-utils';
-
+import { Loading } from 'he-components';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -24,7 +24,7 @@ ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 function ProvinceChartComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
-  const { countryData, spiData } = props;
+  const { spiData } = props;
   const blankData = {
     labels: [t('Global SPI'), t('Remaining')],
     datasets: [
@@ -95,55 +95,50 @@ function ProvinceChartComponent(props) {
   const [countryProtected, setCountryProtected] = useState();
   const [countryRegions, setCountryRegions] = useState();
   const [spiRank, setSpiRank] = useState(0);
-  const [selectedRegionScores, setSelectedRegionScores] = useState()
+  const [selectedRegionScores, setSelectedRegionScores] = useState();
+  const [sortedBySpi, setSortedBySpi] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (countryData) {
-      const { country_scores, regions } = spiData.trendData[0];
-      setCountryRegions(regions);
+    if (!spiData.trendData.length) return;
+    setIsLoading(false);
+    const { country_scores, regions } = spiData.trendData[0];
+    setCountryRegions(regions);
 
-      const { spi_all, percentprotected_all } = country_scores[country_scores.length - 1];
-      setCountrySPI(spi_all);
-      setCountryProtected(percentprotected_all);
+    const { spi_all, percentprotected_all } = country_scores[country_scores.length - 1];
+    setCountrySPI(spi_all);
+    setCountryProtected(percentprotected_all);
+    getChartData();
+    const spi = {
+      labels: [t('Global SPI'), t('Remaining')],
+      datasets: [
+        {
+          label: '',
+          data: [
+            spi_all,
+            100 - spi_all,
+          ],
+          backgroundColor: [
+            getCSSVariable('temporal-spi'),
+            getCSSVariable('white-opacity-20'),
+          ],
+          borderColor: [
+            getCSSVariable('temporal-spi'),
+            getCSSVariable('white-opacity-20'),
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
 
-      const spi = {
-        labels: [t('Global SPI'), t('Remaining')],
-        datasets: [
-          {
-            label: '',
-            data: [
-              spi_all,
-              100 - spi_all,
-            ],
-            backgroundColor: [
-              getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
-            ],
-            borderColor: [
-              getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      setSpiArcData(spi);
-    }
-  }, [spiData]);
+    setSpiArcData(spi);
+  }, [spiData.trendData]);
 
   useEffect(() => {
     if (!countryRegions) return;
     getProvinces();
 
   }, [countryRegions])
-
-
-  useEffect(() => {
-    if (!spiData.trendData.length) return;
-
-    getChartData();
-  }, [spiData.trendData]);
 
   const getProvinces = () => {
     const prov = countryRegions.map(region => {
@@ -163,12 +158,15 @@ function ProvinceChartComponent(props) {
     });
 
     setProvinces(sortProvinces);
+
+    const spiSorted = sortProvincesBySPI();
+    setSortedBySpi(spiSorted);
   }
 
   const getProvinceScores = (province) => {
     const foundRegion = countryRegions.filter(region => region.region_name === province.value);
     const scores = foundRegion[0].regional_scores[foundRegion[0].regional_scores.length - 1];
-    setSpiRank(sortProvincesBySPI(province));
+    setSpiRank(sortedBySpi.findIndex(prov => prov.region_name === province.value) + 1);
     setSelectedRegionScores(scores);
   }
 
@@ -191,7 +189,7 @@ function ProvinceChartComponent(props) {
     setBubbleData({ datasets: data });
   }
 
-  const sortProvincesBySPI = (province) => {
+  const sortProvincesBySPI = () => {
     const sorted = countryRegions.sort((a, b) => {
       const spi_A = a.regional_scores[a.regional_scores.length - 1].spi_all;
       const spi_B = b.regional_scores[b.regional_scores.length - 1].spi_all;
@@ -204,7 +202,7 @@ function ProvinceChartComponent(props) {
       return 0;
     });
 
-    return (sorted.findIndex(prov => prov.region_name === province.value) + 1)
+    return sorted;
   }
 
   const sortProvincesByArea = () => {
@@ -213,7 +211,8 @@ function ProvinceChartComponent(props) {
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      <div className={styles.info}>
+      {isLoading && <Loading height={200} />}
+      {!isLoading && <div className={styles.info}>
         <div className={styles.specs}>
           <Select
             className="basic-single"
@@ -251,6 +250,7 @@ function ProvinceChartComponent(props) {
           <span>{t('Area Protected')}</span>
         </div>
       </div>
+      }
       <div className={styles.chart}>
         {bubbleData && <Bubble options={options} data={bubbleData} />}
       </div>

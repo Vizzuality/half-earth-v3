@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useT } from '@transifex/react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
-import Button from 'components/button';
+
 import LayerToggle from 'components/layer-toggle';
-import SearchLocation from 'components/search-location';
+
 import SpeciesInfoContainer from '../species-info';
 import EsriFeatureService from 'services/esri-feature-service';
-
-import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 

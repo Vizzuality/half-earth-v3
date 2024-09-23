@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import cx from 'classnames';
 import { getCSSVariable } from 'utils/css-utils';
-
+import { Loading } from 'he-components';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -24,12 +24,12 @@ function TemporalTrendsSpiNationalChartComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
-  const { nationalChartData, spiData } = props;
+  const { spiData } = props;
 
   const [data, setData] = useState();
   const [currentScore, setCurrentScore] = useState();
   const [areaProtected, setAreaProtected] = useState(0);
-
+  const [isLoading, setIsLoading] = useState(true);
   const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
 
   const blankData = {
@@ -99,7 +99,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
 
   useEffect(() => {
     if (!spiData.trendData.length) return;
-
+    setIsLoading(false);
     const data = spiData.trendData;
     const { country_scores } = data[0];
 
@@ -171,30 +171,33 @@ function TemporalTrendsSpiNationalChartComponent(props) {
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      <div className={styles.info}>
-        {currentScore &&
-          <div className={styles.arcGrid}>
-            <b>{currentScore?.year}</b>
-            <SpiArcChartComponent
-              width="125x"
-              height="75px"
-              data={spiArcData}
-              value={currentScore.spi_all}
-            />
-            <SpiArcChartComponent
-              width="125x"
-              height="75px"
-              data={areaProtectedData}
-              value={areaProtected}
-            />
-            <b>{currentScore?.national_rank}</b>
-            <span>{t('Year')}</span>
-            <span>SPI</span>
-            <span>{t('Area Protected')}</span>
-            <span>{t('Global Ranking')}</span>
-          </div>
-        }
-      </div>
+      {isLoading && <Loading height={200} />}
+      {!isLoading &&
+        <div className={styles.info}>
+          {currentScore &&
+            <div className={styles.arcGrid}>
+              <b>{currentScore?.year}</b>
+              <SpiArcChartComponent
+                width="125x"
+                height="75px"
+                data={spiArcData}
+                value={currentScore.spi_all}
+              />
+              <SpiArcChartComponent
+                width="125x"
+                height="75px"
+                data={areaProtectedData}
+                value={areaProtected}
+              />
+              <b>{currentScore?.national_rank}</b>
+              <span>{t('Year')}</span>
+              <span>SPI</span>
+              <span>{t('Area Protected')}</span>
+              <span>{t('Global Ranking')}</span>
+            </div>
+          }
+        </div>
+      }
       {data && (
         <div className={styles.chart}>
           <Line options={options} data={data} />
