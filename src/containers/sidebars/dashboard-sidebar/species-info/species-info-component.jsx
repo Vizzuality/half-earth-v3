@@ -22,7 +22,7 @@ function SpeciesInfoComponent(props) {
         <div className={styles.info}>
           <span className={styles.commonName}>{speciesInfo?.commonname}</span>
           <span className={styles.taxa}>{speciesInfo?.scientificname}</span>
-          <img src={taxaImage} alt="taxa" />
+          {speciesInfo?.taxa && <img src={taxaImage} alt="taxa" />}
         </div>
       </div>
       <p className={styles.description}>
