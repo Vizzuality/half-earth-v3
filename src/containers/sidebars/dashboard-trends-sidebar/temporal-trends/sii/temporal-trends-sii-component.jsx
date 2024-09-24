@@ -13,12 +13,13 @@ import { useT } from '@transifex/react';
 
 function TemporalTrendsSiiComponent(props) {
   const t = useT();
-  const { countryData, siiData } = props;
+  const { countryName, siiData } = props;
   const [nationalChartData, setNationalChartData] = useState({
     area_values: [],
     spi_values: [],
   });
   const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 })
+  const [firstValues, setFirstValues] = useState({ year: 0, spi: 0 })
   const { lightMode } = useContext(LightModeContext);
   const taxa = 'all_terr_verts';
 
@@ -31,7 +32,8 @@ function TemporalTrendsSiiComponent(props) {
       setNationalChartData(allVertValues[0]);
 
       const { values } = allVertValues[0];
-      setLatestValues({ year: last(values)[0], spi: (last(values)[1] * 100).toFixed(2) })
+      setLatestValues({ year: last(values)[0], spi: (last(values)[1] * 100).toFixed(2) });
+      setFirstValues({ year: values[0][0], spi: (values[0][1] * 100).toFixed(2) })
     }
   };
 
@@ -44,9 +46,9 @@ function TemporalTrendsSiiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
-          Species data coverage remains low in <b>{countryData?.NAME_0}</b>. In {latestValues.year}, {latestValues.spi}% of the expected ranges of terrestrial vertebrate species
-          here had a recorded observation of that species. Since 1950, the
-          annual SII has fluctuated between 1.6 and 0.0.
+          Species data coverage remains low in <b>{countryName}</b>. In {latestValues.year}, <b>{latestValues.spi}%</b> of the expected ranges of terrestrial vertebrate species
+          here had a recorded observation of that species. Since <b>{firstValues.year}</b>, the
+          annual SII has fluctuated between <b>{firstValues.spi}</b> and <b>{latestValues.spi}</b>.
         </p>
         <div className={styles.options}>
           <div className={styles.trendTypes}>
@@ -63,10 +65,10 @@ function TemporalTrendsSiiComponent(props) {
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="play animation"
-          /> */}
+          />
           <span className={styles.helpText}>
             {t('View how the percent of area protected, SPI, and score distributions have changed over time.')}
-          </span>
+          </span> */}
         </div>
       </div>
       <NationalChartContainer

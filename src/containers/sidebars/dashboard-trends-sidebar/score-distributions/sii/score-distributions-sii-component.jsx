@@ -95,7 +95,7 @@ function ScoreDistributionsSiiComponent(props) {
     getChartData();
     getTaxaData();
     setIsLoading(false);
-  }, [siiData.scoreData]);
+  }, [siiData.scoresData]);
 
   const options = {
     plugins: {
@@ -182,7 +182,7 @@ function ScoreDistributionsSiiComponent(props) {
           })}
         </ul>
         <div className={styles.options}>
-          {!showTable && <Button
+          {/* {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label={t('View full table')}
@@ -196,7 +196,7 @@ function ScoreDistributionsSiiComponent(props) {
           />}
           <span className={styles.helpText}>
             {t('Open and download a full table of species SPS and relevant traits at national and province levels for a selected year.')}
-          </span>
+          </span> */}
         </div>
       </div>
       <div className={compStyles.chartArea}>
@@ -205,11 +205,10 @@ function ScoreDistributionsSiiComponent(props) {
           {isLoading && <Loading height={200} />}
           {!isLoading && <DistributionsChartComponent data={chartData} options={options} />}
         </>)}
-        {showTable && (<>
+        {/* {showTable && (<>
           <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
-          <DistributionsTableContainer chartData={chartData}
-            {...props} />
-        </>)}
+          <DistributionsTableContainer chartData={siiData?.scoresData} {...props} />
+        </>)} */}
       </div>
     </div>
   );

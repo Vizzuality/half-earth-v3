@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import cx from 'classnames';
 import { getCSSVariable } from 'utils/css-utils';
-
+import last from 'lodash/last';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -28,6 +28,7 @@ function NationalChartComponent(props) {
   const { lightMode } = useContext(LightModeContext);
   const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
   const [isLoading, setIsLoading] = useState(true);
+  const [lastYear, setLastYear] = useState();
 
   const blankData = {
     labels: [t('Global SPI'), t('Remaining')],
@@ -47,6 +48,7 @@ function NationalChartComponent(props) {
       },
     ],
   };
+
   const [spiData, setSpiData] = useState(blankData);
 
   const options = {
@@ -92,32 +94,6 @@ function NationalChartComponent(props) {
     },
   };
 
-  // useEffect(() => {
-  //   console.log(countryData)
-  //   if (countryData) {
-  //     const spi = {
-  //       labels: ['Global SPI', 'Remaining'],
-  //       datasets: [
-  //         {
-  //           label: '',
-  //           data: [
-  //             countryData.Global_SPI_ter,
-  //             100 - countryData.Global_SPI_ter,
-  //           ],
-  //           backgroundColor: [
-  //             getCSSVariable('temporal-spi'),
-  //             getCSSVariable('white-opacity-20'),
-  //           ],
-  //           borderColor: [getCSSVariable('temporal-spi'), getCSSVariable('white-opacity-20')],
-  //           borderWidth: 1,
-  //         },
-  //       ],
-  //     };
-
-  //     setSpiData(spi);
-  //   }
-  // }, [countryData]);
-
   useEffect(() => {
     if (nationalChartData && nationalChartData.values?.length) {
       const values = nationalChartData.values;
@@ -132,11 +108,10 @@ function NationalChartComponent(props) {
           },
         ],
       });
-      const spiVal = nationalChartData.metrics[0] * 100;
-      // nationalChartData.spi_values[
-      // nationalChartData.spi_values.length - 1
-      // ][1];
 
+      setLastYear(last(values)[0]);
+
+      const spiVal = nationalChartData.metrics[0] * 100;
       const spi = {
         labels: [t('Global SPI'), t('Remaining')],
         datasets: [
@@ -168,7 +143,7 @@ function NationalChartComponent(props) {
       {!isLoading && <>
         <div className={styles.info}>
           <div className={styles.arcGrid}>
-            <b>2024</b>
+            <b>{lastYear}</b>
             <SpiArcChartComponent
               width="125x"
               height="75px"
