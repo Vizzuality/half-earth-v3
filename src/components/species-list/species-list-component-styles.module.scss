@@ -167,6 +167,40 @@
     max-height: calc(100vh - 315px);
   }
 
+  .search{
+    border: 1px solid var(--border-color);
+    padding: 5px;
+    border-radius: 8px;
+    flex-grow: 1;
+    background: #{$white};
+    width: 225px;
+    margin: 5px 0;
+
+    input[type="text"]{
+      color: var(--border-color);
+      width: 100%;
+    }
+
+    ::placeholder{
+      color: var(--border-color);
+    }
+
+    svg{
+      fill: var(--border-color);
+      color: var(--border-color);
+
+      path{
+        fill: var(--border-color);
+        color: var(--border-color);
+      }
+    }
+
+    &.showResults{
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
   .speciesFilter {
     padding: 10px 0;
     line-height: 32px;

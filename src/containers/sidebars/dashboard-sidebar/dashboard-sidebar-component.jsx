@@ -114,7 +114,6 @@ function DashboardSidebar(props) {
 
   const [filters, setFilters] = useState(filterStart);
   const [isLoading, setIsLoading] = useState(true);
-  const [filter, setFilter] = useState();
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   useEffect(() => {
@@ -141,10 +140,7 @@ function DashboardSidebar(props) {
                 filters={filters}
                 setFilters={setFilters}
                 {...props} />
-              <SpeciesListContainer
-                filter={filter}
-                setFilter={setFilter}
-                {...props} />
+              <SpeciesListContainer {...props} />
             </>
             }
           </div>

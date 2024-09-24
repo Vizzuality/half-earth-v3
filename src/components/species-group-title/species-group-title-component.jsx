@@ -11,14 +11,6 @@ function SpeciesGroupTitleComponent(props) {
         {species === '__blank' ? '' : family_common[0]}
       </div>
       <div className={styles.sci}>{family}</div>
-      {filter !== '' &&
-        (
-          <div className={styles.filterCount}>
-            {familyObj.visibleCount}/{familyObj.total}
-            {familyObj.visibleCount === 1 ? 'match' : 'matches'}
-          </div>
-        )
-      }
     </div>
   )
 }

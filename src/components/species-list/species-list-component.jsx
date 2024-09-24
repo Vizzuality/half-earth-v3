@@ -3,6 +3,7 @@ import styles from './species-list-component-styles.module.scss';
 import cx from 'classnames';
 import { useT } from '@transifex/react';
 import Button from 'components/button';
+import SearchInput from 'components/search-input';
 import { LightModeContext } from '../../context/light-mode';
 import SpeciesGroupContainer from '../species-group';
 import SpeciesGroupTitleContainer from '../species-group-title';
@@ -14,8 +15,6 @@ function SpeciesListComponent(props) {
     selectedTaxa,
     setSelectedTaxa,
     filteredTaxaList,
-    filter,
-    setFilter,
   } = props
 
   const { lightMode } = useContext(LightModeContext);
@@ -25,8 +24,7 @@ function SpeciesListComponent(props) {
   const [familyCounts, setFamilyCounts] = useState({});
   const [selectedTaxaObj, setSelectedTaxaObj] = useState();
   const [filteredSpecies, setFilteredSpecies] = useState({});
-
-
+  const [filter, setFilter] = useState();
 
   useEffect(() => {
     if (!selectedTaxa) return;
@@ -38,6 +36,16 @@ function SpeciesListComponent(props) {
 
     applyFilter();
   }, [selectedTaxaObj]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      applyFilter();
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    }
+  }, [filter]);
 
   const getTaxaTitle = (label, taxa) => {
     const taxaToCheck = [
@@ -104,8 +112,6 @@ function SpeciesListComponent(props) {
   }
 
   const applyFilter = () => {
-    setFilter(filter?.toLowerCase().trim());
-
     // this.virtualScroll?.scrollToIndex(0);
     const inFilterCheck = sp => sp.filterString.indexOf(filter) > -1;
     setInFilter(0);
@@ -165,8 +171,11 @@ function SpeciesListComponent(props) {
       groupByFamily = { ...groupByFamily, __blank: noNameGroup };
     }
 
-
     setFilteredSpecies(groupByFamily);
+  }
+
+  const handleSearch = (event) => {
+    setFilter(event.currentTarget.value.toLowerCase().trim());
   }
 
   const clearSelection = () => {
@@ -214,7 +223,11 @@ function SpeciesListComponent(props) {
           <div className={styles.header}>
             {selectedTaxaObj?.count}&nbsp;{getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
           </div>
-          <input type="search" placeholder={`${t('Filter')} ${selectedTaxa}`} />
+          <SearchInput
+            className={cx(styles.search)}
+            placeholder={`${t('Filter')} ${selectedTaxa}`}
+            onChange={handleSearch}
+            value={filter} />
           <div className={styles.filterResults}>
             {Object.keys(filteredSpecies).map((sp, index) => {
               return <div key={index}>
