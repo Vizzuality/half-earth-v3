@@ -15,10 +15,11 @@ import DistributionsTableContainer from '../shi/distributions-table';
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();
-  const { spiData } = props;
+  const { spiData, countryISO } = props;
   const { lightMode } = useContext(LightModeContext);
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
+  const bucketSize = 5;
 
   const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
 
@@ -40,63 +41,6 @@ function ScoreDistributionsSpiComponent(props) {
       scientificname: 'Ptychadena bunoderma',
     },
   ];
-
-  const [chartData, setChartData] = useState();
-  const [showTable, setShowTable] = useState(false);
-  const [taxaData, setTaxaData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-
-  const getChartData = async () => {
-    const data = spiData.scoresData;
-    const taxaSet = {};
-
-    // Loop through each number and place it in the appropriate bucket
-    data.forEach(a => {
-      const number = +a.protection_score;
-      // Determine the bucket index based on the floor value of the number
-      let bucketIndex = Math.floor(number / 5);
-
-      if (!taxaSet.hasOwnProperty(bucketIndex)) {
-        taxaSet[bucketIndex] = 1;
-      } else {
-        taxaSet[bucketIndex] += 1;
-      }
-    });
-
-    const labels = Object.keys(taxaSet).map(key => +key * 5);
-
-    setChartData({
-      labels,
-      datasets: [
-        {
-          label: t('Items'),
-          data: Object.values(taxaSet),
-          backgroundColor: getCSSVariable('birds'),
-        },
-      ],
-    });
-  };
-
-  // TODO: Using hard coded region id for Congo
-  const getTaxaData = async () => {
-    const taxaCallsResponses = await Promise.all(
-      taxas.map(async (taxa) => {
-        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
-        const data = await response.json();
-        return data;
-      })
-    );
-
-    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
-    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
-  }
-
-  useEffect(() => {
-    if (!spiData.scoresData.length) return;
-    getTaxaData();
-    getChartData();
-    setIsLoading(false);
-  }, [spiData.scoresData]);
 
   const options = {
     plugins: {
@@ -151,6 +95,91 @@ function ScoreDistributionsSpiComponent(props) {
       },
     },
   };
+
+  const [chartData, setChartData] = useState();
+  const [showTable, setShowTable] = useState(false);
+  const [taxaData, setTaxaData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (!spiData.scoresData.length) return;
+    getTaxaData();
+    getChartData();
+    setIsLoading(false);
+  }, [spiData.scoresData]);
+
+  const getChartData = async () => {
+    const lastYear = '2024';
+    const url = `https://next-api.mol.org/2.x/indicators/sps/values_all_taxa?iso3=${countryISO}&year=${lastYear}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    // const data = spiData.scoresData;
+    const taxaSet = { 'amphibians': {}, 'birds': {}, 'mammals': {}, 'reptiles': {} };
+
+    // Loop through each number and place it in the appropriate bucket
+    data.forEach(a => {
+      const speciesGroup = a.speciesgroup;
+
+      a.protectionscores.forEach(s => {
+        const number = +s.protectionscore;
+        // Determine the bucket index based on the floor value of the number
+        let bucketIndex = Math.floor(number / bucketSize);
+
+        if (!taxaSet[speciesGroup].hasOwnProperty(bucketIndex)) {
+          taxaSet[speciesGroup][bucketIndex] = 1;
+        } else {
+          taxaSet[speciesGroup][bucketIndex] += 1;
+        }
+      })
+    });
+
+    const uniqueKeys = new Set(
+      [...Object.keys(taxaSet['birds']),
+      ...Object.keys(taxaSet['mammals']),
+      ...Object.keys(taxaSet['reptiles']),
+      ...Object.keys(taxaSet['amphibians'])]);
+
+    setChartData({
+      labels: [...uniqueKeys].map(key => key * bucketSize),
+      datasets: [
+        {
+          label: t('Birds'),
+          data: Object.values(taxaSet['birds']),
+          backgroundColor: getCSSVariable('birds'),
+        },
+        {
+          label: t('Mammals'),
+          data: Object.values(taxaSet['mammals']),
+          backgroundColor: getCSSVariable('mammals'),
+        },
+        {
+          label: t('Reptiles'),
+          data: Object.values(taxaSet['reptiles']),
+          backgroundColor: getCSSVariable('reptiles'),
+        },
+        {
+          label: t('Amphibians'),
+          data: Object.values(taxaSet['amphibians']),
+          backgroundColor: getCSSVariable('amphibians'),
+        },
+      ],
+    });
+  };
+
+  // TODO: Using hard coded region id for Congo
+  const getTaxaData = async () => {
+    const taxaCallsResponses = await Promise.all(
+      taxas.map(async (taxa) => {
+        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
+        const data = await response.json();
+        return data;
+      })
+    );
+
+    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
+    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
+  }
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
