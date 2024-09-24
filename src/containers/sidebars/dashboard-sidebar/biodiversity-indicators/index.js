@@ -43,9 +43,8 @@ function BioDiversityContainer(props) {
   const getHabitatScore = () => {
     const country = dataByCountry[countryName];
 
-    // const countrySHS = country?.shs;
     // TODO: handle no frag values
-    const startYearValue = country?.frag[0].gisfrag;
+    const startYearValue = country?.frag[0]?.gisfrag ?? 0;
     // eslint-disable-next-line no-unsafe-optional-chaining
     const lastCountryYearValue = country?.shs.length - 1;
     let globalAreaScore = 0;
@@ -55,16 +54,20 @@ function BioDiversityContainer(props) {
 
     if (dataByCountry.Global?.shs[lastCountryYearValue]) {
       globalAreaScore = dataByCountry.Global?.shs[lastCountryYearValue].propchange;
-      globalConnectivityScore = (
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        dataByCountry.Global?.frag[lastCountryYearValue].gisfrag / startYearValue
-      );
+
+      if(dataByCountry.Global?.frag[lastCountryYearValue]?.gisfrag){
+        globalConnectivityScore = (
+          // eslint-disable-next-line no-unsafe-optional-chaining
+          dataByCountry.Global?.frag[lastCountryYearValue].gisfrag / startYearValue
+        );
+      }
     }
 
     const scores = {
       habitatScore: (((countryAreaScore + countryConnectivityScore) / 2) * 100).toFixed(2),
       globalHabitatScore: ((globalAreaScore + globalConnectivityScore) / 2) * 100
     };
+
     return scores;
   }
 
@@ -75,7 +78,7 @@ function BioDiversityContainer(props) {
       const habitatCountry = dataByCountry[countryName];
 
       // const countrySHS = country?.shs;
-      const startYearValue = habitatCountry?.frag[0].gisfrag;
+      const startYearValue = habitatCountry?.frag[0]?.gisfrag ?? 0;
       // eslint-disable-next-line no-unsafe-optional-chaining
       const lastCountryYearValue = habitatCountry?.shs.length - 1;
       const countryData = dataByCountry[country];
@@ -177,12 +180,17 @@ function BioDiversityContainer(props) {
   }
 
   const getCountryScores = (country, lastCountryYearValue, startYearValue) => {
+    let countryAreaScore = 0;
+    let countryConnectivityScore = 0;
+
     if (country?.shs[lastCountryYearValue]) {
-      const countryAreaScore = country?.shs[lastCountryYearValue].propchange;
-      const countryConnectivityScore = (
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        country?.frag[lastCountryYearValue]?.gisfrag / startYearValue
-      );
+      countryAreaScore = country?.shs[lastCountryYearValue].propchange;
+      if(country?.frag[lastCountryYearValue]?.gisfrag){
+        countryConnectivityScore = (
+          // eslint-disable-next-line no-unsafe-optional-chaining
+          country?.frag[lastCountryYearValue]?.gisfrag / startYearValue
+        );
+      }
 
       return { countryAreaScore, countryConnectivityScore };
     }

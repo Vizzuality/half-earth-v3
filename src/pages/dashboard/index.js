@@ -247,6 +247,7 @@ function DashboardContainer(props) {
   }
 
   const getPreferenceQuery = (preferences) => {
+    if(!preferences) return {};
     return {
       class: preferences.class,
       habitat: preferences.habitat,
