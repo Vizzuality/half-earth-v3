@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-
+import { Loading } from 'he-components';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import styles from './national-chart-styles.module.scss';
@@ -22,11 +22,12 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
-  const { countryData, nationalChartData } = props;
+  const { nationalChartData } = props;
   const [data, setData] = useState();
   const [spiValue, setSpiValue] = useState(0);
   const { lightMode } = useContext(LightModeContext);
   const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
+  const [isLoading, setIsLoading] = useState(true);
 
   const blankData = {
     labels: [t('Global SPI'), t('Remaining')],
@@ -157,31 +158,35 @@ function NationalChartComponent(props) {
 
       setSpiValue(spiVal);
       setSpiData(spi);
+      setIsLoading(false);
     }
   }, [nationalChartData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      <div className={styles.info}>
-        <div className={styles.arcGrid}>
-          <b>2024</b>
-          <SpiArcChartComponent
-            width="125x"
-            height="75px"
-            data={spiData}
-            value={spiValue}
-          />
-          <b>{nationalChartData.metrics?.[1]}</b>
-          <span>{t('Year')}</span>
-          <span>SII</span>
-          <span>{t('Global Ranking')}</span>
+      {isLoading && <Loading height={200} />}
+      {!isLoading && <>
+        <div className={styles.info}>
+          <div className={styles.arcGrid}>
+            <b>2024</b>
+            <SpiArcChartComponent
+              width="125x"
+              height="75px"
+              data={spiData}
+              value={spiValue}
+            />
+            <b>{nationalChartData.metrics?.[1]}</b>
+            <span>{t('Year')}</span>
+            <span>SII</span>
+            <span>{t('Global Ranking')}</span>
+          </div>
         </div>
-      </div>
-      {data && (
-        <div className={styles.chart}>
-          <Line options={options} data={data} />
-        </div>
-      )}
+        {data && (
+          <div className={styles.chart}>
+            <Line options={options} data={data} />
+          </div>
+        )}
+      </>}
     </div>
   );
 }

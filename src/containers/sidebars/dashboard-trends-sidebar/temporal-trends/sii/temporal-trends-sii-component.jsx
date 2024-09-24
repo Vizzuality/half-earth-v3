@@ -59,11 +59,11 @@ function TemporalTrendsSiiComponent(props) {
           <span className={styles.helpText}>
             {t('Toggle national SPI and province-level breakdown.')}
           </span>
-          <Button
+          {/* <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="play animation"
-          />
+          /> */}
           <span className={styles.helpText}>
             {t('View how the percent of area protected, SPI, and score distributions have changed over time.')}
           </span>

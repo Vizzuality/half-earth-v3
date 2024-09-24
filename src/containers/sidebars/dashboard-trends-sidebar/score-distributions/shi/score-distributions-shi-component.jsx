@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
-
+import { Loading } from 'he-components';
 import Button from 'components/button';
 import { getCSSVariable } from 'utils/css-utils';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
@@ -44,16 +44,15 @@ function ScoreDistributionsShiComponent(props) {
   const [showTable, setShowTable] = useState(false);
   const [activeScore, setActiveScore] = useState('habitat score');
   const [taxaData, setTaxaData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const { lightMode } = useContext(LightModeContext);
 
   const getChartData = async () => {
-    if (shiData.scoresData.length) {
-      const data = shiData.scoresData;
+    const data = shiData.scoresData;
 
-      setResponseData(data);
-      displayData(data, activeScore);
-    }
+    setResponseData(data);
+    displayData(data, activeScore);
   }
 
   const displayData = (data, activeScore) => {
@@ -146,9 +145,11 @@ function ScoreDistributionsShiComponent(props) {
   }
 
   useEffect(() => {
+    if (!shiData.scoresData.length) return;
     getChartData();
     getTaxaData();
-  }, [shiData]);
+    setIsLoading(false);
+  }, [shiData.scoresData]);
 
   const getTaxaData = async () => {
     const taxaCallsResponses = await Promise.all(
@@ -315,10 +316,8 @@ function ScoreDistributionsShiComponent(props) {
             />
           </div>
           <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
-          <DistributionsChartComponent
-            data={chartData}
-            options={options}
-          />
+          {isLoading && <Loading height={200} />}
+          {!isLoading && <DistributionsChartComponent data={chartData} options={options} />}
         </>)}
         {showTable && (<>
           <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />

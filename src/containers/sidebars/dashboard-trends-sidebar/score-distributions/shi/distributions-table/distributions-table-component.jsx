@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './distributions-table-styles.module.scss';
 import tableStyles from 'components/protected-areas-table/protected-areas-table-styles.module.scss';
 import { useT, useLocale } from '@transifex/react';
@@ -10,6 +10,12 @@ function DistributionsTableComponent(props) {
   const { chartData } = props;
   const t = useT();
   const locale = useLocale();
+
+  useEffect(() => {
+    if (!chartData) return;
+    console.log(chartData);
+  }, [chartData])
+
 
   return (
     <div className={styles.container}>

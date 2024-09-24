@@ -218,7 +218,6 @@ function ProvinceChartComponent(props) {
             className="basic-single"
             classNamePrefix="select"
             defaultValue={provinces[0]}
-            isClearable
             isSearchable
             name="provinces"
             options={provinces}

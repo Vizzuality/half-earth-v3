@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-
+import { Loading } from 'he-components';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import styles from './national-chart-styles.module.scss';
@@ -47,6 +47,7 @@ function NationalChartComponent(props) {
     ],
   };
   const [shiData, setShiData] = useState(blankData);
+  const [isLoading, setIsLoading] = useState(true);
 
   const options = {
     plugins: {
@@ -94,89 +95,93 @@ function NationalChartComponent(props) {
   };
 
   useEffect(() => {
-    if (chartData.length) {
-      setData({
-        labels: chartData.map((item) => item.year),
-        datasets: [
-          {
-            label: t('Average Area Score'),
-            data: chartData.map((item) => item.avg_area),
-            borderColor: getCSSVariable('birds'),
-          },
-          {
-            label: t('Average Connectivity Score'),
-            data: chartData.map((item) => item.avg_conn),
-            borderColor: getCSSVariable('mammals'),
-          },
-          {
-            label: t('Average Habitat Score'),
-            data: chartData.map((item) => (item.avg_area + item.avg_conn) / 2),
-            borderColor: getCSSVariable('reptiles'),
-          },
-        ],
-      });
+    if (!chartData.length) return;
 
-      const lastValues = chartData[chartData.length - 1];
-      setNationalScores({
-        areaScore: lastValues.avg_area,
-        connecivityScore: lastValues.avg_conn,
-        year: lastValues.year
-      });
+    setData({
+      labels: chartData.map((item) => item.year),
+      datasets: [
+        {
+          label: t('Average Area Score'),
+          data: chartData.map((item) => item.avg_area),
+          borderColor: getCSSVariable('birds'),
+        },
+        {
+          label: t('Average Connectivity Score'),
+          data: chartData.map((item) => item.avg_conn),
+          borderColor: getCSSVariable('mammals'),
+        },
+        {
+          label: t('Average Habitat Score'),
+          data: chartData.map((item) => (item.avg_area + item.avg_conn) / 2),
+          borderColor: getCSSVariable('reptiles'),
+        },
+      ],
+    });
 
-      const shiVal = (lastValues.avg_area + lastValues.avg_conn) / 2;
+    const lastValues = chartData[chartData.length - 1];
+    setNationalScores({
+      areaScore: lastValues.avg_area,
+      connecivityScore: lastValues.avg_conn,
+      year: lastValues.year
+    });
 
-      const shi = {
-        labels: [t('Global SHI'), t('Remaining')],
-        datasets: [
-          {
-            label: '',
-            data: [shiVal, 100 - shiVal],
-            backgroundColor: [
-              getCSSVariable('temporal-spi'),
-              emptyArcColor,
-            ],
-            borderColor: [
-              getCSSVariable('temporal-spi'),
-              emptyArcColor,
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
+    const shiVal = (lastValues.avg_area + lastValues.avg_conn) / 2;
 
-      setShiValue(shiVal);
-      setShiData(shi);
-    }
+    const shi = {
+      labels: [t('Global SHI'), t('Remaining')],
+      datasets: [
+        {
+          label: '',
+          data: [shiVal, 100 - shiVal],
+          backgroundColor: [
+            getCSSVariable('temporal-spi'),
+            emptyArcColor,
+          ],
+          borderColor: [
+            getCSSVariable('temporal-spi'),
+            emptyArcColor,
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    setShiValue(shiVal);
+    setShiData(shi);
+    setIsLoading(false);
 
   }, [chartData])
 
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      <div className={styles.info}>
-        <div className={styles.arcGrid}>
-          <b>{nationalScores.year}</b>
-          <b>{nationalScores.areaScore}</b>
-          <SpiArcChartComponent
-            width="125x"
-            height="75px"
-            data={shiData}
-            value={shiValue}
-          />
-          <b>{nationalScores.connecivityScore}</b>
-          <b>{countryData?.prop_protected_ter}</b>
-          <span>{t('Year')}</span>
-          <span>{t('Area Score')}</span>
-          <span>{t('SHI')}</span>
-          <span>{t('Connectivity Score')}</span>
-          <span>{t('Global Ranking')}</span>
+      {isLoading && <Loading height={200} />}
+      {!isLoading && <>
+        <div className={styles.info}>
+          <div className={styles.arcGrid}>
+            <b>{nationalScores.year}</b>
+            <b>{nationalScores.areaScore}</b>
+            <SpiArcChartComponent
+              width="125x"
+              height="75px"
+              data={shiData}
+              value={shiValue}
+            />
+            <b>{nationalScores.connecivityScore}</b>
+            <b>{countryData?.prop_protected_ter}</b>
+            <span>{t('Year')}</span>
+            <span>{t('Area Score')}</span>
+            <span>{t('SHI')}</span>
+            <span>{t('Connectivity Score')}</span>
+            <span>{t('Global Ranking')}</span>
+          </div>
         </div>
-      </div>
-      {data && (
-        <div className={styles.chart}>
-          <Line options={options} data={data} />
-        </div>
-      )}
+        {data && (
+          <div className={styles.chart}>
+            <Line options={options} data={data} />
+          </div>
+        )}
+      </>}
     </div>
   );
 }

@@ -32,7 +32,7 @@ ChartJS.register(
 
 function SpeciesRichnessComponent(props) {
   const t = useT();
-  const { countryData, taxaData } = props;
+  const { taxaData } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
@@ -59,7 +59,7 @@ function SpeciesRichnessComponent(props) {
   });
 
   const getPercentage = (species) => {
-    const { count, total } = scores[species];
+    const { count } = scores[species];
     // const percent = (count / total) * 100 || 0;
     // return [percent, 100 - percent];
 

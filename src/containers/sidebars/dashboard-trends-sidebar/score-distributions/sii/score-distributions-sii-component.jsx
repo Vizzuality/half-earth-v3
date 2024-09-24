@@ -10,6 +10,8 @@ import SpeciesRichnessComponent from 'components/species-richness/species-richne
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
 import { useT } from '@transifex/react';
+import DistributionsTableContainer from '../shi/distributions-table';
+import { Loading } from 'he-components';
 
 function ScoreDistributionsSiiComponent(props) {
   const t = useT();
@@ -41,38 +43,37 @@ function ScoreDistributionsSiiComponent(props) {
   const [chartData, setChartData] = useState();
   const [taxaData, setTaxaData] = useState();
   const [showTable, setShowTable] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getChartData = async () => {
-    if (siiData.scoresData.length) {
-      const data = siiData.scoresData;
-      const taxaSet = {};
+    const data = siiData.scoresData;
+    const taxaSet = {};
 
-      // Loop through each number and place it in the appropriate bucket
-      data.forEach(a => {
-        const number = +a.protection_score;
-        // Determine the bucket index based on the floor value of the number
-        let bucketIndex = Math.floor(number / 5);
+    // Loop through each number and place it in the appropriate bucket
+    data.forEach(a => {
+      const number = +a.protection_score;
+      // Determine the bucket index based on the floor value of the number
+      let bucketIndex = Math.floor(number / 5);
 
-        if (!taxaSet.hasOwnProperty(bucketIndex)) {
-          taxaSet[bucketIndex] = 1;
-        } else {
-          taxaSet[bucketIndex] += 1;
-        }
-      });
+      if (!taxaSet.hasOwnProperty(bucketIndex)) {
+        taxaSet[bucketIndex] = 1;
+      } else {
+        taxaSet[bucketIndex] += 1;
+      }
+    });
 
-      const labels = Object.keys(taxaSet).map(key => +key * 5);
+    const labels = Object.keys(taxaSet).map(key => +key * 5);
 
-      setChartData({
-        labels,
-        datasets: [
-          {
-            label: 'Items',
-            data: Object.values(taxaSet),
-            backgroundColor: getCSSVariable('birds'),
-          },
-        ],
-      });
-    }
+    setChartData({
+      labels,
+      datasets: [
+        {
+          label: 'Items',
+          data: Object.values(taxaSet),
+          backgroundColor: getCSSVariable('birds'),
+        },
+      ],
+    });
   };
 
   // TODO: Using hard coded region id for Congo
@@ -90,9 +91,11 @@ function ScoreDistributionsSiiComponent(props) {
   }
 
   useEffect(() => {
+    if (!siiData.scoresData.length) return;
     getChartData();
     getTaxaData();
-  }, [siiData]);
+    setIsLoading(false);
+  }, [siiData.scoreData]);
 
   const options = {
     plugins: {
@@ -199,15 +202,13 @@ function ScoreDistributionsSiiComponent(props) {
       <div className={compStyles.chartArea}>
         {!showTable && (<>
           <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
-          <DistributionsChartComponent
-            data={chartData}
-            options={options}
-          />
+          {isLoading && <Loading height={200} />}
+          {!isLoading && <DistributionsChartComponent data={chartData} options={options} />}
         </>)}
         {showTable && (<>
           <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
-          {/* <DistributionsTableContainer chartData={chartData}
-            {...props} /> */}
+          <DistributionsTableContainer chartData={chartData}
+            {...props} />
         </>)}
       </div>
     </div>

@@ -6,15 +6,16 @@ import Button from 'components/button';
 import { getCSSVariable } from 'utils/css-utils';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
-
+import { Loading } from 'he-components';
 import compStyles from './score-distributions-spi-styles.module.scss';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
 import { useT } from '@transifex/react';
+import DistributionsTableContainer from '../shi/distributions-table';
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();
-  const { countryData, spiData } = props;
+  const { spiData } = props;
   const { lightMode } = useContext(LightModeContext);
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
@@ -43,38 +44,37 @@ function ScoreDistributionsSpiComponent(props) {
   const [chartData, setChartData] = useState();
   const [showTable, setShowTable] = useState(false);
   const [taxaData, setTaxaData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const getChartData = async () => {
-    if (spiData.scoresData.length) {
-      const data = spiData.scoresData;
-      const taxaSet = {};
+    const data = spiData.scoresData;
+    const taxaSet = {};
 
-      // Loop through each number and place it in the appropriate bucket
-      data.forEach(a => {
-        const number = +a.protection_score;
-        // Determine the bucket index based on the floor value of the number
-        let bucketIndex = Math.floor(number / 5);
+    // Loop through each number and place it in the appropriate bucket
+    data.forEach(a => {
+      const number = +a.protection_score;
+      // Determine the bucket index based on the floor value of the number
+      let bucketIndex = Math.floor(number / 5);
 
-        if (!taxaSet.hasOwnProperty(bucketIndex)) {
-          taxaSet[bucketIndex] = 1;
-        } else {
-          taxaSet[bucketIndex] += 1;
-        }
-      });
+      if (!taxaSet.hasOwnProperty(bucketIndex)) {
+        taxaSet[bucketIndex] = 1;
+      } else {
+        taxaSet[bucketIndex] += 1;
+      }
+    });
 
-      const labels = Object.keys(taxaSet).map(key => +key * 5);
+    const labels = Object.keys(taxaSet).map(key => +key * 5);
 
-      setChartData({
-        labels,
-        datasets: [
-          {
-            label: t('Items'),
-            data: Object.values(taxaSet),
-            backgroundColor: getCSSVariable('birds'),
-          },
-        ],
-      });
-    }
+    setChartData({
+      labels,
+      datasets: [
+        {
+          label: t('Items'),
+          data: Object.values(taxaSet),
+          backgroundColor: getCSSVariable('birds'),
+        },
+      ],
+    });
   };
 
   // TODO: Using hard coded region id for Congo
@@ -92,9 +92,11 @@ function ScoreDistributionsSpiComponent(props) {
   }
 
   useEffect(() => {
+    if (!spiData.scoresData.length) return;
     getTaxaData();
     getChartData();
-  }, [spiData]);
+    setIsLoading(false);
+  }, [spiData.scoresData]);
 
   const options = {
     plugins: {
@@ -181,7 +183,7 @@ function ScoreDistributionsSpiComponent(props) {
             );
           })}
         </ul>
-        <div className={styles.options}>
+        {/* <div className={styles.options}>
           {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
@@ -197,18 +199,18 @@ function ScoreDistributionsSpiComponent(props) {
           <span className={styles.helpText}>
             {t('Open and download a full table of species SPS and relevant traits at national and province levels for a selected year.')}
           </span>
-        </div>
+        </div> */}
       </div>
       <div className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}>
         {!showTable && (<>
           <div className={compStyles.title}>{t('NATIONAL SPI BY TAXONOMIC GROUP')}</div>
-          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
-          <DistributionsChartComponent options={options} data={chartData} />
+          <SpeciesRichnessComponent taxaData={taxaData} />
+          {isLoading && <Loading height={200} />}
+          {!isLoading && <DistributionsChartComponent options={options} data={chartData} />}
         </>)}
         {showTable && (<>
-          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
-          {/* <DistributionsTableContainer chartData={chartData}
-            {...props} /> */}
+          <SpeciesRichnessComponent taxaData={taxaData} />
+          <DistributionsTableContainer chartData={chartData} {...props} />
         </>)}
       </div>
     </div>
