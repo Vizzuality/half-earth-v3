@@ -8,7 +8,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import styles from './grouped-list-styles.module.scss';
 
 function GroupedListComponent(props) {
-  const { dataPoints, setDataPoints, map } = props;
+  const { dataPoints, setDataPoints, map, speciesInfo } = props;
 
   const displayChildren = (key) => {
     const showChildren = !dataPoints[key].showChildren;
@@ -41,13 +41,7 @@ function GroupedListComponent(props) {
   }
 
   const displaySingleLayer = (item) => {
-    // const blah = EsriFeatureService.getGeoJsonLayer();
-    const blah = EsriFeatureService.getXYZLayer();
-    //https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/species/detailed/3857/{z}/{x}/{y}.mvt?scientificname=Accipiter%20badius&dsids=704898e7-b945-4721-b201-9286bd00c0a9,d542e050-2ae5-457e-8476-027741538965
-    map.add(blah);
-
-
-    if (dataPoints[item].items.length === 0) {
+    if (dataPoints[item]?.items.length === 0) {
       setDataPoints({
         ...dataPoints, [item]: { ...dataPoints[item], isActive: !dataPoints[item].isActive }
       });
@@ -65,6 +59,16 @@ function GroupedListComponent(props) {
       });
     }
   };
+
+  const findLayerToShow = (item) => {
+    if (item.type_title.toUpperCase() === 'POINT OBSERVATIONS') {
+
+      const jsonLayer = EsriFeatureService.getGeoJsonLayer(speciesInfo.scientificname.replace(' ', '_'));
+      map.add(jsonLayer);
+    }
+
+    displaySingleLayer(item)
+  }
 
   // check if some but not all children are selected
   const checkIfSomeChecked = (key) => {
@@ -111,7 +115,7 @@ function GroupedListComponent(props) {
               </div>
               {dataPoints[key].showChildren && <ul>
                 {dataPoints[key].items.map((item) => (
-                  <li key={item.dataset_id} className={styles.children} onClick={() => displaySingleLayer(item)}>
+                  <li key={item.dataset_id} className={styles.children} onClick={() => findLayerToShow(item)}>
                     <FormControlLabel
                       label={item.dataset_title}
                       control={<Checkbox checked={item.isActive} />}

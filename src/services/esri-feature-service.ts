@@ -42,9 +42,9 @@ function getFeatures({
   });
 }
 
-function getGeoJsonLayer(){
+function getGeoJsonLayer(scientificname){
   return new GeoJSONLayer({
-    url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson'
+    url: `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${scientificname}.geojson`
   });
 }
 
