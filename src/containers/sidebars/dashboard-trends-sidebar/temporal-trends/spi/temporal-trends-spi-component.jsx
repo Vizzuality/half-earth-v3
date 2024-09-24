@@ -43,6 +43,7 @@ function TemporalTrendsSpiComponent(props) {
   }, [spiData.trendData]);
 
   const handleActionChange = (event) => {
+    setShowTable(false);
     setActiveTrend(event.currentTarget.innerText);
   };
 

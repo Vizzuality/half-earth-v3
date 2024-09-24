@@ -16,7 +16,7 @@ import { useT } from '@transifex/react';
 
 function TemporalTrendsShiComponent(props) {
   const t = useT();
-  const { updateActiveTrend, shiData, shiValue } = props;
+  const { shiData, shiValue } = props;
 
   // const [chartData, setChartData] = useState();
   const [lostAvg, setLostAvg] = useState(0);
@@ -28,7 +28,7 @@ function TemporalTrendsShiComponent(props) {
   }, [shiValue]);
 
   const handleActionChange = (event) => {
-    updateActiveTrend(event.currentTarget.innerText);
+
   };
 
   return (
@@ -50,11 +50,11 @@ function TemporalTrendsShiComponent(props) {
             label={NATIONAL_TREND}
             handleClick={handleActionChange}
           />
-
+          {/*
           <span className={styles.helpText}>
             {t('Toggle national SPI and province-level breakdown.')}
           </span>
-          {/* <Button
+          <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="play animation"
