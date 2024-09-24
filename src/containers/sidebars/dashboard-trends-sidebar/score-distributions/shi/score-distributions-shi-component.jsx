@@ -289,6 +289,8 @@ function ScoreDistributionsShiComponent(props) {
       </div>
       <div className={compStyles.chartArea}>
         {!showTable && (<>
+
+          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
             <Button
               type="rectangular"
@@ -315,7 +317,6 @@ function ScoreDistributionsShiComponent(props) {
               handleClick={handleActiveChange}
             />
           </div>
-          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           {isLoading && <Loading height={200} />}
           {!isLoading && <DistributionsChartComponent data={chartData} options={options} />}
         </>)}

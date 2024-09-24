@@ -130,9 +130,9 @@ function TrendTableComponent(props) {
                 <tr key={`wdpa-row-${row.NAME}-${index}`}>
                   <td className={tableStyles.firstColumn}>{row.region_name}</td>
                   <td>{row.regional_scores[row.regional_scores.length - 1].spi_all.toFixed(2)}</td>
-                  <td>{row.regional_scores[row.regional_scores.length - 1].nspecies.toFixed(2)}</td>
-                  <td>{row.regional_scores[row.regional_scores.length - 1].percentprotected_all.toFixed(2)}<sup>2</sup></td>
-                  <td>{row.regional_scores[row.regional_scores.length - 1].percentprotected_all.toFixed(2)}</td>
+                  <td>{row.regional_scores[row.regional_scores.length - 1].region_area?.toFixed(2) ?? 0}km<sup>2</sup></td>
+                  <td>{row.regional_scores[row.regional_scores.length - 1].reserve_area?.toFixed(2) ?? 0}km<sup>2</sup></td>
+                  <td>{row.regional_scores[row.regional_scores.length - 1].nspecies}</td>
                 </tr>
               ))}
           </tbody>
