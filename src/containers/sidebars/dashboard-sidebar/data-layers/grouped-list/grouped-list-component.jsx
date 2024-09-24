@@ -47,17 +47,23 @@ function GroupedListComponent(props) {
     map.add(blah);
 
 
-    setDataPoints({
-      ...dataPoints,
-      [item.type_title]: {
-        ...dataPoints[item.type_title],
-        items: [
-          ...dataPoints[item.type_title].items.map(point => {
-            return point?.dataset_id === item.dataset_id ? { ...point, isActive: !point.isActive } : point
-          }),
-        ]
-      }
-    });
+    if (dataPoints[item].items.length === 0) {
+      setDataPoints({
+        ...dataPoints, [item]: { ...dataPoints[item], isActive: !dataPoints[item].isActive }
+      });
+    } else {
+      setDataPoints({
+        ...dataPoints,
+        [item.type_title]: {
+          ...dataPoints[item.type_title],
+          items: [
+            ...dataPoints[item.type_title].items.map(point => {
+              return point?.dataset_id === item.dataset_id ? { ...point, isActive: !point.isActive } : point
+            }),
+          ]
+        }
+      });
+    }
   };
 
   // check if some but not all children are selected
@@ -79,40 +85,53 @@ function GroupedListComponent(props) {
     <div className={styles.container}>
       {Object.keys(dataPoints).map((key) => (
         <div key={key}>
-          <div className={styles.parent}>
-            <button onClick={() => displayChildren(key)}>
-              <ArrowIcon
-                className={cx(styles.arrowIcon, {
-                  [styles.isOpened]: dataPoints[key].showChildren,
-                })}
-              />
-            </button>
+          {dataPoints[key].items.length > 0 &&
+            <>
+              <div className={styles.parent}>
+                <button onClick={() => displayChildren(key)}>
+                  <ArrowIcon
+                    className={cx(styles.arrowIcon, {
+                      [styles.isOpened]: dataPoints[key].showChildren,
+                    })}
+                  />
+                </button>
+                <FormControlLabel
+                  label={key}
+                  control={
+                    <Checkbox
+                      indeterminate={checkIfSomeChecked(key)}
+                      checked={checkIfAllChecked(key)}
+                      onChange={() => updateChildren(key)}
+                    />
+                  }
+                />
+                <img className={styles.productTypeLogo}
+                  src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0]?.product_type === 'points' ? 'points_agg' : dataPoints[key].items[0]?.product_type)}.png`} />
+                <span>{dataPoints[key].total_no_rows}</span>
+              </div>
+              {dataPoints[key].showChildren && <ul>
+                {dataPoints[key].items.map((item) => (
+                  <li key={item.dataset_id} className={styles.children} onClick={() => displaySingleLayer(item)}>
+                    <FormControlLabel
+                      label={item.dataset_title}
+                      control={<Checkbox checked={item.isActive} />}
+                    />
+                    <span></span>
+                    <span>{item.no_rows}</span>
+                  </li>
+                ))}
+              </ul>
+              }
+            </>
+          }
+          {dataPoints[key].items.length === 0 && <div className={styles.children} onClick={() => displaySingleLayer(key)}>
             <FormControlLabel
               label={key}
-              control={
-                <Checkbox
-                  indeterminate={checkIfSomeChecked(key)}
-                  checked={checkIfAllChecked(key)}
-                  onChange={() => updateChildren(key)}
-                />
-              }
+              control={<Checkbox checked={dataPoints[key].isActive} />}
             />
-            <img className={styles.productTypeLogo}
-              src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0].product_type === 'points' ? 'points_agg' : dataPoints[key].items[0].product_type)}.png`} />
+            <span></span>
             <span>{dataPoints[key].total_no_rows}</span>
           </div>
-          {dataPoints[key].showChildren && <ul>
-            {dataPoints[key].items.map((item) => (
-              <li key={item.dataset_id} className={styles.children} onClick={() => displaySingleLayer(item)}>
-                <FormControlLabel
-                  label={item.dataset_title}
-                  control={<Checkbox checked={item.isActive} />}
-                />
-                <span></span>
-                <span>{item.no_rows}</span>
-              </li>
-            ))}
-          </ul>
           }
         </div>
       ))}

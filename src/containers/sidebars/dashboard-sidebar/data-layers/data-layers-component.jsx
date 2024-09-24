@@ -52,6 +52,34 @@ function DataLayerComponent(props) {
 
   const [dataLayers, setDataLayers] = useState({});
   const [dataPoints, setDataPoints] = useState();
+  const [privateDataPoints, setPrivateDataPoints] = useState({
+    'Point Observations': {
+      items: [],
+      total_no_rows: 0,
+      isActive: false,
+      showChildren: false,
+    }
+  });
+  const [regionsData, setRegionsData] = useState({
+    'Protected Areas': {
+      items: [],
+      total_no_rows: 0,
+      isActive: false,
+      showChildren: false,
+    },
+    'Proposed Protection': {
+      items: [],
+      total_no_rows: 0,
+      isActive: false,
+      showChildren: false,
+    },
+    'Administrative Layers': {
+      items: [],
+      total_no_rows: 0,
+      isActive: false,
+      showChildren: false,
+    },
+  })
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -63,7 +91,6 @@ function DataLayerComponent(props) {
   useEffect(() => {
     if (!dataPoints) return;
     setIsLoading(false);
-    console.log(dataPoints);
   }, [dataPoints]);
 
   const groupByTypeTitle = (arr) => {
@@ -143,11 +170,6 @@ function DataLayerComponent(props) {
         type="button"
         onClick={() => { }}
       >
-        {/* <ArrowIcon
-          className={cx(styles.arrowIcon, {
-            [styles.isOpened]: isOpened,
-          })}
-        /> */}
         <span>{t('Species Data: Public')}</span>
       </button>
       {!isLoading && dataPoints && <DataLayersGroupedList
@@ -161,52 +183,24 @@ function DataLayerComponent(props) {
         type="button"
         onClick={() => { }}
       >
-        <ArrowIcon
-          className={cx(styles.arrowIcon, {
-            [styles.isOpened]: isOpened,
-          })}
-        />
         <span>{t('Species Data: Private')}</span>
       </button>
-      {speciesPrivateLayers.map((layer) => (
-        <LayerToggle
-          map={map}
-          option={layer}
-          type="checkbox"
-          variant="light"
-          key={layer.value}
-          isChecked={layer.isChecked}
-          activeLayers={activeLayers}
-          onChange={updateLayer}
-          themeCategorySlug={layer.value}
-        />
-      ))}
+      <DataLayersGroupedList
+        dataPoints={privateDataPoints}
+        map={map}
+        setDataPoints={setPrivateDataPoints} />
       <hr className={hrTheme.dark} />
       <button
         className={styles.distributionTitle}
         type="button"
         onClick={() => { }}
       >
-        <ArrowIcon
-          className={cx(styles.arrowIcon, {
-            [styles.isOpened]: isOpened,
-          })}
-        />
         <span>{t('Regions Data')}</span>
       </button>
-      {speciesRegionsLayers.map((layer) => (
-        <LayerToggle
-          map={map}
-          option={layer}
-          type="checkbox"
-          variant="light"
-          key={layer.value}
-          isChecked={layer.isChecked}
-          activeLayers={activeLayers}
-          onChange={updateLayer}
-          themeCategorySlug={layer.value}
-        />
-      ))}
+      <DataLayersGroupedList
+        dataPoints={regionsData}
+        map={map}
+        setDataPoints={setRegionsData} />
     </section>
   );
 }
