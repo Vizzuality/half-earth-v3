@@ -20,28 +20,10 @@ function ScoreDistributionsSpiComponent(props) {
   const t = useT();
   const { spiData, countryISO, activeTrend, selectedProvince, year } = props;
   const { lightMode } = useContext(LightModeContext);
+  const [speciesHighlights, setSpeciesHighlights] = useState();
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
   const bucketSize = 5;
-
-  const spsSpecies = [
-    {
-      name: 'Grey Winged Robin Chat',
-      scientificname: 'Cossypha polioptera',
-    },
-    {
-      name: 'Piliocolobus parmentieri',
-      scientificname: 'Piliocolobus parmentieri',
-    },
-    {
-      name: 'Palm Egg Eater',
-      scientificname: 'Dasypeltis palmarum',
-    },
-    {
-      name: 'Caconda Grassland Frog',
-      scientificname: 'Ptychadena bunoderma',
-    },
-  ];
 
   const options = {
     plugins: {
@@ -102,22 +84,37 @@ function ScoreDistributionsSpiComponent(props) {
   const [taxaData, setTaxaData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [titleText, setTitleText] = useState();
+  const [spsSpecies, setSpsSpecies] = useState();
 
   useEffect(() => {
     if (!spiData.scoresData.length || !year) return;
-    getTaxaData();
-    getChartData();
-    setIsLoading(false);
+
+    setIsLoading(true);
+    getTopSpecies();
+    getData();
   }, [spiData.scoresData, year]);
 
   useEffect(() => {
     if (!year) return;
-    setIsLoading(true);
-    getChartData();
-    getTaxaData();
-    getTitleText();
-  }, [activeTrend, selectedProvince, year])
 
+    setIsLoading(true);
+    getData();
+
+  }, [activeTrend, selectedProvince, year]);
+
+  useEffect(() => {
+    if (!speciesHighlights) return;
+    loadSpecies();
+
+  }, [speciesHighlights, selectedProvince])
+
+
+  const getData = () => {
+    getTaxaData();
+    getChartData();
+    getTitleText();
+    setIsLoading(false);
+  }
 
   const getChartData = async () => {
     let url = `https://next-api.mol.org/2.x/indicators/sps/values_all_taxa?iso3=${countryISO}&year=${year}`;
@@ -194,6 +191,22 @@ function ScoreDistributionsSpiComponent(props) {
     setTaxaData(data);
   }
 
+  const getTopSpecies = async () => {
+    const response = await fetch(`https://next-api.mol.org/2.x/indicators/shs/species_hightlights?iso3=${countryISO}&year=${year}`);
+    const data = await response.json();
+
+    setSpeciesHighlights(data[0]);
+  }
+
+  const loadSpecies = () => {
+    if (activeTrend === PROVINCE_TREND && selectedProvince) {
+      const regionSpecies = speciesHighlights.region_highlights.filter(sh => sh.iso3_regional === selectedProvince.iso_regional);
+      setSpsSpecies(regionSpecies[0].region_highlights);
+    } else {
+      setSpsSpecies(speciesHighlights.country_highlights)
+    }
+  }
+
   const getTitleText = () => {
     if (activeTrend === NATIONAL_TREND || !selectedProvince) {
       setTitleText(t('NATIONAL SPI BY TAXONOMIC GROUP'));
@@ -218,17 +231,17 @@ function ScoreDistributionsSpiComponent(props) {
         </span>
         <hr />
         <ul className={styles.spsSpecies}>
-          {spsSpecies.map((species) => {
+          {spsSpecies && spsSpecies.map((species, index) => {
             return (
-              <li key={species.scientificname}>
-                <img src="https://place-hold.it/50x50" alt="species" />
+              <li key={index}>
+                <img src={species.asset_url} alt="species" />
                 <div className={styles.spsInfo}>
-                  <span className={styles.name}>{species.name}</span>
+                  <span className={styles.name}>{species.species}</span>
                   <span className={styles.scientificname}>
-                    {species.scientificname}
+                    {species.species}
                   </span>
                 </div>
-                <span className={styles.spsScore}>SPS: 0.04</span>
+                {species.protection_score && <span className={styles.spsScore}>{`SPS: ${species.protection_score?.toFixed(2)}`}</span>}
               </li>
             );
           })}

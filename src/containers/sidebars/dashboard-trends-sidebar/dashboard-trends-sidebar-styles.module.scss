@@ -127,6 +127,11 @@ $info-width: 300px;
         gap: 12px;
         margin: 6px 0;
 
+        img{
+          width: 50px;
+          height: 50px;
+        }
+
         .spsInfo{
           display: flex;
           flex-direction: column;
