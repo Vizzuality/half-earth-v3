@@ -14,7 +14,7 @@ import compStyles from './score-distributions-spi-styles.module.scss';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
 import { useT } from '@transifex/react';
-import DistributionsTableContainer from '../shi/distributions-table';
+import DistributionsTableContainer from '../../shi/score-distributions/distributions-table';
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();

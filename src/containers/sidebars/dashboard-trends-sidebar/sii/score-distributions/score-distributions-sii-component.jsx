@@ -1,25 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import cx from 'classnames';
-import { Loading } from 'he-components';
+
 import Button from 'components/button';
 import { getCSSVariable } from 'utils/css-utils';
+import compStyles from './score-distributions-sii-styles.module.scss';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
-
-import compStyles from './score-distributions-shi-styles.module.scss';
-import DistributionsTableContainer from './distributions-table';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
 import { useT } from '@transifex/react';
+import DistributionsTableContainer from '../../shi/score-distributions/distributions-table';
+import { Loading } from 'he-components';
 
-function ScoreDistributionsShiComponent(props) {
+function ScoreDistributionsSiiComponent(props) {
   const t = useT();
-  const { countryData, shiData } = props;
-
+  const { countryData, siiData } = props;
+  const { lightMode } = useContext(LightModeContext);
   const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
+
   const spsSpecies = [
     {
       name: 'Grey Winged Robin Chat',
@@ -40,58 +41,19 @@ function ScoreDistributionsShiComponent(props) {
   ];
 
   const [chartData, setChartData] = useState();
-  const [responseData, setResponseData] = useState();
-  const [showTable, setShowTable] = useState(false);
-  const [activeScore, setActiveScore] = useState('habitat score');
   const [taxaData, setTaxaData] = useState();
+  const [showTable, setShowTable] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { lightMode } = useContext(LightModeContext);
-
   const getChartData = async () => {
-    const data = shiData.scoresData;
-
-    setResponseData(data);
-    displayData(data, activeScore);
-  }
-
-  const displayData = (data, activeScore) => {
-    // const ampSet = getHistogramData('AMPHIBIA');
-    // const mamSet = getHistogramData('MAMMALIA');
-    // const repSet = getHistogramData('REPTILIA');
-    // const birdSet = getHistogramData('AVES');
+    const data = siiData.scoresData;
     const taxaSet = {};
-
-    // data.forEach(a => {
-    //   let floorScore;
-    //   if (activeScore === 'area') {
-    //     floorScore = Math.floor(a.area_score);
-    //   } else if (activeScore === 'habitat score') {
-    //     floorScore = Math.floor((a.area_score + a.connectivity_score) / 2);
-    //   } else if (activeScore === 'connectivity') {
-    //     floorScore = Math.floor(a.connectivity_score);
-    //   }
-
-    //   if (!taxaSet.hasOwnProperty(floorScore)) {
-    //     taxaSet[floorScore] = 1;
-    //   } else {
-    //     taxaSet[floorScore] += 1;
-    //   }
-    // });
 
     // Loop through each number and place it in the appropriate bucket
     data.forEach(a => {
-      let floorScore;
-      if (activeScore === 'area') {
-        floorScore = Math.floor(a.area_score);
-      } else if (activeScore === 'habitat score') {
-        floorScore = Math.floor((a.area_score + a.connectivity_score) / 2);
-      } else if (activeScore === 'connectivity') {
-        floorScore = Math.floor(a.connectivity_score);
-      }
-
+      const number = +a.protection_score;
       // Determine the bucket index based on the floor value of the number
-      let bucketIndex = Math.floor(floorScore / 5);
+      let bucketIndex = Math.floor(number / 5);
 
       if (!taxaSet.hasOwnProperty(bucketIndex)) {
         taxaSet[bucketIndex] = 1;
@@ -100,57 +62,21 @@ function ScoreDistributionsShiComponent(props) {
       }
     });
 
-    const labels = Object.keys(taxaSet).map(key => key * 5);
+    const labels = Object.keys(taxaSet).map(key => +key * 5);
 
     setChartData({
       labels,
       datasets: [
-        // {
-        //   label: '# of occurance',
-        //   data: ampSet,
-        //   backgroundColor: getCSSVariable('amphibians'),
-        //   stack: 'Stack 0',
-        //   barPercentage: 1,
-        // },
-        // {
-        //   label: '# of occurance',
-        //   data: mamSet,
-        //   backgroundColor: getCSSVariable('mammals'),
-        //   stack: 'Stack 0',
-        //   barPercentage: 1,
-        // },
-        // {
-        //   label: '# of occurance',
-        //   data: repSet,
-        //   backgroundColor: getCSSVariable('reptiles'),
-        //   stack: 'Stack 0',
-        //   barPercentage: 1,
-        // },
-        // {
-        //   label: '# of occurance',
-        //   data: birdSet,
-        //   backgroundColor: getCSSVariable('birds'),
-        //   stack: 'Stack 0',
-        //   barPercentage: 1,
-        // },
         {
-          label: t('# of occurance'),
+          label: 'Items',
           data: Object.values(taxaSet),
           backgroundColor: getCSSVariable('birds'),
-          stack: 'Stack 0',
-          barPercentage: 1,
         },
       ],
     });
-  }
+  };
 
-  useEffect(() => {
-    if (!shiData.scoresData.length) return;
-    getChartData();
-    getTaxaData();
-    setIsLoading(false);
-  }, [shiData.scoresData]);
-
+  // TODO: Using hard coded region id for Congo
   const getTaxaData = async () => {
     const taxaCallsResponses = await Promise.all(
       taxas.map(async (taxa) => {
@@ -164,26 +90,12 @@ function ScoreDistributionsShiComponent(props) {
     setTaxaData({ birdData, mammalData, reptileData, amphibianData });
   }
 
-
-  const getHistogramData = (taxa) => {
-    const taxaGroup = chartData.filter(item => item.taxa === taxa);
-    const taxaSet = {};
-
-    taxaGroup.forEach(a => {
-      const floorScore = Math.floor(a.area_score);
-      if (!taxaSet.hasOwnProperty(floorScore)) {
-        taxaSet[floorScore] = 1;
-      } else {
-        taxaSet[floorScore] += 1;
-      }
-    });
-    return taxaSet;
-  }
-
-  const handleActiveChange = (event) => {
-    setActiveScore(event.currentTarget.innerText.toLowerCase());
-    displayData(responseData, event.currentTarget.innerText.toLowerCase());
-  };
+  useEffect(() => {
+    if (!siiData.scoresData.length) return;
+    getChartData();
+    getTaxaData();
+    setIsLoading(false);
+  }, [siiData.scoresData]);
 
   const options = {
     plugins: {
@@ -207,7 +119,7 @@ function ScoreDistributionsShiComponent(props) {
         display: true,
         title: {
           display: true,
-          text: t('Score'),
+          text: t('Protection Score'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -217,7 +129,7 @@ function ScoreDistributionsShiComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          stepSize: 5,
+          stepSize: 10,
         },
       },
       y: {
@@ -245,12 +157,12 @@ function ScoreDistributionsShiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          View the distribution of the individual Species Habitat Scores,
-          including the two components Area and Connectivity, for all terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average habitat score while <b>{highAvg}</b> have the highest.
+          View the distribution of the individual Species Information Scores for all
+          terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average information score while <b>{highAvg}</b> have the highest.
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SHS between')} <b>35-45:</b>
+          {t('Species with SIS between')} <b>0-5:</b>
         </span>
         <hr />
         <ul className={styles.spsSpecies}>
@@ -264,13 +176,13 @@ function ScoreDistributionsShiComponent(props) {
                     {species.scientificname}
                   </span>
                 </div>
-                <span className={styles.spsScore}>SHS: 0.04</span>
+                <span className={styles.spsScore}>SPS: 0.04</span>
               </li>
             );
           })}
         </ul>
         <div className={styles.options}>
-          {!showTable && <Button
+          {/* {!showTable && <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label={t('View full table')}
@@ -284,50 +196,22 @@ function ScoreDistributionsShiComponent(props) {
           />}
           <span className={styles.helpText}>
             {t('Open and download a full table of species SPS and relevant traits at national and province levels for a selected year.')}
-          </span>
+          </span> */}
         </div>
       </div>
       <div className={compStyles.chartArea}>
         {!showTable && (<>
-
-          <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
-          <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: activeScore !== 'habitat score',
-              })}
-              label={t('Habitat Score')}
-              handleClick={handleActiveChange}
-            />
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: activeScore !== 'area',
-              })}
-              label={t('Area')}
-              handleClick={handleActiveChange}
-            />
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: activeScore !== 'connectivity',
-              })}
-              label={t('Connectivity')}
-              handleClick={handleActiveChange}
-            />
-          </div>
+          {/* <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} /> */}
           {isLoading && <Loading height={200} />}
           {!isLoading && <DistributionsChartComponent data={chartData} options={options} />}
         </>)}
-        {showTable && (<>
+        {/* {showTable && (<>
           <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
-          <DistributionsTableContainer chartData={responseData}
-            {...props} />
-        </>)}
+          <DistributionsTableContainer chartData={siiData?.scoresData} {...props} />
+        </>)} */}
       </div>
     </div>
   );
 }
 
-export default ScoreDistributionsShiComponent;
+export default ScoreDistributionsSiiComponent;

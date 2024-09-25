@@ -3,8 +3,9 @@ import { useT } from '@transifex/react';
 import cx from 'classnames';
 
 import styles from './dashboard-trends-sidebar-styles.module.scss';
-import ScoreDistributionsContainer from './score-distributions';
-import TemporalTrendsContainer from './temporal-trends';
+import SiiContainer from './sii';
+import SpiContainer from './spi';
+import ShiContainer from './shi';
 
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
@@ -59,14 +60,9 @@ function DashboardTrendsSidebar(props) {
           </button>
         </div>
       </header>
-      <TemporalTrendsContainer
-        trendOption={trendOption}
-        {...props}
-      />
-      <ScoreDistributionsContainer
-        trendOption={trendOption}
-        {...props}
-      />
+      {trendOption === 1 && <ShiContainer trendOption={trendOption} {...props} />}
+      {trendOption === 2 && <SpiContainer trendOption={trendOption} {...props} />}
+      {trendOption === 3 && <SiiContainer trendOption={trendOption} {...props} />}
     </div>
   );
 }

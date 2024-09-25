@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-import TemporalTrendsSpiComponent from '../temporal-trends/spi/temporal-trends-spi-component';
-import ScoreDistributionsSpiComponent from '../score-distributions/spi/score-distributions-spi-component';
+import ScoreDistributionsSpiComponent from './score-distibutions/score-distributions-spi-component';
 import { PROVINCE_TREND } from '../dashboard-trends-sidebar-component';
+import TemporalTrendsSpiComponent from './temporal-trends/temporal-trends-spi-component';
 
 function SpiComponent(props) {
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
