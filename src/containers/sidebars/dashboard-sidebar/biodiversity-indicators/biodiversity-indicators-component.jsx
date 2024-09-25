@@ -41,7 +41,7 @@ function BioDiversityComponent(props) {
         <div className={styles.tabs}>
           <button
             type="button"
-            aria-label="Species Protection Index"
+            aria-label={t('Species Protection Index')}
             className={cx({
               [styles.selected]: selectedTab === 2,
             })}
@@ -52,7 +52,7 @@ function BioDiversityComponent(props) {
           </button>
           <button
             type="button"
-            aria-label="Species Habitat Index"
+            aria-label={t('Species Habitat Index')}
             className={cx({
               [styles.selected]: selectedTab === 1,
             })}
@@ -63,7 +63,7 @@ function BioDiversityComponent(props) {
           </button>
           <button
             type="button"
-            aria-label="Species Information Index"
+            aria-label={t('Species Information Index')}
             className={cx({
               [styles.selected]: selectedTab === 3,
             })}

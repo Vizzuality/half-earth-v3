@@ -4,14 +4,11 @@ import Button from 'components/button';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
 import SearchLocation from 'components/search-location';
 
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-
-import Checkbox from '../../../../components/checkbox/checkbox-component';
 
 import styles from './regions-analysis-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
@@ -54,7 +51,7 @@ function RegionsAnalysisComponent(props) {
         <Button
           type="rectangular"
           className={styles.saveButton}
-          label="download data"
+          label={t('Download Data')}
         />
       </div>
     </section>

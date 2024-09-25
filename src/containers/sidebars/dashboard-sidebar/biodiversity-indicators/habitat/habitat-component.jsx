@@ -61,7 +61,7 @@ function HabitatComponent(props) {
             </span>
             <div className={styles.results}>
               <b>{(globalHabitatScore).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</b>
-              <span className={styles.desc}>Suitable habitat lost globally since 2001</span>
+              <span className={styles.desc}>{t('Suitable habitat lost globally since 2001')}</span>
             </div>
           </div>
         </div>

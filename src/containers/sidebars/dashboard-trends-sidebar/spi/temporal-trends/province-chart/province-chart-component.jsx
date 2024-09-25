@@ -298,6 +298,7 @@ function ProvinceChartComponent(props) {
             defaultValue={provinces[foundIndex]}
             options={provinces}
             onChange={getProvinceScores}
+            placeholder={t('Select Region')}
           />
           {selectedRegionScores && <>
             <span>
