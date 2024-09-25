@@ -19,6 +19,7 @@ import {
 } from 'chart.js';
 import { LightModeContext } from '../../context/light-mode';
 import { useT } from '@transifex/react';
+import { PROVINCE_TREND } from '../../containers/sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 ChartJS.register(
   CategoryScale,
@@ -32,7 +33,7 @@ ChartJS.register(
 
 function SpeciesRichnessComponent(props) {
   const t = useT();
-  const { taxaData } = props;
+  const { taxaData, selectedProvince, activeTrend } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
@@ -60,68 +61,49 @@ function SpeciesRichnessComponent(props) {
 
   const getPercentage = (species) => {
     const { count } = scores[species];
-    // const percent = (count / total) * 100 || 0;
-    // return [percent, 100 - percent];
-
     return [count, 100 - count];
   };
 
-  // useEffect(() => {
-  //   if (countryData) {
-  //     const {
-  //       endemic_birds,
-  //       birds,
-  //       endemic_mammals,
-  //       mammals,
-  //       endemic_reptiles,
-  //       reptiles,
-  //       endemic_amphibians,
-  //       amphibians,
-  //     } = countryData;
-
-  //     setScores({
-  //       birds: {
-  //         count: endemic_birds,
-  //         total: birds,
-  //       },
-  //       mammals: {
-  //         count: endemic_mammals,
-  //         total: mammals,
-  //       },
-  //       reptiles: {
-  //         count: endemic_reptiles,
-  //         total: reptiles,
-  //       },
-  //       amphibians: {
-  //         count: endemic_amphibians,
-  //         total: amphibians,
-  //       },
-  //     });
-  //   }
-  // }, [countryData]);
-
   useEffect(() => {
     if (!taxaData) return;
-    setScores({
-      birds: {
-        count: taxaData.birdData[0].values.spi_values[taxaData.birdData[0].values.spi_values.length - 1][1],
-        total: taxaData.birdData[0].nspecies,
-      },
-      mammals: {
-        count: taxaData.mammalData[0].values.spi_values[taxaData.mammalData[0].values.spi_values.length - 1][1],
-        total: taxaData.mammalData[0].nspecies,
-      },
-      reptiles: {
-        count: taxaData.reptileData[0].values.spi_values[taxaData.reptileData[0].values.spi_values.length - 1][1],
-        total: taxaData.reptileData[0].nspecies,
-      },
-      amphibians: {
-        count: taxaData.amphibianData[0].values.spi_values[taxaData.amphibianData[0].values.spi_values.length - 1][1],
-        total: taxaData.amphibianData[0].nspecies,
-      },
-    });
+    getScores();
+  }, [taxaData]);
 
-  }, [taxaData])
+  const getScores = () => {
+    let data = [];
+    if (selectedProvince && activeTrend === PROVINCE_TREND) {
+      const regionData = taxaData.filter(region => region.region_name === selectedProvince.region_name);
+      data = regionData[0]?.taxa_scores;
+    } else {
+      data = taxaData;
+    }
+
+    if (data) {
+      const amphibians = data.filter(taxa => taxa.speciesgroup === 'amphibians');
+      const birds = data.filter(taxa => taxa.speciesgroup === 'birds');
+      const mammals = data.filter(taxa => taxa.speciesgroup === 'mammals');
+      const reptiles = data.filter(taxa => taxa.speciesgroup === 'reptiles');
+
+      setScores({
+        birds: {
+          count: birds[0].mean_protection_score,
+          total: birds[0].nspecies,
+        },
+        mammals: {
+          count: mammals[0].mean_protection_score,
+          total: mammals[0].nspecies,
+        },
+        reptiles: {
+          count: reptiles[0].mean_protection_score,
+          total: reptiles[0].nspecies,
+        },
+        amphibians: {
+          count: amphibians[0].mean_protection_score,
+          total: amphibians[0].nspecies,
+        },
+      });
+    }
+  };
 
   const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
 

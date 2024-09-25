@@ -11,7 +11,7 @@ function ScoreDistributionsContainer(props) {
     return <ScoreDistributionsShiComponent {...props} />;
   }
   if (trendOption === 2) {
-    return <ScoreDistributionsSpiComponent {...props} />;
+    return <></>;//<ScoreDistributionsSpiComponent {...props} />;
   }
   if (trendOption === 3) {
     return <ScoreDistributionsSiiComponent {...props} />;

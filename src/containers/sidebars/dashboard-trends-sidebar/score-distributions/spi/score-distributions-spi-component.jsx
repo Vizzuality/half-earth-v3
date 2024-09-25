@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
-
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../dashboard-trends-sidebar-component';
 import Button from 'components/button';
 import { getCSSVariable } from 'utils/css-utils';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
@@ -15,13 +18,11 @@ import DistributionsTableContainer from '../shi/distributions-table';
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();
-  const { spiData, countryISO } = props;
+  const { spiData, countryISO, activeTrend, selectedProvince, year } = props;
   const { lightMode } = useContext(LightModeContext);
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
   const bucketSize = 5;
-
-  const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
 
   const spsSpecies = [
     {
@@ -100,17 +101,30 @@ function ScoreDistributionsSpiComponent(props) {
   const [showTable, setShowTable] = useState(false);
   const [taxaData, setTaxaData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [titleText, setTitleText] = useState();
 
   useEffect(() => {
-    if (!spiData.scoresData.length) return;
+    if (!spiData.scoresData.length || !year) return;
     getTaxaData();
     getChartData();
     setIsLoading(false);
-  }, [spiData.scoresData]);
+  }, [spiData.scoresData, year]);
+
+  useEffect(() => {
+    if (!year) return;
+    setIsLoading(true);
+    getChartData();
+    getTaxaData();
+    getTitleText();
+  }, [activeTrend, selectedProvince, year])
+
 
   const getChartData = async () => {
-    const lastYear = '2024';
-    const url = `https://next-api.mol.org/2.x/indicators/sps/values_all_taxa?iso3=${countryISO}&year=${lastYear}`;
+    let url = `https://next-api.mol.org/2.x/indicators/sps/values_all_taxa?iso3=${countryISO}&year=${year}`;
+
+    if (activeTrend === PROVINCE_TREND && selectedProvince) {
+      url = `https://next-api.mol.org/2.x/indicators/sps/values_regional_all_taxa?iso3_regional=${selectedProvince.iso_regional}&year=${year}`;
+    }
     const response = await fetch(url);
     const data = await response.json();
 
@@ -165,20 +179,27 @@ function ScoreDistributionsSpiComponent(props) {
         },
       ],
     });
+    setIsLoading(false);
   };
 
   // TODO: Using hard coded region id for Congo
   const getTaxaData = async () => {
-    const taxaCallsResponses = await Promise.all(
-      taxas.map(async (taxa) => {
-        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
-        const data = await response.json();
-        return data;
-      })
-    );
+    let url = `https://next-api.mol.org/2.x/indicators/sps/sps_score_by_taxa_country?iso3=${countryISO}&year=${year}`;
+    if (selectedProvince && activeTrend === PROVINCE_TREND) {
+      url = `https://next-api.mol.org/2.x/indicators/sps/sps_score_by_taxa_region?iso3=${countryISO}&year=${year}`;
+    }
 
-    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
-    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
+    const response = await fetch(url);
+    const data = await response.json();
+    setTaxaData(data);
+  }
+
+  const getTitleText = () => {
+    if (activeTrend === NATIONAL_TREND || !selectedProvince) {
+      setTitleText(t('NATIONAL SPI BY TAXONOMIC GROUP'));
+    } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
+      setTitleText(`${selectedProvince?.region_name} ${t(' SPI BY TAXONOMIC GROUP')}`);
+    }
   }
 
   return (
@@ -232,8 +253,8 @@ function ScoreDistributionsSpiComponent(props) {
       </div>
       <div className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}>
         {!showTable && (<>
-          <div className={compStyles.title}>{t('NATIONAL SPI BY TAXONOMIC GROUP')}</div>
-          <SpeciesRichnessComponent taxaData={taxaData} />
+          <div className={compStyles.title}>{titleText}</div>
+          <SpeciesRichnessComponent taxaData={taxaData} {...props} />
           {isLoading && <Loading height={200} />}
           {!isLoading && <DistributionsChartComponent options={options} data={chartData} />}
         </>)}

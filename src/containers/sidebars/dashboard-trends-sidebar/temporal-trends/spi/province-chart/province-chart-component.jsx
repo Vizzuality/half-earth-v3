@@ -24,7 +24,7 @@ ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 function ProvinceChartComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
-  const { spiData } = props;
+  const { spiData, setSelectedProvince, countryRegions, selectedProvince } = props;
   const blankData = {
     labels: [t('Global SPI'), t('Remaining')],
     datasets: [
@@ -93,7 +93,6 @@ function ProvinceChartComponent(props) {
   const [spiArcData, setSpiArcData] = useState(blankData);
   const [countrySPI, setCountrySPI] = useState();
   const [countryProtected, setCountryProtected] = useState();
-  const [countryRegions, setCountryRegions] = useState();
   const [spiRank, setSpiRank] = useState(0);
   const [areaRank, setAreaRank] = useState(0);
   const [speciesRank, setSpeciesRank] = useState(0);
@@ -102,12 +101,13 @@ function ProvinceChartComponent(props) {
   const [sortedByArea, setSortedByArea] = useState();
   const [sortedBySpecies, setSortedBySpecies] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [foundIndex, setFoundIndex] = useState(0);
 
   useEffect(() => {
     if (!spiData.trendData.length) return;
     setIsLoading(false);
-    const { country_scores, regions } = spiData.trendData[0];
-    setCountryRegions(regions);
+    const { country_scores } = spiData.trendData[0];
+    // setCountryRegions(regions);
 
     const { spi_all, percentprotected_all } = country_scores[country_scores.length - 1];
     setCountrySPI(spi_all);
@@ -138,6 +138,18 @@ function ProvinceChartComponent(props) {
     setSpiArcData(spi);
   }, [spiData.trendData]);
 
+  useEffect(() => {
+    if (!countryRegions.length) return;
+    getProvinces();
+
+  }, [countryRegions]);
+
+  useEffect(() => {
+    if (sortedBySpecies?.length && selectedProvince) {
+      getProvinceScores({ value: selectedProvince.region_name })
+    }
+  }, [sortedBySpecies])
+
   const getChartData = () => {
     const { regions } = spiData.trendData[0];
     const data = [];
@@ -156,12 +168,6 @@ function ProvinceChartComponent(props) {
 
     setBubbleData({ datasets: data });
   }
-
-  useEffect(() => {
-    if (!countryRegions) return;
-    getProvinces();
-
-  }, [countryRegions])
 
   const getProvinces = () => {
     const prov = countryRegions.map(region => {
@@ -182,6 +188,12 @@ function ProvinceChartComponent(props) {
 
     setProvinces(sortProvinces);
 
+    if (selectedProvince) {
+      setFoundIndex(prov.findIndex(prov => prov.value === selectedProvince.region_name));
+    } else {
+      setFoundIndex(0);
+    }
+
     const spiSorted = sortProvincesBySPI();
     setSortedBySpi(spiSorted);
     const areaSorted = sortProvincesByArea();
@@ -193,6 +205,7 @@ function ProvinceChartComponent(props) {
   const getProvinceScores = (province) => {
     const foundRegion = countryRegions.filter(region => region.region_name === province.value);
     const scores = foundRegion[0].regional_scores[foundRegion[0].regional_scores.length - 1];
+    setSelectedProvince(foundRegion[0]);
     setSpiRank(sortedBySpi.findIndex(prov => prov.region_name === province.value) + 1);
     setAreaRank(sortedByArea.findIndex(prov => prov.region_name === province.value) + 1);
     setSpeciesRank(sortedBySpecies.findIndex(prov => prov.region_name === province.value) + 1);
@@ -282,6 +295,7 @@ function ProvinceChartComponent(props) {
             className="basic-single"
             classNamePrefix="select"
             name="provinces"
+            defaultValue={provinces[foundIndex]}
             options={provinces}
             onChange={getProvinceScores}
           />

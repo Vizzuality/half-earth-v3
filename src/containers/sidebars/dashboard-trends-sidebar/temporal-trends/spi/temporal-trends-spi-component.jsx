@@ -19,13 +19,21 @@ import TrendTableComponent from './trend-table/trend-table-component';
 function TemporalTrendsSpiComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
-  const { countryName, spiData } = props;
+  const { countryName, spiData, activeTrend, setActiveTrend, setYear } = props;
 
   const areaProtected = (328357).toLocaleString();
   const [showTable, setShowTable] = useState(false);
-  const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
   const [spiInfo, setSpiInfo] = useState();
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
+  const [countryRegions, setCountryRegions] = useState([]);
+
+  useEffect(() => {
+    if (!spiData.trendData.length) return;
+    getNationalData();
+    const { regions } = spiData.trendData[0];
+    setCountryRegions(regions);
+
+  }, [spiData.trendData]);
 
   const getNationalData = async () => {
     if (spiData.trendData.length) {
@@ -35,12 +43,9 @@ function TemporalTrendsSpiComponent(props) {
       const currentScore = country_scores[country_scores.length - 1];
       setAreaProtectedPercent(currentScore.percentprotected_all.toFixed(2))
       setSpiInfo(`${firstScore.spi_all.toFixed(2)} in ${firstScore.year} to ${currentScore.spi_all.toFixed(2)} in ${currentScore.year}`);
+      setYear(currentScore.year);
     }
   };
-
-  useEffect(() => {
-    getNationalData();
-  }, [spiData.trendData]);
 
   const handleActionChange = (event) => {
     setShowTable(false);
@@ -103,7 +108,10 @@ function TemporalTrendsSpiComponent(props) {
         {activeTrend === NATIONAL_TREND && (
           <NationalChartContainer {...props} />
         )}
-        {activeTrend === PROVINCE_TREND && <ProvinceChartContainer {...props} />}
+        {activeTrend === PROVINCE_TREND &&
+          <ProvinceChartContainer
+            countryRegions={countryRegions}
+            {...props} />}
       </>}
       {
         showTable && <TrendTableComponent {...props} />
