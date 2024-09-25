@@ -158,7 +158,7 @@ function ViewContainer(props) {
         //   console.error(err);
         // });
     }
-  }, [map]);
+  }, [map, viewSettings]);
 
   useEffect(() => {
     if (map && view) {

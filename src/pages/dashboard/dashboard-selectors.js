@@ -7,6 +7,7 @@ import {
 } from 'selectors/location-selectors';
 
 import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
+import dashboardTrendViewConfig from 'containers/views/dashboard-trends-view/dashboard-trends-view-config';
 import { SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
@@ -17,6 +18,13 @@ const selectScientificName = ({ location }) => location.payload.scientificname ?
 const getViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
   return {
     ...dashboardViewConfig.view,
+    ...globeUrlState,
+  };
+});
+
+const getTrendViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
+  return {
+    ...dashboardTrendViewConfig.view,
     ...globeUrlState,
   };
 });
@@ -70,6 +78,7 @@ const getSidebarVisibility = createSelector(
 
 export default createStructuredSelector({
   viewSettings: getViewSettings,
+  trendViewSettings: getTrendViewSettings,
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,

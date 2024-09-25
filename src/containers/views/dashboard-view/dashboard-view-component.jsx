@@ -30,6 +30,7 @@ function DashboardViewComponent(props) {
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
+  const [mapViewSettings, setMapViewSettings] = useState(viewSettings);
 
   useEffect(() => {
     if (geometry && view) {
@@ -41,7 +42,7 @@ function DashboardViewComponent(props) {
     <MapView
       onMapLoad={onMapLoad}
       mapName="dashboard"
-      viewSettings={viewSettings}
+      viewSettings={mapViewSettings}
       map={map}
       setMap={setMap}
       view={view}
@@ -56,6 +57,7 @@ function DashboardViewComponent(props) {
         <DashboardSidebarContainer
           map={map}
           view={view}
+          setMapViewSettings={setMapViewSettings}
           {...props} />
       </LightModeProvider>
       <CountryLabelsLayer

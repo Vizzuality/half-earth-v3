@@ -13,18 +13,13 @@ import { LightModeContext } from '../../../context/light-mode';
 import FilterContainer from '../../../components/filters';
 import SpeciesListContainer from '../../../components/species-list';
 import DashboardNav from '../../../components/dashboard-nav';
-
 import DashboardHomeContainer from './dashboard-home';
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
 import { NAVIGATION } from '../../../utils/dashboard-utils';
 
-
 function DashboardSidebar(props) {
   const t = useT();
-  const {
-    countryName,
-    taxaList,
-    selectedIndex } = props;
+  const { countryName, taxaList, selectedIndex, setMapViewSettings, viewSettings, trendViewSettings } = props;
 
   const filterStart = [
     {
@@ -120,6 +115,16 @@ function DashboardSidebar(props) {
     if (!taxaList.length) return;
     setIsLoading(false);
   }, [taxaList]);
+
+  useEffect(() => {
+    if (selectedIndex === NAVIGATION.TRENDS) {
+      setMapViewSettings(trendViewSettings);
+    } else {
+      setMapViewSettings(viewSettings);
+    }
+
+  }, [selectedIndex])
+
 
   return (
     <div className={cx(lightMode ? styles.light : '', selectedIndex === NAVIGATION.TRENDS ? styles.trends : '', styles.container)}>
