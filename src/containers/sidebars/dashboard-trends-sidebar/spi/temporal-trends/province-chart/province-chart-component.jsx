@@ -154,18 +154,22 @@ function ProvinceChartComponent(props) {
     const { regions } = spiData.trendData[0];
     const data = [];
 
-    setCurrentYear(regions[0].regional_scores[regions[0].regional_scores.length - 1].year);
-
+    let lastYear = 2001;
     regions.map(region => {
       const { regional_scores, region_name } = region;
-      const { region_area, spi_all } = regional_scores[regional_scores.length - 1];
+      const { region_area, spi_all, year } = regional_scores[regional_scores.length - 1];
       data.push({
         label: region_name,
         data: [{ x: region_area, y: spi_all, r: 10 }],
         backgroundColor: getCSSVariable('birds'),
       })
+
+      if (year > lastYear) {
+        lastYear = year;
+      }
     });
 
+    setCurrentYear(lastYear);
     setBubbleData({ datasets: data });
   }
 
@@ -212,6 +216,8 @@ function ProvinceChartComponent(props) {
     setSelectedRegionScores(scores);
     setCountryProtected(scores.percentprotected_all);
     setCountrySPI(scores.spi_all);
+
+    setCurrentYear(scores.year);
 
     const spi = {
       labels: [t('Global SPI'), t('Remaining')],
