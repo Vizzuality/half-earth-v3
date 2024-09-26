@@ -7,7 +7,7 @@ import mapStateToProps from './selectors';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
 function DashboardTrendsSidebarContainer(props) {
-  const { countryISO, view } = props;
+  const { countryISO, view, map } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState(null);
@@ -92,18 +92,18 @@ function DashboardTrendsSidebarContainer(props) {
   }, [view, countryISO]);
 
   //SPI layer
-  // useEffect(() => {
-  //   EsriFeatureService.getFeatures({
-  //     url,
-  //     whereClause: `GID_0 = '${countryISO}'`,
-  //     returnGeometry: true,
-  //   }).then((features) => {
-  //     if (map) {
-  //       const { layer } = features[0];
-  //       map.add(layer);
-  //     }
-  //   });
-  // }, [map, view]);
+  useEffect(() => {
+    EsriFeatureService.getFeatures({
+      url,
+      whereClause: `GID_0 = '${countryISO}'`,
+      returnGeometry: true,
+    }).then((features) => {
+      if (map) {
+        const { layer } = features[0];
+        map.add(layer);
+      }
+    });
+  }, [map, view]);
 
   return (
     <Component

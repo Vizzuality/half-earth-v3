@@ -62,7 +62,7 @@ const getCountryName = createSelector(
     if (!countryData) {
       return null;
     }
-    return countryData.NAME_0;
+    return 'République démocratique du Congo';//countryData.NAME_0;
   }
 );
 
