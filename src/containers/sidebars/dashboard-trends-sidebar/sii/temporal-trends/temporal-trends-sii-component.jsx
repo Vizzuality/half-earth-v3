@@ -46,9 +46,7 @@ function TemporalTrendsSiiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
-          Species data coverage remains low in <b>{countryName}</b>. In {latestValues.year}, <b>{latestValues.spi}%</b> of the expected ranges of terrestrial vertebrate species
-          here had a recorded observation of that species. Since <b>{firstValues.year}</b>, the
-          annual SII has fluctuated between <b>{firstValues.spi}</b> and <b>{latestValues.spi}</b>.
+          La couverture des données sur les espèces reste faible en République Démocratique du Congo. En 2023, 0,41 % des aires de répartition attendues des espèces de vertébrés terrestres ici avaient une observation enregistrée de cette espèce. Depuis 1950, l'indice SII annuel a fluctué entre 0,49 et 0,41.
         </p>
         <div className={styles.options}>
           <div className={styles.trendTypes}>

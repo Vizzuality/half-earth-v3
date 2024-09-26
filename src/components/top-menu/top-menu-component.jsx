@@ -6,9 +6,9 @@ function TopMenuComponent(props) {
   const t = useT();
   return (
     <div className={styles.container}>
-      <a href="#" target='_blank'>{t('About Us')}</a>
+      <a href="#" target='_blank'>{t('À propos de nous')}</a>
       <span>|</span>
-      <a href="#">{t('Login')}</a>
+      <a href="#">{t('Connexion')}</a>
     </div>
   )
 }

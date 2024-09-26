@@ -20,7 +20,10 @@ function GroupedListComponent(props) {
         showChildren: showChildren,
       }
     });
-  }
+  };
+
+  const protectedAreasURL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_WDPA_all/VectorTileServer';
+  const vtLayer = EsriFeatureService.getVectorTileLayer(protectedAreasURL);
 
   // update value of all children
   const updateChildren = (item) => {
@@ -58,11 +61,18 @@ function GroupedListComponent(props) {
         }
       });
     }
+
+    if (item.toUpperCase() === 'AIRES PROTÉGÉES') {
+      if (!dataPoints[item].isActive) {
+        map.add(vtLayer);
+      } else {
+        map.remove(vtLayer);
+      }
+    }
   };
 
   const findLayerToShow = (item) => {
     if (item.type_title.toUpperCase() === 'OBSERVATIONS PONCTUELLES') {
-
       const jsonLayer = EsriFeatureService.getGeoJsonLayer(speciesInfo.scientificname.replace(' ', '_'));
       map.add(jsonLayer);
     }

@@ -61,7 +61,6 @@ function getXYZLayer(){
   })
 }
 
-
 function getLayer({ slug, outFields = ['*'] }: GetLayer) {
   return new FeatureLayer({
     url: LAYERS_URLS[slug],

@@ -10,7 +10,7 @@ function SpeciesInfoComponent(props) {
   const { lightMode } = useContext(LightModeContext);
   useEffect(() => {
     if (speciesInfo) {
-      if (speciesInfo?.taxa !== 'animals') {
+      if (speciesInfo?.taxa && speciesInfo?.taxa !== 'animals') {
         setTaxaImage(`https://mol.org/static/img/groups/taxa_${speciesInfo?.taxa}.png`);
       }
     }

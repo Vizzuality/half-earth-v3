@@ -57,9 +57,9 @@ function TemporalTrendsSpiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
-          Since 1980, the {countryName} has added <b>{areaProtected} km<sup>2</sup></b> of
-          land into its protected area network, representing <b>{areaProtectedPercent}%</b> of the total
-          land in the country, increasing its Species Protection Index from <b>{spiInfo}</b>.
+          Depuis 1980, la République Démocratique du Congo a ajouté <b>{areaProtected} km<sup>2</sup></b>
+          de terres à son réseau d'aires protégées, représentant <b>{areaProtectedPercent}%</b> de la superficie
+          totale du pays, augmentant son indice de protection des espèces de <b>{spiInfo}</b>.
         </p>
         <div className={styles.options}>
           <div className={styles.btnGroup}>

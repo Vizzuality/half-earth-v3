@@ -24,10 +24,10 @@ function DashboardSidebar(props) {
   const filterStart = [
     {
       name: 'dataset',
-      title: 'Expected Sources',
+      title: 'Sources prévues',
       filters: [
         {
-          name: 'Expert Range Map',
+          name: 'Carte de répartition des experts',
           active: false,
           test: species => species.datasetList.map(d => d.product_type).indexOf('range') > -1,
           count: 0,
@@ -38,7 +38,7 @@ function DashboardSidebar(props) {
     },
     {
       name: 'dataset',
-      title: 'Recorded Sources',
+      title: 'Sources enregistrées',
       filters: [
         {
           name: 'Occurrence',
@@ -49,7 +49,7 @@ function DashboardSidebar(props) {
           type: 'and',
         },
         {
-          name: 'Local Inventory',
+          name: 'Inventaire local',
           active: false,
           test: species => species.datasetList.map(d => d.product_type).indexOf('localinv') >
             -1,
@@ -61,10 +61,10 @@ function DashboardSidebar(props) {
     },
     {
       name: 'threat',
-      title: 'IUCN Status',
+      title: 'IUCN Statut',
       filters: [
         {
-          name: 'Critically Endangered',
+          name: 'En danger critique d\'extinction',
           active: false,
           test: species => species.traits?.threat_status_code === 'CR',
           count: 0,
@@ -72,7 +72,7 @@ function DashboardSidebar(props) {
           type: 'or',
         },
         {
-          name: 'Endangered',
+          name: 'En danger',
           result: false,
           active: false,
           test: species => species.traits?.threat_status_code === 'EN',
@@ -80,7 +80,7 @@ function DashboardSidebar(props) {
           type: 'or',
         },
         {
-          name: 'Vulnerable',
+          name: 'Vulnérable',
           active: false,
           test: species => species.traits?.threat_status_code === 'VU',
           count: 0,
@@ -88,7 +88,7 @@ function DashboardSidebar(props) {
           result: false,
         },
         {
-          name: 'Least Concern',
+          name: 'Préoccupation mineure',
           active: false,
           test: species => species.traits?.threat_status_code === 'LC',
           count: 0,
@@ -96,7 +96,7 @@ function DashboardSidebar(props) {
           result: false,
         },
         {
-          name: 'Unknown',
+          name: 'Inconnu',
           active: false,
           result: false,
           test: species => species.traits?.threat_status_code === undefined,
@@ -132,7 +132,8 @@ function DashboardSidebar(props) {
         {!lightMode && <LightModeIcon className={styles.icon} />}
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
-      <h1>{countryName}</h1>
+      {/* <h1>{countryName}</h1> */}
+      <h1>République démocratique du Congo</h1>
 
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />

@@ -21,7 +21,7 @@ function DashboardTrendsSidebar(props) {
       <header>
         <div className={styles.title}>
           <b>{t('Conservation Metrics')}</b>
-          <label>{countryName}</label>
+          <label>République démocratique du Congo</label>
         </div>
         <div className={styles.tabs}>
           <button

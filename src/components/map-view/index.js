@@ -10,7 +10,6 @@ import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import TileLayer from '@arcgis/core/layers/TileLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
-
 import Component from './component';
 import mapStateToProps from './selectors';
 
@@ -71,92 +70,62 @@ function ViewContainer(props) {
   };
 
   useEffect(() => {
-    // loadModules(
-    //   [
-    //     'esri/Map',
-    //     'esri/layers/FeatureLayer',
-    //     'esri/layers/GraphicsLayer',
-    //     'esri/layers/GroupLayer',
-    //     'esri/layers/TileLayer',
-    //   ],
-    //   loaderOptions
-    // )
-      // .then(([Map, FeatureLayer, GraphicsLayer, GroupLayer, TileLayer]) => {
-        const countries = new FeatureLayer({
-          portalItem: {
-            id: '53a1e68de7e4499cad77c80daba46a94',
-          },
-        });
-        setCountryLayer(countries);
+    const countries = new FeatureLayer({
+      portalItem: {
+        id: '53a1e68de7e4499cad77c80daba46a94',
+      },
+    });
+    setCountryLayer(countries);
 
-        const graphics = new GraphicsLayer({
-          blendMode: 'destination-in',
-          title: 'layer',
-        });
-        setGraphicsLayer(graphics);
+    const graphics = new GraphicsLayer({
+      blendMode: 'destination-in',
+      title: 'layer',
+    });
+    setGraphicsLayer(graphics);
 
-        const tileLayer = new TileLayer({
-          portalItem: {
-            // bottom layer in the group layer
-            id: '10df2279f9684e4a9f6a7f08febac2a9', // world imagery
-          },
-        });
+    const tileLayer = new TileLayer({
+      portalItem: {
+        // bottom layer in the group layer
+        id: '10df2279f9684e4a9f6a7f08febac2a9', // world imagery
+      },
+    });
 
-        const group = new GroupLayer({
-          layers: [
-            tileLayer,
-            // world imagery layer will show where it overlaps with the graphicslayer
-            graphics,
-          ],
-          opacity: 0, // initially this layer will be transparent
-        });
-        setGroupLayer(group);
+    const group = new GroupLayer({
+      layers: [
+        tileLayer,
+        // world imagery layer will show where it overlaps with the graphicslayer
+        graphics,
+      ],
+      opacity: 0, // initially this layer will be transparent
+    });
+    setGroupLayer(group);
 
-        const flatMap = new Map({
-          basemap: SATELLITE_BASEMAP_LAYER,
-          ground: {
-            surfaceColor: '#070710',
-          },
-          layers: [countries, group],
-        });
+    const flatMap = new Map({
+      basemap: SATELLITE_BASEMAP_LAYER,
+      ground: {
+        surfaceColor: '#070710',
+      },
+      layers: [countries, group],
+    });
 
-        setMap(flatMap);
+    setMap(flatMap);
 
-        if (onMapLoad) {
-          onMapLoad(flatMap);
-        }
-      // })
-      // .catch((err) => {
-      //   console.error(err);
-      // });
+    if (onMapLoad) {
+      onMapLoad(flatMap);
+    }
   }, []);
 
   useEffect(() => {
     if (map) {
-      // loadModules(['esri/views/MapView'], loaderOptions)
-      //   .then(([MapView]) => {
-          const flatView = new MapView({
-            map,
-            container: `map-container-${mapName || mapId}`,
-            zoom: 6,
-            popup: null,
-            ...viewSettings,
-          });
+      const flatView = new MapView({
+        map,
+        container: `map-container-${mapName || mapId}`,
+        zoom: 6,
+        popup: null,
+        ...viewSettings,
+      });
 
-          // flatView.on('click', async (event) => {
-          //   const query = {
-          //     geometry: flatView.toMap(event),
-          //     returnGeometry: true,
-          //     outFields: ['*'],
-          //   };
-          //   await highlightCountry(query, query.geometry, flatView);
-          // });
-
-          setView(flatView);
-        // })
-        // .catch((err) => {
-        //   console.error(err);
-        // });
+      setView(flatView);
     }
   }, [map, viewSettings]);
 

@@ -212,9 +212,9 @@ function ScoreDistributionsSpiComponent(props) {
 
   const getTitleText = () => {
     if (activeTrend === NATIONAL_TREND || !selectedProvince) {
-      setTitleText(t('NATIONAL SPI BY TAXONOMIC GROUP'));
+      setTitleText(t('NATIONAL SPI PAR GROUPE TAXONOMIQUE'));
     } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      setTitleText(`${selectedProvince?.region_name} ${t(' SPI BY TAXONOMIC GROUP')}`);
+      setTitleText(`${selectedProvince?.region_name} ${t(' SPI PAR GROUPE TAXONOMIQUE')}`);
     }
   }
 
@@ -224,9 +224,8 @@ function ScoreDistributionsSpiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          View the distribution of the individual Species Protection Scores for
-          all terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average
-          protection score while <b>{highAvg}</b> have the highest.
+          Voir la répartition des scores de protection des espèces individuelles pour tous les vertébrés terrestres.
+          <b>{lowAvg}</b> ont le score de protection moyen le plus bas, tandis que <b>{highAvg}</b> ont le score le plus élevé
         </p>
 
         <span className={styles.spsSpeciesTitle}>

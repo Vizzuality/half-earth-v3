@@ -16,7 +16,6 @@ import {
 } from 'constants/layers-urls';
 import { NAVIGATION } from '../../utils/dashboard-utils.js';
 
-
 const actions = { ...countryDataActions, ...urlActions };
 
 function DashboardContainer(props) {

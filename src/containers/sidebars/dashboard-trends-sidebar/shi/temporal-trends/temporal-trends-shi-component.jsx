@@ -36,12 +36,10 @@ function TemporalTrendsShiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
-          Since 2001, the terrestrial vertebrate species of the Democratic
-          Republic of the Congo have <b>lost an average of {lostAvg}%</b> of their suitable
-          habitat, leading to the country having a <b>Species Habitat Index of {shiValue}.</b>
+          Depuis 2001, les espèces de vertébrés terrestres de la République Démocratique du Congo ont perdu en moyenne 1,37 % de leur habitat approprié, ce qui a conduit le pays à avoir un indice d'habitat des espèces de 98,63.
         </p>
         <p className={styles.description}>
-          The <b>Area Score</b> addresses changes in habitat extent while the <b>Connectivity Score</b> addresses changes in the fragmentation of habitat.
+          Le score de surface traite des changements dans l'extension de l'habitat, tandis que le score de connectivité traite des changements dans la fragmentation de l'habitat.
         </p>
         <div className={styles.options}>
           <Button

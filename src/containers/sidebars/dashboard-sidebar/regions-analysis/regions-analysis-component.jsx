@@ -5,6 +5,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import SearchLocation from 'components/search-location';
+import EsriFeatureService from 'services/esri-feature-service';
 
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
@@ -16,8 +17,16 @@ import { useT } from '@transifex/react';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
-  const { view, selectedOption } = props;
+  const { view, selectedOption, map } = props;
   const { lightMode } = useContext(LightModeContext);
+
+  const optionSelected = (event) => {
+    if (event.currentTarget.value === 'protectedAreas') {
+      const protectedAreasURL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_WDPA_all/VectorTileServer';
+      const vtLayer = EsriFeatureService.getVectorTileLayer(protectedAreasURL);
+      map.add(vtLayer);
+    }
+  }
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -30,6 +39,7 @@ function RegionsAnalysisComponent(props) {
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
           name="radio-buttons-group"
+          onChange={optionSelected}
         >
           <FormControlLabel value="protectedAreas" control={<Radio />} label={t('Protected Areas')} />
           <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} />
@@ -51,7 +61,7 @@ function RegionsAnalysisComponent(props) {
         <Button
           type="rectangular"
           className={styles.saveButton}
-          label={t('Download Data')}
+          label={t('Télécharger les données')}
         />
       </div>
     </section>
