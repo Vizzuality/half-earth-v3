@@ -21,7 +21,7 @@ function DashboardTrendsSidebarContainer(props) {
   const [siiData, setSiiData] = useState({trendData: [], scoresData: []});
 
   const url =
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_Terrestrial_202403/FeatureServer/0';
+    'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
 
   const getData = async () => {
     const year = '2021';
@@ -92,17 +92,22 @@ function DashboardTrendsSidebarContainer(props) {
   }, [view, countryISO]);
 
   //SPI layer
+  // useEffect(() => {
+  //   EsriFeatureService.getFeatures({
+  //     url,
+  //     whereClause: `GID_0 = '${countryISO}'`,
+  //     returnGeometry: true,
+  //   }).then((features) => {
+  //     if (map) {
+  //       const { layer } = features[0];
+  //       map.add(layer);
+  //     }
+  //   });
+  // }, [map, view]);
+
   useEffect(() => {
-    EsriFeatureService.getFeatures({
-      url,
-      whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: true,
-    }).then((features) => {
-      if (map) {
-        const { layer } = features[0];
-        map.add(layer);
-      }
-    });
+    const layer = EsriFeatureService.getVectorTileLayer(url);
+    map.add(layer);
   }, [map, view]);
 
   return (

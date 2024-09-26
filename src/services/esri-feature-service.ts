@@ -4,6 +4,7 @@ import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
+import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import {
     addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
@@ -39,6 +40,12 @@ function getFeatures({
       }
       resolve(null);
     });
+  });
+}
+
+function getVectorTileLayer(url){
+  return new VectorTileLayer({
+    url,
   });
 }
 
@@ -101,5 +108,6 @@ export default {
   getLayer,
   addFeature,
   getGeoJsonLayer,
+  getVectorTileLayer,
   getXYZLayer,
 };

@@ -104,9 +104,10 @@ function ProvinceChartComponent(props) {
   const [selectedRegionScores, setSelectedRegionScores] = useState();
   const [sortedBySpi, setSortedBySpi] = useState();
   const [sortedByArea, setSortedByArea] = useState();
-  const [sortedBySpecies, setSortedBySpecies] = useState();
+  const [sortedBySpecies, setSortedBySpecies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [foundIndex, setFoundIndex] = useState(0);
+  const [allSorted, setAllSorted] = useState(false);
 
   useEffect(() => {
     if (!spiData.trendData.length) return;
@@ -146,14 +147,21 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (!countryRegions.length) return;
     getProvinces();
-
   }, [countryRegions]);
 
   useEffect(() => {
-    if (sortedBySpecies?.length && selectedProvince) {
-      getProvinceScores({ value: selectedProvince.region_name })
+    if (allSorted && provinces.length && !selectedProvince) {
+      setFoundIndex(0);
+      getProvinceScores({ value: provinces[0].value });
     }
-  }, [sortedBySpecies])
+  }, [allSorted, provinces]);
+
+  useEffect(() => {
+    if (sortedBySpecies?.length && selectedProvince) {
+      getProvinceScores({ value: selectedProvince.region_name });
+      setFoundIndex(provinces.findIndex(prov => prov.value === selectedProvince.region_name));
+    }
+  }, [sortedBySpecies]);
 
   const getChartData = () => {
     const { regions } = spiData.trendData[0];
@@ -197,19 +205,14 @@ function ProvinceChartComponent(props) {
 
     setProvinces(sortProvinces);
 
-    if (selectedProvince) {
-      setFoundIndex(prov.findIndex(prov => prov.value === selectedProvince.region_name));
-    } else {
-      setFoundIndex(0);
-      getProvinceScores(prov[0]);
-    }
-
     const spiSorted = sortProvincesBySPI();
     setSortedBySpi(spiSorted);
     const areaSorted = sortProvincesByArea();
     setSortedByArea(areaSorted);
     const speciesSorted = sortProvincesBySpecies();
     setSortedBySpecies(speciesSorted);
+
+    setAllSorted(true);
   }
 
   const getProvinceScores = (province) => {
@@ -220,6 +223,9 @@ function ProvinceChartComponent(props) {
     setAreaRank(sortedByArea.findIndex(prov => prov.region_name === province.value) + 1);
     setSpeciesRank(sortedBySpecies.findIndex(prov => prov.region_name === province.value) + 1);
     setSelectedRegionScores(scores);
+    if (selectedProvince) {
+      setFoundIndex(provinces.findIndex(region => region.region_name === province.value));
+    }
     setCountryProtected(scores.percentprotected_all);
     setCountrySPI(scores.spi_all);
     setCurrentYear(scores.year);

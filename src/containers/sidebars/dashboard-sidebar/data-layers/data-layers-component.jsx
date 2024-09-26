@@ -138,7 +138,7 @@ function DataLayerComponent(props) {
         type="button"
         onClick={() => { }}
       >
-        <span>{t('Species Data: Public')}</span>
+        <span>{t('DONNÉES SUR LES ESPÈCES: PUBLIC')}</span>
       </button>
       {!isLoading && dataPoints && <DataLayersGroupedList
         dataPoints={dataPoints}
@@ -150,7 +150,7 @@ function DataLayerComponent(props) {
         type="button"
         onClick={() => { }}
       >
-        <span>{t('Species Data: Private')}</span>
+        <span>{t('DONNÉES SUR L\'ESPÈCE: PRIVÉE')}</span>
       </button>
       <DataLayersGroupedList
         dataPoints={privateDataPoints}
@@ -163,7 +163,7 @@ function DataLayerComponent(props) {
         type="button"
         onClick={() => { }}
       >
-        <span>{t('Regions Data')}</span>
+        <span>{t('DONNÉES DES RÉGIONS')}</span>
       </button>
       <DataLayersGroupedList
         dataPoints={regionsData}
