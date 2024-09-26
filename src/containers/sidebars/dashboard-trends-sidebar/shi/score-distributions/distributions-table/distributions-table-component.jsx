@@ -5,17 +5,10 @@ import { useT, useLocale } from '@transifex/react';
 import ArrowDown from 'icons/arrow_down.svg?react';
 import ArrowUp from 'icons/arrow_up.svg?react';
 
-
 function DistributionsTableComponent(props) {
   const { chartData } = props;
   const t = useT();
   const locale = useLocale();
-
-  useEffect(() => {
-    if (!chartData) return;
-    console.log(chartData);
-  }, [chartData])
-
 
   return (
     <div className={styles.container}>
@@ -148,19 +141,21 @@ function DistributionsTableComponent(props) {
           </thead>
           <tbody>
             {chartData &&
-              chartData.map((row, index) => (
+              chartData.map(row => (
                 // eslint-disable-next-line react/no-array-index-key
-                <tr key={`wdpa-row-${row.NAME}-${index}`}>
-                  <td className={tableStyles.firstColumn}>{row.taxa}</td>
-                  <td>{row.scientificname}</td>
-                  <td>{row.steward_score.toFixed(2)}</td>
-                  <td>{(row.area_score + row.connectivity_score / 2).toFixed(2)}<sup>2</sup></td>
-                  <td>{row.area_score.toFixed(2)}</td>
-                  <td>{row.connectivity_score.toFixed(2)}</td>
-                  <td className={tableStyles.lastColumn}>
-                    {((row.area_score + row.connectivity_score) / 2).toFixed(2)}
-                  </td>
-                </tr>
+                row.taxa_scores.map((species, idx) => (
+                  <tr key={`wdpa-row-${row.speciesgroup}-${idx}`}>
+                    <td className={tableStyles.firstColumn}>{row.speciesgroup}</td>
+                    <td>{species.scientificname}</td>
+                    <td>{species.steward_score.toFixed(2)}</td>
+                    <td>{(species.area_score + species.connectivity_score / 2).toFixed(2)}<sup>2</sup></td>
+                    <td>{species.area_score.toFixed(2)}</td>
+                    <td>{species.connectivity_score.toFixed(2)}</td>
+                    <td className={tableStyles.lastColumn}>
+                      {((species.area_score + species.connectivity_score) / 2).toFixed(2)}
+                    </td>
+                  </tr>
+                ))
               ))}
           </tbody>
         </table>

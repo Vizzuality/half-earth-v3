@@ -15,175 +15,27 @@ import { useT } from '@transifex/react';
 
 function ScoreDistributionsShiComponent(props) {
   const t = useT();
-  const { countryData, shiData } = props;
+  const { shiData } = props;
+  const SCORES = {
+    HABITAT_SCORE: 'steward_score',
+    AREA_SCORE: 'area_score',
+    CONNECTIVITY_SCORE: 'connectivity_score',
+  }
 
   const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
-  const spsSpecies = [
-    {
-      name: 'Grey Winged Robin Chat',
-      scientificname: 'Cossypha polioptera',
-    },
-    {
-      name: 'Piliocolobus parmentieri',
-      scientificname: 'Piliocolobus parmentieri',
-    },
-    {
-      name: 'Palm Egg Eater',
-      scientificname: 'Dasypeltis palmarum',
-    },
-    {
-      name: 'Caconda Grassland Frog',
-      scientificname: 'Ptychadena bunoderma',
-    },
-  ];
+  const bucketSize = 5;
 
   const [chartData, setChartData] = useState();
   const [responseData, setResponseData] = useState();
   const [showTable, setShowTable] = useState(false);
-  const [activeScore, setActiveScore] = useState('habitat score');
+  const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
   const [taxaData, setTaxaData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [spsSpecies, setSpsSpecies] = useState();
+  const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const { lightMode } = useContext(LightModeContext);
-
-  const getChartData = async () => {
-    const data = shiData.scoresData;
-
-    setResponseData(data);
-    displayData(data, activeScore);
-  }
-
-  const displayData = (data, activeScore) => {
-    // const ampSet = getHistogramData('AMPHIBIA');
-    // const mamSet = getHistogramData('MAMMALIA');
-    // const repSet = getHistogramData('REPTILIA');
-    // const birdSet = getHistogramData('AVES');
-    const taxaSet = {};
-
-    // data.forEach(a => {
-    //   let floorScore;
-    //   if (activeScore === 'area') {
-    //     floorScore = Math.floor(a.area_score);
-    //   } else if (activeScore === 'habitat score') {
-    //     floorScore = Math.floor((a.area_score + a.connectivity_score) / 2);
-    //   } else if (activeScore === 'connectivity') {
-    //     floorScore = Math.floor(a.connectivity_score);
-    //   }
-
-    //   if (!taxaSet.hasOwnProperty(floorScore)) {
-    //     taxaSet[floorScore] = 1;
-    //   } else {
-    //     taxaSet[floorScore] += 1;
-    //   }
-    // });
-
-    // Loop through each number and place it in the appropriate bucket
-    data.forEach(a => {
-      let floorScore;
-      if (activeScore === 'area') {
-        floorScore = Math.floor(a.area_score);
-      } else if (activeScore === 'habitat score') {
-        floorScore = Math.floor((a.area_score + a.connectivity_score) / 2);
-      } else if (activeScore === 'connectivity') {
-        floorScore = Math.floor(a.connectivity_score);
-      }
-
-      // Determine the bucket index based on the floor value of the number
-      let bucketIndex = Math.floor(floorScore / 5);
-
-      if (!taxaSet.hasOwnProperty(bucketIndex)) {
-        taxaSet[bucketIndex] = 1;
-      } else {
-        taxaSet[bucketIndex] += 1;
-      }
-    });
-
-    const labels = Object.keys(taxaSet).map(key => key * 5);
-
-    setChartData({
-      labels,
-      datasets: [
-        // {
-        //   label: '# of occurance',
-        //   data: ampSet,
-        //   backgroundColor: getCSSVariable('amphibians'),
-        //   stack: 'Stack 0',
-        //   barPercentage: 1,
-        // },
-        // {
-        //   label: '# of occurance',
-        //   data: mamSet,
-        //   backgroundColor: getCSSVariable('mammals'),
-        //   stack: 'Stack 0',
-        //   barPercentage: 1,
-        // },
-        // {
-        //   label: '# of occurance',
-        //   data: repSet,
-        //   backgroundColor: getCSSVariable('reptiles'),
-        //   stack: 'Stack 0',
-        //   barPercentage: 1,
-        // },
-        // {
-        //   label: '# of occurance',
-        //   data: birdSet,
-        //   backgroundColor: getCSSVariable('birds'),
-        //   stack: 'Stack 0',
-        //   barPercentage: 1,
-        // },
-        {
-          label: t('# of occurance'),
-          data: Object.values(taxaSet),
-          backgroundColor: getCSSVariable('birds'),
-          stack: 'Stack 0',
-          barPercentage: 1,
-        },
-      ],
-    });
-  }
-
-  useEffect(() => {
-    if (!shiData.scoresData.length) return;
-    getChartData();
-    getTaxaData();
-    setIsLoading(false);
-  }, [shiData.scoresData]);
-
-  const getTaxaData = async () => {
-    const taxaCallsResponses = await Promise.all(
-      taxas.map(async (taxa) => {
-        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
-        const data = await response.json();
-        return data;
-      })
-    );
-
-    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
-    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
-  }
-
-
-  const getHistogramData = (taxa) => {
-    const taxaGroup = chartData.filter(item => item.taxa === taxa);
-    const taxaSet = {};
-
-    taxaGroup.forEach(a => {
-      const floorScore = Math.floor(a.area_score);
-      if (!taxaSet.hasOwnProperty(floorScore)) {
-        taxaSet[floorScore] = 1;
-      } else {
-        taxaSet[floorScore] += 1;
-      }
-    });
-    return taxaSet;
-  }
-
-  const handleActiveChange = (event) => {
-    setActiveScore(event.currentTarget.innerText.toLowerCase());
-    displayData(responseData, event.currentTarget.innerText.toLowerCase());
-  };
 
   const options = {
     plugins: {
@@ -239,6 +91,105 @@ function ScoreDistributionsShiComponent(props) {
     },
   };
 
+  useEffect(() => {
+    if (!shiData.scoresData.length) return;
+
+    setIsLoading(true);
+    getChartData();
+    // getTaxaData();
+    setIsLoading(false);
+  }, [shiData.scoresData]);
+
+  const getChartData = async () => {
+    const data = shiData.scoresData;
+
+    setResponseData(data);
+    loadSpecies(data);
+    displayData(data, activeScore);
+  }
+
+  const displayData = (data, activeScore) => {
+    const taxaSet = { 'amphibians': {}, 'birds': {}, 'mammals': {}, 'reptiles': {} };
+
+    // Loop through each number and place it in the appropriate bucket
+    data.forEach(a => {
+      const speciesGroup = a.speciesgroup;
+
+      a.taxa_scores.forEach(s => {
+        const number = +s[activeScore];
+        // Determine the bucket index based on the floor value of the number
+        let bucketIndex = Math.floor(number / bucketSize);
+
+        if (!taxaSet[speciesGroup].hasOwnProperty(bucketIndex)) {
+          taxaSet[speciesGroup][bucketIndex] = 1;
+        } else {
+          taxaSet[speciesGroup][bucketIndex] += 1;
+        }
+      })
+    });
+
+    const uniqueKeys = new Set(
+      [...Object.keys(taxaSet['birds']),
+      ...Object.keys(taxaSet['mammals']),
+      ...Object.keys(taxaSet['reptiles']),
+      ...Object.keys(taxaSet['amphibians'])]);
+
+    setChartData({
+      labels: [...uniqueKeys].map(key => key * bucketSize),
+      datasets: [
+        {
+          label: t('Birds'),
+          data: Object.values(taxaSet['birds']),
+          backgroundColor: getCSSVariable('birds'),
+        },
+        {
+          label: t('Mammals'),
+          data: Object.values(taxaSet['mammals']),
+          backgroundColor: getCSSVariable('mammals'),
+        },
+        {
+          label: t('Reptiles'),
+          data: Object.values(taxaSet['reptiles']),
+          backgroundColor: getCSSVariable('reptiles'),
+        },
+        {
+          label: t('Amphibians'),
+          data: Object.values(taxaSet['amphibians']),
+          backgroundColor: getCSSVariable('amphibians'),
+        },
+      ],
+    });
+    setIsLoading(false);
+  }
+
+  const getTaxaData = async () => {
+    const taxaCallsResponses = await Promise.all(
+      taxas.map(async (taxa) => {
+        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
+        const data = await response.json();
+        return data;
+      })
+    );
+
+    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
+    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
+  }
+
+  const handleActiveChange = (score) => {
+    setActiveScore(score);
+    displayData(responseData, score);
+  };
+
+  const loadSpecies = (data) => {
+    const species = [];
+    species.push(data[0].taxa_scores[0]);
+    species.push(data[1].taxa_scores[0]);
+    species.push(data[2].taxa_scores[0]);
+    species.push(data[3].taxa_scores[0]);
+    setSpsSpecies(species);
+    setIsSpeciesLoading(false);
+  }
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
@@ -253,22 +204,24 @@ function ScoreDistributionsShiComponent(props) {
           {t('Species with SHS between')} <b>35-45:</b>
         </span>
         <hr />
-        <ul className={styles.spsSpecies}>
-          {spsSpecies.map((species) => {
+        {isSpeciesLoading && <Loading height={200} />}
+        {!isSpeciesLoading && <ul className={styles.spsSpecies}>
+          {spsSpecies.map((species, index) => {
             return (
-              <li key={species.scientificname}>
-                <img src="https://place-hold.it/50x50" alt="species" />
+              <li key={index}>
+                <img src={species.species_url} alt="species" />
                 <div className={styles.spsInfo}>
-                  <span className={styles.name}>{species.name}</span>
+                  <span className={styles.name}>{species.scientificname}</span>
                   <span className={styles.scientificname}>
                     {species.scientificname}
                   </span>
                 </div>
-                <span className={styles.spsScore}>SHS: 0.04</span>
+                <span className={styles.spsScore}>SHS: {species.steward_score.toFixed(2)}</span>
               </li>
             );
           })}
         </ul>
+        }
         <div className={styles.options}>
           {!showTable && <Button
             type="rectangular"
@@ -295,26 +248,26 @@ function ScoreDistributionsShiComponent(props) {
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeScore !== 'habitat score',
+                [styles.notActive]: activeScore !== SCORES.HABITAT_SCORE,
               })}
               label={t('Habitat Score')}
-              handleClick={handleActiveChange}
+              handleClick={() => handleActiveChange(SCORES.HABITAT_SCORE)}
             />
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeScore !== 'area',
+                [styles.notActive]: activeScore !== SCORES.AREA_SCORE,
               })}
               label={t('Area')}
-              handleClick={handleActiveChange}
+              handleClick={() => handleActiveChange(SCORES.AREA_SCORE)}
             />
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeScore !== 'connectivity',
+                [styles.notActive]: activeScore !== SCORES.CONNECTIVITY_SCORE,
               })}
               label={t('Connectivity')}
-              handleClick={handleActiveChange}
+              handleClick={() => handleActiveChange(SCORES.CONNECTIVITY_SCORE)}
             />
           </div>
           {isLoading && <Loading height={200} />}
