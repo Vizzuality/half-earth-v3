@@ -124,7 +124,7 @@ function DashboardHomeComponent(props) {
           </div>
         </div>
       </div>
-      <PartnersContainer />
+      {/* <PartnersContainer /> */}
     </div>
   )
 }
