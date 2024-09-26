@@ -72,9 +72,14 @@ function GroupedListComponent(props) {
   };
 
   const findLayerToShow = (item) => {
-    if (item.type_title.toUpperCase() === 'OBSERVATIONS PONCTUELLES') {
+    if (item.type_title.toUpperCase() === 'POINT OBSERVATIONS') {
       const jsonLayer = EsriFeatureService.getGeoJsonLayer(speciesInfo.scientificname.replace(' ', '_'));
       map.add(jsonLayer);
+    }
+
+    if (item.type_title.toUpperCase() === 'EXPERT RANGE MAPS') {
+      const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'));
+      map.add(webTileLayer);
     }
 
     displaySingleLayer(item)

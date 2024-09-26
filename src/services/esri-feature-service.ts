@@ -55,9 +55,12 @@ function getGeoJsonLayer(scientificname){
   });
 }
 
-function getXYZLayer(){
+async function getXYZLayer(scientificname){
+  const response = await fetch(`https://next-api-dot-map-of-life.appspot.com/2.x/species/drc_rangemap?scientificname=${scientificname}`);
+  const data = await response.json();
+
   return new WebTileLayer({
-    urlTemplate: 'https://earthengine.googleapis.com/v1/projects/map-of-life/maps/974cd092f1d222cd5ad9f26eaeaaa974-20d1f1ec2257362d28e5de6dcf970908/tiles/{z}/{x}/{y}'
+    urlTemplate: data.url
   })
 }
 
