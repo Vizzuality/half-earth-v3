@@ -85,6 +85,11 @@ function ProvinceChartComponent(props) {
         },
       },
     },
+    onClick: (event, elements) => {
+      if (elements.length > 0) {
+        selectClickedRegion(elements);
+      }
+    }
   };
 
   const [provinces, setProvinces] = useState([]);
@@ -160,7 +165,7 @@ function ProvinceChartComponent(props) {
       const { region_area, spi_all, year } = regional_scores[regional_scores.length - 1];
       data.push({
         label: region_name,
-        data: [{ x: region_area, y: spi_all, r: 10 }],
+        data: [{ label: region_name, x: region_area, y: spi_all, r: 10 }],
         backgroundColor: getCSSVariable('birds'),
       })
 
@@ -216,7 +221,6 @@ function ProvinceChartComponent(props) {
     setSelectedRegionScores(scores);
     setCountryProtected(scores.percentprotected_all);
     setCountrySPI(scores.spi_all);
-
     setCurrentYear(scores.year);
 
     const spi = {
@@ -292,6 +296,14 @@ function ProvinceChartComponent(props) {
     return sorted;
   }
 
+  const selectClickedRegion = (elements) => {
+    const datasetIndex = elements[0].datasetIndex;
+    const dataIndex = elements[0].index;
+    const value = bubbleData.datasets[datasetIndex].data[dataIndex];
+    getProvinceScores({ value: value.label });
+    setFoundIndex(provinces.findIndex(prov => prov.value === value.label));
+  }
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {isLoading && <Loading height={200} />}
@@ -301,7 +313,9 @@ function ProvinceChartComponent(props) {
             className="basic-single"
             classNamePrefix="select"
             name="provinces"
-            defaultValue={provinces[foundIndex]}
+            value={provinces[foundIndex]}
+            getOptionLabel={x => x.label}
+            getOptionValue={x => x.value}
             options={provinces}
             onChange={getProvinceScores}
             placeholder={t('Select Region')}

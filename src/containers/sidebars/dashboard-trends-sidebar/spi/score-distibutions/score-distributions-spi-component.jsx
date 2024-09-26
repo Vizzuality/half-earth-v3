@@ -83,6 +83,7 @@ function ScoreDistributionsSpiComponent(props) {
   const [showTable, setShowTable] = useState(false);
   const [taxaData, setTaxaData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const [titleText, setTitleText] = useState();
   const [spsSpecies, setSpsSpecies] = useState();
 
@@ -104,6 +105,7 @@ function ScoreDistributionsSpiComponent(props) {
 
   useEffect(() => {
     if (!speciesHighlights) return;
+    setIsLoading(true);
     loadSpecies();
 
   }, [speciesHighlights, selectedProvince])
@@ -205,6 +207,7 @@ function ScoreDistributionsSpiComponent(props) {
     } else {
       setSpsSpecies(speciesHighlights.country_highlights)
     }
+    setIsSpeciesLoading(false);
   }
 
   const getTitleText = () => {
@@ -230,7 +233,8 @@ function ScoreDistributionsSpiComponent(props) {
           {t('Species with SPS between')} <b>0.5:</b>
         </span>
         <hr />
-        <ul className={styles.spsSpecies}>
+        {isSpeciesLoading && <Loading height={200} />}
+        {!isSpeciesLoading && <ul className={styles.spsSpecies}>
           {spsSpecies && spsSpecies.map((species, index) => {
             return (
               <li key={index}>
@@ -246,6 +250,7 @@ function ScoreDistributionsSpiComponent(props) {
             );
           })}
         </ul>
+        }
         {/* <div className={styles.options}>
           {!showTable && <Button
             type="rectangular"

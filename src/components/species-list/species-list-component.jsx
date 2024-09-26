@@ -124,11 +124,11 @@ function SpeciesListComponent(props) {
 
     // sort by family common
     const familySortedSpecies = sortFilteredSpecies(
-      selectedTaxaObj.species,
+      selectedTaxaObj?.species,
     );
 
     // group by family common
-    let groupByFamily = familySortedSpecies.reduce((group, result) => {
+    let groupByFamily = familySortedSpecies?.reduce((group, result) => {
       const catName = result.family[0] ?? '__blank';
 
       const updateResult = { ...result };
@@ -147,31 +147,35 @@ function SpeciesListComponent(props) {
       return group;
     }, {});
 
-    // sort family common by common
-    const groupKeys = Object.keys(groupByFamily);
+    if (groupByFamily) {
+      // sort family common by common
+      const groupKeys = Object.keys(groupByFamily);
 
-    groupKeys.forEach(groupKey => {
-      groupByFamily[groupKey].sort((a, b) => {
-        if (a.scientificname < b.scientificname) {
-          return -1;
-        }
-        if (a.scientificname > b.scientificname) {
-          return 1;
-        }
-        return 0;
+      groupKeys.forEach(groupKey => {
+        groupByFamily[groupKey].sort((a, b) => {
+          if (a.scientificname < b.scientificname) {
+            return -1;
+          }
+          if (a.scientificname > b.scientificname) {
+            return 1;
+          }
+          return 0;
+        });
       });
-    });
 
-    const keyLength = Object.keys(groupByFamily).length - 1;
+      const keyLength = Object.keys(groupByFamily).length - 1;
 
-    // check if there is a group with no name
-    if (Object.keys(groupByFamily)[keyLength] === '') {
-      const noNameGroup = Object.values(groupByFamily)[keyLength];
-      delete groupByFamily[Object.keys(groupByFamily)[keyLength]];
-      groupByFamily = { ...groupByFamily, __blank: noNameGroup };
+      // check if there is a group with no name
+      if (Object.keys(groupByFamily)[keyLength] === '') {
+        const noNameGroup = Object.values(groupByFamily)[keyLength];
+        delete groupByFamily[Object.keys(groupByFamily)[keyLength]];
+        groupByFamily = { ...groupByFamily, __blank: noNameGroup };
+      }
+
+      setFilteredSpecies(groupByFamily);
+    } else {
+      setFilteredSpecies({});
     }
-
-    setFilteredSpecies(groupByFamily);
   }
 
   const handleSearch = (event) => {
@@ -183,7 +187,7 @@ function SpeciesListComponent(props) {
   }
 
   const sortFilteredSpecies = (species) => {
-    return species.sort((a, b) => {
+    return species?.sort((a, b) => {
       if (a.family[0] < b.family[0]) {
         return -1;
       }
