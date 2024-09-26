@@ -100,7 +100,8 @@ function DashboardContainer(props) {
   const getDataLayersData = async () => {
     const dataLayerParams = {
       scientificname: speciesName,
-      group: 'movement'
+      group: 'movement',
+      lang: 'fr',
     };
     const dparams = new URLSearchParams(dataLayerParams);
     const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;

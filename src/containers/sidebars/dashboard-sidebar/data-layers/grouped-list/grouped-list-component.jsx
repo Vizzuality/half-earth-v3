@@ -61,7 +61,7 @@ function GroupedListComponent(props) {
   };
 
   const findLayerToShow = (item) => {
-    if (item.type_title.toUpperCase() === 'POINT OBSERVATIONS') {
+    if (item.type_title.toUpperCase() === 'OBSERVATIONS PONCTUELLES') {
 
       const jsonLayer = EsriFeatureService.getGeoJsonLayer(speciesInfo.scientificname.replace(' ', '_'));
       map.add(jsonLayer);

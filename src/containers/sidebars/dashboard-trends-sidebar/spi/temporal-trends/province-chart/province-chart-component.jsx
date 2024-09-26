@@ -106,7 +106,7 @@ function ProvinceChartComponent(props) {
   const [sortedByArea, setSortedByArea] = useState();
   const [sortedBySpecies, setSortedBySpecies] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [foundIndex, setFoundIndex] = useState(-1);
+  const [foundIndex, setFoundIndex] = useState(0);
 
   useEffect(() => {
     if (!spiData.trendData.length) return;
@@ -200,7 +200,8 @@ function ProvinceChartComponent(props) {
     if (selectedProvince) {
       setFoundIndex(prov.findIndex(prov => prov.value === selectedProvince.region_name));
     } else {
-      setFoundIndex(-1);
+      setFoundIndex(0);
+      getProvinceScores(prov[0]);
     }
 
     const spiSorted = sortProvincesBySPI();

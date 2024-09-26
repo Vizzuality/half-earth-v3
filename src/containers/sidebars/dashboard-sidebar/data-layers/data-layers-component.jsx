@@ -21,7 +21,7 @@ function DataLayerComponent(props) {
   const [dataLayers, setDataLayers] = useState({});
   const [dataPoints, setDataPoints] = useState();
   const [privateDataPoints, setPrivateDataPoints] = useState({
-    'Point Observations': {
+    'Observations ponctuelles': {
       items: [],
       total_no_rows: 0,
       isActive: false,
@@ -29,19 +29,19 @@ function DataLayerComponent(props) {
     }
   });
   const [regionsData, setRegionsData] = useState({
-    'Protected Areas': {
+    'Aires protégées': {
       items: [],
       total_no_rows: 0,
       isActive: false,
       showChildren: false,
     },
-    'Proposed Protection': {
+    'Protection proposée': {
       items: [],
       total_no_rows: 0,
       isActive: false,
       showChildren: false,
     },
-    'Administrative Layers': {
+    'Couches administratives': {
       items: [],
       total_no_rows: 0,
       isActive: false,
