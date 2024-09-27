@@ -43,43 +43,6 @@ function DashboardContainer(props) {
 
   // Get Country information, allows to get country name
   useEffect(() => {
-    setCountryDataLoading();
-    EsriFeatureService.getFeatures({
-      url: COUNTRIES_DATA_SERVICE_URL,
-      whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: true,
-    })
-      .then((features) => {
-        const { geometry } = features[0];
-
-        setCountryDataReady(features);
-        if (geometry) {
-          setGeometry(geometry);
-        }
-
-      })
-      .catch((error) => {
-        setCountryDataError(error);
-      });
-
-      getSpeciesList();
-  }, []);
-
-  useEffect(() => {
-    if(!scientificName) return;
-    localStorage.setItem('selected_species', scientificName);
-    setSpeciesName(scientificName);
-  }, [scientificName])
-
-
-  useEffect(() => {
-    if(!speciesName) return;
-    getSpeciesData();
-    getDataLayersData();
-    getData();
-  }, [speciesName]);
-
-  useEffect(() => {
     // Function to handle back navigation
     const handleBackButton = (event) => {
       // Implement custom behavior here
@@ -89,12 +52,59 @@ function DashboardContainer(props) {
     // Add event listener for popstate event
     window.addEventListener('popstate', handleBackButton);
 
+    setCountryDataLoading();
+    EsriFeatureService.getFeatures({
+      url: COUNTRIES_DATA_SERVICE_URL,
+      whereClause: `GID_0 = '${countryISO}'`,
+      returnGeometry: true,
+    }).then((features) => {
+      const { geometry } = features[0];
+
+      setCountryDataReady(features);
+      if (geometry) {
+        setGeometry(geometry);
+      }
+
+    })
+    .catch((error) => {
+      setCountryDataError(error);
+    });
+
+    getSpeciesList();
+
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('popstate', handleBackButton);
     };
   }, []);
 
+  useEffect(() => {
+    if(!scientificName) return;
+    localStorage.setItem('selected_species', scientificName);
+    setSpeciesName(scientificName);
+  }, [scientificName])
+
+  useEffect(() => {
+    if(!speciesName) return;
+    getSpeciesData();
+  }, [speciesName]);
+
+  useEffect(() => {
+    if(!speciesInfo) return;
+    getDataLayersData();
+  }, [speciesInfo]);
+
+  useEffect(() => {
+    if(!dataLayerData) return;
+    getData();
+  }, [dataLayerData]);
+
+  const getSpeciesData = async () => {
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${speciesName}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    setSpeciesInfo(data[0]);
+  }
 
   const getDataLayersData = async () => {
     const dataLayerParams = {
@@ -132,13 +142,6 @@ function DashboardContainer(props) {
     const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${speciesName}`;
     const reserveCoverageMetricsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/reserve-coverage/metrics?scientificname=${speciesName}&${params}`;
     const habitatMetricesUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-distribution/metrics?scientificname=${speciesName}&${params}`;
-
-    // const dataLayerParams = {
-    //   scientificname: scientificName,
-    //   group: 'movement'
-    // };
-    // const dparams = new URLSearchParams(dataLayerParams);
-    // const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
 
     const apiCalls = [
       habitatTrendUrl,
@@ -302,13 +305,6 @@ function DashboardContainer(props) {
       }
       return 0;
     });
-  }
-
-  const getSpeciesData = async () => {
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${speciesName}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    setSpeciesInfo(data[0]);
   }
 
   const handleMapLoad = (map, activeLayers) => {
