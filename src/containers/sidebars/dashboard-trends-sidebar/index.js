@@ -7,7 +7,7 @@ import mapStateToProps from './selectors';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
 function DashboardTrendsSidebarContainer(props) {
-  const { countryISO, view, map } = props;
+  const { countryISO, view, map, regionLayers, setRegionLayers } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState(null);
@@ -91,23 +91,14 @@ function DashboardTrendsSidebarContainer(props) {
     });
   }, [view, countryISO]);
 
-  //SPI layer
-  // useEffect(() => {
-  //   EsriFeatureService.getFeatures({
-  //     url,
-  //     whereClause: `GID_0 = '${countryISO}'`,
-  //     returnGeometry: true,
-  //   }).then((features) => {
-  //     if (map) {
-  //       const { layer } = features[0];
-  //       map.add(layer);
-  //     }
-  //   });
-  // }, [map, view]);
-
   useEffect(() => {
-    const layer = EsriFeatureService.getVectorTileLayer(url);
-    map.add(layer);
+    if(!map && !view) return;
+
+    if(!regionLayers.hasOwnProperty('SPI REGIONS')) {
+      const layer = EsriFeatureService.getVectorTileLayer(url);
+      setRegionLayers({ ...regionLayers, ['SPI REGIONS']: layer });
+      map.add(layer);
+    }
   }, [map, view]);
 
   return (

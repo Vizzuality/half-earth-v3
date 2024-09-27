@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import styles from './dashboard-nav-styles.module.scss';
 import AnalyticsIcon from 'icons/analytics.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
@@ -14,7 +14,7 @@ import { NAVIGATION } from '../../utils/dashboard-utils';
 
 function DashboardNavComponent(props) {
   const t = useT();
-  const { selectedIndex, setSelectedIndex, } = props;
+  const { selectedIndex, setSelectedIndex } = props;
   const { lightMode, } = useContext(LightModeContext);
 
   const titles = {
@@ -30,7 +30,6 @@ function DashboardNavComponent(props) {
     window.history.pushState({ selectedIndex: page }, '', `?page=${title}`);
     setSelectedIndex(page);
   }
-
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.sidenav)}>

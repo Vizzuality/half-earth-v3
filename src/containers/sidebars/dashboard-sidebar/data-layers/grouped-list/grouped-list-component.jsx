@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -8,7 +8,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import styles from './grouped-list-styles.module.scss';
 
 function GroupedListComponent(props) {
-  const { dataPoints, setDataPoints, map, speciesInfo } = props;
+  const { dataPoints, setDataPoints, map, speciesInfo, regionLayers, setRegionLayers } = props;
 
   const displayChildren = (key) => {
     const showChildren = !dataPoints[key].showChildren;
@@ -30,7 +30,11 @@ function GroupedListComponent(props) {
     const isActive = !dataPoints[item].isActive;
 
     const typeItems = dataPoints[item].items;
-    typeItems.map(item => item.isActive = isActive);
+    typeItems.map(item => {
+      findLayerToShow(item);
+      item.isActive = isActive;
+    });
+
     setDataPoints({
       ...dataPoints,
       [item]: {
@@ -62,24 +66,48 @@ function GroupedListComponent(props) {
       });
     }
 
-    if (item.toUpperCase() === 'AIRES PROTÉGÉES') {
+    if (typeof item === 'string' && item.toUpperCase() === 'AIRES PROTÉGÉES') {
       if (!dataPoints[item].isActive) {
+        setRegionLayers({ ...regionLayers, [item.toUpperCase()]: vtLayer });
         map.add(vtLayer);
       } else {
-        map.remove(vtLayer);
+        const layer = regionLayers[item.toUpperCase()];
+        const { [item.toUpperCase()]: name, ...rest } = regionLayers;
+        setRegionLayers(rest);
+        map.remove(layer);
       }
     }
   };
 
   const findLayerToShow = (item) => {
-    if (item.type_title.toUpperCase() === 'POINT OBSERVATIONS') {
-      const jsonLayer = EsriFeatureService.getGeoJsonLayer(speciesInfo.scientificname.replace(' ', '_'));
-      map.add(jsonLayer);
+    const layerParent = item.type_title.toUpperCase();
+    const layerName = item.dataset_title.toUpperCase();
+
+    if (layerParent === 'POINT OBSERVATIONS') {
+      if (!item.isActive) {
+        const jsonLayer = EsriFeatureService.getGeoJsonLayer(speciesInfo.scientificname.replace(' ', '_'));
+        setRegionLayers({ ...regionLayers, [layerName]: jsonLayer });
+        map.add(jsonLayer);
+      } else {
+        const layer = regionLayers[layerName];
+        const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers(rest);
+        map.remove(layer);
+      }
     }
 
-    if (item.type_title.toUpperCase() === 'EXPERT RANGE MAPS') {
-      const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'));
-      map.add(webTileLayer);
+    if (layerParent === 'EXPERT RANGE MAPS') {
+      if (!item.isActive) {
+        const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'));
+        webTileLayer.then(layer => {
+          setRegionLayers({ ...regionLayers, [layerName]: layer });
+          map.add(layer);
+        });
+      } else {
+        const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers(rest);
+        map.remove(regionLayers[layerName]);
+      }
     }
 
     displaySingleLayer(item)

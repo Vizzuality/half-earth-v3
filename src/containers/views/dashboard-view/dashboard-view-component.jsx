@@ -30,6 +30,7 @@ function DashboardViewComponent(props) {
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
+  const [regionLayers, setRegionLayers] = useState({});
   const [mapViewSettings, setMapViewSettings] = useState(viewSettings);
 
   useEffect(() => {
@@ -58,6 +59,8 @@ function DashboardViewComponent(props) {
           map={map}
           view={view}
           setMapViewSettings={setMapViewSettings}
+          regionLayers={regionLayers}
+          setRegionLayers={setRegionLayers}
           {...props} />
       </LightModeProvider>
       <CountryLabelsLayer
