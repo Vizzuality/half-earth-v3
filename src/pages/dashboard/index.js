@@ -95,9 +95,10 @@ function DashboardContainer(props) {
   }, [speciesInfo]);
 
   useEffect(() => {
-    if(!dataLayerData) return;
+    if(!dataLayerData || !taxaList.length) return;
     getData();
-  }, [dataLayerData]);
+
+  }, [dataLayerData, taxaList]);
 
   const getSpeciesData = async () => {
     const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${speciesName}`;
