@@ -13,7 +13,7 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
 import { LightModeContext } from '../../../../../context/light-mode';
-import { useT } from '@transifex/react';
+import { useT, T } from '@transifex/react';
 import TrendTableComponent from './trend-table/trend-table-component';
 
 function TemporalTrendsSpiComponent(props) {
@@ -21,11 +21,12 @@ function TemporalTrendsSpiComponent(props) {
   const { lightMode } = useContext(LightModeContext);
   const { countryName, spiData, activeTrend, setActiveTrend, setYear } = props;
 
-  const areaProtected = (328357).toLocaleString();
   const [showTable, setShowTable] = useState(false);
   const [spiInfo, setSpiInfo] = useState();
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
   const [countryRegions, setCountryRegions] = useState([]);
+  const [areaProtected, setAreaProtected] = useState();
+  const [startYear, setStartYear] = useState('1980');
 
   useEffect(() => {
     if (!spiData.trendData.length) return;
@@ -44,6 +45,10 @@ function TemporalTrendsSpiComponent(props) {
       setAreaProtectedPercent(currentScore.percentprotected_all.toFixed(2))
       setSpiInfo(`${firstScore.spi_all.toFixed(2)} in ${firstScore.year} to ${currentScore.spi_all.toFixed(2)} in ${currentScore.year}`);
       setYear(currentScore.year);
+
+      const spiChange = currentScore.spi_all - firstScore.spi_all;
+      const areaProtectedChange = currentScore.region_area / spiChange;
+      setAreaProtected(areaProtectedChange);
     }
   };
 
@@ -57,9 +62,14 @@ function TemporalTrendsSpiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
-          Depuis 1980, la République Démocratique du Congo a ajouté <b>{areaProtected} km<sup>2</sup></b>
-          de terres à son réseau d'aires protégées, représentant <b>{areaProtectedPercent}%</b> de la superficie
-          totale du pays, augmentant son indice de protection des espèces de <b>{spiInfo}</b>.
+          <T
+            _str='Since {startYear}, the {countryName} has added {areaBold} of land into its protected area network, representing {areaProtectedPercentBold} of the total land in the country, increasing its Species Protection Index from {spiInfoBold}'
+            startYear={startYear}
+            countryName={countryName}
+            areaBold={<b>{areaProtected}km<sup>2</sup></b>}
+            areaProtectedPercentBold={<b>{areaProtectedPercent}%</b>}
+            spiInfoBold={<b>{spiInfo}</b>}
+          />
         </p>
         <div className={styles.options}>
           <div className={styles.btnGroup}>

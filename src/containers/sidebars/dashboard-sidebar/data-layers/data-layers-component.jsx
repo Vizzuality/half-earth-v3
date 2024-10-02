@@ -21,7 +21,7 @@ function DataLayerComponent(props) {
   const [dataLayers, setDataLayers] = useState({});
   const [dataPoints, setDataPoints] = useState();
   const [privateDataPoints, setPrivateDataPoints] = useState({
-    'Observations ponctuelles': {
+    'Point Observations': {
       items: [],
       total_no_rows: '',
       isActive: false,
@@ -29,19 +29,19 @@ function DataLayerComponent(props) {
     }
   });
   const [regionsData, setRegionsData] = useState({
-    'Aires protégées': {
+    'Protected Areas': {
       items: [],
       total_no_rows: '',
       isActive: false,
       showChildren: false,
     },
-    'Protection proposée': {
+    'Proposed Protection': {
       items: [],
       total_no_rows: '',
       isActive: false,
       showChildren: false,
     },
-    'Couches administratives': {
+    'Administrative Layers': {
       items: [],
       total_no_rows: '',
       isActive: false,
@@ -138,7 +138,7 @@ function DataLayerComponent(props) {
         type="button"
         onClick={() => { }}
       >
-        <span>{t('DONNÉES SUR LES ESPÈCES: PUBLIC')}</span>
+        <span>{t('Species Data: Public')}</span>
       </button>
       {!isLoading && dataPoints && <DataLayersGroupedList
         dataPoints={dataPoints}
@@ -150,7 +150,7 @@ function DataLayerComponent(props) {
         type="button"
         onClick={() => { }}
       >
-        <span>{t('DONNÉES SUR L\'ESPÈCE: PRIVÉE')}</span>
+        <span>{t('Species Data: Private')}</span>
       </button>
       <DataLayersGroupedList
         dataPoints={privateDataPoints}
@@ -163,7 +163,7 @@ function DataLayerComponent(props) {
         type="button"
         onClick={() => { }}
       >
-        <span>{t('DONNÉES DES RÉGIONS')}</span>
+        <span>{t('Regions Data')}</span>
       </button>
       <DataLayersGroupedList
         dataPoints={regionsData}

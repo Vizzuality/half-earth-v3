@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import loadable from '@loadable/component';
-
+import { NAVIGATION } from 'utils/dashboard-utils.js';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
@@ -25,7 +25,8 @@ function DashboardViewComponent(props) {
     countryName,
     isFullscreenActive,
     openedModal,
-    geometry
+    geometry,
+    selectedIndex
   } = props;
 
   const [map, setMap] = useState(null);
@@ -36,6 +37,18 @@ function DashboardViewComponent(props) {
   useEffect(() => {
     if (geometry && view) {
       view.center = [geometry.longitude, geometry.latitude];
+
+      view.on('click', (event) => {
+        if (selectedIndex === NAVIGATION.TRENDS)
+          view.hitTest(event).then(function (response) {
+            if (response.results.length) {
+              console.log(response);
+              const graphic = response.results[0].graphic;
+              const attributes = graphic.attributes;
+              console.log(attributes);
+            }
+          });
+      })
     }
   }, [view, geometry]);
 

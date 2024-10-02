@@ -11,7 +11,7 @@ import compStyles from './score-distributions-shi-styles.module.scss';
 import DistributionsTableContainer from './distributions-table';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
-import { useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 function ScoreDistributionsShiComponent(props) {
   const t = useT();
@@ -196,7 +196,11 @@ function ScoreDistributionsShiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          Voir la répartition des scores d'habitat des espèces individuelles, y compris les deux composants Surface et Connectivité, pour tous les vertébrés terrestres. Les amphibiens ont le score d'habitat moyen le plus bas, tandis que les oiseaux ont le score le plus élevé.
+          <T
+            _str='View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates. {lowAvgBold} have the lowest average habitat score while {highAvgBold} have the highest.'
+            lowAvgBold={<b>{lowAvg}</b>}
+            highAvgBold={<b>{highAvg}</b>}
+          />
         </p>
 
         <span className={styles.spsSpeciesTitle}>

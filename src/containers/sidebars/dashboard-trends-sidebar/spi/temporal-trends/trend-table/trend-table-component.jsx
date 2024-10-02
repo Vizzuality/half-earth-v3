@@ -72,7 +72,7 @@ function TrendTableComponent(props) {
               </th>
               <th>
                 <div className={tableStyles.headerColumnContainer}>
-                  <span>{t('Area (km2)')}</span>
+                  <span>{t('Area')}(km<sup>2</sup>)</span>
                   <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>

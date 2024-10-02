@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './habitat-component-styles.module.scss';
-import { useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 import cx from 'classnames';
 
 import {
@@ -49,7 +49,13 @@ function HabitatComponent(props) {
             </span>
             <div className={styles.results}>
               <b>{habitatScore}%</b>
-              <span className={styles.desc}>Suitable habitat lost in {countryName} since 2001</span>
+              <span className={styles.desc}>
+                <T
+                  _str='Suitable habitat lost in {countryName} since {startYear}'
+                  countryName={countryName}
+                  startYear={startYear}
+                />
+              </span>
             </div>
           </div>
         </div>

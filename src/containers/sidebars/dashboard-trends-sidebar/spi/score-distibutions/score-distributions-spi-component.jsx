@@ -13,7 +13,7 @@ import { Loading } from 'he-components';
 import compStyles from './score-distributions-spi-styles.module.scss';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import { LightModeContext } from '../../../../../context/light-mode';
-import { useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 import DistributionsTableContainer from '../../shi/score-distributions/distributions-table';
 
 function ScoreDistributionsSpiComponent(props) {
@@ -116,7 +116,8 @@ function ScoreDistributionsSpiComponent(props) {
     getChartData();
     getTitleText();
     setIsLoading(false);
-  }
+  };
+
 
   const getChartData = async () => {
     let url = `https://next-api.mol.org/2.x/indicators/sps/values_all_taxa?iso3=${countryISO}&year=${year}`;
@@ -212,9 +213,9 @@ function ScoreDistributionsSpiComponent(props) {
 
   const getTitleText = () => {
     if (activeTrend === NATIONAL_TREND || !selectedProvince) {
-      setTitleText(t('NATIONAL SPI PAR GROUPE TAXONOMIQUE'));
+      setTitleText(`NATIONAL ${t(' SPI BY TAXONOMIC GROUP')}`);
     } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      setTitleText(`${selectedProvince?.region_name} ${t(' SPI PAR GROUPE TAXONOMIQUE')}`);
+      setTitleText(`${selectedProvince?.region_name} ${t('SPI BY TAXONOMIC GROUP')}`);
     }
   }
 
@@ -224,8 +225,11 @@ function ScoreDistributionsSpiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          Voir la répartition des scores de protection des espèces individuelles pour tous les vertébrés terrestres.
-          <b>{lowAvg}</b> ont le score de protection moyen le plus bas, tandis que <b>{highAvg}</b> ont le score le plus élevé
+          <T
+            _str='View the distribution of the individual Species Protection Scores for all terrestrial vertebrates. {lowAvgBold} have the lowest average protection score while {highAvgBold} have the highest.'
+            lowAvgBold={<b>{lowAvg}</b>}
+            highAvgBold={<b>{highAvg}</b>}
+          />
         </p>
 
         <span className={styles.spsSpeciesTitle}>

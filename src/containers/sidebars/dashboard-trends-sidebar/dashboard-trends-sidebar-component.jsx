@@ -26,7 +26,7 @@ function DashboardTrendsSidebar(props) {
         <div className={styles.tabs}>
           <button
             type="button"
-            aria-label="Species Protection Index"
+            aria-label={t('Species Protection Index')}
             className={cx({
               [styles.selected]: trendOption === 2,
             })}
@@ -37,7 +37,7 @@ function DashboardTrendsSidebar(props) {
           </button>
           <button
             type="button"
-            aria-label="Species Habitat Index"
+            aria-label={t('Species Habitat Index')}
             className={cx({
               [styles.selected]: trendOption === 1,
             })}
@@ -49,7 +49,7 @@ function DashboardTrendsSidebar(props) {
 
           <button
             type="button"
-            aria-label="Species Information Index"
+            aria-label={t('Species Information Index')}
             className={cx({
               [styles.selected]: trendOption === 3,
             })}

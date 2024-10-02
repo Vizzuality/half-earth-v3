@@ -12,15 +12,16 @@ import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
 import { LightModeContext } from '../../../../../context/light-mode';
-import { useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 function TemporalTrendsShiComponent(props) {
   const t = useT();
-  const { shiData, shiValue } = props;
+  const { shiData, shiValue, countryName } = props;
 
   // const [chartData, setChartData] = useState();
   const [lostAvg, setLostAvg] = useState(0);
   const { lightMode } = useContext(LightModeContext);
+  const [startYear, setStartYear] = useState(2001);
 
   useEffect(() => {
     setLostAvg((100 - shiValue).toFixed(2));
@@ -36,10 +37,16 @@ function TemporalTrendsShiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
-          Depuis 2001, les espèces de vertébrés terrestres de la République Démocratique du Congo ont perdu en moyenne 1,37 % de leur habitat approprié, ce qui a conduit le pays à avoir un indice d'habitat des espèces de 98,63.
+          <T
+            _str='Since {startYear}, the terrestrial vertebrate species of the {countryNameBold} have lost an average of {lostAvgBold} of their suitable habitat, leading to the country having a Species Habitat Index of {shiValueBold}.'
+            startYear={startYear}
+            countryNameBold={<b>{countryName}</b>}
+            lostAvgBold={<b>{lostAvg}%</b>}
+            shiValueBold={<b>{shiValue}</b>}
+          />
         </p>
         <p className={styles.description}>
-          Le score de surface traite des changements dans l'extension de l'habitat, tandis que le score de connectivité traite des changements dans la fragmentation de l'habitat.
+          {t('The Area Score addresses changes in habitat extent while the Connectivity Score addresses changes in the fragmentation of habitat.')}
         </p>
         <div className={styles.options}>
           <Button

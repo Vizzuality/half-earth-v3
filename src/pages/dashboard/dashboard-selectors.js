@@ -7,7 +7,7 @@ import {
 } from 'selectors/location-selectors';
 
 import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
-import dashboardTrendViewConfig from 'containers/views/dashboard-trends-view/dashboard-trends-view-config';
+import dashboardTrendViewConfig from 'containers/views/dashboard-view/dashboard-trends-view-config';
 import { SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();

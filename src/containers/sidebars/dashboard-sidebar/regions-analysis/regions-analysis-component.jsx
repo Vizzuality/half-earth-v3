@@ -61,7 +61,7 @@ function RegionsAnalysisComponent(props) {
         <Button
           type="rectangular"
           className={styles.saveButton}
-          label={t('Télécharger les données')}
+          label={t('Download Data')}
         />
       </div>
     </section>

@@ -9,7 +9,7 @@ import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import NationalChartContainer from './national-chart';
 import { LightModeContext } from '../../../../../context/light-mode';
-import { useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 function TemporalTrendsSiiComponent(props) {
   const t = useT();
@@ -18,8 +18,11 @@ function TemporalTrendsSiiComponent(props) {
     area_values: [],
     spi_values: [],
   });
-  const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 })
-  const [firstValues, setFirstValues] = useState({ year: 0, spi: 0 })
+  const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 });
+  const [firstValues, setFirstValues] = useState({ year: 0, spi: 0 });
+  const [highestObservation, setHighestObservation] = useState(0);
+  const [lowestObservation, setLowestObservation] = useState(0);
+  const [currentYear, setCurrentYear] = useState(2023);
   const { lightMode } = useContext(LightModeContext);
   const taxa = 'all_terr_verts';
 
@@ -46,7 +49,15 @@ function TemporalTrendsSiiComponent(props) {
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
-          La couverture des données sur les espèces reste faible en République Démocratique du Congo. En 2023, 0,41 % des aires de répartition attendues des espèces de vertébrés terrestres ici avaient une observation enregistrée de cette espèce. Depuis 1950, l'indice SII annuel a fluctué entre 0,49 et 0,41.
+          <T
+            _str='In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryName} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {highestObservationBold} and {lowestObservationBold}.'
+            currentYear={currentYear}
+            currentObservationBold={<b>{latestValues.spi}%</b>}
+            countryName={countryName}
+            startYear={firstValues.year}
+            highestObservationBold={<b>{highestObservation}</b>}
+            lowestObservationBold={<b>{lowestObservation}</b>}
+          />
         </p>
         <div className={styles.options}>
           <div className={styles.trendTypes}>

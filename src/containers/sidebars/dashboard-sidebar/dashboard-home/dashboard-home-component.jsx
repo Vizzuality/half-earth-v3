@@ -91,7 +91,7 @@ function DashboardHomeComponent(props) {
             handleClick={() => setSelectedIndex(NAVIGATION.REGION)} />
         </div>
         <div className={styles.mostPopular}>
-          <span className={styles.sectionTitle}>{t('Espèces populaires')}</span>
+          <span className={styles.sectionTitle}>{t('Popular Species')}</span>
           <div className={styles.species}>
             <div className={cx(styles.navCard, styles.chat)} onClick={() => selectSpecies('Cossypha polioptera')} >
               <div className={styles.outline}></div>

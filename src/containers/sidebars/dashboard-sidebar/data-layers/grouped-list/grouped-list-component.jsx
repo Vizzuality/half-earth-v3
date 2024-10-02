@@ -6,9 +6,11 @@ import ArrowIcon from 'icons/arrow_right.svg?react';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import styles from './grouped-list-styles.module.scss';
+import { useT } from '@transifex/react';
 
 function GroupedListComponent(props) {
   const { dataPoints, setDataPoints, map, speciesInfo, regionLayers, setRegionLayers } = props;
+  const t = useT();
 
   const displayChildren = (key) => {
     const showChildren = !dataPoints[key].showChildren;
@@ -143,7 +145,7 @@ function GroupedListComponent(props) {
                   />
                 </button>
                 <FormControlLabel
-                  label={key}
+                  label={t(key)}
                   control={
                     <Checkbox
                       indeterminate={checkIfSomeChecked(key)}
@@ -160,7 +162,7 @@ function GroupedListComponent(props) {
                 {dataPoints[key].items.map((item) => (
                   <li key={item.dataset_id} className={styles.children} onClick={() => findLayerToShow(item)}>
                     <FormControlLabel
-                      label={item.dataset_title}
+                      label={t(item.dataset_title)}
                       control={<Checkbox checked={item.isActive} />}
                     />
                     <span></span>
@@ -173,7 +175,7 @@ function GroupedListComponent(props) {
           }
           {dataPoints[key].items.length === 0 && <div className={styles.children} onClick={() => displaySingleLayer(key)}>
             <FormControlLabel
-              label={key}
+              label={t(key)}
               control={<Checkbox checked={dataPoints[key].isActive} />}
             />
             <span></span>

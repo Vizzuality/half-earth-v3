@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './protection-component-styles.module.scss';
-import { useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 import cx from 'classnames';
 
 import {
@@ -33,6 +33,9 @@ function ProtectionComponent(props) {
     chartOptions
   } = props;
 
+  const [totalArea, setTotalArea] = useState(0);
+  const [globalArea, setGlobalArea] = useState(0);
+
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -49,7 +52,11 @@ function ProtectionComponent(props) {
             <div className={styles.results}>
               <b>{protectionArea.toLocaleString(undefined, { maximumFractionDigits: 2 })} km<sup>2</sup></b>
               <span className={styles.desc}>
-                of a total 15,461 km<sup>2</sup> suitable habitat within protected areas
+                <T
+                  _str='of a total {totalArea} km{sup} suitable habitat within protected areas'
+                  sup={<sup>2</sup>}
+                  totalArea={totalArea}
+                />
               </span>
             </div>
           </div>
@@ -62,7 +69,13 @@ function ProtectionComponent(props) {
             </div>
             <div className={styles.results}>
               <b>{globalProtectionArea.toLocaleString(undefined, { maximumFractionDigits: 2 })} km<sup>2</sup></b>
-              <span className={styles.desc}>of a total 87,338 km<sup>2</sup> suitable habitat within protected areas</span>
+              <span className={styles.desc}>
+                <T
+                  _str='of a total {globalArea} km{sup} suitable habitat within protected areas'
+                  sup={<sup>2</sup>}
+                  globalArea={globalArea}
+                />
+              </span>
             </div>
           </div>
         </div>
