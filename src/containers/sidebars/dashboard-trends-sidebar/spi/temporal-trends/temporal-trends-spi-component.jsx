@@ -24,15 +24,12 @@ function TemporalTrendsSpiComponent(props) {
   const [showTable, setShowTable] = useState(false);
   const [spiInfo, setSpiInfo] = useState();
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
-  const [countryRegions, setCountryRegions] = useState([]);
   const [areaProtected, setAreaProtected] = useState(0);
   const [startYear, setStartYear] = useState('1980');
 
   useEffect(() => {
     if (!spiData.trendData.length) return;
     getNationalData();
-    const { regions } = spiData.trendData[0];
-    setCountryRegions(regions);
 
   }, [spiData.trendData]);
 
@@ -132,7 +129,6 @@ function TemporalTrendsSpiComponent(props) {
         )}
         {activeTrend === PROVINCE_TREND &&
           <ProvinceChartContainer
-            countryRegions={countryRegions}
             {...props} />}
       </>}
       {

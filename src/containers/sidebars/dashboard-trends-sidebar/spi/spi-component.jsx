@@ -6,7 +6,6 @@ import TemporalTrendsSpiComponent from './temporal-trends/temporal-trends-spi-co
 
 function SpiComponent(props) {
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
-  const [selectedProvince, setSelectedProvince] = useState();
   const [year, setYear] = useState();
 
   return (
@@ -14,14 +13,10 @@ function SpiComponent(props) {
       <TemporalTrendsSpiComponent
         activeTrend={activeTrend}
         setActiveTrend={setActiveTrend}
-        selectedProvince={selectedProvince}
-        setSelectedProvince={setSelectedProvince}
         setYear={setYear}
         {...props} />
       <ScoreDistributionsSpiComponent
         activeTrend={activeTrend}
-        selectedProvince={selectedProvince}
-        setSelectedProvince={setSelectedProvince}
         year={year}
         {...props} />
     </>

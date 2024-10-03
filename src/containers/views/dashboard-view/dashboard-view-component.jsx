@@ -35,35 +35,47 @@ function DashboardViewComponent(props) {
   const [regionLayers, setRegionLayers] = useState({});
   const [mapViewSettings, setMapViewSettings] = useState(viewSettings);
   const [clickedRegion, setClickedRegion] = useState();
+  const [tabOption, setTabOption] = useState(2);
 
   useEffect(() => {
     if (geometry && view) {
       view.center = [geometry.longitude, geometry.latitude];
 
-      view.on('click', async (event) => {
-        let hits;
-        try {
-          if (selectedIndex === NAVIGATION.TRENDS) {
-            hits = await hitTest(event);
+      view.on('click', handleRegionClicked);
 
-            if (hits) {
-              console.log(hits);
-              setClickedRegion(hits);
-            }
-          }
-        } catch { }
-      });
-
-      view.on('pointer-move', async (event) => {
-        let hits;
-        try {
-          if (selectedIndex === NAVIGATION.TRENDS) {
-            hits = await hitTest(event);
-          }
-        } catch { }
-      })
+      view.on('pointer-move', handlePointerMove)
     }
   }, [view, geometry]);
+
+  useEffect(() => {
+    if (tabOption === 2) {
+      view?.on('click', handleRegionClicked)
+    }
+  }, [tabOption, view])
+
+
+  const handleRegionClicked = async (event) => {
+    let hits;
+    try {
+      if (selectedIndex === NAVIGATION.TRENDS) {
+        hits = await hitTest(event);
+
+        if (hits) {
+          console.log(hits);
+          setClickedRegion(hits);
+        }
+      }
+    } catch { }
+  }
+
+  const handlePointerMove = async (event) => {
+    let hits;
+    try {
+      if (selectedIndex === NAVIGATION.TRENDS) {
+        hits = await hitTest(event);
+      }
+    } catch { }
+  }
 
   const hitTest = promiseUtils.debounce(async (event) => {
     const response = await view.hitTest(event);
@@ -103,6 +115,8 @@ function DashboardViewComponent(props) {
           regionLayers={regionLayers}
           setRegionLayers={setRegionLayers}
           clickedRegion={clickedRegion}
+          tabOption={tabOption}
+          setTabOption={setTabOption}
           {...props} />
       </LightModeProvider>
       <CountryLabelsLayer

@@ -20,6 +20,14 @@ function DashboardTrendsSidebarContainer(props) {
   const [spiData, setSpiData] = useState({trendData: [], scoresData: []});
   const [siiData, setSiiData] = useState({trendData: [], scoresData: []});
 
+  const [provinces, setProvinces] = useState([]);
+  const [sortedBySpi, setSortedBySpi] = useState();
+  const [sortedByArea, setSortedByArea] = useState();
+  const [sortedBySpecies, setSortedBySpecies] = useState([]);
+  const [allSorted, setAllSorted] = useState(false);
+  const [countryRegions, setCountryRegions] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState();
+
   const url =
     'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
 
@@ -58,6 +66,8 @@ function DashboardTrendsSidebarContainer(props) {
     setShiValue(shi);
 
     const spiTD = spiTrendData;
+    const { regions } = spiTrendData[0];
+    setCountryRegions(regions);
     const spiTrendsValues = spiTD[0].country_scores;
     const spi = (spiTrendsValues[spiTrendsValues.length - 1].spi_all).toFixed(2);
     setSpiValue(spi);
@@ -73,6 +83,11 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (!countryRegions?.length) return;
+    getProvinces();
+  }, [countryRegions]);
 
   // find and zoom to region
   useEffect(() => {
@@ -101,6 +116,83 @@ function DashboardTrendsSidebarContainer(props) {
     }
   }, [map, view]);
 
+  const getProvinces = () => {
+    const prov = countryRegions.map(region => {
+      return { value: region.region_name, label: region.region_name }
+    });
+
+    const sortProvinces = prov.sort((a, b) => {
+      const nameA = a.label.toUpperCase();
+      const nameB = b.label.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    setProvinces(sortProvinces);
+
+    const spiSorted = sortProvincesBySPI();
+    setSortedBySpi(spiSorted);
+    const areaSorted = sortProvincesByArea();
+    setSortedByArea(areaSorted);
+    const speciesSorted = sortProvincesBySpecies();
+    setSortedBySpecies(speciesSorted);
+
+    setAllSorted(true);
+  }
+
+  const sortProvincesBySPI = () => {
+    const sorted = [...countryRegions].sort((a, b) => {
+      const spi_A = a.regional_scores[a.regional_scores.length - 1].spi_all;
+      const spi_B = b.regional_scores[b.regional_scores.length - 1].spi_all;
+      if (spi_A > spi_B) {
+        return -1;
+      }
+      if (spi_A < spi_B) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return sorted;
+  }
+
+  const sortProvincesByArea = () => {
+    const sorted = [...countryRegions].sort((a, b) => {
+      const spi_A = a.regional_scores[a.regional_scores.length - 1].region_area;
+      const spi_B = b.regional_scores[b.regional_scores.length - 1].region_area;
+      if (spi_A > spi_B) {
+        return -1;
+      }
+      if (spi_A < spi_B) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return sorted;
+  }
+
+  const sortProvincesBySpecies = () => {
+    const sorted = [...countryRegions].sort((a, b) => {
+      const spi_A = a.regional_scores[a.regional_scores.length - 1].nspecies;
+      const spi_B = b.regional_scores[b.regional_scores.length - 1].nspecies;
+      if (spi_A > spi_B) {
+        return -1;
+      }
+      if (spi_A < spi_B) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return sorted;
+  }
+
   return (
     <Component
       countryISO={countryISO}
@@ -112,6 +204,13 @@ function DashboardTrendsSidebarContainer(props) {
       siiData={siiData}
       countryData={countryData}
       geo={geo}
+      provinces={provinces}
+      sortedByArea={sortedByArea}
+      sortedBySpecies={sortedBySpecies}
+      sortedBySpi={sortedBySpi}
+      countryRegions={countryRegions}
+      selectedProvince={selectedProvince}
+      setSelectedProvince={setSelectedProvince}
       {...props}
     />
   );
