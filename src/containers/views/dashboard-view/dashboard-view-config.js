@@ -19,6 +19,11 @@ export default {
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: ADMIN_AREAS_FEATURE_LAYER },
     ],
+    highlightOptions:{
+      color: [255, 255, 0, 1], // bright yellow
+      haloOpacity: 0.9,
+      fillOpacity: 0.2
+    },
     padding: {
       left: 0,
     },

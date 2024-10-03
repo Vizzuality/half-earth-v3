@@ -7,6 +7,7 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
 import { LightModeProvider } from '../../../context/light-mode';
 import MapView from 'components/map-view';
+import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
 
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
 import TopMenuContainer from '../../../components/top-menu';
@@ -39,19 +40,45 @@ function DashboardViewComponent(props) {
     if (geometry && view) {
       view.center = [geometry.longitude, geometry.latitude];
 
-      view.on('click', (event) => {
-        if (selectedIndex === NAVIGATION.TRENDS)
-          view.hitTest(event).then(function (response) {
-            if (response.results.length) {
-              const graphic = response.results[0].graphic;
-              const attributes = graphic.attributes;
-              console.log(attributes);
-              setClickedRegion(attributes);
+      view.on('click', async (event) => {
+        let hits;
+        try {
+          if (selectedIndex === NAVIGATION.TRENDS) {
+            hits = await hitTest(event);
+
+            if (hits) {
+              console.log(hits);
+              setClickedRegion(hits);
             }
-          });
+          }
+        } catch { }
+      });
+
+      view.on('pointer-move', async (event) => {
+        let hits;
+        try {
+          if (selectedIndex === NAVIGATION.TRENDS) {
+            hits = await hitTest(event);
+          }
+        } catch { }
       })
     }
   }, [view, geometry]);
+
+  const hitTest = promiseUtils.debounce(async (event) => {
+    const response = await view.hitTest(event);
+    if (response.results.length) {
+      const graphic = response.results[0].graphic;
+      const attributes = graphic.attributes;
+      if (attributes.hasOwnProperty('region_name')) {
+        return attributes;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  });
 
   return (
     <MapView
