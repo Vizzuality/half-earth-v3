@@ -30,6 +30,7 @@ $info-width: 300px;
       padding-left: 26px;
       padding-right: 5px;
       flex-grow: 1;
+      border-bottom: solid 2px $white;
 
       button{
         display: flex;
@@ -59,6 +60,12 @@ $info-width: 300px;
 
         &.selected{
           background-color: var(--border-color);
+          color: $white;
+          border-top-color: $white;
+          border-top-right-radius: 8px;
+          border-top-left-radius: 8px;
+          border-style: solid;
+          border-bottom: none;
 
           label,
           span{
