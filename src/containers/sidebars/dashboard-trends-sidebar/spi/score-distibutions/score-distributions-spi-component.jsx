@@ -105,7 +105,7 @@ function ScoreDistributionsSpiComponent(props) {
 
   useEffect(() => {
     if (!speciesHighlights) return;
-    setIsLoading(true);
+    setIsSpeciesLoading(true);
     loadSpecies();
 
   }, [speciesHighlights, selectedProvince])
