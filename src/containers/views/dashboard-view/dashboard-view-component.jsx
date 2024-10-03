@@ -33,6 +33,7 @@ function DashboardViewComponent(props) {
   const [view, setView] = useState(null);
   const [regionLayers, setRegionLayers] = useState({});
   const [mapViewSettings, setMapViewSettings] = useState(viewSettings);
+  const [clickedRegion, setClickedRegion] = useState();
 
   useEffect(() => {
     if (geometry && view) {
@@ -42,10 +43,10 @@ function DashboardViewComponent(props) {
         if (selectedIndex === NAVIGATION.TRENDS)
           view.hitTest(event).then(function (response) {
             if (response.results.length) {
-              console.log(response);
               const graphic = response.results[0].graphic;
               const attributes = graphic.attributes;
               console.log(attributes);
+              setClickedRegion(attributes);
             }
           });
       })
@@ -74,6 +75,7 @@ function DashboardViewComponent(props) {
           setMapViewSettings={setMapViewSettings}
           regionLayers={regionLayers}
           setRegionLayers={setRegionLayers}
+          clickedRegion={clickedRegion}
           {...props} />
       </LightModeProvider>
       <CountryLabelsLayer

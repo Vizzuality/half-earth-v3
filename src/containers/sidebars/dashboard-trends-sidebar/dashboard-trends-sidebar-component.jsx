@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useT } from '@transifex/react';
 import cx from 'classnames';
 

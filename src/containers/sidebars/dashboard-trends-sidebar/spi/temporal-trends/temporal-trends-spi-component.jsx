@@ -25,7 +25,7 @@ function TemporalTrendsSpiComponent(props) {
   const [spiInfo, setSpiInfo] = useState();
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
   const [countryRegions, setCountryRegions] = useState([]);
-  const [areaProtected, setAreaProtected] = useState();
+  const [areaProtected, setAreaProtected] = useState(0);
   const [startYear, setStartYear] = useState('1980');
 
   useEffect(() => {
@@ -47,10 +47,22 @@ function TemporalTrendsSpiComponent(props) {
       setYear(currentScore.year);
 
       const spiChange = currentScore.spi_all - firstScore.spi_all;
-      const areaProtectedChange = currentScore.region_area / spiChange;
+      const totalRegionAreas = getCountryArea();
+      // 62.0950555134937
+      // 30.8088823880089
+      // 2,327,888.7255660617
+      const areaProtectedChange = totalRegionAreas / spiChange;
       setAreaProtected(areaProtectedChange);
     }
   };
+
+  const getCountryArea = () => {
+    const { regions } = spiData.trendData[0];
+
+    return regions.reduce((accumulator, region) => {
+      return region.regional_scores[0].region_area + accumulator
+    }, 0);
+  }
 
   const handleActionChange = (event) => {
     setShowTable(false);
@@ -66,7 +78,7 @@ function TemporalTrendsSpiComponent(props) {
             _str='Since {startYear}, the {countryName} has added {areaBold} of land into its protected area network, representing {areaProtectedPercentBold} of the total land in the country, increasing its Species Protection Index from {spiInfoBold}'
             startYear={startYear}
             countryName={countryName}
-            areaBold={<b>{areaProtected}km<sup>2</sup></b>}
+            areaBold={<b>{areaProtected.toFixed(2)} km<sup>2</sup></b>}
             areaProtectedPercentBold={<b>{areaProtectedPercent}%</b>}
             spiInfoBold={<b>{spiInfo}</b>}
           />

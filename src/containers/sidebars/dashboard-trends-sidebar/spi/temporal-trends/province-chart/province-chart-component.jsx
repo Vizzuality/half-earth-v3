@@ -24,7 +24,7 @@ ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 function ProvinceChartComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
-  const { spiData, setSelectedProvince, countryRegions, selectedProvince } = props;
+  const { spiData, setSelectedProvince, countryRegions, selectedProvince, clickedRegion } = props;
   const blankData = {
     labels: [t('Global SPI'), t('Remaining')],
     datasets: [
@@ -163,6 +163,12 @@ function ProvinceChartComponent(props) {
     }
   }, [sortedBySpecies]);
 
+  useEffect(() => {
+    if (!clickedRegion) return;
+    getProvinceScores({ value: clickedRegion.NAME_1 });
+  }, [clickedRegion])
+
+
   const getChartData = () => {
     const { regions } = spiData.trendData[0];
     const data = [];
@@ -224,7 +230,7 @@ function ProvinceChartComponent(props) {
     setSpeciesRank(sortedBySpecies.findIndex(prov => prov.region_name === province.value) + 1);
     setSelectedRegionScores(scores);
     if (selectedProvince) {
-      setFoundIndex(provinces.findIndex(region => region.region_name === province.value));
+      setFoundIndex(provinces.findIndex(region => region.value === province.value));
     }
     setCountryProtected(scores.percentprotected_all);
     setCountrySPI(scores.spi_all);
