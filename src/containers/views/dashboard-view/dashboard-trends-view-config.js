@@ -20,9 +20,9 @@ export default {
       { title: ADMIN_AREAS_FEATURE_LAYER },
     ],
     highlightOptions:{
-      color: [255, 255, 0, 1], // bright yellow
+      color: [22, 186, 180, 1],
       haloOpacity: 0.9,
-      fillOpacity: 0.2
+      fillOpacity: 0.7
     },
     padding: {
       left: 200,

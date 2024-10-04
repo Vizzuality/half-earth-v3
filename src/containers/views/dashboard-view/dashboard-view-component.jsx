@@ -37,13 +37,16 @@ function DashboardViewComponent(props) {
   const [clickedRegion, setClickedRegion] = useState();
   const [tabOption, setTabOption] = useState(2);
 
+  let highlight;
+  let hoverHighlight;
+
   useEffect(() => {
     if (geometry && view) {
       view.center = [geometry.longitude, geometry.latitude];
 
       view.on('click', handleRegionClicked);
 
-      view.on('pointer-move', handlePointerMove)
+      view.on('pointer-move', handlePointerMove);
     }
   }, [view, geometry]);
 
@@ -58,11 +61,19 @@ function DashboardViewComponent(props) {
     let hits;
     try {
       if (selectedIndex === NAVIGATION.TRENDS) {
+        let layerView = await view.whenLayerView(regionLayers['SPI REGIONS']);
         hits = await hitTest(event);
 
         if (hits) {
           console.log(hits);
-          setClickedRegion(hits);
+          setClickedRegion(hits.attributes);
+
+          if (highlight) {
+            highlight.remove();
+            hoverHighlight.remove();
+          }
+
+          highlight = layerView.highlight(hits.graphic);
         }
       }
     } catch { }
@@ -72,18 +83,32 @@ function DashboardViewComponent(props) {
     let hits;
     try {
       if (selectedIndex === NAVIGATION.TRENDS) {
+        let layerView = await view.whenLayerView(regionLayers['SPI REGIONS']);
         hits = await hitTest(event);
+
+        if (hits) {
+          if (hoverHighlight) {
+            hoverHighlight.remove();
+          }
+
+          hoverHighlight = layerView.highlight(hits.graphic);
+          // console.log(hits.graphic);
+        } else {
+          if (hoverHighlight) {
+            hoverHighlight.remove();
+          }
+        }
       }
     } catch { }
   }
 
   const hitTest = promiseUtils.debounce(async (event) => {
-    const response = await view.hitTest(event);
-    if (response.results.length) {
-      const graphic = response.results[0].graphic;
-      const attributes = graphic.attributes;
+    const { results } = await view.hitTest(event);
+    if (results.length) {
+      const { graphic } = results.find(x => x.graphic.attributes.OBJECTID);
+      const { attributes } = graphic;
       if (attributes.hasOwnProperty('region_name')) {
-        return attributes;
+        return { graphic, attributes }
       } else {
         return null;
       }

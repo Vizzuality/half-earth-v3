@@ -4,6 +4,7 @@ import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
+import TileLayer from '@arcgis/core/layers/TileLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import {
@@ -49,6 +50,13 @@ function getVectorTileLayer(url){
   });
 }
 
+function getFeatureLayer(url){
+  return new FeatureLayer({
+    url,
+    outFields: ['*'],
+  });
+}
+
 function getGeoJsonLayer(scientificname){
   return new GeoJSONLayer({
     url: `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${scientificname}.geojson`
@@ -62,6 +70,14 @@ async function getXYZLayer(scientificname){
   return new WebTileLayer({
     urlTemplate: data.url
   })
+}
+
+function getTileLayer(url){
+  return new TileLayer({
+    url,
+    id: 'regions',
+    visible: true,
+  });
 }
 
 function getLayer({ slug, outFields = ['*'] }: GetLayer) {
@@ -109,7 +125,9 @@ export default {
   getFeatures,
   getLayer,
   addFeature,
+  getFeatureLayer,
   getGeoJsonLayer,
   getVectorTileLayer,
   getXYZLayer,
+  getTileLayer,
 };

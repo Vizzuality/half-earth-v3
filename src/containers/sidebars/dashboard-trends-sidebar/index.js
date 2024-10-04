@@ -29,7 +29,10 @@ function DashboardTrendsSidebarContainer(props) {
   const [selectedProvince, setSelectedProvince] = useState();
 
   const url =
-    'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
+  `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_provinces_spi_oct4/MapServer`;
+
+  const featureLayerURL = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/FeatureServer`;
+    // 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
 
   const getData = async () => {
     const year = '2021';
@@ -110,8 +113,10 @@ function DashboardTrendsSidebarContainer(props) {
     if(!map && !view) return;
 
     if(!regionLayers.hasOwnProperty('SPI REGIONS')) {
-      const layer = EsriFeatureService.getVectorTileLayer(url);
+      const layer = EsriFeatureService.getTileLayer(url);
       setRegionLayers({ ...regionLayers, ['SPI REGIONS']: layer });
+      const featureLayer = EsriFeatureService.getFeatureLayer(featureLayerURL);
+      map.add(featureLayer);
       map.add(layer);
     }
   }, [map, view]);
