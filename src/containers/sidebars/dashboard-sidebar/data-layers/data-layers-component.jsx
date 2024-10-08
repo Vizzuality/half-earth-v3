@@ -35,12 +35,12 @@ function DataLayerComponent(props) {
       isActive: false,
       showChildren: false,
     },
-    'Proposed Protection': {
-      items: [],
-      total_no_rows: '',
-      isActive: false,
-      showChildren: false,
-    },
+    // 'Proposed Protection': {
+    //   items: [],
+    //   total_no_rows: '',
+    //   isActive: false,
+    //   showChildren: false,
+    // },
     'Administrative Layers': {
       items: [],
       total_no_rows: '',

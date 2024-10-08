@@ -54,7 +54,7 @@ function DashboardViewComponent(props) {
     if (tabOption === 2) {
       view?.on('click', handleRegionClicked)
     }
-  }, [tabOption, view])
+  }, [tabOption, view]);
 
 
   const handleRegionClicked = async (event) => {
@@ -65,13 +65,10 @@ function DashboardViewComponent(props) {
         hits = await hitTest(event);
 
         if (hits) {
-          console.log(hits);
           setClickedRegion(hits.attributes);
 
-          if (highlight) {
-            highlight.remove();
-            hoverHighlight.remove();
-          }
+          highlight?.remove();
+          hoverHighlight?.remove();
 
           highlight = layerView.highlight(hits.graphic);
         }
@@ -87,19 +84,22 @@ function DashboardViewComponent(props) {
         hits = await hitTest(event);
 
         if (hits) {
-          if (hoverHighlight) {
-            hoverHighlight.remove();
-          }
-
+          hoverHighlight?.remove();
           hoverHighlight = layerView.highlight(hits.graphic);
-          // console.log(hits.graphic);
         } else {
-          if (hoverHighlight) {
-            hoverHighlight.remove();
-          }
+          hoverHighlight?.remove();
         }
       }
     } catch { }
+  }
+
+  const handleRegionSelected = async (foundRegion) => {
+    let layerView = await view.whenLayerView(regionLayers['SPI REGIONS']);
+
+    highlight?.remove();
+    hoverHighlight?.remove();
+
+    highlight = layerView.highlight(foundRegion.graphic);
   }
 
   const hitTest = promiseUtils.debounce(async (event) => {
@@ -142,6 +142,7 @@ function DashboardViewComponent(props) {
           clickedRegion={clickedRegion}
           tabOption={tabOption}
           setTabOption={setTabOption}
+          handleRegionSelected={handleRegionSelected}
           {...props} />
       </LightModeProvider>
       <CountryLabelsLayer

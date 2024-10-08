@@ -34,6 +34,9 @@ function ProvinceChartComponent(props) {
     sortedByArea,
     sortedBySpecies,
     provinces,
+    view,
+    regionLayers,
+    handleRegionSelected,
     allSorted } = props;
 
   const blankData = {
@@ -154,7 +157,7 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (allSorted && provinces.length && !selectedProvince) {
       setFoundIndex(0);
-      getProvinceScores({ value: provinces[0].value });
+      handleProvinceSelected({ value: provinces[0].value });
     }
   }, [allSorted, provinces]);
 
@@ -192,6 +195,22 @@ function ProvinceChartComponent(props) {
 
     setCurrentYear(lastYear);
     setBubbleData({ datasets: data });
+  }
+
+  const handleProvinceSelected = async (province) => {
+    let layerView = await view.whenLayerView(regionLayers['SPI REGIONS FEATURE']);
+
+    const searchQuery = {
+      returnGeometry: true,
+      outFields: ["*"],
+    };
+
+    const results = await layerView.queryFeatures(searchQuery);
+
+    const foundRegion = results.features.filter(feat => feat.attributes.NAME_1 === province.value);
+    handleRegionSelected({ graphic: foundRegion[0], attributes: foundRegion[0].attributes });
+
+    getProvinceScores(province);
   }
 
   const getProvinceScores = (province) => {
@@ -237,7 +256,7 @@ function ProvinceChartComponent(props) {
     const datasetIndex = elements[0].datasetIndex;
     const dataIndex = elements[0].index;
     const value = bubbleData.datasets[datasetIndex].data[dataIndex];
-    getProvinceScores({ value: value.label });
+    handleProvinceSelected({ value: value.label });
     setFoundIndex(provinces.findIndex(prov => prov.value === value.label));
   }
 
@@ -254,7 +273,7 @@ function ProvinceChartComponent(props) {
             getOptionLabel={x => x.label}
             getOptionValue={x => x.value}
             options={provinces}
-            onChange={getProvinceScores}
+            onChange={handleProvinceSelected}
             placeholder={t('Select Region')}
           />
           {selectedRegionScores && <>

@@ -13,8 +13,10 @@ function DashboardSidebarContainer(props) {
 
     if(regionLayers.hasOwnProperty('SPI REGIONS') && selectedIndex !== NAVIGATION.TRENDS){
       const layer = regionLayers['SPI REGIONS'];
-      const { ['SPI REGIONS']: name, ...rest } = regionLayers;
+      const featureLayer = regionLayers['SPI REGIONS FEATURE'];
+      const { ['SPI REGIONS']: name, ['SPI REGIONS FEATURE']: featureName, ...rest } = regionLayers;
       setRegionLayers(rest);
+      map.remove(featureLayer);
       map.remove(layer);
     }
   }, [map, view]);

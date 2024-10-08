@@ -33,7 +33,8 @@ function HabitatComponent(props) {
     countryTrendIcon,
     onCountryChange,
     chartOptions,
-    updateCountry } = props;
+    updateCountry,
+    startYear } = props;
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>

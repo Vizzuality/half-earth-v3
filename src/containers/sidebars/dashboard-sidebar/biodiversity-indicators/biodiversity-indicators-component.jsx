@@ -69,6 +69,7 @@ function BioDiversityComponent(props) {
             })}
             onClick={() => setSelectedTab(3)}
           >
+            <span>0.00%</span>
             <span>{t('Information Score')}</span>
           </button>
         </div>

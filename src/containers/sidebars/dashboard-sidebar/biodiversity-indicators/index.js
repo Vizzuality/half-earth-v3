@@ -17,6 +17,7 @@ function BioDiversityContainer(props) {
   const [protectionTableData, setProtectionTableData] = useState([]);
   const [protectionArea, setProtectionArea] = useState('0');
   const [globalProtectionArea, setGlobalProtectionArea] = useState('0');
+  const [startYear, setStartYear] = useState(1950)
 
 
   // get habitat score information
@@ -45,6 +46,7 @@ function BioDiversityContainer(props) {
 
     // TODO: handle no frag values
     const startYearValue = country?.frag[0]?.gisfrag ?? 0;
+    setStartYear(country?.frag[0]?.year ?? country?.shs[0]?.year ?? 2001);
     // eslint-disable-next-line no-unsafe-optional-chaining
     const lastCountryYearValue = country?.shs.length - 1;
     let globalAreaScore = 0;
@@ -237,6 +239,7 @@ function BioDiversityContainer(props) {
             protectionTableData={protectionTableData}
             protectionArea={protectionArea}
             globalProtectionArea={globalProtectionArea}
+            startYear={startYear}
             {...props} />;
 }
 

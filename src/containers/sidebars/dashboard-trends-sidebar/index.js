@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import EsriFeatureService from 'services/esri-feature-service';
+import SearchVM from "@arcgis/core/widgets/Search/SearchViewModel.js";
 
 import Component from './dashboard-trends-sidebar-component.jsx';
 import mapStateToProps from './selectors';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
 function DashboardTrendsSidebarContainer(props) {
-  const { countryISO, view, map, regionLayers, setRegionLayers } = props;
+  const { countryISO, view, map, regionLayers, setRegionLayers, handleRegionSelected } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState(null);
@@ -28,8 +29,9 @@ function DashboardTrendsSidebarContainer(props) {
   const [countryRegions, setCountryRegions] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState();
 
-  const url =
-  `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_provinces_spi_oct4/MapServer`;
+  const url = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_provinces_spi_oct4/MapServer`;
+  // 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_drc_provinces_cm/FeatureServer'
+
 
   const featureLayerURL = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/FeatureServer`;
     // 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
@@ -114,8 +116,9 @@ function DashboardTrendsSidebarContainer(props) {
 
     if(!regionLayers.hasOwnProperty('SPI REGIONS')) {
       const layer = EsriFeatureService.getTileLayer(url);
-      setRegionLayers({ ...regionLayers, ['SPI REGIONS']: layer });
       const featureLayer = EsriFeatureService.getFeatureLayer(featureLayerURL);
+      setRegionLayers({ ...regionLayers, ['SPI REGIONS']: layer, ['SPI REGIONS FEATURE']: featureLayer });
+
       map.add(featureLayer);
       map.add(layer);
     }
@@ -216,6 +219,7 @@ function DashboardTrendsSidebarContainer(props) {
       countryRegions={countryRegions}
       selectedProvince={selectedProvince}
       setSelectedProvince={setSelectedProvince}
+      allSorted={allSorted}
       {...props}
     />
   );

@@ -37,6 +37,7 @@
     margin-top: 10px;
     padding-left: 26px;
     padding-right: 5px;
+    border-bottom: solid 2px var(--border-color);
 
     button{
       display: flex;
@@ -66,6 +67,11 @@
 
       &.selected{
         background-color: var(--border-color);
+        color: $white;
+        border: solid 2px var(--border-color);
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
+        border-bottom: none;
 
         label,
         span{
