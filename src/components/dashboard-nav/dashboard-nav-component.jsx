@@ -1,11 +1,10 @@
 import React, { useContext } from 'react'
 import styles from './dashboard-nav-styles.module.scss';
-import AnalyticsIcon from 'icons/analytics.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
+import OkapiIcon from 'icons/okapi.svg?react';
 import TimeLineIcon from 'icons/timeline.svg?react';
 import HomeIcon from 'icons/house-solid.svg?react';
 import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
-import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import { useT } from '@transifex/react';
 import cx from 'classnames';
@@ -42,7 +41,7 @@ function DashboardNavComponent(props) {
           })}
           onClick={() => updateHistory(NAVIGATION.HOME, titles.HOME)}
         >
-          <HomeIcon className={styles.icon} />
+          <HomeIcon />
         </button>
         <button
           type="button"
@@ -52,7 +51,7 @@ function DashboardNavComponent(props) {
           })}
           onClick={() => updateHistory(NAVIGATION.REGION, titles.REGIONS)}
         >
-          <SouthAmericaIcon className={styles.icon} />
+          <SouthAmericaIcon />
         </button>
         <button
           type="button"
@@ -64,7 +63,7 @@ function DashboardNavComponent(props) {
             updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER);
           }}
         >
-          <EmojiNatureIcon className={styles.icon} />
+          <OkapiIcon className={styles.speciesIcon} />
         </button>
         {selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS && <div className={styles.subNav}>
           <button
@@ -75,7 +74,7 @@ function DashboardNavComponent(props) {
             })}
             onClick={() => updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER)}
           >
-            <StacksIcon className={styles.icon} />
+            <StacksIcon />
           </button>
           <button
             type="button"
@@ -85,7 +84,7 @@ function DashboardNavComponent(props) {
             })}
             onClick={() => updateHistory(NAVIGATION.BIO_IND, titles.BIO_DIVERSITY)}
           >
-            <TimeLineIcon className={styles.icon} />
+            <TimeLineIcon />
           </button>
         </div>
         }
@@ -97,7 +96,7 @@ function DashboardNavComponent(props) {
           })}
           onClick={() => updateHistory(NAVIGATION.TRENDS, titles.TRENDS)}
         >
-          <WhatshotIcon className={styles.icon} />
+          <WhatshotIcon />
         </button>
       </div>
     </section>
