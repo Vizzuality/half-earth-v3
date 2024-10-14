@@ -9,6 +9,7 @@
   --selected-font-color: #{$white};
   --save-button-text: #{$dark-text};
   --border-color-hover: #{$brand-color-main-hover};
+  --disabled: rgba(255, 255, 255, 0.3);
 
   &.light{
     --font-color: #{$black};
@@ -16,6 +17,7 @@
     --selected-font-color: #{$white};
     --save-button-text: #{$white};
     --border-color-hover: #{$mol-blue};
+    --disabled: rgba(0,0,0,0.5);
   }
 
   .arrowIcon {
@@ -50,7 +52,7 @@
       color: var(--font-color);
 
       &[aria-disabled="true"]{
-        color: rgba(255, 255, 255, 0.3);
+        color: var(--disabled);
       }
     }
 
@@ -61,7 +63,7 @@
 
   .disabled{
     + span{
-      color: rgba(255, 255, 255, 0.3) !important;
+      color: var(--disabled) !important;
     }
   }
 

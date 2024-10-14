@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import cx from 'classnames';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -7,10 +7,12 @@ import EsriFeatureService from 'services/esri-feature-service';
 
 import styles from './grouped-list-styles.module.scss';
 import { useT } from '@transifex/react';
+import { LightModeContext } from '../../../../../context/light-mode';
 
 function GroupedListComponent(props) {
   const { dataPoints, setDataPoints, map, speciesInfo, regionLayers, setRegionLayers } = props;
   const t = useT();
+  const { lightMode } = useContext(LightModeContext);
 
   const expertRangeMapIds = ['ec694c34-bddd-4111-ba99-926a5f7866e8',
     '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
@@ -198,7 +200,7 @@ function GroupedListComponent(props) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {Object.keys(dataPoints).map((key) => (
         <div key={key}>
           {dataPoints[key].items.length > 0 &&
