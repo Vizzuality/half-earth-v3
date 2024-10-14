@@ -48,10 +48,20 @@
 
     span{
       color: var(--font-color);
+
+      &[aria-disabled="true"]{
+        color: rgba(255, 255, 255, 0.3);
+      }
     }
 
     > span{
       text-align: center;
+    }
+  }
+
+  .disabled{
+    + span{
+      color: rgba(255, 255, 255, 0.3) !important;
     }
   }
 

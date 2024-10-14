@@ -12,6 +12,11 @@ function GroupedListComponent(props) {
   const { dataPoints, setDataPoints, map, speciesInfo, regionLayers, setRegionLayers } = props;
   const t = useT();
 
+  const expertRangeMapIds = ['ec694c34-bddd-4111-ba99-926a5f7866e8',
+    '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
+    '98f229de-6131-41ef-aff1-7a52212b5a15',
+    'd542e050-2ae5-457e-8476-027741538965']
+
   const displayChildren = (key) => {
     const showChildren = !dataPoints[key].showChildren;
 
@@ -36,17 +41,8 @@ function GroupedListComponent(props) {
 
     const typeItems = dataPoints[item].items;
 
-    /// TODO: added for hard code demo
-    // const isExpertMaps = item.toUpperCase() === 'EXPERT RANGE MAPS';
-    // if (isExpertMaps) {
-    //   findLayerToShow(dataPoints[item].items[0])
-    // }
-
     typeItems.map(item => {
-      /// TODO: added for hard code demo, remove if statement, leave findLayerToShow method
-      // if (!isExpertMaps) {
       findLayerToShow(item);
-      // }
       item.isActive = isActive;
     });
 
@@ -182,6 +178,25 @@ function GroupedListComponent(props) {
     return typeItems;
   }
 
+  const getCheckbox = (item) => {
+    let control = <FormControlLabel
+      label={t(item.dataset_title)}
+      control={<Checkbox onClick={() => findLayerToShow(item)} checked={item.isActive} />}
+    />
+
+    if (item.type_title.toUpperCase() === 'EXPERT RANGE MAPS') {
+      if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
+        control = <FormControlLabel
+          label={t(item.dataset_title)}
+          disabled
+          control={<Checkbox disabled className={styles.disabled} />}
+        />
+      }
+    }
+
+    return control;
+  }
+
   return (
     <div className={styles.container}>
       {Object.keys(dataPoints).map((key) => (
@@ -212,11 +227,9 @@ function GroupedListComponent(props) {
               </div>
               {dataPoints[key].showChildren && <ul>
                 {dataPoints[key].items.map((item) => (
-                  <li key={item.dataset_id} className={styles.children} onClick={() => findLayerToShow(item)}>
-                    <FormControlLabel
-                      label={t(item.dataset_title)}
-                      control={<Checkbox checked={item.isActive} />}
-                    />
+                  <li key={item.dataset_id} className={styles.children}>
+                    {getCheckbox(item)}
+
                     <span></span>
                     <span>{item.no_rows}</span>
                   </li>
