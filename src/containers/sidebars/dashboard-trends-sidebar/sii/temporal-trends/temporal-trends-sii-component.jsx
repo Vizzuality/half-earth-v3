@@ -67,9 +67,9 @@ function TemporalTrendsSiiComponent(props) {
               label={NATIONAL_TREND}
             />
           </div>
-          <span className={styles.helpText}>
+          {/* <span className={styles.helpText}>
             {t('Toggle national SPI and province-level breakdown.')}
-          </span>
+          </span> */}
           {/* <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
