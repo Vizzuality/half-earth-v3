@@ -40,7 +40,7 @@ function ProtectionComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <p>
-        {t('*The Species Protection Score is calculated using the species expert range map and the WDPA Protected Areas.')}
+        {t('*The Species Protection Score is calculated using the habitat suitable range map and the WDPA Protected Areas.')}
       </p>
       <div className={styles.scores}>
         <div className={styles.metric}>

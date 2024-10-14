@@ -20,7 +20,7 @@ function SpeciesInfoComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.species)}>
       <div className={styles.title}>
-        <img src={speciesInfo?.image.url} alt="species" />
+        <img src={speciesInfo?.image.url ?? `https://mol.org/static/img/groups/taxa_${speciesInfo?.taxa}.png`} alt="species" />
         <div className={styles.info}>
           <span className={styles.commonName}>{speciesInfo?.commonname}</span>
           <span className={styles.taxa}>{speciesInfo?.scientificname}</span>

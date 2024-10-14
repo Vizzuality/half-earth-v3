@@ -233,7 +233,7 @@ function ScoreDistributionsSpiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SPS between')} <b>0.5:</b>
+          {t('Species with SPS between')} <b>0 - 5:</b>
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}
