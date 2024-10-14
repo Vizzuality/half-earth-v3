@@ -25,7 +25,6 @@ function ScoreDistributionsShiComponent(props) {
   const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
-  const bucketSize = 5;
 
   const [chartData, setChartData] = useState();
   const [responseData, setResponseData] = useState();
@@ -36,6 +35,9 @@ function ScoreDistributionsShiComponent(props) {
   const [spsSpecies, setSpsSpecies] = useState();
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const { lightMode } = useContext(LightModeContext);
+  const [lowBucket, setLowBucket] = useState(0);
+  const [highBucket, setHighBucket] = useState(5);
+  const bucketSize = 5;
 
   const options = {
     plugins: {
@@ -89,6 +91,18 @@ function ScoreDistributionsShiComponent(props) {
         },
       },
     },
+    onClick: (event, elements) => {
+      if (elements.length > 0) {
+        console.log(elements);
+        const datasetIndex = elements[0].datasetIndex;
+        const dataIndex = elements[0].index;
+        const value = chartData.datasets[datasetIndex].data[dataIndex];
+        console.log(value);
+
+        setLowBucket(dataIndex * bucketSize);
+        setHighBucket((dataIndex * bucketSize) + bucketSize)
+      }
+    }
   };
 
   useEffect(() => {
@@ -204,7 +218,7 @@ function ScoreDistributionsShiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SHS between')} <b>35-45:</b>
+          {t('Species with SHS between')} <b>{lowBucket} - {highBucket}:</b>
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}

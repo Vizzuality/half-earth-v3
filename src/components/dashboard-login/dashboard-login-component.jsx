@@ -25,7 +25,6 @@ function DashboardLoginComponent(props) {
       <div className={styles.loginForm}>
         <FormControl variant="standard">
           <TextField
-            id="outlined-controlled"
             label={t('Email address')}
             value={email}
             onChange={(event) => {
@@ -35,7 +34,6 @@ function DashboardLoginComponent(props) {
         </FormControl>
         <FormControl variant="standard">
           <TextField
-            id="outlined-controlled"
             label={t('Password')}
             type='password'
             value={password}

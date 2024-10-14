@@ -21,9 +21,18 @@ function ScoreDistributionsSpiComponent(props) {
   const { spiData, countryISO, activeTrend, selectedProvince, year } = props;
   const { lightMode } = useContext(LightModeContext);
   const [speciesHighlights, setSpeciesHighlights] = useState();
+  const [lowBucket, setLowBucket] = useState(0);
+  const [highBucket, setHighBucket] = useState(5);
+  const [chartData, setChartData] = useState();
+  const [showTable, setShowTable] = useState(false);
+  const [taxaData, setTaxaData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
+  const [titleText, setTitleText] = useState();
+  const [spsSpecies, setSpsSpecies] = useState();
+  const bucketSize = 5;
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
-  const bucketSize = 5;
 
   const options = {
     plugins: {
@@ -77,15 +86,19 @@ function ScoreDistributionsSpiComponent(props) {
         },
       },
     },
-  };
+    onClick: (event, elements) => {
+      if (elements.length > 0) {
+        console.log(elements);
+        const datasetIndex = elements[0].datasetIndex;
+        const dataIndex = elements[0].index;
+        const value = chartData.datasets[datasetIndex].data[dataIndex];
+        console.log(value);
 
-  const [chartData, setChartData] = useState();
-  const [showTable, setShowTable] = useState(false);
-  const [taxaData, setTaxaData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
-  const [titleText, setTitleText] = useState();
-  const [spsSpecies, setSpsSpecies] = useState();
+        setLowBucket(dataIndex * bucketSize);
+        setHighBucket((dataIndex * bucketSize) + bucketSize)
+      }
+    }
+  };
 
   useEffect(() => {
     if (!spiData.scoresData.length || !year) return;
@@ -233,7 +246,7 @@ function ScoreDistributionsSpiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SPS between')} <b>0 - 5:</b>
+          {t('Species with SPS between')} <b>{lowBucket} - {highBucket}:</b>
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}

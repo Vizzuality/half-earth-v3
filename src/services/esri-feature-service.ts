@@ -88,10 +88,10 @@ function getMVTSource(scientificname){
   };
 }
 
-function getTileLayer(url){
+function getTileLayer(url, id){
   return new TileLayer({
     url,
-    id: 'regions',
+    id,
     visible: true,
   });
 }
@@ -139,7 +139,7 @@ function addFeature({ url, features }: AddFeature) {
 
 function addProvinceLayer(){
   const featureLayer = getFeatureLayer(PROVINCE_FEATURE_LAYER_URL, LAYER_OPTIONS.PROVINCES);
-  const vectorTileLayer = getVectorTileLayer(PROVINCE_VECTOR_URL, LAYER_OPTIONS.PROVINCES_VECTOR);
+  const vectorTileLayer = getTileLayer(PROVINCE_VECTOR_URL, LAYER_OPTIONS.PROVINCES_VECTOR);
   const groupLayer = new GroupLayer({
     layers: [featureLayer, vectorTileLayer],
     id: LAYER_OPTIONS.PROVINCES
