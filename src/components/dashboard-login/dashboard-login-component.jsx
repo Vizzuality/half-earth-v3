@@ -26,7 +26,7 @@ function DashboardLoginComponent(props) {
         <FormControl variant="standard">
           <TextField
             id="outlined-controlled"
-            label="Email address"
+            label={t('Email address')}
             value={email}
             onChange={(event) => {
               setEmail(event.target.value);
@@ -36,7 +36,7 @@ function DashboardLoginComponent(props) {
         <FormControl variant="standard">
           <TextField
             id="outlined-controlled"
-            label="Password"
+            label={t('Password')}
             type='password'
             value={password}
             onChange={(event) => {
