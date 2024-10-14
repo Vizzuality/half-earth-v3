@@ -14,18 +14,18 @@ export default {
     activeLayers: [
       { title: GRAPHIC_LAYER },
       { title: CITIES_LABELS_LAYER },
-      { title: REGIONS_LABELS_LAYER, opacity: 0 },
+      { title: REGIONS_LABELS_LAYER },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: ADMIN_AREAS_FEATURE_LAYER },
     ],
     highlightOptions:{
-      color: [255, 255, 0, 1], // bright yellow
+      color: [22, 186, 180, 1],
       haloOpacity: 0.9,
-      fillOpacity: 0.2
+      fillOpacity: 0.6
     },
     padding: {
-      left: 0,
+      left: 200,
     },
     environment: {
       atmosphereEnabled: false,

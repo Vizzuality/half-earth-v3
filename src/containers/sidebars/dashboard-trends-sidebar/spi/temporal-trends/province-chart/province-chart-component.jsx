@@ -14,10 +14,11 @@ import {
 } from 'chart.js';
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
-
+import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
 import styles from './province-chart-styles.module.scss';
 import { useT } from '@transifex/react';
 import { LightModeContext } from '../../../../../../context/light-mode';
+import { LAYER_OPTIONS } from '../../../../../../utils/dashboard-utils';
 
 ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
@@ -37,6 +38,7 @@ function ProvinceChartComponent(props) {
     view,
     regionLayers,
     handleRegionSelected,
+    layerView,
     allSorted } = props;
 
   const blankData = {
@@ -117,6 +119,7 @@ function ProvinceChartComponent(props) {
   const [selectedRegionScores, setSelectedRegionScores] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [foundIndex, setFoundIndex] = useState(0);
+  // const [layerView, setLayerView] = useState();
 
   useEffect(() => {
     if (!spiData.trendData.length) return;
@@ -157,22 +160,22 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (allSorted && provinces.length && !selectedProvince) {
       setFoundIndex(0);
-      handleProvinceSelected({ value: provinces[0].value });
+      // handleProvinceSelected({ value: provinces[0].value });
     }
   }, [allSorted, provinces]);
 
   useEffect(() => {
     if (sortedBySpecies?.length && selectedProvince) {
-      getProvinceScores({ value: selectedProvince.region_name });
+      handleProvinceSelected({ value: selectedProvince.region_name });
       setFoundIndex(provinces.findIndex(prov => prov.value === selectedProvince.region_name));
     }
   }, [sortedBySpecies]);
 
   useEffect(() => {
-    if (clickedRegion) {
+    if (clickedRegion && countryRegions.length && allSorted) {
       getProvinceScores({ value: clickedRegion.NAME_1 });
     }
-  }, [clickedRegion])
+  }, [clickedRegion, countryRegions, allSorted]);
 
   const getChartData = () => {
     const { regions } = spiData.trendData[0];
@@ -198,8 +201,6 @@ function ProvinceChartComponent(props) {
   }
 
   const handleProvinceSelected = async (province) => {
-    let layerView = await view.whenLayerView(regionLayers['SPI REGIONS FEATURE']);
-
     const searchQuery = {
       returnGeometry: true,
       outFields: ["*"],
@@ -208,8 +209,7 @@ function ProvinceChartComponent(props) {
     const results = await layerView.queryFeatures(searchQuery);
 
     const foundRegion = results.features.filter(feat => feat.attributes.NAME_1 === province.value);
-    handleRegionSelected({ graphic: foundRegion[0], attributes: foundRegion[0].attributes });
-
+    handleRegionSelected({ graphic: foundRegion[0] });
     getProvinceScores(province);
   }
 

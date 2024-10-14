@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import EsriFeatureService from 'services/esri-feature-service';
-import SearchVM from "@arcgis/core/widgets/Search/SearchViewModel.js";
+import GroupLayer from '@arcgis/core/layers/GroupLayer.js';
 
-import Component from './dashboard-trends-sidebar-component.jsx';
+import Component, { PROVINCE_TREND } from './dashboard-trends-sidebar-component.jsx';
 import mapStateToProps from './selectors';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+import { LAYER_OPTIONS } from '../../../utils/dashboard-utils.js';
 
 function DashboardTrendsSidebarContainer(props) {
-  const { countryISO, view, map, regionLayers, setRegionLayers, handleRegionSelected } = props;
+  const { countryISO, view, map, regionLayers, setRegionLayers } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState(null);
@@ -28,13 +29,47 @@ function DashboardTrendsSidebarContainer(props) {
   const [allSorted, setAllSorted] = useState(false);
   const [countryRegions, setCountryRegions] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState();
+  const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
 
-  const url = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_provinces_spi_oct4/MapServer`;
-  // 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_drc_provinces_cm/FeatureServer'
+  useEffect(() => {
+    getData();
+  }, []);
 
+  useEffect(() => {
+    if (!countryRegions?.length) return;
+    getProvinces();
+  }, [countryRegions]);
 
-  const featureLayerURL = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/FeatureServer`;
-    // 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
+  // find and zoom to region
+  useEffect(() => {
+    EsriFeatureService.getFeatures({
+      url: COUNTRIES_DATA_SERVICE_URL,
+      whereClause: `GID_0 = '${countryISO}'`,
+      returnGeometry: true,
+    }).then((features) => {
+      const { geometry, attributes } = features[0];
+
+      if (geometry && view) {
+        // view.center = [geometry.longitude, geometry.latitude];
+        setGeo(geometry);
+        setCountryData(attributes);
+      }
+    });
+  }, [view, countryISO]);
+
+  useEffect(() => {
+    if(!map && !view) return;
+
+    if(!regionLayers.hasOwnProperty(LAYER_OPTIONS.PROVINCES)) {
+      const layers = EsriFeatureService.addProvinceLayer();
+
+      setRegionLayers({ ...regionLayers,
+        [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
+        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer });
+
+      map.add(layers.groupLayer);
+    }
+  }, [map, view]);
 
   const getData = async () => {
     const year = '2021';
@@ -84,45 +119,6 @@ function DashboardTrendsSidebarContainer(props) {
     setSpiData({trendData: spiTrendData, scoresData: spiScoresData});
     setSiiData({trendData: siiTrendData, scoresData: siiScoresData});
   }
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    if (!countryRegions?.length) return;
-    getProvinces();
-  }, [countryRegions]);
-
-  // find and zoom to region
-  useEffect(() => {
-    EsriFeatureService.getFeatures({
-      url: COUNTRIES_DATA_SERVICE_URL,
-      whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: true,
-    }).then((features) => {
-      const { geometry, attributes } = features[0];
-
-      if (geometry && view) {
-        view.center = [geometry.longitude, geometry.latitude];
-        setGeo(geometry);
-        setCountryData(attributes);
-      }
-    });
-  }, [view, countryISO]);
-
-  useEffect(() => {
-    if(!map && !view) return;
-
-    if(!regionLayers.hasOwnProperty('SPI REGIONS')) {
-      const layer = EsriFeatureService.getTileLayer(url);
-      const featureLayer = EsriFeatureService.getFeatureLayer(featureLayerURL);
-      setRegionLayers({ ...regionLayers, ['SPI REGIONS']: layer, ['SPI REGIONS FEATURE']: featureLayer });
-
-      map.add(featureLayer);
-      map.add(layer);
-    }
-  }, [map, view]);
 
   const getProvinces = () => {
     const prov = countryRegions.map(region => {
@@ -220,6 +216,8 @@ function DashboardTrendsSidebarContainer(props) {
       selectedProvince={selectedProvince}
       setSelectedProvince={setSelectedProvince}
       allSorted={allSorted}
+      activeTrend={activeTrend}
+      setActiveTrend={setActiveTrend}
       {...props}
     />
   );

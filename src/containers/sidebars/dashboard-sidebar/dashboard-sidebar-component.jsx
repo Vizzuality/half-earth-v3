@@ -19,7 +19,7 @@ import { NAVIGATION } from '../../../utils/dashboard-utils';
 
 function DashboardSidebar(props) {
   const t = useT();
-  const { countryName, taxaList, selectedIndex, setMapViewSettings, viewSettings, trendViewSettings } = props;
+  const { countryName, taxaList, selectedIndex, map, regionLayers, setRegionLayers } = props;
 
   const filterStart = [
     {
@@ -116,14 +116,15 @@ function DashboardSidebar(props) {
     setIsLoading(false);
   }, [taxaList]);
 
-  useEffect(() => {
-    if (selectedIndex === NAVIGATION.TRENDS) {
-      setMapViewSettings(trendViewSettings);
-    } else {
-      setMapViewSettings(viewSettings);
-    }
+  // useEffect(() => {
+  //   if (regionLayers.hasOwnProperty('SPI REGIONS') && selectedIndex !== NAVIGATION.TRENDS) {
+  //     const layer = regionLayers['SPI REGIONS'];
+  //     const { ['SPI REGIONS']: name, ...rest } = regionLayers;
+  //     setRegionLayers(rest);
+  //     map.remove(layer);
+  //   }
 
-  }, [selectedIndex])
+  // }, [selectedIndex])
 
 
   return (
@@ -138,8 +139,8 @@ function DashboardSidebar(props) {
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />
         {selectedIndex === NAVIGATION.HOME && <DashboardHomeContainer {...props} />}
-        {selectedIndex === NAVIGATION.REGION &&
-          <div className={styles.filters}>
+        {selectedIndex === NAVIGATION.REGION && <RegionsAnalysisComponent {...props} />}
+        {/* <div className={styles.filters}>
             {isLoading && <Loading height={200} />}
             {!isLoading && <>
               <FilterContainer
@@ -149,14 +150,11 @@ function DashboardSidebar(props) {
               <SpeciesListContainer {...props} />
             </>
             }
-          </div>
-        }
+          </div> */}
+
         {selectedIndex === NAVIGATION.SPECIES || selectedIndex === NAVIGATION.DATA_LAYER && <DataLayerContainer {...props} />}
         {selectedIndex === NAVIGATION.BIO_IND && <BioDiversityContainer {...props} />}
-        {selectedIndex === NAVIGATION.REGION_ANALYSIS && <RegionsAnalysisComponent {...props} />}
-        {selectedIndex === NAVIGATION.TRENDS && <DashboardTrendsSidebarContainer
-          {...props}
-        />}
+        {selectedIndex === NAVIGATION.TRENDS && <DashboardTrendsSidebarContainer {...props} />}
       </div>
     </div>
   );

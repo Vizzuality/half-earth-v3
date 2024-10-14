@@ -1,9 +1,14 @@
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
+import {
+    LAYER_OPTIONS, PROTECTED_AREA_FEATURE_URL, PROTECTED_AREA_VECTOR_URL,
+    PROVINCE_FEATURE_LAYER_URL, PROVINCE_VECTOR_URL
+} from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import TileLayer from '@arcgis/core/layers/TileLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
@@ -44,16 +49,18 @@ function getFeatures({
   });
 }
 
-function getVectorTileLayer(url){
+function getVectorTileLayer(url, id){
   return new VectorTileLayer({
     url,
+    id,
   });
 }
 
-function getFeatureLayer(url){
+function getFeatureLayer(url, id){
   return new FeatureLayer({
     url,
     outFields: ['*'],
+    id,
   });
 }
 
@@ -69,7 +76,16 @@ async function getXYZLayer(scientificname){
 
   return new WebTileLayer({
     urlTemplate: data.url
-  })
+  });
+}
+
+function getMVTSource(scientificname){
+  return  {
+    type: 'vector',
+    tiles: [
+      'https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/regions/regions/{proj}/{z}/{x}/{y}.pbf?region_id=1673cab0-c717-4367-9db0-5c63bf26944d'
+    ]
+  };
 }
 
 function getTileLayer(url){
@@ -121,6 +137,29 @@ function addFeature({ url, features }: AddFeature) {
   });
 }
 
+function addProvinceLayer(){
+  const featureLayer = getFeatureLayer(PROVINCE_FEATURE_LAYER_URL, LAYER_OPTIONS.PROVINCES);
+  const vectorTileLayer = getVectorTileLayer(PROVINCE_VECTOR_URL, LAYER_OPTIONS.PROVINCES_VECTOR);
+  const groupLayer = new GroupLayer({
+    layers: [featureLayer, vectorTileLayer],
+    id: LAYER_OPTIONS.PROVINCES
+  });
+
+  return { groupLayer, featureLayer, vectorTileLayer };
+}
+
+function addProtectedAreaLayer(){
+  const featureLayer = getFeatureLayer(PROTECTED_AREA_FEATURE_URL, LAYER_OPTIONS.PROTECTED_AREAS);
+  const vectorTileLayer = getVectorTileLayer(PROTECTED_AREA_VECTOR_URL, LAYER_OPTIONS.PROTECTED_AREAS_VECTOR);
+
+  const groupLayer = new GroupLayer({
+    layers: [featureLayer],
+    id: LAYER_OPTIONS.PROTECTED_AREAS,
+  });
+
+  return { groupLayer, featureLayer, vectorTileLayer };
+}
+
 export default {
   getFeatures,
   getLayer,
@@ -130,4 +169,7 @@ export default {
   getVectorTileLayer,
   getXYZLayer,
   getTileLayer,
+  getMVTSource,
+  addProvinceLayer,
+  addProtectedAreaLayer,
 };

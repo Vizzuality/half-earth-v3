@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import loadable from '@loadable/component';
-import { NAVIGATION } from 'utils/dashboard-utils.js';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
@@ -11,10 +10,13 @@ import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
 
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
 import TopMenuContainer from '../../../components/top-menu';
+import { LAYER_OPTIONS } from '../../../utils/dashboard-utils';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
-
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
+
+
+let highlight;
 
 function DashboardViewComponent(props) {
   const {
@@ -27,7 +29,7 @@ function DashboardViewComponent(props) {
     isFullscreenActive,
     openedModal,
     geometry,
-    selectedIndex
+    selectedIndex,
   } = props;
 
   const [map, setMap] = useState(null);
@@ -36,42 +38,39 @@ function DashboardViewComponent(props) {
   const [mapViewSettings, setMapViewSettings] = useState(viewSettings);
   const [clickedRegion, setClickedRegion] = useState();
   const [tabOption, setTabOption] = useState(2);
-
-  let highlight;
+  const [selectedRegionOption, setSelectedRegionOption] = useState('');
+  const [layerView, setLayerView] = useState();
   let hoverHighlight;
 
-  useEffect(() => {
-    if (geometry && view) {
-      view.center = [geometry.longitude, geometry.latitude];
-
-      view.on('click', handleRegionClicked);
-
-      view.on('pointer-move', handlePointerMove);
+  useEffect(async () => {
+    if (view && Object.keys(regionLayers).length) {
+      const layer = await getLayerView();
+      setLayerView(layer);
     }
-  }, [view, geometry]);
+  }, [regionLayers, view]);
 
   useEffect(() => {
-    if (tabOption === 2) {
-      view?.on('click', handleRegionClicked)
-    }
-  }, [tabOption, view]);
+    if (!layerView) return;
+    view.on('click', (event) => handleRegionClicked(event));
+    view.on('pointer-move', handlePointerMove);
+  }, [layerView]);
 
+  const getLayerView = async () => {
+    return await view.whenLayerView(regionLayers[LAYER_OPTIONS.PROVINCES] || regionLayers[LAYER_OPTIONS.PROTECTED_AREAS]);
+  }
 
   const handleRegionClicked = async (event) => {
+    event.stopPropagation();
     let hits;
     try {
-      if (selectedIndex === NAVIGATION.TRENDS) {
-        let layerView = await view.whenLayerView(regionLayers['SPI REGIONS']);
-        hits = await hitTest(event);
+      highlight?.remove();
+      hoverHighlight?.remove();
 
-        if (hits) {
-          setClickedRegion(hits.attributes);
+      hits = await hitTest(event);
+      if (hits) {
+        setClickedRegion(hits.attributes);
 
-          highlight?.remove();
-          hoverHighlight?.remove();
-
-          highlight = layerView.highlight(hits.graphic);
-        }
+        highlight = layerView.highlight(hits.graphic);
       }
     } catch { }
   }
@@ -79,35 +78,28 @@ function DashboardViewComponent(props) {
   const handlePointerMove = async (event) => {
     let hits;
     try {
-      if (selectedIndex === NAVIGATION.TRENDS) {
-        let layerView = await view.whenLayerView(regionLayers['SPI REGIONS']);
-        hits = await hitTest(event);
+      hits = await hitTest(event);
 
-        if (hits) {
-          hoverHighlight?.remove();
-          hoverHighlight = layerView.highlight(hits.graphic);
-        } else {
-          hoverHighlight?.remove();
-        }
+      if (hits) {
+        hoverHighlight?.remove();
+        hoverHighlight = layerView.highlight(hits.graphic);
+      } else {
+        hoverHighlight?.remove();
       }
     } catch { }
   }
 
-  const handleRegionSelected = async (foundRegion) => {
-    let layerView = await view.whenLayerView(regionLayers['SPI REGIONS']);
-
+  const handleRegionSelected = (foundRegion) => {
     highlight?.remove();
-    hoverHighlight?.remove();
-
     highlight = layerView.highlight(foundRegion.graphic);
   }
 
   const hitTest = promiseUtils.debounce(async (event) => {
     const { results } = await view.hitTest(event);
     if (results.length) {
-      const { graphic } = results.find(x => x.graphic.attributes.OBJECTID);
+      const { graphic } = results.find(x => x.graphic.attributes.OBJECTID || x.graphic.attributes.WDPA_PID);
       const { attributes } = graphic;
-      if (attributes.hasOwnProperty('region_name')) {
+      if (attributes.hasOwnProperty('region_name') || attributes.hasOwnProperty('WDPA_PID')) {
         return { graphic, attributes }
       } else {
         return null;
@@ -143,6 +135,9 @@ function DashboardViewComponent(props) {
           tabOption={tabOption}
           setTabOption={setTabOption}
           handleRegionSelected={handleRegionSelected}
+          selectedRegionOption={selectedRegionOption}
+          setSelectedRegionOption={setSelectedRegionOption}
+          layerView={layerView}
           {...props} />
       </LightModeProvider>
       <CountryLabelsLayer

@@ -87,16 +87,6 @@ function DashboardNavComponent(props) {
           >
             <TimeLineIcon className={styles.icon} />
           </button>
-          <button
-            type="button"
-            aria-label={t('Regions Analysis')}
-            className={cx({
-              [styles.selected]: selectedIndex === NAVIGATION.REGION_ANALYSIS,
-            })}
-            onClick={() => updateHistory(NAVIGATION.REGION_ANALYSIS, titles.REGION_ANALYSIS)}
-          >
-            <AnalyticsIcon className={styles.icon} />
-          </button>
         </div>
         }
         <button

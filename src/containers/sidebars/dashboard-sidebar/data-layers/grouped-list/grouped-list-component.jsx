@@ -35,8 +35,18 @@ function GroupedListComponent(props) {
     const isActive = !dataPoints[item].isActive;
 
     const typeItems = dataPoints[item].items;
+
+    /// TODO: added for hard code demo
+    const isExpertMaps = item.toUpperCase() === 'EXPERT RANGE MAPS';
+    if (isExpertMaps) {
+      findLayerToShow(dataPoints[item].items[0])
+    }
+
     typeItems.map(item => {
-      findLayerToShow(item);
+      /// TODO: added for hard code demo, remove if statement, leave findLayerToShow method
+      if (!isExpertMaps) {
+        findLayerToShow(item);
+      }
       item.isActive = isActive;
     });
 
@@ -71,25 +81,27 @@ function GroupedListComponent(props) {
       });
     }
 
-    if (typeof item === 'string' && item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'PROTECTED AREAS') {
-      if (!dataPoints[item].isActive) {
-        setRegionLayers({ ...regionLayers, [item.toUpperCase()]: vtLayer });
-        map.add(vtLayer);
-      } else {
-        const layer = regionLayers[item.toUpperCase()];
-        const { [item.toUpperCase()]: name, ...rest } = regionLayers;
-        setRegionLayers(rest);
-        map.remove(layer);
-      }
-    } else if (typeof item === 'string' && item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
-      if (!dataPoints[item].isActive) {
-        setRegionLayers({ ...regionLayers, [item.toUpperCase()]: administrativeLayer });
-        map.add(administrativeLayer);
-      } else {
-        const layer = regionLayers[item.toUpperCase()];
-        const { [item.toUpperCase()]: name, ...rest } = regionLayers;
-        setRegionLayers(rest);
-        map.remove(layer);
+    if (typeof item === 'string') {
+      if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'PROTECTED AREAS') {
+        if (!dataPoints[item].isActive) {
+          setRegionLayers({ ...regionLayers, [item.toUpperCase()]: vtLayer });
+          map.add(vtLayer);
+        } else {
+          const layer = regionLayers[item.toUpperCase()];
+          const { [item.toUpperCase()]: name, ...rest } = regionLayers;
+          setRegionLayers(rest);
+          map.remove(layer);
+        }
+      } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
+        if (!dataPoints[item].isActive) {
+          setRegionLayers({ ...regionLayers, [item.toUpperCase()]: administrativeLayer });
+          map.add(administrativeLayer);
+        } else {
+          const layer = regionLayers[item.toUpperCase()];
+          const { [item.toUpperCase()]: name, ...rest } = regionLayers;
+          setRegionLayers(rest);
+          map.remove(layer);
+        }
       }
     }
   };
@@ -125,6 +137,33 @@ function GroupedListComponent(props) {
       }
     }
 
+    if (layerParent === 'REGIONAL CHECKLISTS') {
+      if (!item.isActive) {
+        const webTileLayer = EsriFeatureService.getMVTSource();
+
+        setRegionLayers({ ...regionLayers, [layerName]: webTileLayer });
+
+        map.addSource('mapTiles', {
+          type: 'vector',
+          tiles: [
+            'https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/regions/regions/{proj}/{z}/{x}/{y}.pbf?region_id=1673cab0-c717-4367-9db0-5c63bf26944d'
+          ]
+        });
+
+
+        map.add({
+          id: 'mvt-fill',
+          type: 'fill',
+          source: 'mapTiles'
+        });
+
+      } else {
+        const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers(rest);
+        map.remove(regionLayers[layerName]);
+      }
+    }
+
     displaySingleLayer(item)
   }
 
@@ -149,14 +188,14 @@ function GroupedListComponent(props) {
         <div key={key}>
           {dataPoints[key].items.length > 0 &&
             <>
-              <div className={styles.parent}>
-                <button onClick={() => displayChildren(key)}>
+              <div className={cx(key.toUpperCase() === 'EXPERT RANGE MAPS' ? styles.children : styles.parent)}>
+                {key.toUpperCase() !== 'EXPERT RANGE MAPS' && <button onClick={() => displayChildren(key)}>
                   <ArrowIcon
                     className={cx(styles.arrowIcon, {
                       [styles.isOpened]: dataPoints[key].showChildren,
                     })}
                   />
-                </button>
+                </button>}
                 <FormControlLabel
                   label={t(key)}
                   control={
@@ -171,7 +210,7 @@ function GroupedListComponent(props) {
                   src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0]?.product_type === 'points' ? 'points_agg' : dataPoints[key].items[0]?.product_type)}.png`} />
                 <span>{dataPoints[key].total_no_rows}</span>
               </div>
-              {dataPoints[key].showChildren && <ul>
+              {key.toUpperCase() !== 'EXPERT RANGE MAPS' && dataPoints[key].showChildren && <ul>
                 {dataPoints[key].items.map((item) => (
                   <li key={item.dataset_id} className={styles.children} onClick={() => findLayerToShow(item)}>
                     <FormControlLabel

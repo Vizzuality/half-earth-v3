@@ -3,23 +3,21 @@ import { connect } from 'react-redux';
 
 import Component from './dashboard-sidebar-component.jsx';
 import mapStateToProps from './selectors';
-import { NAVIGATION } from '../../../utils/dashboard-utils.js';
+// import { NAVIGATION } from '../../../utils/dashboard-utils.js';
 
 function DashboardSidebarContainer(props) {
-  const {regionLayers, setRegionLayers, map, view, selectedIndex} = props;
+  // const {regionLayers, setRegionLayers, map, view, selectedIndex} = props;
 
-  useEffect(() => {
-    if(!map && !view) return;
+  // useEffect(() => {
+  //   if(!map && !view) return;
 
-    if(regionLayers.hasOwnProperty('SPI REGIONS') && selectedIndex !== NAVIGATION.TRENDS){
-      const layer = regionLayers['SPI REGIONS'];
-      const featureLayer = regionLayers['SPI REGIONS FEATURE'];
-      const { ['SPI REGIONS']: name, ['SPI REGIONS FEATURE']: featureName, ...rest } = regionLayers;
-      setRegionLayers(rest);
-      map.remove(featureLayer);
-      map.remove(layer);
-    }
-  }, [map, view]);
+    // if(regionLayers.hasOwnProperty('SPI REGIONS') && selectedIndex !== NAVIGATION.TRENDS){
+    //   const layer = regionLayers['SPI REGIONS'];
+    //   const { ['SPI REGIONS']: name, ...rest } = regionLayers;
+    //   setRegionLayers(rest);
+    //   map.remove(layer);
+    // }
+  // }, [map, view]);
 
 
   return <Component {...props}/>;

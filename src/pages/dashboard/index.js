@@ -14,7 +14,7 @@ import mapStateToProps from './dashboard-selectors.js';
 import {
   COUNTRIES_DATA_SERVICE_URL
 } from 'constants/layers-urls';
-import { NAVIGATION } from '../../utils/dashboard-utils.js';
+import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
 
 const actions = { ...countryDataActions, ...urlActions };
 
@@ -80,7 +80,7 @@ function DashboardContainer(props) {
 
   useEffect(() => {
     if(!scientificName) return;
-    localStorage.setItem('selected_species', scientificName);
+    localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificName);
     setSpeciesName(scientificName);
   }, [scientificName])
 
