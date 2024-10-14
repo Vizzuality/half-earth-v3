@@ -38,6 +38,7 @@ function DashboardContainer(props) {
   const [filteredTaxaList, setFilteredTaxaList] = useState();
   const [speciesName, setSpeciesName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const speciesListUrl = 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list';
 
@@ -332,6 +333,8 @@ function DashboardContainer(props) {
     setSpeciesName={setSpeciesName}
     selectedIndex={selectedIndex}
     setSelectedIndex={setSelectedIndex}
+    loggedIn={loggedIn}
+    setLoggedIn={setLoggedIn}
     {...props} />;
 }
 
