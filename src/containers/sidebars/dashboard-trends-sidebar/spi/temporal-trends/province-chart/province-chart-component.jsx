@@ -160,7 +160,7 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (allSorted && provinces.length && !selectedProvince) {
       setFoundIndex(0);
-      // handleProvinceSelected({ value: provinces[0].value });
+      handleProvinceSelected({ value: provinces[0].value });
     }
   }, [allSorted, provinces]);
 
