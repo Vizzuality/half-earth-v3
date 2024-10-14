@@ -3,8 +3,8 @@ import styles from './dashboard-login-styles.module.scss';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from 'components/button';
+import iccnLogo from 'logos/institut-congolais.png';
 import { useT } from '@transifex/react';
-import Logo from '../half-earth-logo/component';
 
 function DashboardLoginComponent(props) {
   const { setLoggedIn } = props;
@@ -19,7 +19,9 @@ function DashboardLoginComponent(props) {
 
   return (
     <div className={styles.container}>
-      <Logo />
+      <div>
+        <img src={iccnLogo} style={{ width: '300px' }} />
+      </div>
       <div className={styles.loginForm}>
         <FormControl variant="standard">
           <TextField
