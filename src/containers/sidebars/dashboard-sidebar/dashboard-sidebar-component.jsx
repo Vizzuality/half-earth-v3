@@ -15,7 +15,7 @@ import SpeciesListContainer from '../../../components/species-list';
 import DashboardNav from '../../../components/dashboard-nav';
 import DashboardHomeContainer from './dashboard-home';
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
-import { NAVIGATION } from '../../../utils/dashboard-utils';
+import { LAYER_OPTIONS, NAVIGATION } from '../../../utils/dashboard-utils';
 
 function DashboardSidebar(props) {
   const t = useT();
@@ -116,16 +116,24 @@ function DashboardSidebar(props) {
     setIsLoading(false);
   }, [taxaList]);
 
-  // useEffect(() => {
-  //   if (regionLayers.hasOwnProperty('SPI REGIONS') && selectedIndex !== NAVIGATION.TRENDS) {
-  //     const layer = regionLayers['SPI REGIONS'];
-  //     const { ['SPI REGIONS']: name, ...rest } = regionLayers;
-  //     setRegionLayers(rest);
-  //     map.remove(layer);
-  //   }
+  useEffect(() => {
+    if (regionLayers.hasOwnProperty(LAYER_OPTIONS.PROVINCES) && selectedIndex !== NAVIGATION.TRENDS) {
+      removeRegionLayers();
+      setRegionLayers({});
+    }
+  }, [selectedIndex]);
 
-  // }, [selectedIndex])
-
+  const removeRegionLayers = () => {
+    let layers = regionLayers;
+    Object.keys(layers).map(region => {
+      // const { [region]: name, ...rest } = layers;
+      // layers = rest;
+      const foundLayer = map.layers.items.find(item => item.id === region);
+      if (foundLayer) {
+        map.remove(foundLayer);
+      }
+    });
+  }
 
   return (
     <div className={cx(lightMode ? styles.light : '', selectedIndex === NAVIGATION.TRENDS ? styles.trends : '', styles.container)}>
