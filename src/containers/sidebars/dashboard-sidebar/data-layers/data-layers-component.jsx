@@ -73,8 +73,16 @@ function DataLayerComponent(props) {
         };
       }
       obj.isActive = false;
-      acc[key].items.push(obj);
-      acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+      /// TODO: Remove Expert Range Maps restriction
+      if (key.toUpperCase() === 'EXPERT RANGE MAPS') {
+        if (acc[key].items < 2) {
+          acc[key].items.push(obj);
+          acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+        }
+      } else {
+        acc[key].items.push(obj);
+        acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+      }
       return acc;
     }, {});
   }

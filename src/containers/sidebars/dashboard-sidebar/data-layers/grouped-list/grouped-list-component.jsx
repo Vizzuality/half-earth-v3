@@ -37,16 +37,16 @@ function GroupedListComponent(props) {
     const typeItems = dataPoints[item].items;
 
     /// TODO: added for hard code demo
-    const isExpertMaps = item.toUpperCase() === 'EXPERT RANGE MAPS';
-    if (isExpertMaps) {
-      findLayerToShow(dataPoints[item].items[0])
-    }
+    // const isExpertMaps = item.toUpperCase() === 'EXPERT RANGE MAPS';
+    // if (isExpertMaps) {
+    //   findLayerToShow(dataPoints[item].items[0])
+    // }
 
     typeItems.map(item => {
       /// TODO: added for hard code demo, remove if statement, leave findLayerToShow method
-      if (!isExpertMaps) {
-        findLayerToShow(item);
-      }
+      // if (!isExpertMaps) {
+      findLayerToShow(item);
+      // }
       item.isActive = isActive;
     });
 
@@ -188,14 +188,14 @@ function GroupedListComponent(props) {
         <div key={key}>
           {dataPoints[key].items.length > 0 &&
             <>
-              <div className={cx(key.toUpperCase() === 'EXPERT RANGE MAPS' ? styles.children : styles.parent)}>
-                {key.toUpperCase() !== 'EXPERT RANGE MAPS' && <button onClick={() => displayChildren(key)}>
+              <div className={styles.parent}>
+                <button onClick={() => displayChildren(key)}>
                   <ArrowIcon
                     className={cx(styles.arrowIcon, {
                       [styles.isOpened]: dataPoints[key].showChildren,
                     })}
                   />
-                </button>}
+                </button>
                 <FormControlLabel
                   label={t(key)}
                   control={
@@ -210,7 +210,7 @@ function GroupedListComponent(props) {
                   src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0]?.product_type === 'points' ? 'points_agg' : dataPoints[key].items[0]?.product_type)}.png`} />
                 <span>{dataPoints[key].total_no_rows}</span>
               </div>
-              {key.toUpperCase() !== 'EXPERT RANGE MAPS' && dataPoints[key].showChildren && <ul>
+              {dataPoints[key].showChildren && <ul>
                 {dataPoints[key].items.map((item) => (
                   <li key={item.dataset_id} className={styles.children} onClick={() => findLayerToShow(item)}>
                     <FormControlLabel
