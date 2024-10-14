@@ -134,7 +134,7 @@ function DashboardSidebar(props) {
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
       {/* <h1>{countryName}</h1> */}
-      <h1>République démocratique du Congo</h1>
+      <h1>{t('Democratic Republic of the Congo')}</h1>
 
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />
