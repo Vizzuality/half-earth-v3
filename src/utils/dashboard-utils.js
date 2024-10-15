@@ -8,6 +8,7 @@ export const NAVIGATION = {
   BIO_IND: 5,
   REGION_ANALYSIS: 6,
   TRENDS: 7,
+  EXPLORE_SPECIES: 8,
 }
 
 export const LAYER_OPTIONS = {
@@ -21,7 +22,7 @@ export const LAYER_OPTIONS = {
 }
 
 export const PROVINCE_FEATURE_LAYER_URL = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/FeatureServer`;
-export const PROVINCE_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
+export const PROVINCE_VECTOR_URL = ' https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join_testalex1/MapServer';//https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
 
 export const PROTECTED_AREA_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_WDPA_all/FeatureServer';
 export const PROTECTED_AREA_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_WDPA_all/VectorTileServer';

@@ -47,6 +47,10 @@ function DashboardHomeComponent(props) {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
   }
 
+  const handleExploreAllSpecies = () => {
+    setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+  }
+
   const getSearchResults = async () => {
     const searchParams = {
       region_id: '1eff8980-479e-4eac-b386-b4db859b275d',
@@ -88,7 +92,7 @@ function DashboardHomeComponent(props) {
           }
           <Button type="rectangular"
             label={t('Explore all Species')}
-            handleClick={() => setSelectedIndex(NAVIGATION.REGION)} />
+            handleClick={handleExploreAllSpecies} />
         </div>
         <div className={styles.mostPopular}>
           <span className={styles.sectionTitle}>{t('Popular Species')}</span>
