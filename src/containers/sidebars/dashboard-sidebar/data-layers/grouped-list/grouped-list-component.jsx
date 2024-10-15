@@ -14,10 +14,12 @@ function GroupedListComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
-  const expertRangeMapIds = ['ec694c34-bddd-4111-ba99-926a5f7866e8',
+  const expertRangeMapIds = [
+    'ec694c34-bddd-4111-ba99-926a5f7866e8',
     '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
     '98f229de-6131-41ef-aff1-7a52212b5a15',
-    'd542e050-2ae5-457e-8476-027741538965']
+    'd542e050-2ae5-457e-8476-027741538965'
+  ];
 
   const displayChildren = (key) => {
     const showChildren = !dataPoints[key].showChildren;
