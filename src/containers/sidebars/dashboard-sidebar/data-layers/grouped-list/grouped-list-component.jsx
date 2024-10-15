@@ -123,11 +123,13 @@ function GroupedListComponent(props) {
 
     if (layerParent === 'EXPERT RANGE MAPS') {
       if (!item.isActive) {
-        const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'));
-        webTileLayer.then(layer => {
-          setRegionLayers({ ...regionLayers, [layerName]: layer });
-          map.add(layer);
-        });
+        if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
+          const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'));
+          webTileLayer.then(layer => {
+            setRegionLayers({ ...regionLayers, [layerName]: layer });
+            map.add(layer);
+          });
+        }
       } else {
         const { [layerName]: name, ...rest } = regionLayers;
         setRegionLayers(rest);
@@ -223,8 +225,10 @@ function GroupedListComponent(props) {
                     />
                   }
                 />
-                <img className={styles.productTypeLogo}
-                  src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0]?.product_type === 'points' ? 'points_agg' : dataPoints[key].items[0]?.product_type)}.png`} />
+                {/* Place holder, remove span when new icons are available */}
+                <span></span>
+                {/* <img className={styles.productTypeLogo}
+                  src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0]?.product_type === 'points' ? 'points_agg' : dataPoints[key].items[0]?.product_type)}.png`} /> */}
                 <span>{dataPoints[key].total_no_rows}</span>
               </div>
               {dataPoints[key].showChildren && <ul>
