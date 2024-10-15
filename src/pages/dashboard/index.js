@@ -116,9 +116,11 @@ function DashboardContainer(props) {
     };
     const dparams = new URLSearchParams(dataLayerParams);
     const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
+    const speciesObservationCount = `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/counts_${speciesName.replace(' ', '_')}.geojson`;
 
     const apiCalls = [
-      dataLayersURL
+      dataLayersURL,
+      speciesObservationCount
     ];
 
     const apiResponses = await Promise.all(apiCalls.map(async (url) => {
@@ -127,7 +129,20 @@ function DashboardContainer(props) {
       return data;
     }));
 
-    const [dataLayersData] = apiResponses;
+    const [dataLayersData, speciesObservationData] = apiResponses;
+
+    const ebirdCount = speciesObservationData.find(sod => sod.which === 'ebird');
+    const gbifCount = speciesObservationData.find(sod => sod.which === 'gbif');
+
+    dataLayersData.map(dld => {
+      if(dld.dataset_title.toUpperCase().match(/EBIRD/)){
+        dld.no_rows = ebirdCount.n;
+      }
+
+      if(dld.dataset_title.toUpperCase().match(/GBIF/)){
+        dld.no_rows = gbifCount.n;
+      }
+    })
 
     setDataLayerData(dataLayersData);
   }

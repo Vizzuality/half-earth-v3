@@ -4,6 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ArrowIcon from 'icons/arrow_right.svg?react';
 import EsriFeatureService from 'services/esri-feature-service';
+import { LAYER_TITLE_TYPES } from 'utils/dashboard-utils.js';
 
 import styles from './grouped-list-styles.module.scss';
 import { useT } from '@transifex/react';
@@ -18,8 +19,13 @@ function GroupedListComponent(props) {
     'ec694c34-bddd-4111-ba99-926a5f7866e8',
     '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
     '98f229de-6131-41ef-aff1-7a52212b5a15',
-    'd542e050-2ae5-457e-8476-027741538965'
+    'd542e050-2ae5-457e-8476-027741538965',
   ];
+
+  const pointObservationIds = [
+    '9905692e-6a28-4310-b01e-476a471e5bf8',
+    '794adb49-7458-41c4-a1c0-56537fdbec1d',
+  ]
 
   const displayChildren = (key) => {
     const showChildren = !dataPoints[key].showChildren;
@@ -110,22 +116,9 @@ function GroupedListComponent(props) {
     const layerParent = item.type_title.toUpperCase();
     const layerName = item.dataset_title.toUpperCase();
 
-    if (layerParent === 'POINT OBSERVATIONS') {
+    if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive) {
-        const jsonLayer = EsriFeatureService.getGeoJsonLayer(speciesInfo.scientificname.replace(' ', '_'));
-        setRegionLayers({ ...regionLayers, [layerName]: jsonLayer });
-        map.add(jsonLayer);
-      } else {
-        const layer = regionLayers[layerName];
-        const { [layerName]: name, ...rest } = regionLayers;
-        setRegionLayers(rest);
-        map.remove(layer);
-      }
-    }
-
-    if (layerParent === 'EXPERT RANGE MAPS') {
-      if (!item.isActive) {
-        if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
+        if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
           const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'));
           webTileLayer.then(layer => {
             setRegionLayers({ ...regionLayers, [layerName]: layer });
@@ -139,7 +132,29 @@ function GroupedListComponent(props) {
       }
     }
 
-    if (layerParent === 'REGIONAL CHECKLISTS') {
+    if (layerParent === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
+      if (!item.isActive) {
+        if (pointObservationIds.find((id) => id === item.dataset_id)) {
+          let name;
+
+          if (layerName.match(/EBIRD/)) {
+            name = `ebird_${speciesInfo.scientificname.replace(' ', '_')}`
+          } else if (layerName.match(/GBIF/)) {
+            name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`
+          }
+
+          const jsonLayer = EsriFeatureService.getGeoJsonLayer(name);
+          setRegionLayers({ ...regionLayers, [layerName]: jsonLayer });
+          map.add(jsonLayer);
+        }
+      } else {
+        const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers(rest);
+        map.remove(regionLayers[layerName]);
+      }
+    }
+
+    if (layerParent === LAYER_TITLE_TYPES.REGIONAL_CHECKLISTS) {
       if (!item.isActive) {
         const webTileLayer = EsriFeatureService.getMVTSource();
 
@@ -151,7 +166,6 @@ function GroupedListComponent(props) {
             'https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/regions/regions/{proj}/{z}/{x}/{y}.pbf?region_id=1673cab0-c717-4367-9db0-5c63bf26944d'
           ]
         });
-
 
         map.add({
           id: 'mvt-fill',
@@ -166,7 +180,7 @@ function GroupedListComponent(props) {
       }
     }
 
-    displaySingleLayer(item)
+    displaySingleLayer(item);
   }
 
   // check if some but not all children are selected
@@ -190,8 +204,18 @@ function GroupedListComponent(props) {
       control={<Checkbox onClick={() => findLayerToShow(item)} checked={item.isActive} />}
     />
 
-    if (item.type_title.toUpperCase() === 'EXPERT RANGE MAPS') {
+    if (item.type_title.toUpperCase() === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
+        control = <FormControlLabel
+          label={t(item.dataset_title)}
+          disabled
+          control={<Checkbox disabled className={styles.disabled} />}
+        />
+      }
+    }
+
+    if (item.type_title.toUpperCase() === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
+      if (!pointObservationIds.find((id) => id === item.dataset_id)) {
         control = <FormControlLabel
           label={t(item.dataset_title)}
           disabled
