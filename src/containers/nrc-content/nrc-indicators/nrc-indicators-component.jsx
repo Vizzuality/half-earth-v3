@@ -151,15 +151,15 @@ function Indicators({ countryData, landMarineSelection }) {
 
   const renderModificationIndicator = () => {
     const noVeryHighHumanModification =
-      Math.round(hm_vh) === 0 && Math.round(hm) !== 0;
+      Math.ceil(hm_vh) === 0 && Math.round(hm) !== 0;
     const noSomeHumanModification =
-      Math.round(hm) === 0 && Math.round(hm_vh) !== 0;
+      Math.ceil(hm) === 0 && Math.round(hm_vh) !== 0;
 
     const getIndicator = () => {
       if (noVeryHighHumanModification) {
-        return `${Math.round(hm)}%`;
+        return `${Math.ceil(hm)}%`;
       }
-      return `${Math.round(hm_vh)}%`;
+      return `${Math.ceil(hm_vh)}%`;
     };
 
     const getDescription = () => {
@@ -224,7 +224,7 @@ function Indicators({ countryData, landMarineSelection }) {
         <p>
           {land && (
             <T
-              _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+              _str="of land has {veryHighHumanModification}"
               _comment="27% { of } land has {very high human modification} and 10% has some modification"
               veryHighHumanModification={boldVeryHighText}
               someModificationNumber={Math.round(hm)}
@@ -232,7 +232,7 @@ function Indicators({ countryData, landMarineSelection }) {
           )}
           {!land && (
             <T
-              _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+              _str="of marine area has {veryHighHumanModification}"
               _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
               veryHighHumanModification={boldVeryHighText}
               someModificationNumber={Math.round(hm)}
