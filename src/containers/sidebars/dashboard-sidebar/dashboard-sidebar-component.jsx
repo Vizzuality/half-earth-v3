@@ -28,7 +28,7 @@ function DashboardSidebar(props) {
   // }, [taxaList]);
 
   useEffect(() => {
-    if (regionLayers.hasOwnProperty(LAYER_OPTIONS.PROVINCES) && selectedIndex !== NAVIGATION.TRENDS) {
+    if (selectedIndex !== NAVIGATION.TRENDS) {
       removeRegionLayers();
       setRegionLayers({});
     }

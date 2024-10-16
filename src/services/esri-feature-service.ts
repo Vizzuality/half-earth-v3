@@ -64,18 +64,20 @@ function getFeatureLayer(url, id){
   });
 }
 
-function getGeoJsonLayer(scientificname){
+function getGeoJsonLayer(scientificname, id){
   return new GeoJSONLayer({
-    url: `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${scientificname}.geojson`
+    url: `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${scientificname}.geojson`,
+    id,
   });
 }
 
-async function getXYZLayer(scientificname){
+async function getXYZLayer(scientificname, id){
   const response = await fetch(`https://next-api-dot-map-of-life.appspot.com/2.x/species/drc_rangemap?scientificname=${scientificname}`);
   const data = await response.json();
 
   return new WebTileLayer({
-    urlTemplate: data.url
+    urlTemplate: data.url,
+    id,
   });
 }
 

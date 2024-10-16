@@ -51,10 +51,18 @@ function GroupedListComponent(props) {
 
     const typeItems = dataPoints[item].items;
 
+    const layers = {};
+
     typeItems.map(item => {
       findLayerToShow(item);
       item.isActive = isActive;
     });
+
+    // setRegionLayers({ ...regionLayers, ...layers });
+
+    // const blah = checkForLayersToRemove(regionLayers, layers);
+    // console.log(blah);
+    // setRegionLayers(blah);
 
     setDataPoints({
       ...dataPoints,
@@ -66,6 +74,21 @@ function GroupedListComponent(props) {
         ]
       }
     });
+  }
+
+  const checkForLayersToRemove = (regionLayers, layers) => {
+    const updatedLayers = { ...regionLayers };
+
+    for (let key in layers) {
+      // Check if the key exists in Object A and if Object B has remove flag set to true
+      if (updatedLayers.hasOwnProperty(key) && layers[key].remove === true) {
+        delete updatedLayers[key]; // Remove the key from Object A
+      } else {
+        updatedLayers[key] = layers[key];
+      }
+    }
+
+    return updatedLayers;
   }
 
   const displaySingleLayer = (item) => {
@@ -115,19 +138,20 @@ function GroupedListComponent(props) {
   const findLayerToShow = (item) => {
     const layerParent = item.type_title.toUpperCase();
     const layerName = item.dataset_title.toUpperCase();
+    let layer;
 
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive) {
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
-          const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'));
+          const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName);
           webTileLayer.then(layer => {
             setRegionLayers({ ...regionLayers, [layerName]: layer });
             map.add(layer);
           });
         }
       } else {
-        const { [layerName]: name, ...rest } = regionLayers;
-        setRegionLayers(rest);
+        // const { [layerName]: name, ...rest } = regionLayers;
+        // setRegionLayers(rest);
         map.remove(regionLayers[layerName]);
       }
     }
@@ -143,13 +167,14 @@ function GroupedListComponent(props) {
             name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`
           }
 
-          const jsonLayer = EsriFeatureService.getGeoJsonLayer(name);
-          setRegionLayers({ ...regionLayers, [layerName]: jsonLayer });
-          map.add(jsonLayer);
+          layer = EsriFeatureService.getGeoJsonLayer(name, layerName);
+          setRegionLayers({ ...regionLayers, [layerName]: layer });
+          map.add(layer);
         }
       } else {
-        const { [layerName]: name, ...rest } = regionLayers;
-        setRegionLayers(rest);
+        // const { [layerName]: name, ...rest } = activeLayers;
+        // setRegionLayers(rest);
+        // activeLayers = rest;
         map.remove(regionLayers[layerName]);
       }
     }
