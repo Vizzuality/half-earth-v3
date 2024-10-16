@@ -13,7 +13,7 @@ import { NAVIGATION } from '../../utils/dashboard-utils';
 
 function DashboardNavComponent(props) {
   const t = useT();
-  const { selectedIndex, setSelectedIndex } = props;
+  const { selectedIndex, setSelectedIndex, speciesName } = props;
   const { lightMode, } = useContext(LightModeContext);
 
   const titles = {
@@ -56,8 +56,10 @@ function DashboardNavComponent(props) {
         <button
           type="button"
           aria-label={t('Species')}
+          disabled={!speciesName}
           className={cx({
             [styles.selected]: selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS,
+            [styles.disabled]: !speciesName
           })}
           onClick={() => {
             updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER);

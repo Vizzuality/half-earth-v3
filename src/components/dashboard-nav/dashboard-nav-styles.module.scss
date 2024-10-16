@@ -70,6 +70,15 @@
           fill: var(--svg-selected-fill);
         }
       }
+
+      &.disabled{
+        cursor: not-allowed;
+        background: transparent;
+
+        svg{
+          fill: var(--svg-fill);
+        }
+      }
     }
   }
 }

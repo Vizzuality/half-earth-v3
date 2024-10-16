@@ -80,10 +80,10 @@ function RegionsAnalysisComponent(props) {
           value={selectedRegionOption}
         >
           <FormControlLabel value="protectedAreas" control={<Radio />} label={t('Protected Areas')} />
-          <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} />
+          {/* <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} /> */}
           <FormControlLabel value="provinces" control={<Radio />} label={t('Provinces')} />
-          <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} />
-          <FormControlLabel value="communityForests" control={<Radio />} label={t('Community Forests')} />
+          {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}
+          {/* <FormControlLabel value="communityForests" control={<Radio />} label={t('Community Forests')} /> */}
         </RadioGroup>
       </div>
       {/* <div className={styles.search}>

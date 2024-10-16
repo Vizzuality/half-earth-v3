@@ -91,18 +91,18 @@ function ScoreDistributionsShiComponent(props) {
         },
       },
     },
-    onClick: (event, elements) => {
-      if (elements.length > 0) {
-        console.log(elements);
-        const datasetIndex = elements[0].datasetIndex;
-        const dataIndex = elements[0].index;
-        const value = chartData.datasets[datasetIndex].data[dataIndex];
-        console.log(value);
+    // onClick: (event, elements) => {
+    //   if (elements.length > 0) {
+    //     console.log(elements);
+    //     const datasetIndex = elements[0].datasetIndex;
+    //     const dataIndex = elements[0].index;
+    //     const value = chartData.datasets[datasetIndex].data[dataIndex];
+    //     console.log(value);
 
-        setLowBucket(dataIndex * bucketSize);
-        setHighBucket((dataIndex * bucketSize) + bucketSize)
-      }
-    }
+    //     setLowBucket(dataIndex * bucketSize);
+    //     setHighBucket((dataIndex * bucketSize) + bucketSize)
+    //   }
+    // }
   };
 
   useEffect(() => {
