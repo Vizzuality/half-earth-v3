@@ -2,8 +2,8 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
-    LAYER_OPTIONS, PROTECTED_AREA_FEATURE_URL, PROTECTED_AREA_VECTOR_URL,
-    PROVINCE_FEATURE_LAYER_URL, PROVINCE_VECTOR_URL
+    EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
+    PROTECTED_AREA_VECTOR_URL, PROVINCE_FEATURE_LAYER_URL, PROVINCE_VECTOR_URL, TREND_MAP_URL
 } from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -71,8 +71,16 @@ function getGeoJsonLayer(scientificname, id){
   });
 }
 
-async function getXYZLayer(scientificname, id){
-  const response = await fetch(`https://next-api-dot-map-of-life.appspot.com/2.x/species/drc_rangemap?scientificname=${scientificname}`);
+async function getXYZLayer(scientificname, id, type){
+  let url;
+
+  if(type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS){
+    url = `${EXPERT_RANGE_MAP_URL}?scientificname=${scientificname}`;
+  } else if(type === LAYER_TITLE_TYPES.TREND){
+    url = `${TREND_MAP_URL}?scientificname=${scientificname}`;
+  }
+
+  const response = await fetch(url);
   const data = await response.json();
 
   return new WebTileLayer({
@@ -139,24 +147,24 @@ function addFeature({ url, features }: AddFeature) {
   });
 }
 
-function addProvinceLayer(){
-  const featureLayer = getFeatureLayer(PROVINCE_FEATURE_LAYER_URL, LAYER_OPTIONS.PROVINCES);
+function addProvinceLayer(id){
+  const featureLayer = getFeatureLayer(PROVINCE_FEATURE_LAYER_URL, id ?? LAYER_OPTIONS.PROVINCES);
   const vectorTileLayer = getVectorTileLayer(PROVINCE_VECTOR_URL, LAYER_OPTIONS.PROVINCES_VECTOR);
   const groupLayer = new GroupLayer({
     layers: [featureLayer, vectorTileLayer],
-    id: LAYER_OPTIONS.PROVINCES
+    id: id ?? LAYER_OPTIONS.PROVINCES
   });
 
   return { groupLayer, featureLayer, vectorTileLayer };
 }
 
-function addProtectedAreaLayer(){
-  const featureLayer = getFeatureLayer(PROTECTED_AREA_FEATURE_URL, LAYER_OPTIONS.PROTECTED_AREAS);
+function addProtectedAreaLayer(id){
+  const featureLayer = getFeatureLayer(PROTECTED_AREA_FEATURE_URL, id ?? LAYER_OPTIONS.PROTECTED_AREAS);
   const vectorTileLayer = getVectorTileLayer(PROTECTED_AREA_VECTOR_URL, LAYER_OPTIONS.PROTECTED_AREAS_VECTOR);
 
   const groupLayer = new GroupLayer({
     layers: [featureLayer],
-    id: LAYER_OPTIONS.PROTECTED_AREAS,
+    id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
   });
 
   return { groupLayer, featureLayer, vectorTileLayer };

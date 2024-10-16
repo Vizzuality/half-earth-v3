@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ArrowIcon from 'icons/arrow_right.svg?react';
 import EsriFeatureService from 'services/esri-feature-service';
-import { LAYER_TITLE_TYPES } from 'utils/dashboard-utils.js';
+import { LAYER_TITLE_TYPES, LAYER_OPTIONS } from 'utils/dashboard-utils.js';
 
 import styles from './grouped-list-styles.module.scss';
 import { useT } from '@transifex/react';
@@ -38,12 +38,6 @@ function GroupedListComponent(props) {
       }
     });
   };
-
-  const protectedAreasURL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_WDPA_all/VectorTileServer';
-  const vtLayer = EsriFeatureService.getVectorTileLayer(protectedAreasURL);
-
-  const administrativeLayerURL = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_provinces_spi_oct4/MapServer`;
-  const administrativeLayer = EsriFeatureService.getTileLayer(administrativeLayerURL);
 
   // update value of all children
   const updateChildren = (item) => {
@@ -113,8 +107,13 @@ function GroupedListComponent(props) {
     if (typeof item === 'string') {
       if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'PROTECTED AREAS') {
         if (!dataPoints[item].isActive) {
-          setRegionLayers({ ...regionLayers, [item.toUpperCase()]: vtLayer });
-          map.add(vtLayer);
+          const layers = EsriFeatureService.addProtectedAreaLayer(item.toUpperCase());
+
+          setRegionLayers({
+            ...regionLayers,
+            [item.toUpperCase()]: layers.featureLayer,
+          });
+          map.add(layers.featureLayer);
         } else {
           const layer = regionLayers[item.toUpperCase()];
           const { [item.toUpperCase()]: name, ...rest } = regionLayers;
@@ -123,13 +122,31 @@ function GroupedListComponent(props) {
         }
       } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
         if (!dataPoints[item].isActive) {
-          setRegionLayers({ ...regionLayers, [item.toUpperCase()]: administrativeLayer });
-          map.add(administrativeLayer);
+          const layers = EsriFeatureService.addProvinceLayer(item.toUpperCase());
+
+          setRegionLayers({
+            ...regionLayers,
+            [item.toUpperCase()]: layers.featureLayer,
+          });
+          map.add(layers.featureLayer);
         } else {
           const layer = regionLayers[item.toUpperCase()];
           const { [item.toUpperCase()]: name, ...rest } = regionLayers;
           setRegionLayers(rest);
           map.remove(layer);
+        }
+      } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'TRENDS') {
+        const layerName = item.toUpperCase();
+        if (!dataPoints[item].isActive) {
+          const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
+          webTileLayer.then(layer => {
+            setRegionLayers({ ...regionLayers, [layerName]: layer });
+            map.add(layer);
+          });
+        } else {
+          // const { [layerName]: name, ...rest } = regionLayers;
+          // setRegionLayers(rest);
+          map.remove(regionLayers[layerName]);
         }
       }
     }
@@ -143,7 +160,7 @@ function GroupedListComponent(props) {
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive) {
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
-          const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName);
+          const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS);
           webTileLayer.then(layer => {
             setRegionLayers({ ...regionLayers, [layerName]: layer });
             map.add(layer);

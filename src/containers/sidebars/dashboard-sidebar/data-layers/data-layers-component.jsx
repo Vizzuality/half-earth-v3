@@ -47,6 +47,12 @@ function DataLayerComponent(props) {
       isActive: false,
       showChildren: false,
     },
+    'Trends': {
+      items: [],
+      total_no_rows: '',
+      isActive: false,
+      showChildren: false,
+    },
   })
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,25 +70,27 @@ function DataLayerComponent(props) {
   const groupByTypeTitle = (arr) => {
     return arr.reduce((acc, obj) => {
       const key = obj.type_title;
-      if (!acc[key]) {
-        acc[key] = {
-          items: [],
-          total_no_rows: 0,
-          isActive: false,
-          showChildren: false,
-        };
+      if (key.toUpperCase() === 'EXPERT RANGE MAPS' || key.toUpperCase() === 'POINT OBSERVATIONS') {
+        if (!acc[key]) {
+          acc[key] = {
+            items: [],
+            total_no_rows: 0,
+            isActive: false,
+            showChildren: false,
+          };
+        }
+        obj.isActive = false;
+        /// TODO: Remove Expert Range Maps restriction
+        // if (key.toUpperCase() === 'EXPERT RANGE MAPS') {
+        //   if (acc[key].items < 2) {
+        //     acc[key].items.push(obj);
+        //     acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+        //   }
+        // } else {
+        acc[key].items.push(obj);
+        acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+        // }
       }
-      obj.isActive = false;
-      /// TODO: Remove Expert Range Maps restriction
-      // if (key.toUpperCase() === 'EXPERT RANGE MAPS') {
-      //   if (acc[key].items < 2) {
-      //     acc[key].items.push(obj);
-      //     acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
-      //   }
-      // } else {
-      acc[key].items.push(obj);
-      acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
-      // }
       return acc;
     }, {});
   }

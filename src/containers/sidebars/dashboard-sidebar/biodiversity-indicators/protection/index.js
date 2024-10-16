@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getCSSVariable } from 'utils/css-utils';
 import ProtectionComponent from './protection-component';
+import { useT } from '@transifex/react';
 
 function ProtectionContainer(props) {
+  const t = useT();
   const {protectionTableData, countryName, dataByCountry, lightMode,} = props;
   const [selectedCountry, setSelectedCountry] = useState('Global');
   const [shiCountries, setShiCountries] = useState([]);
@@ -50,7 +52,7 @@ function ProtectionContainer(props) {
         display: true,
         title: {
           display: true,
-          text: 'Year',
+          text: t('Year'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -65,7 +67,7 @@ function ProtectionContainer(props) {
         display: true,
         title: {
           display: true,
-          text: 'Species Habitat Score',
+          text: t('Species Protection Score'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {

@@ -19,7 +19,6 @@ function DashboardSidebar(props) {
   const t = useT();
   const { countryName, taxaList, selectedIndex, map, regionLayers, setRegionLayers } = props;
 
-
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   // useEffect(() => {

@@ -4,8 +4,10 @@ import HabitatComponent from './habitat-component';
 import ArrowUpward from 'icons/arrow-up-solid.svg?react';
 import ArrowDownward from 'icons/arrow-down-solid.svg?react';
 import Stable from 'icons/minus-solid.svg?react';
+import { useT } from '@transifex/react';
 
 function HabitatContainer(props) {
+  const t = useT();
   const { lightMode, habitatTableData, dataByCountry, countryName, habitatScore, globalHabitatScore } = props;
 
   const [selectedCountry, setSelectedCountry] = useState('Global');
@@ -37,7 +39,7 @@ function HabitatContainer(props) {
         display: true,
         title: {
           display: true,
-          text: 'Year',
+          text: t('Year'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -52,7 +54,7 @@ function HabitatContainer(props) {
         display: true,
         title: {
           display: true,
-          text: 'Species Habitat Score',
+          text: t('Species Habitat Score'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {

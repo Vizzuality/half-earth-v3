@@ -21,6 +21,11 @@ function RegionsAnalysisComponent(props) {
   const { view, selectedOption, map, regionLayers, setRegionLayers, selectedRegionOption, setSelectedRegionOption } = props;
   const { lightMode } = useContext(LightModeContext);
 
+  useEffect(() => {
+    setSelectedRegionOption(null);
+  }, [])
+
+
   const optionSelected = (event) => {
     removeRegionLayers();
     let layers;
@@ -39,9 +44,8 @@ function RegionsAnalysisComponent(props) {
 
       setRegionLayers({
         [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
-        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer
       });
-      map.add(layers.groupLayer);
+      map.add(layers.featureLayer);
     }
 
     setSelectedRegionOption(option);

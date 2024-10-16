@@ -44,7 +44,7 @@ function ProtectionComponent(props) {
       </p>
       <div className={styles.scores}>
         <div className={styles.metric}>
-          <label>{countryName}</label>
+          <label>{t(countryName)}</label>
           <div className={styles.score}>
             <div className={styles.chartWrapper}>
               <b>{protectionScore}</b>
@@ -96,7 +96,7 @@ function ProtectionComponent(props) {
         </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.blue)}></div>
-          <label>{countryName}</label>
+          <label>{t(countryName)}</label>
           <div className={cx(styles.legendBox, styles.green)}></div>
           <label>{selectedCountry}</label>
         </div>

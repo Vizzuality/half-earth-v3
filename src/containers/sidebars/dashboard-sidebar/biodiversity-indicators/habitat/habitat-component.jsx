@@ -43,7 +43,7 @@ function HabitatComponent(props) {
       </p>
       <div className={styles.scores}>
         <div className={styles.metric}>
-          <label>{countryName}</label>
+          <label>{t(countryName)}</label>
           <div className={styles.score}>
             <span className={cx(styles['material-symbols-outlined'], styles[countryTrend])}>
               {countryTrendIcon}
@@ -53,7 +53,7 @@ function HabitatComponent(props) {
               <span className={styles.desc}>
                 <T
                   _str='Suitable habitat lost in {countryName} since {startYear}'
-                  countryName={countryName}
+                  countryName={t(countryName)}
                   startYear={startYear}
                 />
               </span>
@@ -89,7 +89,7 @@ function HabitatComponent(props) {
         </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.blue)}></div>
-          <label>{countryName}</label>
+          <label>{t(countryName)}</label>
           <div className={cx(styles.legendBox, styles.green)}></div>
           <label>{selectedCountry}</label>
         </div>

@@ -109,6 +109,8 @@ function DashboardContainer(props) {
   }
 
   const getDataLayersData = async () => {
+    // setDataLayerData(null);
+
     const dataLayerParams = {
       scientificname: speciesName,
       group: 'movement',
@@ -135,11 +137,11 @@ function DashboardContainer(props) {
     const gbifCount = speciesObservationData.find(sod => sod.which === 'gbif');
 
     dataLayersData.map(dld => {
-      if(dld.dataset_title.toUpperCase().match(/EBIRD/)){
+      if(ebirdCount && dld.dataset_title.toUpperCase().match(/EBIRD/)){
         dld.no_rows = ebirdCount.n;
       }
 
-      if(dld.dataset_title.toUpperCase().match(/GBIF/)){
+      if(gbifCount && dld.dataset_title.toUpperCase().match(/GBIF/)){
         dld.no_rows = gbifCount.n;
       }
     })
@@ -192,7 +194,6 @@ function DashboardContainer(props) {
       }
     });
     const data = await response.json();
-
 
     const seasons = [
       '',
