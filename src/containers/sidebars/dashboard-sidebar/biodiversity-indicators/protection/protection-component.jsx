@@ -38,7 +38,7 @@ function ProtectionComponent(props) {
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      <div className={styles.scores}>
+      {/* <div className={styles.scores}>
         <div className={styles.metric}>
           <label>{t(countryName)}</label>
           <div className={styles.score}>
@@ -75,7 +75,7 @@ function ProtectionComponent(props) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className={styles.chart}>
         <div className={styles.compareWrap}>
           <label className={styles.compare}>{t('Compare')}</label>

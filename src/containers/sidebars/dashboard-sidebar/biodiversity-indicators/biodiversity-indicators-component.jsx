@@ -47,7 +47,7 @@ function BioDiversityComponent(props) {
             })}
             onClick={() => setSelectedTab(2)}
           >
-            <span>{protectionScore}%</span>
+            <label>{protectionScore}%</label>
             <span>{t('Protection Score')}</span>
           </button>
           <button
@@ -58,7 +58,7 @@ function BioDiversityComponent(props) {
             })}
             onClick={() => setSelectedTab(1)}
           >
-            <span>{habitatScore}%</span>
+            <label>{habitatScore}%</label>
             <span>{t('Habitat Score')}</span>
           </button>
           {/* <button
