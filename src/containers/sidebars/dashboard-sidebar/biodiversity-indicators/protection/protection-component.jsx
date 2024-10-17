@@ -36,7 +36,6 @@ function ProtectionComponent(props) {
   const [totalArea, setTotalArea] = useState(0);
   const [globalArea, setGlobalArea] = useState(0);
 
-
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.scores}>

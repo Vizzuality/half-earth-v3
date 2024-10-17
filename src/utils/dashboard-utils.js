@@ -19,6 +19,7 @@ export const LAYER_OPTIONS = {
   PROVINCES_VECTOR: 'PROVINCES_VECTOR',
   PRIORITY_AREAS: 'PRIORITY_AREAS',
   COMMUNITY_FORESTS: 'COMMUNITY_FORESTS',
+  HABITAT: 'HABITAT',
 }
 
 export const PROVINCE_FEATURE_LAYER_URL = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/FeatureServer`;

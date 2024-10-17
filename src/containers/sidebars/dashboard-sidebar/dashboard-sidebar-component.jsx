@@ -11,13 +11,14 @@ import { LightModeContext } from '../../../context/light-mode';
 import DashboardNav from '../../../components/dashboard-nav';
 import DashboardHomeContainer from './dashboard-home';
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
-import { LAYER_OPTIONS, NAVIGATION } from '../../../utils/dashboard-utils';
+import { LAYER_OPTIONS, LAYER_TITLE_TYPES, NAVIGATION } from '../../../utils/dashboard-utils';
 import SpeciesFilterContainer from './species-filter';
 import RegionsAnalysisContainer from './regions-analysis';
+import EsriFeatureService from 'services/esri-feature-service';
 
 function DashboardSidebar(props) {
   const t = useT();
-  const { countryName, selectedIndex, map, regionLayers, setRegionLayers } = props;
+  const { countryName, selectedIndex, map, regionLayers, setRegionLayers, speciesInfo } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
@@ -25,6 +26,27 @@ function DashboardSidebar(props) {
     if (selectedIndex !== NAVIGATION.TRENDS) {
       removeRegionLayers();
       setRegionLayers({});
+    }
+
+    if (selectedIndex === NAVIGATION.BIO_IND) {
+      if (!regionLayers.hasOwnProperty(LAYER_OPTIONS.HABITAT)) {
+        const layerName = LAYER_OPTIONS.HABITAT;
+        const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
+        webTileLayer.then(layer => {
+          setRegionLayers({ ...regionLayers, [layerName]: layer });
+          map.add(layer);
+        });
+      }
+
+      if (!regionLayers.hasOwnProperty(LAYER_OPTIONS.PROTECTED_AREAS)) {
+        const layers = EsriFeatureService.addProtectedAreaLayer();
+
+        setRegionLayers({
+          ...regionLayers,
+          [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
+        });
+        map.add(layers.featureLayer);
+      }
     }
   }, [selectedIndex]);
 
