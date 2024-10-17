@@ -29,24 +29,18 @@ function DashboardSidebar(props) {
     }
 
     if (selectedIndex === NAVIGATION.BIO_IND) {
-      if (!regionLayers.hasOwnProperty(LAYER_OPTIONS.HABITAT)) {
-        const layerName = LAYER_OPTIONS.HABITAT;
-        const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
-        webTileLayer.then(layer => {
-          setRegionLayers({ ...regionLayers, [layerName]: layer });
-          map.add(layer);
-        });
-      }
-
-      if (!regionLayers.hasOwnProperty(LAYER_OPTIONS.PROTECTED_AREAS)) {
-        const layers = EsriFeatureService.addProtectedAreaLayer();
-
+      const protectedLayers = EsriFeatureService.addProtectedAreaLayer();
+      const layerName = LAYER_OPTIONS.HABITAT;
+      const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
+      webTileLayer.then(layer => {
         setRegionLayers({
           ...regionLayers,
-          [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
+          [layerName]: layer,
+          [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers.featureLayer,
         });
-        map.add(layers.featureLayer);
-      }
+        map.add(layer);
+        map.add(protectedLayers.featureLayer);
+      });
     }
   }, [selectedIndex]);
 
