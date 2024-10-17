@@ -243,6 +243,7 @@ function GroupedListComponent(props) {
   const getCheckbox = (item) => {
     let control = <FormControlLabel
       label={t(item.dataset_title)}
+      style={{ textTransform: item.dataset_title.match(/(jetz|ebird)/i) ? 'none' : '' }}
       control={<Checkbox onClick={() => findLayerToShow(item)} checked={item.isActive} />}
     />
 

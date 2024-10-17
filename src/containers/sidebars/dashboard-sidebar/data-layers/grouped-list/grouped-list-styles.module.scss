@@ -47,6 +47,7 @@
     align-items: center;
     margin-left: 15px;
     color: var(--font-color);
+    text-transform: capitalize;
 
     span{
       color: var(--font-color);
@@ -54,8 +55,6 @@
       &[aria-disabled="true"]{
         color: var(--disabled);
       }
-
-      text-transform: capitalize;
     }
 
     > span{
