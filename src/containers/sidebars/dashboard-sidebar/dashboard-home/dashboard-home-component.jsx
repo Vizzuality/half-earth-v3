@@ -97,32 +97,32 @@ function DashboardHomeComponent(props) {
         <div className={styles.mostPopular}>
           <span className={styles.sectionTitle}>{t('Popular Species')}</span>
           <div className={styles.species}>
-            <div className={cx(styles.navCard, styles.chat)} onClick={() => selectSpecies('Cossypha polioptera')} >
+            <div className={cx(styles.navCard, styles.chat)} onClick={() => selectSpecies('Apalis personata')} >
               <div className={styles.outline}></div>
-              <label>Grey Winged Robin Chat</label>
+              <label>Black-Faced Apalis</label>
               <p>
-                Cossypha polioptera
+                Apalis personata
               </p>
             </div>
-            <div className={cx(styles.navCard, styles.pilio)} onClick={() => selectSpecies('Piliocolobus parmentieri')} >
+            <div className={cx(styles.navCard, styles.pilio)} onClick={() => selectSpecies('Hyperolius cinnamomeoventris')} >
               <div className={styles.outline}></div>
-              <label>Piliocolobus parmentieri</label>
+              <label>Braganca Reed Frog</label>
               <p>
-                Piliocolobus parmentieri
+                Hyperolius cinnamomeoventris
               </p>
             </div>
-            <div className={cx(styles.navCard, styles.egg)} onClick={() => selectSpecies('Dasypeltis palmarum')} >
+            <div className={cx(styles.navCard, styles.egg)} onClick={() => selectSpecies('Lophocebus aterrimus')} >
               <div className={styles.outline}></div>
-              <label>Palm Egg Eater</label>
+              <label>Black Crested Mangabey</label>
               <p>
-                Dasypeltis palmarum
+                Lophocebus aterrimus
               </p>
             </div>
-            <div className={cx(styles.navCard, styles.frog)} onClick={() => selectSpecies('Ptychadena bunoderma')} >
+            <div className={cx(styles.navCard, styles.frog)} onClick={() => selectSpecies('Trioceros johnstoni')} >
               <div className={styles.outline}></div>
-              <label>Caconda Grassland Frog</label>
+              <label>Johnston's Chameleon</label>
               <p>
-                Ptychadena bunoderma
+                Trioceros johnstoni
               </p>
             </div>
           </div>
