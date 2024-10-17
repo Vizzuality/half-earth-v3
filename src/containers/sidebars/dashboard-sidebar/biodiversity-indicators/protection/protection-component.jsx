@@ -89,11 +89,6 @@ function ProtectionComponent(props) {
             ))}
           </select>
         </div>
-        <div className={styles.labels}>
-          <label className={styles.dashed}>{t('Area')}</label>
-          <label className={styles.dotted}>{t('Connectivity')}</label>
-          <label className={styles.solid}>{t('Total')}</label>
-        </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.blue)}></div>
           <label>{t(countryName)}</label>

@@ -34,13 +34,13 @@ function DashboardContainer(props) {
   const [dataLayerData, setDataLayerData] = useState(null);
   const [taxaList, setTaxaList] = useState([])
   const [dataByCountry, setDataByCountry] = useState(null);
+  const [spiDataByCountry, setSpiDataByCountry] = useState(null);
   const [selectedTaxa, setSelectedTaxa] = useState('');
   const [filteredTaxaList, setFilteredTaxaList] = useState();
   const [speciesName, setSpeciesName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
   const [loggedIn, setLoggedIn] = useState(false);
-
-  const speciesListUrl = 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list';
+  const [selectedRegion, setSelectedRegion] = useState();
 
   // Get Country information, allows to get country name
   useEffect(() => {
@@ -71,13 +71,19 @@ function DashboardContainer(props) {
       setCountryDataError(error);
     });
 
-    getSpeciesList();
+    // getSpeciesList();
 
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('popstate', handleBackButton);
     };
   }, []);
+
+  useEffect(() => {
+    getSpeciesList();
+
+  }, [selectedRegion])
+
 
   useEffect(() => {
     if(!scientificName) return;
@@ -137,12 +143,20 @@ function DashboardContainer(props) {
     const gbifCount = speciesObservationData.find(sod => sod.which === 'gbif');
 
     dataLayersData.map(dld => {
-      if(ebirdCount && dld.dataset_title.toUpperCase().match(/EBIRD/)){
-        dld.no_rows = ebirdCount.n;
+      if(dld.dataset_title.toUpperCase().match(/EBIRD/)){
+        if(ebirdCount){
+          dld.no_rows = ebirdCount.n;
+        } else {
+          dld.no_rows = 0;
+        }
       }
 
-      if(gbifCount && dld.dataset_title.toUpperCase().match(/GBIF/)){
-        dld.no_rows = gbifCount.n;
+      if(dld.dataset_title.toUpperCase().match(/GBIF/)){
+        if(gbifCount){
+          dld.no_rows = gbifCount.n;
+        } else {
+          dld.no_rows = 0;
+        }
       }
     })
 
@@ -161,11 +175,13 @@ function DashboardContainer(props) {
     const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${speciesName}`;
     const reserveCoverageMetricsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/reserve-coverage/metrics?scientificname=${speciesName}&${params}`;
     const habitatMetricesUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-distribution/metrics?scientificname=${speciesName}&${params}`;
+    const spiScoreURL = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${speciesName}`
 
     const apiCalls = [
       habitatTrendUrl,
       reserveCoverageMetricsUrl,
       habitatMetricesUrl,
+      spiScoreURL
     ];
 
     const apiResponses = await Promise.all(apiCalls.map(async (url) => {
@@ -174,16 +190,21 @@ function DashboardContainer(props) {
       return data;
     }));
 
-    const [habitatTrendData, reserveCoverageData, habitatMetricesData] = apiResponses;
+    const [habitatTrendData, reserveCoverageData, habitatMetricesData, spiScoreData] = apiResponses;
     getDataByCountry(habitatTrendData);
+    getSpiDataByCountry(spiScoreData);
 
-    setData({habitatTrendData, reserveCoverageData, habitatMetricesData});
+    setData({habitatTrendData, reserveCoverageData, habitatMetricesData, spiScoreData});
   }
 
   const getSpeciesList = async () => {
+    const speciesListUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list`;
+    // 2.x/spatial/species/list?region_dataset_id=gadm_states&region_attribute=GID_1&region_attribute_value=COD.10_1
+
     // TODO: Use mol-country-attribute.json file to find MOL Region ID for ISO value
     const params = makeSpeciesListParams({
       region_id: '44b3bc0a-e617-4785-9123-7e6e5349b07d',
+      ...selectedRegion,
     });
     const response = await fetch(speciesListUrl, {
       method: 'POST',
@@ -261,6 +282,13 @@ function DashboardContainer(props) {
     if (args.region_id) {
       params.region_id = args.region_id;
     }
+    if(args.WDPA_PID){
+      params.WDPA_PID = args.WDPA_PID;
+    }
+    if(args.GID_1){
+      params.GID_1 = args.GID_1;
+    }
+
     if (summary) {
       params.summary = 'true';
     }
@@ -280,6 +308,19 @@ function DashboardContainer(props) {
       use_h: preferences.use_h.toString(),
       use_f: preferences.use_f.toString(),
     }
+  }
+
+  const getSpiDataByCountry = d => {
+    let spiCountryData = d.reduce((acc, obj) => {
+        const key = obj.country_name;
+        if (!acc[key]) {
+          acc[key] = { shs: [] };
+        }
+        acc[key].shs.push(obj);
+        return acc;
+      }, {});
+
+      setSpiDataByCountry(spiCountryData);
   }
 
   const getDataByCountry = (d) => {
@@ -340,6 +381,7 @@ function DashboardContainer(props) {
     data={data}
     dataLayerData={dataLayerData}
     dataByCountry={dataByCountry}
+    spiDataByCountry={spiDataByCountry}
     taxaList={taxaList}
     selectedTaxa={selectedTaxa}
     setSelectedTaxa={setSelectedTaxa}
@@ -351,6 +393,7 @@ function DashboardContainer(props) {
     setSelectedIndex={setSelectedIndex}
     loggedIn={loggedIn}
     setLoggedIn={setLoggedIn}
+    setSelectedRegion={setSelectedRegion}
     {...props} />;
 }
 

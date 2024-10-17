@@ -5,7 +5,7 @@ import { useT } from '@transifex/react';
 
 function ProtectionContainer(props) {
   const t = useT();
-  const {protectionTableData, countryName, dataByCountry, lightMode,} = props;
+  const {protectionTableData, countryName, dataByCountry, lightMode, spiDataByCountry} = props;
   const [selectedCountry, setSelectedCountry] = useState('Global');
   const [shiCountries, setShiCountries] = useState([]);
   const [globalScore, setGlobalScore] = useState(0);
@@ -87,23 +87,23 @@ function ProtectionContainer(props) {
 
   const getChartData = (countrySelected) => {
     const dates = [];
-    const currentCountry = dataByCountry[countryName];
-    const globalCountry = dataByCountry.Global;
+    const currentCountry = spiDataByCountry[countryName];
+    const globalCountry = spiDataByCountry.Global;
 
     const defaultCountryScores = { values: [] };
     const selectedCountryScores = { values: [] };
 
     if (currentCountry) {
       currentCountry.shs?.forEach(row => {
-        defaultCountryScores.values.push(row.propchange * 100);
+        defaultCountryScores.values.push(row.shs_score);
       });
 
-      dataByCountry[countrySelected]?.shs.forEach(row => {
+      spiDataByCountry[countrySelected]?.shs.forEach(row => {
         dates.push(row.year);
-        selectedCountryScores.values.push(row.propchange * 100);
+        selectedCountryScores.values.push(row.shs_score);
       });
 
-      if (globalCountry.shs.length) {
+      if (globalCountry?.shs.length) {
         setGlobalScore(globalCountry.shs[globalCountry.shs.length - 1].val - 100);
       }
     }

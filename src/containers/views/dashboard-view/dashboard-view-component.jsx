@@ -10,7 +10,7 @@ import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
 
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
 import TopMenuContainer from '../../../components/top-menu';
-import { LAYER_OPTIONS } from '../../../utils/dashboard-utils';
+import { LAYER_OPTIONS, NAVIGATION } from '../../../utils/dashboard-utils';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -30,6 +30,8 @@ function DashboardViewComponent(props) {
     openedModal,
     geometry,
     selectedIndex,
+    setSelectedIndex,
+    setSelectedRegion,
   } = props;
 
   const [map, setMap] = useState(null);
@@ -68,7 +70,22 @@ function DashboardViewComponent(props) {
 
       hits = await hitTest(event);
       if (hits) {
-        setClickedRegion(hits.attributes);
+        switch (selectedIndex) {
+          case NAVIGATION.REGION:
+            const { WDPA_PID, GID_1 } = hits.attributes;
+            setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+            if (WDPA_PID) {
+              setSelectedRegion({ WDPA_PID });
+            }
+
+            if (GID_1) {
+              setSelectedRegion({ GID_1 });
+            }
+            break;
+          case NAVIGATION.TRENDS:
+            setClickedRegion(hits.attributes);
+            break;
+        }
 
         highlight = layerView.highlight(hits.graphic);
       }
