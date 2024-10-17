@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Loading } from 'he-components';
 import Button from 'components/button';
 import { useT } from '@transifex/react';
 import styles from './filter-component-styles.module.scss';
@@ -10,7 +11,7 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 function FilterComponent(props) {
   const t = useT();
-  const { setFilteredTaxaList, selectedTaxa, taxaList, filters } = props;
+  const { setFilteredTaxaList, selectedTaxa, taxaList, filters, isLoading } = props;
 
   const [anyActive, setAnyActive] = useState(false);
   const { lightMode } = useContext(LightModeContext);
@@ -133,7 +134,8 @@ function FilterComponent(props) {
         />}
       </div>
       <hr className={hrTheme.dark} />
-      {filters.map((filterGroup, index) => {
+      {isLoading && <Loading height={200} />}
+      {!isLoading && filters.map((filterGroup, index) => {
         return (<div className={styles.filterList} key={index}>
           <div className={styles.filterGroupTitle}>{filterGroup.title}</div>
           <div className={styles.filterbox}>

@@ -17,14 +17,9 @@ import RegionsAnalysisContainer from './regions-analysis';
 
 function DashboardSidebar(props) {
   const t = useT();
-  const { countryName, taxaList, selectedIndex, map, regionLayers, setRegionLayers } = props;
+  const { countryName, selectedIndex, map, regionLayers, setRegionLayers } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
-
-  // useEffect(() => {
-  //   if (!taxaList.length) return;
-  //   setIsLoading(false);
-  // }, [taxaList]);
 
   useEffect(() => {
     if (selectedIndex !== NAVIGATION.TRENDS) {

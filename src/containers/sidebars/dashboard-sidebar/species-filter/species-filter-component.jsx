@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from '../dashboard-sidebar-styles.module.scss';
-import { Loading } from 'he-components';
 import FilterContainer from '../../../../components/filters';
 import SpeciesListContainer from '../../../../components/species-list';
 
@@ -92,7 +91,7 @@ function SpeciesFilterComponent(props) {
     },
   ];
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState(filterStart);
 
   useEffect(() => {
@@ -102,15 +101,14 @@ function SpeciesFilterComponent(props) {
 
   return (
     <div className={styles.filters}>
-      {isLoading && <Loading height={200} />}
-      {!isLoading && <>
-        <FilterContainer
-          filters={filters}
-          setFilters={setFilters}
-          {...props} />
-        <SpeciesListContainer {...props} />
-      </>
-      }
+      <FilterContainer
+        filters={filters}
+        setFilters={setFilters}
+        isLoading={isLoading}
+        {...props} />
+      <SpeciesListContainer
+        isLoading={isLoading}
+        {...props} />
     </div>
   )
 }

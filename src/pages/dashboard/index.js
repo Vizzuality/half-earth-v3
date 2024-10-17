@@ -71,7 +71,7 @@ function DashboardContainer(props) {
       setCountryDataError(error);
     });
 
-    // getSpeciesList();
+    getSpeciesList();
 
     // Cleanup event listener on component unmount
     return () => {
@@ -80,10 +80,10 @@ function DashboardContainer(props) {
   }, []);
 
   useEffect(() => {
+    if(!selectedRegion) return;
     getSpeciesList();
 
   }, [selectedRegion])
-
 
   useEffect(() => {
     if(!scientificName) return;
@@ -115,8 +115,6 @@ function DashboardContainer(props) {
   }
 
   const getDataLayersData = async () => {
-    // setDataLayerData(null);
-
     const dataLayerParams = {
       scientificname: speciesName,
       group: 'movement',
@@ -199,13 +197,16 @@ function DashboardContainer(props) {
 
   const getSpeciesList = async () => {
     const speciesListUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list`;
-    // 2.x/spatial/species/list?region_dataset_id=gadm_states&region_attribute=GID_1&region_attribute_value=COD.10_1
 
     // TODO: Use mol-country-attribute.json file to find MOL Region ID for ISO value
     const params = makeSpeciesListParams({
       region_id: '44b3bc0a-e617-4785-9123-7e6e5349b07d',
       ...selectedRegion,
     });
+
+    // province
+    // region_attribute:'GID_1',
+      // region_attribute_value:'COD.10_1'
     const response = await fetch(speciesListUrl, {
       method: 'POST',
       body: JSON.stringify(params),
@@ -283,11 +284,18 @@ function DashboardContainer(props) {
       params.region_id = args.region_id;
     }
     if(args.WDPA_PID){
-      params.WDPA_PID = args.WDPA_PID;
+      params.region_attribute = 'WDPA_PID';
+      params.region_dataset_id = 'wdpa';
+      params.region_attribute_value = args.WDPA_PID;
     }
     if(args.GID_1){
-      params.GID_1 = args.GID_1;
+      params.region_attribute = 'GID_1';
+      params.region_attribute_value = args.GID_1;
+      params.region_dataset_id = 'gadm_states';
     }
+    // if(args.region_dataset_id){
+    //   params.region_dataset_id = args.region_dataset_id;
+    // }
 
     if (summary) {
       params.summary = 'true';
@@ -383,6 +391,7 @@ function DashboardContainer(props) {
     dataByCountry={dataByCountry}
     spiDataByCountry={spiDataByCountry}
     taxaList={taxaList}
+    setTaxaList={setTaxaList}
     selectedTaxa={selectedTaxa}
     setSelectedTaxa={setSelectedTaxa}
     filteredTaxaList={filteredTaxaList}

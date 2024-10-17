@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Loading } from 'he-components';
 import styles from './species-list-component-styles.module.scss';
 import cx from 'classnames';
 import { useT } from '@transifex/react';
@@ -15,6 +16,7 @@ function SpeciesListComponent(props) {
     selectedTaxa,
     setSelectedTaxa,
     filteredTaxaList,
+    isLoading,
   } = props
 
   const { lightMode } = useContext(LightModeContext);
@@ -221,8 +223,8 @@ function SpeciesListComponent(props) {
             </div>
           )
         })}
-      </div>
-      {selectedTaxa && selectedTaxaObj &&
+      </div>{isLoading && <Loading height={200} />}
+      {!isLoading && selectedTaxa && selectedTaxaObj &&
         <div className={styles.speciesList}>
           <div className={styles.header}>
             {selectedTaxaObj?.count}&nbsp;{getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
