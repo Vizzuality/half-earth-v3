@@ -137,14 +137,14 @@ function FilterComponent(props) {
       {isLoading && <Loading height={200} />}
       {!isLoading && filters.map((filterGroup, index) => {
         return (<div className={styles.filterList} key={index}>
-          <div className={styles.filterGroupTitle}>{filterGroup.title}</div>
+          <div className={styles.filterGroupTitle}>{t(filterGroup.title)}</div>
           <div className={styles.filterbox}>
             {filterGroup.filters.map((filter, idx) => {
               return (
                 <Chip key={idx}
                   icon={filter.active ? <DoneIcon /> : <></>}
                   color={filter.active ? "success" : "primary"}
-                  label={`${filter.name}: ${filter.count}`}
+                  label={`${t(filter.name)}: ${filter.count}`}
                   onClick={() => activateFilter(filter)}></Chip>
               )
             })}

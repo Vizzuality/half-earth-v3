@@ -8,10 +8,10 @@ function SpeciesFilterComponent(props) {
   const filterStart = [
     {
       name: 'dataset',
-      title: 'Sources prévues',
+      title: 'Expected Sources',
       filters: [
         {
-          name: 'Carte de répartition des experts',
+          name: 'Expert Range Map',
           active: false,
           test: species => species.datasetList.map(d => d.product_type).indexOf('range') > -1,
           count: 0,
@@ -22,7 +22,7 @@ function SpeciesFilterComponent(props) {
     },
     {
       name: 'dataset',
-      title: 'Sources enregistrées',
+      title: 'Recorded Sources',
       filters: [
         {
           name: 'Occurrence',
@@ -33,7 +33,7 @@ function SpeciesFilterComponent(props) {
           type: 'and',
         },
         {
-          name: 'Inventaire local',
+          name: 'Local Inventory',
           active: false,
           test: species => species.datasetList.map(d => d.product_type).indexOf('localinv') >
             -1,
@@ -45,10 +45,10 @@ function SpeciesFilterComponent(props) {
     },
     {
       name: 'threat',
-      title: 'IUCN Statut',
+      title: 'IUCN Status',
       filters: [
         {
-          name: 'En danger critique d\'extinction',
+          name: 'Critically Endangered',
           active: false,
           test: species => species.traits?.threat_status_code === 'CR',
           count: 0,
@@ -56,7 +56,7 @@ function SpeciesFilterComponent(props) {
           type: 'or',
         },
         {
-          name: 'En danger',
+          name: 'Endangered',
           result: false,
           active: false,
           test: species => species.traits?.threat_status_code === 'EN',
@@ -64,7 +64,7 @@ function SpeciesFilterComponent(props) {
           type: 'or',
         },
         {
-          name: 'Vulnérable',
+          name: 'Vulnerable',
           active: false,
           test: species => species.traits?.threat_status_code === 'VU',
           count: 0,
@@ -72,7 +72,7 @@ function SpeciesFilterComponent(props) {
           result: false,
         },
         {
-          name: 'Préoccupation mineure',
+          name: 'Least Concern',
           active: false,
           test: species => species.traits?.threat_status_code === 'LC',
           count: 0,
@@ -80,7 +80,7 @@ function SpeciesFilterComponent(props) {
           result: false,
         },
         {
-          name: 'Inconnu',
+          name: 'Unknown',
           active: false,
           result: false,
           test: species => species.traits?.threat_status_code === undefined,
