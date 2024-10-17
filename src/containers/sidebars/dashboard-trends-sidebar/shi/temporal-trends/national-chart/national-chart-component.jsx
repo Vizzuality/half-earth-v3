@@ -159,21 +159,31 @@ function NationalChartComponent(props) {
       {!isLoading && <>
         <div className={styles.info}>
           <div className={styles.arcGrid}>
-            <b>{nationalScores.year}</b>
-            <b>{nationalScores.areaScore}</b>
+            <div className={styles.values}>
+              <b>{nationalScores.year}</b>
+              <span>{t('Year')}</span>
+            </div>
+            <div className={styles.values}>
+              <b>{nationalScores.areaScore}</b>
+              <span>{t('Area Score')}</span>
+            </div>
             <SpiArcChartComponent
               width="125x"
               height="75px"
               data={shiData}
               value={shiValue}
             />
-            <b>{nationalScores.connecivityScore}</b>
-            <b>{countryData?.prop_protected_ter}</b>
-            <span>{t('Year')}</span>
-            <span>{t('Area Score')}</span>
+            <div className={styles.values}>
+              <b>{nationalScores.connecivityScore}</b>
+              <span>{t('Connectivity Score')}</span>
+            </div>
+            <div className={styles.values}>
+              <b>{countryData?.prop_protected_ter}</b>
+              <span>{t('Global Ranking')}</span>
+            </div>
+            <span></span>
+            <span></span>
             <span>{t('SHI')}</span>
-            <span>{t('Connectivity Score')}</span>
-            <span>{t('Global Ranking')}</span>
           </div>
         </div>
         {data && (
@@ -182,7 +192,7 @@ function NationalChartComponent(props) {
           </div>
         )}
       </>}
-    </div>
+    </div >
   );
 }
 

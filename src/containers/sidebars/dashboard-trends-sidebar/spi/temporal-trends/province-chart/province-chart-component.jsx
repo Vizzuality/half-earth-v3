@@ -289,16 +289,21 @@ function ProvinceChartComponent(props) {
           </>}
         </div>
         <div className={styles.arcGrid}>
-          <b>{currentYear}</b>
+          <div className={styles.values}>
+            <b>{currentYear}</b>
+            <span>{t('Year')}</span>
+          </div>
           <SpiArcChartComponent
             width="125x"
             height="75px"
             data={spiArcData}
             value={countrySPI}
           />
-          <b>{countryProtected?.toFixed(2)}</b>
-          <span>{t('Year')}</span>
-          <span>{t('SPI')}</span>
+          <div className={styles.values}>
+            <b>{countryProtected?.toFixed(2)}</b>
+            <span>{t('SPI')}</span>
+          </div>
+          <span></span>
           <span>{t('Area Protected')}</span>
         </div>
       </div>

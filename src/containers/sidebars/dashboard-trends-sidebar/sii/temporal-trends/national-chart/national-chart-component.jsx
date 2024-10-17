@@ -143,17 +143,23 @@ function NationalChartComponent(props) {
       {!isLoading && <>
         <div className={styles.info}>
           <div className={styles.arcGrid}>
-            <b>{lastYear}</b>
+            <div className={styles.values}>
+              <b>{lastYear}</b>
+              <span>{t('Year')}</span>
+            </div>
             <SpiArcChartComponent
               width="125x"
               height="75px"
               data={spiData}
               value={spiValue}
             />
-            <b>{nationalChartData.metrics?.[1]}</b>
-            <span>{t('Year')}</span>
+            <div className={styles.values}>
+              <b>{nationalChartData.metrics?.[1]}</b>
+              <span>{t('Global Ranking')}</span>
+            </div>
+            <span></span>
             <span>SII</span>
-            <span>{t('Global Ranking')}</span>
+
           </div>
         </div>
         {data && (

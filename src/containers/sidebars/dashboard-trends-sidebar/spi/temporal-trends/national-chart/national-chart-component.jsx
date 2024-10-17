@@ -176,7 +176,10 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         <div className={styles.info}>
           {currentScore &&
             <div className={styles.arcGrid}>
-              <b>{currentScore?.year}</b>
+              <div className={styles.values}>
+                <b>{currentScore?.year}</b>
+                <span>{t('Year')}</span>
+              </div>
               <SpiArcChartComponent
                 width="125x"
                 height="75px"
@@ -189,9 +192,11 @@ function TemporalTrendsSpiNationalChartComponent(props) {
                 data={areaProtectedData}
                 value={areaProtected}
               />
-              <b>{currentScore?.national_rank}</b>
-              <span>{t('Year')}</span>
-              <span>SPI</span>
+              <div className={styles.values}>
+                <b>{currentScore?.national_rank}</b>
+                <span>SPI</span>
+              </div>
+              <span></span>
               <span>{t('Area Protected')}</span>
               <span>{t('Global Ranking')}</span>
             </div>
