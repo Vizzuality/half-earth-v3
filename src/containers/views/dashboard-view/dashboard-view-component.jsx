@@ -69,27 +69,29 @@ function DashboardViewComponent(props) {
       highlight?.remove();
       hoverHighlight?.remove();
 
-      hits = await hitTest(event);
-      if (hits) {
-        switch (selectedIndex) {
-          case NAVIGATION.REGION:
-            setTaxaList([]);
-            const { WDPA_PID, GID_1 } = hits.attributes;
-            setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
-            if (WDPA_PID) {
-              setSelectedRegion({ WDPA_PID });
-            }
+      if (selectedIndex !== NAVIGATION.BIO_IND) {
+        hits = await hitTest(event);
+        if (hits) {
+          switch (selectedIndex) {
+            case NAVIGATION.REGION:
+              setTaxaList([]);
+              const { WDPA_PID, GID_1 } = hits.attributes;
+              setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+              if (WDPA_PID) {
+                setSelectedRegion({ WDPA_PID });
+              }
 
-            if (GID_1) {
-              setSelectedRegion({ GID_1 });
-            }
-            break;
-          case NAVIGATION.TRENDS:
-            setClickedRegion(hits.attributes);
-            break;
+              if (GID_1) {
+                setSelectedRegion({ GID_1 });
+              }
+              break;
+            case NAVIGATION.TRENDS:
+              setClickedRegion(hits.attributes);
+              break;
+          }
+
+          highlight = layerView.highlight(hits.graphic);
         }
-
-        highlight = layerView.highlight(hits.graphic);
       }
     } catch { }
   }
@@ -97,13 +99,15 @@ function DashboardViewComponent(props) {
   const handlePointerMove = async (event) => {
     let hits;
     try {
-      hits = await hitTest(event);
+      if (selectedIndex !== NAVIGATION.BIO_IND) {
+        hits = await hitTest(event);
 
-      if (hits) {
-        hoverHighlight?.remove();
-        hoverHighlight = layerView.highlight(hits.graphic);
-      } else {
-        hoverHighlight?.remove();
+        if (hits) {
+          hoverHighlight?.remove();
+          hoverHighlight = layerView.highlight(hits.graphic);
+        } else {
+          hoverHighlight?.remove();
+        }
       }
     } catch { }
   }
