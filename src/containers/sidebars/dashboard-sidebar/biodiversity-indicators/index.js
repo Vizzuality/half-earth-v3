@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-
+import last from 'lodash/last';
 import BioDiversityComponent from './biodiversity-indicators-component';
 import country_attrs from '../mol-country-attributes.json';
 import { LightModeContext } from '../../../../context/light-mode';
@@ -17,8 +17,7 @@ function BioDiversityContainer(props) {
   const [protectionTableData, setProtectionTableData] = useState([]);
   const [protectionArea, setProtectionArea] = useState('0');
   const [globalProtectionArea, setGlobalProtectionArea] = useState('0');
-  const [startYear, setStartYear] = useState(1950)
-
+  const [startYear, setStartYear] = useState(1950);
 
   // get habitat score information
   useEffect(() => {
@@ -37,7 +36,7 @@ function BioDiversityContainer(props) {
       const { protectionScore, globalProtectionScore } = getProtectionScore(data.reserveCoverageData, data.habitatMetricesData);
       setProtectionScore(protectionScore);
       setGlobalProtectionScore(globalProtectionScore);
-      getProtectionTableData(data.reserveCoverageData, data.habitatMetricesData);
+      getProtectionTableData(data.spiScoreData);
     }
   }, [habitatTableData])
 
@@ -138,44 +137,19 @@ function BioDiversityContainer(props) {
     return scores;
   }
 
-  const getProtectionTableData = (protection, hdm) => {
+  const getProtectionTableData = (spiData) => {
     const tableData = [];
 
     Object.keys(dataByCountry).forEach(country => {
-      let { refined_range_size } = hdm;
-      let reserves = protection;
-
-      if (country.toLowerCase() !== 'global') {
-        const cattr = country_attrs.filter(
-          r => r.NAME === country,
-        )[0];
-
-        reserves = protection.filter(item => item.ISO3 === cattr.ISO3);
-
-        refined_range_size = hdm.refined_grouped_stats.filter(
-          r => r.ZONEID === cattr.GEO_ID,
-        )[0].sum;
-      }
-
-      const targetArea = targetProtectedArea(refined_range_size);
-      const allArea = reserves.map(r => r.sum).reduce((a, b) => a + b, 0);
-      const sps = Math.min((allArea / targetArea) * 100, 100);
-
-      const habitatStewardShip = habitatTableData.filter(
-        item => item.country === country,
-      )?.[0];
-      const stewardship = habitatStewardShip ? habitatStewardShip.stewardship : 0;
-
-      if (!Number.isNaN(sps)) {
-        // grab stewardship value from habitat table data
-        tableData.push({
-          country,
-          stewardship,
-          rangeProtected: allArea > 1000 ? parseInt(allArea, 10) : allArea,
-          targetProtected: targetArea > 1000 ? parseInt(targetArea, 10) : targetArea,
-          sps,
-        });
-      }
+      const currentCountryData = last(spiData.filter(row => row.country_name === country));
+      // grab stewardship value from habitat table data
+      tableData.push({
+        country: currentCountryData.country_name,
+        stewardship: currentCountryData.stewardship,
+        rangeProtected: currentCountryData.range_protected.toFixed(2),
+        targetProtected: currentCountryData.target_protected.toFixed(2),
+        sps: currentCountryData.shs_score.toFixed(2)
+      });
     });
 
     setProtectionTableData(tableData);

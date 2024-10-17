@@ -61,7 +61,7 @@ function BioDiversityComponent(props) {
             <span>{habitatScore}%</span>
             <span>{t('Habitat Score')}</span>
           </button>
-          <button
+          {/* <button
             type="button"
             aria-label={t('Species Information Index')}
             className={cx({
@@ -71,7 +71,7 @@ function BioDiversityComponent(props) {
           >
             <span>0.00%</span>
             <span>{t('Information Score')}</span>
-          </button>
+          </button> */}
         </div>
         {selectedTab === 1 &&
           <HabitatContainer

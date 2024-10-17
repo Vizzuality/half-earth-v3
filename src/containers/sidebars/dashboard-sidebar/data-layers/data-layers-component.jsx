@@ -149,42 +149,44 @@ function DataLayerComponent(props) {
       <SpeciesInfoContainer speciesInfo={speciesInfo} />
       <hr className={hrTheme.dark} />
       {isLoading && <Loading height={200} />}
-      <button
-        className={styles.distributionTitle}
-        type="button"
-        onClick={() => { }}
-      >
-        <span>{t('Species Data: Public')}</span>
-      </button>
-      {!isLoading && dataPoints && <DataLayersGroupedList
-        dataPoints={dataPoints}
-        setDataPoints={setDataPoints}
-        {...props} />}
-      <hr className={hrTheme.dark} />
-      <button
-        className={styles.distributionTitle}
-        type="button"
-        onClick={() => { }}
-      >
-        <span>{t('Species Data: Private')}</span>
-      </button>
-      <DataLayersGroupedList
-        dataPoints={privateDataPoints}
-        setDataPoints={setPrivateDataPoints}
-        {...props}
-      />
-      <hr className={hrTheme.dark} />
-      <button
-        className={styles.distributionTitle}
-        type="button"
-        onClick={() => { }}
-      >
-        <span>{t('Regions Data')}</span>
-      </button>
-      <DataLayersGroupedList
-        dataPoints={regionsData}
-        setDataPoints={setRegionsData}
-        {...props} />
+      {!isLoading && dataPoints && <>
+        <button
+          className={styles.distributionTitle}
+          type="button"
+          onClick={() => { }}
+        >
+          <span>{t('Species Data: Public')}</span>
+        </button>
+        <DataLayersGroupedList
+          dataPoints={dataPoints}
+          setDataPoints={setDataPoints}
+          {...props} />
+        <hr className={hrTheme.dark} />
+        <button
+          className={styles.distributionTitle}
+          type="button"
+          onClick={() => { }}
+        >
+          <span>{t('Species Data: Private')}</span>
+        </button>
+        <DataLayersGroupedList
+          dataPoints={privateDataPoints}
+          setDataPoints={setPrivateDataPoints}
+          {...props}
+        />
+        <hr className={hrTheme.dark} />
+        <button
+          className={styles.distributionTitle}
+          type="button"
+          onClick={() => { }}
+        >
+          <span>{t('Regions Data')}</span>
+        </button>
+        <DataLayersGroupedList
+          dataPoints={regionsData}
+          setDataPoints={setRegionsData}
+          {...props} />
+      </>}
     </section>
   );
 }
