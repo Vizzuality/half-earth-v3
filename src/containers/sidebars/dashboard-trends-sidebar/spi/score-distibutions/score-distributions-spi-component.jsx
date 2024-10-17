@@ -15,10 +15,11 @@ import DistributionsChartComponent from 'components/charts/distribution-chart/di
 import { LightModeContext } from '../../../../../context/light-mode';
 import { T, useT } from '@transifex/react';
 import DistributionsTableContainer from '../../shi/score-distributions/distributions-table';
+import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../../../../utils/dashboard-utils';
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();
-  const { spiData, countryISO, activeTrend, selectedProvince, year } = props;
+  const { spiData, countryISO, activeTrend, selectedProvince, year, setSelectedIndex, setSpeciesName } = props;
   const { lightMode } = useContext(LightModeContext);
   const [speciesHighlights, setSpeciesHighlights] = useState();
   const [lowBucket, setLowBucket] = useState(0);
@@ -232,6 +233,12 @@ function ScoreDistributionsSpiComponent(props) {
     }
   }
 
+  const selectSpecies = (scientificname) => {
+    setSelectedIndex(NAVIGATION.DATA_LAYER);
+    setSpeciesName(scientificname);
+    localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
+  }
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
@@ -253,7 +260,7 @@ function ScoreDistributionsSpiComponent(props) {
         {!isSpeciesLoading && <ul className={styles.spsSpecies}>
           {spsSpecies && spsSpecies.map((species, index) => {
             return (
-              <li key={index}>
+              <li key={index} onClick={() => selectSpecies(species.species)}>
                 <img src={species.asset_url} alt="species" />
                 <div className={styles.spsInfo}>
                   <span className={styles.name}>{species.species}</span>
