@@ -253,7 +253,7 @@ function ScoreDistributionsShiComponent(props) {
             handleClick={() => setShowTable(false)}
           />}
           <span className={styles.helpText}>
-            {t('Open and download a full table of species SPS and relevant traits at national and province levels for a selected year.')}
+            {t('Open and download a full table of species scores and relevant traits at national and province levels.')}
           </span>
         </div>
       </div>
