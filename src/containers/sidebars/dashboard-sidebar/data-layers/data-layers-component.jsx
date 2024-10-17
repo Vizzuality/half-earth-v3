@@ -47,18 +47,21 @@ function DataLayerComponent(props) {
       isActive: false,
       showChildren: false,
     },
-    'Trends': {
-      items: [],
-      total_no_rows: '',
-      isActive: false,
-      showChildren: false,
-    },
   })
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!dataLayerData) return;
-    setDataPoints(groupByTypeTitle(dataLayerData));
+    const publicData = {
+      ...groupByTypeTitle(dataLayerData),
+      'Habitat Loss/Gain': {
+        items: [],
+        total_no_rows: '',
+        isActive: false,
+        showChildren: false,
+      }
+    };
+    setDataPoints(publicData);
 
   }, [dataLayerData]);
 

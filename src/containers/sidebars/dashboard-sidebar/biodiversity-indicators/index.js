@@ -143,13 +143,15 @@ function BioDiversityContainer(props) {
     Object.keys(dataByCountry).forEach(country => {
       const currentCountryData = last(spiData.filter(row => row.country_name === country));
       // grab stewardship value from habitat table data
-      tableData.push({
-        country: currentCountryData.country_name,
-        stewardship: currentCountryData.stewardship,
-        rangeProtected: currentCountryData.range_protected.toFixed(2),
-        targetProtected: currentCountryData.target_protected.toFixed(2),
-        sps: currentCountryData.shs_score.toFixed(2)
-      });
+      if(currentCountryData){
+        tableData.push({
+          country: currentCountryData.country_name,
+          stewardship: currentCountryData.stewardship,
+          rangeProtected: currentCountryData.range_protected.toFixed(2),
+          targetProtected: currentCountryData.target_protected.toFixed(2),
+          sps: currentCountryData.shs_score.toFixed(2)
+        });
+      }
     });
 
     setProtectionTableData(tableData);

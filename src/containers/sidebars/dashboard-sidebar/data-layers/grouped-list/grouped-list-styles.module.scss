@@ -54,6 +54,8 @@
       &[aria-disabled="true"]{
         color: var(--disabled);
       }
+
+      text-transform: capitalize;
     }
 
     > span{

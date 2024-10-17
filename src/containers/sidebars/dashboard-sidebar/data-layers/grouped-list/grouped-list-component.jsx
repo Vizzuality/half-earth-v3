@@ -135,7 +135,7 @@ function GroupedListComponent(props) {
           setRegionLayers(rest);
           map.remove(layer);
         }
-      } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'TRENDS') {
+      } else if (item.toUpperCase() === 'PERTE/GAIN D\'HABITAT' || item.toUpperCase() === 'HABITAT LOSS/GAIN') {
         const layerName = item.toUpperCase();
         if (!dataPoints[item].isActive) {
           const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
