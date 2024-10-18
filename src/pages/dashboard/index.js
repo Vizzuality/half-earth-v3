@@ -403,6 +403,7 @@ function DashboardContainer(props) {
     loggedIn={loggedIn}
     setLoggedIn={setLoggedIn}
     setSelectedRegion={setSelectedRegion}
+    selectedRegion={selectedRegion}
     {...props} />;
 }
 

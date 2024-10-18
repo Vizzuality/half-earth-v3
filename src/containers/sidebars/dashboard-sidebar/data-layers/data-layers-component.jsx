@@ -2,20 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useT } from '@transifex/react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
-
-
+import Button from 'components/button';
 import SpeciesInfoContainer from '../species-info';
 import EsriFeatureService from 'services/esri-feature-service';
-
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-
 import styles from './data-layers-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import DataLayersGroupedList from './grouped-list';
+import { NAVIGATION } from '../../../../utils/dashboard-utils';
 
 function DataLayerComponent(props) {
   const t = useT();
-  const { map, speciesInfo, dataLayerData } = props;
+  const { map, speciesInfo, dataLayerData, selectedRegion, setSelectedIndex } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [dataLayers, setDataLayers] = useState({});
@@ -98,55 +96,20 @@ function DataLayerComponent(props) {
     }, {});
   }
 
-  // const updateOption = (layerName, showHide) => {
-  //   const visibleLayers = speciesLayers.map((l) => {
-  //     if (l.value === layerName) {
-  //       return { ...l, isChecked: showHide };
-  //     }
-  //     return l;
-  //   });
-  //   setSpeciesLayers(visibleLayers);
-  // };
-
-  // const updateLayer = (event) => {
-  //   const layerName = event.value;
-  //   const taxa = 'mammals';
-  //   const scientificname = 'Syncerus caffer';
-
-  //   const url =
-  //     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/occurrence_202301_alltaxa_drc_test/FeatureServer/0';
-
-  //   const layerToShow = speciesLayers.find((l) => l.value === layerName);
-
-  //   if (!layerToShow.isChecked) {
-  //     EsriFeatureService.getFeatures({
-  //       url,
-  //       whereClause: `taxa = '${taxa}' AND scientificname = '${scientificname}'`,
-  //       returnGeometry: true,
-  //     }).then((features) => {
-  //       const { layer } = features[0];
-  //       setDataLayers({ ...dataLayers, [layerName]: layer });
-
-  //       updateOption(layerName, true);
-
-  //       map.add(layer);
-  //     });
-  //   } else {
-  //     const layer = dataLayers[layerName];
-  //     // get remaining layers from object
-  //     const { [layerName]: name, ...rest } = dataLayers;
-  //     // set the update the dataLayers object
-  //     setDataLayers(rest);
-
-  //     updateOption(layerName, false);
-
-  //     map.remove(layer);
-  //   }
-  // };
+  const handleBack = () => {
+    setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+  }
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
-      <span className={styles.sectionTitle}>{t('Data Layers')}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span className={styles.sectionTitle}>{t('Data Layers')}</span>
+        {selectedRegion && <Button
+          className={styles.back}
+          handleClick={handleBack}
+          label={t('Back')}
+        />}
+      </div>
       <hr className={hrTheme.dark} />
 
       <SpeciesInfoContainer speciesInfo={speciesInfo} />

@@ -133,4 +133,12 @@ $trends-width: 1000px;
       width: 100%;
     }
   }
+
+  .wrapper{
+    width: 100%;
+
+    .back{
+      color: var(--font-color);
+    }
+  }
 }

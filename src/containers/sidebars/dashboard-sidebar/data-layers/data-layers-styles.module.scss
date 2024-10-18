@@ -46,6 +46,10 @@
     }
   }
 
+  .back{
+    color: var(--font-color);
+  }
+
   .areaNameEdit {
     @extend %display2;
     background-color: transparent;

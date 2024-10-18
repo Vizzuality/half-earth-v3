@@ -14,16 +14,18 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 import styles from './regions-analysis-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import { useT } from '@transifex/react';
-import { LAYER_OPTIONS } from '../../../../utils/dashboard-utils';
+import { LAYER_OPTIONS, NAVIGATION } from '../../../../utils/dashboard-utils';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
-  const { view, selectedOption, map, regionLayers, setRegionLayers, selectedRegionOption, setSelectedRegionOption } = props;
+  const { view, selectedOption, map, regionLayers, setRegionLayers, setSelectedIndex, selectedRegionOption, setSelectedRegionOption } = props;
   const { lightMode } = useContext(LightModeContext);
 
   useEffect(() => {
-    setSelectedRegionOption(null);
-  }, [])
+    if (selectedRegionOption) {
+      setSelectedIndex(NAVIGATION.EXPLORE_SPECIES)
+    }
+  }, []);
 
 
   const optionSelected = (event) => {

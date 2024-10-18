@@ -32,6 +32,7 @@ function DashboardViewComponent(props) {
     selectedIndex,
     setSelectedIndex,
     setSelectedRegion,
+    selectedRegion,
     setTaxaList,
   } = props;
 
@@ -161,6 +162,7 @@ function DashboardViewComponent(props) {
           selectedRegionOption={selectedRegionOption}
           setSelectedRegionOption={setSelectedRegionOption}
           layerView={layerView}
+          selectedRegion={selectedRegion}
           {...props} />
       </LightModeProvider>
       <CountryLabelsLayer

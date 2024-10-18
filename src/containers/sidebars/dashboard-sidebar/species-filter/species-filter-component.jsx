@@ -2,9 +2,13 @@ import { useEffect, useState } from 'react';
 import styles from '../dashboard-sidebar-styles.module.scss';
 import FilterContainer from '../../../../components/filters';
 import SpeciesListContainer from '../../../../components/species-list';
+import Button from 'components/button';
+import { useT } from '@transifex/react';
+import { NAVIGATION } from '../../../../utils/dashboard-utils';
 
 function SpeciesFilterComponent(props) {
-  const { taxaList } = props;
+  const t = useT();
+  const { taxaList, selectedRegionOption, setSelectedRegionOption, setSelectedIndex } = props;
   const filterStart = [
     {
       name: 'dataset',
@@ -99,16 +103,28 @@ function SpeciesFilterComponent(props) {
     setIsLoading(false);
   }, [taxaList]);
 
+  const handleBack = () => {
+    setSelectedRegionOption(null);
+    setSelectedIndex(NAVIGATION.REGION);
+  }
+
   return (
-    <div className={styles.filters}>
-      <FilterContainer
-        filters={filters}
-        setFilters={setFilters}
-        isLoading={isLoading}
-        {...props} />
-      <SpeciesListContainer
-        isLoading={isLoading}
-        {...props} />
+    <div className={styles.wrapper}>
+      {selectedRegionOption && <Button
+        className={styles.back}
+        handleClick={handleBack}
+        label={t('Clear region selected')}
+      />}
+      <div className={styles.filters}>
+        <FilterContainer
+          filters={filters}
+          setFilters={setFilters}
+          isLoading={isLoading}
+          {...props} />
+        <SpeciesListContainer
+          isLoading={isLoading}
+          {...props} />
+      </div>
     </div>
   )
 }
