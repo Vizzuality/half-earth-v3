@@ -11,7 +11,7 @@ import { LightModeContext } from '../../../context/light-mode';
 import DashboardNav from '../../../components/dashboard-nav';
 import DashboardHomeContainer from './dashboard-home';
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
-import { LAYER_OPTIONS, LAYER_TITLE_TYPES, NAVIGATION } from '../../../utils/dashboard-utils';
+import { INITIAL_LAYERS, LAYER_OPTIONS, LAYER_TITLE_TYPES, NAVIGATION } from '../../../utils/dashboard-utils';
 import SpeciesFilterContainer from './species-filter';
 import RegionsAnalysisContainer from './regions-analysis';
 import EsriFeatureService from 'services/esri-feature-service';
@@ -30,13 +30,19 @@ function DashboardSidebar(props) {
   }, [selectedIndex]);
 
   const removeRegionLayers = () => {
-    let layers = regionLayers;
-    Object.keys(layers).map(region => {
-      // const { [region]: name, ...rest } = layers;
-      // layers = rest;
-      const foundLayer = map.layers.items.find(item => item.id === region);
-      if (foundLayer) {
-        map.remove(foundLayer);
+    // let layers = regionLayers;
+    // Object.keys(layers).map(region => {
+    //   // const { [region]: name, ...rest } = layers;
+    //   // layers = rest;
+    //   const foundLayer = map.layers.items.find(item => item.id === region);
+    //   if (foundLayer) {
+    //     map.remove(foundLayer);
+    //   }
+    // });
+
+    map.layers.items.forEach(layer => {
+      if (!INITIAL_LAYERS.includes(layer.id)) {
+        map.remove(layer);
       }
     });
   }

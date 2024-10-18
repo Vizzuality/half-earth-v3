@@ -4,7 +4,7 @@ import BioDiversityComponent from './biodiversity-indicators-component';
 import country_attrs from '../mol-country-attributes.json';
 import { LightModeContext } from '../../../../context/light-mode';
 import EsriFeatureService from 'services/esri-feature-service';
-import { LAYER_OPTIONS, LAYER_TITLE_TYPES } from '../../../../utils/dashboard-utils';
+import { INITIAL_LAYERS, LAYER_OPTIONS, LAYER_TITLE_TYPES } from '../../../../utils/dashboard-utils';
 
 function BioDiversityContainer(props) {
   const { data, countryName, dataByCountry, regionLayers, map, speciesInfo, setRegionLayers } = props;
@@ -62,21 +62,27 @@ function BioDiversityContainer(props) {
           ...regionLayers,
           [layerName]: layer,
           [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers.featureLayer,
+          [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: protectedLayers.vectorTileLayer
         });
         map.add(layer);
-        map.add(protectedLayers.featureLayer);
+        map.add(protectedLayers.groupLayer);
       });
     }
   }, [selectedTab]);
 
   const removeRegionLayers = () => {
-    let layers = regionLayers;
-    Object.keys(layers).map(region => {
-      // const { [region]: name, ...rest } = layers;
-      // layers = rest;
-      const foundLayer = map.layers.items.find(item => item.id === region);
-      if (foundLayer) {
-        map.remove(foundLayer);
+    // let layers = regionLayers;
+    // Object.keys(layers).map(region => {
+    //   // const { [region]: name, ...rest } = layers;
+    //   // layers = rest;
+    //   const foundLayer = map.layers.items.find(item => item.id === region);
+    //   if (foundLayer) {
+    //     map.remove(foundLayer);
+    //   }
+    // });
+    map.layers.items.forEach(layer => {
+      if (!INITIAL_LAYERS.includes(layer.id)) {
+        map.remove(layer);
       }
     });
   }

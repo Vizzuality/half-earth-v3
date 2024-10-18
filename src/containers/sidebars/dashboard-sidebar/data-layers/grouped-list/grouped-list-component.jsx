@@ -9,9 +9,10 @@ import { LAYER_TITLE_TYPES, LAYER_OPTIONS } from 'utils/dashboard-utils.js';
 import styles from './grouped-list-styles.module.scss';
 import { useT } from '@transifex/react';
 import { LightModeContext } from '../../../../../context/light-mode';
+import { REGIONS_PROVINCE_VECTOR_URL } from '../../../../../utils/dashboard-utils';
 
 function GroupedListComponent(props) {
-  const { dataPoints, setDataPoints, map, speciesInfo, regionLayers, setRegionLayers } = props;
+  const { dataPoints, setDataPoints, map, view, speciesInfo, regionLayers, setRegionLayers } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
@@ -107,28 +108,46 @@ function GroupedListComponent(props) {
     if (typeof item === 'string') {
       if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'PROTECTED AREAS') {
         if (!dataPoints[item].isActive) {
-          const layers = EsriFeatureService.addProtectedAreaLayer(item.toUpperCase());
+          // const layers = EsriFeatureService.addProtectedAreaLayer(item.toUpperCase());
+
+          // setRegionLayers({
+          //   ...regionLayers,
+          //   [item.toUpperCase()]: layers.featureLayer,
+          // });
+          // map.add(layers.featureLayer);
+
+          const layers = EsriFeatureService.addProtectedAreaLayer();
+          layers.featureLayer.opacity = 0;
 
           setRegionLayers({
             ...regionLayers,
-            [item.toUpperCase()]: layers.featureLayer,
+            [LAYER_OPTIONS.PROTECTED_AREAS]: layers.featureLayer,
+            [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers.vectorTileLayer
           });
           map.add(layers.featureLayer);
+          map.add(layers.vectorTileLayer);
         } else {
-          const layer = regionLayers[item.toUpperCase()];
-          const { [item.toUpperCase()]: name, ...rest } = regionLayers;
+          const featureLayer = regionLayers[LAYER_OPTIONS.PROTECTED_AREAS];
+          const vectorTileLayer = regionLayers[LAYER_OPTIONS.PROTECTED_AREAS_VECTOR];
+
+          const {
+            [LAYER_OPTIONS.PROTECTED_AREAS]: name,
+            [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: vt, ...rest } = regionLayers;
+
           setRegionLayers(rest);
-          map.remove(layer);
+          map.remove(featureLayer);
+          map.remove(vectorTileLayer);
         }
       } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
         if (!dataPoints[item].isActive) {
-          const layers = EsriFeatureService.addProvinceLayer(item.toUpperCase());
+          const url = REGIONS_PROVINCE_VECTOR_URL;
+          const layer = EsriFeatureService.getVectorTileLayer(url, item.toUpperCase());
 
           setRegionLayers({
             ...regionLayers,
-            [item.toUpperCase()]: layers.featureLayer,
+            [item.toUpperCase()]: layer,
           });
-          map.add(layers.featureLayer);
+          map.add(layer);
         } else {
           const layer = regionLayers[item.toUpperCase()];
           const { [item.toUpperCase()]: name, ...rest } = regionLayers;
@@ -138,7 +157,12 @@ function GroupedListComponent(props) {
       } else if (item.toUpperCase() === 'PERTE/GAIN D\'HABITAT' || item.toUpperCase() === 'HABITAT LOSS/GAIN') {
         const layerName = item.toUpperCase();
         if (!dataPoints[item].isActive) {
-          const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
+          const webTileLayer = EsriFeatureService.getXYZLayer(
+            speciesInfo.scientificname.replace(' ', '_'),
+            layerName,
+            LAYER_TITLE_TYPES.TREND
+          );
+
           webTileLayer.then(layer => {
             setRegionLayers({ ...regionLayers, [layerName]: layer });
             map.add(layer);
@@ -160,10 +184,15 @@ function GroupedListComponent(props) {
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive) {
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
-          const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS);
+          const webTileLayer = EsriFeatureService.getXYZLayer(
+            speciesInfo.scientificname.replace(' ', '_'),
+            layerName,
+            LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS
+          );
+
           webTileLayer.then(layer => {
             setRegionLayers({ ...regionLayers, [layerName]: layer });
-            map.add(layer);
+            map.add(layer, map.layers.length - 1);
           });
         }
       } else {
@@ -186,7 +215,7 @@ function GroupedListComponent(props) {
 
           layer = EsriFeatureService.getGeoJsonLayer(name, layerName);
           setRegionLayers({ ...regionLayers, [layerName]: layer });
-          map.add(layer);
+          map.add(layer, map.layers.length - 1);
         }
       } else {
         // const { [layerName]: name, ...rest } = activeLayers;

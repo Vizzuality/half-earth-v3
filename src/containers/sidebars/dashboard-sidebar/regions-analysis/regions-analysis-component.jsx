@@ -14,27 +14,42 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 import styles from './regions-analysis-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import { useT } from '@transifex/react';
-import { LAYER_OPTIONS, NAVIGATION } from '../../../../utils/dashboard-utils';
+import { INITIAL_LAYERS, LAYER_OPTIONS, NAVIGATION } from '../../../../utils/dashboard-utils';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
-  const { view, selectedOption, map, regionLayers, setRegionLayers, setSelectedIndex, selectedRegionOption, setSelectedRegionOption } = props;
+  const {
+    view,
+    selectedOption,
+    map,
+    regionLayers,
+    setRegionLayers,
+    setSelectedIndex,
+    selectedRegion,
+    setSelectedRegion,
+    selectedRegionOption,
+    setSelectedRegionOption
+  } = props;
   const { lightMode } = useContext(LightModeContext);
 
   useEffect(() => {
-    if (selectedRegionOption) {
+    if (selectedRegionOption && selectedRegion) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES)
+    } else {
+      setSelectedRegionOption(null);
     }
   }, []);
 
 
   const optionSelected = (event) => {
+    setSelectedRegion(null);
     removeRegionLayers();
     let layers;
 
     const option = event.currentTarget.value;
     if (option === 'protectedAreas') {
       layers = EsriFeatureService.addProtectedAreaLayer();
+      layers.featureLayer.opacity = 0;
 
       setRegionLayers({
         [LAYER_OPTIONS.PROTECTED_AREAS]: layers.featureLayer,
@@ -42,28 +57,34 @@ function RegionsAnalysisComponent(props) {
       });
       map.add(layers.groupLayer);
     } else if (option === 'provinces') {
-      layers = EsriFeatureService.addProvinceLayer();
+      layers = EsriFeatureService.addRegionProvinceLayer();
+      layers.featureLayer.opacity = 0;
 
       setRegionLayers({
         [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
+        [LAYER_OPTIONS.PROVINCE_VECTOR_URL]: layers.vectorTileLayer
       });
-      map.add(layers.featureLayer);
+      map.add(layers.groupLayer);
     }
 
     setSelectedRegionOption(option);
   }
 
   const removeRegionLayers = () => {
-    let layers = regionLayers;
-    Object.keys(layers).map(region => {
-      // const { [region]: name, ...rest } = layers;
-      // layers = rest;
-      const foundLayer = map.layers.items.find(item => item.id === region);
-      if (foundLayer) {
-        map.remove(foundLayer);
+    // let layers = regionLayers;
+    // Object.keys(layers).map(region => {
+    //   // const { [region]: name, ...rest } = layers;
+    //   // layers = rest;
+    //   const foundLayer = map.layers.items.find(item => item.id === region);
+    //   if (foundLayer) {
+    //     map.remove(foundLayer);
+    //   }
+    // });
+    map.layers.items.forEach(layer => {
+      if (!INITIAL_LAYERS.includes(layer.id)) {
+        map.remove(layer);
       }
     });
-
     // setRegionLayers(layers);
   }
 

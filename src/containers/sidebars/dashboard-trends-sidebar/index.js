@@ -62,6 +62,7 @@ function DashboardTrendsSidebarContainer(props) {
 
     if(!regionLayers.hasOwnProperty(LAYER_OPTIONS.PROVINCES)) {
       const layers = EsriFeatureService.addProvinceLayer();
+      layers.featureLayer.opacity = 0;
 
       setRegionLayers({ ...regionLayers,
         [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,

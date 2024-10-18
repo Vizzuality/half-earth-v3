@@ -3,7 +3,8 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
     EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
-    PROTECTED_AREA_VECTOR_URL, PROVINCE_FEATURE_LAYER_URL, PROVINCE_VECTOR_URL, TREND_MAP_URL
+    PROTECTED_AREA_VECTOR_URL, PROVINCE_FEATURE_LAYER_URL, PROVINCE_VECTOR_URL,
+    REGIONS_PROVINCE_VECTOR_URL, TREND_MAP_URL
 } from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -158,6 +159,17 @@ function addProvinceLayer(id){
   return { groupLayer, featureLayer, vectorTileLayer };
 }
 
+function addRegionProvinceLayer(id) {
+  const featureLayer = getFeatureLayer(PROVINCE_FEATURE_LAYER_URL, id ?? LAYER_OPTIONS.PROVINCES);
+  const vectorTileLayer = getVectorTileLayer(REGIONS_PROVINCE_VECTOR_URL, LAYER_OPTIONS.PROVINCES_VECTOR);
+  const groupLayer = new GroupLayer({
+    layers: [featureLayer, vectorTileLayer],
+    id: id ?? LAYER_OPTIONS.PROVINCES
+  });
+
+  return { groupLayer, featureLayer, vectorTileLayer };
+}
+
 function addProtectedAreaLayer(id){
   const featureLayer = getFeatureLayer(PROTECTED_AREA_FEATURE_URL, id ?? LAYER_OPTIONS.PROTECTED_AREAS);
   const vectorTileLayer = getVectorTileLayer(PROTECTED_AREA_VECTOR_URL, LAYER_OPTIONS.PROTECTED_AREAS_VECTOR);
@@ -182,4 +194,5 @@ export default {
   getMVTSource,
   addProvinceLayer,
   addProtectedAreaLayer,
+  addRegionProvinceLayer,
 };

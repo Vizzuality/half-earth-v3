@@ -24,6 +24,7 @@ export const LAYER_OPTIONS = {
 
 export const PROVINCE_FEATURE_LAYER_URL = `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/FeatureServer`;
 export const PROVINCE_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/drc_provinces_spi_join/VectorTileServer';
+export const REGIONS_PROVINCE_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_drc_provinces_boundary_only/VectorTileServer';
 
 export const PROTECTED_AREA_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_WDPA_all/FeatureServer';
 export const PROTECTED_AREA_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/DRC_WDPA_all_2_view_vector_tile_layer/VectorTileServer';
@@ -37,4 +38,14 @@ export const LAYER_TITLE_TYPES = {
   REGIONAL_CHECKLISTS: 'REGIONAL CHECKLISTS',
   TREND: 'TREND',
 }
+
+export const INITIAL_LAYERS = [
+  'INITIAL_COUNTRY_LAYER',
+  'INITIAL_GROUP_LAYER',
+  'cities_labels_layer',
+  'regions_labels_layer',
+  'countries_labels_layer',
+  'landscape_features_labels_layer',
+  'admin_areas_feature_layer',
+]
 

@@ -74,6 +74,7 @@ function ViewContainer(props) {
       portalItem: {
         id: '53a1e68de7e4499cad77c80daba46a94',
       },
+      id: 'INITIAL_COUNTRY_LAYER',
     });
     setCountryLayer(countries);
 
@@ -91,6 +92,7 @@ function ViewContainer(props) {
     });
 
     const group = new GroupLayer({
+      id: 'INITIAL_GROUP_LAYER',
       layers: [
         tileLayer,
         // world imagery layer will show where it overlaps with the graphicslayer
