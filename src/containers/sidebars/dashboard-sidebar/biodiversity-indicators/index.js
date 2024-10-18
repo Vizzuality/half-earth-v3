@@ -3,9 +3,11 @@ import last from 'lodash/last';
 import BioDiversityComponent from './biodiversity-indicators-component';
 import country_attrs from '../mol-country-attributes.json';
 import { LightModeContext } from '../../../../context/light-mode';
+import EsriFeatureService from 'services/esri-feature-service';
+import { LAYER_OPTIONS, LAYER_TITLE_TYPES } from '../../../../utils/dashboard-utils';
 
 function BioDiversityContainer(props) {
-  const { data, countryName, dataByCountry } = props;
+  const { data, countryName, dataByCountry, regionLayers, map, speciesInfo, setRegionLayers } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [selectedTab, setSelectedTab] = useState(2);
@@ -33,12 +35,53 @@ function BioDiversityContainer(props) {
   // get protection score information
   useEffect(() => {
     if (data && habitatTableData && dataByCountry) {
-      const { protectionScore, globalProtectionScore } = getProtectionScore(data.reserveCoverageData, data.habitatMetricesData);
-      setProtectionScore(protectionScore);
-      setGlobalProtectionScore(globalProtectionScore);
       getProtectionTableData(data.spiScoreData);
+
+      const globalValues = data.spiScoreData.filter(country => country.country_name.toUpperCase() === 'GLOBAL');
+      const countryData = data.spiScoreData.filter(country => country.country_name.toUpperCase() === countryName.toUpperCase());
+
+      const scores = {
+        protectionScore: last(countryData).shs_score.toFixed(2),
+        globalProtectionScore: last(globalValues).shs_score.toFixed(2)
+      }
+
+      // const { protectionScore, globalProtectionScore } = getProtectionScore(data.reserveCoverageData, data.habitatMetricesData);
+      setProtectionScore(scores.protectionScore);
+      setGlobalProtectionScore(scores.globalProtectionScore);
     }
-  }, [habitatTableData])
+  }, [habitatTableData]);
+
+  useEffect(() => {
+    if(selectedTab === 1){
+      removeRegionLayers();
+    } else if(selectedTab === 2){
+      const protectedLayers = EsriFeatureService.addProtectedAreaLayer();
+      const layerName = LAYER_OPTIONS.HABITAT;
+      const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
+      webTileLayer.then(layer => {
+        setRegionLayers({
+          ...regionLayers,
+          [layerName]: layer,
+          [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers.featureLayer,
+        });
+        map.add(layer);
+        map.add(protectedLayers.featureLayer);
+      });
+    }
+  }, [selectedTab]);
+
+  const removeRegionLayers = () => {
+    let layers = regionLayers;
+    Object.keys(layers).map(region => {
+      // const { [region]: name, ...rest } = layers;
+      // layers = rest;
+      const foundLayer = map.layers.items.find(item => item.id === region);
+      if (foundLayer) {
+        map.remove(foundLayer);
+      }
+    });
+  }
+
 
   const getHabitatScore = () => {
     const country = dataByCountry[countryName];

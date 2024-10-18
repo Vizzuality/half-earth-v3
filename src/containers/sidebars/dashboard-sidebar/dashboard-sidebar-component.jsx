@@ -27,21 +27,6 @@ function DashboardSidebar(props) {
       removeRegionLayers();
       setRegionLayers({});
     }
-
-    if (selectedIndex === NAVIGATION.BIO_IND) {
-      const protectedLayers = EsriFeatureService.addProtectedAreaLayer();
-      const layerName = LAYER_OPTIONS.HABITAT;
-      const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
-      webTileLayer.then(layer => {
-        setRegionLayers({
-          ...regionLayers,
-          [layerName]: layer,
-          [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers.featureLayer,
-        });
-        map.add(layer);
-        map.add(protectedLayers.featureLayer);
-      });
-    }
   }, [selectedIndex]);
 
   const removeRegionLayers = () => {

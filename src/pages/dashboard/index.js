@@ -162,23 +162,11 @@ function DashboardContainer(props) {
   }
 
   const getData = async () => {
-    const speciesPreferences = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/habitat?scientificname=${speciesName}`;
-    const res = await fetch(speciesPreferences);
-    const ps = await res.json();
-    // TODO: figure out what to do is ps.prefs are null
-    const preferences = getPreferenceQuery(ps.prefs);
-    const params = new URLSearchParams(preferences);
-
-    // TODO: Some responses have no frag results
     const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${speciesName}`;
-    const reserveCoverageMetricsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/reserve-coverage/metrics?scientificname=${speciesName}&${params}`;
-    const habitatMetricesUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-distribution/metrics?scientificname=${speciesName}&${params}`;
     const spiScoreURL = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${speciesName}`
 
     const apiCalls = [
       habitatTrendUrl,
-      reserveCoverageMetricsUrl,
-      habitatMetricesUrl,
       spiScoreURL
     ];
 
@@ -188,11 +176,11 @@ function DashboardContainer(props) {
       return data;
     }));
 
-    const [habitatTrendData, reserveCoverageData, habitatMetricesData, spiScoreData] = apiResponses;
+    const [habitatTrendData, spiScoreData] = apiResponses;
     getDataByCountry(habitatTrendData);
     getSpiDataByCountry(spiScoreData);
 
-    setData({habitatTrendData, reserveCoverageData, habitatMetricesData, spiScoreData});
+    setData({habitatTrendData, spiScoreData});
   }
 
   const getSpeciesList = async () => {
@@ -301,21 +289,6 @@ function DashboardContainer(props) {
       params.summary = 'true';
     }
     return params;
-  }
-
-  const getPreferenceQuery = (preferences) => {
-    if(!preferences) return {};
-    return {
-      class: preferences.class,
-      habitat: preferences.habitat,
-      treecover_max: preferences.tree_cover_max.toString(),
-      treecover_min: preferences.tree_cover_min.toString(),
-      elev_max: preferences.elev_max.toString(),
-      elev_min: preferences.elev_min.toString(),
-      use_e: preferences.use_e.toString(),
-      use_h: preferences.use_h.toString(),
-      use_f: preferences.use_f.toString(),
-    }
   }
 
   const getSpiDataByCountry = d => {
