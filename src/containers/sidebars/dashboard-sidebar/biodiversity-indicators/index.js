@@ -45,7 +45,6 @@ function BioDiversityContainer(props) {
         globalProtectionScore: last(globalValues).shs_score.toFixed(2)
       }
 
-      // const { protectionScore, globalProtectionScore } = getProtectionScore(data.reserveCoverageData, data.habitatMetricesData);
       setProtectionScore(scores.protectionScore);
       setGlobalProtectionScore(scores.globalProtectionScore);
     }

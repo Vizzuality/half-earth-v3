@@ -9,7 +9,7 @@ import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { LAYER_OPTIONS } from '../../../utils/dashboard-utils.js';
 
 function DashboardTrendsSidebarContainer(props) {
-  const { countryISO, view, map, regionLayers, setRegionLayers } = props;
+  const { countryISO, view, map, regionLayers, setRegionLayers, geometry } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState(null);
@@ -68,6 +68,15 @@ function DashboardTrendsSidebarContainer(props) {
         [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer });
 
       map.add(layers.groupLayer);
+
+      // rezoom to country
+      view.goTo(
+        {
+          target: geometry,
+          center: [geometry.longitude - 15, geometry.latitude],
+          zoom: 5.5,
+          extent: geometry.clone(),
+        });
     }
   }, [map, view]);
 
