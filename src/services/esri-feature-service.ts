@@ -163,7 +163,7 @@ function addProtectedAreaLayer(id){
   const vectorTileLayer = getVectorTileLayer(PROTECTED_AREA_VECTOR_URL, LAYER_OPTIONS.PROTECTED_AREAS_VECTOR);
 
   const groupLayer = new GroupLayer({
-    layers: [featureLayer],
+    layers: [featureLayer, vectorTileLayer],
     id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
   });
 

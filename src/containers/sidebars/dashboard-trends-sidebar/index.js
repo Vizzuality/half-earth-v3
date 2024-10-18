@@ -70,13 +70,12 @@ function DashboardTrendsSidebarContainer(props) {
       map.add(layers.groupLayer);
 
       // rezoom to country
-      view.goTo(
-        {
-          target: geometry,
-          center: [geometry.longitude - 15, geometry.latitude],
-          zoom: 5.5,
-          extent: geometry.clone(),
-        });
+      view.goTo({
+        target: geometry,
+        center: [geometry.longitude - 15, geometry.latitude],
+        zoom: 5.5,
+        extent: geometry.clone(),
+      });
     }
   }, [map, view]);
 
