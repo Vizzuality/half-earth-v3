@@ -46,18 +46,10 @@ function GroupedListComponent(props) {
 
     const typeItems = dataPoints[item].items;
 
-    const layers = {};
-
     typeItems.map(item => {
       findLayerToShow(item);
       item.isActive = isActive;
     });
-
-    // setRegionLayers({ ...regionLayers, ...layers });
-
-    // const blah = checkForLayersToRemove(regionLayers, layers);
-    // console.log(blah);
-    // setRegionLayers(blah);
 
     setDataPoints({
       ...dataPoints,
@@ -69,21 +61,6 @@ function GroupedListComponent(props) {
         ]
       }
     });
-  }
-
-  const checkForLayersToRemove = (regionLayers, layers) => {
-    const updatedLayers = { ...regionLayers };
-
-    for (let key in layers) {
-      // Check if the key exists in Object A and if Object B has remove flag set to true
-      if (updatedLayers.hasOwnProperty(key) && layers[key].remove === true) {
-        delete updatedLayers[key]; // Remove the key from Object A
-      } else {
-        updatedLayers[key] = layers[key];
-      }
-    }
-
-    return updatedLayers;
   }
 
   const displaySingleLayer = (item) => {
@@ -110,19 +87,17 @@ function GroupedListComponent(props) {
         if (!dataPoints[item].isActive) {
           const layers = EsriFeatureService.addProtectedAreaLayer();
 
-          setRegionLayers({
-            ...regionLayers,
-            [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers.vectorTileLayer
-          });
+          setRegionLayers((regionLayers) => ({ ...regionLayers, [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers.vectorTileLayer }));
           map.add(layers.vectorTileLayer);
         } else {
           const vectorTileLayer = regionLayers[LAYER_OPTIONS.PROTECTED_AREAS_VECTOR];
 
-          const {
-            [LAYER_OPTIONS.PROTECTED_AREAS]: name,
-            [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: vt, ...rest } = regionLayers;
-
-          setRegionLayers(rest);
+          setRegionLayers((regionLayers) => {
+            const {
+              [LAYER_OPTIONS.PROTECTED_AREAS]: name,
+              [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: vt, ...rest } = regionLayers;
+            return rest;
+          });
           map.remove(vectorTileLayer);
         }
       } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
@@ -130,15 +105,14 @@ function GroupedListComponent(props) {
           const url = REGIONS_PROVINCE_VECTOR_URL;
           const layer = EsriFeatureService.getVectorTileLayer(url, item.toUpperCase());
 
-          setRegionLayers({
-            ...regionLayers,
-            [item.toUpperCase()]: layer,
-          });
+          setRegionLayers((regionLayers) => ({ ...regionLayers, [item.toUpperCase()]: layer }));
           map.add(layer);
         } else {
           const layer = regionLayers[item.toUpperCase()];
-          const { [item.toUpperCase()]: name, ...rest } = regionLayers;
-          setRegionLayers(rest);
+          setRegionLayers((regionLayers) => {
+            const { [item.toUpperCase()]: name, ...rest } = regionLayers;
+            return rest;
+          });
           map.remove(layer);
         }
       } else if (item.toUpperCase() === 'PERTE/GAIN D\'HABITAT' || item.toUpperCase() === 'HABITAT LOSS/GAIN') {
@@ -151,12 +125,14 @@ function GroupedListComponent(props) {
           );
 
           webTileLayer.then(layer => {
-            setRegionLayers({ ...regionLayers, [layerName]: layer });
+            setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
             map.add(layer);
           });
         } else {
-          // const { [layerName]: name, ...rest } = regionLayers;
-          // setRegionLayers(rest);
+          setRegionLayers((regionLayers) => {
+            const { [layerName]: name, ...rest } = regionLayers;
+            return rest;
+          });
           map.remove(regionLayers[layerName]);
         }
       }
@@ -178,13 +154,15 @@ function GroupedListComponent(props) {
           );
 
           webTileLayer.then(layer => {
-            setRegionLayers({ ...regionLayers, [layerName]: layer });
+            setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
             map.add(layer, map.layers.length - 1);
           });
         }
       } else {
-        // const { [layerName]: name, ...rest } = regionLayers;
-        // setRegionLayers(rest);
+        setRegionLayers((regionLayers) => {
+          const { [layerName]: name, ...rest } = regionLayers;
+          return rest;
+        });
         map.remove(regionLayers[layerName]);
       }
     }
@@ -201,22 +179,25 @@ function GroupedListComponent(props) {
           }
 
           layer = EsriFeatureService.getGeoJsonLayer(name, layerName);
-          setRegionLayers({ ...regionLayers, [layerName]: layer });
+          setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
           map.add(layer, map.layers.length - 1);
         }
       } else {
-        const { [layerName]: name, ...rest } = regionLayers;
-        setRegionLayers(rest);
-        // activeLayers = rest;
+        // const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers((regionLayers) => {
+          const { [layerName]: name, ...rest } = regionLayers;
+          return rest;
+        });
+
         map.remove(regionLayers[layerName]);
       }
     }
 
     if (layerParent === LAYER_TITLE_TYPES.REGIONAL_CHECKLISTS) {
       if (!item.isActive) {
-        const webTileLayer = EsriFeatureService.getMVTSource();
+        const layer = EsriFeatureService.getMVTSource();
 
-        setRegionLayers({ ...regionLayers, [layerName]: webTileLayer });
+        setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
 
         map.addSource('mapTiles', {
           type: 'vector',
@@ -232,8 +213,10 @@ function GroupedListComponent(props) {
         });
 
       } else {
-        const { [layerName]: name, ...rest } = regionLayers;
-        setRegionLayers(rest);
+        setRegionLayers((regionLayers) => {
+          const { [layerName]: name, ...rest } = regionLayers;
+          return rest;
+        });
         map.remove(regionLayers[layerName]);
       }
     }
