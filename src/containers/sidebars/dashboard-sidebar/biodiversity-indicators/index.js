@@ -124,6 +124,7 @@ function BioDiversityContainer(props) {
     const tableData = [];
 
     Object.keys(dataByCountry).forEach(country => {
+      let stewardship = 100;
       const habitatCountry = dataByCountry[countryName];
 
       // const countrySHS = country?.shs;
@@ -133,7 +134,11 @@ function BioDiversityContainer(props) {
       const countryData = dataByCountry[country];
       const global2001 = dataByCountry.Global?.shs[0]?.val || 0;
       const country2001 = roundUpNumber(countryData.shs[0]?.val || 0);
-      const stewardship = (country2001 / global2001) * 100;
+      if(country.toUpperCase() === 'GLOBAL'){
+        stewardship = 100;
+      } else {
+        stewardship = (country2001 / global2001) * 100;
+      }
 
       const { countryAreaScore, countryConnectivityScore } = getCountryScores(countryData, lastCountryYearValue, startYearValue);
       const shs = ((countryAreaScore + countryConnectivityScore) / 2) * 100;
