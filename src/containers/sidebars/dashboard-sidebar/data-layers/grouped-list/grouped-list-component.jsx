@@ -108,26 +108,14 @@ function GroupedListComponent(props) {
     if (typeof item === 'string') {
       if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'PROTECTED AREAS') {
         if (!dataPoints[item].isActive) {
-          // const layers = EsriFeatureService.addProtectedAreaLayer(item.toUpperCase());
-
-          // setRegionLayers({
-          //   ...regionLayers,
-          //   [item.toUpperCase()]: layers.featureLayer,
-          // });
-          // map.add(layers.featureLayer);
-
           const layers = EsriFeatureService.addProtectedAreaLayer();
-          layers.featureLayer.opacity = 0;
 
           setRegionLayers({
             ...regionLayers,
-            [LAYER_OPTIONS.PROTECTED_AREAS]: layers.featureLayer,
             [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers.vectorTileLayer
           });
-          map.add(layers.featureLayer);
           map.add(layers.vectorTileLayer);
         } else {
-          const featureLayer = regionLayers[LAYER_OPTIONS.PROTECTED_AREAS];
           const vectorTileLayer = regionLayers[LAYER_OPTIONS.PROTECTED_AREAS_VECTOR];
 
           const {
@@ -135,7 +123,6 @@ function GroupedListComponent(props) {
             [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: vt, ...rest } = regionLayers;
 
           setRegionLayers(rest);
-          map.remove(featureLayer);
           map.remove(vectorTileLayer);
         }
       } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
