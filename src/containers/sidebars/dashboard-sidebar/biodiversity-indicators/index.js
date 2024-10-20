@@ -51,9 +51,7 @@ function BioDiversityContainer(props) {
   }, [habitatTableData]);
 
   useEffect(() => {
-    if(selectedTab === 1){
       removeRegionLayers();
-    } else if(selectedTab === 2){
       const protectedLayers = EsriFeatureService.addProtectedAreaLayer();
       const layerName = LAYER_OPTIONS.HABITAT;
       const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
@@ -67,8 +65,7 @@ function BioDiversityContainer(props) {
         map.add(layer);
         map.add(protectedLayers.groupLayer);
       });
-    }
-  }, [selectedTab]);
+  }, []);
 
   const removeRegionLayers = () => {
     // let layers = regionLayers;

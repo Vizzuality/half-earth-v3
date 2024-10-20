@@ -218,8 +218,8 @@ function GroupedListComponent(props) {
           map.add(layer, map.layers.length - 1);
         }
       } else {
-        // const { [layerName]: name, ...rest } = activeLayers;
-        // setRegionLayers(rest);
+        const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers(rest);
         // activeLayers = rest;
         map.remove(regionLayers[layerName]);
       }
