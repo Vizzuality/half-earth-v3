@@ -31,6 +31,14 @@
     color: var(--font-color);
   }
 
+  .speciesName{
+    font-size: 18px;
+    text-transform: capitalize;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--font-color);
+  }
+
   .tabs{
     display: flex;
     justify-content: space-evenly;
