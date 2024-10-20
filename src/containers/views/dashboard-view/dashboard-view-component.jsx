@@ -100,7 +100,7 @@ function DashboardViewComponent(props) {
   const handlePointerMove = async (event) => {
     let hits;
     try {
-      if (selectedIndex !== NAVIGATION.BIO_IND) {
+      if (selectedIndex !== NAVIGATION.BIO_IND && selectedIndex !== NAVIGATION.DATA_LAYER) {
         hits = await hitTest(event);
 
         if (hits) {
