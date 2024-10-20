@@ -14,7 +14,7 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 import styles from './regions-analysis-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import { useT } from '@transifex/react';
-import { INITIAL_LAYERS, LAYER_OPTIONS, NAVIGATION } from '../../../../utils/dashboard-utils';
+import { INITIAL_LAYERS, LAYER_OPTIONS, NAVIGATION, REGION_OPTIONS } from '../../../../utils/dashboard-utils';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
@@ -47,7 +47,7 @@ function RegionsAnalysisComponent(props) {
     let layers;
 
     const option = event.currentTarget.value;
-    if (option === 'protectedAreas') {
+    if (option === REGION_OPTIONS.PROTECTED_AREAS) {
       layers = EsriFeatureService.addProtectedAreaLayer();
       layers.featureLayer.opacity = 0;
 
@@ -56,7 +56,7 @@ function RegionsAnalysisComponent(props) {
         [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers.vectorTileLayer
       });
       map.add(layers.groupLayer);
-    } else if (option === 'provinces') {
+    } else if (option === REGION_OPTIONS.PROVINCES) {
       layers = EsriFeatureService.addRegionProvinceLayer();
       layers.featureLayer.opacity = 0;
 
@@ -102,9 +102,9 @@ function RegionsAnalysisComponent(props) {
           onChange={optionSelected}
           value={selectedRegionOption}
         >
-          <FormControlLabel value="protectedAreas" control={<Radio />} label={t('Protected Areas')} />
+          <FormControlLabel value={REGION_OPTIONS.PROTECTED_AREAS} control={<Radio />} label={t('Protected Areas')} />
           {/* <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} /> */}
-          <FormControlLabel value="provinces" control={<Radio />} label={t('Provinces')} />
+          <FormControlLabel value={REGION_OPTIONS.PROVINCES} control={<Radio />} label={t('Provinces')} />
           {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}
           {/* <FormControlLabel value="communityForests" control={<Radio />} label={t('Community Forests')} /> */}
         </RadioGroup>

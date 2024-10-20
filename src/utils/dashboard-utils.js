@@ -47,5 +47,10 @@ export const INITIAL_LAYERS = [
   'countries_labels_layer',
   'landscape_features_labels_layer',
   'admin_areas_feature_layer',
-]
+];
+
+export const REGION_OPTIONS = {
+  PROVINCES: 'PROVINCES',
+  PROTECTED_AREAS: 'PROTECTED_AREAS'
+}
 

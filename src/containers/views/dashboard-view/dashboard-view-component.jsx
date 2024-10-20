@@ -6,11 +6,12 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
 import { LightModeProvider } from '../../../context/light-mode';
 import MapView from 'components/map-view';
+import PopupTemplate from '@arcgis/core/PopupTemplate';
 import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
 
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
 import TopMenuContainer from '../../../components/top-menu';
-import { LAYER_OPTIONS, NAVIGATION } from '../../../utils/dashboard-utils';
+import { LAYER_OPTIONS, NAVIGATION, REGION_OPTIONS } from '../../../utils/dashboard-utils';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -76,13 +77,14 @@ function DashboardViewComponent(props) {
           switch (selectedIndex) {
             case NAVIGATION.REGION:
               setTaxaList([]);
+
               const { WDPA_PID, GID_1 } = hits.attributes;
               setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
-              if (WDPA_PID) {
+              if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
                 setSelectedRegion({ WDPA_PID });
               }
 
-              if (GID_1) {
+              if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
                 setSelectedRegion({ GID_1 });
               }
               break;
@@ -106,7 +108,24 @@ function DashboardViewComponent(props) {
         if (hits) {
           hoverHighlight?.remove();
           hoverHighlight = layerView.highlight(hits.graphic);
+
+          let regionName;
+          if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
+            regionName = hits.attributes.NAME;
+          } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
+            regionName = hits.attributes.NAME_1;
+          }
+
+          if (regionName) {
+            console.log(regionName);
+            view.popup.open({
+              // Set the popup's title to the coordinates of the location
+              title: `${regionName}`,
+              location: view.toMap({ x: event.x, y: event.y })
+            });
+          }
         } else {
+          view.popup.close();
           hoverHighlight?.remove();
         }
       }
