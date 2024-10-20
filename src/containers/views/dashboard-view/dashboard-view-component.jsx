@@ -12,7 +12,6 @@ import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
 import TopMenuContainer from '../../../components/top-menu';
 import { LAYER_OPTIONS, NAVIGATION, REGION_OPTIONS } from '../../../utils/dashboard-utils';
-import { ActiveLayersProvider } from '../../../context/layers/active-layers';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
