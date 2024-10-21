@@ -101,9 +101,9 @@ function ProvinceChartComponent(props) {
         },
       },
     },
-    onClick: (event, elements) => {
+    onClick: (event, elements, chart) => {
       if (elements.length > 0) {
-        selectClickedRegion(elements);
+        selectClickedRegion(elements, chart);
       }
     }
   };
@@ -119,6 +119,7 @@ function ProvinceChartComponent(props) {
   const [selectedRegionScores, setSelectedRegionScores] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [foundIndex, setFoundIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState(-1);
   // const [layerView, setLayerView] = useState();
 
   useEffect(() => {
@@ -211,6 +212,18 @@ function ProvinceChartComponent(props) {
     const foundRegion = results?.features.filter(feat => feat.attributes.NAME_1 === province.value);
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
+
+    // const foundIndex = bubbleData.datasets.find(item => item.label === province.value);
+    // highlightProvinceBubble(foundIndex);
+  }
+
+  const highlightProvinceBubble = (index, chart) => {
+    if (previousIndex > -1) {
+      chart.data.datasets[previousIndex].backgroundColor = getCSSVariable('birds');
+    }
+    chart.data.datasets[index].backgroundColor = '#18bab4';
+    setPreviousIndex(index);
+    chart.update();
   }
 
   const getProvinceScores = (province) => {
@@ -252,11 +265,13 @@ function ProvinceChartComponent(props) {
     setSpiArcData(spi);
   }
 
-  const selectClickedRegion = (elements) => {
+  const selectClickedRegion = (elements, chart) => {
     const datasetIndex = elements[0].datasetIndex;
     const dataIndex = elements[0].index;
 
     const value = bubbleData.datasets[datasetIndex].data[dataIndex];
+
+    highlightProvinceBubble(datasetIndex, chart);
 
     handleProvinceSelected({ value: value.label });
     setFoundIndex(provinces.findIndex(prov => prov.value === value.label));

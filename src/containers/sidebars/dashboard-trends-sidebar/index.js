@@ -68,10 +68,12 @@ function DashboardTrendsSidebarContainer(props) {
 
       setRegionLayers((regionLayers) => ({ ...regionLayers,
         [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
-        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer }));
+        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer,
+        [LAYER_OPTIONS.PROVINCES_REGION_VECTOR]: layers.outlineVectorTileLayer }));
 
       map.add(layers.featureLayer);
       map.add(layers.vectorTileLayer);
+      map.add(layers.outlineVectorTileLayer);
 
       // rezoom to country
       view.goTo({
