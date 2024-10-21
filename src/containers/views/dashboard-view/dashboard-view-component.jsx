@@ -134,7 +134,7 @@ function DashboardViewComponent(props) {
 
   const handleRegionSelected = (foundRegion) => {
     highlight?.remove();
-    highlight = layerView.highlight(foundRegion.graphic);
+    highlight = layerView?.highlight(foundRegion.graphic);
   }
 
   const hitTest = promiseUtils.debounce(async (event) => {

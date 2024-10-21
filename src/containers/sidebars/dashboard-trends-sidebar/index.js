@@ -32,6 +32,7 @@ function DashboardTrendsSidebarContainer(props) {
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
 
   useEffect(() => {
+    removeRegionLayers();
     getData();
   }, []);
 
@@ -64,11 +65,12 @@ function DashboardTrendsSidebarContainer(props) {
       const layers = EsriFeatureService.addProvinceLayer();
       layers.featureLayer.opacity = 0;
 
-      setRegionLayers({ ...regionLayers,
+      setRegionLayers((regionLayers) => ({ ...regionLayers,
         [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
-        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer });
+        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer }));
 
-      map.add(layers.groupLayer);
+      map.add(layers.featureLayer);
+      map.add(layers.vectorTileLayer);
 
       // rezoom to country
       view.goTo({
@@ -79,6 +81,16 @@ function DashboardTrendsSidebarContainer(props) {
       });
     }
   }, [map, view]);
+
+  const removeRegionLayers = () => {
+    let layers = regionLayers;
+    Object.keys(layers).map(region => {
+      const foundLayer = map.layers.items.find(item => item.id === region);
+      if (foundLayer) {
+        map.remove(foundLayer);
+      }
+    });
+  }
 
   const getData = async () => {
     const year = '2021';

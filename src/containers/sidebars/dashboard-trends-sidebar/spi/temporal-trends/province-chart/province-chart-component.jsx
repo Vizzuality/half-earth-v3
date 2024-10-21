@@ -206,10 +206,10 @@ function ProvinceChartComponent(props) {
       outFields: ["*"],
     };
 
-    const results = await layerView.queryFeatures(searchQuery);
+    const results = await layerView?.queryFeatures(searchQuery);
 
-    const foundRegion = results.features.filter(feat => feat.attributes.NAME_1 === province.value);
-    handleRegionSelected({ graphic: foundRegion[0] });
+    const foundRegion = results?.features.filter(feat => feat.attributes.NAME_1 === province.value);
+    handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
   }
 
