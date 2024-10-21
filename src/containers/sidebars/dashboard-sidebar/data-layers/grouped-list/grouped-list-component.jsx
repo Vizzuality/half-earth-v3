@@ -271,10 +271,6 @@ function GroupedListComponent(props) {
     return control;
   }
 
-  const searchForLayers = (item) => {
-
-  }
-
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {Object.keys(dataPoints).map((key) => (

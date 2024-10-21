@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Bubble } from 'react-chartjs-2';
 import Select from 'react-select';
 import cx from 'classnames';
@@ -24,6 +24,7 @@ ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function ProvinceChartComponent(props) {
   const t = useT();
+  const chartRef = useRef(null);
   const { lightMode } = useContext(LightModeContext);
   const {
     spiData,
@@ -175,6 +176,9 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (clickedRegion && countryRegions.length && allSorted) {
       getProvinceScores({ value: clickedRegion.NAME_1 });
+
+      const foundIndex = bubbleData.datasets.findIndex(item => item.label === clickedRegion.NAME_1);
+      highlightProvinceBubble(foundIndex);
     }
   }, [clickedRegion, countryRegions, allSorted]);
 
@@ -213,17 +217,22 @@ function ProvinceChartComponent(props) {
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
 
-    // const foundIndex = bubbleData.datasets.find(item => item.label === province.value);
-    // highlightProvinceBubble(foundIndex);
+    const foundIndex = bubbleData.datasets.findIndex(item => item.label === province.value);
+    highlightProvinceBubble(foundIndex);
+
   }
 
-  const highlightProvinceBubble = (index, chart) => {
-    if (previousIndex > -1) {
-      chart.data.datasets[previousIndex].backgroundColor = getCSSVariable('birds');
+  const highlightProvinceBubble = (index) => {
+    const chart = chartRef.current;
+
+    if (chart) {
+      if (previousIndex > -1) {
+        chart.data.datasets[previousIndex].backgroundColor = getCSSVariable('birds');
+      }
+      chart.data.datasets[index].backgroundColor = '#18bab4';
+      setPreviousIndex(index);
+      chart.update();
     }
-    chart.data.datasets[index].backgroundColor = '#18bab4';
-    setPreviousIndex(index);
-    chart.update();
   }
 
   const getProvinceScores = (province) => {
@@ -326,7 +335,7 @@ function ProvinceChartComponent(props) {
       </div>
       }
       <div className={styles.chart}>
-        {bubbleData && <Bubble options={options} data={bubbleData} />}
+        {bubbleData && <Bubble options={options} data={bubbleData} ref={chartRef} />}
       </div>
     </div>
   );
