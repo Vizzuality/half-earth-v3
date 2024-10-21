@@ -36,8 +36,6 @@ function DashboardSidebar(props) {
         map.remove(foundLayer);
       }
     });
-
-    console.log(regionLayers)
   }
 
   return (

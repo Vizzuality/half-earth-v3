@@ -15,10 +15,12 @@ import {
   COUNTRIES_DATA_SERVICE_URL
 } from 'constants/layers-urls';
 import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
+import { useLocale } from '@transifex/react';
 
 const actions = { ...countryDataActions, ...urlActions };
 
 function DashboardContainer(props) {
+  const locale = useLocale();
   const {
     viewSettings,
     countryISO,
@@ -118,7 +120,7 @@ function DashboardContainer(props) {
     const dataLayerParams = {
       scientificname: speciesName,
       group: 'movement',
-      lang: 'fr',
+      lang: locale,
     };
     const dparams = new URLSearchParams(dataLayerParams);
     const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
@@ -251,7 +253,7 @@ function DashboardContainer(props) {
 
   const makeSpeciesListParams = (args, summary = false) => {
     const params = {};
-    params.lang = 'en';
+    params.lang = locale;
     if (args.lat) {
       params.lat = args.lat.toString();
     }

@@ -7,12 +7,13 @@ import cx from 'classnames';
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
 import { LightModeContext } from '../../../../context/light-mode';
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../../../utils/dashboard-utils';
 
 
 function DashboardHomeComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const { countryISO, setSelectedIndex, setSpeciesName } = props;
 
   const { lightMode, } = useContext(LightModeContext);
@@ -31,11 +32,6 @@ function DashboardHomeComponent(props) {
   }, [searchInput]);
 
   const searchURL = 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/spatial_species_search';
-  //   ?region_id=1eff8980-479e-4eac-b386-b4db859b275d
-  // &query=Pyxicephalus
-  // &limit=25
-  // &page=0
-  // &lang=en'
 
   const handleSearch = (searchText) => {
     setSearchInput(searchText.currentTarget.value);
@@ -57,7 +53,7 @@ function DashboardHomeComponent(props) {
       query: searchInput,
       limit: 10,
       page: 0,
-      lang: 'en',
+      lang: locale,
     };
     const params = new URLSearchParams(searchParams);
     const searchSpecies = await fetch(`${searchURL}?${params}`);
