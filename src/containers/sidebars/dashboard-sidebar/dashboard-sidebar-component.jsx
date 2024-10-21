@@ -22,6 +22,7 @@ function DashboardSidebar(props) {
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   useEffect(() => {
+    // TODO: find out why this doesn't work
     if (selectedIndex !== NAVIGATION.TRENDS) {
       removeRegionLayers();
       setRegionLayers({});

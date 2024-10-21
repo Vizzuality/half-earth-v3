@@ -53,7 +53,7 @@ function DashboardHomeComponent(props) {
       query: searchInput,
       limit: 10,
       page: 0,
-      lang: locale,
+      lang: locale || 'en',
     };
     const params = new URLSearchParams(searchParams);
     const searchSpecies = await fetch(`${searchURL}?${params}`);

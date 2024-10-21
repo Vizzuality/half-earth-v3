@@ -253,7 +253,7 @@ function DashboardContainer(props) {
 
   const makeSpeciesListParams = (args, summary = false) => {
     const params = {};
-    params.lang = locale;
+    params.lang = locale || 'en';
     if (args.lat) {
       params.lat = args.lat.toString();
     }
