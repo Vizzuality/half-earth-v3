@@ -10,6 +10,22 @@ import styles from './data-layers-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import DataLayersGroupedList from './grouped-list';
 import { NAVIGATION } from '../../../../utils/dashboard-utils';
+import { getCSSVariable } from 'utils/css-utils';
+
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  plugins,
+  Filler
+} from 'chart.js';
+
+ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Filler, Legend, CategoryScale);
 
 function DataLayerComponent(props) {
   const t = useT();
@@ -47,6 +63,55 @@ function DataLayerComponent(props) {
     },
   })
   const [isLoading, setIsLoading] = useState(true);
+  const [chartData, setChartData] = useState();
+  const [showHabitatChart, setShowHabitatChart] = useState(false)
+
+  const chartOptions = {
+    plugins: {
+      title: {
+        display: false,
+      },
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        beginAtZero: false,
+        display: true,
+        title: {
+          display: true,
+          text: t('Year'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+        },
+      },
+      y: {
+        beginAtZero: false,
+        display: true,
+        title: {
+          display: true,
+          text: t('Habitat Suitable Range'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+        },
+      },
+    },
+  };
+
+  useEffect(() => {
+    getHabitatMapData();
+  }, [])
 
   useEffect(() => {
     if (!dataLayerData) return;
@@ -100,6 +165,35 @@ function DataLayerComponent(props) {
     setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
   }
 
+  const getHabitatMapData = async () => {
+    const habitatMapUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/map?scientificname=${speciesInfo.scientificname}`;
+    const response = await fetch(habitatMapUrl);
+    const d = await response.json();
+
+    // remove Year row
+    d.data.shift();
+
+    setChartData({
+      labels: d.data.map(item => item[0]),
+      datasets: [
+        {
+          fill: false,
+          backgroundColor: 'rgba(24, 186, 180, 1)',
+          borderColor: 'rgba(24, 186, 180, 1)',
+          pointStyle: false,
+          data: d.data.map(item => item[2])
+        },
+        {
+          fill: '-1',
+          backgroundColor: 'rgba(24, 186, 180, 0.7)',
+          borderColor: 'rgba(24, 186, 180, 1)',
+          pointStyle: false,
+          data: d.data.map(item => item[3])
+        },
+      ]
+    });
+  }
+
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -126,8 +220,9 @@ function DataLayerComponent(props) {
         <DataLayersGroupedList
           dataPoints={dataPoints}
           setDataPoints={setDataPoints}
+          setShowHabitatChart={setShowHabitatChart}
           {...props} />
-
+        {chartData && showHabitatChart && <Line options={chartOptions} data={chartData} />}
         <hr className={hrTheme.dark} />
         <button
           className={styles.distributionTitle}

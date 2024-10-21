@@ -12,7 +12,7 @@ import { LightModeContext } from '../../../../../context/light-mode';
 import { REGIONS_PROVINCE_VECTOR_URL } from '../../../../../utils/dashboard-utils';
 
 function GroupedListComponent(props) {
-  const { dataPoints, setDataPoints, map, view, speciesInfo, regionLayers, setRegionLayers } = props;
+  const { dataPoints, setDataPoints, map, view, speciesInfo, regionLayers, setRegionLayers, setShowHabitatChart } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
@@ -118,6 +118,7 @@ function GroupedListComponent(props) {
       } else if (item.toUpperCase() === 'PERTE/GAIN D\'HABITAT' || item.toUpperCase() === 'HABITAT LOSS/GAIN') {
         const layerName = item.toUpperCase();
         if (!dataPoints[item].isActive) {
+          setShowHabitatChart(true);
           const webTileLayer = EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
             layerName,
@@ -129,6 +130,7 @@ function GroupedListComponent(props) {
             map.add(layer);
           });
         } else {
+          setShowHabitatChart(false);
           setRegionLayers((regionLayers) => {
             const { [layerName]: name, ...rest } = regionLayers;
             return rest;
