@@ -62,8 +62,8 @@ function BioDiversityContainer(props) {
           [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers.featureLayer,
           [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: protectedLayers.vectorTileLayer
         });
-        map.add(layer);
         map.add(protectedLayers.groupLayer);
+        map.add(layer);
       });
   }, []);
 
