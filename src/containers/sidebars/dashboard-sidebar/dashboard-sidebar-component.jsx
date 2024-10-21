@@ -11,10 +11,9 @@ import { LightModeContext } from '../../../context/light-mode';
 import DashboardNav from '../../../components/dashboard-nav';
 import DashboardHomeContainer from './dashboard-home';
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
-import { INITIAL_LAYERS, LAYER_OPTIONS, LAYER_TITLE_TYPES, NAVIGATION } from '../../../utils/dashboard-utils';
+import { NAVIGATION } from '../../../utils/dashboard-utils';
 import SpeciesFilterContainer from './species-filter';
 import RegionsAnalysisContainer from './regions-analysis';
-import EsriFeatureService from 'services/esri-feature-service';
 
 function DashboardSidebar(props) {
   const t = useT();
