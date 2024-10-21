@@ -25,7 +25,7 @@ export default {
       fillOpacity: 0.7
     },
     padding: {
-      left: 200,
+      left: 0,
     },
     environment: {
       atmosphereEnabled: false,
