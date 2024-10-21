@@ -125,6 +125,16 @@ function GroupedListComponent(props) {
             LAYER_TITLE_TYPES.TREND
           );
 
+          let layerIndex = searchForLayers('HABITAT LOSS/GAIN') - 1;
+
+          if (layerIndex < 0) {
+            layerIndex = searchForLayers('GBIF (2023)') - 1;
+          }
+
+          if (layerIndex < 0) {
+            layerIndex = map.layers.items.length;
+          }
+
           webTileLayer.then(layer => {
             setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
             map.add(layer);
@@ -155,9 +165,19 @@ function GroupedListComponent(props) {
             LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS
           );
 
+          let layerIndex = searchForLayers('HABITAT LOSS/GAIN') - 1;
+
+          if (layerIndex < 0) {
+            layerIndex = searchForLayers('GBIF (2023)') - 1;
+          }
+
+          if (layerIndex < 0) {
+            layerIndex = map.layers.items.length;
+          }
+
           webTileLayer.then(layer => {
             setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
-            map.add(layer, map.layers.length - 1);
+            map.add(layer, layerIndex);
           });
         }
       } else {
@@ -182,7 +202,13 @@ function GroupedListComponent(props) {
 
           layer = EsriFeatureService.getGeoJsonLayer(name, layerName);
           setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
-          map.add(layer, map.layers.length - 1);
+
+          let layerIndex = searchForLayers('HABITAT LOSS/GAIN');
+
+          if (layerIndex < 0) {
+            layerIndex = map.layers.items.length;
+          }
+          map.add(layer, layerIndex + 1);
         }
       } else {
         // const { [layerName]: name, ...rest } = regionLayers;
@@ -269,6 +295,10 @@ function GroupedListComponent(props) {
     }
 
     return control;
+  }
+
+  const searchForLayers = (layerName) => {
+    return map.layers.items.findIndex(item => item.id === layerName);
   }
 
   return (
