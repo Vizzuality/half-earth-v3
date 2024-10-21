@@ -16,7 +16,6 @@ import { LAYER_OPTIONS, NAVIGATION, REGION_OPTIONS } from '../../../utils/dashbo
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
-
 let highlight;
 
 function DashboardViewComponent(props) {

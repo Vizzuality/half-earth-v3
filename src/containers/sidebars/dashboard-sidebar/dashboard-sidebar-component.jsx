@@ -17,13 +17,20 @@ import RegionsAnalysisContainer from './regions-analysis';
 
 function DashboardSidebar(props) {
   const t = useT();
-  const { countryName, selectedIndex, map, regionLayers, setRegionLayers, speciesInfo, speciesName } = props;
+  const { countryName,
+    selectedIndex,
+    map,
+    regionLayers,
+    selectedRegionOption,
+    setRegionLayers,
+    speciesInfo,
+    speciesName } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
   useEffect(() => {
     // TODO: find out why this doesn't work
-    if (selectedIndex !== NAVIGATION.TRENDS) {
+    if (selectedIndex !== NAVIGATION.TRENDS && selectedIndex !== NAVIGATION.EXPLORE_SPECIES) {
       removeRegionLayers();
       setRegionLayers({});
     }
