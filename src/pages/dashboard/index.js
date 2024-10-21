@@ -104,7 +104,7 @@ function DashboardContainer(props) {
   }, [speciesInfo]);
 
   useEffect(() => {
-    if(!dataLayerData || !taxaList.length) return;
+    if(!dataLayerData || !taxaList?.length) return;
     getData();
 
   }, [dataLayerData, taxaList]);
@@ -216,7 +216,7 @@ function DashboardContainer(props) {
       '',
     ];
 
-    data.taxas.forEach(taxa => {
+    data.taxas?.forEach(taxa => {
       const taxaDatasetSet = new Set();
       taxa.species.forEach(species => {
         const speciesDatasets = Object.keys(species.dataset);
@@ -338,7 +338,7 @@ function DashboardContainer(props) {
   }
 
   const sortTaxaList = (taxa) => {
-    return taxa.sort((a, b) => {
+    return taxa?.sort((a, b) => {
       if (a.sortby < b.sortby) {
         return -1;
       }

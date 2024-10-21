@@ -127,6 +127,7 @@ function DataLayerComponent(props) {
           dataPoints={dataPoints}
           setDataPoints={setDataPoints}
           {...props} />
+
         <hr className={hrTheme.dark} />
         <button
           className={styles.distributionTitle}

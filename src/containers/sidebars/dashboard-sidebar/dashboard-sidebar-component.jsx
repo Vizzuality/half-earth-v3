@@ -17,7 +17,7 @@ import RegionsAnalysisContainer from './regions-analysis';
 
 function DashboardSidebar(props) {
   const t = useT();
-  const { countryName, selectedIndex, map, regionLayers, setRegionLayers, speciesInfo } = props;
+  const { countryName, selectedIndex, map, regionLayers, setRegionLayers, speciesInfo, speciesName } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
@@ -52,7 +52,13 @@ function DashboardSidebar(props) {
         {selectedIndex === NAVIGATION.HOME && <DashboardHomeContainer {...props} />}
         {selectedIndex === NAVIGATION.EXPLORE_SPECIES && <SpeciesFilterContainer {...props} />}
         {selectedIndex === NAVIGATION.REGION && <RegionsAnalysisContainer {...props} />}
-        {selectedIndex === NAVIGATION.SPECIES || selectedIndex === NAVIGATION.DATA_LAYER && <DataLayerContainer {...props} />}
+        {!speciesName &&
+          selectedIndex === NAVIGATION.DATA_LAYER &&
+          <DashboardHomeContainer {...props} />}
+        {speciesName &&
+          (selectedIndex === NAVIGATION.SPECIES ||
+            selectedIndex === NAVIGATION.DATA_LAYER) &&
+          <DataLayerContainer {...props} />}
         {selectedIndex === NAVIGATION.BIO_IND && <BioDiversityContainer {...props} />}
         {selectedIndex === NAVIGATION.TRENDS && <DashboardTrendsSidebarContainer {...props} />}
       </div>

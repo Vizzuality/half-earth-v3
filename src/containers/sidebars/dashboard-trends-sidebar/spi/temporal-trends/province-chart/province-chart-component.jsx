@@ -255,7 +255,9 @@ function ProvinceChartComponent(props) {
   const selectClickedRegion = (elements) => {
     const datasetIndex = elements[0].datasetIndex;
     const dataIndex = elements[0].index;
+
     const value = bubbleData.datasets[datasetIndex].data[dataIndex];
+
     handleProvinceSelected({ value: value.label });
     setFoundIndex(provinces.findIndex(prov => prov.value === value.label));
   }

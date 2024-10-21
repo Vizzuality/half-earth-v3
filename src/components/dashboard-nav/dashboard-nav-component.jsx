@@ -56,10 +56,8 @@ function DashboardNavComponent(props) {
         <button
           type="button"
           aria-label={t('Species')}
-          disabled={!speciesName}
           className={cx({
             [styles.selected]: selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS,
-            [styles.disabled]: !speciesName
           })}
           onClick={() => {
             updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER);
@@ -70,9 +68,11 @@ function DashboardNavComponent(props) {
         {selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS && <div className={styles.subNav}>
           <button
             type="button"
+            disabled={!speciesName}
             aria-label={t('Data Analysis')}
             className={cx({
               [styles.selected]: selectedIndex === NAVIGATION.DATA_LAYER,
+              [styles.disabled]: !speciesName
             })}
             onClick={() => updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER)}
           >
@@ -80,9 +80,11 @@ function DashboardNavComponent(props) {
           </button>
           <button
             type="button"
+            disabled={!speciesName}
             aria-label={t('Biodiversity Indicators')}
             className={cx({
               [styles.selected]: selectedIndex === NAVIGATION.BIO_IND,
+              [styles.disabled]: !speciesName
             })}
             onClick={() => updateHistory(NAVIGATION.BIO_IND, titles.BIO_DIVERSITY)}
           >

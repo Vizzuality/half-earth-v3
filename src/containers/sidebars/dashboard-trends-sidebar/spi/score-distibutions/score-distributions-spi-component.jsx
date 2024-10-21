@@ -218,7 +218,7 @@ function ScoreDistributionsSpiComponent(props) {
   const loadSpecies = () => {
     if (activeTrend === PROVINCE_TREND && selectedProvince) {
       const regionSpecies = speciesHighlights.region_highlights.filter(sh => sh.iso3_regional === selectedProvince.iso_regional);
-      setSpsSpecies(regionSpecies[0].region_highlights);
+      setSpsSpecies(regionSpecies[0]?.region_highlights);
     } else {
       setSpsSpecies(speciesHighlights.country_highlights)
     }
