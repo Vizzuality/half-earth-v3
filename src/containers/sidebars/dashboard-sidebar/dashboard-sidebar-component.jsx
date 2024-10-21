@@ -30,21 +30,15 @@ function DashboardSidebar(props) {
   }, [selectedIndex]);
 
   const removeRegionLayers = () => {
-    // let layers = regionLayers;
-    // Object.keys(layers).map(region => {
-    //   // const { [region]: name, ...rest } = layers;
-    //   // layers = rest;
-    //   const foundLayer = map.layers.items.find(item => item.id === region);
-    //   if (foundLayer) {
-    //     map.remove(foundLayer);
-    //   }
-    // });
-
-    map.layers.items.forEach(layer => {
-      if (!INITIAL_LAYERS.includes(layer.id)) {
-        map.remove(layer);
+    let layers = regionLayers;
+    Object.keys(layers).map(region => {
+      const foundLayer = map.layers.items.find(item => item.id === region);
+      if (foundLayer) {
+        map.remove(foundLayer);
       }
     });
+
+    console.log(regionLayers)
   }
 
   return (
