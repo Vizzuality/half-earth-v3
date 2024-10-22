@@ -2,8 +2,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import {
-  selectGlobeUrlState,
-  selectUiUrlState,
+  selectGlobeUrlState
 } from 'selectors/location-selectors';
 
 import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
@@ -26,13 +25,6 @@ const getTrendViewSettings = createSelector(selectGlobeUrlState, (globeUrlState)
   return {
     ...dashboardTrendViewConfig.view,
     ...globeUrlState,
-  };
-});
-
-const getUiSettings = createSelector(selectUiUrlState, (uiUrlState) => {
-  return {
-    ...dashboardViewConfig.ui,
-    ...uiUrlState,
   };
 });
 
@@ -71,11 +63,6 @@ const getScientificName = createSelector(
   (scientificName) => scientificName
 );
 
-const getSidebarVisibility = createSelector(
-  getUiSettings,
-  (uiSettings) => uiSettings.isSidebarOpen
-);
-
 export default createStructuredSelector({
   viewSettings: getViewSettings,
   trendViewSettings: getTrendViewSettings,
@@ -83,5 +70,4 @@ export default createStructuredSelector({
   countryISO: getCountryISO,
   countryName: getCountryName,
   scientificName: getScientificName,
-  isSidebarOpen: getSidebarVisibility,
 });

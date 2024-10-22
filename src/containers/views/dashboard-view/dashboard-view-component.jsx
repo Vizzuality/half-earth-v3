@@ -3,10 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import loadable from '@loadable/component';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
-import SideMenu from 'containers/menus/sidemenu';
 import { LightModeProvider } from '../../../context/light-mode';
 import MapView from 'components/map-view';
-import PopupTemplate from '@arcgis/core/PopupTemplate';
 import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
 
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
@@ -45,6 +43,14 @@ function DashboardViewComponent(props) {
   const [selectedRegionOption, setSelectedRegionOption] = useState('');
   const [layerView, setLayerView] = useState();
   let hoverHighlight;
+
+  useEffect(() => {
+    if (!view) return;
+    view.on('click', (event) => {
+      event.stopPropagation();
+    });
+  }, [view])
+
 
   useEffect(async () => {
     if (view && Object.keys(regionLayers).length) {
@@ -191,12 +197,6 @@ function DashboardViewComponent(props) {
       />
 
       <RegionsLabelsLayer sceneMode={sceneMode} activeLayers={activeLayers} />
-
-      <SideMenu
-        openedModal={openedModal}
-        activeLayers={activeLayers}
-        isFullscreenActive={isFullscreenActive}
-      />
 
       <LabelsLayer activeLayers={activeLayers} />
     </MapView>

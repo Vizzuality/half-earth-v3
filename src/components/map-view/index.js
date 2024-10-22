@@ -9,7 +9,7 @@ import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import TileLayer from '@arcgis/core/layers/TileLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
-import Popup from "@arcgis/core/widgets/Popup.js";
+// import Popup from "@arcgis/core/widgets/Popup.js";
 
 import Component from './component';
 import mapStateToProps from './selectors';
@@ -124,7 +124,7 @@ function ViewContainer(props) {
         map,
         container: `map-container-${mapName || mapId}`,
         zoom: 6,
-        popup: new Popup(),
+        // popup: new Popup(),
         ...viewSettings,
       });
 
