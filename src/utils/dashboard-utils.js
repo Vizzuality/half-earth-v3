@@ -36,8 +36,8 @@ export const TREND_MAP_URL = 'https://next-api-dot-map-of-life.appspot.com/2.x/s
 export const PROVINCE_LIB_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/liberia_provinces_spi_join/FeatureServer';
 export const PROVINCE_LIB_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Liberia__Province_SPI/VectorTileServer';
 export const PROVINCE_LIB_REGIONS_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Liberia_Provine_Borders/VectorTileServer';
-export const PROTECTED_AREA_LIB_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/liberia_wdpa_take2/FeatureServer';
-export const PROTECTED_AREA_LIB_VECTOR_URL ='https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Liberia_WDPA_(filtered)/VectorTileServer';
+export const PROTECTED_AREA_LIB_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/liberia_wdpa_all/FeatureServer';
+export const PROTECTED_AREA_LIB_VECTOR_URL ='https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/liberia_wdpa_all/VectorTileServer';
 
 export const LAYER_TITLE_TYPES = {
   EXPERT_RANGE_MAPS: 'EXPERT RANGE MAPS',
