@@ -115,7 +115,7 @@ function RegionsAnalysisComponent(props) {
       <span className={styles.sectionTitle}>{t('Regions Analysis')}</span>
       <hr className={hrTheme.dark} />
       <p>
-        {t('Select a region type below to explore a table of regions in which this species is expected to occur.')}
+        {t('Select a region type below to display on the map and explore species lists for each region.')}
       </p>
       <div className={styles.choices}>
         <RadioGroup
