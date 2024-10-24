@@ -106,7 +106,7 @@ function DashboardViewComponent(props) {
                   scientificName,
                   selectedIndex: selectedIndex,
                   regionLayers: activeLayers,
-                  selectedRegion: hits.attributes.NAME_1
+                  selectedRegion: (hits.attributes.NAME_1 ?? hits.attributes.region_name)
                 },
               });
               setClickedRegion(hits.attributes);
@@ -133,7 +133,7 @@ function DashboardViewComponent(props) {
           if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
             regionName = hits.attributes.NAME;
           } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
-            regionName = hits.attributes.NAME_1;
+            regionName = (hits.attributes.NAME_1 ?? hits.attributes.region_name);
           }
 
           if (regionName) {

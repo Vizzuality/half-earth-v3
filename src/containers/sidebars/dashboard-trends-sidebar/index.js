@@ -51,7 +51,6 @@ function DashboardTrendsSidebarContainer(props) {
       const { geometry, attributes } = features[0];
 
       if (geometry && view) {
-        // view.center = [geometry.longitude, geometry.latitude];
         setGeo(geometry);
         setCountryData(attributes);
       }
@@ -78,8 +77,8 @@ function DashboardTrendsSidebarContainer(props) {
       // rezoom to country
       view.goTo({
         target: geometry,
-        center: [geometry.longitude - 15, geometry.latitude],
-        zoom: 5.5,
+        center: [geometry.longitude - 7, geometry.latitude],
+        zoom: 7.2,
         extent: geometry.clone(),
       });
     }
