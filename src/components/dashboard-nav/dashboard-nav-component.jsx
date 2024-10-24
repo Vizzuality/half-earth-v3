@@ -4,6 +4,8 @@ import StacksIcon from 'icons/stacks.svg?react';
 import OkapiIcon from 'icons/okapi.svg?react';
 import TimeLineIcon from 'icons/timeline.svg?react';
 import HomeIcon from 'icons/house-solid.svg?react';
+import ElephantIcon from 'icons/elephant.svg?react';
+import DuikerIcon from 'icons/duiker_icon_black.svg?react';
 import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import { useT } from '@transifex/react';
@@ -74,7 +76,9 @@ function DashboardNavComponent(props) {
             updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER);
           }}
         >
-          <OkapiIcon className={styles.speciesIcon} />
+          {countryISO === 'COD' && <OkapiIcon className={styles.speciesIcon} />}
+          {countryISO === 'LBR' && <DuikerIcon className={styles.speciesIcon} />}
+          {countryISO === 'GIN' && <ElephantIcon className={styles.speciesIcon} />}
         </button>
         {selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS && <div className={styles.subNav}>
           <button
