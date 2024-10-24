@@ -227,14 +227,14 @@ function ProvinceChartComponent(props) {
   const highlightProvinceBubble = (index) => {
     const chart = chartRef.current;
 
-    // if (chart && index) {
-    //   if (previousIndex > -1) {
-    //     chart.data.datasets[previousIndex].backgroundColor = getCSSVariable('birds');
-    //   }
-    //   chart.data.datasets[index].backgroundColor = '#18bab4';
-    //   setPreviousIndex(index);
-    //   chart.update();
-    // }
+    if (chart && index) {
+      if (previousIndex > -1) {
+        chart.data.datasets[previousIndex].backgroundColor = getCSSVariable('birds');
+      }
+      chart.data.datasets[index].backgroundColor = '#18bab4';
+      setPreviousIndex(index);
+      chart.update();
+    }
   }
 
   const getProvinceScores = (province) => {
