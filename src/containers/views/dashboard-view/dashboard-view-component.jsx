@@ -5,6 +5,7 @@ import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import { LightModeProvider } from '../../../context/light-mode';
 import MapView from 'components/map-view';
+import SideMenu from 'containers/menus/sidemenu';
 import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
 import { DASHBOARD } from 'router';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
@@ -209,6 +210,12 @@ function DashboardViewComponent(props) {
       />
 
       <RegionsLabelsLayer sceneMode={sceneMode} activeLayers={activeLayers} />
+
+      <SideMenu
+        openedModal={openedModal}
+        activeLayers={activeLayers}
+        isFullscreenActive={isFullscreenActive}
+      />
 
       <LabelsLayer activeLayers={activeLayers} />
     </MapView>
