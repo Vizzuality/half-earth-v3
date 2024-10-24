@@ -3,7 +3,8 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
     EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
-    PROTECTED_AREA_VECTOR_URL, PROVINCE_FEATURE_LAYER_URL, PROVINCE_REGIONS_VECTOR_URL,
+    PROTECTED_AREA_VECTOR_URL, PROVINCE_FEATURE_LAYER_URL, PROVINCE_LIB_FEATURE_URL,
+    PROVINCE_LIB_REGIONS_VECTOR_URL, PROVINCE_LIB_VECTOR_URL, PROVINCE_REGIONS_VECTOR_URL,
     PROVINCE_VECTOR_URL, TREND_MAP_URL
 } from 'utils/dashboard-utils.js';
 
@@ -148,10 +149,20 @@ function addFeature({ url, features }: AddFeature) {
   });
 }
 
-function addProvinceLayer(id){
-  const featureLayer = getFeatureLayer(PROVINCE_FEATURE_LAYER_URL, id ?? LAYER_OPTIONS.PROVINCES);
-  const vectorTileLayer = getVectorTileLayer(PROVINCE_VECTOR_URL, LAYER_OPTIONS.PROVINCES_VECTOR);
-  const outlineVectorTileLayer = getVectorTileLayer(PROVINCE_REGIONS_VECTOR_URL, LAYER_OPTIONS.PROVINCES_REGION_VECTOR)
+function addProvinceLayer(id, countryISO = 'COD'){
+  let featureURL = PROVINCE_FEATURE_LAYER_URL;
+  let vectorTileURL = PROVINCE_VECTOR_URL;
+  let outlineTileURL = PROVINCE_REGIONS_VECTOR_URL;
+
+  if(countryISO === 'LBR'){
+    featureURL = PROVINCE_LIB_FEATURE_URL;
+    vectorTileURL = PROVINCE_LIB_VECTOR_URL;
+    outlineTileURL = PROVINCE_LIB_REGIONS_VECTOR_URL;
+  }
+
+  const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROVINCES);
+  const vectorTileLayer = getVectorTileLayer(vectorTileURL, LAYER_OPTIONS.PROVINCES_VECTOR);
+  const outlineVectorTileLayer = getVectorTileLayer(outlineTileURL, LAYER_OPTIONS.PROVINCES_REGION_VECTOR)
   const groupLayer = new GroupLayer({
     layers: [featureLayer, vectorTileLayer],
     id: id ?? LAYER_OPTIONS.PROVINCES

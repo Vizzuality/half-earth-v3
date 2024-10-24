@@ -175,9 +175,9 @@ function ProvinceChartComponent(props) {
 
   useEffect(() => {
     if (clickedRegion && countryRegions.length && allSorted) {
-      getProvinceScores({ value: clickedRegion.NAME_1 });
+      getProvinceScores({ value: clickedRegion.NAME_1 ?? clickedRegion.region_name });
 
-      const foundIndex = bubbleData?.datasets.findIndex(item => item.label === clickedRegion.NAME_1);
+      const foundIndex = bubbleData?.datasets.findIndex(item => item.label === (clickedRegion.NAME_1 ?? clickedRegion.region_name));
       if (foundIndex) {
         highlightProvinceBubble(foundIndex);
       }
@@ -215,7 +215,7 @@ function ProvinceChartComponent(props) {
 
     const results = await layerView?.queryFeatures(searchQuery);
 
-    const foundRegion = results?.features.filter(feat => feat.attributes.NAME_1 === province.value);
+    const foundRegion = results?.features.filter(feat => (feat.attributes.NAME_1 ?? feat.attributes.region_name) === province.value);
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
 
@@ -227,14 +227,14 @@ function ProvinceChartComponent(props) {
   const highlightProvinceBubble = (index) => {
     const chart = chartRef.current;
 
-    if (chart && index) {
-      if (previousIndex > -1) {
-        chart.data.datasets[previousIndex].backgroundColor = getCSSVariable('birds');
-      }
-      chart.data.datasets[index].backgroundColor = '#18bab4';
-      setPreviousIndex(index);
-      chart.update();
-    }
+    // if (chart && index) {
+    //   if (previousIndex > -1) {
+    //     chart.data.datasets[previousIndex].backgroundColor = getCSSVariable('birds');
+    //   }
+    //   chart.data.datasets[index].backgroundColor = '#18bab4';
+    //   setPreviousIndex(index);
+    //   chart.update();
+    // }
   }
 
   const getProvinceScores = (province) => {

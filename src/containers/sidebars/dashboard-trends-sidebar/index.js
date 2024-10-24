@@ -62,7 +62,7 @@ function DashboardTrendsSidebarContainer(props) {
     if(!map && !view) return;
 
     if(!regionLayers.hasOwnProperty(LAYER_OPTIONS.PROVINCES)) {
-      const layers = EsriFeatureService.addProvinceLayer();
+      const layers = EsriFeatureService.addProvinceLayer('', countryISO);
       layers.featureLayer.opacity = 0;
       layers.vectorTileLayer.opacity = 0.7;
 
