@@ -93,11 +93,11 @@ function DashboardHomeComponent(props) {
         <div className={styles.mostPopular}>
           <span className={styles.sectionTitle}>{t('Popular Species')}</span>
           <div className={styles.species}>
-            <div className={cx(styles.navCard, styles.chat)} onClick={() => selectSpecies('Apalis personata')} >
+            <div className={cx(styles.navCard, styles.chat)} onClick={() => selectSpecies('Cephalophus zebra')} >
               <div className={styles.outline}></div>
-              <label>Black-Faced Apalis</label>
+              <label>Zebra Duiker</label>
               <p>
-                Apalis personata
+                Cephalophus zebra
               </p>
             </div>
             <div className={cx(styles.navCard, styles.pilio)} onClick={() => selectSpecies('Hyperolius cinnamomeoventris')} >
