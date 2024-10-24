@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from 'components/button';
 import iccnLogo from 'logos/institut-congolais.png';
-import epaLogo from 'logos/channels4_profile.jpg';
+import epaLogo from 'logos/epa_logo_transparent.png';
 import { useT } from '@transifex/react';
 
 function DashboardLoginComponent(props) {

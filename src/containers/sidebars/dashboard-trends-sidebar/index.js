@@ -80,6 +80,13 @@ function DashboardTrendsSidebarContainer(props) {
       zoom: 7.2,
       extent: geometry.clone(),
     });
+
+    // could be used to zoom to country better
+    // view.whenLayerView(layers.vectorTileLayer).then(() => {
+    //   view.goTo({
+    //     target: layers.vectorTileLayer.fullExtent.expand(1.2),
+    //   });
+    // })
   }, [map, view]);
 
   const removeRegionLayers = () => {
