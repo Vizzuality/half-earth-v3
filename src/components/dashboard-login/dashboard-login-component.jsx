@@ -4,14 +4,15 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from 'components/button';
 import iccnLogo from 'logos/institut-congolais.png';
+import epaLogo from 'logos/channels4_profile.jpg';
 import { useT } from '@transifex/react';
 
 function DashboardLoginComponent(props) {
-  const { setLoggedIn } = props;
+  const { setLoggedIn, countryISO } = props;
   const t = useT();
 
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState()
+  const [password, setPassword] = useState();
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -20,7 +21,8 @@ function DashboardLoginComponent(props) {
   return (
     <div className={styles.container}>
       <div>
-        <img src={iccnLogo} style={{ width: '300px' }} />
+        {countryISO.toUpperCase() === 'COD' && <img src={iccnLogo} style={{ width: '300px' }} />}
+        {countryISO.toUpperCase() === 'LBR' && <img src={epaLogo} style={{ width: '300px' }} />}
       </div>
       <div className={styles.loginForm}>
         <FormControl variant="standard">

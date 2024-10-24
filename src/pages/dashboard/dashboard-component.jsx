@@ -13,7 +13,7 @@ function DashboardComponent(props) {
 
   return (
     <>
-      {!loggedIn && <DashboardLogin setLoggedIn={setLoggedIn} />}
+      {!loggedIn && <DashboardLogin setLoggedIn={setLoggedIn} {...props} />}
       {loggedIn && <DashboardView
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         {...props}
