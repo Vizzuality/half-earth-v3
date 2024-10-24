@@ -183,19 +183,22 @@ function TemporalTrendsSpiNationalChartComponent(props) {
               <SpiArcChartComponent
                 width="125x"
                 height="75px"
+                data={areaProtectedData}
+                value={areaProtected}
+              />
+              <SpiArcChartComponent
+                width="125x"
+                height="75px"
                 data={spiArcData}
-                value={currentScore.spi_all}
+                value={currentScore?.spi_all}
               />
               <div className={styles.values}>
-                <b>{areaProtected.toFixed(2)}</b>
+                <b>{currentScore.national_rank}</b>
                 <span>{t('Global Ranking')}</span>
-              </div>
-              <div className={styles.values}>
-                <b>{currentScore?.national_rank}</b>
-                <span>SPI</span>
               </div>
               <span></span>
               <span>{t('Area Protected')}</span>
+              <span>SPI</span>
             </div>
           }
         </div>
