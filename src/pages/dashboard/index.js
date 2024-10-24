@@ -14,7 +14,7 @@ import mapStateToProps from './dashboard-selectors.js';
 import {
   COUNTRIES_DATA_SERVICE_URL
 } from 'constants/layers-urls';
-import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
+import { NAVIGATION } from '../../utils/dashboard-utils';
 import { useLocale } from '@transifex/react';
 
 const actions = { ...countryDataActions, ...urlActions };
@@ -24,7 +24,7 @@ function DashboardContainer(props) {
   const {
     viewSettings,
     countryISO,
-    scientificName,
+    queryParams,
     setCountryDataLoading,
     setCountryDataReady,
     setCountryDataError,
@@ -39,13 +39,17 @@ function DashboardContainer(props) {
   const [spiDataByCountry, setSpiDataByCountry] = useState(null);
   const [selectedTaxa, setSelectedTaxa] = useState('');
   const [filteredTaxaList, setFilteredTaxaList] = useState();
-  const [speciesName, setSpeciesName] = useState(null);
+  const [scientificName, setScientificName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
   const [loggedIn, setLoggedIn] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState();
+  const [regionLayers, setRegionLayers] = useState({});
+  const [selectedRegionOption, setSelectedRegionOption] = useState('');
 
   // Get Country information, allows to get country name
   useEffect(() => {
+    getQueryParams();
+
     // Function to handle back navigation
     const handleBackButton = (event) => {
       // Implement custom behavior here
@@ -89,14 +93,8 @@ function DashboardContainer(props) {
 
   useEffect(() => {
     if(!scientificName) return;
-    localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificName);
-    setSpeciesName(scientificName);
-  }, [scientificName])
-
-  useEffect(() => {
-    if(!speciesName) return;
     getSpeciesData();
-  }, [speciesName]);
+  }, [scientificName])
 
   useEffect(() => {
     if(!speciesInfo) return;
@@ -109,8 +107,31 @@ function DashboardContainer(props) {
 
   }, [dataLayerData, taxaList]);
 
+
+  const getQueryParams = () => {
+    if(queryParams){
+      const {scientificName, regionLayers, selectedIndex, selectedRegionOption} = queryParams
+
+      if(scientificName){
+        setScientificName(scientificName);
+      }
+
+      if(selectedIndex){
+        setSelectedIndex(selectedIndex);
+      }
+
+      if(regionLayers){
+        setRegionLayers(regionLayers);
+      }
+
+      if(selectedRegionOption){
+        setSelectedRegionOption(selectedRegionOption);
+      }
+    }
+  }
+
   const getSpeciesData = async () => {
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${speciesName}`;
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${scientificName}`;
     const response = await fetch(url);
     const data = await response.json();
     setSpeciesInfo(data[0]);
@@ -118,13 +139,13 @@ function DashboardContainer(props) {
 
   const getDataLayersData = async () => {
     const dataLayerParams = {
-      scientificname: speciesName,
+      scientificname: scientificName,
       group: 'movement',
       lang: locale,
     };
     const dparams = new URLSearchParams(dataLayerParams);
     const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
-    const speciesObservationCount = `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/counts_${speciesName.replace(' ', '_')}.geojson`;
+    const speciesObservationCount = `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/counts_${scientificName.replace(' ', '_')}.geojson`;
 
     const apiCalls = [
       dataLayersURL,
@@ -164,8 +185,8 @@ function DashboardContainer(props) {
   }
 
   const getData = async () => {
-    const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${speciesName}`;
-    const spiScoreURL = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${speciesName}`
+    const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
+    const spiScoreURL = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${scientificName}`
 
     const apiCalls = [
       habitatTrendUrl,
@@ -371,14 +392,18 @@ function DashboardContainer(props) {
     setSelectedTaxa={setSelectedTaxa}
     filteredTaxaList={filteredTaxaList}
     setFilteredTaxaList={setFilteredTaxaList}
-    speciesName={speciesName}
-    setSpeciesName={setSpeciesName}
+    scientificName={scientificName}
+    setScientificName={setScientificName}
     selectedIndex={selectedIndex}
     setSelectedIndex={setSelectedIndex}
     loggedIn={loggedIn}
     setLoggedIn={setLoggedIn}
     setSelectedRegion={setSelectedRegion}
     selectedRegion={selectedRegion}
+    regionLayers={regionLayers}
+    setRegionLayers={setRegionLayers}
+    selectedRegionOption={selectedRegionOption}
+    setSelectedRegionOption={setSelectedRegionOption}
     {...props} />;
 }
 

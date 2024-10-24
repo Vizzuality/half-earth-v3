@@ -6,7 +6,7 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import { LightModeProvider } from '../../../context/light-mode';
 import MapView from 'components/map-view';
 import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
-
+import { DASHBOARD } from 'router';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
 import TopMenuContainer from '../../../components/top-menu';
 import { LAYER_OPTIONS, NAVIGATION, REGION_OPTIONS } from '../../../utils/dashboard-utils';
@@ -31,16 +31,20 @@ function DashboardViewComponent(props) {
     setSelectedIndex,
     setSelectedRegion,
     selectedRegion,
+    selectedRegionOption,
+    setSelectedRegionOption,
     setTaxaList,
+    browsePage,
+    scientificName,
+    regionLayers,
+    setRegionLayers,
   } = props;
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
-  const [regionLayers, setRegionLayers] = useState({});
   const [mapViewSettings, setMapViewSettings] = useState(viewSettings);
   const [clickedRegion, setClickedRegion] = useState();
   const [tabOption, setTabOption] = useState(2);
-  const [selectedRegionOption, setSelectedRegionOption] = useState('');
   const [layerView, setLayerView] = useState();
   let hoverHighlight;
 
@@ -49,7 +53,7 @@ function DashboardViewComponent(props) {
     view.on('click', (event) => {
       event.stopPropagation();
     });
-  }, [view])
+  }, [view]);
 
 
   useEffect(async () => {
@@ -94,6 +98,17 @@ function DashboardViewComponent(props) {
               }
               break;
             case NAVIGATION.TRENDS:
+              const activeLayers = Object.keys(regionLayers);
+              browsePage({
+                type: DASHBOARD,
+                payload: { iso: countryISO.toLowerCase() },
+                query: {
+                  scientificName,
+                  selectedIndex: selectedIndex,
+                  regionLayers: activeLayers,
+                  selectedRegion: hits.attributes.NAME_1
+                },
+              });
               setClickedRegion(hits.attributes);
               break;
           }
@@ -122,7 +137,6 @@ function DashboardViewComponent(props) {
           }
 
           if (regionName) {
-            console.log(regionName);
             view.popup.open({
               // Set the popup's title to the coordinates of the location
               title: `${regionName}`,
@@ -183,8 +197,6 @@ function DashboardViewComponent(props) {
           tabOption={tabOption}
           setTabOption={setTabOption}
           handleRegionSelected={handleRegionSelected}
-          selectedRegionOption={selectedRegionOption}
-          setSelectedRegionOption={setSelectedRegionOption}
           layerView={layerView}
           selectedRegion={selectedRegion}
           {...props} />

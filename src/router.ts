@@ -39,7 +39,7 @@ export const routes: RoutesMap<{ path: string; page?: string }> = {
     page: 'aoi',
   },
   [DASHBOARD]: {
-    path: '/dashboard/:iso/:scientificname?',
+    path: '/dashboard/:iso',
     page: 'dashboard',
   },
   [NOT_FOUND]: {

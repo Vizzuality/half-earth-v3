@@ -10,10 +10,11 @@ import { useT } from '@transifex/react';
 import cx from 'classnames';
 import { LightModeContext } from '../../context/light-mode';
 import { NAVIGATION } from '../../utils/dashboard-utils';
+import { DASHBOARD } from 'router';
 
 function DashboardNavComponent(props) {
   const t = useT();
-  const { selectedIndex, setSelectedIndex, speciesName } = props;
+  const { selectedIndex, setSelectedIndex, scientificName, browsePage, countryISO, regionLayers } = props;
   const { lightMode, } = useContext(LightModeContext);
 
   const titles = {
@@ -26,7 +27,17 @@ function DashboardNavComponent(props) {
   }
 
   const updateHistory = (page, title) => {
-    window.history.pushState({ selectedIndex: page }, '', `?page=${title}`);
+    const activeLayers = Object.keys(regionLayers);
+    browsePage({
+      type: DASHBOARD,
+      payload: { iso: countryISO.toLowerCase() },
+      query: {
+        scientificName: scientificName,
+        selectedIndex: page,
+        regionLayers: activeLayers
+      },
+    });
+    window.history.pushState({ selectedIndex: page }, '', ``);
     setSelectedIndex(page);
   }
 
@@ -68,11 +79,11 @@ function DashboardNavComponent(props) {
         {selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS && <div className={styles.subNav}>
           <button
             type="button"
-            disabled={!speciesName}
+            disabled={!scientificName}
             aria-label={t('Data Analysis')}
             className={cx({
               [styles.selected]: selectedIndex === NAVIGATION.DATA_LAYER,
-              [styles.disabled]: !speciesName
+              [styles.disabled]: !scientificName
             })}
             onClick={() => updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER)}
           >
@@ -80,11 +91,11 @@ function DashboardNavComponent(props) {
           </button>
           <button
             type="button"
-            disabled={!speciesName}
+            disabled={!scientificName}
             aria-label={t('Biodiversity Indicators')}
             className={cx({
               [styles.selected]: selectedIndex === NAVIGATION.BIO_IND,
-              [styles.disabled]: !speciesName
+              [styles.disabled]: !scientificName
             })}
             onClick={() => updateHistory(NAVIGATION.BIO_IND, titles.BIO_DIVERSITY)}
           >

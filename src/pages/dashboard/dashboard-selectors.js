@@ -7,12 +7,11 @@ import {
 
 import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
 import dashboardTrendViewConfig from 'containers/views/dashboard-view/dashboard-trends-view-config';
-import { SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const selectCountriesData = ({ countryData }) =>
   countryData && (countryData.data || null);
-const selectScientificName = ({ location }) => location.payload.scientificname ?? localStorage.getItem(SPECIES_SELECTED_COOKIE);
+const selectQueryParams = ({ location }) => location.query;
 
 const getViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
   return {
@@ -58,10 +57,10 @@ const getCountryName = createSelector(
   }
 );
 
-const getScientificName = createSelector(
-  selectScientificName,
-  (scientificName) => scientificName
-);
+const getQueryParams = createSelector(
+  selectQueryParams,
+  (queryParams) => queryParams
+)
 
 export default createStructuredSelector({
   viewSettings: getViewSettings,
@@ -69,5 +68,5 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,
-  scientificName: getScientificName,
+  queryParams: getQueryParams,
 });

@@ -110,8 +110,9 @@ function DataLayerComponent(props) {
   };
 
   useEffect(() => {
+    if (!speciesInfo) return;
     getHabitatMapData();
-  }, [])
+  }, [speciesInfo])
 
   useEffect(() => {
     if (!dataLayerData) return;

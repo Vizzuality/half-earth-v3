@@ -6,6 +6,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import SearchLocation from 'components/search-location';
 import EsriFeatureService from 'services/esri-feature-service';
+import { DASHBOARD } from 'router';
 import GroupLayer from '@arcgis/core/layers/GroupLayer.js';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
@@ -23,18 +24,25 @@ function RegionsAnalysisComponent(props) {
     selectedOption,
     map,
     regionLayers,
+    browsePage,
     setRegionLayers,
     setSelectedIndex,
     selectedRegion,
     setSelectedRegion,
+    scientificName,
+    selectedIndex,
     selectedRegionOption,
-    setSelectedRegionOption
+    setSelectedRegionOption,
+    countryISO,
   } = props;
   const { lightMode } = useContext(LightModeContext);
 
   useEffect(() => {
     if (selectedRegionOption && selectedRegion) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES)
+    } else if (selectedRegionOption) {
+      setSelectedRegionOption(selectedRegionOption);
+      displayLayer(selectedRegionOption);
     } else {
       setSelectedRegionOption(null);
     }
@@ -44,9 +52,14 @@ function RegionsAnalysisComponent(props) {
   const optionSelected = (event) => {
     setSelectedRegion(null);
     removeRegionLayers();
-    let layers;
 
     const option = event.currentTarget.value;
+    displayLayer(option);
+    setSelectedRegionOption(option);
+  }
+
+  const displayLayer = (option) => {
+    let layers;
     if (option === REGION_OPTIONS.PROTECTED_AREAS) {
       layers = EsriFeatureService.addProtectedAreaLayer();
       layers.featureLayer.opacity = 0;
@@ -62,12 +75,21 @@ function RegionsAnalysisComponent(props) {
 
       setRegionLayers({
         [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
-        [LAYER_OPTIONS.PROVINCE_VECTOR_URL]: layers.vectorTileLayer
+        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer
       });
       map.add(layers.groupLayer);
     }
 
-    setSelectedRegionOption(option);
+    browsePage({
+      type: DASHBOARD,
+      payload: { iso: countryISO.toLowerCase() },
+      query: {
+        scientificName: scientificName,
+        selectedIndex: selectedIndex,
+        regionLayers,
+        selectedRegionOption: option
+      },
+    });
   }
 
   const removeRegionLayers = () => {

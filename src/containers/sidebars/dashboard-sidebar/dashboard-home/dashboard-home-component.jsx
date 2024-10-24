@@ -14,7 +14,7 @@ import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../../../utils/dashboard
 function DashboardHomeComponent(props) {
   const t = useT();
   const locale = useLocale();
-  const { countryISO, setSelectedIndex, setSpeciesName } = props;
+  const { countryISO, setSelectedIndex, setScientificName } = props;
 
   const { lightMode, } = useContext(LightModeContext);
   const [searchInput, setSearchInput] = useState('');
@@ -38,7 +38,7 @@ function DashboardHomeComponent(props) {
   }
 
   const handleSearchSelect = (searchItem) => {
-    setSpeciesName(searchItem.scientificname);
+    setScientificName(searchItem.scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
   }
@@ -63,7 +63,7 @@ function DashboardHomeComponent(props) {
 
   const selectSpecies = (scientificname) => {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
-    setSpeciesName(scientificname);
+    setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
   }
 

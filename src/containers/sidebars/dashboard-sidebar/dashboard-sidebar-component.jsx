@@ -21,10 +21,8 @@ function DashboardSidebar(props) {
     selectedIndex,
     map,
     regionLayers,
-    selectedRegionOption,
     setRegionLayers,
-    speciesInfo,
-    speciesName } = props;
+    scientificName } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
 
@@ -52,18 +50,17 @@ function DashboardSidebar(props) {
         {!lightMode && <LightModeIcon className={styles.icon} />}
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
-      {/* <h1>{countryName}</h1> */}
-      <h1>{t('Democratic Republic of the Congo')}</h1>
+      <h1>{countryName}</h1>
 
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />
         {selectedIndex === NAVIGATION.HOME && <DashboardHomeContainer {...props} />}
         {selectedIndex === NAVIGATION.EXPLORE_SPECIES && <SpeciesFilterContainer {...props} />}
         {selectedIndex === NAVIGATION.REGION && <RegionsAnalysisContainer {...props} />}
-        {!speciesName &&
+        {!scientificName &&
           selectedIndex === NAVIGATION.DATA_LAYER &&
           <DashboardHomeContainer {...props} />}
-        {speciesName &&
+        {scientificName &&
           (selectedIndex === NAVIGATION.SPECIES ||
             selectedIndex === NAVIGATION.DATA_LAYER) &&
           <DataLayerContainer {...props} />}

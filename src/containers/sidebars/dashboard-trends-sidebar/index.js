@@ -96,8 +96,20 @@ function DashboardTrendsSidebarContainer(props) {
   }
 
   const getData = async () => {
-    const year = '2021';
-    const regionId = '90b03e87-3880-4164-a310-339994e3f919';
+    let year = '2024';
+    // DRC country id
+    let regionId = '90b03e87-3880-4164-a310-339994e3f919';
+
+    // Liberia
+    if(countryISO.toUpperCase() === 'LBR'){
+      regionId = '50e1557e-fc47-481a-b090-66d5cba5be70';
+    }
+
+    // Guinea
+    if(countryISO.toUpperCase() === 'GIN'){
+      regionId = '22200606-e907-497f-96db-e7cfd95d61b5';
+    }
+
     const taxa = 'all_terr_verts';
 
     // SHI calls
@@ -136,8 +148,10 @@ function DashboardTrendsSidebarContainer(props) {
     const spi = (spiTrendsValues[spiTrendsValues.length - 1].spi_all).toFixed(2);
     setSpiValue(spi);
 
-    const siiTD = siiTrendData;
-    setSiiValue((siiTD[0].all_taxa_avg * 100).toFixed(2));
+    if(siiTrendData.length){
+      const siiTD = siiTrendData;
+      setSiiValue((siiTD[0].all_taxa_avg * 100).toFixed(2));
+    }
 
     setShiData({trendData: shiTrendData, scoresData: shiScoresData});
     setSpiData({trendData: spiTrendData, scoresData: spiScoresData});

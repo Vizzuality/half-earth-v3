@@ -5,12 +5,12 @@ import styles from './species-group-component.module.scss';
 import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../utils/dashboard-utils';
 
 function SpeciesGroupComponent(props) {
-  const { species, selectedTaxaObj, setSelectedIndex, setSpeciesName } = props;
+  const { species, selectedTaxaObj, setSelectedIndex, setScientificName } = props;
   const { asset_url, common, scientificname } = species;
 
   const selectSpecies = (species) => {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
-    setSpeciesName(species.scientificname);
+    setScientificName(species.scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, species.scientificname);
   }
 

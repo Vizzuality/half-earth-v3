@@ -19,7 +19,7 @@ import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../../../../utils/dashbo
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();
-  const { spiData, countryISO, activeTrend, selectedProvince, year, setSelectedIndex, setSpeciesName } = props;
+  const { spiData, countryISO, activeTrend, selectedProvince, year, setSelectedIndex, setScientificName } = props;
   const { lightMode } = useContext(LightModeContext);
   const [speciesHighlights, setSpeciesHighlights] = useState();
   const [lowBucket, setLowBucket] = useState(0);
@@ -235,7 +235,7 @@ function ScoreDistributionsSpiComponent(props) {
 
   const selectSpecies = (scientificname) => {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
-    setSpeciesName(scientificname);
+    setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
   }
 

@@ -16,7 +16,7 @@ import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../../../../utils/dashbo
 
 function ScoreDistributionsShiComponent(props) {
   const t = useT();
-  const { shiData, setSpeciesName, setSelectedIndex } = props;
+  const { shiData, setScientificName, setSelectedIndex } = props;
   const SCORES = {
     HABITAT_SCORE: 'steward_score',
     AREA_SCORE: 'area_score',
@@ -207,7 +207,7 @@ function ScoreDistributionsShiComponent(props) {
 
   const selectSpecies = (scientificname) => {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
-    setSpeciesName(scientificname);
+    setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
   }
 
