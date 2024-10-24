@@ -154,8 +154,12 @@ function DashboardContainer(props) {
 
     const apiResponses = await Promise.all(apiCalls.map(async (url) => {
       const response = await fetch(url);
-      const data = await response.json();
-      return data;
+      try{
+        const data = await response.json();
+        return data;
+      } catch(error){
+        return [];
+      }
     }));
 
     const [dataLayersData, speciesObservationData] = apiResponses;
