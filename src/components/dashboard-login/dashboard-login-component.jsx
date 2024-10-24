@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from 'components/button';
 import iccnLogo from 'logos/institut-congolais.png';
 import epaLogo from 'logos/epa_logo_transparent.png';
+import ginLogo from 'logos/guinea.jpeg';
 import { useT } from '@transifex/react';
 
 function DashboardLoginComponent(props) {
@@ -23,6 +24,7 @@ function DashboardLoginComponent(props) {
       <div>
         {countryISO.toUpperCase() === 'COD' && <img src={iccnLogo} style={{ width: '300px' }} />}
         {countryISO.toUpperCase() === 'LBR' && <img src={epaLogo} style={{ width: '300px' }} />}
+        {countryISO.toUpperCase() === 'GIN' && <img src={ginLogo} style={{ width: '300px' }} />}
       </div>
       <div className={styles.loginForm}>
         <FormControl variant="standard">

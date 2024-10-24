@@ -4,7 +4,7 @@ import ScoreDistributionsSpiComponent from './score-distibutions/score-distribut
 import TemporalTrendsSpiComponent from './temporal-trends/temporal-trends-spi-component';
 
 function SpiComponent(props) {
-  const [year, setYear] = useState();
+  const [year, setYear] = useState('2024');
 
   return (
     <>
