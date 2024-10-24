@@ -3,9 +3,11 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
     EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
-    PROTECTED_AREA_LIB_FEATURE_URL, PROTECTED_AREA_LIB_VECTOR_URL, PROTECTED_AREA_VECTOR_URL,
-    PROVINCE_FEATURE_LAYER_URL, PROVINCE_LIB_FEATURE_URL, PROVINCE_LIB_REGIONS_VECTOR_URL,
-    PROVINCE_LIB_VECTOR_URL, PROVINCE_REGIONS_VECTOR_URL, PROVINCE_VECTOR_URL, TREND_MAP_URL
+    PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_GIN_VECTOR_URL, PROTECTED_AREA_LIB_FEATURE_URL,
+    PROTECTED_AREA_LIB_VECTOR_URL, PROTECTED_AREA_VECTOR_URL, PROVINCE_FEATURE_LAYER_URL,
+    PROVINCE_GIN_FEATURE_URL, PROVINCE_GIN_REGIONS_VECTOR_URL, PROVINCE_GIN_VECTOR_URL,
+    PROVINCE_LIB_FEATURE_URL, PROVINCE_LIB_REGIONS_VECTOR_URL, PROVINCE_LIB_VECTOR_URL,
+    PROVINCE_REGIONS_VECTOR_URL, PROVINCE_VECTOR_URL, TREND_MAP_URL
 } from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -158,6 +160,10 @@ function addProvinceLayer(id, countryISO = 'COD'){
     featureURL = PROVINCE_LIB_FEATURE_URL;
     vectorTileURL = PROVINCE_LIB_VECTOR_URL;
     outlineTileURL = PROVINCE_LIB_REGIONS_VECTOR_URL;
+  } else if(countryISO === 'GIN'){
+    featureURL = PROVINCE_GIN_FEATURE_URL;
+    vectorTileURL = PROVINCE_GIN_VECTOR_URL;
+    outlineTileURL = PROVINCE_GIN_REGIONS_VECTOR_URL;
   }
 
   const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROVINCES);
@@ -178,6 +184,9 @@ function addRegionProvinceLayer(id, countryISO) {
   if(countryISO === 'LBR'){
     featureURL = PROVINCE_LIB_FEATURE_URL;
     vectorTileURL = PROVINCE_LIB_REGIONS_VECTOR_URL;
+  } else if(countryISO === 'GIN'){
+    featureURL = PROVINCE_GIN_FEATURE_URL;
+    vectorTileURL = PROVINCE_GIN_REGIONS_VECTOR_URL;
   }
 
   const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROVINCES);
@@ -197,6 +206,9 @@ function addProtectedAreaLayer(id, countryISO = 'COD'){
   if(countryISO === 'LBR'){
     featureURL = PROTECTED_AREA_LIB_FEATURE_URL;
     vectorTileURL = PROTECTED_AREA_LIB_VECTOR_URL;
+  }else if(countryISO === 'GIN'){
+    featureURL = PROTECTED_AREA_GIN_FEATURE_URL;
+    vectorTileURL = PROTECTED_AREA_GIN_VECTOR_URL;
   }
 
   const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROTECTED_AREAS);

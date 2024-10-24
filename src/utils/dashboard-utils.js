@@ -37,7 +37,14 @@ export const PROVINCE_LIB_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY
 export const PROVINCE_LIB_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Liberia__Province_SPI/VectorTileServer';
 export const PROVINCE_LIB_REGIONS_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Liberia_Provine_Borders/VectorTileServer';
 export const PROTECTED_AREA_LIB_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/liberia_wdpa_all/FeatureServer';
-export const PROTECTED_AREA_LIB_VECTOR_URL ='https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/liberia_wdpa_all/VectorTileServer';
+export const PROTECTED_AREA_LIB_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/liberia_wdpa_all/VectorTileServer';
+
+// GUINEA LAYERS
+export const PROVINCE_GIN_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/guinea_province_spi_join/FeatureServer';
+export const PROVINCE_GIN_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Guinea__Province_SPI/VectorTileServer'
+export const PROVINCE_GIN_REGIONS_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Guinea__Provinces/VectorTileServer';
+export const PROTECTED_AREA_GIN_FEATURE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/guinea_wdpa_all/FeatureServer';
+export const PROTECTED_AREA_GIN_VECTOR_URL = 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/guinea_wdpa_all/VectorTileServer';
 
 export const LAYER_TITLE_TYPES = {
   EXPERT_RANGE_MAPS: 'EXPERT RANGE MAPS',
