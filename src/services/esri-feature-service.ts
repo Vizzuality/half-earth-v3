@@ -3,9 +3,9 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
     EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
-    PROTECTED_AREA_VECTOR_URL, PROVINCE_FEATURE_LAYER_URL, PROVINCE_LIB_FEATURE_URL,
-    PROVINCE_LIB_REGIONS_VECTOR_URL, PROVINCE_LIB_VECTOR_URL, PROVINCE_REGIONS_VECTOR_URL,
-    PROVINCE_VECTOR_URL, TREND_MAP_URL
+    PROTECTED_AREA_LIB_FEATURE_URL, PROTECTED_AREA_LIB_VECTOR_URL, PROTECTED_AREA_VECTOR_URL,
+    PROVINCE_FEATURE_LAYER_URL, PROVINCE_LIB_FEATURE_URL, PROVINCE_LIB_REGIONS_VECTOR_URL,
+    PROVINCE_LIB_VECTOR_URL, PROVINCE_REGIONS_VECTOR_URL, PROVINCE_VECTOR_URL, TREND_MAP_URL
 } from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -171,9 +171,17 @@ function addProvinceLayer(id, countryISO = 'COD'){
   return { groupLayer, featureLayer, vectorTileLayer, outlineVectorTileLayer };
 }
 
-function addRegionProvinceLayer(id) {
-  const featureLayer = getFeatureLayer(PROVINCE_FEATURE_LAYER_URL, id ?? LAYER_OPTIONS.PROVINCES);
-  const vectorTileLayer = getVectorTileLayer(PROVINCE_REGIONS_VECTOR_URL, LAYER_OPTIONS.PROVINCES_REGION_VECTOR);
+function addRegionProvinceLayer(id, countryISO) {
+  let featureURL = PROVINCE_FEATURE_LAYER_URL;
+  let vectorTileURL = PROVINCE_REGIONS_VECTOR_URL;
+
+  if(countryISO === 'LBR'){
+    featureURL = PROVINCE_LIB_FEATURE_URL;
+    vectorTileURL = PROVINCE_LIB_REGIONS_VECTOR_URL;
+  }
+
+  const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROVINCES);
+  const vectorTileLayer = getVectorTileLayer(vectorTileURL, LAYER_OPTIONS.PROVINCES_REGION_VECTOR);
   const groupLayer = new GroupLayer({
     layers: [featureLayer, vectorTileLayer],
     id: id ?? LAYER_OPTIONS.PROVINCES
@@ -182,9 +190,17 @@ function addRegionProvinceLayer(id) {
   return { groupLayer, featureLayer, vectorTileLayer };
 }
 
-function addProtectedAreaLayer(id){
-  const featureLayer = getFeatureLayer(PROTECTED_AREA_FEATURE_URL, id ?? LAYER_OPTIONS.PROTECTED_AREAS);
-  const vectorTileLayer = getVectorTileLayer(PROTECTED_AREA_VECTOR_URL, LAYER_OPTIONS.PROTECTED_AREAS_VECTOR);
+function addProtectedAreaLayer(id, countryISO = 'COD'){
+  let featureURL = PROTECTED_AREA_FEATURE_URL;
+  let vectorTileURL = PROTECTED_AREA_VECTOR_URL;
+
+  if(countryISO === 'LBR'){
+    featureURL = PROTECTED_AREA_LIB_FEATURE_URL;
+    vectorTileURL = PROTECTED_AREA_LIB_VECTOR_URL;
+  }
+
+  const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROTECTED_AREAS);
+  const vectorTileLayer = getVectorTileLayer(vectorTileURL, LAYER_OPTIONS.PROTECTED_AREAS_VECTOR);
 
   const groupLayer = new GroupLayer({
     layers: [featureLayer, vectorTileLayer],

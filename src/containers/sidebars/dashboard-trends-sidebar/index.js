@@ -60,28 +60,26 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     if(!map && !view) return;
 
-    if(!regionLayers.hasOwnProperty(LAYER_OPTIONS.PROVINCES)) {
-      const layers = EsriFeatureService.addProvinceLayer('', countryISO);
-      layers.featureLayer.opacity = 0;
-      layers.vectorTileLayer.opacity = 0.7;
+    const layers = EsriFeatureService.addProvinceLayer(null, countryISO);
+    layers.featureLayer.opacity = 0;
+    layers.vectorTileLayer.opacity = 0.7;
 
-      setRegionLayers((regionLayers) => ({ ...regionLayers,
-        [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
-        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer,
-        [LAYER_OPTIONS.PROVINCES_REGION_VECTOR]: layers.outlineVectorTileLayer }));
+    setRegionLayers((regionLayers) => ({ ...regionLayers,
+      [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
+      [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer,
+      [LAYER_OPTIONS.PROVINCES_REGION_VECTOR]: layers.outlineVectorTileLayer }));
 
-      map.add(layers.featureLayer);
-      map.add(layers.vectorTileLayer);
-      map.add(layers.outlineVectorTileLayer);
+    map.add(layers.featureLayer);
+    map.add(layers.vectorTileLayer);
+    map.add(layers.outlineVectorTileLayer);
 
-      // rezoom to country
-      view.goTo({
-        target: geometry,
-        center: [geometry.longitude - 7, geometry.latitude],
-        zoom: 7.2,
-        extent: geometry.clone(),
-      });
-    }
+    // rezoom to country
+    view.goTo({
+      target: geometry,
+      center: [geometry.longitude - 7, geometry.latitude],
+      zoom: 7.2,
+      extent: geometry.clone(),
+    });
   }, [map, view]);
 
   const removeRegionLayers = () => {

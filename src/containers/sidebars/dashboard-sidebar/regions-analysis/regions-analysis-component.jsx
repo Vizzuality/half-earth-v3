@@ -61,7 +61,7 @@ function RegionsAnalysisComponent(props) {
   const displayLayer = (option) => {
     let layers;
     if (option === REGION_OPTIONS.PROTECTED_AREAS) {
-      layers = EsriFeatureService.addProtectedAreaLayer();
+      layers = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
       layers.featureLayer.opacity = 0;
 
       setRegionLayers({
@@ -70,7 +70,7 @@ function RegionsAnalysisComponent(props) {
       });
       map.add(layers.groupLayer);
     } else if (option === REGION_OPTIONS.PROVINCES) {
-      layers = EsriFeatureService.addRegionProvinceLayer();
+      layers = EsriFeatureService.addRegionProvinceLayer(null, countryISO);
       layers.featureLayer.opacity = 0;
 
       setRegionLayers({
