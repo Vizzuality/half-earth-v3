@@ -48,7 +48,7 @@ function DashboardContainer(props) {
   const [selectedRegionOption, setSelectedRegionOption] = useState('');
   const [selectedProvince, setSelectedProvince] = useState();
   const [tabOption, setTabOption] = useState(2);
-  const [ provinceName, setProvinceName] = useState()
+  const [provinceName, setProvinceName] = useState();
 
   // Get Country information, allows to get country name
   useEffect(() => {
@@ -93,12 +93,12 @@ function DashboardContainer(props) {
     if(!selectedRegion) return;
     getSpeciesList();
 
-  }, [selectedRegion])
+  }, [selectedRegion]);
 
   useEffect(() => {
     if(!scientificName) return;
     getSpeciesData();
-  }, [scientificName])
+  }, [scientificName]);
 
   useEffect(() => {
     if(!speciesInfo) return;
@@ -117,35 +117,45 @@ function DashboardContainer(props) {
       type: DASHBOARD,
       payload: { iso: countryISO.toLowerCase() },
       query: {
-        scientificName: scientificName ?? undefined,
-        selectedIndex,
-        tabOption: tabOption ?? undefined,
-        selectedRegion: selectedRegion ?? undefined,
-        provinceName: provinceName ?? undefined
+        species: scientificName ?? undefined,
+        tab: selectedIndex,
+        trend: tabOption ?? undefined,
+        region: selectedRegion ?? undefined,
+        province: provinceName ?? undefined
       },
     });
 
-  }, [selectedIndex, tabOption, selectedRegion, provinceName])
-
-
+  }, [scientificName, selectedIndex, tabOption, selectedRegion, provinceName]);
 
   const getQueryParams = () => {
     if(queryParams){
       const {
-        scientificName,
+        species,
+        tab,
+        trend,
+        region,
+        province,
         regionLayers,
-        selectedIndex,
-        selectedRegionOption,
-        selectedRegion,
-        provinceName,
-        tabOption} = queryParams
+        selectedRegionOption} = queryParams
 
-      if(scientificName){
-        setScientificName(scientificName);
+      if(species){
+        setScientificName(species);
       }
 
-      if(selectedIndex){
-        setSelectedIndex(selectedIndex);
+      if(tab){
+        setSelectedIndex(tab);
+      }
+
+      if(trend){
+        setTabOption(trend);
+      }
+
+      if(region){
+        setSelectedRegion(region);
+      }
+
+      if(province){
+        setProvinceName(province)
       }
 
       if(regionLayers){
@@ -154,18 +164,6 @@ function DashboardContainer(props) {
 
       if(selectedRegionOption){
         setSelectedRegionOption(selectedRegionOption);
-      }
-
-      if(tabOption){
-        setTabOption(tabOption);
-      }
-
-      if(selectedRegion){
-        setSelectedRegion(selectedRegion);
-      }
-
-      if(provinceName){
-        setProvinceName(provinceName)
       }
     }
   }
@@ -185,7 +183,8 @@ function DashboardContainer(props) {
     };
     const dparams = new URLSearchParams(dataLayerParams);
     const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
-    const speciesObservationCount = `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/counts_${scientificName.replace(' ', '_')}.geojson`;
+    const countryCode = {COG: 'CG', GAB: 'GA', COD: 'CD', LBR: 'LR'};
+    const speciesObservationCount = `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${countryCode[countryISO]}_counts_${scientificName.replace(' ', '_')}.geojson`;
 
     const apiCalls = [
       dataLayersURL,

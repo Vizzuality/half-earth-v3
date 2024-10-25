@@ -12,7 +12,17 @@ import { LightModeContext } from '../../../../../context/light-mode';
 import { PROVINCE_REGIONS_VECTOR_URL } from '../../../../../utils/dashboard-utils';
 
 function GroupedListComponent(props) {
-  const { dataPoints, setDataPoints, map, view, speciesInfo, regionLayers, setRegionLayers, setShowHabitatChart } = props;
+  const {
+    dataPoints,
+    countryISO,
+    setDataPoints,
+    map,
+    view,
+    speciesInfo,
+    regionLayers,
+    setRegionLayers,
+    setShowHabitatChart
+  } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
@@ -200,7 +210,7 @@ function GroupedListComponent(props) {
             name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`
           }
 
-          layer = EsriFeatureService.getGeoJsonLayer(name, layerName);
+          layer = EsriFeatureService.getGeoJsonLayer(name, layerName, countryISO);
           setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
 
           let layerIndex = searchForLayers('HABITAT LOSS/GAIN');

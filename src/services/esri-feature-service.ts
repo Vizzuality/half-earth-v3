@@ -68,9 +68,9 @@ function getFeatureLayer(url, id){
   });
 }
 
-function getGeoJsonLayer(scientificname, id){
+function getGeoJsonLayer(scientificname, id, countryISO = 'CD'){
   return new GeoJSONLayer({
-    url: `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${scientificname}.geojson`,
+    url: `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${countryISO}_${scientificname}.geojson`,
     id,
   });
 }
