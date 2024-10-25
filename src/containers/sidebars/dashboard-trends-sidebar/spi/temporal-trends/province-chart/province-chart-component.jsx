@@ -38,6 +38,8 @@ function ProvinceChartComponent(props) {
     provinces,
     view,
     regionLayers,
+    provinceName,
+    setProvinceName,
     handleRegionSelected,
     layerView,
     allSorted } = props;
@@ -160,11 +162,14 @@ function ProvinceChartComponent(props) {
   }, [spiData.trendData]);
 
   useEffect(() => {
-    if (allSorted && provinces.length && !selectedProvince) {
-      setFoundIndex(0);
-      handleProvinceSelected({ value: provinces[0].value });
+    if (allSorted && provinces.length && bubbleData && !selectedProvince) {
+      if (provinceName) {
+        handleProvinceSelected({ value: provinceName });
+      } else {
+        handleProvinceSelected({ value: provinces[0].value });
+      }
     }
-  }, [allSorted, provinces]);
+  }, [allSorted, provinces, bubbleData]);
 
   useEffect(() => {
     if (sortedBySpecies?.length && selectedProvince) {
@@ -221,13 +226,12 @@ function ProvinceChartComponent(props) {
 
     const foundIndex = bubbleData?.datasets.findIndex(item => item.label === province.value);
     highlightProvinceBubble(foundIndex);
-
   }
 
   const highlightProvinceBubble = (index) => {
     const chart = chartRef.current;
 
-    if (chart && index) {
+    if (chart && index > -1) {
       if (previousIndex > -1) {
         chart.data.datasets[previousIndex].backgroundColor = getCSSVariable('birds');
       }
@@ -238,42 +242,45 @@ function ProvinceChartComponent(props) {
   }
 
   const getProvinceScores = (province) => {
-    const foundRegion = countryRegions.filter(region => region.region_name === province.value);
-    const scores = foundRegion[0].regional_scores[foundRegion[0].regional_scores.length - 1];
-
-    setSelectedProvince(foundRegion[0]);
+    setProvinceName(province.value);
     setSpiRank(sortedBySpi.findIndex(prov => prov.region_name === province.value) + 1);
     setAreaRank(sortedByArea.findIndex(prov => prov.region_name === province.value) + 1);
     setSpeciesRank(sortedBySpecies.findIndex(prov => prov.region_name === province.value) + 1);
-    setSelectedRegionScores(scores);
     setFoundIndex(provinces.findIndex(region => region.value === province.value));
-    setCountryProtected(scores.percentprotected_all);
-    setCountrySPI(scores.spi_all);
-    setCurrentYear(scores.year);
 
-    const spi = {
-      labels: [t('Global SPI'), t('Remaining')],
-      datasets: [
-        {
-          label: '',
-          data: [
-            scores.spi_all,
-            100 - scores.spi_all,
-          ],
-          backgroundColor: [
-            getCSSVariable('temporal-spi'),
-            getCSSVariable('white-opacity-20'),
-          ],
-          borderColor: [
-            getCSSVariable('temporal-spi'),
-            getCSSVariable('white-opacity-20'),
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
+    const foundRegion = countryRegions.filter(region => region.region_name === province.value);
+    if (foundRegion.length) {
+      const scores = foundRegion[0].regional_scores[foundRegion[0].regional_scores.length - 1];
+      setSelectedProvince(foundRegion[0]);
+      setSelectedRegionScores(scores);
+      setCountryProtected(scores.percentprotected_all);
+      setCountrySPI(scores.spi_all);
+      setCurrentYear(scores.year);
 
-    setSpiArcData(spi);
+      const spi = {
+        labels: [t('Global SPI'), t('Remaining')],
+        datasets: [
+          {
+            label: '',
+            data: [
+              scores.spi_all,
+              100 - scores.spi_all,
+            ],
+            backgroundColor: [
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
+            ],
+            borderColor: [
+              getCSSVariable('temporal-spi'),
+              getCSSVariable('white-opacity-20'),
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      setSpiArcData(spi);
+    }
   }
 
   const selectClickedRegion = (elements, chart) => {

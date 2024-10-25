@@ -12,11 +12,10 @@ import { useT } from '@transifex/react';
 import cx from 'classnames';
 import { LightModeContext } from '../../context/light-mode';
 import { NAVIGATION } from '../../utils/dashboard-utils';
-import { DASHBOARD } from 'router';
 
 function DashboardNavComponent(props) {
   const t = useT();
-  const { selectedIndex, setSelectedIndex, scientificName, browsePage, countryISO, regionLayers } = props;
+  const { selectedIndex, setSelectedIndex, scientificName, countryISO } = props;
   const { lightMode, } = useContext(LightModeContext);
 
   const titles = {
@@ -29,16 +28,6 @@ function DashboardNavComponent(props) {
   }
 
   const updateHistory = (page, title) => {
-    const activeLayers = Object.keys(regionLayers);
-    browsePage({
-      type: DASHBOARD,
-      payload: { iso: countryISO.toLowerCase() },
-      query: {
-        scientificName: scientificName,
-        selectedIndex: page,
-        regionLayers: activeLayers
-      },
-    });
     window.history.pushState({ selectedIndex: page }, '', ``);
     setSelectedIndex(page);
   }

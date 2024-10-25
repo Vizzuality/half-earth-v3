@@ -45,7 +45,6 @@ function DashboardViewComponent(props) {
   const [view, setView] = useState(null);
   const [mapViewSettings, setMapViewSettings] = useState(viewSettings);
   const [clickedRegion, setClickedRegion] = useState();
-  const [tabOption, setTabOption] = useState(2);
   const [layerView, setLayerView] = useState();
   let hoverHighlight;
 
@@ -195,8 +194,6 @@ function DashboardViewComponent(props) {
           regionLayers={regionLayers}
           setRegionLayers={setRegionLayers}
           clickedRegion={clickedRegion}
-          tabOption={tabOption}
-          setTabOption={setTabOption}
           handleRegionSelected={handleRegionSelected}
           layerView={layerView}
           selectedRegion={selectedRegion}

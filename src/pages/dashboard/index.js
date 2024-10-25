@@ -10,7 +10,7 @@ import * as urlActions from 'actions/url-actions';
 import countryDataActions from 'redux_modules/country-data';
 import DashboardComponent from './dashboard-component.jsx';
 import mapStateToProps from './dashboard-selectors.js';
-
+import { DASHBOARD } from 'router';
 import {
   COUNTRIES_DATA_SERVICE_URL
 } from 'constants/layers-urls';
@@ -28,6 +28,7 @@ function DashboardContainer(props) {
     setCountryDataLoading,
     setCountryDataReady,
     setCountryDataError,
+    browsePage,
   } = props;
 
   const [geometry, setGeometry] = useState(null);
@@ -45,6 +46,9 @@ function DashboardContainer(props) {
   const [selectedRegion, setSelectedRegion] = useState();
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState();
+  const [tabOption, setTabOption] = useState(2);
+  const [ provinceName, setProvinceName] = useState()
 
   // Get Country information, allows to get country name
   useEffect(() => {
@@ -107,10 +111,34 @@ function DashboardContainer(props) {
 
   }, [dataLayerData, taxaList]);
 
+  useEffect(() => {
+    const activeLayers = Object.keys(regionLayers).length ? Object.keys(regionLayers) : undefined;
+    browsePage({
+      type: DASHBOARD,
+      payload: { iso: countryISO.toLowerCase() },
+      query: {
+        scientificName: scientificName ?? undefined,
+        selectedIndex,
+        tabOption: tabOption ?? undefined,
+        selectedRegion: selectedRegion ?? undefined,
+        provinceName: provinceName ?? undefined
+      },
+    });
+
+  }, [selectedIndex, tabOption, selectedRegion, provinceName])
+
+
 
   const getQueryParams = () => {
     if(queryParams){
-      const {scientificName, regionLayers, selectedIndex, selectedRegionOption} = queryParams
+      const {
+        scientificName,
+        regionLayers,
+        selectedIndex,
+        selectedRegionOption,
+        selectedRegion,
+        provinceName,
+        tabOption} = queryParams
 
       if(scientificName){
         setScientificName(scientificName);
@@ -126,6 +154,18 @@ function DashboardContainer(props) {
 
       if(selectedRegionOption){
         setSelectedRegionOption(selectedRegionOption);
+      }
+
+      if(tabOption){
+        setTabOption(tabOption);
+      }
+
+      if(selectedRegion){
+        setSelectedRegion(selectedRegion);
+      }
+
+      if(provinceName){
+        setProvinceName(provinceName)
       }
     }
   }
@@ -408,6 +448,12 @@ function DashboardContainer(props) {
     setRegionLayers={setRegionLayers}
     selectedRegionOption={selectedRegionOption}
     setSelectedRegionOption={setSelectedRegionOption}
+    selectedProvince={selectedProvince}
+    setSelectedProvince={setSelectedProvince}
+    tabOption={tabOption}
+    setTabOption={setTabOption}
+    provinceName={provinceName}
+    setProvinceName={setProvinceName}
     {...props} />;
 }
 

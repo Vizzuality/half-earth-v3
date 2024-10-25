@@ -28,7 +28,6 @@ function DashboardTrendsSidebarContainer(props) {
   const [sortedBySpecies, setSortedBySpecies] = useState([]);
   const [allSorted, setAllSorted] = useState(false);
   const [countryRegions, setCountryRegions] = useState([]);
-  const [selectedProvince, setSelectedProvince] = useState();
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
 
   useEffect(() => {
@@ -265,8 +264,6 @@ function DashboardTrendsSidebarContainer(props) {
       sortedBySpecies={sortedBySpecies}
       sortedBySpi={sortedBySpi}
       countryRegions={countryRegions}
-      selectedProvince={selectedProvince}
-      setSelectedProvince={setSelectedProvince}
       allSorted={allSorted}
       activeTrend={activeTrend}
       setActiveTrend={setActiveTrend}
