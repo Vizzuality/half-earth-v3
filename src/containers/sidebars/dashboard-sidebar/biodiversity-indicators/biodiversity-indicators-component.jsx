@@ -37,7 +37,7 @@ function BioDiversityComponent(props) {
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <span className={styles.sectionTitle}>{t('Biodiversity Indicators')}</span>
       <hr className={hrTheme.dark} />
-      <span className={styles.scientificName}>{speciesInfo.scientificname}</span>
+      <span className={styles.speciesName}>{speciesInfo.scientificname}</span>
       {isLoading && <Loading height={200} />}
       {!isLoading && <>
         <div className={styles.tabs}>
