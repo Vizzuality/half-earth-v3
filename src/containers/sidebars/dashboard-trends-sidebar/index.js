@@ -114,6 +114,16 @@ function DashboardTrendsSidebarContainer(props) {
       regionId = '22200606-e907-497f-96db-e7cfd95d61b5';
     }
 
+    // Gabon
+    if(countryISO.toUpperCase() === 'GAB'){
+      regionId = '30810b40-0044-46dd-a1cd-5a3217749738';
+    }
+
+    // Republic of Congo
+    if(countryISO.toUpperCase() === 'COG'){
+      regionId = '0c98b276-f38a-4a2e-abab-0acfad46ac69'
+    }
+
     const taxa = 'all_terr_verts';
 
     // SHI calls
