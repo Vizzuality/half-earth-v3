@@ -68,11 +68,10 @@ function DashboardTrendsSidebarContainer(props) {
     // rezoom to country
     view.goTo({
       target: geometry,
-      center: [geometry.longitude - 7, geometry.latitude],
+      center: [geometry.longitude - 20, geometry.latitude],
       zoom: 5.5,
       extent: geometry.clone(),
     });
-
   }, [map, view]);
 
   const removeRegionLayers = () => {

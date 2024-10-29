@@ -83,38 +83,40 @@ function DashboardViewComponent(props) {
       if (selectedIndex !== NAVIGATION.BIO_IND) {
         hits = await hitTest(event);
         if (hits) {
-          switch (selectedIndex) {
-            case NAVIGATION.REGION:
-              setTaxaList([]);
-
-              const { WDPA_PID, GID_1 } = hits.attributes;
-              setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
-              if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
-                setSelectedRegion({ WDPA_PID });
-              }
-
-              if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
-                setSelectedRegion({ GID_1 });
-              }
-              break;
-            case NAVIGATION.TRENDS:
-              const activeLayers = Object.keys(regionLayers);
-              browsePage({
-                type: DASHBOARD,
-                payload: { iso: countryISO.toLowerCase() },
-                query: {
-                  scientificName,
-                  selectedIndex: selectedIndex,
-                  regionLayers: activeLayers,
-                  selectedRegion: (hits.attributes.NAME_1 ?? hits.attributes.region_name)
-                },
-              });
-              setClickedRegion(hits.attributes);
-              break;
-          }
-
           if (hits.attributes.GID_0 === countryISO) {
-            highlight = layerView.highlight(hits.graphic);
+            switch (selectedIndex) {
+              case NAVIGATION.REGION:
+                setTaxaList([]);
+
+                const { WDPA_PID, GID_1 } = hits.attributes;
+                setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+                if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
+                  setSelectedRegion({ WDPA_PID });
+                }
+
+                if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
+                  setSelectedRegion({ GID_1 });
+                }
+                break;
+              case NAVIGATION.TRENDS:
+                const activeLayers = Object.keys(regionLayers);
+                browsePage({
+                  type: DASHBOARD,
+                  payload: { iso: countryISO.toLowerCase() },
+                  query: {
+                    scientificName,
+                    selectedIndex: selectedIndex,
+                    regionLayers: activeLayers,
+                    selectedRegion: (hits.attributes.NAME_1 ?? hits.attributes.region_name)
+                  },
+                });
+                setClickedRegion(hits.attributes);
+                break;
+            }
+
+            if (hits.attributes.GID_0 === countryISO) {
+              highlight = layerView.highlight(hits.graphic);
+            }
           }
         }
       }
@@ -132,21 +134,21 @@ function DashboardViewComponent(props) {
 
           if (hits.attributes.GID_0 === countryISO) {
             hoverHighlight = layerView.highlight(hits.graphic);
-          }
 
-          let regionName;
-          if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
-            regionName = hits.attributes.NAME;
-          } else {
-            regionName = (hits.attributes.NAME_1 ?? hits.attributes.region_name);
-          }
+            let regionName;
+            if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
+              regionName = hits.attributes.NAME;
+            } else {
+              regionName = (hits.attributes.NAME_1 ?? hits.attributes.region_name);
+            }
 
-          if (regionName) {
-            view.popup.open({
-              // Set the popup's title to the coordinates of the location
-              title: `${regionName}`,
-              location: view.toMap({ x: event.x, y: event.y })
-            });
+            if (regionName) {
+              view.popup.open({
+                // Set the popup's title to the coordinates of the location
+                title: `${regionName}`,
+                location: view.toMap({ x: event.x, y: event.y })
+              });
+            }
           }
         } else {
           view.closePopup();
