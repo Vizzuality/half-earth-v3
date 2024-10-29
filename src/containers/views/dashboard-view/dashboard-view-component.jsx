@@ -137,7 +137,7 @@ function DashboardViewComponent(props) {
           let regionName;
           if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
             regionName = hits.attributes.NAME;
-          } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
+          } else {
             regionName = (hits.attributes.NAME_1 ?? hits.attributes.region_name);
           }
 

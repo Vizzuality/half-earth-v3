@@ -15,7 +15,13 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 import styles from './regions-analysis-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import { useT } from '@transifex/react';
-import { INITIAL_LAYERS, LAYER_OPTIONS, NAVIGATION, PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, REGION_OPTIONS } from '../../../../utils/dashboard-utils';
+import {
+  INITIAL_LAYERS,
+  LAYER_OPTIONS,
+  NAVIGATION,
+  PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+  REGION_OPTIONS
+} from '../../../../utils/dashboard-utils';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();

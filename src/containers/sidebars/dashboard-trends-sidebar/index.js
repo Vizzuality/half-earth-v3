@@ -86,7 +86,7 @@ function DashboardTrendsSidebarContainer(props) {
   }
 
   const getData = async () => {
-    let year = '2024';
+    const year = '2024';
     // DRC country id
     let regionId = '90b03e87-3880-4164-a310-339994e3f919';
 
