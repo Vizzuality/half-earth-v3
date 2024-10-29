@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import EsriFeatureService from 'services/esri-feature-service';
-import GroupLayer from '@arcgis/core/layers/GroupLayer.js';
 
 import Component, { PROVINCE_TREND } from './dashboard-trends-sidebar-component.jsx';
 import mapStateToProps from './selectors';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-import { LAYER_OPTIONS } from '../../../utils/dashboard-utils.js';
+import { LAYER_OPTIONS, PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID } from '../../../utils/dashboard-utils.js';
 
 function DashboardTrendsSidebarContainer(props) {
   const { countryISO, view, map, regionLayers, setRegionLayers, geometry } = props;
@@ -59,33 +58,21 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     if(!map && !view) return;
 
-    const layers = EsriFeatureService.addProvinceLayer(null, countryISO);
-    layers.featureLayer.opacity = 0;
-    layers.vectorTileLayer.opacity = 0.7;
+    const layer = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID, countryISO);
 
     setRegionLayers((regionLayers) => ({ ...regionLayers,
-      [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
-      [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer,
-      [LAYER_OPTIONS.PROVINCES_REGION_VECTOR]: layers.outlineVectorTileLayer }));
+      [LAYER_OPTIONS.PROVINCES]: layer}));
 
-    map.add(layers.featureLayer);
-    map.add(layers.vectorTileLayer);
-    map.add(layers.outlineVectorTileLayer);
+    map.add(layer);
 
     // rezoom to country
     view.goTo({
       target: geometry,
       center: [geometry.longitude - 7, geometry.latitude],
-      zoom: 7.2,
+      zoom: 5.5,
       extent: geometry.clone(),
     });
 
-    // could be used to zoom to country better
-    // view.whenLayerView(layers.vectorTileLayer).then(() => {
-    //   view.goTo({
-    //     target: layers.vectorTileLayer.fullExtent.expand(1.2),
-    //   });
-    // })
   }, [map, view]);
 
   const removeRegionLayers = () => {

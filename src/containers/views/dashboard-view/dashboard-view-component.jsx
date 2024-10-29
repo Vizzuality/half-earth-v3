@@ -113,7 +113,9 @@ function DashboardViewComponent(props) {
               break;
           }
 
-          highlight = layerView.highlight(hits.graphic);
+          if (hits.attributes.GID_0 === countryISO) {
+            highlight = layerView.highlight(hits.graphic);
+          }
         }
       }
     } catch { }
@@ -127,7 +129,10 @@ function DashboardViewComponent(props) {
 
         if (hits) {
           hoverHighlight?.remove();
-          hoverHighlight = layerView.highlight(hits.graphic);
+
+          if (hits.attributes.GID_0 === countryISO) {
+            hoverHighlight = layerView.highlight(hits.graphic);
+          }
 
           let regionName;
           if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
@@ -144,7 +149,7 @@ function DashboardViewComponent(props) {
             });
           }
         } else {
-          view.popup.close();
+          view.closePopup();
           hoverHighlight?.remove();
         }
       }
@@ -159,10 +164,15 @@ function DashboardViewComponent(props) {
   const hitTest = promiseUtils.debounce(async (event) => {
     const { results } = await view.hitTest(event);
     if (results.length) {
-      const { graphic } = results.find(x => x.graphic.attributes.OBJECTID || x.graphic.attributes.WDPA_PID);
-      const { attributes } = graphic;
-      if (attributes.hasOwnProperty('region_name') || attributes.hasOwnProperty('WDPA_PID')) {
-        return { graphic, attributes }
+      const foundLayer = results.find(x => x.graphic.attributes.NAME_1 || x.graphic.attributes.WDPA_PID);
+      if (foundLayer) {
+        const { graphic } = foundLayer
+        const { attributes } = graphic;
+        if (attributes.hasOwnProperty('NAME_1') || attributes.hasOwnProperty('WDPA_PID')) {
+          return { graphic, attributes }
+        } else {
+          return null;
+        }
       } else {
         return null;
       }

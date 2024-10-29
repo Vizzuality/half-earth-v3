@@ -15,7 +15,7 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 import styles from './regions-analysis-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import { useT } from '@transifex/react';
-import { INITIAL_LAYERS, LAYER_OPTIONS, NAVIGATION, REGION_OPTIONS } from '../../../../utils/dashboard-utils';
+import { INITIAL_LAYERS, LAYER_OPTIONS, NAVIGATION, PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, REGION_OPTIONS } from '../../../../utils/dashboard-utils';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
@@ -70,14 +70,12 @@ function RegionsAnalysisComponent(props) {
       });
       map.add(layers.groupLayer);
     } else if (option === REGION_OPTIONS.PROVINCES) {
-      layers = EsriFeatureService.addRegionProvinceLayer(null, countryISO);
-      layers.featureLayer.opacity = 0;
+      layers = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, countryISO);
 
       setRegionLayers({
-        [LAYER_OPTIONS.PROVINCES]: layers.featureLayer,
-        [LAYER_OPTIONS.PROVINCES_VECTOR]: layers.vectorTileLayer
+        [LAYER_OPTIONS.PROVINCES]: layers,
       });
-      map.add(layers.groupLayer);
+      map.add(layers);
     }
 
     browsePage({
@@ -93,21 +91,11 @@ function RegionsAnalysisComponent(props) {
   }
 
   const removeRegionLayers = () => {
-    // let layers = regionLayers;
-    // Object.keys(layers).map(region => {
-    //   // const { [region]: name, ...rest } = layers;
-    //   // layers = rest;
-    //   const foundLayer = map.layers.items.find(item => item.id === region);
-    //   if (foundLayer) {
-    //     map.remove(foundLayer);
-    //   }
-    // });
     map.layers.items.forEach(layer => {
       if (!INITIAL_LAYERS.includes(layer.id)) {
         map.remove(layer);
       }
     });
-    // setRegionLayers(layers);
   }
 
   return (

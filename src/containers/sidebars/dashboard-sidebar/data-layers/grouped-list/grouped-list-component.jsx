@@ -9,7 +9,7 @@ import { LAYER_TITLE_TYPES, LAYER_OPTIONS } from 'utils/dashboard-utils.js';
 import styles from './grouped-list-styles.module.scss';
 import { useT } from '@transifex/react';
 import { LightModeContext } from '../../../../../context/light-mode';
-import { PROVINCE_REGIONS_VECTOR_URL } from '../../../../../utils/dashboard-utils';
+import { PROVINCE_FEATURE_GLOBAL_OUTLINE_ID } from '../../../../../utils/dashboard-utils';
 
 function GroupedListComponent(props) {
   const {
@@ -112,8 +112,7 @@ function GroupedListComponent(props) {
         }
       } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
         if (!dataPoints[item].isActive) {
-          const url = PROVINCE_REGIONS_VECTOR_URL;
-          const layer = EsriFeatureService.getVectorTileLayer(url, item.toUpperCase());
+          const layer = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, countryISO, item.toUpperCase());
 
           setRegionLayers((regionLayers) => ({ ...regionLayers, [item.toUpperCase()]: layer }));
           map.add(layer);
