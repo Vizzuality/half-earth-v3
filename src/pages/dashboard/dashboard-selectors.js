@@ -6,7 +6,6 @@ import {
 } from 'selectors/location-selectors';
 
 import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
-import dashboardTrendViewConfig from 'containers/views/dashboard-view/dashboard-trends-view-config';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const selectCountriesData = ({ countryData }) =>
@@ -16,13 +15,6 @@ const selectQueryParams = ({ location }) => location.query;
 const getViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
   return {
     ...dashboardViewConfig.view,
-    ...globeUrlState,
-  };
-});
-
-const getTrendViewSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
-  return {
-    ...dashboardTrendViewConfig.view,
     ...globeUrlState,
   };
 });
@@ -64,7 +56,6 @@ const getQueryParams = createSelector(
 
 export default createStructuredSelector({
   viewSettings: getViewSettings,
-  trendViewSettings: getTrendViewSettings,
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,

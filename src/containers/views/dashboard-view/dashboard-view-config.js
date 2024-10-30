@@ -14,7 +14,7 @@ export default {
     activeLayers: [
       { title: GRAPHIC_LAYER },
       { title: CITIES_LABELS_LAYER },
-      { title: REGIONS_LABELS_LAYER },
+      { title: REGIONS_LABELS_LAYER, opacity: 0 },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: ADMIN_AREAS_FEATURE_LAYER },

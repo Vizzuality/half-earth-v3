@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import EsriFeatureService from 'services/esri-feature-service';
+import last from 'lodash/last';
 
 import Component, { PROVINCE_TREND } from './dashboard-trends-sidebar-component.jsx';
 import mapStateToProps from './selectors';
@@ -85,7 +86,6 @@ function DashboardTrendsSidebarContainer(props) {
   }
 
   const getData = async () => {
-    const year = '2024';
     // DRC country id
     let regionId = '90b03e87-3880-4164-a310-339994e3f919';
 
@@ -111,29 +111,36 @@ function DashboardTrendsSidebarContainer(props) {
 
     const taxa = 'all_terr_verts';
 
-    // SHI calls
     const shiTrendsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/shs/trend?iso=${countryISO}`;
-    const shiScoresUrl = `https://next-api.mol.org/2.x/indicators/shs/values_all_taxa?iso=${countryISO}&year=${year}`;
-    // const shiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/shs/values?iso=${countryISO}&year=${year}`;
-
-    // SPI calls
     const spiTrendsUrl = `https://next-api.mol.org/2.x/indicators/regional_spi_scores?iso3=${countryISO}`;
-    // const spiTrendsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=${regionId}&taxa=${taxa}`;
-    const spiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${year}&taxa=${taxa}`;
-
-    // SII calls
     const siiTrendsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/completeness?region_id=${regionId}&indicator=richness&version=2020&weight=national`;
-    const siiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${year}&taxa=${taxa}`;
 
-    const apiCalls = [shiTrendsUrl, shiScoresUrl, spiTrendsUrl, spiScoresUrl, siiTrendsUrl, siiScoresUrl];
+    const trendApiCalls = [shiTrendsUrl, spiTrendsUrl, siiTrendsUrl];
 
-    const apiResponses = await Promise.all(apiCalls.map(async (url) => {
+    const trendApiResponses = await Promise.all(trendApiCalls.map(async (url) => {
       const response = await fetch(url);
       const data = await response.json();
       return data;
     }));
 
-    const [shiTrendData, shiScoresData, spiTrendData, spiScoresData, siiTrendData, siiScoresData] = apiResponses;
+    const [shiTrendData, spiTrendData, siiTrendData, ] = trendApiResponses;
+
+    const shiYear = last(shiTrendData).year;
+    const spiYear = last(spiTrendData[0].country_scores).year;
+    const siiYear = last(shiTrendData).year;
+    const shiScoresUrl = `https://next-api.mol.org/2.x/indicators/shs/values_all_taxa?iso=${countryISO}&year=${shiYear}`;
+    const spiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${spiYear}&taxa=${taxa}`;
+    const siiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${siiYear}&taxa=${taxa}`;
+
+    const spendApiCalls = [shiScoresUrl, spiScoresUrl, siiScoresUrl];
+
+    const scoreApiResponses = await Promise.all(spendApiCalls.map(async (url) => {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    }));
+
+    const [shiScoresData, spiScoresData, siiScoresData] = scoreApiResponses;
 
     const shiTD = shiTrendData;
     const lastValues = shiTD[shiTD.length - 1];
