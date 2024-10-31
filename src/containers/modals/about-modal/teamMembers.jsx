@@ -7,7 +7,6 @@ const teams = [
     members: [
       { name: 'Paula J. Ehrlich', title: 'President and CEO' },
       { name: 'Walter Jetz', title: 'Scientific Chair' },
-      { name: 'Laura Dangermond', title: 'Scientific Chair' },
       { name: 'Bill Finch', title: 'Conservation Science Advisor' },
       { name: 'Lori Parro', title: 'Chief Financial Officer' },
       { name: 'Amy Tidovsky', title: 'VP of Development' },
