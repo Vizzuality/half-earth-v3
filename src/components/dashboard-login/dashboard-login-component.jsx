@@ -7,6 +7,14 @@ import iccnLogo from 'logos/institut-congolais.png';
 import epaLogo from 'logos/epa_logo_transparent.png';
 import ginLogo from 'logos/guinea.jpeg';
 import { useT } from '@transifex/react';
+import IdentityManager from '@arcgis/core/identity/IdentityManager';
+import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
+import Portal from '@arcgis/core/portal/Portal';
+
+const info = new OAuthInfo({
+  appId: '7Xx7eWvI655rXo2l',
+  popup: false,
+})
 
 function DashboardLoginComponent(props) {
   const { setLoggedIn, countryISO } = props;
@@ -28,6 +36,13 @@ function DashboardLoginComponent(props) {
       setFavicon('/favicon-gin.ico');
       setPageTitle('EPA National Biodiversity');
     }
+
+    IdentityManager.registerOAuthInfos([info]);
+
+    IdentityManager.checkSignInStatus(info.portalUrl)
+      .then(handleLoginSuccess)
+      .catch(() => console.log('not logged in'));
+
   }, []);
 
   useEffect(() => {
@@ -40,15 +55,33 @@ function DashboardLoginComponent(props) {
       newLink.rel = 'icon';
       newLink.href = favicon;
       document.head.appendChild(newLink);
-
-      const newTitle = document.createElement('title');
-      newTitle.text = pageTitle;
-      document.head.appendChild(newLink);
     }
   }, [favicon]);
 
+  useEffect(() => {
+    const title = document.querySelector('head title');
+
+    if (title) {
+      title.text = pageTitle;
+    } else {
+      const newTitle = document.createElement('title');
+      newTitle.text = pageTitle;
+      document.head.appendChild(newTitle);
+    }
+  }, [pageTitle]);
+
   const handleLogin = () => {
     setLoggedIn(true);
+    IdentityManager.getCredential(info.portalUrl);
+  }
+
+  const handleLoginSuccess = () => {
+    const portal = new Portal();
+    portal.authMode = 'immediate';
+    portal.load().then(() => {
+      console.log(portal);
+      console.log('User Info: ', portal.user);
+    })
   }
 
   return (
