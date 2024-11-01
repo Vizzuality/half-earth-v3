@@ -22,7 +22,7 @@ function DashboardLoginComponent(props) {
     } else if (countryISO.toUpperCase() === 'LBR') {
       setFavicon('/favicon-epa.ico');
     } else if (countryISO.toUpperCase() === 'GIN') {
-      setFavicon('/favicon.ico');
+      setFavicon('/favicon-gin.ico');
     }
   }, []);
 
