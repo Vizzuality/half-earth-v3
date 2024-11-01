@@ -15,25 +15,34 @@ function DashboardLoginComponent(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [favicon, setFavicon] = useState('/favicon.ico');
+  const [pageTitle, setPageTitle] = useState('EPA National Biodiversity');
 
   useEffect(() => {
     if (countryISO.toUpperCase() === 'COD') {
       setFavicon('/favicon-drc.ico');
+      setPageTitle('EPA');
     } else if (countryISO.toUpperCase() === 'LBR') {
       setFavicon('/favicon-epa.ico');
+      setPageTitle('EPA National');
     } else if (countryISO.toUpperCase() === 'GIN') {
       setFavicon('/favicon-gin.ico');
+      setPageTitle('EPA National Biodiversity');
     }
   }, []);
 
   useEffect(() => {
     const link = document.querySelector('link[rel="icon"]');
+
     if (link) {
       link.href = favicon;
     } else {
       const newLink = document.createElement('link');
       newLink.rel = 'icon';
       newLink.href = favicon;
+      document.head.appendChild(newLink);
+
+      const newTitle = document.createElement('title');
+      newTitle.text = pageTitle;
       document.head.appendChild(newLink);
     }
   }, [favicon]);
