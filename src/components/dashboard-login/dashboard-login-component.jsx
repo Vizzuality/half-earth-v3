@@ -28,10 +28,10 @@ function DashboardLoginComponent(props) {
   useEffect(() => {
     if (countryISO.toUpperCase() === 'COD') {
       setFavicon('/favicon-drc.ico');
-      setPageTitle('EPA');
+      setPageTitle('ICCN Biodiversité nationale');
     } else if (countryISO.toUpperCase() === 'LBR') {
       setFavicon('/favicon-epa.ico');
-      setPageTitle('EPA National');
+      setPageTitle('EPA National Biodiversity');
     } else if (countryISO.toUpperCase() === 'GIN') {
       setFavicon('/favicon-gin.ico');
       setPageTitle('EPA National Biodiversity');
