@@ -20,7 +20,7 @@ function DashboardLoginComponent(props) {
     if (countryISO.toUpperCase() === 'COD') {
       setFavicon('/favicon-drc.ico');
     } else if (countryISO.toUpperCase() === 'LBR') {
-      setFavicon('https://half-earth-v3-91xqc3lgl-map-of-life.vercel.app/assets/institut-congolais-I8sBpTDv.png');
+      setFavicon('https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_favicon.png');
     } else if (countryISO.toUpperCase() === 'GIN') {
       setFavicon('/favicon-gin.ico');
     }
