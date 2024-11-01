@@ -20,7 +20,7 @@ function DashboardLoginComponent(props) {
     if (countryISO.toUpperCase() === 'COD') {
       setFavicon('/favicon-drc.ico');
     } else if (countryISO.toUpperCase() === 'LBR') {
-      setFavicon('https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_favicon.png');
+      setFavicon('/favicon-epa.ico');
     } else if (countryISO.toUpperCase() === 'GIN') {
       setFavicon('/favicon-gin.ico');
     }
