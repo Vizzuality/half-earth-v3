@@ -198,7 +198,7 @@ function DashboardViewComponent(props) {
       }}
     >
       <LightModeProvider>
-        <TopMenuContainer />
+        <TopMenuContainer {...props} />
         <DashboardSidebarContainer
           map={map}
           view={view}

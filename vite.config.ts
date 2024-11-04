@@ -1,9 +1,12 @@
 import path from 'path';
-
-import react from '@vitejs/plugin-react';
 import { defineConfig, transformWithEsbuild } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
+
+// vite.config.js
+import basicSsl from '@vitejs/plugin-basic-ssl';
+import react from '@vitejs/plugin-react';
+
 // Custom Vite plugin for directory-named resolution
 function directoryNamedResolver() {
   return {
@@ -74,6 +77,14 @@ export default defineConfig({
     directoryNamedResolver(),
     moduleScssResolver(),
     svgr(),
+    basicSsl({
+      /** name of certification */
+      name: 'test',
+      /** custom trust domains */
+      domains: ['*.custom.com'],
+      /** custom certification directory */
+      certDir: '/Users/.../.devServer/cert'
+    })
   ],
   optimizeDeps: {
     force: true,

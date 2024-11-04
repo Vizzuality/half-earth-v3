@@ -49,6 +49,7 @@ function DashboardContainer(props) {
   const [selectedProvince, setSelectedProvince] = useState();
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
+  const [user, setUser] = useState()
 
   // Get Country information, allows to get country name
   useEffect(() => {
@@ -453,6 +454,8 @@ function DashboardContainer(props) {
     setTabOption={setTabOption}
     provinceName={provinceName}
     setProvinceName={setProvinceName}
+    user={user}
+    setUser={setUser}
     {...props} />;
 }
 

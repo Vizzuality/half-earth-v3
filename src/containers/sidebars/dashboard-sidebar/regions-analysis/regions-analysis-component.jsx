@@ -44,11 +44,9 @@ function RegionsAnalysisComponent(props) {
   const { lightMode } = useContext(LightModeContext);
 
   useEffect(() => {
+    removeRegionLayers();
     if (selectedRegionOption && selectedRegion) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES)
-    } else if (selectedRegionOption) {
-      setSelectedRegionOption(selectedRegionOption);
-      displayLayer(selectedRegionOption);
     } else {
       setSelectedRegionOption(null);
     }
@@ -70,17 +68,23 @@ function RegionsAnalysisComponent(props) {
       layers = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
       layers.featureLayer.opacity = 0;
 
-      setRegionLayers({
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
         [LAYER_OPTIONS.PROTECTED_AREAS]: layers.featureLayer,
         [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers.vectorTileLayer
+      }));
+      map.add(layers.featureLayer);
+      map.add(layers.vectorTileLayer);
+      view.goTo({
+        zoom: 6,
       });
-      map.add(layers.groupLayer);
     } else if (option === REGION_OPTIONS.PROVINCES) {
       layers = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, countryISO);
 
-      setRegionLayers({
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
         [LAYER_OPTIONS.PROVINCES]: layers,
-      });
+      }));
       map.add(layers);
     }
 
@@ -97,11 +101,13 @@ function RegionsAnalysisComponent(props) {
   }
 
   const removeRegionLayers = () => {
-    map.layers.items.forEach(layer => {
-      if (!INITIAL_LAYERS.includes(layer.id)) {
-        map.remove(layer);
-      }
-    });
+    const protectedAreaLayer = map.layers.items.find(layer => layer.id === LAYER_OPTIONS.PROTECTED_AREAS);
+    const protectedAreaLayerVector = map.layers.items.find(layer => layer.id === LAYER_OPTIONS.PROTECTED_AREAS_VECTOR);
+    const provinceLayer = map.layers.items.find(layer => layer.id === LAYER_OPTIONS.PROVINCES);
+
+    map.remove(protectedAreaLayer);
+    map.remove(protectedAreaLayerVector);
+    map.remove(provinceLayer);
   }
 
   return (

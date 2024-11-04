@@ -163,7 +163,14 @@ function addProtectedAreaLayer(id, countryISO = 'COD'){
     vectorTileURL = PROTECTED_AREA_GIN_VECTOR_URL;
   }
 
-  const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROTECTED_AREAS, countryISO);
+  const featureLayer = new FeatureLayer({
+    url: featureURL,
+    outFields: ['*'],
+    definitionExpression: `GID_0 = '${countryISO}'`,
+    id: id ?? LAYER_OPTIONS.PROTECTED_AREAS
+  });
+
+  // const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROTECTED_AREAS, countryISO);
   const vectorTileLayer = getVectorTileLayer(vectorTileURL, LAYER_OPTIONS.PROTECTED_AREAS_VECTOR, countryISO);
 
   const groupLayer = new GroupLayer({

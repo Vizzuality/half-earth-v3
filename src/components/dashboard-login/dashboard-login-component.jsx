@@ -7,17 +7,18 @@ import iccnLogo from 'logos/institut-congolais.png';
 import epaLogo from 'logos/epa_logo_transparent.png';
 import ginLogo from 'logos/guinea.jpeg';
 import { useT } from '@transifex/react';
-// import IdentityManager from '@arcgis/core/identity/IdentityManager';
-// import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
-// import Portal from '@arcgis/core/portal/Portal';
+import IdentityManager from '@arcgis/core/identity/IdentityManager';
+import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
+import Portal from '@arcgis/core/portal/Portal';
+import { DASHBOARD } from 'router';
 
-// const info = new OAuthInfo({
-//   appId: '7Xx7eWvI655rXo2l',
-//   popup: false,
-// });
+const info = new OAuthInfo({
+  appId: '7Xx7eWvI655rXo2l',
+  popup: false,
+});
 
 function DashboardLoginComponent(props) {
-  const { setLoggedIn, countryISO } = props;
+  const { setLoggedIn, countryISO, browsePage, setUser, user } = props;
   const t = useT();
 
   const [email, setEmail] = useState();
@@ -37,11 +38,11 @@ function DashboardLoginComponent(props) {
       setPageTitle('EPA National Biodiversity');
     }
 
-    // IdentityManager.registerOAuthInfos([info]);
+    IdentityManager.registerOAuthInfos([info]);
 
-    // IdentityManager.checkSignInStatus(info.portalUrl)
-    //   .then(handleLoginSuccess)
-    //   .catch(() => console.log('not logged in'));
+    IdentityManager.checkSignInStatus(info.portalUrl)
+      .then(handleLoginSuccess)
+      .catch(() => console.log('not logged in'));
 
   }, []);
 
@@ -72,17 +73,28 @@ function DashboardLoginComponent(props) {
 
   const handleLogin = () => {
     setLoggedIn(true);
-    // IdentityManager.getCredential(info.portalUrl);
+    IdentityManager.getCredential(info.portalUrl);
   }
 
-  // const handleLoginSuccess = () => {
-  //   const portal = new Portal();
-  //   portal.authMode = 'immediate';
-  //   portal.load().then(() => {
-  //     console.log(portal);
-  //     console.log('User Info: ', portal.user);
-  //   })
-  // }
+  const handleLoginSuccess = () => {
+    const portal = new Portal();
+    portal.authMode = 'immediate';
+    portal.load().then(() => {
+      console.log(portal);
+      console.log('User Info: ', portal.user);
+      setLoggedIn(true);
+      setUser(portal.user);
+
+      // update the page to the user's culture/language
+      browsePage({
+        type: DASHBOARD,
+        payload: { iso: countryISO.toLowerCase() },
+        query: {
+          lang: portal.user.culture.split('-')[0],
+        },
+      });
+    })
+  }
 
   return (
     <div className={styles.container}>
@@ -92,7 +104,7 @@ function DashboardLoginComponent(props) {
         {countryISO.toUpperCase() === 'GIN' && <img src={ginLogo} style={{ width: '300px' }} />}
       </div>
       <div className={styles.loginForm}>
-        <FormControl variant="standard">
+        {/* <FormControl variant="standard">
           <TextField
             label={t('Email address')}
             value={email}
@@ -110,7 +122,7 @@ function DashboardLoginComponent(props) {
               setPassword(event.target.value);
             }}
           />
-        </FormControl>
+        </FormControl> */}
         <Button
           className={styles.saveButton}
           type="rectangular"

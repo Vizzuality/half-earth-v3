@@ -14,8 +14,9 @@
 
   position: absolute;
   top: 0;
-  right: 20px;
+  right: 50px;
   display: flex;
+  align-items: center;
   gap: 10px;
   background-color: var(--bg-color);
   padding: 4px 10px;
@@ -31,5 +32,9 @@
     color: var(--font-color);
     text-decoration: none;
     font-weight: 700;
+
+    &.profile{
+      height: 30px;
+    }
   }
 }
