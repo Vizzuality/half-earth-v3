@@ -72,7 +72,6 @@ function DashboardLoginComponent(props) {
   }, [pageTitle]);
 
   const handleLogin = () => {
-    setLoggedIn(true);
     IdentityManager.getCredential(info.portalUrl);
   }
 
