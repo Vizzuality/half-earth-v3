@@ -16,12 +16,11 @@ import styles from './regions-analysis-styles.module.scss';
 import { LightModeContext } from '../../../../context/light-mode';
 import { useT } from '@transifex/react';
 import {
-  INITIAL_LAYERS,
   LAYER_OPTIONS,
   NAVIGATION,
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   REGION_OPTIONS
-} from '../../../../utils/dashboard-utils';
+} from 'utils/dashboard-utils';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
@@ -63,29 +62,24 @@ function RegionsAnalysisComponent(props) {
   }
 
   const displayLayer = (option) => {
-    let layers;
+    let featureLayer;
     if (option === REGION_OPTIONS.PROTECTED_AREAS) {
-      layers = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
-      layers.featureLayer.opacity = 0;
+      featureLayer = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
 
       setRegionLayers((regionLayers) => ({
-        ...regionLayers,
-        [LAYER_OPTIONS.PROTECTED_AREAS]: layers.featureLayer,
-        [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers.vectorTileLayer
+        [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer
       }));
-      map.add(layers.featureLayer);
-      map.add(layers.vectorTileLayer);
+      map.add(featureLayer);
       view.goTo({
         zoom: 6,
       });
     } else if (option === REGION_OPTIONS.PROVINCES) {
-      layers = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, countryISO);
+      featureLayer = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, countryISO);
 
       setRegionLayers((regionLayers) => ({
-        ...regionLayers,
-        [LAYER_OPTIONS.PROVINCES]: layers,
+        [LAYER_OPTIONS.PROVINCES]: featureLayer,
       }));
-      map.add(layers);
+      map.add(featureLayer);
     }
 
     browsePage({

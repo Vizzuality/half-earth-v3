@@ -7,7 +7,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import { INITIAL_LAYERS, LAYER_OPTIONS, LAYER_TITLE_TYPES } from '../../../../utils/dashboard-utils';
 
 function BioDiversityContainer(props) {
-  const { data, countryName, dataByCountry, regionLayers, map, speciesInfo, setRegionLayers } = props;
+  const { data, countryName, dataByCountry, regionLayers, map, speciesInfo, setRegionLayers, countryISO } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [selectedTab, setSelectedTab] = useState(2);
@@ -52,17 +52,16 @@ function BioDiversityContainer(props) {
 
   useEffect(() => {
       removeRegionLayers();
-      const protectedLayers = EsriFeatureService.addProtectedAreaLayer();
+      const protectedLayers = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
       const layerName = LAYER_OPTIONS.HABITAT;
       const webTileLayer = EsriFeatureService.getXYZLayer(speciesInfo.scientificname.replace(' ', '_'), layerName, LAYER_TITLE_TYPES.TREND);
       webTileLayer.then(layer => {
         setRegionLayers({
           ...regionLayers,
           [layerName]: layer,
-          [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers.featureLayer,
-          [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: protectedLayers.vectorTileLayer
+          [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers,
         });
-        map.add(protectedLayers.groupLayer);
+        map.add(protectedLayers);
         map.add(layer);
       });
   }, []);

@@ -3,13 +3,11 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
     EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
-    PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_GIN_VECTOR_URL, PROTECTED_AREA_LIB_FEATURE_URL,
-    PROTECTED_AREA_LIB_VECTOR_URL, PROTECTED_AREA_VECTOR_URL, TREND_MAP_URL
+    PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL, TREND_MAP_URL
 } from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
-import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import TileLayer from '@arcgis/core/layers/TileLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
@@ -152,33 +150,23 @@ function addFeature({ url, features }: AddFeature) {
 }
 
 function addProtectedAreaLayer(id, countryISO = 'COD'){
-  let featureURL = PROTECTED_AREA_FEATURE_URL;
-  let vectorTileURL = PROTECTED_AREA_VECTOR_URL;
+  let featurePortalId = PROTECTED_AREA_FEATURE_URL;
 
   if(countryISO === 'LBR'){
-    featureURL = PROTECTED_AREA_LIB_FEATURE_URL;
-    vectorTileURL = PROTECTED_AREA_LIB_VECTOR_URL;
+    featurePortalId = PROTECTED_AREA_LIB_FEATURE_URL;
   }else if(countryISO === 'GIN'){
-    featureURL = PROTECTED_AREA_GIN_FEATURE_URL;
-    vectorTileURL = PROTECTED_AREA_GIN_VECTOR_URL;
+    featurePortalId = PROTECTED_AREA_GIN_FEATURE_URL;
   }
 
   const featureLayer = new FeatureLayer({
-    url: featureURL,
+    portalItem: {
+      id: featurePortalId,
+    },
     outFields: ['*'],
-    definitionExpression: `GID_0 = '${countryISO}'`,
     id: id ?? LAYER_OPTIONS.PROTECTED_AREAS
   });
 
-  // const featureLayer = getFeatureLayer(featureURL, id ?? LAYER_OPTIONS.PROTECTED_AREAS, countryISO);
-  const vectorTileLayer = getVectorTileLayer(vectorTileURL, LAYER_OPTIONS.PROTECTED_AREAS_VECTOR, countryISO);
-
-  const groupLayer = new GroupLayer({
-    layers: [featureLayer, vectorTileLayer],
-    id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
-  });
-
-  return { groupLayer, featureLayer, vectorTileLayer };
+  return featureLayer;
 }
 
 export default {

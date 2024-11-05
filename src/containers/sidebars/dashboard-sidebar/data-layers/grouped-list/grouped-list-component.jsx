@@ -95,10 +95,10 @@ function GroupedListComponent(props) {
     if (typeof item === 'string') {
       if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'PROTECTED AREAS') {
         if (!dataPoints[item].isActive) {
-          const layers = EsriFeatureService.addProtectedAreaLayer();
+          const layers = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
 
-          setRegionLayers((regionLayers) => ({ ...regionLayers, [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers.vectorTileLayer }));
-          map.add(layers.vectorTileLayer);
+          setRegionLayers((regionLayers) => ({ ...regionLayers, [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers }));
+          map.add(layers);
         } else {
           const vectorTileLayer = regionLayers[LAYER_OPTIONS.PROTECTED_AREAS_VECTOR];
 
