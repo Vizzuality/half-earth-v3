@@ -131,29 +131,31 @@ function DashboardViewComponent(props) {
 
         if (hits) {
           hoverHighlight?.remove();
+          view.closePopup();
 
-          if (hits.attributes.GID_0 === countryISO) {
-            hoverHighlight = layerView.highlight(hits.graphic);
-
-            let regionName;
-            if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
+          let regionName;
+          if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
+            if (hits.attributes.ISO3 === countryISO) {
               regionName = hits.attributes.NAME;
-            } else {
+            }
+          } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
+            if (hits.attributes.GID_0 === countryISO) {
               regionName = (hits.attributes.NAME_1 ?? hits.attributes.region_name);
             }
-
-            if (regionName) {
-              view.popup.open({
-                // Set the popup's title to the coordinates of the location
-                title: `${regionName}`,
-                location: view.toMap({ x: event.x, y: event.y })
-              });
-            }
           }
-        } else {
-          view.closePopup();
-          hoverHighlight?.remove();
+
+          if (regionName) {
+            hoverHighlight = layerView.highlight(hits.graphic);
+            view.openPopup({
+              // Set the popup's title to the coordinates of the location
+              title: `${regionName}`,
+              location: view.toMap({ x: event.x, y: event.y })
+            });
+          }
         }
+      } else {
+        view.closePopup();
+        hoverHighlight?.remove();
       }
     } catch { }
   }
