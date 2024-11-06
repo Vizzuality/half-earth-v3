@@ -82,8 +82,6 @@ function DashboardContainer(props) {
       setCountryDataError(error);
     });
 
-    getSpeciesList();
-
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('popstate', handleBackButton);
@@ -122,11 +120,11 @@ function DashboardContainer(props) {
         tab: selectedIndex,
         trend: tabOption ?? undefined,
         region: selectedRegion ?? undefined,
-        province: provinceName ?? undefined
+        province: provinceName ?? undefined,
+        lang: user?.culture?.split('-')[0] ?? undefined,
       },
     });
-
-  }, [scientificName, selectedIndex, tabOption, selectedRegion, provinceName]);
+  }, [scientificName, selectedIndex, tabOption, selectedRegion, provinceName, user]);
 
   const getQueryParams = () => {
     if(queryParams){

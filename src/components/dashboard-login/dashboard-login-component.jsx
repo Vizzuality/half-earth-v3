@@ -83,16 +83,7 @@ function DashboardLoginComponent(props) {
       console.log('User Info: ', portal.user);
       setLoggedIn(true);
       setUser(portal.user);
-
-      // update the page to the user's culture/language
-      browsePage({
-        type: DASHBOARD,
-        payload: { iso: countryISO.toLowerCase() },
-        query: {
-          lang: portal.user.culture.split('-')[0],
-        },
-      });
-    })
+    });
   }
 
   return (
