@@ -6,10 +6,10 @@ import last from 'lodash/last';
 import Component, { PROVINCE_TREND } from './dashboard-trends-sidebar-component.jsx';
 import mapStateToProps from './selectors';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-import { LAYER_OPTIONS, PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID } from '../../../utils/dashboard-utils.js';
+import { LAYER_OPTIONS, PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID, REGION_OPTIONS } from '../../../utils/dashboard-utils.js';
 
 function DashboardTrendsSidebarContainer(props) {
-  const { countryISO, view, map, regionLayers, setRegionLayers, geometry } = props;
+  const { countryISO, view, map, regionLayers, setRegionLayers, geometry, setSelectedRegionOption } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState(null);
@@ -86,6 +86,8 @@ function DashboardTrendsSidebarContainer(props) {
   }
 
   const getData = async () => {
+    setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
+
     // DRC country id
     let regionId = '90b03e87-3880-4164-a310-339994e3f919';
 
