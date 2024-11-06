@@ -70,9 +70,6 @@ function RegionsAnalysisComponent(props) {
         [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer
       }));
       map.add(featureLayer);
-      view.goTo({
-        zoom: 6,
-      });
     } else if (option === REGION_OPTIONS.PROVINCES) {
       featureLayer = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, countryISO);
 
