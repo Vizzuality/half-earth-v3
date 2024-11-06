@@ -83,40 +83,38 @@ function DashboardViewComponent(props) {
       if (selectedIndex !== NAVIGATION.BIO_IND) {
         hits = await hitTest(event);
         if (hits) {
+          switch (selectedIndex) {
+            case NAVIGATION.REGION:
+              setTaxaList([]);
+
+              const { WDPA_PID, GID_1 } = hits.attributes;
+              setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+              if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
+                setSelectedRegion({ WDPA_PID });
+              }
+
+              if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
+                setSelectedRegion({ GID_1 });
+              }
+              break;
+            case NAVIGATION.TRENDS:
+              const activeLayers = Object.keys(regionLayers);
+              browsePage({
+                type: DASHBOARD,
+                payload: { iso: countryISO.toLowerCase() },
+                query: {
+                  scientificName,
+                  selectedIndex: selectedIndex,
+                  regionLayers: activeLayers,
+                  selectedRegion: (hits.attributes.NAME_1 ?? hits.attributes.region_name)
+                },
+              });
+              setClickedRegion(hits.attributes);
+              break;
+          }
+
           if (hits.attributes.GID_0 === countryISO) {
-            switch (selectedIndex) {
-              case NAVIGATION.REGION:
-                setTaxaList([]);
-
-                const { WDPA_PID, GID_1 } = hits.attributes;
-                setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
-                if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
-                  setSelectedRegion({ WDPA_PID });
-                }
-
-                if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
-                  setSelectedRegion({ GID_1 });
-                }
-                break;
-              case NAVIGATION.TRENDS:
-                const activeLayers = Object.keys(regionLayers);
-                browsePage({
-                  type: DASHBOARD,
-                  payload: { iso: countryISO.toLowerCase() },
-                  query: {
-                    scientificName,
-                    selectedIndex: selectedIndex,
-                    regionLayers: activeLayers,
-                    selectedRegion: (hits.attributes.NAME_1 ?? hits.attributes.region_name)
-                  },
-                });
-                setClickedRegion(hits.attributes);
-                break;
-            }
-
-            if (hits.attributes.GID_0 === countryISO) {
-              highlight = layerView.highlight(hits.graphic);
-            }
+            highlight = layerView.highlight(hits.graphic);
           }
         }
       }
