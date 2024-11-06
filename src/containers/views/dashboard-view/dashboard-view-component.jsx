@@ -96,6 +96,7 @@ function DashboardViewComponent(props) {
               if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
                 setSelectedRegion({ GID_1 });
               }
+
               break;
             case NAVIGATION.TRENDS:
               const activeLayers = Object.keys(regionLayers);
@@ -113,9 +114,7 @@ function DashboardViewComponent(props) {
               break;
           }
 
-          if (hits.attributes.GID_0 === countryISO) {
-            highlight = layerView.highlight(hits.graphic);
-          }
+          highlight = layerView.highlight(hits.graphic);
         }
       }
     } catch { }
@@ -126,10 +125,10 @@ function DashboardViewComponent(props) {
     try {
       if (selectedIndex !== NAVIGATION.BIO_IND && selectedIndex !== NAVIGATION.DATA_LAYER) {
         hits = await hitTest(event);
+        hoverHighlight?.remove();
+        view.closePopup();
 
         if (hits) {
-          hoverHighlight?.remove();
-          view.closePopup();
 
           let regionName;
           if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
