@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from './dashboard-login-styles.module.scss';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
 import Button from 'components/button';
 import iccnLogo from 'logos/institut-congolais.png';
 import epaLogo from 'logos/epa_logo_transparent.png';
 import ginLogo from 'logos/guinea.jpeg';
+import sleLogo from 'logos/guinea.jpeg';
 import { useT } from '@transifex/react';
 import IdentityManager from '@arcgis/core/identity/IdentityManager';
 import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
 import Portal from '@arcgis/core/portal/Portal';
-import { DASHBOARD } from 'router';
 
 const info = new OAuthInfo({
   appId: '7Xx7eWvI655rXo2l',
@@ -35,6 +33,9 @@ function DashboardLoginComponent(props) {
       setPageTitle('EPA National Biodiversity');
     } else if (countryISO.toUpperCase() === 'GIN') {
       setFavicon('/favicon-gin.ico');
+      setPageTitle('EPA National Biodiversity');
+    } else if (countryISO.toUpperCase() === 'SLE') {
+      setFavicon('/favicon-sle.ico');
       setPageTitle('EPA National Biodiversity');
     }
 
@@ -92,6 +93,7 @@ function DashboardLoginComponent(props) {
         {countryISO.toUpperCase() === 'COD' && <img src={iccnLogo} style={{ width: '300px' }} />}
         {countryISO.toUpperCase() === 'LBR' && <img src={epaLogo} style={{ width: '300px' }} />}
         {countryISO.toUpperCase() === 'GIN' && <img src={ginLogo} style={{ width: '300px' }} />}
+        {countryISO.toUpperCase() === 'SLE' && <img src={sleLogo} style={{ width: '300px' }} />}
       </div>
       <div className={styles.loginForm}>
         {/* <FormControl variant="standard">

@@ -68,6 +68,7 @@ function DashboardNavComponent(props) {
           {countryISO === 'COD' && <OkapiIcon className={styles.speciesIcon} />}
           {countryISO === 'LBR' && <DuikerIcon className={styles.speciesIcon} />}
           {countryISO === 'GIN' && <ElephantIcon className={styles.speciesIcon} />}
+          {countryISO === 'SLE' && <ElephantIcon className={styles.speciesIcon} />}
         </button>
         {selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS && <div className={styles.subNav}>
           <button
