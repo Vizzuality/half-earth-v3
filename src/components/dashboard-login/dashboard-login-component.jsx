@@ -4,7 +4,7 @@ import Button from 'components/button';
 import iccnLogo from 'logos/institut-congolais.png';
 import epaLogo from 'logos/epa_logo_transparent.png';
 import ginLogo from 'logos/guinea.jpeg';
-import sleLogo from 'logos/guinea.jpeg';
+import sleLogo from 'logos/SL_flag.png';
 import { useT } from '@transifex/react';
 import IdentityManager from '@arcgis/core/identity/IdentityManager';
 import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
@@ -36,7 +36,7 @@ function DashboardLoginComponent(props) {
       setPageTitle('EPA National Biodiversity');
     } else if (countryISO.toUpperCase() === 'SLE') {
       setFavicon('/favicon-sle.ico');
-      setPageTitle('EPA National Biodiversity');
+      setPageTitle('Sierra Leone');
     }
 
     IdentityManager.registerOAuthInfos([info]);

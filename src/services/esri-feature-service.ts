@@ -3,7 +3,8 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
     EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
-    PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL, TREND_MAP_URL
+    PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL, PROTECTED_AREA_SLE_FEATURE_URL,
+    TREND_MAP_URL
 } from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -154,8 +155,10 @@ function addProtectedAreaLayer(id, countryISO = 'COD'){
 
   if(countryISO === 'LBR'){
     featurePortalId = PROTECTED_AREA_LIB_FEATURE_URL;
-  }else if(countryISO === 'GIN'){
+  } else if(countryISO === 'GIN'){
     featurePortalId = PROTECTED_AREA_GIN_FEATURE_URL;
+  } else if(countryISO === 'SLE'){
+    featurePortalId = PROTECTED_AREA_SLE_FEATURE_URL;
   }
 
   const featureLayer = new FeatureLayer({
