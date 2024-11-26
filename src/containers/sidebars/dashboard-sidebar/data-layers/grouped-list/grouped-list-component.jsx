@@ -97,18 +97,15 @@ function GroupedListComponent(props) {
         if (!dataPoints[item].isActive) {
           const layers = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
 
-          setRegionLayers((regionLayers) => ({ ...regionLayers, [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: layers }));
+          setRegionLayers((regionLayers) => ({ ...regionLayers, [LAYER_OPTIONS.PROTECTED_AREAS]: layers }));
           map.add(layers);
         } else {
-          const vectorTileLayer = regionLayers[LAYER_OPTIONS.PROTECTED_AREAS_VECTOR];
 
           setRegionLayers((regionLayers) => {
             const {
-              [LAYER_OPTIONS.PROTECTED_AREAS]: name,
-              [LAYER_OPTIONS.PROTECTED_AREAS_VECTOR]: vt, ...rest } = regionLayers;
+              [LAYER_OPTIONS.PROTECTED_AREAS]: name, ...rest } = regionLayers;
             return rest;
           });
-          map.remove(vectorTileLayer);
         }
       } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
         if (!dataPoints[item].isActive) {

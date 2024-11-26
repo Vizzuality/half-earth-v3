@@ -93,11 +93,9 @@ function RegionsAnalysisComponent(props) {
 
   const removeRegionLayers = () => {
     const protectedAreaLayer = map.layers.items.find(layer => layer.id === LAYER_OPTIONS.PROTECTED_AREAS);
-    const protectedAreaLayerVector = map.layers.items.find(layer => layer.id === LAYER_OPTIONS.PROTECTED_AREAS_VECTOR);
     const provinceLayer = map.layers.items.find(layer => layer.id === LAYER_OPTIONS.PROVINCES);
 
     map.remove(protectedAreaLayer);
-    map.remove(protectedAreaLayerVector);
     map.remove(provinceLayer);
   }
 
