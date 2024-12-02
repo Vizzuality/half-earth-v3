@@ -1,112 +1,129 @@
-import React, { useEffect, useState } from 'react'
-import styles from './dashboard-login-styles.module.scss'
-import Button from 'components/button'
-import iccnLogo from 'logos/institut-congolais.png'
-import epaLogo from 'logos/epa_logo_transparent.png'
-import ginLogo from 'logos/guinea.jpeg'
-import sleLogo from 'logos/SL_flag.png'
-import guyLogo from 'logos/Guyana_PAC.png'
-import { useT } from '@transifex/react'
-import IdentityManager from '@arcgis/core/identity/IdentityManager'
-import OAuthInfo from '@arcgis/core/identity/OAuthInfo'
-import Portal from '@arcgis/core/portal/Portal'
+import React, { useEffect, useState } from 'react';
+
+import { useT } from '@transifex/react';
+
+import IdentityManager from '@arcgis/core/identity/IdentityManager';
+import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
+import Portal from '@arcgis/core/portal/Portal';
+import epaLogo from 'logos/epa_logo_transparent.png';
+import ginLogo from 'logos/guinea.jpeg';
+import guyLogo from 'logos/Guyana_PAC.png';
+import iccnLogo from 'logos/institut-congolais.png';
+import sleLogo from 'logos/SL_flag.png';
+
+import Button from 'components/button';
+
+import styles from './dashboard-login-styles.module.scss';
 
 const info = new OAuthInfo({
   appId: '7Xx7eWvI655rXo2l',
   popup: false,
-})
+});
 
 function DashboardLoginComponent(props) {
-  const { setLoggedIn, countryISO, browsePage, setUser, user } = props
-  const t = useT()
+  const { setLoggedIn, countryISO, browsePage, setUser, user } = props;
+  const t = useT();
 
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const [favicon, setFavicon] = useState('/favicon.ico')
-  const [pageTitle, setPageTitle] = useState('EPA National Biodiversity')
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [favicon, setFavicon] = useState('/favicon.ico');
+  const [pageTitle, setPageTitle] = useState('EPA National Biodiversity');
 
   useEffect(() => {
     switch (countryISO.toUpperCase()) {
       case 'COD':
-        setFavicon('/favicon-drc.ico')
-        setPageTitle('ICCN Biodiversité nationale')
-        break
+        setFavicon('/favicon-drc.ico');
+        setPageTitle('ICCN Biodiversité nationale');
+        break;
       case 'LBR':
-        setFavicon('/favicon-epa.ico')
-        setPageTitle('EPA National Biodiversity')
-        break
+        setFavicon('/favicon-epa.ico');
+        setPageTitle('EPA National Biodiversity');
+        break;
       case 'GIN':
-        setFavicon('/favicon-gin.ico')
-        setPageTitle('EPA National Biodiversity')
-        break
+        setFavicon('/favicon-gin.ico');
+        setPageTitle('EPA National Biodiversity');
+        break;
       case 'SLE':
-        setFavicon('/favicon-sle.ico')
-        setPageTitle('Sierra Leone')
-        break
+        setFavicon('/favicon-sle.ico');
+        setPageTitle('Sierra Leone');
+        break;
       case 'GUY':
-        setFavicon('favicon-guy.ico')
-        setPageTitle('Guyana')
-        break
+        setFavicon('favicon-guy.ico');
+        setPageTitle('Guyana');
+        break;
       default:
-        break
+        break;
     }
 
-    IdentityManager.registerOAuthInfos([info])
+    IdentityManager.registerOAuthInfos([info]);
 
     IdentityManager.checkSignInStatus(info.portalUrl)
       .then(handleLoginSuccess)
-      .catch(() => console.log('not logged in'))
-
-  }, [])
+      .catch(() => console.log('not logged in'));
+  }, []);
 
   useEffect(() => {
-    const link = document.querySelector('link[rel="icon"]')
+    const link = document.querySelector('link[rel="icon"]');
 
     if (link) {
-      link.href = favicon
+      link.href = favicon;
     } else {
-      const newLink = document.createElement('link')
-      newLink.rel = 'icon'
-      newLink.href = favicon
-      document.head.appendChild(newLink)
+      const newLink = document.createElement('link');
+      newLink.rel = 'icon';
+      newLink.href = favicon;
+      document.head.appendChild(newLink);
     }
-  }, [favicon])
+  }, [favicon]);
 
   useEffect(() => {
-    const title = document.querySelector('head title')
+    const title = document.querySelector('head title');
 
     if (title) {
-      title.text = pageTitle
+      title.text = pageTitle;
     } else {
-      const newTitle = document.createElement('title')
-      newTitle.text = pageTitle
-      document.head.appendChild(newTitle)
+      const newTitle = document.createElement('title');
+      newTitle.text = pageTitle;
+      document.head.appendChild(newTitle);
     }
-  }, [pageTitle])
+  }, [pageTitle]);
 
   const handleLogin = () => {
-    IdentityManager.getCredential(info.portalUrl)
-  }
+    IdentityManager.getCredential(info.portalUrl);
+  };
 
   const handleLoginSuccess = () => {
-    const portal = new Portal()
-    portal.authMode = 'immediate'
+    const portal = new Portal();
+    portal.authMode = 'immediate';
     portal.load().then(() => {
-      console.log(portal)
-      console.log('User Info: ', portal.user)
-      setLoggedIn(true)
-      setUser(portal.user)
-    })
-  }
+      console.log(portal);
+      console.log('User Info: ', portal.user);
+      setLoggedIn(true);
+      setUser(portal.user);
+    });
+  };
 
   return (
     <div className={styles.container}>
       <div>
-        {countryISO.toUpperCase() === 'COD' && <img src={iccnLogo} style={{ width: '300px' }} />}
-        {countryISO.toUpperCase() === 'LBR' && <img src={epaLogo} style={{ width: '300px' }} />}
-        {countryISO.toUpperCase() === 'GIN' && <img src={ginLogo} style={{ width: '300px' }} />}
-        {countryISO.toUpperCase() === 'SLE' && <img src={sleLogo} style={{ width: '300px' }} />}
-        {countryISO.toUpperCase() === 'GUY' && <img src={guyLogo} style={{ width: '300px' }} />}
+        {countryISO.toUpperCase() === 'COD' && (
+          <img
+            src={iccnLogo}
+            style={{ width: '300px' }}
+            alt="Democratic Rep of Congo"
+          />
+        )}
+        {countryISO.toUpperCase() === 'LBR' && (
+          <img src={epaLogo} style={{ width: '300px' }} alt="Liberia" />
+        )}
+        {countryISO.toUpperCase() === 'GIN' && (
+          <img src={ginLogo} style={{ width: '300px' }} alt="Guinea" />
+        )}
+        {countryISO.toUpperCase() === 'SLE' && (
+          <img src={sleLogo} style={{ width: '300px' }} alt="Sierra Leone" />
+        )}
+        {countryISO.toUpperCase() === 'GUY' && (
+          <img src={guyLogo} style={{ width: '300px' }} alt="Guyana" />
+        )}
       </div>
       <div className={styles.loginForm}>
         {/* <FormControl variant="standard">
@@ -136,7 +153,7 @@ function DashboardLoginComponent(props) {
         />
       </div>
     </div>
-  )
+  );
 }
 
-export default DashboardLoginComponent
+export default DashboardLoginComponent;
