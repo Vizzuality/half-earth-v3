@@ -1,50 +1,50 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import PartnersContainer from '../../../../components/partners';
-import styles from './dashboard-home-styles.module.scss';
-import hrTheme from 'styles/themes/hr-theme.module.scss';
-import cx from 'classnames';
-import Button from 'components/button';
-import SearchInput from 'components/search-input';
-import { LightModeContext } from '../../../../context/light-mode';
-import { useLocale, useT } from '@transifex/react';
-import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../../../utils/dashboard-utils';
+import PartnersContainer from '../../../../components/partners'
+import styles from './dashboard-home-styles.module.scss'
+import hrTheme from 'styles/themes/hr-theme.module.scss'
+import cx from 'classnames'
+import Button from 'components/button'
+import SearchInput from 'components/search-input'
+import { LightModeContext } from '../../../../context/light-mode'
+import { useLocale, useT } from '@transifex/react'
+import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../../../utils/dashboard-utils'
 
 
 function DashboardHomeComponent(props) {
-  const t = useT();
-  const locale = useLocale();
-  const { countryISO, setSelectedIndex, setScientificName } = props;
+  const t = useT()
+  const locale = useLocale()
+  const { countryISO, setSelectedIndex, setScientificName } = props
 
-  const { lightMode, } = useContext(LightModeContext);
-  const [searchInput, setSearchInput] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const { lightMode, } = useContext(LightModeContext)
+  const [searchInput, setSearchInput] = useState('')
+  const [searchResults, setSearchResults] = useState([])
 
   useEffect(() => {
-    if (!searchInput) return;
+    if (!searchInput) return
     const handler = setTimeout(() => {
-      getSearchResults();
-    }, 300);
+      getSearchResults()
+    }, 300)
 
     return () => {
-      clearTimeout(handler);
+      clearTimeout(handler)
     }
-  }, [searchInput]);
+  }, [searchInput])
 
-  const searchURL = 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/spatial_species_search';
+  const searchURL = 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/spatial_species_search'
 
   const handleSearch = (searchText) => {
-    setSearchInput(searchText.currentTarget.value);
+    setSearchInput(searchText.currentTarget.value)
   }
 
   const handleSearchSelect = (searchItem) => {
-    setScientificName(searchItem.scientificname);
-    localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
-    setSelectedIndex(NAVIGATION.DATA_LAYER);
+    setScientificName(searchItem.scientificname)
+    localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname)
+    setSelectedIndex(NAVIGATION.DATA_LAYER)
   }
 
   const handleExploreAllSpecies = () => {
-    setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+    setSelectedIndex(NAVIGATION.EXPLORE_SPECIES)
   }
 
   const getSearchResults = async () => {
@@ -54,17 +54,17 @@ function DashboardHomeComponent(props) {
       limit: 10,
       page: 0,
       lang: locale || 'en',
-    };
-    const params = new URLSearchParams(searchParams);
-    const searchSpecies = await fetch(`${searchURL}?${params}`);
-    const results = await searchSpecies.json();
-    setSearchResults(results);
+    }
+    const params = new URLSearchParams(searchParams)
+    const searchSpecies = await fetch(`${searchURL}?${params}`)
+    const results = await searchSpecies.json()
+    setSearchResults(results)
   }
 
   const selectSpecies = (scientificname) => {
-    setSelectedIndex(NAVIGATION.DATA_LAYER);
-    setScientificName(scientificname);
-    localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
+    setSelectedIndex(NAVIGATION.DATA_LAYER)
+    setScientificName(scientificname)
+    localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname)
   }
 
   return (
@@ -100,11 +100,11 @@ function DashboardHomeComponent(props) {
                 Choeropsis liberiensis
               </p>
             </div>
-            <div className={cx(styles.navCard, styles.pilio)} onClick={() => selectSpecies('Hyperolius cinnamomeoventris')} >
+            <div className={cx(styles.navCard, styles.pilio)} onClick={() => selectSpecies('Phaethornis rupurumii')} >
               <div className={styles.outline}></div>
-              <label>Braganca Reed Frog</label>
+              <label>Streak-Throated Hermit</label>
               <p>
-                Hyperolius cinnamomeoventris
+                Phaethornis rupurumii
               </p>
             </div>
             <div className={cx(styles.navCard, styles.egg)} onClick={() => selectSpecies('Lophocebus aterrimus')} >

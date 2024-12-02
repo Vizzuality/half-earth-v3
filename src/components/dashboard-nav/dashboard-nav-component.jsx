@@ -1,22 +1,22 @@
 import React, { useContext } from 'react'
-import styles from './dashboard-nav-styles.module.scss';
-import StacksIcon from 'icons/stacks.svg?react';
-import OkapiIcon from 'icons/okapi.svg?react';
-import TimeLineIcon from 'icons/timeline.svg?react';
-import HomeIcon from 'icons/house-solid.svg?react';
-import ElephantIcon from 'icons/elephant.svg?react';
-import DuikerIcon from 'icons/duiker_icon_black.svg?react';
-import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
-import WhatshotIcon from '@mui/icons-material/Whatshot';
-import { useT } from '@transifex/react';
-import cx from 'classnames';
-import { LightModeContext } from '../../context/light-mode';
-import { NAVIGATION } from '../../utils/dashboard-utils';
+import styles from './dashboard-nav-styles.module.scss'
+import StacksIcon from 'icons/stacks.svg?react'
+import OkapiIcon from 'icons/okapi.svg?react'
+import TimeLineIcon from 'icons/timeline.svg?react'
+import HomeIcon from 'icons/house-solid.svg?react'
+import ElephantIcon from 'icons/elephant.svg?react'
+import DuikerIcon from 'icons/duiker_icon_black.svg?react'
+import SouthAmericaIcon from '@mui/icons-material/SouthAmerica'
+import WhatshotIcon from '@mui/icons-material/Whatshot'
+import { useT } from '@transifex/react'
+import cx from 'classnames'
+import { LightModeContext } from '../../context/light-mode'
+import { NAVIGATION } from '../../utils/dashboard-utils'
 
 function DashboardNavComponent(props) {
-  const t = useT();
-  const { selectedIndex, setSelectedIndex, scientificName, countryISO } = props;
-  const { lightMode, } = useContext(LightModeContext);
+  const t = useT()
+  const { selectedIndex, setSelectedIndex, scientificName, countryISO } = props
+  const { lightMode, } = useContext(LightModeContext)
 
   const titles = {
     HOME: 'home',
@@ -28,8 +28,8 @@ function DashboardNavComponent(props) {
   }
 
   const updateHistory = (page, title) => {
-    window.history.pushState({ selectedIndex: page }, '', ``);
-    setSelectedIndex(page);
+    window.history.pushState({ selectedIndex: page }, '', ``)
+    setSelectedIndex(page)
   }
 
   return (
@@ -62,13 +62,14 @@ function DashboardNavComponent(props) {
             [styles.selected]: selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS,
           })}
           onClick={() => {
-            updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER);
+            updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER)
           }}
         >
           {countryISO === 'COD' && <OkapiIcon className={styles.speciesIcon} />}
           {countryISO === 'LBR' && <DuikerIcon className={styles.speciesIcon} />}
           {countryISO === 'GIN' && <ElephantIcon className={styles.speciesIcon} />}
           {countryISO === 'SLE' && <ElephantIcon className={styles.speciesIcon} />}
+          {countryISO === 'GUY' && <ElephantIcon className={styles.speciesIcon} />}
         </button>
         {selectedIndex >= NAVIGATION.SPECIES && selectedIndex <= NAVIGATION.REGION_ANALYSIS && <div className={styles.subNav}>
           <button
@@ -112,4 +113,4 @@ function DashboardNavComponent(props) {
   )
 }
 
-export default DashboardNavComponent;
+export default DashboardNavComponent
