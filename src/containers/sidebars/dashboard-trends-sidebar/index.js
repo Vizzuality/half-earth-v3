@@ -1,15 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import EsriFeatureService from 'services/esri-feature-service';
+
 import last from 'lodash/last';
 
-import Component, { PROVINCE_TREND } from './dashboard-trends-sidebar-component.jsx';
-import mapStateToProps from './selectors';
+import EsriFeatureService from 'services/esri-feature-service';
+
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-import { LAYER_OPTIONS, PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID, REGION_OPTIONS } from '../../../utils/dashboard-utils.js';
+
+import {
+  LAYER_OPTIONS,
+  PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
+  REGION_OPTIONS,
+} from '../../../utils/dashboard-utils.js';
+
+import Component, {
+  PROVINCE_TREND,
+} from './dashboard-trends-sidebar-component.jsx';
+import mapStateToProps from './selectors';
 
 function DashboardTrendsSidebarContainer(props) {
-  const { countryISO, view, map, regionLayers, setRegionLayers, geometry, setSelectedRegionOption } = props;
+  const {
+    countryISO,
+    view,
+    map,
+    regionLayers,
+    setRegionLayers,
+    geometry,
+    setSelectedRegionOption,
+  } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState(null);
@@ -18,9 +36,9 @@ function DashboardTrendsSidebarContainer(props) {
   const [spiValue, setSpiValue] = useState(0);
   const [siiValue, setSiiValue] = useState(0);
 
-  const [shiData, setShiData] = useState({trendData: [], scoresData: []});
-  const [spiData, setSpiData] = useState({trendData: [], scoresData: []});
-  const [siiData, setSiiData] = useState({trendData: [], scoresData: []});
+  const [shiData, setShiData] = useState({ trendData: [], scoresData: [] });
+  const [spiData, setSpiData] = useState({ trendData: [], scoresData: [] });
+  const [siiData, setSiiData] = useState({ trendData: [], scoresData: [] });
 
   const [provinces, setProvinces] = useState([]);
   const [sortedBySpi, setSortedBySpi] = useState();
@@ -57,12 +75,17 @@ function DashboardTrendsSidebarContainer(props) {
   }, [view, countryISO]);
 
   useEffect(() => {
-    if(!map && !view) return;
+    if (!map && !view) return;
 
-    const layer = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID, countryISO);
+    const layer = EsriFeatureService.getFeatureLayer(
+      PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
+      countryISO
+    );
 
-    setRegionLayers((regionLayers) => ({ ...regionLayers,
-      [LAYER_OPTIONS.PROVINCES]: layer}));
+    setRegionLayers((regionLayers) => ({
+      ...regionLayers,
+      [LAYER_OPTIONS.PROVINCES]: layer,
+    }));
 
     map.add(layer);
 
@@ -76,14 +99,14 @@ function DashboardTrendsSidebarContainer(props) {
   }, [map, view]);
 
   const removeRegionLayers = () => {
-    let layers = regionLayers;
-    Object.keys(layers).map(region => {
-      const foundLayer = map.layers.items.find(item => item.id === region);
+    const layers = regionLayers;
+    Object.keys(layers).map((region) => {
+      const foundLayer = map.layers.items.find((item) => item.id === region);
       if (foundLayer) {
         map.remove(foundLayer);
       }
     });
-  }
+  };
 
   const getData = async () => {
     setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
@@ -92,23 +115,33 @@ function DashboardTrendsSidebarContainer(props) {
     let regionId = '90b03e87-3880-4164-a310-339994e3f919';
 
     // Liberia
-    if(countryISO.toUpperCase() === 'LBR'){
+    if (countryISO.toUpperCase() === 'LBR') {
       regionId = '50e1557e-fc47-481a-b090-66d5cba5be70';
     }
 
     // Guinea
-    if(countryISO.toUpperCase() === 'GIN'){
+    if (countryISO.toUpperCase() === 'GIN') {
       regionId = '22200606-e907-497f-96db-e7cfd95d61b5';
     }
 
     // Gabon
-    if(countryISO.toUpperCase() === 'GAB'){
+    if (countryISO.toUpperCase() === 'GAB') {
       regionId = '30810b40-0044-46dd-a1cd-5a3217749738';
     }
 
     // Republic of Congo
-    if(countryISO.toUpperCase() === 'COG'){
-      regionId = '0c98b276-f38a-4a2e-abab-0acfad46ac69'
+    if (countryISO.toUpperCase() === 'COG') {
+      regionId = '0c98b276-f38a-4a2e-abab-0acfad46ac69';
+    }
+
+    // Sierra Leone
+    if (countryISO.toUpperCase() === 'SLE') {
+      regionId = '3f0ce739-6440-4474-b4bc-d78b7c9de63e';
+    }
+
+    // Guyana
+    if (countryISO.toUpperCase() === 'GUY') {
+      regionId = '1cebe33c-216c-4b9d-816b-fb20dcf910e8';
     }
 
     const taxa = 'all_terr_verts';
@@ -119,11 +152,13 @@ function DashboardTrendsSidebarContainer(props) {
 
     const trendApiCalls = [shiTrendsUrl, spiTrendsUrl, siiTrendsUrl];
 
-    const trendApiResponses = await Promise.all(trendApiCalls.map(async (url) => {
-      const response = await fetch(url);
-      const data = await response.json();
-      return data;
-    }));
+    const trendApiResponses = await Promise.all(
+      trendApiCalls.map(async (url) => {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+      })
+    );
 
     const [shiTrendData, spiTrendData, siiTrendData] = trendApiResponses;
 
@@ -136,11 +171,13 @@ function DashboardTrendsSidebarContainer(props) {
 
     const spendApiCalls = [shiScoresUrl, spiScoresUrl, siiScoresUrl];
 
-    const scoreApiResponses = await Promise.all(spendApiCalls.map(async (url) => {
-      const response = await fetch(url);
-      const data = await response.json();
-      return data;
-    }));
+    const scoreApiResponses = await Promise.all(
+      spendApiCalls.map(async (url) => {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+      })
+    );
 
     const [shiScoresData, spiScoresData, siiScoresData] = scoreApiResponses;
 
@@ -153,22 +190,22 @@ function DashboardTrendsSidebarContainer(props) {
     const { regions } = spiTrendData[0];
     setCountryRegions(regions);
     const spiTrendsValues = spiTD[0].country_scores;
-    const spi = (spiTrendsValues[spiTrendsValues.length - 1].spi_all).toFixed(2);
+    const spi = spiTrendsValues[spiTrendsValues.length - 1].spi_all.toFixed(2);
     setSpiValue(spi);
 
-    if(siiTrendData.length){
+    if (siiTrendData.length) {
       const siiTD = siiTrendData;
       setSiiValue((siiTD[0].all_taxa_avg * 100).toFixed(2));
     }
 
-    setShiData({trendData: shiTrendData, scoresData: shiScoresData});
-    setSpiData({trendData: spiTrendData, scoresData: spiScoresData});
-    setSiiData({trendData: siiTrendData, scoresData: siiScoresData});
-  }
+    setShiData({ trendData: shiTrendData, scoresData: shiScoresData });
+    setSpiData({ trendData: spiTrendData, scoresData: spiScoresData });
+    setSiiData({ trendData: siiTrendData, scoresData: siiScoresData });
+  };
 
   const getProvinces = () => {
-    const prov = countryRegions.map(region => {
-      return { value: region.region_name, label: region.region_name }
+    const prov = countryRegions.map((region) => {
+      return { value: region.region_name, label: region.region_name };
     });
 
     const sortProvinces = prov.sort((a, b) => {
@@ -193,7 +230,7 @@ function DashboardTrendsSidebarContainer(props) {
     setSortedBySpecies(speciesSorted);
 
     setAllSorted(true);
-  }
+  };
 
   const sortProvincesBySPI = () => {
     const sorted = [...countryRegions].sort((a, b) => {
@@ -209,7 +246,7 @@ function DashboardTrendsSidebarContainer(props) {
     });
 
     return sorted;
-  }
+  };
 
   const sortProvincesByArea = () => {
     const sorted = [...countryRegions].sort((a, b) => {
@@ -225,7 +262,7 @@ function DashboardTrendsSidebarContainer(props) {
     });
 
     return sorted;
-  }
+  };
 
   const sortProvincesBySpecies = () => {
     const sorted = [...countryRegions].sort((a, b) => {
@@ -241,7 +278,7 @@ function DashboardTrendsSidebarContainer(props) {
     });
 
     return sorted;
-  }
+  };
 
   return (
     <Component
