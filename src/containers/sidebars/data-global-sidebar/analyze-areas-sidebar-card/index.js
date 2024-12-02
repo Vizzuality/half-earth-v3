@@ -115,6 +115,7 @@ function AnalyzeAreasContainer(props) {
     changeUI,
     selectedAnalysisLayer,
     selectedAnalysisTab,
+    resetOption
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(
@@ -140,6 +141,16 @@ function AnalyzeAreasContainer(props) {
       setIsFirstLoad(false);
     }
   }, [selectedAnalysisLayer, precalculatedAOIOptions, setSelectedOption]);
+
+  useEffect(() => {
+    if(resetOption){
+      handleOptionSelection({
+        slug: CLEAR_SELECTIONS,
+        label: CLEAR_SELECTIONS,
+        title: CLEAR_SELECTIONS,
+      });
+    }
+  }, [resetOption])
 
   const postDrawCallback = (geometry) => {
     const hash = createHashFromGeometry(geometry);
@@ -213,6 +224,7 @@ function AnalyzeAreasContainer(props) {
   const handleLayerToggle = (newSelectedOption) => {
     const protectedAreasSelected =
       newSelectedOption === WDPA_OECM_FEATURE_LAYER;
+    const protectedAreasFormerSelected = selectedOption?.slug === WDPA_OECM_FEATURE_LAYER;
 
     const getLayersToToggle = () => {
       const formerSelectedSlug = selectedOption?.slug;
@@ -240,13 +252,24 @@ function AnalyzeAreasContainer(props) {
         });
       }
 
+      const additionalProtectedAreasLayers = [
+        PROTECTED_AREAS_VECTOR_TILE_LAYER,
+        COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+      ];
       if (protectedAreasSelected) {
-        const additionalProtectedAreasLayers = [
-          PROTECTED_AREAS_VECTOR_TILE_LAYER,
-          COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-        ];
         additionalProtectedAreasLayers.forEach((layer) => {
           if (!activeLayers.some((l) => l.title === layer)) {
+            layersToToggle.push({
+              layerId: layer,
+              category: LAYERS_CATEGORIES.PROTECTION,
+            });
+          }
+        });
+      }
+
+      if(protectedAreasFormerSelected){
+        additionalProtectedAreasLayers.forEach((layer) => {
+          if (activeLayers.some((l) => l.title === PROTECTED_AREAS_VECTOR_TILE_LAYER)) {
             layersToToggle.push({
               layerId: layer,
               category: LAYERS_CATEGORIES.PROTECTION,
@@ -286,6 +309,7 @@ function AnalyzeAreasContainer(props) {
   const watchUtils = useWatchUtils();
 
   const handleOptionSelection = async (option) => {
+    console.log(option)
     if (option?.slug === HALF_EARTH_FUTURE_TILE_LAYER && isFirstLoad) {
       setShowProgress(true);
     }
