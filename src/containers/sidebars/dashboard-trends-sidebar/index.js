@@ -48,56 +48,6 @@ function DashboardTrendsSidebarContainer(props) {
   const [countryRegions, setCountryRegions] = useState([]);
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
 
-  useEffect(() => {
-    removeRegionLayers();
-    getData();
-  }, []);
-
-  useEffect(() => {
-    if (!countryRegions?.length) return;
-    getProvinces();
-  }, [countryRegions]);
-
-  // find and zoom to region
-  useEffect(() => {
-    EsriFeatureService.getFeatures({
-      url: COUNTRIES_DATA_SERVICE_URL,
-      whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: true,
-    }).then((features) => {
-      const { geometry, attributes } = features[0];
-
-      if (geometry && view) {
-        setGeo(geometry);
-        setCountryData(attributes);
-      }
-    });
-  }, [view, countryISO]);
-
-  useEffect(() => {
-    if (!map && !view) return;
-
-    const layer = EsriFeatureService.getFeatureLayer(
-      PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
-      countryISO
-    );
-
-    setRegionLayers((regionLayers) => ({
-      ...regionLayers,
-      [LAYER_OPTIONS.PROVINCES]: layer,
-    }));
-
-    map.add(layer);
-
-    // rezoom to country
-    view.goTo({
-      target: geometry,
-      center: [geometry.longitude - 20, geometry.latitude],
-      zoom: 5.5,
-      extent: geometry.clone(),
-    });
-  }, [map, view]);
-
   const removeRegionLayers = () => {
     const layers = regionLayers;
     Object.keys(layers).map((region) => {
@@ -279,6 +229,56 @@ function DashboardTrendsSidebarContainer(props) {
 
     return sorted;
   };
+
+  useEffect(() => {
+    removeRegionLayers();
+    getData();
+  }, []);
+
+  useEffect(() => {
+    if (!countryRegions?.length) return;
+    getProvinces();
+  }, [countryRegions]);
+
+  // find and zoom to region
+  useEffect(() => {
+    EsriFeatureService.getFeatures({
+      url: COUNTRIES_DATA_SERVICE_URL,
+      whereClause: `GID_0 = '${countryISO}'`,
+      returnGeometry: true,
+    }).then((features) => {
+      const { geometry, attributes } = features[0];
+
+      if (geometry && view) {
+        setGeo(geometry);
+        setCountryData(attributes);
+      }
+    });
+  }, [view, countryISO]);
+
+  useEffect(() => {
+    if (!map && !view) return;
+
+    const layer = EsriFeatureService.getFeatureLayer(
+      PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
+      countryISO
+    );
+
+    setRegionLayers((regionLayers) => ({
+      ...regionLayers,
+      [LAYER_OPTIONS.PROVINCES]: layer,
+    }));
+
+    map.add(layer);
+
+    // rezoom to country
+    view.goTo({
+      target: geometry,
+      center: [geometry.longitude - 20, geometry.latitude],
+      zoom: 5.5,
+      extent: geometry.clone(),
+    });
+  }, [map, view]);
 
   return (
     <Component
