@@ -114,7 +114,7 @@ function DashboardTrendsSidebarContainer(props) {
 
     const shiYear = last(shiTrendData).year;
     const spiYear = last(spiTrendData[0].country_scores).year;
-    const siiYear = last(siiTrendData[0].groups[0].values)[0];
+    const siiYear = last(siiTrendData[0]?.groups[0]?.values)?.[0] || shiYear;
     const shiScoresUrl = `https://next-api.mol.org/2.x/indicators/shs/values_all_taxa?iso=${countryISO}&year=${shiYear}`;
     const spiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${spiYear}&taxa=${taxa}`;
     const siiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${siiYear}&taxa=${taxa}`;
