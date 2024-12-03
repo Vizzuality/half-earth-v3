@@ -1,25 +1,41 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import { T, useT } from '@transifex/react';
+
+import { getCSSVariable } from 'utils/css-utils';
+
 import cx from 'classnames';
+import { Loading } from 'he-components';
+
+import Button from 'components/button';
+import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
+import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
+
+import { LightModeContext } from '../../../../../context/light-mode';
+import {
+  NAVIGATION,
+  SPECIES_SELECTED_COOKIE,
+} from '../../../../../utils/dashboard-utils';
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
 } from '../../dashboard-trends-sidebar-component';
-import Button from 'components/button';
-import { getCSSVariable } from 'utils/css-utils';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
-import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
-import { Loading } from 'he-components';
-import compStyles from './score-distributions-spi-styles.module.scss';
-import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
-import { LightModeContext } from '../../../../../context/light-mode';
-import { T, useT } from '@transifex/react';
 import DistributionsTableContainer from '../../shi/score-distributions/distributions-table';
-import { NAVIGATION, SPECIES_SELECTED_COOKIE } from '../../../../../utils/dashboard-utils';
+
+import compStyles from './score-distributions-spi-styles.module.scss';
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();
-  const { spiData, countryISO, activeTrend, selectedProvince, year, setSelectedIndex, setScientificName } = props;
+  const {
+    spiData,
+    countryISO,
+    activeTrend,
+    selectedProvince,
+    year,
+    setSelectedIndex,
+    setScientificName,
+  } = props;
   const { lightMode } = useContext(LightModeContext);
   const [speciesHighlights, setSpeciesHighlights] = useState();
   const [lowBucket, setLowBucket] = useState(0);
@@ -114,16 +130,13 @@ function ScoreDistributionsSpiComponent(props) {
 
     setIsLoading(true);
     getData();
-
   }, [activeTrend, selectedProvince, year]);
 
   useEffect(() => {
     if (!speciesHighlights) return;
     setIsSpeciesLoading(true);
     loadSpecies();
-
-  }, [speciesHighlights, selectedProvince])
-
+  }, [speciesHighlights, selectedProvince]);
 
   const getData = () => {
     getTaxaData();
@@ -131,7 +144,6 @@ function ScoreDistributionsSpiComponent(props) {
     getTitleText();
     setIsLoading(false);
   };
-
 
   const getChartData = async () => {
     let url = `https://next-api.mol.org/2.x/indicators/sps/values_all_taxa?iso3=${countryISO}&year=${year}`;
@@ -143,52 +155,53 @@ function ScoreDistributionsSpiComponent(props) {
     const data = await response.json();
 
     // const data = spiData.scoresData;
-    const taxaSet = { 'amphibians': {}, 'birds': {}, 'mammals': {}, 'reptiles': {} };
+    const taxaSet = { amphibians: {}, birds: {}, mammals: {}, reptiles: {} };
 
     // Loop through each number and place it in the appropriate bucket
-    data.forEach(a => {
+    data.forEach((a) => {
       const speciesGroup = a.speciesgroup;
 
-      a.protectionscores.forEach(s => {
+      a.protectionscores.forEach((s) => {
         const number = +s.protectionscore;
         // Determine the bucket index based on the floor value of the number
-        let bucketIndex = Math.floor(number / bucketSize);
+        const bucketIndex = Math.floor(number / bucketSize);
 
         if (!taxaSet[speciesGroup].hasOwnProperty(bucketIndex)) {
           taxaSet[speciesGroup][bucketIndex] = 1;
         } else {
           taxaSet[speciesGroup][bucketIndex] += 1;
         }
-      })
+      });
     });
 
-    const uniqueKeys = new Set(
-      [...Object.keys(taxaSet['birds']),
-      ...Object.keys(taxaSet['mammals']),
-      ...Object.keys(taxaSet['reptiles']),
-      ...Object.keys(taxaSet['amphibians'])]);
+    const uniqueKeys = new Set([
+      ...Object.keys(taxaSet.birds),
+      ...Object.keys(taxaSet.mammals),
+      ...Object.keys(taxaSet.reptiles),
+      ...Object.keys(taxaSet.amphibians),
+    ]);
 
     setChartData({
-      labels: [...uniqueKeys].map(key => key * bucketSize),
+      labels: [...uniqueKeys].map((key) => key * bucketSize),
       datasets: [
         {
           label: t('Birds'),
-          data: Object.values(taxaSet['birds']),
+          data: Object.values(taxaSet.birds),
           backgroundColor: getCSSVariable('birds'),
         },
         {
           label: t('Mammals'),
-          data: Object.values(taxaSet['mammals']),
+          data: Object.values(taxaSet.mammals),
           backgroundColor: getCSSVariable('mammals'),
         },
         {
           label: t('Reptiles'),
-          data: Object.values(taxaSet['reptiles']),
+          data: Object.values(taxaSet.reptiles),
           backgroundColor: getCSSVariable('reptiles'),
         },
         {
           label: t('Amphibians'),
-          data: Object.values(taxaSet['amphibians']),
+          data: Object.values(taxaSet.amphibians),
           backgroundColor: getCSSVariable('amphibians'),
         },
       ],
@@ -206,38 +219,44 @@ function ScoreDistributionsSpiComponent(props) {
     const response = await fetch(url);
     const data = await response.json();
     setTaxaData(data);
-  }
+  };
 
   const getTopSpecies = async () => {
-    const response = await fetch(`https://next-api.mol.org/2.x/indicators/shs/species_hightlights?iso3=${countryISO}&year=${year}`);
+    const response = await fetch(
+      `https://next-api.mol.org/2.x/indicators/shs/species_hightlights?iso3=${countryISO}&year=${year}`
+    );
     const data = await response.json();
 
     setSpeciesHighlights(data[0]);
-  }
+  };
 
   const loadSpecies = () => {
     if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      const regionSpecies = speciesHighlights.region_highlights.filter(sh => sh.iso3_regional === selectedProvince.iso_regional);
+      const regionSpecies = speciesHighlights.region_highlights.filter(
+        (sh) => sh.iso3_regional === selectedProvince.iso_regional
+      );
       setSpsSpecies(regionSpecies[0]?.region_highlights);
     } else {
-      setSpsSpecies(speciesHighlights.country_highlights)
+      setSpsSpecies(speciesHighlights.country_highlights);
     }
     setIsSpeciesLoading(false);
-  }
+  };
 
   const getTitleText = () => {
     if (activeTrend === NATIONAL_TREND || !selectedProvince) {
       setTitleText(`NATIONAL ${t(' SPI BY TAXONOMIC GROUP')}`);
     } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      setTitleText(`${selectedProvince?.region_name} ${t('SPI BY TAXONOMIC GROUP')}`);
+      setTitleText(
+        `${selectedProvince?.region_name} ${t('SPI BY TAXONOMIC GROUP')}`
+      );
     }
-  }
+  };
 
   const selectSpecies = (scientificname) => {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
-  }
+  };
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
@@ -246,34 +265,46 @@ function ScoreDistributionsSpiComponent(props) {
 
         <p className={styles.description}>
           <T
-            _str='View the distribution of the individual Species Protection Scores for all terrestrial vertebrates. {lowAvgBold} have the lowest average protection score while {highAvgBold} have the highest.'
+            _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates. {lowAvgBold} have the lowest average protection score while {highAvgBold} have the highest."
             lowAvgBold={<b>{lowAvg}</b>}
             highAvgBold={<b>{highAvg}</b>}
           />
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SPS between')} <b>{lowBucket} - {highBucket}:</b>
+          {t('Species with SPS between')}{' '}
+          <b>
+            {lowBucket} - {highBucket}:
+          </b>
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}
-        {!isSpeciesLoading && <ul className={styles.spsSpecies}>
-          {spsSpecies && spsSpecies.map((species, index) => {
-            return (
-              <li key={index} onClick={() => selectSpecies(species.species)}>
-                <img src={species.asset_url} alt="species" />
-                <div className={styles.spsInfo}>
-                  <span className={styles.name}>{species.species}</span>
-                  <span className={styles.scientificname}>
-                    {species.species}
-                  </span>
-                </div>
-                {species.protection_score && <span className={styles.spsScore}>{`SPS: ${species.protection_score?.toFixed(2)}`}</span>}
-              </li>
-            );
-          })}
-        </ul>
-        }
+        {!isSpeciesLoading && (
+          <ul className={styles.spsSpecies}>
+            {spsSpecies &&
+              spsSpecies.map((species, index) => {
+                return (
+                  <li
+                    key={index}
+                    onClick={() => selectSpecies(species.species)}
+                  >
+                    <img src={species.asset_url} alt="species" />
+                    <div className={styles.spsInfo}>
+                      <span className={styles.name}>{species.species}</span>
+                      <span className={styles.scientificname}>
+                        {species.species}
+                      </span>
+                    </div>
+                    {species.protection_score && (
+                      <span
+                        className={styles.spsScore}
+                      >{`SPS: ${species.protection_score?.toFixed(2)}`}</span>
+                    )}
+                  </li>
+                );
+              })}
+          </ul>
+        )}
         {/* <div className={styles.options}>
           {!showTable && <Button
             type="rectangular"
@@ -292,17 +323,25 @@ function ScoreDistributionsSpiComponent(props) {
           </span>
         </div> */}
       </div>
-      <div className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}>
-        {!showTable && (<>
-          <div className={compStyles.title}>{titleText}</div>
-          <SpeciesRichnessComponent taxaData={taxaData} {...props} />
-          {isLoading && <Loading height={200} />}
-          {!isLoading && <DistributionsChartComponent options={options} data={chartData} />}
-        </>)}
-        {showTable && (<>
-          <SpeciesRichnessComponent taxaData={taxaData} />
-          <DistributionsTableContainer chartData={chartData} {...props} />
-        </>)}
+      <div
+        className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}
+      >
+        {!showTable && (
+          <>
+            <div className={compStyles.title}>{titleText}</div>
+            <SpeciesRichnessComponent taxaData={taxaData} {...props} />
+            {isLoading && <Loading height={200} />}
+            {!isLoading && (
+              <DistributionsChartComponent options={options} data={chartData} />
+            )}
+          </>
+        )}
+        {showTable && (
+          <>
+            <SpeciesRichnessComponent taxaData={taxaData} />
+            <DistributionsTableContainer chartData={chartData} {...props} />
+          </>
+        )}
       </div>
     </div>
   );
