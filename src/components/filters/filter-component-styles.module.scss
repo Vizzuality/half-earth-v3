@@ -1,0 +1,55 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.filters {
+  width: 50%;
+
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --selected-font-color: #{$white};
+  --save-button-text: #{$dark-text};
+  --border-color-hover: #{$brand-color-main-hover};
+  color: var(--font-color);
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    --selected-font-color: #{$white};
+    --save-button-text: #{$white};
+    --border-color-hover: #{$mol-blue};
+  }
+
+  .titleRow {
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .close{
+    color: var(--font-color);
+  }
+
+  .filterList{
+    margin-bottom: 15px;
+
+    .filterGroupTitle {
+      font-size: 16px;
+      padding: 0 0 8px;
+    }
+
+    .filterbox {
+      padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 10px;
+    }
+  }
+}

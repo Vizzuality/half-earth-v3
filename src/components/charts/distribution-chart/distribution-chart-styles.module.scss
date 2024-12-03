@@ -1,0 +1,28 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px 10px 26px;
+  flex-grow: 1;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  .title{
+    color: $white;
+    font-family: "Open Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+  }
+
+  .chart{
+    width: 100%;
+  }
+}

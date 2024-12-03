@@ -1,0 +1,31 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px 10px 26px;
+  flex-grow: 1;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  .tableWrapper{
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 300px;
+    overflow-y: auto;
+
+    table{
+      font-size: 10px;
+
+      th{
+        span{
+          color: $white;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

@@ -1,15 +1,20 @@
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import * as query from '@arcgis/core/rest/query';
-import {
-  addFeatures,
-  queryFeatures,
-  applyEdits,
-  IQueryFeaturesResponse,
-} from '@esri/arcgis-rest-feature-layer';
-import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
-
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
+import {
+    EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
+    PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_GUY_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL,
+    PROTECTED_AREA_SLE_FEATURE_URL, TREND_MAP_URL
+} from 'utils/dashboard-utils.js';
+
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
+import TileLayer from '@arcgis/core/layers/TileLayer';
+import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
+import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
+import {
+    addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
+} from '@esri/arcgis-rest-feature-layer';
 
 function getFeatures({
   url,
@@ -41,6 +46,66 @@ function getFeatures({
       }
       resolve(null);
     });
+  });
+}
+
+function getVectorTileLayer(url, id, countryISO){
+  return new VectorTileLayer({
+    url,
+    id,
+  });
+}
+
+function getFeatureLayer(portalItemId, countryISO, id){
+  return new FeatureLayer({
+    portalItem: {
+      id: portalItemId,
+    },
+    outFields: ['*'],
+    definitionExpression: `GID_0 = '${countryISO}'`,
+    id: id ?? LAYER_OPTIONS.PROVINCES
+  });
+}
+
+function getGeoJsonLayer(scientificname, id, countryISO = 'CD'){
+  return new GeoJSONLayer({
+    url: `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${countryISO}_${scientificname}.geojson`,
+    id,
+  });
+}
+
+async function getXYZLayer(scientificname, id, type){
+  let url;
+
+  if(type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS){
+    url = `${EXPERT_RANGE_MAP_URL}?scientificname=${scientificname}`;
+  } else if(type === LAYER_TITLE_TYPES.TREND){
+    url = `${TREND_MAP_URL}?scientificname=${scientificname}`;
+  }
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  return new WebTileLayer({
+    urlTemplate: data.url,
+    id,
+  });
+}
+
+function getMVTSource(scientificname){
+  return  {
+    type: 'vector',
+    tiles: [
+      'https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/regions/regions/{proj}/{z}/{x}/{y}.pbf?region_id=1673cab0-c717-4367-9db0-5c63bf26944d'
+    ]
+  };
+}
+
+function getTileLayer(url, id){
+  return new TileLayer({
+    url,
+    id,
+    visible: true,
   });
 }
 
@@ -85,8 +150,47 @@ function addFeature({ url, features }: AddFeature) {
   });
 }
 
+function addProtectedAreaLayer(id, countryISO = 'COD'){
+  let featurePortalId = PROTECTED_AREA_FEATURE_URL;
+
+
+  switch (countryISO) {
+    case 'LBR':
+      featurePortalId = PROTECTED_AREA_LIB_FEATURE_URL;
+      break;
+    case 'GIN':
+      featurePortalId = PROTECTED_AREA_GIN_FEATURE_URL;
+      break;
+    case 'SLE':
+      featurePortalId = PROTECTED_AREA_SLE_FEATURE_URL;
+      break;
+    case 'GUY':
+      featurePortalId = PROTECTED_AREA_GUY_FEATURE_URL;
+      break;
+    default:
+      break;
+  }
+
+  const featureLayer = new FeatureLayer({
+    portalItem: {
+      id: featurePortalId,
+    },
+    outFields: ['*'],
+    id: id ?? LAYER_OPTIONS.PROTECTED_AREAS
+  });
+
+  return featureLayer;
+}
+
 export default {
   getFeatures,
   getLayer,
   addFeature,
+  getFeatureLayer,
+  getGeoJsonLayer,
+  getVectorTileLayer,
+  getXYZLayer,
+  getTileLayer,
+  getMVTSource,
+  addProtectedAreaLayer,
 };
