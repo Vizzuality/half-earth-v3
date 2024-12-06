@@ -1,10 +1,9 @@
-import React from 'react'
-import DashboardHomeComponent from './dashboard-home-component'
+import React from 'react';
+
+import DashboardHomeComponent from './dashboard-home-component';
 
 function DashboardHomeContainer(props) {
-  return (
-    <DashboardHomeComponent {...props}/>
-  )
+  return <DashboardHomeComponent {...props} />;
 }
 
-export default DashboardHomeContainer
+export default DashboardHomeContainer;

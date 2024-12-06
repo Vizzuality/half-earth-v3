@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 import ScoreDistributionsSpiComponent from './score-distibutions/score-distributions-spi-component';
 import TemporalTrendsSpiComponent from './temporal-trends/temporal-trends-spi-component';
@@ -8,14 +8,10 @@ function SpiComponent(props) {
 
   return (
     <>
-      <TemporalTrendsSpiComponent
-        setYear={setYear}
-        {...props} />
-      <ScoreDistributionsSpiComponent
-        year={year}
-        {...props} />
+      <TemporalTrendsSpiComponent setYear={setYear} {...props} />
+      <ScoreDistributionsSpiComponent year={year} {...props} />
     </>
-  )
+  );
 }
 
 export default SpiComponent;

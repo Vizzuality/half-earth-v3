@@ -55,88 +55,6 @@ function DashboardContainer(props) {
   const [provinceName, setProvinceName] = useState();
   const [user, setUser] = useState();
 
-  // Get Country information, allows to get country name
-  useEffect(() => {
-    getQueryParams();
-
-    // Function to handle back navigation
-    const handleBackButton = (event) => {
-      // Implement custom behavior here
-      setSelectedIndex(window.history.state?.selectedIndex ?? 1);
-    };
-
-    // Add event listener for popstate event
-    window.addEventListener('popstate', handleBackButton);
-
-    setCountryDataLoading();
-    EsriFeatureService.getFeatures({
-      url: COUNTRIES_DATA_SERVICE_URL,
-      whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: true,
-    })
-      .then((features) => {
-        const { geometry } = features[0];
-
-        setCountryDataReady(features);
-        if (geometry) {
-          setGeometry(geometry);
-        }
-      })
-      .catch((error) => {
-        setCountryDataError(error);
-      });
-
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener('popstate', handleBackButton);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!selectedRegion) return;
-    getSpeciesList();
-  }, [selectedRegion]);
-
-  useEffect(() => {
-    if (!scientificName) return;
-    getSpeciesData();
-  }, [scientificName]);
-
-  useEffect(() => {
-    if (!speciesInfo) return;
-    getDataLayersData();
-  }, [speciesInfo]);
-
-  useEffect(() => {
-    if (!dataLayerData || !taxaList?.length) return;
-    getData();
-  }, [dataLayerData, taxaList]);
-
-  useEffect(() => {
-    const activeLayers = Object.keys(regionLayers).length
-      ? Object.keys(regionLayers)
-      : undefined;
-    browsePage({
-      type: DASHBOARD,
-      payload: { iso: countryISO.toLowerCase() },
-      query: {
-        species: scientificName ?? undefined,
-        tab: selectedIndex,
-        trend: tabOption ?? undefined,
-        region: selectedRegion ?? undefined,
-        province: provinceName ?? undefined,
-        lang: user?.culture?.split('-')[0] ?? undefined,
-      },
-    });
-  }, [
-    scientificName,
-    selectedIndex,
-    tabOption,
-    selectedRegion,
-    provinceName,
-    user,
-  ]);
-
   const getQueryParams = () => {
     if (queryParams) {
       const {
@@ -264,62 +182,16 @@ function DashboardContainer(props) {
     setData({ habitatTrendData, spiScoreData });
   };
 
-  const getSpeciesList = async () => {
-    const speciesListUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list`;
-
-    // TODO: Use mol-country-attribute.json file to find MOL Region ID for ISO value
-    const params = makeSpeciesListParams({
-      region_id: '44b3bc0a-e617-4785-9123-7e6e5349b07d',
-      ...selectedRegion,
+  const sortTaxaList = (taxa) => {
+    return taxa?.sort((a, b) => {
+      if (a.sortby < b.sortby) {
+        return -1;
+      }
+      if (a.sortby > b.sortby) {
+        return 1;
+      }
+      return 0;
     });
-
-    // province
-    // region_attribute:'GID_1',
-    // region_attribute_value:'COD.10_1'
-    const response = await fetch(speciesListUrl, {
-      method: 'POST',
-      body: JSON.stringify(params),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json, text/plain, */*',
-      },
-    });
-    const data = await response.json();
-
-    const seasons = ['', 'Resident', 'Breeding', 'Non-breeding', 'Passage', ''];
-
-    data.taxas?.forEach((taxa) => {
-      const taxaDatasetSet = new Set();
-      taxa.species.forEach((species) => {
-        const speciesDatasets = Object.keys(species.dataset);
-        speciesDatasets.forEach((d) => {
-          taxaDatasetSet.add(d);
-        });
-        const speciesDataset2 = {};
-        speciesDatasets.forEach((k) => {
-          speciesDataset2[data.datasets[k].dataset_id] = species.dataset[k];
-        });
-        species.datasetList = speciesDatasets.map((dsid) => ({
-          dataset_id: data.datasets[dsid].dataset_id,
-          product_type: data.datasets[dsid].product_type,
-          title: data.datasets[dsid].title,
-          seasonality: species.dataset[dsid],
-          seasonalityString: species.dataset[dsid]
-            .map((s) => (s === null ? 'Resident' : seasons[s]))
-            .filter((s) => s.length > 0)
-            .join(', '),
-        }));
-        species.dataset = speciesDataset2;
-      });
-      taxa.datasets = {};
-      Array.from(taxaDatasetSet).forEach((d) => {
-        const ds = data.datasets[d];
-        taxa.datasets[ds.dataset_id] = ds;
-      });
-    });
-
-    const taxa = sortTaxaList(data.taxas);
-    setTaxaList(taxa);
   };
 
   const makeSpeciesListParams = (args, summary = false) => {
@@ -362,6 +234,65 @@ function DashboardContainer(props) {
       params.summary = 'true';
     }
     return params;
+  };
+
+  const getSpeciesList = async () => {
+    const speciesListUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list`;
+
+    // TODO: Use mol-country-attribute.json file to find MOL Region ID for ISO value
+    const params = makeSpeciesListParams({
+      region_id: '44b3bc0a-e617-4785-9123-7e6e5349b07d',
+      ...selectedRegion,
+    });
+
+    // province
+    // region_attribute:'GID_1',
+    // region_attribute_value:'COD.10_1'
+    const response = await fetch(speciesListUrl, {
+      method: 'POST',
+      body: JSON.stringify(params),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text/plain, */*',
+      },
+    });
+    const responseData = await response.json();
+
+    const seasons = ['', 'Resident', 'Breeding', 'Non-breeding', 'Passage', ''];
+
+    responseData.taxas?.forEach((taxa) => {
+      const taxaDatasetSet = new Set();
+      taxa.species.forEach((species) => {
+        const speciesDatasets = Object.keys(species.dataset);
+        speciesDatasets.forEach((d) => {
+          taxaDatasetSet.add(d);
+        });
+        const speciesDataset2 = {};
+        speciesDatasets.forEach((k) => {
+          speciesDataset2[responseData.datasets[k].dataset_id] =
+            species.dataset[k];
+        });
+        species.datasetList = speciesDatasets.map((dsid) => ({
+          dataset_id: responseData.datasets[dsid].dataset_id,
+          product_type: responseData.datasets[dsid].product_type,
+          title: responseData.datasets[dsid].title,
+          seasonality: species.dataset[dsid],
+          seasonalityString: species.dataset[dsid]
+            .map((s) => (s === null ? 'Resident' : seasons[s]))
+            .filter((s) => s.length > 0)
+            .join(', '),
+        }));
+        species.dataset = speciesDataset2;
+      });
+      taxa.datasets = {};
+      Array.from(taxaDatasetSet).forEach((d) => {
+        const ds = responseData.datasets[d];
+        taxa.datasets[ds.dataset_id] = ds;
+      });
+    });
+
+    const taxa = sortTaxaList(responseData.taxas);
+    setTaxaList(taxa);
   };
 
   const getSpiDataByCountry = (d) => {
@@ -407,18 +338,6 @@ function DashboardContainer(props) {
     setDataByCountry(countryData);
   };
 
-  const sortTaxaList = (taxa) => {
-    return taxa?.sort((a, b) => {
-      if (a.sortby < b.sortby) {
-        return -1;
-      }
-      if (a.sortby > b.sortby) {
-        return 1;
-      }
-      return 0;
-    });
-  };
-
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({
       map,
@@ -426,6 +345,85 @@ function DashboardContainer(props) {
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);
   };
+
+  // Get Country information, allows to get country name
+  useEffect(() => {
+    getQueryParams();
+
+    // Function to handle back navigation
+    const handleBackButton = () => {
+      // Implement custom behavior here
+      setSelectedIndex(window.history.state?.selectedIndex ?? 1);
+    };
+
+    // Add event listener for popstate event
+    window.addEventListener('popstate', handleBackButton);
+
+    setCountryDataLoading();
+    EsriFeatureService.getFeatures({
+      url: COUNTRIES_DATA_SERVICE_URL,
+      whereClause: `GID_0 = '${countryISO}'`,
+      returnGeometry: true,
+    })
+      .then((features) => {
+        const { geometry } = features[0];
+
+        setCountryDataReady(features);
+        if (geometry) {
+          setGeometry(geometry);
+        }
+      })
+      .catch((error) => {
+        setCountryDataError(error);
+      });
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!selectedRegion) return;
+    getSpeciesList();
+  }, [selectedRegion]);
+
+  useEffect(() => {
+    if (!scientificName) return;
+    getSpeciesData();
+  }, [scientificName]);
+
+  useEffect(() => {
+    if (!speciesInfo) return;
+    getDataLayersData();
+  }, [speciesInfo]);
+
+  useEffect(() => {
+    if (!dataLayerData || !taxaList?.length) return;
+    getData();
+  }, [dataLayerData, taxaList]);
+
+  useEffect(() => {
+    browsePage({
+      type: DASHBOARD,
+      payload: { iso: countryISO.toLowerCase() },
+      query: {
+        species: scientificName ?? undefined,
+        tab: selectedIndex,
+        trend: tabOption ?? undefined,
+        region: selectedRegion ?? undefined,
+        province: provinceName ?? undefined,
+        lang: user?.culture?.split('-')[0] ?? undefined,
+      },
+    });
+  }, [
+    scientificName,
+    selectedIndex,
+    tabOption,
+    selectedRegion,
+    provinceName,
+    user,
+  ]);
 
   return (
     <DashboardComponent

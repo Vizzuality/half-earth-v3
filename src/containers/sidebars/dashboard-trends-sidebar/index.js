@@ -50,7 +50,7 @@ function DashboardTrendsSidebarContainer(props) {
 
   const removeRegionLayers = () => {
     const layers = regionLayers;
-    Object.keys(layers).map((region) => {
+    Object.keys(layers).forEach((region) => {
       const foundLayer = map.layers.items.find((item) => item.id === region);
       if (foundLayer) {
         map.remove(foundLayer);
@@ -153,6 +153,54 @@ function DashboardTrendsSidebarContainer(props) {
     setSiiData({ trendData: siiTrendData, scoresData: siiScoresData });
   };
 
+  const sortProvincesBySPI = () => {
+    const sorted = [...countryRegions].sort((a, b) => {
+      const spiA = a.regional_scores[a.regional_scores.length - 1].spi_all;
+      const spiB = b.regional_scores[b.regional_scores.length - 1].spi_all;
+      if (spiA > spiB) {
+        return -1;
+      }
+      if (spiA < spiB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return sorted;
+  };
+
+  const sortProvincesByArea = () => {
+    const sorted = [...countryRegions].sort((a, b) => {
+      const spiA = a.regional_scores[a.regional_scores.length - 1].region_area;
+      const spiB = b.regional_scores[b.regional_scores.length - 1].region_area;
+      if (spiA > spiB) {
+        return -1;
+      }
+      if (spiA < spiB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return sorted;
+  };
+
+  const sortProvincesBySpecies = () => {
+    const sorted = [...countryRegions].sort((a, b) => {
+      const spiA = a.regional_scores[a.regional_scores.length - 1].nspecies;
+      const spiB = b.regional_scores[b.regional_scores.length - 1].nspecies;
+      if (spiA > spiB) {
+        return -1;
+      }
+      if (spiA < spiB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return sorted;
+  };
+
   const getProvinces = () => {
     const prov = countryRegions.map((region) => {
       return { value: region.region_name, label: region.region_name };
@@ -182,54 +230,6 @@ function DashboardTrendsSidebarContainer(props) {
     setAllSorted(true);
   };
 
-  const sortProvincesBySPI = () => {
-    const sorted = [...countryRegions].sort((a, b) => {
-      const spi_A = a.regional_scores[a.regional_scores.length - 1].spi_all;
-      const spi_B = b.regional_scores[b.regional_scores.length - 1].spi_all;
-      if (spi_A > spi_B) {
-        return -1;
-      }
-      if (spi_A < spi_B) {
-        return 1;
-      }
-      return 0;
-    });
-
-    return sorted;
-  };
-
-  const sortProvincesByArea = () => {
-    const sorted = [...countryRegions].sort((a, b) => {
-      const spi_A = a.regional_scores[a.regional_scores.length - 1].region_area;
-      const spi_B = b.regional_scores[b.regional_scores.length - 1].region_area;
-      if (spi_A > spi_B) {
-        return -1;
-      }
-      if (spi_A < spi_B) {
-        return 1;
-      }
-      return 0;
-    });
-
-    return sorted;
-  };
-
-  const sortProvincesBySpecies = () => {
-    const sorted = [...countryRegions].sort((a, b) => {
-      const spi_A = a.regional_scores[a.regional_scores.length - 1].nspecies;
-      const spi_B = b.regional_scores[b.regional_scores.length - 1].nspecies;
-      if (spi_A > spi_B) {
-        return -1;
-      }
-      if (spi_A < spi_B) {
-        return 1;
-      }
-      return 0;
-    });
-
-    return sorted;
-  };
-
   useEffect(() => {
     removeRegionLayers();
     getData();
@@ -247,6 +247,7 @@ function DashboardTrendsSidebarContainer(props) {
       whereClause: `GID_0 = '${countryISO}'`,
       returnGeometry: true,
     }).then((features) => {
+      // eslint-disable-next-line no-shadow
       const { geometry, attributes } = features[0];
 
       if (geometry && view) {
@@ -264,6 +265,7 @@ function DashboardTrendsSidebarContainer(props) {
       countryISO
     );
 
+    // eslint-disable-next-line no-shadow
     setRegionLayers((regionLayers) => ({
       ...regionLayers,
       [LAYER_OPTIONS.PROVINCES]: layer,
@@ -272,13 +274,94 @@ function DashboardTrendsSidebarContainer(props) {
     map.add(layer);
 
     // rezoom to country
-    view.goTo({
-      target: geometry,
-      center: [geometry.longitude - 20, geometry.latitude],
-      zoom: 5.5,
-      extent: geometry.clone(),
-    });
+    if (geometry) {
+      view.goTo({
+        target: geometry,
+        center: [geometry.longitude - 20, geometry.latitude],
+        zoom: 5.5,
+        extent: geometry.clone(),
+      });
+    }
   }, [map, view]);
+
+  useEffect(() => {
+    const esriTable1Url =
+      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_0/FeatureServer';
+    const esriTable2Url =
+      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table2_v2_0/FeatureServer';
+    const esriTable3Url =
+      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table3_v2_0/FeatureServer';
+    const esriTable4Url =
+      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table4_v2_0/FeatureServer';
+    const esriTable5Url =
+      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table5_v2_0/FeatureServer';
+
+    const esriTable1 = {
+      url: esriTable1Url,
+      whereClause: `ISO3 = '${countryISO}'`,
+      orderByFields: ['iso3', 'year'],
+    };
+
+    EsriFeatureService.getFeatures(esriTable1).then((features) => {
+      const tempData = features.map((f) => f.attributes);
+      const { attributes } = last(features);
+      console.log('Table 1 attributes: ', attributes);
+      console.log('Table 1 data: ', tempData);
+    });
+
+    const species = ['amphibians', 'mammals', 'birds', 'reptiles'];
+
+    species.forEach((s) => {
+      const esriTable3 = {
+        url: esriTable3Url,
+        whereClause: `ISO3 = '${countryISO}' and TAXA = '${s}'`,
+        orderByFields: ['ISO3', 'year'],
+      };
+
+      EsriFeatureService.getFeatures(esriTable3).then((features) => {
+        const tempData = features.map((f) => f.attributes);
+        const { attributes } = last(features);
+        console.log('Table 3 attributes: ', attributes);
+        console.log(`Table 3 for ${s}: `, tempData);
+      });
+    });
+
+    const esriTable4 = {
+      url: esriTable4Url,
+      whereClause: `ISO3 = '${countryISO}'`,
+      orderByFields: ['iso3', 'year'],
+    };
+    EsriFeatureService.getFeatures(esriTable4).then((features) => {
+      const tempData = features.map((f) => f.attributes);
+      const { attributes } = last(features);
+      console.log('Table 4 attributes: ', attributes);
+      console.log('Table 4 data: ', tempData);
+    });
+
+    const esriTable2 = {
+      url: esriTable2Url,
+      whereClause: `GID_1 = 'BRB.8_1' and YEAR = '2024'`,
+      orderByFields: ['GID_1', 'year'],
+    };
+    EsriFeatureService.getFeatures(esriTable2).then((features) => {
+      const tempData = features.map((f) => f.attributes);
+      const { attributes } = last(features);
+      console.log('Table 2 attributes: ', attributes);
+      console.log('Table 2 data: ', tempData);
+    });
+
+    const esriTable5 = {
+      url: esriTable5Url,
+      whereClause: `GID_1 = 'BRB.8_1'`,
+      orderByFields: ['GID_1', 'year'],
+    };
+    EsriFeatureService.getFeatures(esriTable5).then((features) => {
+      const tempData = features.map((f) => f.attributes);
+      const { attributes } = last(features);
+      console.log('Table 5 attributes: ', attributes);
+      console.log('Table 5 data: ', tempData);
+    });
+  }, []);
 
   return (
     <Component
