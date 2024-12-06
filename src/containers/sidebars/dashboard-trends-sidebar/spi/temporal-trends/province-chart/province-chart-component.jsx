@@ -66,54 +66,6 @@ function ProvinceChartComponent(props) {
     ],
   };
 
-  const options = {
-    plugins: {
-      title: {
-        display: false,
-      },
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      x: {
-        beginAtZero: false,
-        display: true,
-        title: {
-          display: true,
-          text: t('Total Area (1000 km2)'),
-          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
-        },
-        grid: {
-          color: getCSSVariable('oslo-gray'),
-        },
-        ticks: {
-          color: getCSSVariable('oslo-gray'),
-        },
-      },
-      y: {
-        beginAtZero: true,
-        display: true,
-        title: {
-          display: true,
-          text: t('Species Protection Index'),
-          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
-        },
-        grid: {
-          color: getCSSVariable('oslo-gray'),
-        },
-        ticks: {
-          color: getCSSVariable('oslo-gray'),
-        },
-      },
-    },
-    onClick: (event, elements, chart) => {
-      if (elements.length > 0) {
-        selectClickedRegion(elements, chart);
-      }
-    },
-  };
-
   const [bubbleData, setBubbleData] = useState();
   const [currentYear, setCurrentYear] = useState();
   const [spiArcData, setSpiArcData] = useState(blankData);
@@ -252,6 +204,54 @@ function ProvinceChartComponent(props) {
     setFoundIndex(provinces.findIndex((prov) => prov.value === value.label));
   };
 
+  const options = {
+    plugins: {
+      title: {
+        display: false,
+      },
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        beginAtZero: false,
+        display: true,
+        title: {
+          display: true,
+          text: t('Total Area (1000 km2)'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+        },
+      },
+      y: {
+        beginAtZero: true,
+        display: true,
+        title: {
+          display: true,
+          text: t('Species Protection Index'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+        },
+      },
+    },
+    onClick: (event, elements, chart) => {
+      if (elements.length > 0) {
+        selectClickedRegion(elements, chart);
+      }
+    },
+  };
+
   useEffect(() => {
     if (!spiData.trendData.length) return;
     setIsLoading(false);
@@ -313,12 +313,12 @@ function ProvinceChartComponent(props) {
         value: clickedRegion.NAME_1 ?? clickedRegion.region_name,
       });
 
-      const foundIndex = bubbleData?.datasets.findIndex(
+      const foundIdx = bubbleData?.datasets.findIndex(
         (item) =>
           item.label === (clickedRegion.NAME_1 ?? clickedRegion.region_name)
       );
-      if (foundIndex) {
-        highlightProvinceBubble(foundIndex);
+      if (foundIdx) {
+        highlightProvinceBubble(foundIdx);
       }
     }
   }, [clickedRegion, countryRegions, allSorted]);

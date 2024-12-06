@@ -73,8 +73,8 @@ function DashboardViewComponent(props) {
         const { graphic } = foundLayer;
         const { attributes } = graphic;
         if (
-          attributes.hasOwnProperty('NAME_1') ||
-          attributes.hasOwnProperty('WDPA_PID')
+          Object.prototype.hasOwnProperty.call(attributes, 'NAME_1') ||
+          Object.prototype.hasOwnProperty.call(attributes, 'WDPA_PID')
         ) {
           return { graphic, attributes };
         }
