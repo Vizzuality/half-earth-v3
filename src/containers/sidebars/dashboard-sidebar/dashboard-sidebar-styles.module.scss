@@ -17,12 +17,12 @@ $trends-width: 1000px;
   flex-direction: column;
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
-  height: calc(100vh - #{$top});
+  height: calc(100vh - #{$top} - 25px);
   width: $sidebar-species-width;
   z-index: $bring-to-front;
 
   &.trends{
-    width: $trends-width
+    width: $trends-width;
   }
 
   --nav-button-bg: #{$white};
