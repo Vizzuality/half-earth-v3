@@ -1,17 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
 
+import { useT } from '@transifex/react';
+
+import { getCSSVariable } from 'utils/css-utils';
+
 import cx from 'classnames';
+import { Loading } from 'he-components';
 
 import Button from 'components/button';
-import { getCSSVariable } from 'utils/css-utils';
-import compStyles from './score-distributions-sii-styles.module.scss';
-import styles from '../../dashboard-trends-sidebar-styles.module.scss';
-import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
+import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
+
 import { LightModeContext } from '../../../../../context/light-mode';
-import { useT } from '@transifex/react';
+import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import DistributionsTableContainer from '../../shi/score-distributions/distributions-table';
-import { Loading } from 'he-components';
+
+import compStyles from './score-distributions-sii-styles.module.scss';
 
 function ScoreDistributionsSiiComponent(props) {
   const t = useT();
@@ -50,10 +54,10 @@ function ScoreDistributionsSiiComponent(props) {
     const taxaSet = {};
 
     // Loop through each number and place it in the appropriate bucket
-    data.forEach(a => {
+    data.forEach((a) => {
       const number = +a.protection_score;
       // Determine the bucket index based on the floor value of the number
-      let bucketIndex = Math.floor(number / 5);
+      const bucketIndex = Math.floor(number / 5);
 
       if (!taxaSet.hasOwnProperty(bucketIndex)) {
         taxaSet[bucketIndex] = 1;
@@ -62,7 +66,7 @@ function ScoreDistributionsSiiComponent(props) {
       }
     });
 
-    const labels = Object.keys(taxaSet).map(key => +key * 5);
+    const labels = Object.keys(taxaSet).map((key) => +key * 5);
 
     setChartData({
       labels,
@@ -80,15 +84,18 @@ function ScoreDistributionsSiiComponent(props) {
   const getTaxaData = async () => {
     const taxaCallsResponses = await Promise.all(
       taxas.map(async (taxa) => {
-        const response = await fetch(`https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`);
+        const response = await fetch(
+          `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`
+        );
         const data = await response.json();
         return data;
       })
     );
 
-    const [birdData, mammalData, reptileData, amphibianData] = taxaCallsResponses;
+    const [birdData, mammalData, reptileData, amphibianData] =
+      taxaCallsResponses;
     setTaxaData({ birdData, mammalData, reptileData, amphibianData });
-  }
+  };
 
   useEffect(() => {
     if (!siiData.scoresData.length) return;
@@ -157,8 +164,9 @@ function ScoreDistributionsSiiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          View the distribution of the individual Species Information Scores for all
-          terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average information score while <b>{highAvg}</b> have the highest.
+          View the distribution of the individual Species Information Scores for
+          all terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average
+          information score while <b>{highAvg}</b> have the highest.
         </p>
 
         <span className={styles.spsSpeciesTitle}>
@@ -200,11 +208,15 @@ function ScoreDistributionsSiiComponent(props) {
         </div>
       </div>
       <div className={compStyles.chartArea}>
-        {!showTable && (<>
-          {/* <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} /> */}
-          {isLoading && <Loading height={200} />}
-          {!isLoading && <DistributionsChartComponent data={chartData} options={options} />}
-        </>)}
+        {!showTable && (
+          <>
+            {/* <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} /> */}
+            {isLoading && <Loading height={200} />}
+            {!isLoading && (
+              <DistributionsChartComponent data={chartData} options={options} />
+            )}
+          </>
+        )}
         {/* {showTable && (<>
           <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} />
           <DistributionsTableContainer chartData={siiData?.scoresData} {...props} />

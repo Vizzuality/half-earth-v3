@@ -63,8 +63,8 @@ function BioDiversityContainer(props) {
       );
 
       const scores = {
-        protectionScore: last(countryData).shs_score.toFixed(2),
-        globalProtectionScore: last(globalValues).shs_score.toFixed(2),
+        protectionScore: last(countryData).shs_score.toFixed(1),
+        globalProtectionScore: last(globalValues).shs_score.toFixed(1),
       };
 
       setProtectionScore(scores.protectionScore);
@@ -145,7 +145,7 @@ function BioDiversityContainer(props) {
       habitatScore: (
         ((countryAreaScore + countryConnectivityScore) / 2) *
         100
-      ).toFixed(2),
+      ).toFixed(1),
       globalHabitatScore:
         ((globalAreaScore + globalConnectivityScore) / 2) * 100,
     };
@@ -226,8 +226,8 @@ function BioDiversityContainer(props) {
     const globalArea = globalProtectionArea / globalProtectionTargetArea;
 
     const scores = {
-      protectionScore: Math.min(area * 100, 100).toFixed(2),
-      globalProtectionScore: Math.min(globalArea * 100, 100).toFixed(2),
+      protectionScore: Math.min(area * 100, 100).toFixed(1),
+      globalProtectionScore: Math.min(globalArea * 100, 100).toFixed(1),
     };
 
     return scores;
@@ -245,9 +245,9 @@ function BioDiversityContainer(props) {
         tableData.push({
           country: currentCountryData.country_name,
           stewardship: currentCountryData.stewardship,
-          rangeProtected: currentCountryData.range_protected.toFixed(2),
-          targetProtected: currentCountryData.target_protected.toFixed(2),
-          sps: currentCountryData.shs_score.toFixed(2),
+          rangeProtected: currentCountryData.range_protected.toFixed(1),
+          targetProtected: currentCountryData.target_protected.toFixed(1),
+          sps: currentCountryData.shs_score.toFixed(1),
         });
       }
     });

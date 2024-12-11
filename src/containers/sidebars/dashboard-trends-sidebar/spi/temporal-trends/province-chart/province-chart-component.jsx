@@ -21,6 +21,7 @@ import { Loading } from 'he-components';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import { LightModeContext } from '../../../../../../context/light-mode';
+import { SPI_LATEST_YEAR } from '../../../../../../utils/dashboard-utils';
 
 import styles from './province-chart-styles.module.scss';
 
@@ -31,20 +32,14 @@ function ProvinceChartComponent(props) {
   const chartRef = useRef(null);
   const { lightMode } = useContext(LightModeContext);
   const {
-    spiData,
     setSelectedProvince,
-    countryRegions,
     selectedProvince,
     clickedRegion,
-    sortedBySpi,
-    sortedByArea,
-    sortedBySpecies,
     provinces,
     provinceName,
     setProvinceName,
     handleRegionSelected,
     layerView,
-    allSorted,
   } = props;
 
   const blankData = {
@@ -67,39 +62,28 @@ function ProvinceChartComponent(props) {
   };
 
   const [bubbleData, setBubbleData] = useState();
-  const [currentYear, setCurrentYear] = useState();
+  const [currentYear, setCurrentYear] = useState(SPI_LATEST_YEAR);
   const [spiArcData, setSpiArcData] = useState(blankData);
   const [countrySPI, setCountrySPI] = useState();
-  const [countryProtected, setCountryProtected] = useState();
   const [spiRank, setSpiRank] = useState(0);
   const [areaRank, setAreaRank] = useState(0);
   const [speciesRank, setSpeciesRank] = useState(0);
-  const [selectedRegionScores, setSelectedRegionScores] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [foundIndex, setFoundIndex] = useState(0);
   const [previousIndex, setPreviousIndex] = useState(-1);
+  const [percentAreaProtected, setPercentAreaProtected] = useState(0);
 
   const getChartData = () => {
-    const { regions } = spiData.trendData[0];
-
     const data = [];
-    let lastYear = 2001;
-    regions.forEach((region) => {
-      const { regional_scores, region_name } = region;
-      const { region_area, spi_all, year } =
-        regional_scores[regional_scores.length - 1];
+    provinces.forEach((region) => {
+      const { AreaProtected, SPI, region_name } = region;
       data.push({
-        label: region_name,
-        data: [{ label: region_name, x: region_area, y: spi_all, r: 10 }],
+        ...region,
+        data: [{ label: region_name, x: AreaProtected, y: SPI, r: 10 }],
         backgroundColor: getCSSVariable('birds'),
       });
-
-      if (year > lastYear) {
-        lastYear = year;
-      }
     });
 
-    setCurrentYear(lastYear);
     setBubbleData({ datasets: data });
   };
 
@@ -118,56 +102,48 @@ function ProvinceChartComponent(props) {
   };
 
   const getProvinceScores = (province) => {
-    setProvinceName(province.value);
-    setSpiRank(
-      sortedBySpi.findIndex((prov) => prov.region_name === province.value) + 1
-    );
-    setAreaRank(
-      sortedByArea.findIndex((prov) => prov.region_name === province.value) + 1
-    );
-    setSpeciesRank(
-      sortedBySpecies.findIndex((prov) => prov.region_name === province.value) +
-        1
-    );
+    const {
+      SPI,
+      AreaProtected,
+      Area,
+      region_name,
+      SPIRanking,
+      SizeRanking,
+      SpeciesRichnessRanking,
+    } = province;
+
+    setSelectedProvince(province);
+    setProvinceName(region_name);
+    setSpiRank(SPIRanking);
+    setAreaRank(SizeRanking);
+    setSpeciesRank(SpeciesRichnessRanking);
+    setPercentAreaProtected((AreaProtected / Area) * 100);
+    setCountrySPI(SPI);
+    setCurrentYear(SPI_LATEST_YEAR);
     setFoundIndex(
-      provinces.findIndex((region) => region.value === province.value)
+      provinces.findIndex((region) => region.region_name === region_name)
     );
 
-    const foundRegion = countryRegions.filter(
-      (region) => region.region_name === province.value
-    );
-    if (foundRegion.length) {
-      const scores =
-        foundRegion[0].regional_scores[
-          foundRegion[0].regional_scores.length - 1
-        ];
-      setSelectedProvince(foundRegion[0]);
-      setSelectedRegionScores(scores);
-      setCountryProtected(scores.percentprotected_all);
-      setCountrySPI(scores.spi_all);
-      setCurrentYear(scores.year);
+    const spi = {
+      labels: [t('Global SPI'), t('Remaining')],
+      datasets: [
+        {
+          label: '',
+          data: [SPI, 100 - SPI],
+          backgroundColor: [
+            getCSSVariable('temporal-spi'),
+            getCSSVariable('white-opacity-20'),
+          ],
+          borderColor: [
+            getCSSVariable('temporal-spi'),
+            getCSSVariable('white-opacity-20'),
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
 
-      const spi = {
-        labels: [t('Global SPI'), t('Remaining')],
-        datasets: [
-          {
-            label: '',
-            data: [scores.spi_all, 100 - scores.spi_all],
-            backgroundColor: [
-              getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
-            ],
-            borderColor: [
-              getCSSVariable('temporal-spi'),
-              getCSSVariable('white-opacity-20'),
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      setSpiArcData(spi);
-    }
+    setSpiArcData(spi);
   };
 
   const handleProvinceSelected = async (province) => {
@@ -180,28 +156,29 @@ function ProvinceChartComponent(props) {
 
     const foundRegion = results?.features.filter(
       (feat) =>
-        (feat.attributes.NAME_1 ?? feat.attributes.region_name) ===
-        province.value
+        (feat.attributes.NAME_1 ?? feat.attributes.region_nam) ===
+        province.region_name
     );
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
 
     const foundIdx = bubbleData?.datasets.findIndex(
-      (item) => item.label === province.value
+      (item) => item.region_name === province.region_name
     );
     highlightProvinceBubble(foundIdx);
   };
 
   const selectClickedRegion = (elements, chart) => {
     const { datasetIndex } = elements[0];
-    const dataIndex = elements[0].index;
 
-    const value = bubbleData.datasets[datasetIndex].data[dataIndex];
+    const value = bubbleData.datasets[datasetIndex];
 
     highlightProvinceBubble(datasetIndex, chart);
 
-    handleProvinceSelected({ value: value.label });
-    setFoundIndex(provinces.findIndex((prov) => prov.value === value.label));
+    handleProvinceSelected(value);
+    setFoundIndex(
+      provinces.findIndex((prov) => prov.region_name === value.region_name)
+    );
   };
 
   const options = {
@@ -253,75 +230,53 @@ function ProvinceChartComponent(props) {
   };
 
   useEffect(() => {
-    if (!spiData.trendData.length) return;
+    if (!provinces) return;
     setIsLoading(false);
-
-    const { country_scores } = spiData.trendData[0];
-    const { spi_all, percentprotected_all } =
-      country_scores[country_scores.length - 1];
-
-    setCountrySPI(spi_all);
-    setCountryProtected(percentprotected_all);
     getChartData();
-
-    const spi = {
-      labels: [t('Global SPI'), t('Remaining')],
-      datasets: [
-        {
-          label: '',
-          data: [spi_all, 100 - spi_all],
-          backgroundColor: [
-            getCSSVariable('temporal-spi'),
-            getCSSVariable('white-opacity-20'),
-          ],
-          borderColor: [
-            getCSSVariable('temporal-spi'),
-            getCSSVariable('white-opacity-20'),
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-
-    setSpiArcData(spi);
-  }, [spiData.trendData]);
+  }, [provinces]);
 
   useEffect(() => {
-    if (allSorted && provinces.length && bubbleData && !selectedProvince) {
+    if (provinces.length && bubbleData && !selectedProvince) {
       if (provinceName) {
-        handleProvinceSelected({ value: provinceName });
+        const region = provinces.find(
+          (item) => item.region_name === provinceName
+        );
+        handleProvinceSelected(region);
       } else {
-        handleProvinceSelected({ value: provinces[0].value });
+        handleProvinceSelected(provinces[0]);
       }
     }
-  }, [allSorted, provinces, bubbleData]);
+  }, [provinces, bubbleData]);
 
   useEffect(() => {
-    if (sortedBySpecies?.length && selectedProvince) {
-      handleProvinceSelected({ value: selectedProvince.region_name });
+    if (selectedProvince) {
+      handleProvinceSelected(selectedProvince);
       setFoundIndex(
         provinces.findIndex(
-          (prov) => prov.value === selectedProvince.region_name
+          (prov) => prov.region_name === selectedProvince.region_name
         )
       );
     }
-  }, [sortedBySpecies]);
+  }, [selectedProvince]);
 
   useEffect(() => {
-    if (clickedRegion && countryRegions.length && allSorted) {
-      getProvinceScores({
-        value: clickedRegion.NAME_1 ?? clickedRegion.region_name,
-      });
+    if (clickedRegion) {
+      const region = provinces.find(
+        (item) =>
+          item.region_name === clickedRegion.NAME_1 ?? clickedRegion.region_name
+      );
+      getProvinceScores(region);
 
       const foundIdx = bubbleData?.datasets.findIndex(
         (item) =>
-          item.label === (clickedRegion.NAME_1 ?? clickedRegion.region_name)
+          item.region_name ===
+          (clickedRegion.NAME_1 ?? clickedRegion.region_name)
       );
       if (foundIdx) {
         highlightProvinceBubble(foundIdx);
       }
     }
-  }, [clickedRegion, countryRegions, allSorted]);
+  }, [clickedRegion]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -334,39 +289,37 @@ function ProvinceChartComponent(props) {
               classNamePrefix="select"
               name="provinces"
               value={provinces[foundIndex]}
-              getOptionLabel={(x) => x.label}
-              getOptionValue={(x) => x.value}
+              getOptionLabel={(x) => x.region_name}
+              getOptionValue={(x) => x.region_name}
               options={provinces}
               onChange={handleProvinceSelected}
               placeholder={t('Select Region')}
             />
-            {selectedRegionScores && (
-              <>
-                <span>
-                  <b>#{spiRank}</b> {t('in SPI')}
-                </span>
-                <span>
-                  <b>#{speciesRank}</b> {t('in vertebrate species richness')}
-                </span>
-                <span>
-                  <b>#{areaRank}</b> {t('in size')}
-                </span>
-              </>
-            )}
+            <span>
+              <b>#{spiRank}</b> {t('in SPI')}
+            </span>
+            <span>
+              <b>#{speciesRank}</b> {t('in vertebrate species richness')}
+            </span>
+            <span>
+              <b>#{areaRank}</b> {t('in size')}
+            </span>
           </div>
           <div className={styles.arcGrid}>
             <div className={styles.values}>
               <b>{currentYear}</b>
               <span>{t('Year')}</span>
             </div>
-            <SpiArcChartComponent
-              width="125x"
-              height="75px"
-              data={spiArcData}
-              value={countrySPI}
-            />
+            {countrySPI && (
+              <SpiArcChartComponent
+                width="125x"
+                height="75px"
+                data={spiArcData}
+                value={percentAreaProtected}
+              />
+            )}
             <div className={styles.values}>
-              <b>{countryProtected?.toFixed(2)}</b>
+              <b>{countrySPI?.toFixed(1)}</b>
               <span>{t('SPI')}</span>
             </div>
             <span />

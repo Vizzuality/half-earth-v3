@@ -1,34 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import styles from './trend-table-styles.module.scss';
-import tableStyles from 'components/protected-areas-table/protected-areas-table-styles.module.scss';
+import React from 'react';
+
 import { useT } from '@transifex/react';
+
+import tableStyles from 'components/protected-areas-table/protected-areas-table-styles.module.scss';
+
 import ArrowDown from 'icons/arrow_down.svg?react';
 import ArrowUp from 'icons/arrow_up.svg?react';
 
+import styles from './trend-table-styles.module.scss';
 
 function TrendTableComponent(props) {
   const t = useT();
-  const { spiData } = props;
-  const [sortedData, setSortedData] = useState()
+  const { provinces } = props;
 
-  useEffect(() => {
-    if (!spiData.trendData) return;
-
-    const prov = spiData.trendData[0].regions;
-    const sortProvinces = prov.sort((a, b) => {
-      const nameA = a.region_name.toUpperCase();
-      const nameB = b.region_name.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    });
-
-    setSortedData(sortProvinces);
-  }, [spiData.trendData])
+  const handleSortChange = () => {};
 
   return (
     <div className={styles.container}>
@@ -64,7 +49,10 @@ function TrendTableComponent(props) {
                     />
                     <ArrowDown
                       onClick={() =>
-                        handleSortChange({ value: 'GOV_TYPE', ascending: false })
+                        handleSortChange({
+                          value: 'GOV_TYPE',
+                          ascending: false,
+                        })
                       }
                     />
                   </div>
@@ -72,7 +60,9 @@ function TrendTableComponent(props) {
               </th>
               <th>
                 <div className={tableStyles.headerColumnContainer}>
-                  <span>{t('Area')}(km<sup>2</sup>)</span>
+                  <span>
+                    {t('Area')}(km<sup>2</sup>)
+                  </span>
                   <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
@@ -93,12 +83,18 @@ function TrendTableComponent(props) {
                   <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
-                        handleSortChange({ value: 'DESIG_TYPE', ascending: true })
+                        handleSortChange({
+                          value: 'DESIG_TYPE',
+                          ascending: true,
+                        })
                       }
                     />
                     <ArrowDown
                       onClick={() =>
-                        handleSortChange({ value: 'DESIG_TYPE', ascending: false })
+                        handleSortChange({
+                          value: 'DESIG_TYPE',
+                          ascending: false,
+                        })
                       }
                     />
                   </div>
@@ -124,22 +120,28 @@ function TrendTableComponent(props) {
             </tr>
           </thead>
           <tbody>
-            {sortedData &&
-              sortedData.map((row, index) => (
+            {provinces &&
+              provinces.map((row, index) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <tr key={`wdpa-row-${row.NAME}-${index}`}>
                   <td className={tableStyles.firstColumn}>{row.region_name}</td>
-                  <td>{row.regional_scores[row.regional_scores.length - 1].spi_all.toFixed(2)}</td>
-                  <td>{row.regional_scores[row.regional_scores.length - 1].region_area?.toFixed(2) ?? 0}km<sup>2</sup></td>
-                  <td>{row.regional_scores[row.regional_scores.length - 1].reserve_area?.toFixed(2) ?? 0}km<sup>2</sup></td>
-                  <td>{row.regional_scores[row.regional_scores.length - 1].nspecies}</td>
+                  <td>{row.SPI.toFixed(1)}</td>
+                  <td>
+                    {row.Area.toFixed(1) ?? 0}
+                    km<sup>2</sup>
+                  </td>
+                  <td>
+                    {row.AreaProtected?.toFixed(1) ?? 0}
+                    km<sup>2</sup>
+                  </td>
+                  <td>{row.VertebrateRichness}</td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
     </div>
-  )
+  );
 }
 
 export default TrendTableComponent;

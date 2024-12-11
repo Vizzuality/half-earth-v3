@@ -1,3 +1,6 @@
+export const SPI_LATEST_YEAR = 2024;
+export const SHI_LATEST_YEAR = 2021;
+
 export const SPECIES_SELECTED_COOKIE = 'species_selected';
 
 export const NAVIGATION = {
@@ -72,5 +75,17 @@ export const REGION_OPTIONS = {
   PROTECTED_AREAS: 'PROTECTED_AREAS',
 };
 
+export const DASHBOARD_REGION_SPECIES_SPI_SCORES_URL =
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_spi_scores_year_2024/FeatureServer';
+
 export const DASHBOARD_TABLE_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1/FeatureServer';
+
+export const DASHBOARD_PROVINCE_TREND_URL =
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table2_v2_1/FeatureServer';
+
+export const DASHBOARD_COUNTRY_URL =
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_0/FeatureServer';
+
+export const DASHBOARD_BIN_SCORES_URL =
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_spi_values_bin_count_by_taxa/FeatureServer';

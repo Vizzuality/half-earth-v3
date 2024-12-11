@@ -30,6 +30,48 @@ function DashboardLoginComponent(props) {
   const [pageTitle, setPageTitle] = useState('EPA National Biodiversity');
 
   useEffect(() => {
+    const link = document.querySelector('link[rel="icon"]');
+
+    if (link) {
+      link.href = favicon;
+    } else {
+      const newLink = document.createElement('link');
+      newLink.rel = 'icon';
+      newLink.href = favicon;
+      document.head.appendChild(newLink);
+    }
+  }, [favicon]);
+
+  useEffect(() => {
+    const title = document.querySelector('head title');
+
+    if (title) {
+      title.text = pageTitle;
+    } else {
+      const newTitle = document.createElement('title');
+      newTitle.text = pageTitle;
+      document.head.appendChild(newTitle);
+    }
+
+    setLoggedIn(true);
+  }, [pageTitle]);
+
+  const handleLogin = () => {
+    IdentityManager.getCredential(info.portalUrl);
+  };
+
+  const handleLoginSuccess = () => {
+    const portal = new Portal();
+    portal.authMode = 'immediate';
+    portal.load().then(() => {
+      console.log(portal);
+      console.log('User Info: ', portal.user);
+      setLoggedIn(true);
+      setUser(portal.user);
+    });
+  };
+
+  useEffect(() => {
     switch (countryISO.toUpperCase()) {
       case 'COD':
         setFavicon('/favicon-drc.ico');
@@ -57,50 +99,10 @@ function DashboardLoginComponent(props) {
 
     IdentityManager.registerOAuthInfos([info]);
 
-    IdentityManager.checkSignInStatus(info.portalUrl)
-      .then(handleLoginSuccess)
-      .catch(() => console.log('not logged in'));
+    // IdentityManager.checkSignInStatus(info.portalUrl)
+    //   .then(handleLoginSuccess)
+    //   .catch(() => console.log('not logged in'));
   }, []);
-
-  useEffect(() => {
-    const link = document.querySelector('link[rel="icon"]');
-
-    if (link) {
-      link.href = favicon;
-    } else {
-      const newLink = document.createElement('link');
-      newLink.rel = 'icon';
-      newLink.href = favicon;
-      document.head.appendChild(newLink);
-    }
-  }, [favicon]);
-
-  useEffect(() => {
-    const title = document.querySelector('head title');
-
-    if (title) {
-      title.text = pageTitle;
-    } else {
-      const newTitle = document.createElement('title');
-      newTitle.text = pageTitle;
-      document.head.appendChild(newTitle);
-    }
-  }, [pageTitle]);
-
-  const handleLogin = () => {
-    IdentityManager.getCredential(info.portalUrl);
-  };
-
-  const handleLoginSuccess = () => {
-    const portal = new Portal();
-    portal.authMode = 'immediate';
-    portal.load().then(() => {
-      console.log(portal);
-      console.log('User Info: ', portal.user);
-      setLoggedIn(true);
-      setUser(portal.user);
-    });
-  };
 
   return (
     <div className={styles.container}>

@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react'
-import styles from './distributions-table-styles.module.scss';
-import tableStyles from 'components/protected-areas-table/protected-areas-table-styles.module.scss';
+import React, { useEffect } from 'react';
+
 import { useT, useLocale } from '@transifex/react';
+
+import tableStyles from 'components/protected-areas-table/protected-areas-table-styles.module.scss';
+
 import ArrowDown from 'icons/arrow_down.svg?react';
 import ArrowUp from 'icons/arrow_up.svg?react';
+
+import styles from './distributions-table-styles.module.scss';
 
 function DistributionsTableComponent(props) {
   const { chartData } = props;
@@ -44,7 +48,10 @@ function DistributionsTableComponent(props) {
                     />
                     <ArrowDown
                       onClick={() =>
-                        handleSortChange({ value: 'GOV_TYPE', ascending: false })
+                        handleSortChange({
+                          value: 'GOV_TYPE',
+                          ascending: false,
+                        })
                       }
                     />
                   </div>
@@ -73,12 +80,18 @@ function DistributionsTableComponent(props) {
                   <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
-                        handleSortChange({ value: 'DESIG_TYPE', ascending: true })
+                        handleSortChange({
+                          value: 'DESIG_TYPE',
+                          ascending: true,
+                        })
                       }
                     />
                     <ArrowDown
                       onClick={() =>
-                        handleSortChange({ value: 'DESIG_TYPE', ascending: false })
+                        handleSortChange({
+                          value: 'DESIG_TYPE',
+                          ascending: false,
+                        })
                       }
                     />
                   </div>
@@ -107,12 +120,18 @@ function DistributionsTableComponent(props) {
                   <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
-                        handleSortChange({ value: 'STATUS_YR', ascending: true })
+                        handleSortChange({
+                          value: 'STATUS_YR',
+                          ascending: true,
+                        })
                       }
                     />
                     <ArrowDown
                       onClick={() =>
-                        handleSortChange({ value: 'STATUS_YR', ascending: false })
+                        handleSortChange({
+                          value: 'STATUS_YR',
+                          ascending: false,
+                        })
                       }
                     />
                   </div>
@@ -120,9 +139,7 @@ function DistributionsTableComponent(props) {
               </th>
               <th className={tableStyles.lastColumn}>
                 <div className={tableStyles.headerColumnContainer}>
-                  <span>
-                    {t('Habitat Score')}
-                  </span>
+                  <span>{t('Habitat Score')}</span>
                   <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
@@ -141,27 +158,38 @@ function DistributionsTableComponent(props) {
           </thead>
           <tbody>
             {chartData &&
-              chartData.map(row => (
+              chartData.map((row) =>
                 // eslint-disable-next-line react/no-array-index-key
                 row.taxa_scores.map((species, idx) => (
                   <tr key={`wdpa-row-${row.speciesgroup}-${idx}`}>
-                    <td className={tableStyles.firstColumn}>{row.speciesgroup}</td>
+                    <td className={tableStyles.firstColumn}>
+                      {row.speciesgroup}
+                    </td>
                     <td>{species.scientificname}</td>
-                    <td>{species.steward_score.toFixed(2)}</td>
-                    <td>{(species.area_score + species.connectivity_score / 2).toFixed(2)}<sup>2</sup></td>
-                    <td>{species.area_score.toFixed(2)}</td>
-                    <td>{species.connectivity_score.toFixed(2)}</td>
+                    <td>{species.steward_score.toFixed(1)}</td>
+                    <td>
+                      {(
+                        species.area_score +
+                        species.connectivity_score / 2
+                      ).toFixed(1)}
+                      <sup>2</sup>
+                    </td>
+                    <td>{species.area_score.toFixed(1)}</td>
+                    <td>{species.connectivity_score.toFixed(1)}</td>
                     <td className={tableStyles.lastColumn}>
-                      {((species.area_score + species.connectivity_score) / 2).toFixed(2)}
+                      {(
+                        (species.area_score + species.connectivity_score) /
+                        2
+                      ).toFixed(1)}
                     </td>
                   </tr>
                 ))
-              ))}
+              )}
           </tbody>
         </table>
       </div>
     </div>
-  )
+  );
 }
 
-export default DistributionsTableComponent
+export default DistributionsTableComponent;

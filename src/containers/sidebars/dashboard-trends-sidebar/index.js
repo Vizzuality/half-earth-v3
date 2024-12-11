@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
+import {
+  DASHBOARD_BIN_SCORES_URL,
+  DASHBOARD_COUNTRY_URL,
+  DASHBOARD_PROVINCE_TREND_URL,
+  DASHBOARD_REGION_SPECIES_SPI_SCORES_URL,
+  LAYER_OPTIONS,
+  PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
+  REGION_OPTIONS,
+  SHI_LATEST_YEAR,
+  SPI_LATEST_YEAR,
+} from 'utils/dashboard-utils.js';
+
 import last from 'lodash/last';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-
-import {
-  LAYER_OPTIONS,
-  PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
-  REGION_OPTIONS,
-} from '../../../utils/dashboard-utils.js';
 
 import Component, {
   PROVINCE_TREND,
@@ -27,26 +33,22 @@ function DashboardTrendsSidebarContainer(props) {
     setRegionLayers,
     geometry,
     setSelectedRegionOption,
+    selectedProvince,
   } = props;
 
   const [geo, setGeo] = useState(null);
-  const [countryData, setCountryData] = useState(null);
+  const [countryData, setCountryData] = useState([]);
+  const [provinces, setProvinces] = useState([]);
+  const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
+  const [scoresData, setScoresData] = useState([]);
+  const [selectSpeciesData, setSelectSpeciesData] = useState([]);
 
   const [shiValue, setShiValue] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
   const [siiValue, setSiiValue] = useState(0);
 
   const [shiData, setShiData] = useState({ trendData: [], scoresData: [] });
-  const [spiData, setSpiData] = useState({ trendData: [], scoresData: [] });
   const [siiData, setSiiData] = useState({ trendData: [], scoresData: [] });
-
-  const [provinces, setProvinces] = useState([]);
-  const [sortedBySpi, setSortedBySpi] = useState();
-  const [sortedByArea, setSortedByArea] = useState();
-  const [sortedBySpecies, setSortedBySpecies] = useState([]);
-  const [allSorted, setAllSorted] = useState(false);
-  const [countryRegions, setCountryRegions] = useState([]);
-  const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
 
   const removeRegionLayers = () => {
     const layers = regionLayers;
@@ -96,11 +98,9 @@ function DashboardTrendsSidebarContainer(props) {
 
     const taxa = 'all_terr_verts';
 
-    const shiTrendsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/shs/trend?iso=${countryISO}`;
-    const spiTrendsUrl = `https://next-api.mol.org/2.x/indicators/regional_spi_scores?iso3=${countryISO}`;
     const siiTrendsUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/completeness?region_id=${regionId}&indicator=richness&version=2020&weight=national`;
 
-    const trendApiCalls = [shiTrendsUrl, spiTrendsUrl, siiTrendsUrl];
+    const trendApiCalls = [siiTrendsUrl];
 
     const trendApiResponses = await Promise.all(
       trendApiCalls.map(async (url) => {
@@ -110,16 +110,16 @@ function DashboardTrendsSidebarContainer(props) {
       })
     );
 
-    const [shiTrendData, spiTrendData, siiTrendData] = trendApiResponses;
+    const [siiTrendData] = trendApiResponses;
 
-    const shiYear = last(shiTrendData).year;
-    const spiYear = last(spiTrendData[0].country_scores).year;
-    const siiYear = last(siiTrendData[0]?.groups[0]?.values)?.[0] || shiYear;
+    const shiYear = SHI_LATEST_YEAR;
+
+    const siiYear = SHI_LATEST_YEAR;
     const shiScoresUrl = `https://next-api.mol.org/2.x/indicators/shs/values_all_taxa?iso=${countryISO}&year=${shiYear}`;
-    const spiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${spiYear}&taxa=${taxa}`;
+
     const siiScoresUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/values?iso=${countryISO}&year=${siiYear}&taxa=${taxa}`;
 
-    const spendApiCalls = [shiScoresUrl, spiScoresUrl, siiScoresUrl];
+    const spendApiCalls = [shiScoresUrl, siiScoresUrl];
 
     const scoreApiResponses = await Promise.all(
       spendApiCalls.map(async (url) => {
@@ -129,116 +129,56 @@ function DashboardTrendsSidebarContainer(props) {
       })
     );
 
-    const [shiScoresData, spiScoresData, siiScoresData] = scoreApiResponses;
-
-    const shiTD = shiTrendData;
-    const lastValues = shiTD[shiTD.length - 1];
-    const shi = ((lastValues.avg_area + lastValues.avg_conn) / 2).toFixed(2);
-    setShiValue(shi);
-
-    const spiTD = spiTrendData;
-    const { regions } = spiTrendData[0];
-    setCountryRegions(regions);
-    const spiTrendsValues = spiTD[0].country_scores;
-    const spi = spiTrendsValues[spiTrendsValues.length - 1].spi_all.toFixed(2);
-    setSpiValue(spi);
+    const [shiScoresData, siiScoresData] = scoreApiResponses;
+    // setShiValue(shi);
 
     if (siiTrendData.length) {
       const siiTD = siiTrendData;
-      setSiiValue((siiTD[0].all_taxa_avg * 100).toFixed(2));
+      // setSiiValue((siiTD[0].all_taxa_avg * 100).toFixed(2));
     }
 
-    setShiData({ trendData: shiTrendData, scoresData: shiScoresData });
-    setSpiData({ trendData: spiTrendData, scoresData: spiScoresData });
+    setShiData({ trendData: {}, scoresData: shiScoresData });
     setSiiData({ trendData: siiTrendData, scoresData: siiScoresData });
   };
 
-  const sortProvincesBySPI = () => {
-    const sorted = [...countryRegions].sort((a, b) => {
-      const spiA = a.regional_scores[a.regional_scores.length - 1].spi_all;
-      const spiB = b.regional_scores[b.regional_scores.length - 1].spi_all;
-      if (spiA > spiB) {
-        return -1;
-      }
-      if (spiA < spiB) {
-        return 1;
-      }
-      return 0;
+  const getProvinceData = (provinceURL) => {
+    EsriFeatureService.getFeatures(provinceURL).then((features) => {
+      const regions = features.map((f) => f.attributes);
+      setProvinces(regions);
     });
-
-    return sorted;
   };
 
-  const sortProvincesByArea = () => {
-    const sorted = [...countryRegions].sort((a, b) => {
-      const spiA = a.regional_scores[a.regional_scores.length - 1].region_area;
-      const spiB = b.regional_scores[b.regional_scores.length - 1].region_area;
-      if (spiA > spiB) {
-        return -1;
-      }
-      if (spiA < spiB) {
-        return 1;
-      }
-      return 0;
-    });
+  const getCountryData = (countryURL) => {
+    EsriFeatureService.getFeatures(countryURL).then((features) => {
+      const countries = features.map((f) => f.attributes);
 
-    return sorted;
+      setSpiValue(last(countries).SPI.toFixed(1));
+
+      const tabValues = countries.find((item) => item.Year === SHI_LATEST_YEAR);
+      setShiValue(parseFloat(tabValues.SHI).toFixed(1));
+      setSiiValue(tabValues.SII.toFixed(1));
+      setCountryData(countries);
+    });
   };
 
-  const sortProvincesBySpecies = () => {
-    const sorted = [...countryRegions].sort((a, b) => {
-      const spiA = a.regional_scores[a.regional_scores.length - 1].nspecies;
-      const spiB = b.regional_scores[b.regional_scores.length - 1].nspecies;
-      if (spiA > spiB) {
-        return -1;
-      }
-      if (spiA < spiB) {
-        return 1;
-      }
-      return 0;
+  const getScoreData = (scoresDataURL) => {
+    EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
+      const data = features.map((f) => f.attributes);
+      setScoresData(data);
     });
-
-    return sorted;
   };
 
-  const getProvinces = () => {
-    const prov = countryRegions.map((region) => {
-      return { value: region.region_name, label: region.region_name };
+  const getSelectSpeciesData = (selectSpeciesURL) => {
+    EsriFeatureService.getFeatures(selectSpeciesURL).then((features) => {
+      const data = features.map((f) => f.attributes);
+      setSelectSpeciesData(data);
     });
-
-    const sortProvinces = prov.sort((a, b) => {
-      const nameA = a.label.toUpperCase();
-      const nameB = b.label.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    });
-
-    setProvinces(sortProvinces);
-
-    const spiSorted = sortProvincesBySPI();
-    setSortedBySpi(spiSorted);
-    const areaSorted = sortProvincesByArea();
-    setSortedByArea(areaSorted);
-    const speciesSorted = sortProvincesBySpecies();
-    setSortedBySpecies(speciesSorted);
-
-    setAllSorted(true);
   };
 
   useEffect(() => {
     removeRegionLayers();
     getData();
   }, []);
-
-  useEffect(() => {
-    if (!countryRegions?.length) return;
-    getProvinces();
-  }, [countryRegions]);
 
   // find and zoom to region
   useEffect(() => {
@@ -252,7 +192,7 @@ function DashboardTrendsSidebarContainer(props) {
 
       if (geometry && view) {
         setGeo(geometry);
-        setCountryData(attributes);
+        // setCountryData(attributes);
       }
     });
   }, [view, countryISO]);
@@ -285,83 +225,38 @@ function DashboardTrendsSidebarContainer(props) {
   }, [map, view]);
 
   useEffect(() => {
-    const esriTable1Url =
-      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_0/FeatureServer';
-    const esriTable2Url =
-      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table2_v2_0/FeatureServer';
-    const esriTable3Url =
-      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table3_v2_0/FeatureServer';
-    const esriTable4Url =
-      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table4_v2_0/FeatureServer';
-    const esriTable5Url =
-      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table5_v2_0/FeatureServer';
+    const provinceURL = {
+      url: DASHBOARD_PROVINCE_TREND_URL,
+      whereClause: `ISO3 = '${countryISO}' and YEAR = ${SPI_LATEST_YEAR}`,
+      orderByFields: ['region_name'],
+    };
 
-    const esriTable1 = {
-      url: esriTable1Url,
+    const countryURL = {
+      url: DASHBOARD_COUNTRY_URL,
       whereClause: `ISO3 = '${countryISO}'`,
-      orderByFields: ['iso3', 'year'],
+      orderByFields: ['year'],
     };
 
-    EsriFeatureService.getFeatures(esriTable1).then((features) => {
-      const tempData = features.map((f) => f.attributes);
-      const { attributes } = last(features);
-      console.log('Table 1 attributes: ', attributes);
-      console.log('Table 1 data: ', tempData);
-    });
+    getProvinceData(provinceURL);
 
-    const species = ['amphibians', 'mammals', 'birds', 'reptiles'];
-
-    species.forEach((s) => {
-      const esriTable3 = {
-        url: esriTable3Url,
-        whereClause: `ISO3 = '${countryISO}' and TAXA = '${s}'`,
-        orderByFields: ['ISO3', 'year'],
-      };
-
-      EsriFeatureService.getFeatures(esriTable3).then((features) => {
-        const tempData = features.map((f) => f.attributes);
-        const { attributes } = last(features);
-        console.log('Table 3 attributes: ', attributes);
-        console.log(`Table 3 for ${s}: `, tempData);
-      });
-    });
-
-    const esriTable4 = {
-      url: esriTable4Url,
-      whereClause: `ISO3 = '${countryISO}'`,
-      orderByFields: ['iso3', 'year'],
-    };
-    EsriFeatureService.getFeatures(esriTable4).then((features) => {
-      const tempData = features.map((f) => f.attributes);
-      const { attributes } = last(features);
-      console.log('Table 4 attributes: ', attributes);
-      console.log('Table 4 data: ', tempData);
-    });
-
-    const esriTable2 = {
-      url: esriTable2Url,
-      whereClause: `GID_1 = 'BRB.8_1' and YEAR = '2024'`,
-      orderByFields: ['GID_1', 'year'],
-    };
-    EsriFeatureService.getFeatures(esriTable2).then((features) => {
-      const tempData = features.map((f) => f.attributes);
-      const { attributes } = last(features);
-      console.log('Table 2 attributes: ', attributes);
-      console.log('Table 2 data: ', tempData);
-    });
-
-    const esriTable5 = {
-      url: esriTable5Url,
-      whereClause: `GID_1 = 'BRB.8_1'`,
-      orderByFields: ['GID_1', 'year'],
-    };
-    EsriFeatureService.getFeatures(esriTable5).then((features) => {
-      const tempData = features.map((f) => f.attributes);
-      const { attributes } = last(features);
-      console.log('Table 5 attributes: ', attributes);
-      console.log('Table 5 data: ', tempData);
-    });
+    getCountryData(countryURL);
   }, []);
+
+  useEffect(() => {
+    if (!selectedProvince) return;
+    const scoreDataURL = {
+      url: DASHBOARD_BIN_SCORES_URL,
+      whereClause: `ISO3 = '${countryISO}' and YEAR = ${SPI_LATEST_YEAR}`,
+    };
+
+    const selectSpeciesURL = {
+      url: DASHBOARD_REGION_SPECIES_SPI_SCORES_URL,
+      whereClause: `ISO3_regional = '${selectedProvince.iso3_regional}' and YEAR = ${SPI_LATEST_YEAR}`,
+    };
+
+    getScoreData(scoreDataURL);
+    getSelectSpeciesData(selectSpeciesURL);
+  }, [selectedProvince]);
 
   return (
     <Component
@@ -370,16 +265,12 @@ function DashboardTrendsSidebarContainer(props) {
       spiValue={spiValue}
       siiValue={siiValue}
       shiData={shiData}
-      spiData={spiData}
       siiData={siiData}
-      countryData={countryData}
-      geo={geo}
       provinces={provinces}
-      sortedByArea={sortedByArea}
-      sortedBySpecies={sortedBySpecies}
-      sortedBySpi={sortedBySpi}
-      countryRegions={countryRegions}
-      allSorted={allSorted}
+      countryData={countryData}
+      scoresData={scoresData}
+      selectSpeciesData={selectSpeciesData}
+      geo={geo}
       activeTrend={activeTrend}
       setActiveTrend={setActiveTrend}
       {...props}

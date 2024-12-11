@@ -132,44 +132,51 @@ function DashboardViewComponent(props) {
           highlight = layerView.highlight(hits.graphic);
         }
       }
-    } catch {}
+    } catch (error) {
+      throw Error(error);
+    }
   };
 
   const handlePointerMove = async (event) => {
     let hits;
 
-    if (
-      selectedIndex !== NAVIGATION.BIO_IND &&
-      selectedIndex !== NAVIGATION.DATA_LAYER
-    ) {
-      hits = await hitTest(event);
-      hoverHighlight?.remove();
-      view.closePopup();
+    try {
+      if (
+        selectedIndex !== NAVIGATION.BIO_IND &&
+        selectedIndex !== NAVIGATION.DATA_LAYER
+      ) {
+        hits = await hitTest(event);
+        hoverHighlight?.remove();
+        view.closePopup();
 
-      if (hits) {
-        let regionName;
-        if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
-          if (hits.attributes.ISO3 === countryISO) {
-            regionName = hits.attributes.NAME;
+        if (hits) {
+          let regionName;
+          if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
+            if (hits.attributes.ISO3 === countryISO) {
+              regionName = hits.attributes.NAME;
+            }
+          } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
+            if (hits.attributes.GID_0 === countryISO) {
+              regionName =
+                hits.attributes.NAME_1 ?? hits.attributes.region_name;
+            }
           }
-        } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
-          if (hits.attributes.GID_0 === countryISO) {
-            regionName = hits.attributes.NAME_1 ?? hits.attributes.region_name;
+
+          if (regionName) {
+            hoverHighlight = layerView.highlight(hits.graphic);
+            view.openPopup({
+              // Set the popup's title to the coordinates of the location
+              title: `${regionName}`,
+              location: view.toMap({ x: event.x, y: event.y }),
+            });
           }
         }
-
-        if (regionName) {
-          hoverHighlight = layerView.highlight(hits.graphic);
-          view.openPopup({
-            // Set the popup's title to the coordinates of the location
-            title: `${regionName}`,
-            location: view.toMap({ x: event.x, y: event.y }),
-          });
-        }
+      } else {
+        view.closePopup();
+        hoverHighlight?.remove();
       }
-    } else {
-      view.closePopup();
-      hoverHighlight?.remove();
+    } catch (error) {
+      throw Error(error);
     }
   };
 

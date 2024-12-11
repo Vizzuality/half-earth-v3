@@ -1,12 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import styles from './species-richness-styles.module.scss';
-import SpiArcChartComponent from '../charts/spi-arc-chart/spi-arc-chart-component';
-import Amphibians from 'images/amphibians.svg';
-import Birds from 'images/birds.svg';
-import Mammals from 'images/mammals.svg';
+
+import { useT } from '@transifex/react';
+
 import { getCSSVariable } from 'utils/css-utils';
-import Reptiles from 'images/reptiles.svg';
-import cx from 'classnames';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,9 +14,23 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import cx from 'classnames';
+import last from 'lodash/last';
+
+import Amphibians from 'images/amphibians.svg';
+import Birds from 'images/birds.svg';
+import Mammals from 'images/mammals.svg';
+import Reptiles from 'images/reptiles.svg';
+
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../containers/sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
+import compStyles from '../../containers/sidebars/dashboard-trends-sidebar/spi/score-distibutions/score-distributions-spi-styles.module.scss';
 import { LightModeContext } from '../../context/light-mode';
-import { useT } from '@transifex/react';
-import { PROVINCE_TREND } from '../../containers/sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
+import SpiArcChartComponent from '../charts/spi-arc-chart/spi-arc-chart-component';
+
+import styles from './species-richness-styles.module.scss';
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +44,7 @@ ChartJS.register(
 
 function SpeciesRichnessComponent(props) {
   const t = useT();
-  const { taxaData, selectedProvince, activeTrend } = props;
+  const { selectedProvince, activeTrend, provinces, countryData } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
@@ -59,53 +70,74 @@ function SpeciesRichnessComponent(props) {
     },
   });
 
+  const [titleText, setTitleText] = useState(
+    `NATIONAL ${t(' SPI BY TAXONOMIC GROUP')}`
+  );
+
   const getPercentage = (species) => {
     const { count } = scores[species];
     return [count, 100 - count];
   };
 
-  useEffect(() => {
-    if (!taxaData) return;
-    getScores();
-  }, [taxaData]);
-
   const getScores = () => {
     let data = [];
     if (selectedProvince && activeTrend === PROVINCE_TREND) {
-      const regionData = taxaData.filter(region => region.region_name === selectedProvince.region_name);
-      data = regionData[0]?.taxa_scores;
+      const regionData = provinces.find(
+        (region) => region.region_name === selectedProvince.region_name
+      );
+      data = regionData;
     } else {
-      data = taxaData;
+      data = last(countryData);
     }
 
     if (data) {
-      const amphibians = data.filter(taxa => taxa.speciesgroup === 'amphibians');
-      const birds = data.filter(taxa => taxa.speciesgroup === 'birds');
-      const mammals = data.filter(taxa => taxa.speciesgroup === 'mammals');
-      const reptiles = data.filter(taxa => taxa.speciesgroup === 'reptiles');
+      const {
+        BirdSpeciesRichness,
+        BirdSPI,
+        MammalSpeciesRichness,
+        MammalSPI,
+        ReptileSpeciesRichness,
+        ReptileSPI,
+        AmphibianSpeciesRichness,
+        AmphibianSPI,
+      } = data;
 
       setScores({
         birds: {
-          count: birds[0].mean_protection_score,
-          total: birds[0].nspecies,
+          count: BirdSPI,
+          total: BirdSpeciesRichness,
         },
         mammals: {
-          count: mammals[0].mean_protection_score,
-          total: mammals[0].nspecies,
+          count: MammalSPI,
+          total: MammalSpeciesRichness,
         },
         reptiles: {
-          count: reptiles[0].mean_protection_score,
-          total: reptiles[0].nspecies,
+          count: ReptileSPI,
+          total: ReptileSpeciesRichness,
         },
         amphibians: {
-          count: amphibians[0].mean_protection_score,
-          total: amphibians[0].nspecies,
+          count: AmphibianSPI,
+          total: AmphibianSpeciesRichness,
         },
       });
     }
   };
 
-  const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
+  useEffect(() => {
+    if (!selectedProvince) return;
+    getScores();
+    if (activeTrend === NATIONAL_TREND || !selectedProvince) {
+      setTitleText(`NATIONAL ${t(' SPI BY TAXONOMIC GROUP')}`);
+    } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
+      setTitleText(
+        `${selectedProvince?.region_name} ${t('SPI BY TAXONOMIC GROUP')}`
+      );
+    }
+  }, [selectedProvince, activeTrend]);
+
+  const emptyArcColor = lightMode
+    ? getCSSVariable('dark-opacity')
+    : getCSSVariable('white-opacity-20');
 
   const birdData = {
     labels: [t('Birds'), t('Remaining')],
@@ -113,14 +145,8 @@ function SpeciesRichnessComponent(props) {
       {
         label: '',
         data: getPercentage('birds'),
-        backgroundColor: [
-          getCSSVariable('birds'),
-          emptyArcColor,
-        ],
-        borderColor: [
-          getCSSVariable('birds'),
-          emptyArcColor,
-        ],
+        backgroundColor: [getCSSVariable('birds'), emptyArcColor],
+        borderColor: [getCSSVariable('birds'), emptyArcColor],
         borderWidth: 1,
       },
     ],
@@ -132,14 +158,8 @@ function SpeciesRichnessComponent(props) {
       {
         label: '',
         data: getPercentage('mammals'),
-        backgroundColor: [
-          getCSSVariable('mammals'),
-          emptyArcColor,
-        ],
-        borderColor: [
-          getCSSVariable('mammals'),
-          emptyArcColor,
-        ],
+        backgroundColor: [getCSSVariable('mammals'), emptyArcColor],
+        borderColor: [getCSSVariable('mammals'), emptyArcColor],
         borderWidth: 1,
       },
     ],
@@ -151,14 +171,8 @@ function SpeciesRichnessComponent(props) {
       {
         label: '',
         data: getPercentage('reptiles'),
-        backgroundColor: [
-          getCSSVariable('reptiles'),
-          emptyArcColor,
-        ],
-        borderColor: [
-          getCSSVariable('reptiles'),
-          emptyArcColor,
-        ],
+        backgroundColor: [getCSSVariable('reptiles'), emptyArcColor],
+        borderColor: [getCSSVariable('reptiles'), emptyArcColor],
         borderWidth: 1,
       },
     ],
@@ -170,14 +184,8 @@ function SpeciesRichnessComponent(props) {
       {
         label: '',
         data: getPercentage('amphibians'),
-        backgroundColor: [
-          getCSSVariable('amphibians'),
-          emptyArcColor,
-        ],
-        borderColor: [
-          getCSSVariable('amphibians'),
-          emptyArcColor,
-        ],
+        backgroundColor: [getCSSVariable('amphibians'), emptyArcColor],
+        borderColor: [getCSSVariable('amphibians'), emptyArcColor],
         borderWidth: 1,
       },
     ],
@@ -185,6 +193,7 @@ function SpeciesRichnessComponent(props) {
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
+      <div className={compStyles.title}>{titleText}</div>
       <div className={styles.spis}>
         <SpiArcChartComponent
           value={scores.birds.count}
@@ -216,7 +225,7 @@ function SpeciesRichnessComponent(props) {
         />
       </div>
     </div>
-  )
+  );
 }
 
-export default SpeciesRichnessComponent
+export default SpeciesRichnessComponent;
