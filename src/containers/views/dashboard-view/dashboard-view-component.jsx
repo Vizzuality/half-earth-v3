@@ -59,7 +59,8 @@ function DashboardViewComponent(props) {
   const getLayerView = async () => {
     return view.whenLayerView(
       regionLayers[LAYER_OPTIONS.PROVINCES] ||
-        regionLayers[LAYER_OPTIONS.PROTECTED_AREAS]
+        regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
+        regionLayers[LAYER_OPTIONS.FORESTS]
     );
   };
 
@@ -160,6 +161,8 @@ function DashboardViewComponent(props) {
               regionName =
                 hits.attributes.NAME_1 ?? hits.attributes.region_name;
             }
+          } else if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
+            regionName = hits.attributes.NAME_1 ?? hits.attributes.region_name;
           }
 
           if (regionName) {
@@ -201,6 +204,9 @@ function DashboardViewComponent(props) {
 
   useEffect(() => {
     if (!layerView) return;
+    view.on('click').remove();
+    view.on('pointer-move').remove();
+
     view.on('click', (event) => handleRegionClicked(event));
     view.on('pointer-move', handlePointerMove);
   }, [layerView]);

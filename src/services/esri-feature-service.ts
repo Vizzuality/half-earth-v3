@@ -1,13 +1,10 @@
+import { LAYERS_URLS } from 'constants/layers-urls';
+import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
-  EXPERT_RANGE_MAP_URL,
-  LAYER_OPTIONS,
-  LAYER_TITLE_TYPES,
-  PROTECTED_AREA_FEATURE_URL,
-  PROTECTED_AREA_GIN_FEATURE_URL,
-  PROTECTED_AREA_GUY_FEATURE_URL,
-  PROTECTED_AREA_LIB_FEATURE_URL,
-  PROTECTED_AREA_SLE_FEATURE_URL,
-  TREND_MAP_URL,
+    EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
+    PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_GUY_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL,
+    PROTECTED_AREA_SLE_FEATURE_URL, TREND_MAP_URL
 } from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -16,15 +13,8 @@ import TileLayer from '@arcgis/core/layers/TileLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import {
-  addFeatures,
-  applyEdits,
-  IQueryFeaturesResponse,
-  queryFeatures,
+    addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
 } from '@esri/arcgis-rest-feature-layer';
-import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
-
-import { LAYERS_URLS } from 'constants/layers-urls';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 function getFeatures({
   url,
@@ -74,7 +64,7 @@ function getFeatureLayer(portalItemId, countryISO, id) {
       id: portalItemId,
     },
     outFields: ['*'],
-    definitionExpression: `GID_0 = '${countryISO}'`,
+    definitionExpression: countryISO ? `GID_0 = '${countryISO}'` : '',
     id: id ?? LAYER_OPTIONS.PROVINCES,
   });
 }

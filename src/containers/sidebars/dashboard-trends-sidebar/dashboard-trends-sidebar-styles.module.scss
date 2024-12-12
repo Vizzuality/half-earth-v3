@@ -134,6 +134,7 @@ $info-width: 300px;
           gap: 12px;
           margin: 6px 0;
           cursor: pointer;
+          width: 100%;
 
           img{
             width: 50px;
@@ -144,6 +145,8 @@ $info-width: 300px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            width: 100%;
+            text-align: left;
 
             .name{
               color: var(--font-color);

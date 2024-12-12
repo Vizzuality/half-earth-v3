@@ -8,6 +8,7 @@ import last from 'lodash/last';
 import Button from 'components/button';
 
 import { LightModeContext } from '../../../../../context/light-mode';
+import { SII_LATEST_YEAR } from '../../../../../utils/dashboard-utils';
 import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
@@ -15,42 +16,41 @@ import NationalChartContainer from './national-chart';
 
 function TemporalTrendsSiiComponent(props) {
   const t = useT();
-  const { countryName, siiData } = props;
-  const [nationalChartData, setNationalChartData] = useState({
-    area_values: [],
-    spi_values: [],
-  });
+  const { countryName, countryData } = props;
+  const [nationalChartData, setNationalChartData] = useState([]);
   const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 });
   const [firstValues, setFirstValues] = useState({ year: 0, spi: 0 });
   const [highestObservation, setHighestObservation] = useState(0);
   const [lowestObservation, setLowestObservation] = useState(0);
   const [currentYear, setCurrentYear] = useState(2023);
   const { lightMode } = useContext(LightModeContext);
-  const taxa = 'all_terr_verts';
 
   const getNationalData = async () => {
-    if (siiData.trendData.length) {
-      const data = siiData.trendData;
-      const { groups } = data[0];
-      const allVertValues = groups.filter((group) => group.taxa === taxa);
+    if (countryData.length) {
+      const allVertValues = countryData
+        .filter((r) => r.Year <= SII_LATEST_YEAR)
+        .map((c) => ({
+          year: c.Year,
+          globalRanking: c.SII_GlobalRanking,
+          sii: c.SII,
+        }));
 
-      setNationalChartData(allVertValues[0]);
+      setNationalChartData(allVertValues);
 
-      const { values } = allVertValues[0];
       setLatestValues({
-        year: last(values)[0],
-        spi: (last(values)[1] * 100).toFixed(1),
+        year: last(allVertValues).year,
+        spi: (last(allVertValues).sii * 100).toFixed(1),
       });
       setFirstValues({
-        year: values[0][0],
-        spi: (values[0][1] * 100).toFixed(1),
+        year: allVertValues[0].year,
+        spi: (allVertValues[0].sii * 100).toFixed(1),
       });
     }
   };
 
   useEffect(() => {
     getNationalData();
-  }, [siiData]);
+  }, [countryData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>

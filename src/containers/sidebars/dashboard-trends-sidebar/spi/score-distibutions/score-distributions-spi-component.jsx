@@ -27,8 +27,8 @@ function ScoreDistributionsSpiComponent(props) {
     selectedProvince,
     setSelectedIndex,
     setScientificName,
-    scoresData,
-    selectSpeciesData,
+    spiScoresData,
+    selectSpiSpeciesData,
   } = props;
   const { lightMode } = useContext(LightModeContext);
   const [chartData, setChartData] = useState();
@@ -37,8 +37,6 @@ function ScoreDistributionsSpiComponent(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
-  const lowAvg = 'Amphibians';
-  const highAvg = 'birds';
 
   const options = {
     plugins: {
@@ -111,13 +109,11 @@ function ScoreDistributionsSpiComponent(props) {
 
     let locationData = [];
     if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      locationData = scoresData.filter(
+      locationData = spiScoresData.filter(
         (loc) => loc.iso3_regional === selectedProvince.iso3_regional
       );
     } else {
-      locationData = scoresData.filter(
-        (loc) => loc.iso3_regional === selectedProvince.iso3
-      );
+      locationData = spiScoresData;
     }
 
     // Loop through each number and place it in the appropriate bucket
@@ -166,17 +162,14 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const loadSpecies = () => {
-    if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      const blah = [
-        selectSpeciesData[0],
-        selectSpeciesData[1],
-        selectSpeciesData[2],
-        selectSpeciesData[3],
-      ];
-      setSpsSpecies(blah);
-    } else {
-      // setSpsSpecies(selectSpeciesData.country_highlights);
-    }
+    const blah = [
+      selectSpiSpeciesData[0],
+      selectSpiSpeciesData[1],
+      selectSpiSpeciesData[2],
+      selectSpiSpeciesData[3],
+    ];
+    setSpsSpecies(blah);
+
     setIsSpeciesLoading(false);
   };
 
@@ -187,17 +180,17 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   useEffect(() => {
-    if (!scoresData.length) return;
+    if (!spiScoresData.length) return;
 
     setIsLoading(true);
     getChartData();
-  }, [scoresData, activeTrend]);
+  }, [spiScoresData, activeTrend]);
 
   useEffect(() => {
-    if (!selectSpeciesData.length) return;
+    if (!selectSpiSpeciesData.length) return;
     setIsSpeciesLoading(true);
     loadSpecies();
-  }, [selectSpeciesData]);
+  }, [selectSpiSpeciesData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
@@ -205,11 +198,12 @@ function ScoreDistributionsSpiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          <T
+          {/* <T
             _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates. {lowAvgBold} have the lowest average protection score while {highAvgBold} have the highest."
             lowAvgBold={<b>{lowAvg}</b>}
             highAvgBold={<b>{highAvg}</b>}
-          />
+          /> */}
+          <T _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates." />
         </p>
 
         <span className={styles.spsSpeciesTitle}>
@@ -235,11 +229,11 @@ function ScoreDistributionsSpiComponent(props) {
                           {s.species}
                         </span>
                       </div>
-                      {s.protection_score_all && (
-                        <span
-                          className={styles.spsScore}
-                        >{`SPS: ${s.protection_score_all?.toFixed(1)}`}</span>
-                      )}
+                      <span
+                        className={styles.spsScore}
+                      >{`SPS: ${s.species_protection_score_all?.toFixed(
+                        1
+                      )}`}</span>
                     </button>
                   </li>
                 );

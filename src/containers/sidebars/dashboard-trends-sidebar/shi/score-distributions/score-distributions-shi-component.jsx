@@ -23,7 +23,7 @@ import compStyles from './score-distributions-shi-styles.module.scss';
 
 function ScoreDistributionsShiComponent(props) {
   const t = useT();
-  const { shiData, setScientificName, setSelectedIndex, scoresData } = props;
+  const { setScientificName, setSelectedIndex, shiScoresData } = props;
   const SCORES = {
     HABITAT_SCORE: 'steward_score',
     AREA_SCORE: 'area_score',
@@ -112,15 +112,6 @@ function ScoreDistributionsShiComponent(props) {
     //   }
     // }
   };
-
-  useEffect(() => {
-    if (!shiData.scoresData.length) return;
-
-    setIsLoading(true);
-    getChartData();
-    // getTaxaData();
-    setIsLoading(false);
-  }, [shiData.scoresData]);
 
   const getChartData = async () => {
     const data = shiData.scoresData;
@@ -221,6 +212,15 @@ function ScoreDistributionsShiComponent(props) {
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
   };
+
+  useEffect(() => {
+    if (!shiScoresData.length) return;
+
+    setIsLoading(true);
+    getChartData();
+    // getTaxaData();
+    setIsLoading(false);
+  }, [shiScoresData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>

@@ -1,32 +1,33 @@
-import React, { useContext, useEffect, useState } from 'react';
-import cx from 'classnames';
-import Button from 'components/button';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import SearchLocation from 'components/search-location';
-import EsriFeatureService from 'services/esri-feature-service';
+import React, { useContext, useEffect } from 'react';
+
 import { DASHBOARD } from 'router';
-import GroupLayer from '@arcgis/core/layers/GroupLayer.js';
-import { SEARCH_TYPES } from 'constants/search-location-constants';
 
-import hrTheme from 'styles/themes/hr-theme.module.scss';
-
-import styles from './regions-analysis-styles.module.scss';
-import { LightModeContext } from '../../../../context/light-mode';
 import { useT } from '@transifex/react';
+
 import {
   LAYER_OPTIONS,
   NAVIGATION,
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
-  REGION_OPTIONS
+  REGION_OPTIONS,
 } from 'utils/dashboard-utils';
+
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import cx from 'classnames';
+
+import EsriFeatureService from 'services/esri-feature-service';
+
+import hrTheme from 'styles/themes/hr-theme.module.scss';
+
+import { LightModeContext } from '../../../../context/light-mode';
+import { DRC_REGION_FEATURE_ID } from '../../../../utils/dashboard-utils';
+
+import styles from './regions-analysis-styles.module.scss';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
   const {
-    view,
-    selectedOption,
     map,
     regionLayers,
     browsePage,
@@ -42,39 +43,30 @@ function RegionsAnalysisComponent(props) {
   } = props;
   const { lightMode } = useContext(LightModeContext);
 
-  useEffect(() => {
-    removeRegionLayers();
-    if (selectedRegionOption && selectedRegion) {
-      setSelectedIndex(NAVIGATION.EXPLORE_SPECIES)
-    } else {
-      setSelectedRegionOption(null);
-    }
-  }, []);
-
-
-  const optionSelected = (event) => {
-    setSelectedRegion(null);
-    removeRegionLayers();
-
-    const option = event.currentTarget.value;
-    displayLayer(option);
-    setSelectedRegionOption(option);
-  }
-
   const displayLayer = (option) => {
     let featureLayer;
     if (option === REGION_OPTIONS.PROTECTED_AREAS) {
       featureLayer = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
 
-      setRegionLayers((regionLayers) => ({
-        [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.PROVINCES) {
-      featureLayer = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, countryISO);
+      featureLayer = EsriFeatureService.getFeatureLayer(
+        PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+        countryISO
+      );
 
-      setRegionLayers((regionLayers) => ({
+      setRegionLayers(() => ({
         [LAYER_OPTIONS.PROVINCES]: featureLayer,
+      }));
+      map.add(featureLayer);
+    } else if (option === REGION_OPTIONS.FORESTS) {
+      featureLayer = EsriFeatureService.getFeatureLayer(DRC_REGION_FEATURE_ID);
+
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.FORESTS]: featureLayer,
       }));
       map.add(featureLayer);
     }
@@ -83,28 +75,52 @@ function RegionsAnalysisComponent(props) {
       type: DASHBOARD,
       payload: { iso: countryISO.toLowerCase() },
       query: {
-        scientificName: scientificName,
-        selectedIndex: selectedIndex,
+        scientificName,
+        selectedIndex,
         regionLayers,
-        selectedRegionOption: option
+        selectedRegionOption: option,
       },
     });
-  }
+  };
 
   const removeRegionLayers = () => {
-    const protectedAreaLayer = map.layers.items.find(layer => layer.id === LAYER_OPTIONS.PROTECTED_AREAS);
-    const provinceLayer = map.layers.items.find(layer => layer.id === LAYER_OPTIONS.PROVINCES);
+    const protectedAreaLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.PROTECTED_AREAS
+    );
+    const provinceLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.PROVINCES
+    );
 
     map.remove(protectedAreaLayer);
     map.remove(provinceLayer);
-  }
+  };
+
+  const optionSelected = (event) => {
+    setSelectedRegion(null);
+    removeRegionLayers();
+
+    const option = event.currentTarget.value;
+    displayLayer(option);
+    setSelectedRegionOption(option);
+  };
+
+  useEffect(() => {
+    removeRegionLayers();
+    if (selectedRegionOption && selectedRegion) {
+      setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+    } else {
+      setSelectedRegionOption(null);
+    }
+  }, []);
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <span className={styles.sectionTitle}>{t('Regions Analysis')}</span>
       <hr className={hrTheme.dark} />
       <p>
-        {t('Select a region type below to display on the map and explore species lists for each region.')}
+        {t(
+          'Select a region type below to display on the map and explore species lists for each region.'
+        )}
       </p>
       <div className={styles.choices}>
         <RadioGroup
@@ -113,9 +129,24 @@ function RegionsAnalysisComponent(props) {
           onChange={optionSelected}
           value={selectedRegionOption}
         >
-          <FormControlLabel value={REGION_OPTIONS.PROTECTED_AREAS} control={<Radio />} label={t('Protected Areas')} />
+          <FormControlLabel
+            value={REGION_OPTIONS.PROTECTED_AREAS}
+            control={<Radio />}
+            label={t('Protected Areas')}
+          />
           {/* <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} /> */}
-          <FormControlLabel value={REGION_OPTIONS.PROVINCES} control={<Radio />} label={t('Provinces')} />
+          <FormControlLabel
+            value={REGION_OPTIONS.PROVINCES}
+            control={<Radio />}
+            label={t('Provinces')}
+          />
+          {countryISO === 'COD' && (
+            <FormControlLabel
+              value={REGION_OPTIONS.FORESTS}
+              control={<Radio />}
+              label={t('Forest Tiles')}
+            />
+          )}
           {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}
           {/* <FormControlLabel value="communityForests" control={<Radio />} label={t('Community Forests')} /> */}
         </RadioGroup>

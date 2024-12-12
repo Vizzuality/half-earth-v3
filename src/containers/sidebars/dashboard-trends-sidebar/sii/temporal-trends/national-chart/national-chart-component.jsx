@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import cx from 'classnames';
+
+import { useT } from '@transifex/react';
+
 import { getCSSVariable } from 'utils/css-utils';
-import last from 'lodash/last';
+
 import {
   Chart as ChartJS,
   LinearScale,
@@ -11,12 +13,15 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import cx from 'classnames';
 import { Loading } from 'he-components';
+import last from 'lodash/last';
+
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
-import styles from './national-chart-styles.module.scss';
 import { LightModeContext } from '../../../../../../context/light-mode';
-import { useT } from '@transifex/react';
+
+import styles from './national-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
@@ -24,11 +29,14 @@ function NationalChartComponent(props) {
   const t = useT();
   const { nationalChartData } = props;
   const [data, setData] = useState();
-  const [spiValue, setSpiValue] = useState(0);
+  const [siiValue, setSiiValue] = useState(0);
   const { lightMode } = useContext(LightModeContext);
-  const emptyArcColor = lightMode ? getCSSVariable('dark-opacity') : getCSSVariable('white-opacity-20');
+  const emptyArcColor = lightMode
+    ? getCSSVariable('dark-opacity')
+    : getCSSVariable('white-opacity-20');
   const [isLoading, setIsLoading] = useState(true);
   const [lastYear, setLastYear] = useState();
+  const [globalRanking, setGlobalRanking] = useState(0);
 
   const blankData = {
     labels: [t('Global SPI'), t('Remaining')],
@@ -36,20 +44,14 @@ function NationalChartComponent(props) {
       {
         label: '',
         data: [0, 0],
-        backgroundColor: [
-          getCSSVariable('temporal-spi'),
-          emptyArcColor,
-        ],
-        borderColor: [
-          getCSSVariable('temporal-spi'),
-          emptyArcColor,
-        ],
+        backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
+        borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
         borderWidth: 1,
       },
     ],
   };
 
-  const [spiData, setSpiData] = useState(blankData);
+  const [siiData, setSiiData] = useState(blankData);
 
   const options = {
     plugins: {
@@ -77,7 +79,7 @@ function NationalChartComponent(props) {
         },
       },
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
         display: true,
         title: {
           display: true,
@@ -95,44 +97,38 @@ function NationalChartComponent(props) {
   };
 
   useEffect(() => {
-    if (nationalChartData && nationalChartData.values?.length) {
-      const values = nationalChartData.values;
-
+    if (nationalChartData.length) {
       setData({
-        labels: values.map((item) => item[0]),
+        labels: nationalChartData.map((item) => item.year),
         datasets: [
           {
             label: t('SII'),
-            data: values.map((item) => (item[1] * 100)),
+            data: nationalChartData.map((item) => item.sii * 100),
             borderColor: getCSSVariable('birds'),
           },
         ],
       });
 
-      setLastYear(last(values)[0]);
+      const lastValue = last(nationalChartData);
 
-      const spiVal = nationalChartData.metrics[0] * 100;
-      const spi = {
+      const siiVal = lastValue.sii * 100;
+      const sii = {
         labels: [t('Global SPI'), t('Remaining')],
         datasets: [
           {
             label: '',
-            data: [spiVal, 100 - spiVal],
-            backgroundColor: [
-              getCSSVariable('temporal-spi'),
-              emptyArcColor,
-            ],
-            borderColor: [
-              getCSSVariable('temporal-spi'),
-              emptyArcColor,
-            ],
+            data: [siiVal, 100 - siiVal],
+            backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
+            borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
             borderWidth: 1,
           },
         ],
       };
 
-      setSpiValue(spiVal);
-      setSpiData(spi);
+      setLastYear(lastValue.year);
+      setGlobalRanking(lastValue.globalRanking);
+      setSiiValue(siiVal);
+      setSiiData(sii);
       setIsLoading(false);
     }
   }, [nationalChartData]);
@@ -140,34 +136,35 @@ function NationalChartComponent(props) {
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {isLoading && <Loading height={200} />}
-      {!isLoading && <>
-        <div className={styles.info}>
-          <div className={styles.arcGrid}>
-            <div className={styles.values}>
-              <b>{lastYear}</b>
-              <span>{t('Year')}</span>
+      {!isLoading && (
+        <>
+          <div className={styles.info}>
+            <div className={styles.arcGrid}>
+              <div className={styles.values}>
+                <b>{lastYear}</b>
+                <span>{t('Year')}</span>
+              </div>
+              <SpiArcChartComponent
+                width="125x"
+                height="75px"
+                data={siiData}
+                value={siiValue}
+              />
+              <div className={styles.values}>
+                <b>{globalRanking}</b>
+                <span>{t('Global Ranking')}</span>
+              </div>
+              <span />
+              <span>SII</span>
             </div>
-            <SpiArcChartComponent
-              width="125x"
-              height="75px"
-              data={spiData}
-              value={spiValue}
-            />
-            <div className={styles.values}>
-              <b>{nationalChartData.metrics?.[1]}</b>
-              <span>{t('Global Ranking')}</span>
+          </div>
+          {data && (
+            <div className={styles.chart}>
+              <Line options={options} data={data} />
             </div>
-            <span></span>
-            <span>SII</span>
-
-          </div>
-        </div>
-        {data && (
-          <div className={styles.chart}>
-            <Line options={options} data={data} />
-          </div>
-        )}
-      </>}
+          )}
+        </>
+      )}
     </div>
   );
 }
