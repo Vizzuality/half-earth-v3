@@ -17,10 +17,14 @@ import {
 import cx from 'classnames';
 import last from 'lodash/last';
 
-import Amphibians from 'images/amphibians.svg';
-import Birds from 'images/birds.svg';
-import Mammals from 'images/mammals.svg';
-import Reptiles from 'images/reptiles.svg';
+import AmphibiansBlack from 'images/dashboard/amphibian_icon_black.png?react';
+import AmphibiansWhite from 'images/dashboard/amphibian_icon_white.png?react';
+import BirdsBlack from 'images/dashboard/bird_icon_black.png?react';
+import BirdsWhite from 'images/dashboard/bird_icon_white.png?react';
+import MammalsBlack from 'images/dashboard/mammal_icon_black.png?react';
+import MammalsWhite from 'images/dashboard/mammal_icon_white.png?react';
+import ReptilesBlack from 'images/dashboard/reptile_icon_black.png?react';
+import ReptilesWhite from 'images/dashboard/reptile_icon_white.png?react';
 
 import {
   NATIONAL_TREND,
@@ -199,28 +203,28 @@ function SpeciesRichnessComponent(props) {
           value={scores.birds.count}
           scores={scores}
           data={birdData}
-          img={Birds}
+          img={lightMode ? BirdsBlack : BirdsWhite}
           species="birds"
         />
         <SpiArcChartComponent
           value={scores.mammals.count}
           scores={scores}
           data={mammalsData}
-          img={Mammals}
+          img={lightMode ? MammalsBlack : MammalsWhite}
           species="mammals"
         />
         <SpiArcChartComponent
           value={scores.reptiles.count}
           scores={scores}
           data={reptilesData}
-          img={Reptiles}
+          img={lightMode ? ReptilesBlack : ReptilesWhite}
           species="reptiles"
         />
         <SpiArcChartComponent
           value={scores.amphibians.count}
           scores={scores}
           data={amphibianData}
-          img={Amphibians}
+          img={lightMode ? AmphibiansBlack : AmphibiansWhite}
           species="amphibians"
         />
       </div>
