@@ -71,14 +71,18 @@ function DashboardViewComponent(props) {
     const { results } = await view.hitTest(event);
     if (results.length) {
       const foundLayer = results.find(
-        (x) => x.graphic.attributes.NAME_1 || x.graphic.attributes.WDPA_PID
+        (x) =>
+          x.graphic.attributes.NAME_1 ||
+          x.graphic.attributes.WDPA_PID ||
+          x.graphic.attributes.territoire
       );
       if (foundLayer) {
         const { graphic } = foundLayer;
         const { attributes } = graphic;
         if (
           Object.prototype.hasOwnProperty.call(attributes, 'NAME_1') ||
-          Object.prototype.hasOwnProperty.call(attributes, 'WDPA_PID')
+          Object.prototype.hasOwnProperty.call(attributes, 'WDPA_PID') ||
+          Object.prototype.hasOwnProperty.call(attributes, 'territoire')
         ) {
           return { graphic, attributes };
         }
@@ -105,7 +109,7 @@ function DashboardViewComponent(props) {
               {
                 setTaxaList([]);
 
-                const { WDPA_PID, GID_1 } = hits.attributes;
+                const { WDPA_PID, GID_1, territoire } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
                   setSelectedRegion({ WDPA_PID });
@@ -113,6 +117,10 @@ function DashboardViewComponent(props) {
 
                 if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
                   setSelectedRegion({ GID_1 });
+                }
+
+                if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
+                  setSelectedRegion({ territoire });
                 }
               }
               break;
@@ -169,7 +177,7 @@ function DashboardViewComponent(props) {
                 hits.attributes.NAME_1 ?? hits.attributes.region_name;
             }
           } else if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
-            regionName = hits.attributes.NAME_1 ?? hits.attributes.region_name;
+            regionName = hits.attributes.territoire;
           }
 
           if (regionName) {

@@ -17,6 +17,7 @@ function SpeciesFilterComponent(props) {
     setSelectedRegionOption,
     setSelectedIndex,
   } = props;
+
   const filterStart = [
     {
       name: 'dataset',
