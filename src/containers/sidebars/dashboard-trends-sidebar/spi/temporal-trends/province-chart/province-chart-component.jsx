@@ -262,7 +262,7 @@ function ProvinceChartComponent(props) {
   }, [selectedProvince]);
 
   useEffect(() => {
-    if (clickedRegion) {
+    if (clickedRegion && provinces.length) {
       const region = provinces.find(
         (item) =>
           item.region_name === clickedRegion.NAME_1 ?? clickedRegion.region_name
@@ -278,7 +278,7 @@ function ProvinceChartComponent(props) {
         highlightProvinceBubble(foundIdx);
       }
     }
-  }, [clickedRegion]);
+  }, [clickedRegion, provinces]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>

@@ -412,7 +412,7 @@ function DashboardContainer(props) {
         tab: selectedIndex,
         trend: tabOption ?? undefined,
         region: selectedRegion ?? undefined,
-        province: provinceName ?? undefined,
+        // province: provinceName ?? undefined,
         lang: user?.culture?.split('-')[0] ?? undefined,
       },
     });
