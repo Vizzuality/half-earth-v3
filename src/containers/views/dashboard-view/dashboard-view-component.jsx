@@ -55,6 +55,8 @@ function DashboardViewComponent(props) {
   const [mapViewSettings, setMapViewSettings] = useState(viewSettings);
   const [clickedRegion, setClickedRegion] = useState();
   const [layerView, setLayerView] = useState();
+  const [onClickHandler, setOnClickHandler] = useState(null);
+  const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
   let hoverHighlight;
 
   const getLayerView = async () => {
@@ -100,33 +102,36 @@ function DashboardViewComponent(props) {
         if (hits) {
           switch (selectedIndex) {
             case NAVIGATION.REGION:
-              setTaxaList([]);
+              {
+                setTaxaList([]);
 
-              const { WDPA_PID, GID_1 } = hits.attributes;
-              setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
-              if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
-                setSelectedRegion({ WDPA_PID });
+                const { WDPA_PID, GID_1 } = hits.attributes;
+                setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+                if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
+                  setSelectedRegion({ WDPA_PID });
+                }
+
+                if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
+                  setSelectedRegion({ GID_1 });
+                }
               }
-
-              if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
-                setSelectedRegion({ GID_1 });
-              }
-
               break;
             case NAVIGATION.TRENDS:
-              const activeLayers = Object.keys(regionLayers);
-              browsePage({
-                type: DASHBOARD,
-                payload: { iso: countryISO.toLowerCase() },
-                query: {
-                  scientificName,
-                  selectedIndex,
-                  regionLayers: activeLayers,
-                  selectedRegion:
-                    hits.attributes.NAME_1 ?? hits.attributes.region_name,
-                },
-              });
-              setClickedRegion(hits.attributes);
+              {
+                const al = Object.keys(regionLayers);
+                browsePage({
+                  type: DASHBOARD,
+                  payload: { iso: countryISO.toLowerCase() },
+                  query: {
+                    scientificName,
+                    selectedIndex,
+                    regionLayers: al,
+                    selectedRegion:
+                      hits.attributes.NAME_1 ?? hits.attributes.region_name,
+                  },
+                });
+                setClickedRegion(hits.attributes);
+              }
               break;
             default:
               break;
@@ -206,11 +211,19 @@ function DashboardViewComponent(props) {
 
   useEffect(() => {
     if (!layerView) return;
-    view.on('click').remove();
-    view.on('pointer-move').remove();
 
-    view.on('click', (event) => handleRegionClicked(event));
-    view.on('pointer-move', handlePointerMove);
+    if (onClickHandler) {
+      onClickHandler.remove();
+      setOnClickHandler(null);
+    }
+
+    if (onPointerMoveHandler) {
+      onPointerMoveHandler.remove();
+      setOnPointerMoveHandler(null);
+    }
+
+    setOnClickHandler(view.on('click', (event) => handleRegionClicked(event)));
+    setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
   }, [layerView]);
 
   return (

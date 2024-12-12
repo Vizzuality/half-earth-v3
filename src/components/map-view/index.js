@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
-
-import Map from '@arcgis/core/Map';
-import MapView from '@arcgis/core/views/MapView';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
-import TileLayer from '@arcgis/core/layers/TileLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import TileLayer from '@arcgis/core/layers/TileLayer';
+import Map from '@arcgis/core/Map';
+import MapView from '@arcgis/core/views/MapView';
+
+import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 // import Popup from "@arcgis/core/widgets/Popup.js";
 
 import Component from './component';
@@ -20,7 +20,6 @@ function ViewContainer(props) {
     mapName,
     mapId,
     viewSettings,
-    loaderOptions,
     map,
     setMap,
     view,
