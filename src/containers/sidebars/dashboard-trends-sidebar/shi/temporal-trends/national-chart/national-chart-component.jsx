@@ -28,7 +28,7 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
-  const { countryData, chartData } = props;
+  const { countryData } = props;
   const { lightMode } = useContext(LightModeContext);
   const [data, setData] = useState();
   const [shiValue, setShiValue] = useState(0);

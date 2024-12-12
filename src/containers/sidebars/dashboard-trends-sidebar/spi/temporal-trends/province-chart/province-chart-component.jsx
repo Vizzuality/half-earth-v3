@@ -35,6 +35,7 @@ function ProvinceChartComponent(props) {
     setSelectedProvince,
     selectedProvince,
     clickedRegion,
+    setClickedRegion,
     provinces,
     provinceName,
     setProvinceName,
@@ -161,6 +162,7 @@ function ProvinceChartComponent(props) {
     );
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
+    setClickedRegion(null);
 
     const foundIdx = bubbleData?.datasets.findIndex(
       (item) => item.region_name === province.region_name

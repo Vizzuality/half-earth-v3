@@ -228,6 +228,7 @@ function DashboardViewComponent(props) {
           regionLayers={regionLayers}
           setRegionLayers={setRegionLayers}
           clickedRegion={clickedRegion}
+          setClickedRegion={setClickedRegion}
           handleRegionSelected={handleRegionSelected}
           layerView={layerView}
           selectedRegion={selectedRegion}

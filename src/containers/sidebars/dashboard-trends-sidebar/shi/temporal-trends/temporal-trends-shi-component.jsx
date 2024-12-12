@@ -7,10 +7,14 @@ import cx from 'classnames';
 import Button from 'components/button';
 
 import { LightModeContext } from '../../../../../context/light-mode';
-import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
+import ProvinceChartContainer from './province-chart';
 
 function TemporalTrendsShiComponent(props) {
   const t = useT();
@@ -18,6 +22,7 @@ function TemporalTrendsShiComponent(props) {
 
   // const [chartData, setChartData] = useState();
   const [lostAvg, setLostAvg] = useState(0);
+  const [activeSHITrend, setActiveSHITrend] = useState(NATIONAL_TREND);
   const { lightMode } = useContext(LightModeContext);
   const [startYear] = useState(2001);
 
@@ -25,7 +30,9 @@ function TemporalTrendsShiComponent(props) {
     setLostAvg((100 - shiValue).toFixed(1));
   }, [shiValue]);
 
-  const handleActionChange = () => {};
+  const handleActionChange = (event) => {
+    setActiveSHITrend(event.currentTarget.innerText);
+  };
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
@@ -46,17 +53,28 @@ function TemporalTrendsShiComponent(props) {
           )}
         </p>
         <div className={styles.options}>
-          <Button
-            type="rectangular"
-            className={styles.saveButton}
-            label={NATIONAL_TREND}
-            handleClick={handleActionChange}
-          />
-          {/*
+          <div className={styles.btnGroup}>
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeSHITrend === NATIONAL_TREND,
+              })}
+              label={PROVINCE_TREND}
+              handleClick={handleActionChange}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeSHITrend === PROVINCE_TREND,
+              })}
+              label={NATIONAL_TREND}
+              handleClick={handleActionChange}
+            />
+          </div>
           <span className={styles.helpText}>
             {t('Toggle national SPI and province-level breakdown.')}
           </span>
-          <Button
+          {/* <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="play animation"
@@ -66,7 +84,12 @@ function TemporalTrendsShiComponent(props) {
           </span> */}
         </div>
       </div>
-      <NationalChartContainer {...props} />
+      {activeSHITrend === NATIONAL_TREND && (
+        <NationalChartContainer {...props} />
+      )}
+      {activeSHITrend === PROVINCE_TREND && (
+        <ProvinceChartContainer {...props} />
+      )}
     </div>
   );
 }
