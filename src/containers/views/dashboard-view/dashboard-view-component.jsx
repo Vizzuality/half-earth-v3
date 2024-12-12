@@ -47,6 +47,7 @@ function DashboardViewComponent(props) {
     scientificName,
     regionLayers,
     setRegionLayers,
+    setSelectedProvince,
   } = props;
 
   const [map, setMap] = useState(null);
@@ -88,6 +89,7 @@ function DashboardViewComponent(props) {
 
   const handleRegionClicked = async (event) => {
     event.stopPropagation();
+    setSelectedProvince(null);
     let hits;
     try {
       highlight?.remove();

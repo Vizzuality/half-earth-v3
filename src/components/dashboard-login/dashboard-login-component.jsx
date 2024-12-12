@@ -64,8 +64,6 @@ function DashboardLoginComponent(props) {
     const portal = new Portal();
     portal.authMode = 'immediate';
     portal.load().then(() => {
-      console.log(portal);
-      console.log('User Info: ', portal.user);
       setLoggedIn(true);
       setUser(portal.user);
     });
@@ -99,9 +97,11 @@ function DashboardLoginComponent(props) {
 
     IdentityManager.registerOAuthInfos([info]);
 
-    // IdentityManager.checkSignInStatus(info.portalUrl)
-    //   .then(handleLoginSuccess)
-    //   .catch(() => console.log('not logged in'));
+    IdentityManager.checkSignInStatus(info.portalUrl)
+      .then(handleLoginSuccess)
+      .catch((error) => {
+        throw Error(error);
+      });
   }, []);
 
   return (

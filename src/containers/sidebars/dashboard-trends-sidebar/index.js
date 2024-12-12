@@ -11,6 +11,8 @@ import {
   REGION_OPTIONS,
   SHI_LATEST_YEAR,
   SPI_LATEST_YEAR,
+  DASHBOARD_SHI_SCORES_URL,
+  SII_LATEST_YEAR,
 } from 'utils/dashboard-utils.js';
 
 import last from 'lodash/last';
@@ -18,11 +20,6 @@ import last from 'lodash/last';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-
-import {
-  DASHBOARD_SHI_SCORES_URL,
-  SII_LATEST_YEAR,
-} from '../../../utils/dashboard-utils.js';
 
 import Component, {
   NATIONAL_TREND,
@@ -63,10 +60,6 @@ function DashboardTrendsSidebarContainer(props) {
         map.remove(foundLayer);
       }
     });
-  };
-
-  const getData = async () => {
-    setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
   };
 
   const getProvinceData = (provinceURL) => {
@@ -111,11 +104,6 @@ function DashboardTrendsSidebarContainer(props) {
     });
   };
 
-  useEffect(() => {
-    removeRegionLayers();
-    getData();
-  }, []);
-
   // find and zoom to region
   useEffect(() => {
     EsriFeatureService.getFeatures({
@@ -124,11 +112,10 @@ function DashboardTrendsSidebarContainer(props) {
       returnGeometry: true,
     }).then((features) => {
       // eslint-disable-next-line no-shadow
-      const { geometry, attributes } = features[0];
+      const { geometry } = features[0];
 
       if (geometry && view) {
         setGeo(geometry);
-        // setCountryData(attributes);
       }
     });
   }, [view, countryISO]);
@@ -161,6 +148,9 @@ function DashboardTrendsSidebarContainer(props) {
   }, [map, view]);
 
   useEffect(() => {
+    removeRegionLayers();
+    setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
+
     const provinceURL = {
       url: DASHBOARD_PROVINCE_TREND_URL,
       whereClause: `iso3 = '${countryISO}' and Year = ${SPI_LATEST_YEAR}`,
@@ -173,7 +163,6 @@ function DashboardTrendsSidebarContainer(props) {
       whereClause: `ISO3 = '${countryISO}'`,
       orderByFields: ['year'],
     };
-
     getCountryData(countryURL);
 
     const shiScoresURL = {
