@@ -19,7 +19,10 @@ import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
-import { SII_LATEST_YEAR } from '../../../utils/dashboard-utils.js';
+import {
+  DASHBOARD_SHI_SCORES_URL,
+  SII_LATEST_YEAR,
+} from '../../../utils/dashboard-utils.js';
 
 import Component, {
   NATIONAL_TREND,
@@ -172,6 +175,13 @@ function DashboardTrendsSidebarContainer(props) {
     };
 
     getCountryData(countryURL);
+
+    const shiScoresURL = {
+      url: DASHBOARD_SHI_SCORES_URL,
+      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR} and HabitatScore >= 1 and HabitatScore <= 5`,
+      // orderByFields: ['region_name'],
+    };
+    getShiScoreData(shiScoresURL);
   }, []);
 
   useEffect(() => {

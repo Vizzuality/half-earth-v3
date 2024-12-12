@@ -38,7 +38,6 @@ function ScoreDistributionsShiComponent(props) {
   const [responseData, setResponseData] = useState();
   const [showTable, setShowTable] = useState(false);
   const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
-  const [taxaData, setTaxaData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
@@ -113,14 +112,6 @@ function ScoreDistributionsShiComponent(props) {
     // }
   };
 
-  const getChartData = async () => {
-    const data = shiData.scoresData;
-
-    setResponseData(data);
-    loadSpecies(data);
-    displayData(data, activeScore);
-  };
-
   const displayData = (data, activeScore) => {
     const taxaSet = { amphibians: {}, birds: {}, mammals: {}, reptiles: {} };
 
@@ -176,22 +167,6 @@ function ScoreDistributionsShiComponent(props) {
     setIsLoading(false);
   };
 
-  const getTaxaData = async () => {
-    const taxaCallsResponses = await Promise.all(
-      taxas.map(async (taxa) => {
-        const response = await fetch(
-          `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`
-        );
-        const data = await response.json();
-        return data;
-      })
-    );
-
-    const [birdData, mammalData, reptileData, amphibianData] =
-      taxaCallsResponses;
-    setTaxaData({ birdData, mammalData, reptileData, amphibianData });
-  };
-
   const handleActiveChange = (score) => {
     setActiveScore(score);
     displayData(responseData, score);
@@ -199,10 +174,10 @@ function ScoreDistributionsShiComponent(props) {
 
   const loadSpecies = (data) => {
     const species = [];
-    species.push(data[0].taxa_scores[0]);
-    species.push(data[1].taxa_scores[0]);
-    species.push(data[2].taxa_scores[0]);
-    species.push(data[3].taxa_scores[0]);
+    species.push(data[0]);
+    species.push(data[1]);
+    species.push(data[2]);
+    species.push(data[3]);
     setSpsSpecies(species);
     setIsSpeciesLoading(false);
   };
@@ -211,6 +186,12 @@ function ScoreDistributionsShiComponent(props) {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
+  };
+
+  const getChartData = async () => {
+    setResponseData(shiScoresData);
+    loadSpecies(shiScoresData);
+    // displayData(shiScoresData, activeScore);
   };
 
   useEffect(() => {
@@ -247,18 +228,20 @@ function ScoreDistributionsShiComponent(props) {
           <ul className={styles.spsSpecies}>
             {spsSpecies.map((s) => {
               return (
-                <li key={s.species}>
+                <li key={s.ScientificName}>
                   <button
                     type="button"
                     onClick={() => selectSpecies(s.species)}
                   >
                     <img src={s.species_url} alt="species" />
                     <div className={styles.spsInfo}>
-                      <span className={styles.name}>{s.species}</span>
-                      <span className={styles.scientificname}>{s.species}</span>
+                      <span className={styles.name}>{s.ScientificName}</span>
+                      <span className={styles.scientificname}>
+                        {s.ScientificName}
+                      </span>
                     </div>
                     <span className={styles.spsScore}>
-                      SHS: {s.steward_score.toFixed(1)}
+                      SHS: {s.HabitatScore.toFixed(1)}
                     </span>
                   </button>
                 </li>
