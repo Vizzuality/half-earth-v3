@@ -22,7 +22,7 @@ function TemporalTrendsSiiComponent(props) {
   const [firstValues, setFirstValues] = useState({ year: 0, spi: 0 });
   const [highestObservation, setHighestObservation] = useState(0);
   const [lowestObservation, setLowestObservation] = useState(0);
-  const [currentYear, setCurrentYear] = useState(2023);
+  const [currentYear, setCurrentYear] = useState(SII_LATEST_YEAR);
   const { lightMode } = useContext(LightModeContext);
 
   const getNationalData = async () => {
@@ -36,10 +36,12 @@ function TemporalTrendsSiiComponent(props) {
         }));
 
       setNationalChartData(allVertValues);
+      const lastValue = last(allVertValues);
+      setCurrentYear(lastValue.year);
 
       setLatestValues({
-        year: last(allVertValues).year,
-        spi: (last(allVertValues).sii * 100).toFixed(1),
+        year: lastValue.year,
+        spi: (lastValue.sii * 100).toFixed(1),
       });
       setFirstValues({
         year: allVertValues[0].year,

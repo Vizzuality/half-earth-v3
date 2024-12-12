@@ -19,6 +19,8 @@ import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
+import { SII_LATEST_YEAR } from '../../../utils/dashboard-utils.js';
+
 import Component, {
   NATIONAL_TREND,
   PROVINCE_TREND,
@@ -77,9 +79,10 @@ function DashboardTrendsSidebarContainer(props) {
 
       setSpiValue(last(countries).SPI.toFixed(1));
 
-      const tabValues = countries.find((item) => item.Year === SHI_LATEST_YEAR);
-      setShiValue(parseFloat(tabValues.SHI).toFixed(1));
-      setSiiValue(tabValues.SII.toFixed(1));
+      const shiValues = countries.find((item) => item.Year === SHI_LATEST_YEAR);
+      const siiValues = countries.find((item) => item.Year === SII_LATEST_YEAR);
+      setShiValue(parseFloat(shiValues.SHI).toFixed(1));
+      setSiiValue((siiValues.SII * 100).toFixed(1));
       setCountryData(countries);
     });
   };
