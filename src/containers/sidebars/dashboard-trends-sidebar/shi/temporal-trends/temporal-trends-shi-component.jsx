@@ -18,7 +18,7 @@ import ProvinceChartContainer from './province-chart';
 
 function TemporalTrendsShiComponent(props) {
   const t = useT();
-  const { shiValue, countryName } = props;
+  const { shiValue, countryName, countryISO } = props;
 
   // const [chartData, setChartData] = useState();
   const [lostAvg, setLostAvg] = useState(0);
@@ -54,14 +54,16 @@ function TemporalTrendsShiComponent(props) {
         </p>
         <div className={styles.options}>
           <div className={styles.btnGroup}>
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: activeSHITrend === NATIONAL_TREND,
-              })}
-              label={PROVINCE_TREND}
-              handleClick={handleActionChange}
-            />
+            {countryISO === 'COD' && (
+              <Button
+                type="rectangular"
+                className={cx(styles.saveButton, {
+                  [styles.notActive]: activeSHITrend === NATIONAL_TREND,
+                })}
+                label={PROVINCE_TREND}
+                handleClick={handleActionChange}
+              />
+            )}
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
