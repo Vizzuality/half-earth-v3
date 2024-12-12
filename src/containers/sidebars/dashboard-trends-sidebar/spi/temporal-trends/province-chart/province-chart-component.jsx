@@ -314,14 +314,12 @@ function ProvinceChartComponent(props) {
               <b>{currentYear}</b>
               <span>{t('Year')}</span>
             </div>
-            {countrySPI && (
-              <SpiArcChartComponent
-                width="125x"
-                height="75px"
-                data={spiArcData}
-                value={percentAreaProtected}
-              />
-            )}
+            <SpiArcChartComponent
+              width="125x"
+              height="75px"
+              data={spiArcData}
+              value={percentAreaProtected}
+            />
             <div className={styles.values}>
               <b>{countrySPI?.toFixed(1)}</b>
               <span>{t('SPI')}</span>
