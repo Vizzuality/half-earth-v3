@@ -236,12 +236,14 @@ function ProvinceChartComponent(props) {
   }, [provinces]);
 
   useEffect(() => {
-    if (provinces.length && bubbleData && !selectedProvince) {
+    if (provinces.length && bubbleData) {
       if (provinceName) {
         const region = provinces.find(
           (item) => item.region_name === provinceName
         );
         handleProvinceSelected(region);
+      } else if (selectedProvince) {
+        handleProvinceSelected(selectedProvince);
       } else {
         handleProvinceSelected(provinces[0]);
       }

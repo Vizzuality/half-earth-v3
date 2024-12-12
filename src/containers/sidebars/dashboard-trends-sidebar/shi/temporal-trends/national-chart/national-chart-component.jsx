@@ -54,6 +54,7 @@ function NationalChartComponent(props) {
   };
   const [shiData, setShiData] = useState(blankData);
   const [isLoading, setIsLoading] = useState(true);
+  const shiStartYear = 2001;
 
   const options = {
     plugins: {
@@ -82,7 +83,7 @@ function NationalChartComponent(props) {
         },
       },
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
         display: true,
         title: {
           display: true,
@@ -94,7 +95,7 @@ function NationalChartComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          maxTicksLimit: 4,
+          maxTicksLimit: 10,
         },
       },
     },
@@ -103,22 +104,31 @@ function NationalChartComponent(props) {
   useEffect(() => {
     if (!countryData.length) return;
 
+    const filteredData = countryData.filter(
+      (item) => item.Year >= shiStartYear && item.Year <= SHI_LATEST_YEAR
+    );
+
     setData({
-      labels: countryData.map((item) => item.Year),
+      labels: filteredData.map((item) => item.Year),
       datasets: [
         {
           label: t('Average Area Score'),
-          data: countryData.map((item) => item.SHI_AreaScore),
+          data: filteredData.map((item) => item.SHI_AreaScore),
           borderColor: getCSSVariable('birds'),
         },
         {
           label: t('Average Connectivity Score'),
-          data: countryData.map((item) => item.SHI_AvgConnectivityScore),
+          data: filteredData.map((item) => item.SHI_AvgConnectivityScore),
           borderColor: getCSSVariable('mammals'),
         },
         {
           label: t('Average Habitat Score'),
-          data: countryData.map((item) => item.SHI_AvgHabitatScore),
+          data: filteredData.map(
+            (item) =>
+              (parseFloat(item.SHI_AreaScore) +
+                parseFloat(item.SHI_AvgConnectivityScore)) /
+              2
+          ),
           borderColor: getCSSVariable('reptiles'),
         },
       ],
@@ -153,7 +163,7 @@ function NationalChartComponent(props) {
     setShiValue(parseFloat(SHI));
     setShiData(shi);
     setIsLoading(false);
-  }, [chartData]);
+  }, [countryData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
