@@ -1,10 +1,9 @@
-import React from 'react'
-import ShiComponent from './shi-component'
+import React from 'react';
+
+import ShiComponent from './shi-component';
 
 function ShiContainer(props) {
-  return (
-    <ShiComponent {...props} />
-  )
+  return <ShiComponent {...props} />;
 }
 
-export default ShiContainer
+export default ShiContainer;

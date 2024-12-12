@@ -1,16 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { DASHBOARD } from 'router';
 
 import loadable from '@loadable/component';
+
+import * as promiseUtils from '@arcgis/core/core/promiseUtils.js';
+
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
-import { LightModeProvider } from '../../../context/light-mode';
-import MapView from 'components/map-view';
 import SideMenu from 'containers/menus/sidemenu';
-import * as promiseUtils from "@arcgis/core/core/promiseUtils.js";
-import { DASHBOARD } from 'router';
-import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar'
+import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
+
+import MapView from 'components/map-view';
+
 import TopMenuContainer from '../../../components/top-menu';
-import { LAYER_OPTIONS, NAVIGATION, REGION_OPTIONS } from '../../../utils/dashboard-utils';
+import { LightModeProvider } from '../../../context/light-mode';
+import {
+  LAYER_OPTIONS,
+  NAVIGATION,
+  REGION_OPTIONS,
+} from '../../../utils/dashboard-utils';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -33,7 +42,6 @@ function DashboardViewComponent(props) {
     setSelectedRegion,
     selectedRegion,
     selectedRegionOption,
-    setSelectedRegionOption,
     setTaxaList,
     browsePage,
     scientificName,
@@ -48,30 +56,35 @@ function DashboardViewComponent(props) {
   const [layerView, setLayerView] = useState();
   let hoverHighlight;
 
-  useEffect(() => {
-    if (!view) return;
-    view.on('click', (event) => {
-      event.stopPropagation();
-    });
-  }, [view]);
-
-
-  useEffect(async () => {
-    if (view && Object.keys(regionLayers).length) {
-      const layer = await getLayerView();
-      setLayerView(layer);
-    }
-  }, [regionLayers, view]);
-
-  useEffect(() => {
-    if (!layerView) return;
-    view.on('click', (event) => handleRegionClicked(event));
-    view.on('pointer-move', handlePointerMove);
-  }, [layerView]);
-
   const getLayerView = async () => {
-    return await view.whenLayerView(regionLayers[LAYER_OPTIONS.PROVINCES] || regionLayers[LAYER_OPTIONS.PROTECTED_AREAS]);
-  }
+    return view.whenLayerView(
+      regionLayers[LAYER_OPTIONS.PROVINCES] ||
+        regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
+        regionLayers[LAYER_OPTIONS.FORESTS]
+    );
+  };
+
+  const hitTest = promiseUtils.debounce(async (event) => {
+    const { results } = await view.hitTest(event);
+    if (results.length) {
+      const foundLayer = results.find(
+        (x) => x.graphic.attributes.NAME_1 || x.graphic.attributes.WDPA_PID
+      );
+      if (foundLayer) {
+        const { graphic } = foundLayer;
+        const { attributes } = graphic;
+        if (
+          Object.prototype.hasOwnProperty.call(attributes, 'NAME_1') ||
+          Object.prototype.hasOwnProperty.call(attributes, 'WDPA_PID')
+        ) {
+          return { graphic, attributes };
+        }
+        return null;
+      }
+      return null;
+    }
+    return null;
+  });
 
   const handleRegionClicked = async (event) => {
     event.stopPropagation();
@@ -105,31 +118,39 @@ function DashboardViewComponent(props) {
                 payload: { iso: countryISO.toLowerCase() },
                 query: {
                   scientificName,
-                  selectedIndex: selectedIndex,
+                  selectedIndex,
                   regionLayers: activeLayers,
-                  selectedRegion: (hits.attributes.NAME_1 ?? hits.attributes.region_name)
+                  selectedRegion:
+                    hits.attributes.NAME_1 ?? hits.attributes.region_name,
                 },
               });
               setClickedRegion(hits.attributes);
+              break;
+            default:
               break;
           }
 
           highlight = layerView.highlight(hits.graphic);
         }
       }
-    } catch { }
-  }
+    } catch (error) {
+      throw Error(error);
+    }
+  };
 
   const handlePointerMove = async (event) => {
     let hits;
+
     try {
-      if (selectedIndex !== NAVIGATION.BIO_IND && selectedIndex !== NAVIGATION.DATA_LAYER) {
+      if (
+        selectedIndex !== NAVIGATION.BIO_IND &&
+        selectedIndex !== NAVIGATION.DATA_LAYER
+      ) {
         hits = await hitTest(event);
         hoverHighlight?.remove();
         view.closePopup();
 
         if (hits) {
-
           let regionName;
           if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
             if (hits.attributes.ISO3 === countryISO) {
@@ -137,8 +158,11 @@ function DashboardViewComponent(props) {
             }
           } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
             if (hits.attributes.GID_0 === countryISO) {
-              regionName = (hits.attributes.NAME_1 ?? hits.attributes.region_name);
+              regionName =
+                hits.attributes.NAME_1 ?? hits.attributes.region_name;
             }
+          } else if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
+            regionName = hits.attributes.NAME_1 ?? hits.attributes.region_name;
           }
 
           if (regionName) {
@@ -146,7 +170,7 @@ function DashboardViewComponent(props) {
             view.openPopup({
               // Set the popup's title to the coordinates of the location
               title: `${regionName}`,
-              location: view.toMap({ x: event.x, y: event.y })
+              location: view.toMap({ x: event.x, y: event.y }),
             });
           }
         }
@@ -154,33 +178,38 @@ function DashboardViewComponent(props) {
         view.closePopup();
         hoverHighlight?.remove();
       }
-    } catch { }
-  }
+    } catch (error) {
+      throw Error(error);
+    }
+  };
 
   const handleRegionSelected = (foundRegion) => {
     highlight?.remove();
     highlight = layerView?.highlight(foundRegion.graphic);
-  }
+  };
 
-  const hitTest = promiseUtils.debounce(async (event) => {
-    const { results } = await view.hitTest(event);
-    if (results.length) {
-      const foundLayer = results.find(x => x.graphic.attributes.NAME_1 || x.graphic.attributes.WDPA_PID);
-      if (foundLayer) {
-        const { graphic } = foundLayer
-        const { attributes } = graphic;
-        if (attributes.hasOwnProperty('NAME_1') || attributes.hasOwnProperty('WDPA_PID')) {
-          return { graphic, attributes }
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    } else {
-      return null;
+  useEffect(() => {
+    if (!view) return;
+    view.on('click', (event) => {
+      event.stopPropagation();
+    });
+  }, [view]);
+
+  useEffect(async () => {
+    if (view && Object.keys(regionLayers).length) {
+      const layer = await getLayerView();
+      setLayerView(layer);
     }
-  });
+  }, [regionLayers, view]);
+
+  useEffect(() => {
+    if (!layerView) return;
+    view.on('click').remove();
+    view.on('pointer-move').remove();
+
+    view.on('click', (event) => handleRegionClicked(event));
+    view.on('pointer-move', handlePointerMove);
+  }, [layerView]);
 
   return (
     <MapView
@@ -205,10 +234,12 @@ function DashboardViewComponent(props) {
           regionLayers={regionLayers}
           setRegionLayers={setRegionLayers}
           clickedRegion={clickedRegion}
+          setClickedRegion={setClickedRegion}
           handleRegionSelected={handleRegionSelected}
           layerView={layerView}
           selectedRegion={selectedRegion}
-          {...props} />
+          {...props}
+        />
       </LightModeProvider>
       <CountryLabelsLayer
         sceneMode={sceneMode}

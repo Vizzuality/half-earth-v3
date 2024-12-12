@@ -1,9 +1,7 @@
 /* eslint-disable max-len */
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import {
-  selectGlobeUrlState
-} from 'selectors/location-selectors';
+import { selectGlobeUrlState } from 'selectors/location-selectors';
 
 import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
 
@@ -39,20 +37,17 @@ const getCountryData = createSelector(
   }
 );
 
-const getCountryName = createSelector(
-  [getCountryData],
-  (countryData) => {
-    if (!countryData) {
-      return null;
-    }
-    return countryData.NAME_0;
+const getCountryName = createSelector([getCountryData], (countryData) => {
+  if (!countryData) {
+    return null;
   }
-);
+  return countryData.NAME_0;
+});
 
 const getQueryParams = createSelector(
   selectQueryParams,
   (queryParams) => queryParams
-)
+);
 
 export default createStructuredSelector({
   viewSettings: getViewSettings,

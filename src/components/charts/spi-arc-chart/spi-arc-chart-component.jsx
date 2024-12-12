@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import cx from 'classnames';
+
+import { useT } from '@transifex/react';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,10 +12,11 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import cx from 'classnames';
+
+import { LightModeContext } from '../../../context/light-mode';
 
 import styles from './spi-arc-chart-styles.module.scss';
-import { LightModeContext } from '../../../context/light-mode';
-import { useT } from '@transifex/react';
 
 ChartJS.register(
   CategoryScale,
@@ -65,19 +68,19 @@ function SpiArcChartComponent(props) {
     if (!value) {
       const percent = (count / total) * 100 || 0;
       return [percent, 100 - percent];
-    } else {
-      return [count, 100 - count];
     }
+    return [count, 100 - count];
   };
 
   useEffect(() => {
-    setScore(value.toFixed(2));
+    if (!value) return;
+    setScore(value.toFixed(1));
   }, [value]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.spi)}>
       {scores && (
-        <span className={styles.score}>{getPercentage()[0].toFixed(2)}</span>
+        <span className={styles.score}>{getPercentage()[0].toFixed(1)}</span>
       )}
       <Doughnut
         data={data}

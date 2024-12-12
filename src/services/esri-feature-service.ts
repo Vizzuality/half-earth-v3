@@ -25,6 +25,7 @@ function getFeatures({
     wkid: LOCAL_SPATIAL_REFERENCE,
   },
   geometry = null,
+  orderByFields = [],
 }: GetFeatures) {
   return new Promise((resolve) => {
     const layer = new FeatureLayer({
@@ -34,10 +35,11 @@ function getFeatures({
     const featureQuery = layer.createQuery();
     featureQuery.outFields = outFields;
     featureQuery.where = whereClause;
-    if (geometry) {
-      featureQuery.geometry = geometry;
-    }
-    featureQuery.returnGeometry = returnGeometry;
+    featureQuery.orderByFields = orderByFields;
+    // if (geometry) {
+    //   featureQuery.geometry = geometry;
+    // }
+    // featureQuery.returnGeometry = returnGeometry;
     featureQuery.outSpatialReference = outSpatialReference;
     layer.queryFeatures(featureQuery).then((results) => {
       // TODO: TS-TODO: Type results.
@@ -49,37 +51,37 @@ function getFeatures({
   });
 }
 
-function getVectorTileLayer(url, id, countryISO){
+function getVectorTileLayer(url, id, countryISO) {
   return new VectorTileLayer({
     url,
     id,
   });
 }
 
-function getFeatureLayer(portalItemId, countryISO, id){
+function getFeatureLayer(portalItemId, countryISO, id) {
   return new FeatureLayer({
     portalItem: {
       id: portalItemId,
     },
     outFields: ['*'],
-    definitionExpression: `GID_0 = '${countryISO}'`,
-    id: id ?? LAYER_OPTIONS.PROVINCES
+    definitionExpression: countryISO ? `GID_0 = '${countryISO}'` : '',
+    id: id ?? LAYER_OPTIONS.PROVINCES,
   });
 }
 
-function getGeoJsonLayer(scientificname, id, countryISO = 'CD'){
+function getGeoJsonLayer(scientificname, id, countryISO = 'CD') {
   return new GeoJSONLayer({
     url: `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${countryISO}_${scientificname}.geojson`,
     id,
   });
 }
 
-async function getXYZLayer(scientificname, id, type){
+async function getXYZLayer(scientificname, id, type) {
   let url;
 
-  if(type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS){
+  if (type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
     url = `${EXPERT_RANGE_MAP_URL}?scientificname=${scientificname}`;
-  } else if(type === LAYER_TITLE_TYPES.TREND){
+  } else if (type === LAYER_TITLE_TYPES.TREND) {
     url = `${TREND_MAP_URL}?scientificname=${scientificname}`;
   }
 
@@ -92,16 +94,16 @@ async function getXYZLayer(scientificname, id, type){
   });
 }
 
-function getMVTSource(scientificname){
-  return  {
+function getMVTSource(scientificname) {
+  return {
     type: 'vector',
     tiles: [
-      'https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/regions/regions/{proj}/{z}/{x}/{y}.pbf?region_id=1673cab0-c717-4367-9db0-5c63bf26944d'
-    ]
+      'https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/regions/regions/{proj}/{z}/{x}/{y}.pbf?region_id=1673cab0-c717-4367-9db0-5c63bf26944d',
+    ],
   };
 }
 
-function getTileLayer(url, id){
+function getTileLayer(url, id) {
   return new TileLayer({
     url,
     id,
@@ -150,9 +152,8 @@ function addFeature({ url, features }: AddFeature) {
   });
 }
 
-function addProtectedAreaLayer(id, countryISO = 'COD'){
+function addProtectedAreaLayer(id, countryISO = 'COD') {
   let featurePortalId = PROTECTED_AREA_FEATURE_URL;
-
 
   switch (countryISO) {
     case 'LBR':
@@ -176,7 +177,7 @@ function addProtectedAreaLayer(id, countryISO = 'COD'){
       id: featurePortalId,
     },
     outFields: ['*'],
-    id: id ?? LAYER_OPTIONS.PROTECTED_AREAS
+    id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
   });
 
   return featureLayer;

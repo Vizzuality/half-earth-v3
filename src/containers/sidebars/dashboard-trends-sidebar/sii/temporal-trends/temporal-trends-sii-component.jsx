@@ -1,48 +1,58 @@
 import React, { useContext, useEffect, useState } from 'react';
-import last from 'lodash/last';
+
+import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
+import last from 'lodash/last';
 
 import Button from 'components/button';
 
+import { LightModeContext } from '../../../../../context/light-mode';
+import { SII_LATEST_YEAR } from '../../../../../utils/dashboard-utils';
 import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
+
 import NationalChartContainer from './national-chart';
-import { LightModeContext } from '../../../../../context/light-mode';
-import { T, useT } from '@transifex/react';
 
 function TemporalTrendsSiiComponent(props) {
   const t = useT();
-  const { countryName, siiData } = props;
-  const [nationalChartData, setNationalChartData] = useState({
-    area_values: [],
-    spi_values: [],
-  });
+  const { countryName, countryData } = props;
+  const [nationalChartData, setNationalChartData] = useState([]);
   const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 });
   const [firstValues, setFirstValues] = useState({ year: 0, spi: 0 });
   const [highestObservation, setHighestObservation] = useState(0);
   const [lowestObservation, setLowestObservation] = useState(0);
-  const [currentYear, setCurrentYear] = useState(2023);
+  const [currentYear, setCurrentYear] = useState(SII_LATEST_YEAR);
   const { lightMode } = useContext(LightModeContext);
-  const taxa = 'all_terr_verts';
 
   const getNationalData = async () => {
-    if (siiData.trendData.length) {
-      const data = siiData.trendData;
-      const { groups } = data[0];
-      const allVertValues = groups.filter(group => group.taxa === taxa);
+    if (countryData.length) {
+      const allVertValues = countryData
+        .filter((r) => r.Year <= SII_LATEST_YEAR)
+        .map((c) => ({
+          year: c.Year,
+          globalRanking: c.SII_GlobalRanking,
+          sii: c.SII,
+        }));
 
-      setNationalChartData(allVertValues[0]);
+      setNationalChartData(allVertValues);
+      const lastValue = last(allVertValues);
+      setCurrentYear(lastValue.year);
 
-      const { values } = allVertValues[0];
-      setLatestValues({ year: last(values)[0], spi: (last(values)[1] * 100).toFixed(2) });
-      setFirstValues({ year: values[0][0], spi: (values[0][1] * 100).toFixed(2) })
+      setLatestValues({
+        year: lastValue.year,
+        spi: (lastValue.sii * 100).toFixed(1),
+      });
+      setFirstValues({
+        year: allVertValues[0].year,
+        spi: (allVertValues[0].sii * 100).toFixed(1),
+      });
     }
   };
 
   useEffect(() => {
     getNationalData();
-  }, [siiData]);
+  }, [countryData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
@@ -50,7 +60,7 @@ function TemporalTrendsSiiComponent(props) {
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
           <T
-            _str='In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryName} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {highestObservationBold} and {lowestObservationBold}.'
+            _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryName} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {highestObservationBold} and {lowestObservationBold}."
             currentYear={currentYear}
             currentObservationBold={<b>{latestValues.spi}%</b>}
             countryName={countryName}

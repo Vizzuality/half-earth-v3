@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+
 import { useT } from '@transifex/react';
+
 import cx from 'classnames';
 
 import styles from './dashboard-trends-sidebar-styles.module.scss';
+import ShiContainer from './shi';
 import SiiContainer from './sii';
 import SpiContainer from './spi';
-import ShiContainer from './shi';
 
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 
 function DashboardTrendsSidebar(props) {
   const t = useT();
-  const { shiValue, siiValue, spiValue, countryName, tabOption, setTabOption } = props;
+  const { shiValue, siiValue, spiValue, tabOption, setTabOption } = props;
 
   return (
     <div className={styles.container}>
@@ -24,13 +26,14 @@ function DashboardTrendsSidebar(props) {
         <div className={styles.tabs}>
           <button
             type="button"
+            name="spi"
             aria-label={t('Species Protection Index')}
             className={cx({
               [styles.selected]: tabOption === 2,
             })}
             onClick={() => setTabOption(2)}
           >
-            <label>{spiValue}</label>
+            <label htmlFor="spi">{spiValue}</label>
             <span>{t('Species Protection Index')}</span>
           </button>
           <button
@@ -40,8 +43,9 @@ function DashboardTrendsSidebar(props) {
               [styles.selected]: tabOption === 1,
             })}
             onClick={() => setTabOption(1)}
+            name="shi"
           >
-            <label>{shiValue}</label>
+            <label htmlFor="shi">{shiValue}</label>
             <span>{t('Species Habitat Index')}</span>
           </button>
 
@@ -52,8 +56,9 @@ function DashboardTrendsSidebar(props) {
               [styles.selected]: tabOption === 3,
             })}
             onClick={() => setTabOption(3)}
+            name="sii"
           >
-            <label>{siiValue}</label>
+            <label htmlFor="sii">{siiValue}</label>
             <span>{t('Species Information Index')}</span>
           </button>
         </div>

@@ -127,6 +127,7 @@ export interface GetFeatures {
   returnGeometry: boolean;
   url: string;
   whereClause?: string;
+  orderByFields?: string[];
 }
 
 export interface GetLayer {

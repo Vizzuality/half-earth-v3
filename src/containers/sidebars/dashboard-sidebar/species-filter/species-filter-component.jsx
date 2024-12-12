@@ -1,14 +1,22 @@
-import { useEffect, useState } from 'react';
-import styles from '../dashboard-sidebar-styles.module.scss';
+import React, { useEffect, useState } from 'react';
+
+import { useT } from '@transifex/react';
+
+import Button from 'components/button';
+
 import FilterContainer from '../../../../components/filters';
 import SpeciesListContainer from '../../../../components/species-list';
-import Button from 'components/button';
-import { useT } from '@transifex/react';
 import { NAVIGATION } from '../../../../utils/dashboard-utils';
+import styles from '../dashboard-sidebar-styles.module.scss';
 
 function SpeciesFilterComponent(props) {
   const t = useT();
-  const { taxaList, selectedRegionOption, setSelectedRegionOption, setSelectedIndex } = props;
+  const {
+    taxaList,
+    selectedRegionOption,
+    setSelectedRegionOption,
+    setSelectedIndex,
+  } = props;
   const filterStart = [
     {
       name: 'dataset',
@@ -17,7 +25,9 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Expert Range Map',
           active: false,
-          test: species => species.datasetList.map(d => d.product_type).indexOf('range') > -1,
+          test: (species) =>
+            species.datasetList.map((d) => d.product_type).indexOf('range') >
+            -1,
           count: 0,
           type: 'and',
           result: false,
@@ -31,7 +41,9 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Occurrence',
           active: false,
-          test: species => species.datasetList.map(d => d.product_type).indexOf('points') > -1,
+          test: (species) =>
+            species.datasetList.map((d) => d.product_type).indexOf('points') >
+            -1,
           count: 0,
           result: false,
           type: 'and',
@@ -39,7 +51,8 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Local Inventory',
           active: false,
-          test: species => species.datasetList.map(d => d.product_type).indexOf('localinv') >
+          test: (species) =>
+            species.datasetList.map((d) => d.product_type).indexOf('localinv') >
             -1,
           result: false,
           count: 0,
@@ -54,7 +67,7 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Critically Endangered',
           active: false,
-          test: species => species.traits?.threat_status_code === 'CR',
+          test: (species) => species.traits?.threat_status_code === 'CR',
           count: 0,
           result: false,
           type: 'or',
@@ -63,14 +76,14 @@ function SpeciesFilterComponent(props) {
           name: 'Endangered',
           result: false,
           active: false,
-          test: species => species.traits?.threat_status_code === 'EN',
+          test: (species) => species.traits?.threat_status_code === 'EN',
           count: 0,
           type: 'or',
         },
         {
           name: 'Vulnerable',
           active: false,
-          test: species => species.traits?.threat_status_code === 'VU',
+          test: (species) => species.traits?.threat_status_code === 'VU',
           count: 0,
           type: 'or',
           result: false,
@@ -78,7 +91,7 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Least Concern',
           active: false,
-          test: species => species.traits?.threat_status_code === 'LC',
+          test: (species) => species.traits?.threat_status_code === 'LC',
           count: 0,
           type: 'or',
           result: false,
@@ -87,7 +100,7 @@ function SpeciesFilterComponent(props) {
           name: 'Unknown',
           active: false,
           result: false,
-          test: species => species.traits?.threat_status_code === undefined,
+          test: (species) => species.traits?.threat_status_code === undefined,
           count: 0,
           type: 'or',
         },
@@ -106,27 +119,28 @@ function SpeciesFilterComponent(props) {
   const handleBack = () => {
     setSelectedRegionOption(null);
     setSelectedIndex(NAVIGATION.REGION);
-  }
+  };
 
   return (
     <div className={styles.wrapper}>
-      {selectedRegionOption && <Button
-        className={styles.back}
-        handleClick={handleBack}
-        label={t('Clear region selected')}
-      />}
+      {selectedRegionOption && (
+        <Button
+          className={styles.back}
+          handleClick={handleBack}
+          label={t('Clear region selected')}
+        />
+      )}
       <div className={styles.filters}>
         <FilterContainer
           filters={filters}
           setFilters={setFilters}
           isLoading={isLoading}
-          {...props} />
-        <SpeciesListContainer
-          isLoading={isLoading}
-          {...props} />
+          {...props}
+        />
+        <SpeciesListContainer isLoading={isLoading} {...props} />
       </div>
     </div>
-  )
+  );
 }
 
 export default SpeciesFilterComponent;
