@@ -26,13 +26,19 @@ function TemporalTrendsShiComponent(props) {
   const { lightMode } = useContext(LightModeContext);
   const [startYear] = useState(2001);
 
-  useEffect(() => {
-    setLostAvg((100 - shiValue).toFixed(1));
-  }, [shiValue]);
-
   const handleActionChange = (event) => {
     setActiveSHITrend(event.currentTarget.innerText);
   };
+
+  useEffect(() => {
+    if (countryISO === 'COD') {
+      setActiveSHITrend(PROVINCE_TREND);
+    }
+  }, []);
+
+  useEffect(() => {
+    setLostAvg((100 - shiValue).toFixed(1));
+  }, [shiValue]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
