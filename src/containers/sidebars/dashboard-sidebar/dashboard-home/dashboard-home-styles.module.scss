@@ -127,21 +127,23 @@
           background-position: center top;
           background-repeat: no-repeat;
           background-size: cover;
+          padding: 0;
+          align-items: center;
 
           &.chat{
-            background-image: url('../../../../assets/images/Choeropsis-liberiensis.jpeg');
+            background-image: url('../../../../assets/images/dashboard/okapi.jpg');
           }
 
           &.pilio{
-            background-image: url('../../../../assets/images/streak-throated.jpg');
+            background-image: url('../../../../assets/images/dashboard/bonobo.jpg');
           }
 
           &.egg{
-            background-image: url('../../../../assets/images/lophocebus.jpg');
+            background-image: url('../../../../assets/images/dashboard/peacock.jpg');
           }
 
           &.frog{
-            background-image: url('../../../../assets/images/trioceros.jpg');
+            background-image: url('../../../../assets/images/dashboard/viper.jpg');
           }
 
 
@@ -154,10 +156,9 @@
           }
 
           .outline{
-            border: 2px solid var(--font-color);
             border-bottom: none;
             height: 100%;
-            margin: 12px 12px 0;
+            // margin: 12px 12px 0;
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
             outline-style: none;
@@ -165,6 +166,7 @@
 
           label{
             font-weight: 600;
+            font-size: 16px;
             letter-spacing: 0em;
             display: flex;
             align-items: center;
@@ -172,8 +174,6 @@
             text-align: center;
             color: var(--font-color);
             margin: 0 12px;
-            border-left: 2px solid var(--font-color);
-            border-right: 2px solid var(--font-color);
             transition: color .3s;
             cursor: pointer;
             text-shadow: 1px 1px var(--dark-color)
@@ -192,6 +192,7 @@
             align-items: center;
             color: var(--dark-color);
             font-size: 14px;
+            width: 100%;
           }
         }
       }

@@ -70,9 +70,7 @@ function DashboardHomeComponent(props) {
       getSearchResults();
     }, 300);
 
-    return () => {
-      clearTimeout(handler);
-    };
+    return () => clearTimeout(handler);
   }, [searchInput]);
 
   return (
@@ -112,43 +110,57 @@ function DashboardHomeComponent(props) {
             handleClick={handleExploreAllSpecies}
           />
         </div>
-        <div className={styles.mostPopular}>
-          <span className={styles.sectionTitle}>{t('Popular Species')}</span>
-          <div className={styles.species}>
-            <div
-              className={cx(styles.navCard, styles.chat)}
-              onClick={() => selectSpecies('Choeropsis liberiensis')}
-            >
-              <div className={styles.outline} />
-              <label>Pygmy Hippopotamus</label>
-              <p>Choeropsis liberiensis</p>
-            </div>
-            <div
-              className={cx(styles.navCard, styles.pilio)}
-              onClick={() => selectSpecies('Phaethornis rupurumii')}
-            >
-              <div className={styles.outline} />
-              <label>Streak-Throated Hermit</label>
-              <p>Phaethornis rupurumii</p>
-            </div>
-            <div
-              className={cx(styles.navCard, styles.egg)}
-              onClick={() => selectSpecies('Lophocebus aterrimus')}
-            >
-              <div className={styles.outline} />
-              <label>Black Crested Mangabey</label>
-              <p>Lophocebus aterrimus</p>
-            </div>
-            <div
-              className={cx(styles.navCard, styles.frog)}
-              onClick={() => selectSpecies('Trioceros johnstoni')}
-            >
-              <div className={styles.outline} />
-              <label>Johnston's Chameleon</label>
-              <p>Trioceros johnstoni</p>
+        {countryISO === 'COD' && (
+          <div className={styles.mostPopular}>
+            <span className={styles.sectionTitle}>{t('Popular Species')}</span>
+            <div className={styles.species}>
+              <button
+                type="button"
+                id="pop1"
+                name="pop1"
+                className={cx(styles.navCard, styles.chat)}
+                onClick={() => selectSpecies('Okapia johnstoni')}
+              >
+                <div className={styles.outline} />
+                <label htmlFor="pop1">Okapi</label>
+                <p>Okapia johnstoni</p>
+              </button>
+              <button
+                type="button"
+                id="pop2"
+                name="pop2"
+                className={cx(styles.navCard, styles.pilio)}
+                onClick={() => selectSpecies('Pan paniscus')}
+              >
+                <div className={styles.outline} />
+                <label htmlFor="pop2">Bonobo</label>
+                <p>Pan paniscus</p>
+              </button>
+              <button
+                type="button"
+                id="pop3"
+                name="pop3"
+                className={cx(styles.navCard, styles.egg)}
+                onClick={() => selectSpecies('Afropavo congensis')}
+              >
+                <div className={styles.outline} />
+                <label htmlFor="pop3">Congo Peacock</label>
+                <p>Afropavo congensis</p>
+              </button>
+              <button
+                type="button"
+                id="pop4"
+                name="pop4"
+                className={cx(styles.navCard, styles.frog)}
+                onClick={() => selectSpecies('Bitis nasicornis')}
+              >
+                <div className={styles.outline} />
+                <label htmlFor="pop4">Rhinoceros Viper</label>
+                <p>Bitis nasicornis</p>
+              </button>
             </div>
           </div>
-        </div>
+        )}
       </div>
       {/* <PartnersContainer /> */}
     </div>
