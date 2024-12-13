@@ -22,6 +22,7 @@ $medium-purple: #8b62e9;
 $tango: #e87926;
 $french-rose: #eb588f;
 $neon-carrot: #ff9c32;
+$bubbles: #FF7841;
 $white-opacity: rgba(255, 255, 255, 0.1);
 $white-opacity-20: rgba($white, 0.2);
 
@@ -299,6 +300,8 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
   --reptiles:#{$reptiles-color};
   --amphibians: #{$amphibians-color};
   --temporal-spi: #{$regionalChecklist};
+  --bubble: #{$bubbles};
+  --bubble-selected: #{$brand-color-main};
 
   // Landcover legend
   --water: #{$water};

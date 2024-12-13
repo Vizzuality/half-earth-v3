@@ -81,7 +81,7 @@ function ProvinceChartComponent(props) {
       data.push({
         ...region,
         data: [{ label: region_name, x: AreaProtected, y: SPI, r: 10 }],
-        backgroundColor: getCSSVariable('birds'),
+        backgroundColor: getCSSVariable('bubble'),
       });
     });
 
@@ -94,9 +94,10 @@ function ProvinceChartComponent(props) {
     if (chart && index > -1) {
       if (previousIndex > -1) {
         chart.data.datasets[previousIndex].backgroundColor =
-          getCSSVariable('birds');
+          getCSSVariable('bubble');
       }
-      chart.data.datasets[index].backgroundColor = '#18bab4';
+      chart.data.datasets[index].backgroundColor =
+        getCSSVariable('bubble-selected');
       setPreviousIndex(index);
       chart.update();
     }
