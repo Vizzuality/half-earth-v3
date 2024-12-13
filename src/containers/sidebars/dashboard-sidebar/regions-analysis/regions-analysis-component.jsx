@@ -63,7 +63,11 @@ function RegionsAnalysisComponent(props) {
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.FORESTS) {
-      featureLayer = EsriFeatureService.getFeatureLayer(DRC_REGION_FEATURE_ID);
+      featureLayer = EsriFeatureService.getFeatureLayer(
+        DRC_REGION_FEATURE_ID,
+        null,
+        LAYER_OPTIONS.FORESTS
+      );
 
       setRegionLayers(() => ({
         [LAYER_OPTIONS.FORESTS]: featureLayer,
