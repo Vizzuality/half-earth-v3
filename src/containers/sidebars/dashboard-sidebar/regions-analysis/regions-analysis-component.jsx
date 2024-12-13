@@ -94,9 +94,13 @@ function RegionsAnalysisComponent(props) {
     const provinceLayer = map.layers.items.find(
       (layer) => layer.id === LAYER_OPTIONS.PROVINCES
     );
+    const forestLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.FORESTS
+    );
 
     map.remove(protectedAreaLayer);
     map.remove(provinceLayer);
+    map.remove(forestLayer);
   };
 
   const optionSelected = (event) => {
