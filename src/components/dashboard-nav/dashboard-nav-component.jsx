@@ -2,9 +2,12 @@ import React, { useContext } from 'react';
 
 import { useT } from '@transifex/react';
 
+import { NAVIGATION } from 'utils/dashboard-utils';
+
 import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
 import DuikerIcon from 'icons/duiker_icon_black.svg?react';
 import ElephantIcon from 'icons/elephant.svg?react';
@@ -12,9 +15,6 @@ import HomeIcon from 'icons/house-solid.svg?react';
 import OkapiIcon from 'icons/okapi.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
 import TimeLineIcon from 'icons/timeline.svg?react';
-
-import { LightModeContext } from '../../context/light-mode';
-import { NAVIGATION } from '../../utils/dashboard-utils';
 
 import styles from './dashboard-nav-styles.module.scss';
 

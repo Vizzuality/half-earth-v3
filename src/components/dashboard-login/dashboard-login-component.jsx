@@ -15,8 +15,10 @@ import Button from 'components/button';
 
 import styles from './dashboard-login-styles.module.scss';
 
+const { ARCGIS_OAUTH_APP_ID } = import.meta.env;
+
 const info = new OAuthInfo({
-  appId: '7Xx7eWvI655rXo2l',
+  appId: ARCGIS_OAUTH_APP_ID,
   popup: false,
 });
 

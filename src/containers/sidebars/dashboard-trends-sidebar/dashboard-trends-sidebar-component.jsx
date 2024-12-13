@@ -12,9 +12,40 @@ import SpiContainer from './spi';
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 
+const TABS = {
+  SHI: 1,
+  SPI: 2,
+  SII: 3,
+};
+
 function DashboardTrendsSidebar(props) {
   const t = useT();
-  const { shiValue, siiValue, spiValue, tabOption, setTabOption } = props;
+  const {
+    shiValue,
+    siiValue,
+    spiValue,
+    tabOption,
+    setTabOption,
+    regionLayers,
+    map,
+  } = props;
+
+  const showHideLayers = (tabClicked) => {
+    const layers = regionLayers;
+    Object.keys(layers).forEach((region) => {
+      const foundLayer = map.layers.items.find((item) => item.id === region);
+      if (foundLayer) {
+        // map.remove(foundLayer);
+        if (tabClicked === TABS.SII) {
+          foundLayer.visible = false;
+        } else {
+          foundLayer.visible = true;
+        }
+      }
+    });
+
+    setTabOption(tabClicked);
+  };
 
   return (
     <div className={styles.container}>
@@ -29,9 +60,9 @@ function DashboardTrendsSidebar(props) {
             name="spi"
             aria-label={t('Species Protection Index')}
             className={cx({
-              [styles.selected]: tabOption === 2,
+              [styles.selected]: tabOption === TABS.SPI,
             })}
-            onClick={() => setTabOption(2)}
+            onClick={() => showHideLayers(TABS.SPI)}
           >
             <label htmlFor="spi">{spiValue}</label>
             <span>{t('Species Protection Index')}</span>
@@ -40,9 +71,9 @@ function DashboardTrendsSidebar(props) {
             type="button"
             aria-label={t('Species Habitat Index')}
             className={cx({
-              [styles.selected]: tabOption === 1,
+              [styles.selected]: tabOption === TABS.SHI,
             })}
-            onClick={() => setTabOption(1)}
+            onClick={() => showHideLayers(TABS.SHI)}
             name="shi"
           >
             <label htmlFor="shi">{shiValue}</label>
@@ -53,9 +84,9 @@ function DashboardTrendsSidebar(props) {
             type="button"
             aria-label={t('Species Information Index')}
             className={cx({
-              [styles.selected]: tabOption === 3,
+              [styles.selected]: tabOption === TABS.SII,
             })}
-            onClick={() => setTabOption(3)}
+            onClick={() => showHideLayers(TABS.SII)}
             name="sii"
           >
             <label htmlFor="sii">{siiValue}</label>
