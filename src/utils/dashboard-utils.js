@@ -81,21 +81,3 @@ export const REGION_OPTIONS = {
 
 export const DASHBOARD_TABLE_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1/FeatureServer';
-
-export const DASHBOARD_PROVINCE_TREND_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table2_v2_2/FeatureServer';
-
-export const DASHBOARD_COUNTRY_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_0/FeatureServer';
-
-export const DASHBOARD_REGION_SPECIES_SPI_SCORES_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_spi_scores_year_2024_v1_2/FeatureServer';
-
-export const DASHBOARD_BIN_SCORES_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_values_bin_count_by_taxa/FeatureServer';
-
-export const DASHBOARD_SHI_SCORES_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_species_shi_scores_year_2024/FeatureServer';
-
-export const DASHBOARD_SHI_BIN_SCORES_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shs_summary_for_stacked_bar_chart/FeatureServer';

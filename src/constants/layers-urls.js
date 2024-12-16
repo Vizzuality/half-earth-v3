@@ -461,3 +461,18 @@ export const LAYERS_URLS = {
   [SPECIFIC_REGIONS_WDPA_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SpecificRegions_wdpa_202401/FeatureServer/0',
 };
+
+export const DASHBOARD_URLS = {
+  COUNTRY_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_0/FeatureServer',
+  SPI_PROVINCE_TREND_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table2_v2_2/FeatureServer',
+  SPI_REGION_SPECIES_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_spi_scores_year_2024_v1_2/FeatureServer',
+  SPI_HISTOGRAM_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_values_bin_count_by_taxa/FeatureServer',
+  SHI_SPECIES_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_species_shi_scores_year_2024/FeatureServer',
+  SHI_HISTOGRAM_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shs_summary_for_stacked_bar_chart/FeatureServer',
+};

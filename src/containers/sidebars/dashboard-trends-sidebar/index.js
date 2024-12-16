@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import {
-  DASHBOARD_BIN_SCORES_URL,
-  DASHBOARD_COUNTRY_URL,
-  DASHBOARD_PROVINCE_TREND_URL,
-  DASHBOARD_REGION_SPECIES_SPI_SCORES_URL,
   LAYER_OPTIONS,
   PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
   REGION_OPTIONS,
   SHI_LATEST_YEAR,
   SPI_LATEST_YEAR,
-  DASHBOARD_SHI_SCORES_URL,
   SII_LATEST_YEAR,
 } from 'utils/dashboard-utils.js';
 
@@ -19,9 +14,10 @@ import last from 'lodash/last';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
-import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-
-import { DASHBOARD_SHI_BIN_SCORES_URL } from '../../../utils/dashboard-utils.js';
+import {
+  COUNTRIES_DATA_SERVICE_URL,
+  DASHBOARD_URLS,
+} from 'constants/layers-urls';
 
 import Component, {
   NATIONAL_TREND,
@@ -162,28 +158,28 @@ function DashboardTrendsSidebarContainer(props) {
     setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
 
     const provinceURL = {
-      url: DASHBOARD_PROVINCE_TREND_URL,
+      url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
       whereClause: `iso3 = '${countryISO}' and Year = ${SPI_LATEST_YEAR}`,
       // orderByFields: ['region_name'],
     };
     getProvinceData(provinceURL);
 
     const countryURL = {
-      url: DASHBOARD_COUNTRY_URL,
+      url: DASHBOARD_URLS.COUNTRY_URL,
       whereClause: `ISO3 = '${countryISO}'`,
       orderByFields: ['year'],
     };
     getCountryData(countryURL);
 
     const shiSpeciesScoresURL = {
-      url: DASHBOARD_SHI_SCORES_URL,
+      url: DASHBOARD_URLS.SHI_SPECIES_URL,
       whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR} and HabitatScore >= 1 and HabitatScore <= 5 and SpeciesImage IS NOT NULL`,
       // orderByFields: ['region_name'],
     };
     getShiSelectSpeciesData(shiSpeciesScoresURL);
 
     const shiScoresURL = {
-      url: DASHBOARD_SHI_BIN_SCORES_URL,
+      url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
       whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR}`,
       // orderByFields: ['region_name'],
     };
@@ -193,7 +189,7 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     if (!selectedProvince) return;
     const scoreDataURL = {
-      url: DASHBOARD_BIN_SCORES_URL,
+      url: DASHBOARD_URLS.SPI_HISTOGRAM_URL,
       whereClause: `ISO3 = '${countryISO}' and YEAR = ${SPI_LATEST_YEAR}`,
     };
     getSpiScoreData(scoreDataURL);
@@ -204,7 +200,7 @@ function DashboardTrendsSidebarContainer(props) {
     }
 
     const selectSpeciesURL = {
-      url: DASHBOARD_REGION_SPECIES_SPI_SCORES_URL,
+      url: DASHBOARD_URLS.SPI_REGION_SPECIES_URL,
       whereClause,
     };
 
