@@ -26,7 +26,6 @@ function GroupedListComponent(props) {
     countryISO,
     setDataPoints,
     map,
-    view,
     speciesInfo,
     regionLayers,
     setRegionLayers,
@@ -47,6 +46,10 @@ function GroupedListComponent(props) {
     '794adb49-7458-41c4-a1c0-56537fdbec1d',
   ];
 
+  const searchForLayers = (layerName) => {
+    return map.layers.items.findIndex((item) => item.id === layerName);
+  };
+
   const displayChildren = (key) => {
     const showChildren = !dataPoints[key].showChildren;
 
@@ -55,27 +58,6 @@ function GroupedListComponent(props) {
       [key]: {
         ...dataPoints[key],
         showChildren,
-      },
-    });
-  };
-
-  // update value of all children
-  const updateChildren = (item) => {
-    const isActive = !dataPoints[item].isActive;
-
-    const typeItems = dataPoints[item].items;
-
-    typeItems.map((item) => {
-      findLayerToShow(item);
-      item.isActive = isActive;
-    });
-
-    setDataPoints({
-      ...dataPoints,
-      [item]: {
-        ...dataPoints[item],
-        isActive,
-        items: [...typeItems],
       },
     });
   };
@@ -113,15 +95,14 @@ function GroupedListComponent(props) {
             countryISO
           );
 
-          setRegionLayers((regionLayers) => ({
-            ...regionLayers,
+          setRegionLayers((rl) => ({
+            ...rl,
             [LAYER_OPTIONS.PROTECTED_AREAS]: layers,
           }));
           map.add(layers);
         } else {
-          setRegionLayers((regionLayers) => {
-            const { [LAYER_OPTIONS.PROTECTED_AREAS]: name, ...rest } =
-              regionLayers;
+          setRegionLayers((rl) => {
+            const { [LAYER_OPTIONS.PROTECTED_AREAS]: name, ...rest } = rl;
             return rest;
           });
         }
@@ -136,15 +117,15 @@ function GroupedListComponent(props) {
             item.toUpperCase()
           );
 
-          setRegionLayers((regionLayers) => ({
-            ...regionLayers,
+          setRegionLayers((rl) => ({
+            ...rl,
             [item.toUpperCase()]: layer,
           }));
           map.add(layer);
         } else {
           const layer = regionLayers[item.toUpperCase()];
-          setRegionLayers((regionLayers) => {
-            const { [item.toUpperCase()]: name, ...rest } = regionLayers;
+          setRegionLayers((rl) => {
+            const { [item.toUpperCase()]: name, ...rest } = rl;
             return rest;
           });
           map.remove(layer);
@@ -173,16 +154,16 @@ function GroupedListComponent(props) {
           }
 
           webTileLayer.then((layer) => {
-            setRegionLayers((regionLayers) => ({
-              ...regionLayers,
+            setRegionLayers((rl) => ({
+              ...rl,
               [layerName]: layer,
             }));
             map.add(layer);
           });
         } else {
           setShowHabitatChart(false);
-          setRegionLayers((regionLayers) => {
-            const { [layerName]: name, ...rest } = regionLayers;
+          setRegionLayers((rl) => {
+            const { [layerName]: name, ...rest } = rl;
             return rest;
           });
           map.remove(regionLayers[layerName]);
@@ -215,17 +196,17 @@ function GroupedListComponent(props) {
             layerIndex = map.layers.items.length;
           }
 
-          webTileLayer.then((layer) => {
-            setRegionLayers((regionLayers) => ({
-              ...regionLayers,
-              [layerName]: layer,
+          webTileLayer.then((l) => {
+            setRegionLayers((rl) => ({
+              ...rl,
+              [layerName]: l,
             }));
-            map.add(layer, layerIndex);
+            map.add(l, layerIndex);
           });
         }
       } else {
-        setRegionLayers((regionLayers) => {
-          const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers((rl) => {
+          const { [layerName]: name, ...rest } = rl;
           return rest;
         });
         map.remove(regionLayers[layerName]);
@@ -248,8 +229,8 @@ function GroupedListComponent(props) {
             layerName,
             countryISO
           );
-          setRegionLayers((regionLayers) => ({
-            ...regionLayers,
+          setRegionLayers((rl) => ({
+            ...rl,
             [layerName]: layer,
           }));
 
@@ -262,8 +243,8 @@ function GroupedListComponent(props) {
         }
       } else {
         // const { [layerName]: name, ...rest } = regionLayers;
-        setRegionLayers((regionLayers) => {
-          const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers((rl) => {
+          const { [layerName]: name, ...rest } = rl;
           return rest;
         });
 
@@ -275,8 +256,8 @@ function GroupedListComponent(props) {
       if (!item.isActive) {
         const layer = EsriFeatureService.getMVTSource();
 
-        setRegionLayers((regionLayers) => ({
-          ...regionLayers,
+        setRegionLayers((rl) => ({
+          ...rl,
           [layerName]: layer,
         }));
 
@@ -293,8 +274,8 @@ function GroupedListComponent(props) {
           source: 'mapTiles',
         });
       } else {
-        setRegionLayers((regionLayers) => {
-          const { [layerName]: name, ...rest } = regionLayers;
+        setRegionLayers((rl) => {
+          const { [layerName]: name, ...rest } = rl;
           return rest;
         });
         map.remove(regionLayers[layerName]);
@@ -302,6 +283,27 @@ function GroupedListComponent(props) {
     }
 
     displaySingleLayer(item);
+  };
+
+  // update value of all children
+  const updateChildren = (item) => {
+    const isActive = !dataPoints[item].isActive;
+
+    const typeItems = dataPoints[item].items;
+
+    typeItems.map((i) => {
+      findLayerToShow(i);
+      i.isActive = isActive;
+    });
+
+    setDataPoints({
+      ...dataPoints,
+      [item]: {
+        ...dataPoints[item],
+        isActive,
+        items: [...typeItems],
+      },
+    });
   };
 
   // check if some but not all children are selected
@@ -368,10 +370,6 @@ function GroupedListComponent(props) {
     return control;
   };
 
-  const searchForLayers = (layerName) => {
-    return map.layers.items.findIndex((item) => item.id === layerName);
-  };
-
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {Object.keys(dataPoints).map((key) => (
@@ -379,7 +377,7 @@ function GroupedListComponent(props) {
           {dataPoints[key].items.length > 0 && (
             <>
               <div className={styles.parent}>
-                <button onClick={() => displayChildren(key)}>
+                <button type="button" onClick={() => displayChildren(key)}>
                   <ArrowIcon
                     className={cx(styles.arrowIcon, {
                       [styles.isOpened]: dataPoints[key].showChildren,

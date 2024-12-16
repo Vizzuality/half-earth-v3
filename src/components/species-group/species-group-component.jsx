@@ -12,11 +12,12 @@ import styles from './species-group-component.module.scss';
 function SpeciesGroupComponent(props) {
   const { species, selectedTaxaObj, setSelectedIndex, setScientificName } =
     props;
+  // eslint-disable-next-line camelcase
   const { asset_url, common, scientificname } = species;
 
-  const selectSpecies = (species) => {
+  const selectSpecies = (selectedSpecies) => {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
-    setScientificName(species.scientificname);
+    setScientificName(selectedSpecies.scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, species.scientificname);
   };
 

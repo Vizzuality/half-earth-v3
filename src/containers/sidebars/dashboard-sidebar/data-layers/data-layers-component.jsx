@@ -13,7 +13,6 @@ import {
   Tooltip,
   Legend,
   CategoryScale,
-  plugins,
   Filler,
 } from 'chart.js';
 import cx from 'classnames';
@@ -21,8 +20,6 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import Button from 'components/button';
-
-import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION } from 'constants/dashboard-constants.js';
 
@@ -45,11 +42,10 @@ ChartJS.register(
 
 function DataLayerComponent(props) {
   const t = useT();
-  const { map, speciesInfo, dataLayerData, selectedRegion, setSelectedIndex } =
+  const { speciesInfo, dataLayerData, selectedRegion, setSelectedIndex } =
     props;
 
   const { lightMode } = useContext(LightModeContext);
-  const [dataLayers, setDataLayers] = useState({});
   const [dataPoints, setDataPoints] = useState();
   const [privateDataPoints, setPrivateDataPoints] = useState({
     'Point Observations': {
@@ -126,30 +122,6 @@ function DataLayerComponent(props) {
     },
   };
 
-  useEffect(() => {
-    if (!speciesInfo) return;
-    getHabitatMapData();
-  }, [speciesInfo]);
-
-  useEffect(() => {
-    if (!dataLayerData) return;
-    const publicData = {
-      ...groupByTypeTitle(dataLayerData),
-      'Habitat Loss/Gain': {
-        items: [],
-        total_no_rows: '',
-        isActive: false,
-        showChildren: false,
-      },
-    };
-    setDataPoints(publicData);
-  }, [dataLayerData]);
-
-  useEffect(() => {
-    if (!dataPoints) return;
-    setIsLoading(false);
-  }, [dataPoints]);
-
   const groupByTypeTitle = (arr) => {
     return arr.reduce((acc, obj) => {
       const key = obj.type_title;
@@ -213,6 +185,30 @@ function DataLayerComponent(props) {
       ],
     });
   };
+
+  useEffect(() => {
+    if (!speciesInfo) return;
+    getHabitatMapData();
+  }, [speciesInfo]);
+
+  useEffect(() => {
+    if (!dataLayerData) return;
+    const publicData = {
+      ...groupByTypeTitle(dataLayerData),
+      'Habitat Loss/Gain': {
+        items: [],
+        total_no_rows: '',
+        isActive: false,
+        showChildren: false,
+      },
+    };
+    setDataPoints(publicData);
+  }, [dataLayerData]);
+
+  useEffect(() => {
+    if (!dataPoints) return;
+    setIsLoading(false);
+  }, [dataPoints]);
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>

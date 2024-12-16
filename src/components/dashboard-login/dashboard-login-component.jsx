@@ -21,11 +21,9 @@ const info = new OAuthInfo({
 });
 
 function DashboardLoginComponent(props) {
-  const { setLoggedIn, countryISO, browsePage, setUser, user } = props;
+  const { setLoggedIn, countryISO, setUser } = props;
   const t = useT();
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
   const [favicon, setFavicon] = useState('/favicon.ico');
   const [pageTitle, setPageTitle] = useState('EPA National Biodiversity');
 

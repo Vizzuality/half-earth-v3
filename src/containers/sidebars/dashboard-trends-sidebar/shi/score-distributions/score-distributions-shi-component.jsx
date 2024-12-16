@@ -10,7 +10,6 @@ import { Loading } from 'he-components';
 
 import Button from 'components/button';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
-import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 
 import {
   NAVIGATION,
@@ -49,7 +48,6 @@ function ScoreDistributionsShiComponent(props) {
   const { lightMode } = useContext(LightModeContext);
   const [lowBucket, setLowBucket] = useState(0);
   const [highBucket, setHighBucket] = useState(5);
-  const bucketSize = 7;
 
   const options = {
     plugins: {
@@ -150,7 +148,7 @@ function ScoreDistributionsShiComponent(props) {
       taxaSet.mammals[score][bin] = a[`${score}_mammals`];
       taxaSet.reptiles[score][bin] = a[`${score}_reptiles`];
     });
-    console.log('Taxaset', taxaSet);
+
     const uniqueKeys = new Set([
       ...Object.keys(taxaSet.birds[score]),
       ...Object.keys(taxaSet.mammals[score]),

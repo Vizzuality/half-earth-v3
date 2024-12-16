@@ -15,8 +15,6 @@ import {
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
-import PartnersContainer from '../../../../components/partners';
-
 import styles from './dashboard-home-styles.module.scss';
 
 function DashboardHomeComponent(props) {

@@ -14,8 +14,7 @@ import { setBasemap } from 'utils/layer-manager-utils.js';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION } from 'constants/dashboard-constants';
-import { GADM_0_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
-import { COUNTRIES_DATA_SERVICE_URL, LAYERS_URLS } from 'constants/layers-urls';
+import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import DashboardComponent from './dashboard-component.jsx';
@@ -100,8 +99,8 @@ function DashboardContainer(props) {
   const getSpeciesData = async () => {
     const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${scientificName}`;
     const response = await fetch(url);
-    const data = await response.json();
-    setSpeciesInfo(data[0]);
+    const d = await response.json();
+    setSpeciesInfo(d[0]);
   };
 
   const getDataLayersData = async () => {
@@ -123,8 +122,8 @@ function DashboardContainer(props) {
       apiCalls.map(async (url) => {
         const response = await fetch(url);
         try {
-          const data = await response.json();
-          return data;
+          const d = await response.json();
+          return d;
         } catch (error) {
           return [];
         }
@@ -159,27 +158,6 @@ function DashboardContainer(props) {
     });
 
     setDataLayerData(dataLayersData);
-  };
-
-  const getData = async () => {
-    const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
-    const spiScoreURL = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${scientificName}`;
-
-    const apiCalls = [habitatTrendUrl, spiScoreURL];
-
-    const apiResponses = await Promise.all(
-      apiCalls.map(async (url) => {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data;
-      })
-    );
-
-    const [habitatTrendData, spiScoreData] = apiResponses;
-    getDataByCountry(habitatTrendData);
-    getSpiDataByCountry(spiScoreData);
-
-    setData({ habitatTrendData, spiScoreData });
   };
 
   const sortTaxaList = (taxa) => {
@@ -359,6 +337,27 @@ function DashboardContainer(props) {
       layersArray: viewSettings.basemap.layersArray,
     });
     activateLayersOnLoad(map, activeLayers, layersConfig);
+  };
+
+  const getData = async () => {
+    const habitatTrendUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
+    const spiScoreURL = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${scientificName}`;
+
+    const apiCalls = [habitatTrendUrl, spiScoreURL];
+
+    const apiResponses = await Promise.all(
+      apiCalls.map(async (url) => {
+        const response = await fetch(url);
+        const d = await response.json();
+        return d;
+      })
+    );
+
+    const [habitatTrendData, spiScoreData] = apiResponses;
+    getDataByCountry(habitatTrendData);
+    getSpiDataByCountry(spiScoreData);
+
+    setData({ habitatTrendData, spiScoreData });
   };
 
   // Get Country information, allows to get country name
