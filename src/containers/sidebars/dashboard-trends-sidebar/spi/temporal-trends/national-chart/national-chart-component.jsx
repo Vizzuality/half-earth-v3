@@ -140,7 +140,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         {
           label: 'SPI',
           data: countryData.map((item) => item.SPI),
-          borderColor: getCSSVariable('birds'),
+          borderColor: getCSSVariable('bubble'),
         },
         {
           label: t('Area protected'),

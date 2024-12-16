@@ -82,6 +82,7 @@ function ProvinceChartComponent(props) {
         ...region,
         data: [{ label: region_name, x: AreaProtected, y: SPI, r: 10 }],
         backgroundColor: getCSSVariable('bubble'),
+        borderColor: getCSSVariable('white'),
       });
     });
 

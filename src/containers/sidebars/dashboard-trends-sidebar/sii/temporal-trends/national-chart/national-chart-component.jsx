@@ -104,7 +104,7 @@ function NationalChartComponent(props) {
           {
             label: t('SII'),
             data: nationalChartData.map((item) => item.sii * 100),
-            borderColor: getCSSVariable('birds'),
+            borderColor: getCSSVariable('bubble'),
           },
         ],
       });

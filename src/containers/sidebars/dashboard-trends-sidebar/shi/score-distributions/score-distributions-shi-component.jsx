@@ -23,14 +23,18 @@ import compStyles from './score-distributions-shi-styles.module.scss';
 
 function ScoreDistributionsShiComponent(props) {
   const t = useT();
-  const { setScientificName, setSelectedIndex, shiScoresData } = props;
+  const {
+    setScientificName,
+    setSelectedIndex,
+    shiScoresData,
+    selectShiSpeciesData,
+  } = props;
   const SCORES = {
-    HABITAT_SCORE: 'steward_score',
-    AREA_SCORE: 'area_score',
-    CONNECTIVITY_SCORE: 'connectivity_score',
+    HABITAT_SCORE: 'steward',
+    AREA_SCORE: 'areascore',
+    CONNECTIVITY_SCORE: 'connectivity',
   };
 
-  const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
   const lowAvg = 'Amphibians';
   const highAvg = 'birds';
 
@@ -44,7 +48,7 @@ function ScoreDistributionsShiComponent(props) {
   const { lightMode } = useContext(LightModeContext);
   const [lowBucket, setLowBucket] = useState(0);
   const [highBucket, setHighBucket] = useState(5);
-  const bucketSize = 5;
+  const bucketSize = 7;
 
   const options = {
     plugins: {
@@ -112,54 +116,68 @@ function ScoreDistributionsShiComponent(props) {
     // }
   };
 
-  const displayData = (data, activeScore) => {
-    const taxaSet = { amphibians: {}, birds: {}, mammals: {}, reptiles: {} };
+  const displayData = (score) => {
+    const taxaSet = {
+      amphibians: {
+        [SCORES.AREA_SCORE]: {},
+        [SCORES.HABITAT_SCORE]: {},
+        [SCORES.CONNECTIVITY_SCORE]: {},
+      },
+      birds: {
+        [SCORES.AREA_SCORE]: {},
+        [SCORES.HABITAT_SCORE]: {},
+        [SCORES.CONNECTIVITY_SCORE]: {},
+      },
+      mammals: {
+        [SCORES.AREA_SCORE]: {},
+        [SCORES.HABITAT_SCORE]: {},
+        [SCORES.CONNECTIVITY_SCORE]: {},
+      },
+      reptiles: {
+        [SCORES.AREA_SCORE]: {},
+        [SCORES.HABITAT_SCORE]: {},
+        [SCORES.CONNECTIVITY_SCORE]: {},
+      },
+    };
 
     // Loop through each number and place it in the appropriate bucket
-    data.forEach((a) => {
-      const speciesGroup = a.speciesgroup;
+    shiScoresData.forEach((a) => {
+      const bin = a.binned.split(',')[0].replace(/ /gi, '');
 
-      a.taxa_scores.forEach((s) => {
-        const number = +s[activeScore];
-        // Determine the bucket index based on the floor value of the number
-        const bucketIndex = Math.floor(number / bucketSize);
-
-        if (!taxaSet[speciesGroup].hasOwnProperty(bucketIndex)) {
-          taxaSet[speciesGroup][bucketIndex] = 1;
-        } else {
-          taxaSet[speciesGroup][bucketIndex] += 1;
-        }
-      });
+      taxaSet.amphibians[score][bin] = a[`${score}_amphibians`];
+      taxaSet.birds[score][bin] = a[`${score}_birds`];
+      taxaSet.mammals[score][bin] = a[`${score}_mammals`];
+      taxaSet.reptiles[score][bin] = a[`${score}_reptiles`];
     });
-
+    console.log('Taxaset', taxaSet);
     const uniqueKeys = new Set([
-      ...Object.keys(taxaSet.birds),
-      ...Object.keys(taxaSet.mammals),
-      ...Object.keys(taxaSet.reptiles),
-      ...Object.keys(taxaSet.amphibians),
+      ...Object.keys(taxaSet.birds[score]),
+      ...Object.keys(taxaSet.mammals[score]),
+      ...Object.keys(taxaSet.reptiles[score]),
+      ...Object.keys(taxaSet.amphibians[score]),
     ]);
 
     setChartData({
-      labels: [...uniqueKeys].map((key) => key * bucketSize),
+      labels: [...uniqueKeys].map((key) => key),
       datasets: [
         {
           label: t('Birds'),
-          data: Object.values(taxaSet.birds),
+          data: Object.values(taxaSet.birds[score]),
           backgroundColor: getCSSVariable('birds'),
         },
         {
           label: t('Mammals'),
-          data: Object.values(taxaSet.mammals),
+          data: Object.values(taxaSet.mammals[score]),
           backgroundColor: getCSSVariable('mammals'),
         },
         {
           label: t('Reptiles'),
-          data: Object.values(taxaSet.reptiles),
+          data: Object.values(taxaSet.reptiles[score]),
           backgroundColor: getCSSVariable('reptiles'),
         },
         {
           label: t('Amphibians'),
-          data: Object.values(taxaSet.amphibians),
+          data: Object.values(taxaSet.amphibians[score]),
           backgroundColor: getCSSVariable('amphibians'),
         },
       ],
@@ -169,15 +187,16 @@ function ScoreDistributionsShiComponent(props) {
 
   const handleActiveChange = (score) => {
     setActiveScore(score);
-    displayData(responseData, score);
+    displayData(score);
   };
 
-  const loadSpecies = (data) => {
-    const species = [];
-    species.push(data[0]);
-    species.push(data[1]);
-    species.push(data[2]);
-    species.push(data[3]);
+  const loadSpecies = () => {
+    const species = [
+      selectShiSpeciesData[0],
+      selectShiSpeciesData[1],
+      selectShiSpeciesData[2],
+      selectShiSpeciesData[3],
+    ];
     setSpsSpecies(species);
     setIsSpeciesLoading(false);
   };
@@ -189,9 +208,9 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const getChartData = async () => {
-    setResponseData(shiScoresData);
-    loadSpecies(shiScoresData);
-    // displayData(shiScoresData, activeScore);
+    // setResponseData(selectShiSpeciesData);
+    // loadSpecies(selectShiSpeciesData);
+    displayData(SCORES.HABITAT_SCORE);
   };
 
   useEffect(() => {
@@ -199,9 +218,13 @@ function ScoreDistributionsShiComponent(props) {
 
     setIsLoading(true);
     getChartData();
-    // getTaxaData();
-    setIsLoading(false);
   }, [shiScoresData]);
+
+  useEffect(() => {
+    if (!selectShiSpeciesData.length) return;
+    setIsSpeciesLoading(true);
+    loadSpecies();
+  }, [selectShiSpeciesData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
@@ -233,7 +256,7 @@ function ScoreDistributionsShiComponent(props) {
                     type="button"
                     onClick={() => selectSpecies(s.species)}
                   >
-                    <img src={s.species_url} alt="species" />
+                    <img src={s.SpeciesImage} alt="species" />
                     <div className={styles.spsInfo}>
                       <span className={styles.name}>{s.ScientificName}</span>
                       <span className={styles.scientificname}>

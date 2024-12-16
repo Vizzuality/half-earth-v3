@@ -162,13 +162,13 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const loadSpecies = () => {
-    const blah = [
+    const species = [
       selectSpiSpeciesData[0],
       selectSpiSpeciesData[1],
       selectSpiSpeciesData[2],
       selectSpiSpeciesData[3],
     ];
-    setSpsSpecies(blah);
+    setSpsSpecies(species);
 
     setIsSpeciesLoading(false);
   };
@@ -222,7 +222,7 @@ function ScoreDistributionsSpiComponent(props) {
                       type="button"
                       onClick={() => selectSpecies(s.species)}
                     >
-                      <img src={s.asset_url} alt="species" />
+                      <img src={s.species_url} alt="species" />
                       <div className={styles.spsInfo}>
                         <span className={styles.name}>{s.species}</span>
                         <span className={styles.scientificname}>

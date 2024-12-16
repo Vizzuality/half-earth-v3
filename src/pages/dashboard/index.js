@@ -12,7 +12,8 @@ import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
-import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+import { GADM_0_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
+import { COUNTRIES_DATA_SERVICE_URL, LAYERS_URLS } from 'constants/layers-urls';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import { NAVIGATION } from '../../utils/dashboard-utils';
@@ -238,6 +239,7 @@ function DashboardContainer(props) {
 
   const getSpeciesList = async () => {
     const speciesListUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list`;
+    // https://utility.arcgis.com/usrsvcs/servers/f09f7630ec964885bb2a968c7f1a8bea/rest/services/gadm0_aoi_summaries_updated_20240326/FeatureServer/0
 
     // TODO: Use mol-country-attribute.json file to find MOL Region ID for ISO value
     const params = makeSpeciesListParams({
@@ -293,6 +295,20 @@ function DashboardContainer(props) {
 
     const taxa = sortTaxaList(responseData.taxas);
     setTaxaList(taxa);
+  };
+
+  const newGetSpeciesList = () => {
+    EsriFeatureService.getFeatures({
+      url: LAYERS_URLS[GADM_0_ADMIN_AREAS_FEATURE_LAYER],
+      whereClause: `NAME_0 = 'Aruba'`,
+      returnGeometry: false,
+    }).then((features) => {
+      if (features && features[0]) {
+        const { geometry, attributes } = features[0];
+        setGeometry(geometry);
+        console.log(attributes);
+      }
+    });
   };
 
   const getSpiDataByCountry = (d) => {
@@ -385,7 +401,8 @@ function DashboardContainer(props) {
 
   useEffect(() => {
     if (!selectedRegion) return;
-    getSpeciesList();
+    // getSpeciesList();
+    newGetSpeciesList();
   }, [selectedRegion]);
 
   useEffect(() => {

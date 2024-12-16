@@ -21,6 +21,8 @@ import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
+import { DASHBOARD_SHI_BIN_SCORES_URL } from '../../../utils/dashboard-utils.js';
+
 import Component, {
   NATIONAL_TREND,
   PROVINCE_TREND,
@@ -47,6 +49,7 @@ function DashboardTrendsSidebarContainer(props) {
   const [spiScoresData, setSpiScoresData] = useState([]);
   const [shiScoresData, setShiScoresData] = useState([]);
   const [selectSpiSpeciesData, setSpiSelectSpeciesData] = useState([]);
+  const [selectShiSpeciesData, setShiSelectSpeciesData] = useState([]);
 
   const [shiValue, setShiValue] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
@@ -90,6 +93,13 @@ function DashboardTrendsSidebarContainer(props) {
     });
   };
 
+  const getScoresData = (scoresDataURL) => {
+    EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
+      const data = features.map((f) => f.attributes);
+      setShiScoresData(data);
+    });
+  };
+
   const getSpiSelectSpeciesData = (selectSpeciesURL) => {
     EsriFeatureService.getFeatures(selectSpeciesURL).then((features) => {
       const data = features.map((f) => f.attributes);
@@ -97,10 +107,10 @@ function DashboardTrendsSidebarContainer(props) {
     });
   };
 
-  const getShiScoreData = (scoresDataURL) => {
+  const getShiSelectSpeciesData = (scoresDataURL) => {
     EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
       const data = features.map((f) => f.attributes);
-      setShiScoresData(data);
+      setShiSelectSpeciesData(data);
     });
   };
 
@@ -165,12 +175,19 @@ function DashboardTrendsSidebarContainer(props) {
     };
     getCountryData(countryURL);
 
-    const shiScoresURL = {
+    const shiSpeciesScoresURL = {
       url: DASHBOARD_SHI_SCORES_URL,
-      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR} and HabitatScore >= 1 and HabitatScore <= 5`,
+      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR} and HabitatScore >= 1 and HabitatScore <= 5 and SpeciesImage IS NOT NULL`,
       // orderByFields: ['region_name'],
     };
-    getShiScoreData(shiScoresURL);
+    getShiSelectSpeciesData(shiSpeciesScoresURL);
+
+    const shiScoresURL = {
+      url: DASHBOARD_SHI_BIN_SCORES_URL,
+      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR}`,
+      // orderByFields: ['region_name'],
+    };
+    getScoresData(shiScoresURL);
   }, []);
 
   useEffect(() => {
@@ -181,9 +198,9 @@ function DashboardTrendsSidebarContainer(props) {
     };
     getSpiScoreData(scoreDataURL);
 
-    let whereClause = `ISO3_regional = '${selectedProvince.iso3_regional}' and species_protection_score_all >= 0 and species_protection_score_all <= 5`;
+    let whereClause = `ISO3_regional = '${selectedProvince.iso3_regional}' and species_protection_score_all >= 0 and species_protection_score_all <= 5 and species_url IS NOT NULL`;
     if (activeTrend === NATIONAL_TREND) {
-      whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX' and species_protection_score_all >= 0 and species_protection_score_all <= 5`;
+      whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX' and species_protection_score_all >= 0 and species_protection_score_all <= 5 and species_url IS NOT NULL`;
     }
 
     const selectSpeciesURL = {
@@ -205,6 +222,7 @@ function DashboardTrendsSidebarContainer(props) {
       spiScoresData={spiScoresData}
       shiScoresData={shiScoresData}
       selectSpiSpeciesData={selectSpiSpeciesData}
+      selectShiSpeciesData={selectShiSpeciesData}
       geo={geo}
       activeTrend={activeTrend}
       setActiveTrend={setActiveTrend}

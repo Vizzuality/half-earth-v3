@@ -1,23 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Loading } from 'he-components';
-import styles from './species-list-component-styles.module.scss';
-import cx from 'classnames';
+
 import { useT } from '@transifex/react';
+
+import cx from 'classnames';
+import { Loading } from 'he-components';
+
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
+
+import hrTheme from 'styles/themes/hr-theme.module.scss';
+
 import { LightModeContext } from '../../context/light-mode';
 import SpeciesGroupContainer from '../species-group';
 import SpeciesGroupTitleContainer from '../species-group-title';
-import hrTheme from 'styles/themes/hr-theme.module.scss';
+
+import styles from './species-list-component-styles.module.scss';
 
 function SpeciesListComponent(props) {
   const t = useT();
-  const {
-    selectedTaxa,
-    setSelectedTaxa,
-    filteredTaxaList,
-    isLoading,
-  } = props
+  const { selectedTaxa, setSelectedTaxa, filteredTaxaList, isLoading } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const SPHINGID_MOTHS = /Sphingid moths/gi;
@@ -46,7 +47,7 @@ function SpeciesListComponent(props) {
 
     return () => {
       clearTimeout(handler);
-    }
+    };
   }, [filter]);
 
   const getTaxaTitle = (label, taxa) => {
@@ -70,21 +71,21 @@ function SpeciesListComponent(props) {
     }
 
     return label;
-  }
+  };
 
   const updateSelectedTaxa = (taxa) => {
     if (!taxa) return;
 
     setFilter('');
     setSelectedTaxa(taxa);
-    let fc = {};
+    const fc = {};
 
-    const sto = filteredTaxaList.find(t => t.taxa === taxa);
+    const sto = filteredTaxaList.find((t) => t.taxa === taxa);
     if (sto === undefined) return;
 
     setInFilter(sto?.species?.length);
 
-    const transformer = sp => ({
+    const transformer = (sp) => ({
       ...sp,
       visible: true,
       filterString: [sp.scientificname, sp.common, sp.family, sp.family_common]
@@ -92,7 +93,7 @@ function SpeciesListComponent(props) {
         .toLocaleLowerCase(),
     });
     const transformed = [];
-    sto?.species?.forEach(sp => {
+    sto?.species?.forEach((sp) => {
       let species = sp;
       if (!fc[species.family]) {
         fc[species.family] = {
@@ -111,23 +112,21 @@ function SpeciesListComponent(props) {
     sto.species = transformed;
     setFamilyCounts(fc);
     setSelectedTaxaObj(sto);
-  }
+  };
 
   const applyFilter = () => {
     // this.virtualScroll?.scrollToIndex(0);
-    const inFilterCheck = sp => sp.filterString.indexOf(filter) > -1;
+    const inFilterCheck = (sp) => sp.filterString.indexOf(filter) > -1;
     setInFilter(0);
 
     // clear the counts
     const fc = familyCounts;
-    Object.keys(fc).forEach(k => {
+    Object.keys(fc).forEach((k) => {
       fc[k].visibleCount = 0;
     });
 
     // sort by family common
-    const familySortedSpecies = sortFilteredSpecies(
-      selectedTaxaObj?.species,
-    );
+    const familySortedSpecies = sortFilteredSpecies(selectedTaxaObj?.species);
 
     // group by family common
     let groupByFamily = familySortedSpecies?.reduce((group, result) => {
@@ -153,7 +152,7 @@ function SpeciesListComponent(props) {
       // sort family common by common
       const groupKeys = Object.keys(groupByFamily);
 
-      groupKeys.forEach(groupKey => {
+      groupKeys.forEach((groupKey) => {
         groupByFamily[groupKey].sort((a, b) => {
           if (a.scientificname < b.scientificname) {
             return -1;
@@ -178,15 +177,15 @@ function SpeciesListComponent(props) {
     } else {
       setFilteredSpecies({});
     }
-  }
+  };
 
   const handleSearch = (event) => {
     setFilter(event.currentTarget.value.toLowerCase().trim());
-  }
+  };
 
   const clearSelection = () => {
     setSelectedTaxa('');
-  }
+  };
 
   const sortFilteredSpecies = (species) => {
     return species?.sort((a, b) => {
@@ -198,58 +197,82 @@ function SpeciesListComponent(props) {
       }
       return 0;
     });
-  }
+  };
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.filters)}>
       <div className={styles.titleRow}>
         <div className={styles.title}>{t('Species')}</div>
-        {selectedTaxa && <Button
-          className={styles.close}
-          handleClick={clearSelection}
-          label={t('Clear Selection')}
-        />}
+        {selectedTaxa && (
+          <Button
+            className={styles.close}
+            handleClick={clearSelection}
+            label={t('Clear Selection')}
+          />
+        )}
       </div>
       <hr className={hrTheme.dark} />
       <div className={styles.taxaList}>
-        {!selectedTaxa && filteredTaxaList?.map((taxa, index) => {
-          return (
-            <div className={styles.title} key={index} onClick={() => updateSelectedTaxa(taxa.taxa)}>
-              <img className={styles.thumb}
-                src={`https://mol.org/static/img/groups/taxa_${taxa.taxa}.png`} />
-              <div className={styles.header}>
-                {taxa.count}&nbsp;{getTaxaTitle(taxa?.title, taxa?.taxa)}
+        {!selectedTaxa &&
+          filteredTaxaList?.map((taxa, index) => {
+            return (
+              <div
+                className={styles.title}
+                key={index}
+                onClick={() => updateSelectedTaxa(taxa.taxa)}
+              >
+                <img
+                  className={styles.thumb}
+                  src={`https://mol.org/static/img/groups/taxa_${taxa.taxa}.png`}
+                />
+                <div className={styles.header}>
+                  {taxa.count}&nbsp;{getTaxaTitle(taxa?.title, taxa?.taxa)}
+                </div>
               </div>
-            </div>
-          )
-        })}
-      </div>{isLoading && <Loading height={200} />}
-      {!isLoading && selectedTaxa && selectedTaxaObj &&
+            );
+          })}
+      </div>
+      {isLoading && <Loading height={200} />}
+      {!isLoading && selectedTaxa && selectedTaxaObj && (
         <div className={styles.speciesList}>
           <div className={styles.header}>
-            {selectedTaxaObj?.count}&nbsp;{getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
+            {selectedTaxaObj?.count}&nbsp;
+            {getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
           </div>
           <SearchInput
             className={cx(styles.search)}
             placeholder={`${t('Filter')} ${selectedTaxa}`}
             onChange={handleSearch}
-            value={filter} />
+            value={filter}
+          />
           <div className={styles.filterResults}>
             {Object.keys(filteredSpecies).map((sp, index) => {
-              return <div key={index}>
-                {filteredSpecies[sp].length > 0 &&
-                  <SpeciesGroupTitleContainer species={filteredSpecies[sp][0]} filter={filter} />
-                }
-                {filteredSpecies[sp].map((v, idx) => (
-                  v.visible && <SpeciesGroupContainer species={v} key={idx} selectedTaxaObj={selectedTaxaObj} {...props} />
-                ))}
-              </div>
-            })
-            }
+              return (
+                <div key={index}>
+                  {filteredSpecies[sp].length > 0 && (
+                    <SpeciesGroupTitleContainer
+                      species={filteredSpecies[sp][0]}
+                      filter={filter}
+                    />
+                  )}
+                  {filteredSpecies[sp].map(
+                    (v, idx) =>
+                      v.visible && (
+                        <SpeciesGroupContainer
+                          species={v}
+                          key={idx}
+                          selectedTaxaObj={selectedTaxaObj}
+                          {...props}
+                        />
+                      )
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
-      }
+      )}
     </div>
   );
 }
-export default SpeciesListComponent
+export default SpeciesListComponent;

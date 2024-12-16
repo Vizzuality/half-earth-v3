@@ -114,7 +114,7 @@ function NationalChartComponent(props) {
         {
           label: t('Average Area Score'),
           data: filteredData.map((item) => item.SHI_AreaScore),
-          borderColor: getCSSVariable('birds'),
+          borderColor: getCSSVariable('bubble'),
         },
         {
           label: t('Average Connectivity Score'),
