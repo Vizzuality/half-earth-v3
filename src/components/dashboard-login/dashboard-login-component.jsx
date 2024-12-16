@@ -52,8 +52,6 @@ function DashboardLoginComponent(props) {
       newTitle.text = pageTitle;
       document.head.appendChild(newTitle);
     }
-
-    setLoggedIn(true);
   }, [pageTitle]);
 
   const handleLogin = () => {
