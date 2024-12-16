@@ -18,8 +18,8 @@
   .score{
     color: var(--font-color);
     text-align: center;
-    font-family: "Open Sans";
-    font-size: 20px;
+    font-family: $font-family-1;
+    font-size: $font-size-tick;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -29,8 +29,8 @@
   .globalScore{
     color: var(--font-color);
     text-align: center;
-    font-family: "Open Sans";
-    font-size: 20px;
+    font-family: $font-family-1;
+    font-size: $font-size-tick;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -46,15 +46,15 @@
     .richness{
       color: var(--font-color);
       text-align: center;
-      font-family: "Open Sans";
-      font-size: 11px;
+      font-family: $font-family-1;
+      font-size: $font-size-xxs;
       font-style: italic;
       font-weight: 400;
       line-height: normal;
     }
 
     .score{
-      font-size: 16px;
+      font-size: $font-size-base;
       font-weight: 600;
       text-transform: uppercase;
       margin-bottom: 0;

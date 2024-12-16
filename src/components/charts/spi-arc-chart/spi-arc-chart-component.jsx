@@ -91,7 +91,6 @@ function SpiArcChartComponent(props) {
       {scores && (
         <div className={styles.taxoGroup}>
           <img src={img} width={40} height={40} alt={species} />
-          {/* <div className={styles.richness}>{t('Species Richness:')}</div> */}
           <div className={styles.score}>
             {scores[species].total} {t(species)}
           </div>
