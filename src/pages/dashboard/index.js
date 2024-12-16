@@ -297,17 +297,17 @@ function DashboardContainer(props) {
   };
 
   const newGetSpeciesList = () => {
-    EsriFeatureService.getFeatures({
-      url: LAYERS_URLS[GADM_0_ADMIN_AREAS_FEATURE_LAYER],
-      whereClause: `NAME_0 = 'Aruba'`,
-      returnGeometry: false,
-    }).then((features) => {
-      if (features && features[0]) {
-        const { geometry, attributes } = features[0];
-        setGeometry(geometry);
-        console.log(attributes);
-      }
-    });
+    // EsriFeatureService.getFeatures({
+    //   url: LAYERS_URLS[GADM_0_ADMIN_AREAS_FEATURE_LAYER],
+    //   whereClause: `NAME_0 = 'Aruba'`,
+    //   returnGeometry: false,
+    // }).then((features) => {
+    //   if (features && features[0]) {
+    //     const { geometry, attributes } = features[0];
+    //     setGeometry(geometry);
+    //     console.log(attributes);
+    //   }
+    // });
   };
 
   const getSpiDataByCountry = (d) => {
