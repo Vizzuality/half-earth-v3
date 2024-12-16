@@ -1,11 +1,7 @@
+import { LAYER_OPTIONS, LAYER_TITLE_TYPES } from 'constants/dashboard-constants.js';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
-import {
-    EXPERT_RANGE_MAP_URL, LAYER_OPTIONS, LAYER_TITLE_TYPES, PROTECTED_AREA_FEATURE_URL,
-    PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_GUY_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL,
-    PROTECTED_AREA_SLE_FEATURE_URL, TREND_MAP_URL
-} from 'utils/dashboard-utils.js';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';

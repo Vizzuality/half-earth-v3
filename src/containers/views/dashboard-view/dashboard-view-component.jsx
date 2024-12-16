@@ -13,13 +13,14 @@ import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
 import MapView from 'components/map-view';
 
-import TopMenuContainer from '../../../components/top-menu';
-import { LightModeProvider } from '../../../context/light-mode';
 import {
   LAYER_OPTIONS,
   NAVIGATION,
   REGION_OPTIONS,
-} from '../../../utils/dashboard-utils';
+} from 'constants/dashboard-constants.js';
+
+import TopMenuContainer from '../../../components/top-menu';
+import { LightModeProvider } from '../../../context/light-mode';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));

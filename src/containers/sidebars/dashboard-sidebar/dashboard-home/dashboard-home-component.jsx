@@ -3,18 +3,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocale, useT } from '@transifex/react';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
 
-import hrTheme from 'styles/themes/hr-theme.module.scss';
-
-import PartnersContainer from '../../../../components/partners';
-import { LightModeContext } from '../../../../context/light-mode';
 import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
-} from '../../../../utils/dashboard-utils';
+} from 'constants/dashboard-constants.js';
+
+import hrTheme from 'styles/themes/hr-theme.module.scss';
+
+import PartnersContainer from '../../../../components/partners';
 
 import styles from './dashboard-home-styles.module.scss';
 

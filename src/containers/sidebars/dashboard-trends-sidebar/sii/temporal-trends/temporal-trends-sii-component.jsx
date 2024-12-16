@@ -3,12 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 import last from 'lodash/last';
 
 import Button from 'components/button';
 
-import { LightModeContext } from '../../../../../context/light-mode';
-import { SII_LATEST_YEAR } from '../../../../../utils/dashboard-utils';
+import { SII_LATEST_YEAR } from 'constants/dashboard-constants.js';
+
 import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 

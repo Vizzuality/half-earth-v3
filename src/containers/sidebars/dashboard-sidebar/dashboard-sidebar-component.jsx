@@ -5,12 +5,13 @@ import { useT } from '@transifex/react';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
 
+import { NAVIGATION } from 'constants/dashboard-constants.js';
+
 import DashboardNav from '../../../components/dashboard-nav';
-import { LightModeContext } from '../../../context/light-mode';
-import { NAVIGATION } from '../../../utils/dashboard-utils';
 
 import BioDiversityContainer from './biodiversity-indicators';
 import DashboardHomeContainer from './dashboard-home';

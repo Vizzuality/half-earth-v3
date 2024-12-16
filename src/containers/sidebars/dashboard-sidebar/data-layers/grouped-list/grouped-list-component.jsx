@@ -1,15 +1,24 @@
-import React, { useContext, useState } from 'react';
-import cx from 'classnames';
+import React, { useContext } from 'react';
+
+import { useT } from '@transifex/react';
+
+import { PROVINCE_FEATURE_GLOBAL_OUTLINE_ID } from 'utils/dashboard-utils';
+
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import ArrowIcon from 'icons/arrow_right.svg?react';
+import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
+
 import EsriFeatureService from 'services/esri-feature-service';
-import { LAYER_TITLE_TYPES, LAYER_OPTIONS } from 'utils/dashboard-utils.js';
+
+import {
+  LAYER_TITLE_TYPES,
+  LAYER_OPTIONS,
+} from 'constants/dashboard-constants.js';
+
+import ArrowIcon from 'icons/arrow_right.svg?react';
 
 import styles from './grouped-list-styles.module.scss';
-import { useT } from '@transifex/react';
-import { LightModeContext } from '../../../../../context/light-mode';
-import { PROVINCE_FEATURE_GLOBAL_OUTLINE_ID } from '../../../../../utils/dashboard-utils';
 
 function GroupedListComponent(props) {
   const {
@@ -21,7 +30,7 @@ function GroupedListComponent(props) {
     speciesInfo,
     regionLayers,
     setRegionLayers,
-    setShowHabitatChart
+    setShowHabitatChart,
   } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
@@ -36,7 +45,7 @@ function GroupedListComponent(props) {
   const pointObservationIds = [
     '9905692e-6a28-4310-b01e-476a471e5bf8',
     '794adb49-7458-41c4-a1c0-56537fdbec1d',
-  ]
+  ];
 
   const displayChildren = (key) => {
     const showChildren = !dataPoints[key].showChildren;
@@ -45,8 +54,8 @@ function GroupedListComponent(props) {
       ...dataPoints,
       [key]: {
         ...dataPoints[key],
-        showChildren: showChildren,
-      }
+        showChildren,
+      },
     });
   };
 
@@ -56,7 +65,7 @@ function GroupedListComponent(props) {
 
     const typeItems = dataPoints[item].items;
 
-    typeItems.map(item => {
+    typeItems.map((item) => {
       findLayerToShow(item);
       item.isActive = isActive;
     });
@@ -65,18 +74,17 @@ function GroupedListComponent(props) {
       ...dataPoints,
       [item]: {
         ...dataPoints[item],
-        isActive: isActive,
-        items: [
-          ...typeItems
-        ]
-      }
+        isActive,
+        items: [...typeItems],
+      },
     });
-  }
+  };
 
   const displaySingleLayer = (item) => {
     if (dataPoints[item]?.items.length === 0) {
       setDataPoints({
-        ...dataPoints, [item]: { ...dataPoints[item], isActive: !dataPoints[item].isActive }
+        ...dataPoints,
+        [item]: { ...dataPoints[item], isActive: !dataPoints[item].isActive },
       });
     } else {
       setDataPoints({
@@ -84,34 +92,54 @@ function GroupedListComponent(props) {
         [item.type_title]: {
           ...dataPoints[item.type_title],
           items: [
-            ...dataPoints[item.type_title].items.map(point => {
-              return point?.dataset_id === item.dataset_id ? { ...point, isActive: !point.isActive } : point
+            ...dataPoints[item.type_title].items.map((point) => {
+              return point?.dataset_id === item.dataset_id
+                ? { ...point, isActive: !point.isActive }
+                : point;
             }),
-          ]
-        }
+          ],
+        },
       });
     }
 
     if (typeof item === 'string') {
-      if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'PROTECTED AREAS') {
+      if (
+        item.toUpperCase() === 'AIRES PROTÉGÉES' ||
+        item.toUpperCase() === 'PROTECTED AREAS'
+      ) {
         if (!dataPoints[item].isActive) {
-          const layers = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
+          const layers = EsriFeatureService.addProtectedAreaLayer(
+            null,
+            countryISO
+          );
 
-          setRegionLayers((regionLayers) => ({ ...regionLayers, [LAYER_OPTIONS.PROTECTED_AREAS]: layers }));
+          setRegionLayers((regionLayers) => ({
+            ...regionLayers,
+            [LAYER_OPTIONS.PROTECTED_AREAS]: layers,
+          }));
           map.add(layers);
         } else {
-
           setRegionLayers((regionLayers) => {
-            const {
-              [LAYER_OPTIONS.PROTECTED_AREAS]: name, ...rest } = regionLayers;
+            const { [LAYER_OPTIONS.PROTECTED_AREAS]: name, ...rest } =
+              regionLayers;
             return rest;
           });
         }
-      } else if (item.toUpperCase() === 'AIRES PROTÉGÉES' || item.toUpperCase() === 'ADMINISTRATIVE LAYERS') {
+      } else if (
+        item.toUpperCase() === 'AIRES PROTÉGÉES' ||
+        item.toUpperCase() === 'ADMINISTRATIVE LAYERS'
+      ) {
         if (!dataPoints[item].isActive) {
-          const layer = EsriFeatureService.getFeatureLayer(PROVINCE_FEATURE_GLOBAL_OUTLINE_ID, countryISO, item.toUpperCase());
+          const layer = EsriFeatureService.getFeatureLayer(
+            PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+            countryISO,
+            item.toUpperCase()
+          );
 
-          setRegionLayers((regionLayers) => ({ ...regionLayers, [item.toUpperCase()]: layer }));
+          setRegionLayers((regionLayers) => ({
+            ...regionLayers,
+            [item.toUpperCase()]: layer,
+          }));
           map.add(layer);
         } else {
           const layer = regionLayers[item.toUpperCase()];
@@ -121,7 +149,10 @@ function GroupedListComponent(props) {
           });
           map.remove(layer);
         }
-      } else if (item.toUpperCase() === 'PERTE/GAIN D\'HABITAT' || item.toUpperCase() === 'HABITAT LOSS/GAIN') {
+      } else if (
+        item.toUpperCase() === "PERTE/GAIN D'HABITAT" ||
+        item.toUpperCase() === 'HABITAT LOSS/GAIN'
+      ) {
         const layerName = item.toUpperCase();
         if (!dataPoints[item].isActive) {
           setShowHabitatChart(true);
@@ -141,8 +172,11 @@ function GroupedListComponent(props) {
             layerIndex = map.layers.items.length;
           }
 
-          webTileLayer.then(layer => {
-            setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
+          webTileLayer.then((layer) => {
+            setRegionLayers((regionLayers) => ({
+              ...regionLayers,
+              [layerName]: layer,
+            }));
             map.add(layer);
           });
         } else {
@@ -181,8 +215,11 @@ function GroupedListComponent(props) {
             layerIndex = map.layers.items.length;
           }
 
-          webTileLayer.then(layer => {
-            setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
+          webTileLayer.then((layer) => {
+            setRegionLayers((regionLayers) => ({
+              ...regionLayers,
+              [layerName]: layer,
+            }));
             map.add(layer, layerIndex);
           });
         }
@@ -201,13 +238,20 @@ function GroupedListComponent(props) {
           let name;
 
           if (layerName.match(/EBIRD/)) {
-            name = `ebird_${speciesInfo.scientificname.replace(' ', '_')}`
+            name = `ebird_${speciesInfo.scientificname.replace(' ', '_')}`;
           } else if (layerName.match(/GBIF/)) {
-            name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`
+            name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`;
           }
 
-          layer = EsriFeatureService.getGeoJsonLayer(name, layerName, countryISO);
-          setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
+          layer = EsriFeatureService.getGeoJsonLayer(
+            name,
+            layerName,
+            countryISO
+          );
+          setRegionLayers((regionLayers) => ({
+            ...regionLayers,
+            [layerName]: layer,
+          }));
 
           let layerIndex = searchForLayers('HABITAT LOSS/GAIN');
 
@@ -231,21 +275,23 @@ function GroupedListComponent(props) {
       if (!item.isActive) {
         const layer = EsriFeatureService.getMVTSource();
 
-        setRegionLayers((regionLayers) => ({ ...regionLayers, [layerName]: layer }));
+        setRegionLayers((regionLayers) => ({
+          ...regionLayers,
+          [layerName]: layer,
+        }));
 
         map.addSource('mapTiles', {
           type: 'vector',
           tiles: [
-            'https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/regions/regions/{proj}/{z}/{x}/{y}.pbf?region_id=1673cab0-c717-4367-9db0-5c63bf26944d'
-          ]
+            'https://production-dot-tiler-dot-map-of-life.appspot.com/0.x/tiles/regions/regions/{proj}/{z}/{x}/{y}.pbf?region_id=1673cab0-c717-4367-9db0-5c63bf26944d',
+          ],
         });
 
         map.add({
           id: 'mvt-fill',
           type: 'fill',
-          source: 'mapTiles'
+          source: 'mapTiles',
         });
-
       } else {
         setRegionLayers((regionLayers) => {
           const { [layerName]: name, ...rest } = regionLayers;
@@ -256,62 +302,81 @@ function GroupedListComponent(props) {
     }
 
     displaySingleLayer(item);
-  }
+  };
 
   // check if some but not all children are selected
   const checkIfSomeChecked = (key) => {
-    const items = dataPoints[key].items
-    const typeItems = items.some(item => item.isActive === true) && !items.every(item => item.isActive === true);
+    const { items } = dataPoints[key];
+    const typeItems =
+      items.some((item) => item.isActive === true) &&
+      !items.every((item) => item.isActive === true);
     return typeItems;
-  }
+  };
 
   // check if all children are selected
   const checkIfAllChecked = (key) => {
-    const items = dataPoints[key].items
-    const typeItems = items.every(item => item.isActive === true);
+    const { items } = dataPoints[key];
+    const typeItems = items.every((item) => item.isActive === true);
     dataPoints[key].isActive = typeItems;
     return typeItems;
-  }
+  };
 
   const getCheckbox = (item) => {
-    let control = <FormControlLabel
-      label={t(item.dataset_title)}
-      style={{ textTransform: item.dataset_title.match(/(jetz|ebird)/i) ? 'none' : '' }}
-      control={<Checkbox onClick={() => findLayerToShow(item)} checked={item.isActive} />}
-    />
+    let control = (
+      <FormControlLabel
+        label={t(item.dataset_title)}
+        style={{
+          textTransform: item.dataset_title.match(/(jetz|ebird)/i)
+            ? 'none'
+            : '',
+        }}
+        control={
+          <Checkbox
+            onClick={() => findLayerToShow(item)}
+            checked={item.isActive}
+          />
+        }
+      />
+    );
 
     if (item.type_title.toUpperCase() === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
-        control = <FormControlLabel
-          label={t(item.dataset_title)}
-          disabled
-          control={<Checkbox disabled className={styles.disabled} />}
-        />
+        control = (
+          <FormControlLabel
+            label={t(item.dataset_title)}
+            disabled
+            control={<Checkbox disabled className={styles.disabled} />}
+          />
+        );
       }
     }
 
-    if (item.type_title.toUpperCase() === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
+    if (
+      item.type_title.toUpperCase() === LAYER_TITLE_TYPES.POINT_OBSERVATIONS
+    ) {
       if (!pointObservationIds.find((id) => id === item.dataset_id)) {
-        control = <FormControlLabel
-          label={t(item.dataset_title)}
-          disabled
-          control={<Checkbox disabled className={styles.disabled} />}
-        />
+        control = (
+          <FormControlLabel
+            label={t(item.dataset_title)}
+            disabled
+            control={<Checkbox disabled className={styles.disabled} />}
+          />
+        );
       }
     }
 
     return control;
-  }
+  };
 
   const searchForLayers = (layerName) => {
-    return map.layers.items.findIndex(item => item.id === layerName);
-  }
+    return map.layers.items.findIndex((item) => item.id === layerName);
+  };
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {Object.keys(dataPoints).map((key) => (
         <div key={key}>
-          {dataPoints[key].items.length > 0 &&
+          {dataPoints[key].items.length > 0 && (
             <>
               <div className={styles.parent}>
                 <button onClick={() => displayChildren(key)}>
@@ -332,33 +397,38 @@ function GroupedListComponent(props) {
                   }
                 />
                 {/* Place holder, remove span when new icons are available */}
-                <span></span>
+                <span />
                 {/* <img className={styles.productTypeLogo}
                   src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0]?.product_type === 'points' ? 'points_agg' : dataPoints[key].items[0]?.product_type)}.png`} /> */}
                 <span>{dataPoints[key].total_no_rows}</span>
               </div>
-              {dataPoints[key].showChildren && <ul>
-                {dataPoints[key].items.map((item) => (
-                  <li key={item.dataset_id} className={styles.children}>
-                    {getCheckbox(item)}
+              {dataPoints[key].showChildren && (
+                <ul>
+                  {dataPoints[key].items.map((item) => (
+                    <li key={item.dataset_id} className={styles.children}>
+                      {getCheckbox(item)}
 
-                    <span></span>
-                    <span>{item.no_rows}</span>
-                  </li>
-                ))}
-              </ul>
-              }
+                      <span />
+                      <span>{item.no_rows}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </>
-          }
-          {dataPoints[key].items.length === 0 && <div className={styles.children} onClick={() => displaySingleLayer(key)}>
-            <FormControlLabel
-              label={t(key)}
-              control={<Checkbox checked={dataPoints[key].isActive} />}
-            />
-            <span></span>
-            <span>{dataPoints[key].total_no_rows}</span>
-          </div>
-          }
+          )}
+          {dataPoints[key].items.length === 0 && (
+            <div
+              className={styles.children}
+              onClick={() => displaySingleLayer(key)}
+            >
+              <FormControlLabel
+                label={t(key)}
+                control={<Checkbox checked={dataPoints[key].isActive} />}
+              />
+              <span />
+              <span>{dataPoints[key].total_no_rows}</span>
+            </div>
+          )}
         </div>
       ))}
     </div>

@@ -4,9 +4,10 @@ import { useT } from '@transifex/react';
 
 import Button from 'components/button';
 
+import { NAVIGATION } from 'constants/dashboard-constants.js';
+
 import FilterContainer from '../../../../components/filters';
 import SpeciesListContainer from '../../../../components/species-list';
-import { NAVIGATION } from '../../../../utils/dashboard-utils';
 import styles from '../dashboard-sidebar-styles.module.scss';
 
 function SpeciesFilterComponent(props) {

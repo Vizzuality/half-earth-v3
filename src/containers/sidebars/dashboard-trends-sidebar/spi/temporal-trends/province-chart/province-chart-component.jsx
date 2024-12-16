@@ -16,12 +16,12 @@ import {
   Legend,
 } from 'chart.js';
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
-import { LightModeContext } from '../../../../../../context/light-mode';
-import { SPI_LATEST_YEAR } from '../../../../../../utils/dashboard-utils';
+import { SPI_LATEST_YEAR } from 'constants/dashboard-constants.js';
 
 import styles from './province-chart-styles.module.scss';
 

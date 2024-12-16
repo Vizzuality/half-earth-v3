@@ -14,12 +14,11 @@ import {
   Legend,
 } from 'chart.js';
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
-
-import { LightModeContext } from '../../../../../../context/light-mode';
 
 import styles from './national-chart-styles.module.scss';
 

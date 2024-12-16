@@ -9,15 +9,14 @@ import { useLocale } from '@transifex/react';
 import * as urlActions from 'actions/url-actions';
 
 import { activateLayersOnLoad } from 'utils/layer-manager-utils';
+import { setBasemap } from 'utils/layer-manager-utils.js';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
+import { NAVIGATION } from 'constants/dashboard-constants';
 import { GADM_0_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { COUNTRIES_DATA_SERVICE_URL, LAYERS_URLS } from 'constants/layers-urls';
 import { layersConfig } from 'constants/mol-layers-configs';
-
-import { NAVIGATION } from '../../utils/dashboard-utils';
-import { setBasemap } from '../../utils/layer-manager-utils.js';
 
 import DashboardComponent from './dashboard-component.jsx';
 import mapStateToProps from './dashboard-selectors.js';

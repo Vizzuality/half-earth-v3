@@ -5,23 +5,25 @@ import { DASHBOARD } from 'router';
 import { useT } from '@transifex/react';
 
 import {
-  LAYER_OPTIONS,
-  NAVIGATION,
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
-  REGION_OPTIONS,
+  DRC_REGION_FEATURE_ID,
 } from 'utils/dashboard-utils';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
-import hrTheme from 'styles/themes/hr-theme.module.scss';
+import {
+  LAYER_OPTIONS,
+  NAVIGATION,
+  REGION_OPTIONS,
+} from 'constants/dashboard-constants.js';
 
-import { LightModeContext } from '../../../../context/light-mode';
-import { DRC_REGION_FEATURE_ID } from '../../../../utils/dashboard-utils';
+import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import styles from './regions-analysis-styles.module.scss';
 

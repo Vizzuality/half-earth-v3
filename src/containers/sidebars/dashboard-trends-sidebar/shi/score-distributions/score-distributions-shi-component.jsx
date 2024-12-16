@@ -5,17 +5,18 @@ import { T, useT } from '@transifex/react';
 import { getCSSVariable } from 'utils/css-utils';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import Button from 'components/button';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 
-import { LightModeContext } from '../../../../../context/light-mode';
 import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
-} from '../../../../../utils/dashboard-utils';
+} from 'constants/dashboard-constants.js';
+
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import DistributionsTableContainer from './distributions-table';

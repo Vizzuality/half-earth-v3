@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  LAYER_OPTIONS,
-  PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
-  REGION_OPTIONS,
-  SHI_LATEST_YEAR,
-  SPI_LATEST_YEAR,
-  SII_LATEST_YEAR,
-} from 'utils/dashboard-utils.js';
+import { PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID } from 'utils/dashboard-utils.js';
 
 import last from 'lodash/last';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
+import {
+  LAYER_OPTIONS,
+  REGION_OPTIONS,
+  SHI_LATEST_YEAR,
+  SPI_LATEST_YEAR,
+  SII_LATEST_YEAR,
+} from 'constants/dashboard-constants.js';
 import {
   COUNTRIES_DATA_SERVICE_URL,
   DASHBOARD_URLS,

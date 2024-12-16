@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import { LightModeContext } from 'context/light-mode';
 import last from 'lodash/last';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
-import { LightModeContext } from '../../../../context/light-mode';
 import {
   INITIAL_LAYERS,
   LAYER_OPTIONS,
   LAYER_TITLE_TYPES,
-} from '../../../../utils/dashboard-utils';
+} from 'constants/dashboard-constants';
+
 import country_attrs from '../mol-country-attributes.json';
 
 import BioDiversityComponent from './biodiversity-indicators-component';

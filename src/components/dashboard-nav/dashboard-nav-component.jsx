@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 
 import { useT } from '@transifex/react';
 
-import { NAVIGATION } from 'utils/dashboard-utils';
-
 import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
+
+import { NAVIGATION } from 'constants/dashboard-constants.js';
 
 import DuikerIcon from 'icons/duiker_icon_black.svg?react';
 import ElephantIcon from 'icons/elephant.svg?react';
