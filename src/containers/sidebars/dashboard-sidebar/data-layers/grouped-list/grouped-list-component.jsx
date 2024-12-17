@@ -144,7 +144,7 @@ function GroupedListComponent(props) {
           LAYER_TITLE_TYPES.TREND
         );
 
-        let layerIndex = searchForLayers('HABITAT LOSS/GAIN') - 1;
+        let layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT) - 1;
 
         if (layerIndex < 0) {
           layerIndex = searchForLayers('GBIF (2023)') - 1;
@@ -171,8 +171,6 @@ function GroupedListComponent(props) {
       }
     } else if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
       if (!item.isActive) {
-        // const layer = EsriFeatureService.getCSVLayer();
-
         const layer = EsriFeatureService.getFeatureLayer(
           SPECIES_LAYER_IDS.Hyperolius_tuberculatus,
           null,
@@ -209,7 +207,7 @@ function GroupedListComponent(props) {
             LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS
           );
 
-          let layerIndex = searchForLayers('HABITAT LOSS/GAIN') - 1;
+          let layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT) - 1;
 
           if (layerIndex < 0) {
             layerIndex = searchForLayers('GBIF (2023)') - 1;
