@@ -21,7 +21,7 @@ import { Loading } from 'he-components';
 
 import Button from 'components/button';
 
-import { NAVIGATION } from 'constants/dashboard-constants.js';
+import { LAYER_OPTIONS, NAVIGATION } from 'constants/dashboard-constants.js';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
@@ -47,20 +47,24 @@ function DataLayerComponent(props) {
 
   const { lightMode } = useContext(LightModeContext);
   const [dataPoints, setDataPoints] = useState();
-  const [privateDataPoints, setPrivateDataPoints] = useState({
-    'Point Observations': {
+  const [privateDataPoints, setPrivateDataPoints] = useState([
+    {
+      label: t('Point Observations'),
       items: [],
       total_no_rows: '',
       isActive: false,
       showChildren: false,
+      id: LAYER_OPTIONS.POINT_OBSERVATIONS,
     },
-  });
-  const [regionsData, setRegionsData] = useState({
-    'Protected Areas': {
+  ]);
+  const [regionsData, setRegionsData] = useState([
+    {
+      label: t('Protected Areas'),
       items: [],
       total_no_rows: '',
       isActive: false,
       showChildren: false,
+      id: LAYER_OPTIONS.PROTECTED_AREAS,
     },
     // 'Proposed Protection': {
     //   items: [],
@@ -68,13 +72,15 @@ function DataLayerComponent(props) {
     //   isActive: false,
     //   showChildren: false,
     // },
-    'Administrative Layers': {
+    {
+      label: t('Administrative Layers'),
       items: [],
       total_no_rows: '',
       isActive: false,
       showChildren: false,
+      id: LAYER_OPTIONS.ADMINISTRATIVE_LAYERS,
     },
-  });
+  ]);
   const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState();
   const [showHabitatChart, setShowHabitatChart] = useState(false);
@@ -122,35 +128,65 @@ function DataLayerComponent(props) {
     },
   };
 
-  const groupByTypeTitle = (arr) => {
-    return arr.reduce((acc, obj) => {
-      const key = obj.type_title;
+  const groupByTypeTitle = (objects) => {
+    const grouped = {};
+
+    objects.forEach((obj) => {
+      const groupKey = obj.type_title;
       if (
-        key.toUpperCase() === 'EXPERT RANGE MAPS' ||
-        key.toUpperCase() === 'POINT OBSERVATIONS'
+        groupKey.toUpperCase() === 'EXPERT RANGE MAPS' ||
+        groupKey.toUpperCase() === 'POINT OBSERVATIONS'
       ) {
-        if (!acc[key]) {
-          acc[key] = {
-            items: [],
+        if (!grouped[groupKey]) {
+          grouped[groupKey] = {
+            label: obj.type_title,
             total_no_rows: 0,
             isActive: false,
             showChildren: false,
-          };
+            items: [],
+            id:
+              groupKey.toUpperCase() === 'EXPERT RANGE MAPS'
+                ? LAYER_OPTIONS.EXPERT_RANGE_MAPS
+                : LAYER_OPTIONS.POINT_OBSERVATIONS,
+          }; // Create a new object with the original object's properties and an empty 'item' array
         }
         obj.isActive = false;
-        /// TODO: Remove Expert Range Maps restriction
-        // if (key.toUpperCase() === 'EXPERT RANGE MAPS') {
-        //   if (acc[key].items < 2) {
-        //     acc[key].items.push(obj);
-        //     acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
-        //   }
-        // } else {
-        acc[key].items.push(obj);
-        acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
-        // }
+        obj.parentId = grouped[groupKey].id;
+        grouped[groupKey].items.push(obj); // Push the current object into the 'item' array of the matching group
+        grouped[groupKey].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
       }
-      return acc;
-    }, {});
+    });
+
+    return Object.values(grouped);
+    // return arr.reduce((acc, obj) => {
+    //   const key = obj.type_title;
+    //   if (
+    //     key.toUpperCase() === 'EXPERT RANGE MAPS' ||
+    //     key.toUpperCase() === 'POINT OBSERVATIONS'
+    //   ) {
+    //     if (!acc[key].label) {
+    //       acc[key] = {
+    //         label: key,
+    //         items: [],
+    //         total_no_rows: 0,
+    //         isActive: false,
+    //         showChildren: false,
+    //       };
+    //     }
+    //     obj.isActive = false;
+    //     /// TODO: Remove Expert Range Maps restriction
+    //     // if (key.toUpperCase() === 'EXPERT RANGE MAPS') {
+    //     //   if (acc[key].items < 2) {
+    //     //     acc[key].items.push(obj);
+    //     //     acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+    //     //   }
+    //     // } else {
+    //     acc[key].items.push(obj);
+    //     acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+    //     // }
+    //   }
+    //   return acc;
+    // }, []);
   };
 
   const handleBack = () => {
@@ -193,15 +229,17 @@ function DataLayerComponent(props) {
 
   useEffect(() => {
     if (!dataLayerData) return;
-    const publicData = {
+    const publicData = [
       ...groupByTypeTitle(dataLayerData),
-      'Habitat Loss/Gain': {
+      {
+        label: 'Habitat Loss/Gain',
         items: [],
+        id: LAYER_OPTIONS.HABITAT,
         total_no_rows: '',
         isActive: false,
         showChildren: false,
       },
-    };
+    ];
     setDataPoints(publicData);
   }, [dataLayerData]);
 

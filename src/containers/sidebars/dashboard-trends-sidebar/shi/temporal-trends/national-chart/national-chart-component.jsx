@@ -35,7 +35,7 @@ function NationalChartComponent(props) {
   const [nationalScores, setNationalScores] = useState({
     areaScore: 0,
     connecivityScore: 0,
-    year: 2001,
+    year: SHI_LATEST_YEAR,
   });
   const emptyArcColor = lightMode
     ? getCSSVariable('dark-opacity')

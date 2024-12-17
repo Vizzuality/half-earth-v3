@@ -29,3 +29,10 @@ export const PROTECTED_AREA_GUY_FEATURE_URL =
 
 export const DASHBOARD_TABLE_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1/FeatureServer';
+
+// temporary for DRC demo
+export const SPECIES_LAYER_IDS = {
+  Hyperolius_tuberculatus: '7122017b85ca49598afed95402b63cc8',
+  Congolacerta_vauereselli: '7122017b85ca49598afed95402b63cc8',
+  Leptopelis_christyi: '7122017b85ca49598afed95402b63cc8',
+};

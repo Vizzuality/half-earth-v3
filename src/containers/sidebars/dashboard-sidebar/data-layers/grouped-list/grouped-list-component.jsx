@@ -2,7 +2,10 @@ import React, { useContext } from 'react';
 
 import { useT } from '@transifex/react';
 
-import { PROVINCE_FEATURE_GLOBAL_OUTLINE_ID } from 'utils/dashboard-utils';
+import {
+  PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+  SPECIES_LAYER_IDS,
+} from 'utils/dashboard-utils';
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -51,123 +54,143 @@ function GroupedListComponent(props) {
   };
 
   const displayChildren = (key) => {
-    const showChildren = !dataPoints[key].showChildren;
+    const showChildren = !key.showChildren;
 
-    setDataPoints({
-      ...dataPoints,
-      [key]: {
-        ...dataPoints[key],
-        showChildren,
-      },
+    const updatedDataPoints = dataPoints.map((dp) => {
+      if (dp.id === key.id) {
+        return { ...dp, showChildren };
+      }
+      return dp;
     });
+    setDataPoints(updatedDataPoints);
   };
 
   const displaySingleLayer = (item) => {
-    if (dataPoints[item]?.items.length === 0) {
-      setDataPoints({
-        ...dataPoints,
-        [item]: { ...dataPoints[item], isActive: !dataPoints[item].isActive },
+    if (item.items?.length === 0) {
+      const updatedDataPoints = dataPoints.map((dp) => {
+        if (dp.id === item.id) {
+          return { ...dp, isActive: !dp.isActive };
+        }
+        return dp;
       });
+      setDataPoints(updatedDataPoints);
     } else {
-      setDataPoints({
-        ...dataPoints,
-        [item.type_title]: {
-          ...dataPoints[item.type_title],
-          items: [
-            ...dataPoints[item.type_title].items.map((point) => {
-              return point?.dataset_id === item.dataset_id
-                ? { ...point, isActive: !point.isActive }
-                : point;
-            }),
-          ],
-        },
+      const updatedDataPoints = dataPoints.map((dp) => {
+        if (dp.id === item.parentId) {
+          return {
+            ...dp,
+            items: [
+              ...dp.items.map((point) => {
+                return point?.dataset_id === item.dataset_id
+                  ? { ...point, isActive: !point.isActive }
+                  : point;
+              }),
+            ],
+          };
+        }
+        return dp;
       });
+      setDataPoints(updatedDataPoints);
     }
 
-    if (typeof item === 'string') {
-      if (
-        item.toUpperCase() === 'AIRES PROTÉGÉES' ||
-        item.toUpperCase() === 'PROTECTED AREAS'
-      ) {
-        if (!dataPoints[item].isActive) {
-          const layers = EsriFeatureService.addProtectedAreaLayer(
-            null,
-            countryISO
-          );
+    if (item.id === LAYER_OPTIONS.PROTECTED_AREAS) {
+      if (!item.isActive) {
+        const layers = EsriFeatureService.addProtectedAreaLayer(
+          null,
+          countryISO
+        );
 
-          setRegionLayers((rl) => ({
-            ...rl,
-            [LAYER_OPTIONS.PROTECTED_AREAS]: layers,
-          }));
-          map.add(layers);
-        } else {
-          setRegionLayers((rl) => {
-            const { [LAYER_OPTIONS.PROTECTED_AREAS]: name, ...rest } = rl;
-            return rest;
-          });
+        setRegionLayers((rl) => ({
+          ...rl,
+          [item.id]: layers,
+        }));
+        map.add(layers);
+      } else {
+        const layer = regionLayers[item.id];
+        setRegionLayers((rl) => {
+          const { [item.id]: name, ...rest } = rl;
+          return rest;
+        });
+        map.remove(layer);
+      }
+    } else if (item.id === LAYER_OPTIONS.ADMINISTRATIVE_LAYERS) {
+      if (!item.isActive) {
+        const layer = EsriFeatureService.getFeatureLayer(
+          PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+          countryISO,
+          item.id
+        );
+
+        setRegionLayers((rl) => ({
+          ...rl,
+          [item.id]: layer,
+        }));
+        map.add(layer);
+      } else {
+        const layer = regionLayers[item.id];
+        setRegionLayers((rl) => {
+          const { [item.id]: name, ...rest } = rl;
+          return rest;
+        });
+        map.remove(layer);
+      }
+    } else if (item.id === LAYER_OPTIONS.HABITAT) {
+      const layerName = item.id;
+      if (!item.isActive) {
+        setShowHabitatChart(true);
+        const webTileLayer = EsriFeatureService.getXYZLayer(
+          speciesInfo.scientificname.replace(' ', '_'),
+          layerName,
+          LAYER_TITLE_TYPES.TREND
+        );
+
+        let layerIndex = searchForLayers('HABITAT LOSS/GAIN') - 1;
+
+        if (layerIndex < 0) {
+          layerIndex = searchForLayers('GBIF (2023)') - 1;
         }
-      } else if (
-        item.toUpperCase() === 'AIRES PROTÉGÉES' ||
-        item.toUpperCase() === 'ADMINISTRATIVE LAYERS'
-      ) {
-        if (!dataPoints[item].isActive) {
-          const layer = EsriFeatureService.getFeatureLayer(
-            PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
-            countryISO,
-            item.toUpperCase()
-          );
 
+        if (layerIndex < 0) {
+          layerIndex = map.layers.items.length;
+        }
+
+        webTileLayer.then((layer) => {
           setRegionLayers((rl) => ({
             ...rl,
-            [item.toUpperCase()]: layer,
+            [layerName]: layer,
           }));
           map.add(layer);
-        } else {
-          const layer = regionLayers[item.toUpperCase()];
-          setRegionLayers((rl) => {
-            const { [item.toUpperCase()]: name, ...rest } = rl;
-            return rest;
-          });
-          map.remove(layer);
-        }
-      } else if (
-        item.toUpperCase() === "PERTE/GAIN D'HABITAT" ||
-        item.toUpperCase() === 'HABITAT LOSS/GAIN'
-      ) {
-        const layerName = item.toUpperCase();
-        if (!dataPoints[item].isActive) {
-          setShowHabitatChart(true);
-          const webTileLayer = EsriFeatureService.getXYZLayer(
-            speciesInfo.scientificname.replace(' ', '_'),
-            layerName,
-            LAYER_TITLE_TYPES.TREND
-          );
+        });
+      } else {
+        setShowHabitatChart(false);
+        setRegionLayers((rl) => {
+          const { [layerName]: name, ...rest } = rl;
+          return rest;
+        });
+        map.remove(regionLayers[layerName]);
+      }
+    } else if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
+      if (!item.isActive) {
+        // const layer = EsriFeatureService.getCSVLayer();
 
-          let layerIndex = searchForLayers('HABITAT LOSS/GAIN') - 1;
+        const layer = EsriFeatureService.getFeatureLayer(
+          SPECIES_LAYER_IDS.Hyperolius_tuberculatus,
+          null,
+          item.id
+        );
 
-          if (layerIndex < 0) {
-            layerIndex = searchForLayers('GBIF (2023)') - 1;
-          }
-
-          if (layerIndex < 0) {
-            layerIndex = map.layers.items.length;
-          }
-
-          webTileLayer.then((layer) => {
-            setRegionLayers((rl) => ({
-              ...rl,
-              [layerName]: layer,
-            }));
-            map.add(layer);
-          });
-        } else {
-          setShowHabitatChart(false);
-          setRegionLayers((rl) => {
-            const { [layerName]: name, ...rest } = rl;
-            return rest;
-          });
-          map.remove(regionLayers[layerName]);
-        }
+        setRegionLayers((rl) => ({
+          ...rl,
+          [item.id]: layer,
+        }));
+        map.add(layer);
+      } else {
+        const layer = regionLayers.POINT_OBSERVATIONS;
+        setRegionLayers((rl) => {
+          const { [item.id]: name, ...rest } = rl;
+          return rest;
+        });
+        map.remove(layer);
       }
     }
   };
@@ -234,7 +257,7 @@ function GroupedListComponent(props) {
             [layerName]: layer,
           }));
 
-          let layerIndex = searchForLayers('HABITAT LOSS/GAIN');
+          let layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT);
 
           if (layerIndex < 0) {
             layerIndex = map.layers.items.length;
@@ -287,28 +310,36 @@ function GroupedListComponent(props) {
 
   // update value of all children
   const updateChildren = (item) => {
-    const isActive = !dataPoints[item].isActive;
+    const isActive = !item.isActive;
 
-    const typeItems = dataPoints[item].items;
+    const typeItems = item.items;
 
     typeItems.map((i) => {
       findLayerToShow(i);
       i.isActive = isActive;
     });
 
-    setDataPoints({
-      ...dataPoints,
-      [item]: {
-        ...dataPoints[item],
-        isActive,
-        items: [...typeItems],
-      },
+    const updatedDataPoints = dataPoints.map((dp) => {
+      if (dp.id === item.id) {
+        return { ...dp, isActive, items: [...typeItems] };
+      }
+      return dp;
     });
+    setDataPoints(updatedDataPoints);
+
+    // setDataPoints({
+    //   ...dataPoints,
+    //   [item]: {
+    //     ...item,
+    //     isActive,
+    //     items: [...typeItems],
+    //   },
+    // });
   };
 
   // check if some but not all children are selected
   const checkIfSomeChecked = (key) => {
-    const { items } = dataPoints[key];
+    const { items } = key;
     const typeItems =
       items.some((item) => item.isActive === true) &&
       !items.every((item) => item.isActive === true);
@@ -317,9 +348,9 @@ function GroupedListComponent(props) {
 
   // check if all children are selected
   const checkIfAllChecked = (key) => {
-    const { items } = dataPoints[key];
+    const { items } = key;
     const typeItems = items.every((item) => item.isActive === true);
-    dataPoints[key].isActive = typeItems;
+    key.isActive = typeItems;
     return typeItems;
   };
 
@@ -341,7 +372,7 @@ function GroupedListComponent(props) {
       />
     );
 
-    if (item.type_title.toUpperCase() === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
+    if (item.parentId === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
       if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
         control = (
           <FormControlLabel
@@ -353,9 +384,7 @@ function GroupedListComponent(props) {
       }
     }
 
-    if (
-      item.type_title.toUpperCase() === LAYER_TITLE_TYPES.POINT_OBSERVATIONS
-    ) {
+    if (item.parentId === LAYER_OPTIONS.POINT_OBSERVATIONS) {
       if (!pointObservationIds.find((id) => id === item.dataset_id)) {
         control = (
           <FormControlLabel
@@ -372,20 +401,20 @@ function GroupedListComponent(props) {
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      {Object.keys(dataPoints).map((key) => (
-        <div key={key}>
-          {dataPoints[key].items.length > 0 && (
+      {dataPoints.map((key) => (
+        <div key={key.label}>
+          {key.items?.length > 0 && (
             <>
               <div className={styles.parent}>
                 <button type="button" onClick={() => displayChildren(key)}>
                   <ArrowIcon
                     className={cx(styles.arrowIcon, {
-                      [styles.isOpened]: dataPoints[key].showChildren,
+                      [styles.isOpened]: key.showChildren,
                     })}
                   />
                 </button>
                 <FormControlLabel
-                  label={t(key)}
+                  label={t(key.label)}
                   control={
                     <Checkbox
                       indeterminate={checkIfSomeChecked(key)}
@@ -398,11 +427,11 @@ function GroupedListComponent(props) {
                 <span />
                 {/* <img className={styles.productTypeLogo}
                   src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0]?.product_type === 'points' ? 'points_agg' : dataPoints[key].items[0]?.product_type)}.png`} /> */}
-                <span>{dataPoints[key].total_no_rows}</span>
+                <span>{key.total_no_rows}</span>
               </div>
-              {dataPoints[key].showChildren && (
+              {key.showChildren && (
                 <ul>
-                  {dataPoints[key].items.map((item) => (
+                  {key.items.map((item) => (
                     <li key={item.dataset_id} className={styles.children}>
                       {getCheckbox(item)}
 
@@ -414,18 +443,19 @@ function GroupedListComponent(props) {
               )}
             </>
           )}
-          {dataPoints[key].items.length === 0 && (
-            <div
+          {key.items?.length === 0 && (
+            <button
+              type="button"
               className={styles.children}
               onClick={() => displaySingleLayer(key)}
             >
               <FormControlLabel
-                label={t(key)}
-                control={<Checkbox checked={dataPoints[key].isActive} />}
+                label={t(key.label)}
+                control={<Checkbox checked={key.isActive} />}
               />
               <span />
-              <span>{dataPoints[key].total_no_rows}</span>
-            </div>
+              <span>{key.total_no_rows}</span>
+            </button>
           )}
         </div>
       ))}

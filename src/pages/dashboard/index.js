@@ -14,7 +14,8 @@ import { setBasemap } from 'utils/layer-manager-utils.js';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION } from 'constants/dashboard-constants';
-import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+import { GADM_1_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
+import { COUNTRIES_DATA_SERVICE_URL, LAYERS_URLS } from 'constants/layers-urls';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import DashboardComponent from './dashboard-component.jsx';
@@ -53,6 +54,7 @@ function DashboardContainer(props) {
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
   const [user, setUser] = useState();
+  const [molId, setMolId] = useState();
 
   const getQueryParams = () => {
     if (queryParams) {
@@ -275,17 +277,23 @@ function DashboardContainer(props) {
   };
 
   const newGetSpeciesList = () => {
-    // EsriFeatureService.getFeatures({
-    //   url: LAYERS_URLS[GADM_0_ADMIN_AREAS_FEATURE_LAYER],
-    //   whereClause: `NAME_0 = 'Aruba'`,
-    //   returnGeometry: false,
-    // }).then((features) => {
-    //   if (features && features[0]) {
-    //     const { geometry, attributes } = features[0];
-    //     setGeometry(geometry);
-    //     console.log(attributes);
-    //   }
-    // });
+    // https://utility.arcgis.com/usrsvcs/servers/340d03102060417c8a9f712754708216/rest/services/gadm1_precalculated_aoi_summaries_updated_20240321/FeatureServer/0
+
+    EsriFeatureService.getFeatures({
+      url: LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER],
+      whereClause: `GID_1 = '${selectedRegion.GID_1}'`,
+      returnGeometry: false,
+    }).then((features) => {
+      if (features && features[0]) {
+        const { geometry, attributes } = features[0];
+
+        console.log(attributes);
+
+        console.log(JSON.parse(attributes.amphibians));
+      }
+    });
+    // gadm1_precalculated_aoi_summaries_updated_20240321
+    // WDPA_with_gadm1_updated_202401
   };
 
   const getSpiDataByCountry = (d) => {
@@ -380,7 +388,9 @@ function DashboardContainer(props) {
       returnGeometry: true,
     })
       .then((features) => {
-        const { geometry } = features[0];
+        const { geometry, attributes } = features[0];
+
+        setMolId(attributes.OBJECTID);
 
         setCountryDataReady(features);
         if (geometry) {

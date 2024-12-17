@@ -8,6 +8,7 @@ import {
     TREND_MAP_URL
 } from 'utils/dashboard-utils';
 
+import CSVLayer from '@arcgis/core/layers/CSVLayer';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
 import TileLayer from '@arcgis/core/layers/TileLayer';
@@ -67,6 +68,16 @@ function getFeatureLayer(portalItemId, countryISO, id) {
     outFields: ['*'],
     definitionExpression: countryISO ? `GID_0 = '${countryISO}'` : '',
     id: id ?? LAYER_OPTIONS.PROVINCES,
+  });
+}
+
+function getCSVLayer() {
+  return new CSVLayer({
+    // needs to be public accesible URL for csv file
+    url: 'https://raw.githubusercontent.com/MapofLife/half-earth-v3/refs/heads/develop/src/assets/data/drc_speciesRecords.csv', // URL to your CSV file
+    latitudeField: 'lat', // Name of the latitude column
+    longitudeField: 'long', // Name of the longitude column
+    id: 'POINT_OBSERVATIONS',
   });
 }
 
@@ -195,4 +206,5 @@ export default {
   getTileLayer,
   getMVTSource,
   addProtectedAreaLayer,
+  getCSVLayer,
 };
