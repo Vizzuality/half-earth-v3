@@ -57,7 +57,7 @@ function DashboardContainer(props) {
   const [filteredTaxaList, setFilteredTaxaList] = useState();
   const [scientificName, setScientificName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState();
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState('');
