@@ -93,7 +93,8 @@ function GroupedListComponent(props) {
       setDataPoints(updatedDataPoints);
     }
 
-    if (item.id === LAYER_OPTIONS.PROTECTED_AREAS) {
+    const id = item.id ?? item.parentId;
+    if (id === LAYER_OPTIONS.PROTECTED_AREAS) {
       if (!item.isActive) {
         const layers = EsriFeatureService.addProtectedAreaLayer(
           null,
@@ -102,40 +103,40 @@ function GroupedListComponent(props) {
 
         setRegionLayers((rl) => ({
           ...rl,
-          [item.id]: layers,
+          [id]: layers,
         }));
         map.add(layers);
       } else {
-        const layer = regionLayers[item.id];
+        const layer = regionLayers[id];
         setRegionLayers((rl) => {
-          const { [item.id]: name, ...rest } = rl;
+          const { [id]: name, ...rest } = rl;
           return rest;
         });
         map.remove(layer);
       }
-    } else if (item.id === LAYER_OPTIONS.ADMINISTRATIVE_LAYERS) {
+    } else if (id === LAYER_OPTIONS.ADMINISTRATIVE_LAYERS) {
       if (!item.isActive) {
         const layer = EsriFeatureService.getFeatureLayer(
           PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
           countryISO,
-          item.id
+          id
         );
 
         setRegionLayers((rl) => ({
           ...rl,
-          [item.id]: layer,
+          [id]: layer,
         }));
         map.add(layer);
       } else {
-        const layer = regionLayers[item.id];
+        const layer = regionLayers[id];
         setRegionLayers((rl) => {
-          const { [item.id]: name, ...rest } = rl;
+          const { [id]: name, ...rest } = rl;
           return rest;
         });
         map.remove(layer);
       }
-    } else if (item.id === LAYER_OPTIONS.HABITAT) {
-      const layerName = item.id;
+    } else if (id === LAYER_OPTIONS.HABITAT) {
+      const layerName = id;
       if (!item.isActive) {
         setShowHabitatChart(true);
         const webTileLayer = EsriFeatureService.getXYZLayer(
@@ -169,12 +170,12 @@ function GroupedListComponent(props) {
         });
         map.remove(regionLayers[layerName]);
       }
-    } else if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
+    } else if (id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
       if (!item.isActive) {
         const layer = EsriFeatureService.getFeatureLayer(
           SPECIES_LAYER_IDS.Hyperolius_tuberculatus,
           null,
-          item.id
+          id
         );
 
         setRegionLayers((rl) => ({
@@ -185,7 +186,7 @@ function GroupedListComponent(props) {
       } else {
         const layer = regionLayers.POINT_OBSERVATIONS;
         setRegionLayers((rl) => {
-          const { [item.id]: name, ...rest } = rl;
+          const { [id]: name, ...rest } = rl;
           return rest;
         });
         map.remove(layer);
