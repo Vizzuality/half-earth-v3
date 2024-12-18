@@ -26,7 +26,7 @@ function SpeciesFilterComponent(props) {
       title: 'Expected Sources',
       filters: [
         {
-          name: 'Expert Range Map',
+          name: 'Refined Range Map',
           active: false,
           test: (species) =>
             species.datasetList.map((d) => d.product_type).indexOf('range') >
@@ -51,16 +51,16 @@ function SpeciesFilterComponent(props) {
           result: false,
           type: 'and',
         },
-        {
-          name: 'Local Inventory',
-          active: false,
-          test: (species) =>
-            species.datasetList.map((d) => d.product_type).indexOf('localinv') >
-            -1,
-          result: false,
-          count: 0,
-          type: 'and',
-        },
+        // {
+        //   name: 'Local Inventory',
+        //   active: false,
+        //   test: (species) =>
+        //     species.datasetList.map((d) => d.product_type).indexOf('localinv') >
+        //     -1,
+        //   result: false,
+        //   count: 0,
+        //   type: 'and',
+        // },
       ],
     },
     {

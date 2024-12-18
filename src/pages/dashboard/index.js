@@ -21,7 +21,11 @@ import {
   MAMMALS_LOOKUP,
   REPTILES_LOOKUP,
 } from 'constants/layers-slugs';
-import { COUNTRIES_DATA_SERVICE_URL, LAYERS_URLS } from 'constants/layers-urls';
+import {
+  COUNTRIES_DATA_SERVICE_URL,
+  LAYERS_URLS,
+  DASHBOARD_URLS,
+} from 'constants/layers-urls';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import DashboardComponent from './dashboard-component.jsx';
@@ -318,9 +322,17 @@ function DashboardContainer(props) {
     };
   };
 
-  const newGetSpeciesList = async () => {
-    // https://utility.arcgis.com/usrsvcs/servers/340d03102060417c8a9f712754708216/rest/services/gadm1_precalculated_aoi_summaries_updated_20240321/FeatureServer/0
+  const sampleFilterSpecies = {
+    name: '',
+    common_name: '',
+    scientific_name: '',
+    threat_status: '',
+    source: '',
+    image_url: '',
+    taxa: '',
+  };
 
+  const newGetSpeciesList = async () => {
     const features = await EsriFeatureService.getFeatures({
       url: LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER],
       whereClause: `GID_1 = '${selectedRegion.GID_1}'`,
@@ -328,7 +340,7 @@ function DashboardContainer(props) {
     });
 
     if (features && features[0]) {
-      const { geometry, attributes } = features[0];
+      const { attributes } = features[0];
 
       const { amphibians, birds, reptiles, mammals } = attributes;
 
@@ -342,9 +354,32 @@ function DashboardContainer(props) {
 
       const speciesData = [amphibianData, birdsData, reptilesData, mammalsData];
 
+      const speciesList = speciesData.species?.map((species) => {
+        const { name, common_name, scientific_name, taxa } = species;
+        return {
+          name,
+          common_name,
+          scientific_name,
+          threat_status: '',
+          source: '',
+          image_url: '',
+          taxa,
+        };
+      });
+
       setTaxaList(speciesData);
-      console.log(speciesData);
+      console.log('Species Data', speciesData);
     }
+  };
+
+  const getOccurenceSpecies = async () => {
+    const occurenceFeatures = await EsriFeatureService.getFeatures({
+      url: DASHBOARD_URLS.SPECIES_OCCURENCE_URL,
+      whereClause: `GID_1 = '${selectedRegion.GID_1}'`,
+      returnGeometry: false,
+    });
+
+    console.log(occurenceFeatures);
   };
 
   const getSpiDataByCountry = (d) => {
@@ -460,6 +495,7 @@ function DashboardContainer(props) {
     if (!selectedRegion) return;
     // getSpeciesList();
     newGetSpeciesList();
+    getOccurenceSpecies();
   }, [selectedRegion]);
 
   useEffect(() => {
