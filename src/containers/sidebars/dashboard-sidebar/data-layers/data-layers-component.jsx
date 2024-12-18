@@ -271,6 +271,7 @@ function DataLayerComponent(props) {
           <DataLayersGroupedList
             dataPoints={privateDataPoints}
             setDataPoints={setPrivateDataPoints}
+            isPrivate
             {...props}
           />
           <hr className={hrTheme.dark} />

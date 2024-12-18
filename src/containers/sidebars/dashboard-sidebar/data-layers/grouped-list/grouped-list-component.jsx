@@ -33,6 +33,7 @@ function GroupedListComponent(props) {
     regionLayers,
     setRegionLayers,
     setShowHabitatChart,
+    isPrivate,
   } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
@@ -171,25 +172,27 @@ function GroupedListComponent(props) {
         map.remove(regionLayers[layerName]);
       }
     } else if (id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
-      if (!item.isActive) {
-        const layer = EsriFeatureService.getFeatureLayer(
-          SPECIES_LAYER_IDS.Hyperolius_tuberculatus,
-          null,
-          id
-        );
+      if (isPrivate) {
+        if (!item.isActive) {
+          const layer = EsriFeatureService.getFeatureLayer(
+            SPECIES_LAYER_IDS.Hyperolius_tuberculatus,
+            null,
+            id
+          );
 
-        setRegionLayers((rl) => ({
-          ...rl,
-          [item.id]: layer,
-        }));
-        map.add(layer);
-      } else {
-        const layer = regionLayers.POINT_OBSERVATIONS;
-        setRegionLayers((rl) => {
-          const { [id]: name, ...rest } = rl;
-          return rest;
-        });
-        map.remove(layer);
+          setRegionLayers((rl) => ({
+            ...rl,
+            [id]: layer,
+          }));
+          map.add(layer);
+        } else {
+          const layer = regionLayers.POINT_OBSERVATIONS;
+          setRegionLayers((rl) => {
+            const { [id]: name, ...rest } = rl;
+            return rest;
+          });
+          map.remove(layer);
+        }
       }
     }
   };
