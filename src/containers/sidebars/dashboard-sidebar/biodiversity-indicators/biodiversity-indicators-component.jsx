@@ -48,7 +48,7 @@ function BioDiversityComponent(props) {
         {t('Biodiversity Indicators')}
       </span>
       <hr className={hrTheme.dark} />
-      <span className={styles.speciesName}>{speciesInfo.scientificname}</span>
+      <span className={styles.speciesName}>{speciesInfo?.scientificname}</span>
       {isLoading && <Loading height={200} />}
       {!isLoading && (
         <>
