@@ -30,6 +30,11 @@ function BioDiversityComponent(props) {
     globalProtectionArea,
   } = props;
 
+  const TABS = {
+    SHI: 1,
+    SPI: 2,
+  };
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -52,9 +57,9 @@ function BioDiversityComponent(props) {
               type="button"
               aria-label={t('Species Protection Index')}
               className={cx({
-                [styles.selected]: selectedTab === 2,
+                [styles.selected]: selectedTab === TABS.SPI,
               })}
-              onClick={() => setSelectedTab(2)}
+              onClick={() => setSelectedTab(TABS.SPI)}
             >
               <label>{protectionScore}%</label>
               <span>{t('Protection Score')}</span>
@@ -63,9 +68,9 @@ function BioDiversityComponent(props) {
               type="button"
               aria-label={t('Species Habitat Index')}
               className={cx({
-                [styles.selected]: selectedTab === 1,
+                [styles.selected]: selectedTab === TABS.SHI,
               })}
-              onClick={() => setSelectedTab(1)}
+              onClick={() => setSelectedTab(TABS.SHI)}
             >
               <label>{habitatScore}%</label>
               <span>{t('Habitat Score')}</span>

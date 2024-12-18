@@ -1,18 +1,20 @@
-import React from 'react'
+import React from 'react';
+
 import cx from 'classnames';
+
 import styles from './species-group-title-component.module.scss';
 
 function SpeciesGroupTitleComponent(props) {
-  const { species, filter } = props;
-  const { family_common, family, familyObj } = species;
+  const { species } = props;
+  const { scientific_name, common_name } = species;
   return (
     <div className={cx(styles.name, styles.familyTitle, styles.item)}>
       <div className={styles.common}>
-        {species === '__blank' ? '' : family_common[0]}
+        {species === '__blank' ? '' : common_name}
       </div>
-      <div className={styles.sci}>{family}</div>
+      <div className={styles.sci}>{scientific_name}</div>
     </div>
-  )
+  );
 }
 
-export default SpeciesGroupTitleComponent
+export default SpeciesGroupTitleComponent;

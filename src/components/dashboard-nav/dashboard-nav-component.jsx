@@ -3,16 +3,14 @@ import React, { useContext } from 'react';
 import { useT } from '@transifex/react';
 
 import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
-import WhatshotIcon from '@mui/icons-material/Whatshot';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
 import { NAVIGATION } from 'constants/dashboard-constants.js';
 
-import DuikerIcon from 'icons/duiker_icon_black.svg?react';
-import ElephantIcon from 'icons/elephant.svg?react';
+import BirdsIcon from 'icons/bird_icon.svg?react';
+import SpeciesIcon from 'icons/gauge_icon.svg?react';
 import HomeIcon from 'icons/house-solid.svg?react';
-import OkapiIcon from 'icons/okapi.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
 import TimeLineIcon from 'icons/timeline.svg?react';
 
@@ -72,19 +70,7 @@ function DashboardNavComponent(props) {
             updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER);
           }}
         >
-          {countryISO === 'COD' && <OkapiIcon className={styles.speciesIcon} />}
-          {countryISO === 'LBR' && (
-            <DuikerIcon className={styles.speciesIcon} />
-          )}
-          {countryISO === 'GIN' && (
-            <ElephantIcon className={styles.speciesIcon} />
-          )}
-          {countryISO === 'SLE' && (
-            <ElephantIcon className={styles.speciesIcon} />
-          )}
-          {countryISO === 'GUY' && (
-            <ElephantIcon className={styles.speciesIcon} />
-          )}
+          <BirdsIcon />
         </button>
         {selectedIndex >= NAVIGATION.SPECIES &&
           selectedIndex <= NAVIGATION.REGION_ANALYSIS && (
@@ -115,7 +101,7 @@ function DashboardNavComponent(props) {
                   updateHistory(NAVIGATION.BIO_IND, titles.BIO_DIVERSITY)
                 }
               >
-                <TimeLineIcon />
+                <SpeciesIcon />
               </button>
             </div>
           )}
@@ -127,7 +113,7 @@ function DashboardNavComponent(props) {
           })}
           onClick={() => updateHistory(NAVIGATION.TRENDS, titles.TRENDS)}
         >
-          <WhatshotIcon />
+          <TimeLineIcon />
         </button>
       </div>
     </section>

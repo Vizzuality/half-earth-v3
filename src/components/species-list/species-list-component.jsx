@@ -12,7 +12,7 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import { LightModeContext } from '../../context/light-mode';
 import SpeciesGroupContainer from '../species-group';
-import SpeciesGroupTitleContainer from '../species-group-title';
+// import SpeciesGroupTitleContainer from '../species-group-title';
 
 import styles from './species-list-component-styles.module.scss';
 
@@ -28,27 +28,6 @@ function SpeciesListComponent(props) {
   const [selectedTaxaObj, setSelectedTaxaObj] = useState();
   const [filteredSpecies, setFilteredSpecies] = useState({});
   const [filter, setFilter] = useState();
-
-  useEffect(() => {
-    if (!selectedTaxa) return;
-    updateSelectedTaxa(selectedTaxa);
-  }, [selectedTaxa, filteredTaxaList]);
-
-  useEffect(() => {
-    if (!selectedTaxaObj) return;
-
-    applyFilter();
-  }, [selectedTaxaObj]);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      applyFilter();
-    }, 300);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [filter]);
 
   const getTaxaTitle = (label, taxa) => {
     const taxaToCheck = [
@@ -66,11 +45,11 @@ function SpeciesListComponent(props) {
         return `Old World ${label}*`;
       }
       if (!taxaToCheck.includes(taxa.toUpperCase())) {
-        return `${label}*`;
+        return `${t(label)}*`;
       }
     }
 
-    return label;
+    return t(label);
   };
 
   const updateSelectedTaxa = (taxa) => {
@@ -80,7 +59,7 @@ function SpeciesListComponent(props) {
     setSelectedTaxa(taxa);
     const fc = {};
 
-    const sto = filteredTaxaList.find((t) => t.taxa === taxa);
+    const sto = filteredTaxaList?.find((t) => t.taxa === taxa);
     if (sto === undefined) return;
 
     setInFilter(sto?.species?.length);
@@ -116,7 +95,7 @@ function SpeciesListComponent(props) {
 
   const applyFilter = () => {
     // this.virtualScroll?.scrollToIndex(0);
-    const inFilterCheck = (sp) => sp.filterString.indexOf(filter) > -1;
+    const inFilterCheck = (sp) => sp.common_name?.indexOf(filter) > -1;
     setInFilter(0);
 
     // clear the counts
@@ -130,7 +109,7 @@ function SpeciesListComponent(props) {
 
     // group by family common
     let groupByFamily = familySortedSpecies?.reduce((group, result) => {
-      const catName = result.family[0] ?? '__blank';
+      const catName = result.scientific_name[0] ?? '__blank';
 
       const updateResult = { ...result };
 
@@ -189,15 +168,36 @@ function SpeciesListComponent(props) {
 
   const sortFilteredSpecies = (species) => {
     return species?.sort((a, b) => {
-      if (a.family[0] < b.family[0]) {
+      if (a.scientific_name < b.scientific_name) {
         return -1;
       }
-      if (a.family[0] > b.family[0]) {
+      if (a.scientific_name > b.scientific_name) {
         return 1;
       }
       return 0;
     });
   };
+
+  useEffect(() => {
+    if (!selectedTaxa) return;
+    updateSelectedTaxa(selectedTaxa);
+  }, [selectedTaxa, filteredTaxaList]);
+
+  useEffect(() => {
+    if (!selectedTaxaObj) return;
+
+    applyFilter();
+  }, [selectedTaxaObj]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      applyFilter();
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [filter]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.filters)}>
@@ -226,7 +226,15 @@ function SpeciesListComponent(props) {
                   src={`https://mol.org/static/img/groups/taxa_${taxa.taxa}.png`}
                 />
                 <div className={styles.header}>
-                  {taxa.count}&nbsp;{getTaxaTitle(taxa?.title, taxa?.taxa)}
+                  <span style={{ marginRight: '5px' }}>{taxa.count}</span>
+                  <span
+                    style={{
+                      textTransform: 'capitalize',
+                      display: 'inline-block',
+                    }}
+                  >
+                    {getTaxaTitle(taxa?.title, taxa?.taxa)}
+                  </span>
                 </div>
               </div>
             );
@@ -236,8 +244,15 @@ function SpeciesListComponent(props) {
       {!isLoading && selectedTaxa && selectedTaxaObj && (
         <div className={styles.speciesList}>
           <div className={styles.header}>
-            {selectedTaxaObj?.count}&nbsp;
-            {getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
+            <span style={{ marginRight: '5px' }}>{selectedTaxaObj?.count}</span>
+            <span
+              style={{
+                textTransform: 'capitalize',
+                display: 'inline-block',
+              }}
+            >
+              {getTaxaTitle(selectedTaxaObj?.title, selectedTaxaObj?.taxa)}
+            </span>
           </div>
           <SearchInput
             className={cx(styles.search)}
@@ -249,12 +264,12 @@ function SpeciesListComponent(props) {
             {Object.keys(filteredSpecies).map((sp, index) => {
               return (
                 <div key={index}>
-                  {filteredSpecies[sp].length > 0 && (
+                  {/* {filteredSpecies[sp].length > 0 && (
                     <SpeciesGroupTitleContainer
                       species={filteredSpecies[sp][0]}
                       filter={filter}
                     />
-                  )}
+                  )} */}
                   {filteredSpecies[sp].map(
                     (v, idx) =>
                       v.visible && (

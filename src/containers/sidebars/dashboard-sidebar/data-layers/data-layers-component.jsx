@@ -158,35 +158,6 @@ function DataLayerComponent(props) {
     });
 
     return Object.values(grouped);
-    // return arr.reduce((acc, obj) => {
-    //   const key = obj.type_title;
-    //   if (
-    //     key.toUpperCase() === 'EXPERT RANGE MAPS' ||
-    //     key.toUpperCase() === 'POINT OBSERVATIONS'
-    //   ) {
-    //     if (!acc[key].label) {
-    //       acc[key] = {
-    //         label: key,
-    //         items: [],
-    //         total_no_rows: 0,
-    //         isActive: false,
-    //         showChildren: false,
-    //       };
-    //     }
-    //     obj.isActive = false;
-    //     /// TODO: Remove Expert Range Maps restriction
-    //     // if (key.toUpperCase() === 'EXPERT RANGE MAPS') {
-    //     //   if (acc[key].items < 2) {
-    //     //     acc[key].items.push(obj);
-    //     //     acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
-    //     //   }
-    //     // } else {
-    //     acc[key].items.push(obj);
-    //     acc[key].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
-    //     // }
-    //   }
-    //   return acc;
-    // }, []);
   };
 
   const handleBack = () => {

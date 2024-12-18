@@ -118,33 +118,33 @@ function DashboardHomeComponent(props) {
                 id="pop1"
                 name="pop1"
                 className={cx(styles.navCard, styles.chat)}
-                onClick={() => selectSpecies('Okapia johnstoni')}
+                onClick={() => selectSpecies('Leptopelis christyi')}
               >
                 <div className={styles.outline} />
-                <label htmlFor="pop1">Okapi</label>
-                <p>Okapia johnstoni</p>
+                <label htmlFor="pop1">Christy's Forest Treefrog</label>
+                <p>Leptopelis christyi</p>
               </button>
               <button
                 type="button"
                 id="pop2"
                 name="pop2"
                 className={cx(styles.navCard, styles.pilio)}
-                onClick={() => selectSpecies('Pan paniscus')}
+                onClick={() => selectSpecies('Congolacerta vauereselli')}
               >
                 <div className={styles.outline} />
-                <label htmlFor="pop2">Bonobo</label>
-                <p>Pan paniscus</p>
+                <label htmlFor="pop2">Sparse-Scaled Forest Lizard</label>
+                <p>Congolacerta vauereselli</p>
               </button>
               <button
                 type="button"
                 id="pop3"
                 name="pop3"
                 className={cx(styles.navCard, styles.egg)}
-                onClick={() => selectSpecies('Afropavo congensis')}
+                onClick={() => selectSpecies('Hyperolius tuberculatus')}
               >
                 <div className={styles.outline} />
-                <label htmlFor="pop3">Congo Peacock</label>
-                <p>Afropavo congensis</p>
+                <label htmlFor="pop3">Rainforest Reed Frog</label>
+                <p>Hyperolius tuberculatus</p>
               </button>
               <button
                 type="button"

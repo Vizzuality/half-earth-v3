@@ -27,6 +27,9 @@ function BioDiversityContainer(props) {
     countryISO,
   } = props;
 
+  const protectedAreaMin = 10000;
+  const protectedAreaMax = 250000;
+
   const { lightMode } = useContext(LightModeContext);
   const [selectedTab, setSelectedTab] = useState(2);
   const [habitatScore, setHabitatScore] = useState('0.00');
@@ -39,78 +42,29 @@ function BioDiversityContainer(props) {
   const [globalProtectionArea, setGlobalProtectionArea] = useState('0');
   const [startYear, setStartYear] = useState(1950);
 
-  // get habitat score information
-  useEffect(() => {
-    if (dataByCountry && data) {
-      const { habitatScore, globalHabitatScore } = getHabitatScore();
-      setHabitatScore(habitatScore);
-      setGlobalHabitatScore(globalHabitatScore);
-
-      getHabitatTableData();
-    }
-  }, [dataByCountry, data]);
-
-  // get protection score information
-  useEffect(() => {
-    if (data && habitatTableData && dataByCountry) {
-      getProtectionTableData(data.spiScoreData);
-
-      const globalValues = data.spiScoreData.filter(
-        (country) => country.country_name.toUpperCase() === 'GLOBAL'
-      );
-      const countryData = data.spiScoreData.filter(
-        (country) =>
-          country.country_name.toUpperCase() === countryName.toUpperCase()
-      );
-
-      const scores = {
-        protectionScore: last(countryData).shs_score.toFixed(1),
-        globalProtectionScore: last(globalValues).shs_score.toFixed(1),
-      };
-
-      setProtectionScore(scores.protectionScore);
-      setGlobalProtectionScore(scores.globalProtectionScore);
-    }
-  }, [habitatTableData]);
-
-  useEffect(() => {
-    removeRegionLayers();
-    const protectedLayers = EsriFeatureService.addProtectedAreaLayer(
-      null,
-      countryISO
-    );
-    const layerName = LAYER_OPTIONS.HABITAT;
-    const webTileLayer = EsriFeatureService.getXYZLayer(
-      speciesInfo.scientificname.replace(' ', '_'),
-      layerName,
-      LAYER_TITLE_TYPES.TREND
-    );
-    webTileLayer.then((layer) => {
-      setRegionLayers({
-        ...regionLayers,
-        [layerName]: layer,
-        [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers,
-      });
-      map.add(protectedLayers);
-      map.add(layer);
-    });
-  }, []);
-
   const removeRegionLayers = () => {
-    // let layers = regionLayers;
-    // Object.keys(layers).map(region => {
-    //   // const { [region]: name, ...rest } = layers;
-    //   // layers = rest;
-    //   const foundLayer = map.layers.items.find(item => item.id === region);
-    //   if (foundLayer) {
-    //     map.remove(foundLayer);
-    //   }
-    // });
     map.layers.items.forEach((layer) => {
       if (!INITIAL_LAYERS.includes(layer.id)) {
         map.remove(layer);
       }
     });
+  };
+
+  const getCountryScores = (country, lastCountryYearValue, startYearValue) => {
+    let countryAreaScore = 0;
+    let countryConnectivityScore = 0;
+
+    if (country?.shs[lastCountryYearValue]) {
+      countryAreaScore = country?.shs[lastCountryYearValue].propchange;
+      if (country?.frag[lastCountryYearValue]?.gisfrag) {
+        countryConnectivityScore =
+          // eslint-disable-next-line no-unsafe-optional-chaining
+          country?.frag[lastCountryYearValue]?.gisfrag / startYearValue;
+      }
+
+      return { countryAreaScore, countryConnectivityScore };
+    }
+    return { countryAreaScore: 0, countryConnectivityScore: 0 };
   };
 
   const getHabitatScore = () => {
@@ -256,37 +210,21 @@ function BioDiversityContainer(props) {
     setProtectionTableData(tableData);
   };
 
-  const getCountryScores = (country, lastCountryYearValue, startYearValue) => {
-    let countryAreaScore = 0;
-    let countryConnectivityScore = 0;
-
-    if (country?.shs[lastCountryYearValue]) {
-      countryAreaScore = country?.shs[lastCountryYearValue].propchange;
-      if (country?.frag[lastCountryYearValue]?.gisfrag) {
-        countryConnectivityScore =
-          // eslint-disable-next-line no-unsafe-optional-chaining
-          country?.frag[lastCountryYearValue]?.gisfrag / startYearValue;
-      }
-
-      return { countryAreaScore, countryConnectivityScore };
-    }
-    return { countryAreaScore: 0, countryConnectivityScore: 0 };
-  };
-
   const targetProtectedArea = (rs) => {
-    if (rs <= 10000) {
+    if (rs <= protectedAreaMin) {
       return rs;
     }
-    if (rs >= 250000) {
+    if (rs >= protectedAreaMax) {
       return 0.15 * rs;
     }
     return (
       // eslint-disable-next-line operator-linebreak
       rs *
       // eslint-disable-next-line operator-linebreak
-      (((1 - 0.15) / (Math.log10(10000) - Math.log10(250000))) *
+      (((1 - 0.15) /
+        (Math.log10(protectedAreaMin) - Math.log10(protectedAreaMax))) *
         // eslint-disable-next-line operator-linebreak
-        (Math.log10(rs) - Math.log10(10000)) +
+        (Math.log10(rs) - Math.log10(protectedAreaMin)) +
         1)
     );
   };
@@ -300,6 +238,63 @@ function BioDiversityContainer(props) {
     }
     return val;
   };
+
+  // get habitat score information
+  useEffect(() => {
+    if (dataByCountry && data) {
+      const { habitatScore, globalHabitatScore } = getHabitatScore();
+      setHabitatScore(habitatScore);
+      setGlobalHabitatScore(globalHabitatScore);
+
+      getHabitatTableData();
+    }
+  }, [dataByCountry, data]);
+
+  // get protection score information
+  useEffect(() => {
+    if (data && habitatTableData && dataByCountry) {
+      getProtectionTableData(data.spiScoreData);
+
+      const globalValues = data.spiScoreData.filter(
+        (country) => country.country_name.toUpperCase() === 'GLOBAL'
+      );
+      const countryData = data.spiScoreData.filter(
+        (country) =>
+          country.country_name.toUpperCase() === countryName.toUpperCase()
+      );
+
+      const scores = {
+        protectionScore: last(countryData).shs_score.toFixed(1),
+        globalProtectionScore: last(globalValues).shs_score.toFixed(1),
+      };
+
+      setProtectionScore(scores.protectionScore);
+      setGlobalProtectionScore(scores.globalProtectionScore);
+    }
+  }, [habitatTableData]);
+
+  useEffect(() => {
+    removeRegionLayers();
+    const protectedLayers = EsriFeatureService.addProtectedAreaLayer(
+      null,
+      countryISO
+    );
+    const layerName = LAYER_OPTIONS.HABITAT;
+    const webTileLayer = EsriFeatureService.getXYZLayer(
+      speciesInfo.scientificname.replace(' ', '_'),
+      layerName,
+      LAYER_TITLE_TYPES.TREND
+    );
+    webTileLayer.then((layer) => {
+      setRegionLayers({
+        ...regionLayers,
+        [layerName]: layer,
+        [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers,
+      });
+      map.add(protectedLayers);
+      map.add(layer);
+    });
+  }, []);
 
   return (
     <BioDiversityComponent

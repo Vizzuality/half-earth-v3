@@ -4,7 +4,7 @@ import countryDataActions from 'redux_modules/country-data';
 
 import { DASHBOARD } from 'router';
 
-import { useLocale } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import * as urlActions from 'actions/url-actions';
 
@@ -14,7 +14,13 @@ import { setBasemap } from 'utils/layer-manager-utils.js';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION } from 'constants/dashboard-constants';
-import { GADM_1_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
+import {
+  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+  AMPHIBIAN_LOOKUP,
+  BIRDS_LOOKUP,
+  MAMMALS_LOOKUP,
+  REPTILES_LOOKUP,
+} from 'constants/layers-slugs';
 import { COUNTRIES_DATA_SERVICE_URL, LAYERS_URLS } from 'constants/layers-urls';
 import { layersConfig } from 'constants/mol-layers-configs';
 
@@ -25,6 +31,7 @@ const actions = { ...countryDataActions, ...urlActions };
 
 function DashboardContainer(props) {
   const locale = useLocale();
+  const t = useT();
   const {
     viewSettings,
     countryISO,
@@ -54,8 +61,6 @@ function DashboardContainer(props) {
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
   const [user, setUser] = useState();
-  const [molId, setMolId] = useState();
-
   const getQueryParams = () => {
     if (queryParams) {
       const {
@@ -276,24 +281,70 @@ function DashboardContainer(props) {
     setTaxaList(taxa);
   };
 
-  const newGetSpeciesList = () => {
+  const getTaxaSpecies = async (taxa, slices) => {
+    const json = JSON.parse(slices);
+    let url;
+
+    switch (taxa) {
+      case 'amphibians':
+        url = LAYERS_URLS[AMPHIBIAN_LOOKUP];
+        break;
+      case 'birds':
+        url = LAYERS_URLS[BIRDS_LOOKUP];
+        break;
+      case 'mammals':
+        url = LAYERS_URLS[MAMMALS_LOOKUP];
+        break;
+      case 'reptiles':
+        url = LAYERS_URLS[REPTILES_LOOKUP];
+        break;
+      default:
+        break;
+    }
+
+    const response = await EsriFeatureService.getFeatures({
+      url,
+      whereClause: `SliceNumber IN (${json
+        .map((s) => s.SliceNumber)
+        .join(',')})`,
+      returnGeometry: false,
+    });
+
+    return {
+      taxa,
+      title: t(taxa),
+      count: json.length,
+      species: response.map((r) => r.attributes),
+    };
+  };
+
+  const newGetSpeciesList = async () => {
     // https://utility.arcgis.com/usrsvcs/servers/340d03102060417c8a9f712754708216/rest/services/gadm1_precalculated_aoi_summaries_updated_20240321/FeatureServer/0
 
-    EsriFeatureService.getFeatures({
+    const features = await EsriFeatureService.getFeatures({
       url: LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER],
       whereClause: `GID_1 = '${selectedRegion.GID_1}'`,
       returnGeometry: false,
-    }).then((features) => {
-      if (features && features[0]) {
-        const { geometry, attributes } = features[0];
-
-        console.log(attributes);
-
-        console.log(JSON.parse(attributes.amphibians));
-      }
     });
-    // gadm1_precalculated_aoi_summaries_updated_20240321
-    // WDPA_with_gadm1_updated_202401
+
+    if (features && features[0]) {
+      const { geometry, attributes } = features[0];
+
+      const { amphibians, birds, reptiles, mammals } = attributes;
+
+      const [amphibianData, birdsData, reptilesData, mammalsData] =
+        await Promise.all([
+          getTaxaSpecies('amphibians', amphibians),
+          getTaxaSpecies('birds', birds),
+          getTaxaSpecies('reptiles', reptiles),
+          getTaxaSpecies('mammals', mammals),
+        ]);
+
+      const speciesData = [amphibianData, birdsData, reptilesData, mammalsData];
+
+      setTaxaList(speciesData);
+      console.log(speciesData);
+    }
   };
 
   const getSpiDataByCountry = (d) => {
@@ -388,9 +439,7 @@ function DashboardContainer(props) {
       returnGeometry: true,
     })
       .then((features) => {
-        const { geometry, attributes } = features[0];
-
-        setMolId(attributes.OBJECTID);
+        const { geometry } = features[0];
 
         setCountryDataReady(features);
         if (geometry) {
@@ -424,9 +473,9 @@ function DashboardContainer(props) {
   }, [speciesInfo]);
 
   useEffect(() => {
-    if (!dataLayerData || !taxaList?.length) return;
+    if (!dataLayerData) return;
     getData();
-  }, [dataLayerData, taxaList]);
+  }, [dataLayerData]);
 
   useEffect(() => {
     browsePage({

@@ -67,9 +67,11 @@
 .taxaList {
   max-width: 400px;
   margin-top: 15px;
-
-
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
+
 .thumb {
   height: 32px;
   width: 32px;

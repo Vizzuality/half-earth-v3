@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { getCSSVariable } from 'utils/css-utils';
-import HabitatComponent from './habitat-component';
-import ArrowUpward from 'icons/arrow-up-solid.svg?react';
-import ArrowDownward from 'icons/arrow-down-solid.svg?react';
-import Stable from 'icons/minus-solid.svg?react';
+
 import { useT } from '@transifex/react';
+
+import { getCSSVariable } from 'utils/css-utils';
+
+import ArrowDownward from 'icons/arrow-down-solid.svg?react';
+import ArrowUpward from 'icons/arrow-up-solid.svg?react';
+import Stable from 'icons/minus-solid.svg?react';
+
+import HabitatComponent from './habitat-component';
 
 function HabitatContainer(props) {
   const t = useT();
-  const { lightMode, habitatTableData, dataByCountry, countryName, habitatScore, globalHabitatScore } = props;
+  const {
+    lightMode,
+    habitatTableData,
+    dataByCountry,
+    countryName,
+    habitatScore,
+    globalHabitatScore,
+  } = props;
 
   const [selectedCountry, setSelectedCountry] = useState('Global');
   const [shiCountries, setShiCountries] = useState([]);
@@ -67,39 +78,6 @@ function HabitatContainer(props) {
     },
   };
 
-  useEffect(() => {
-    if (habitatTableData.length) {
-      const countries = habitatTableData.map(item => item.country);
-
-      const sortedCountries = countries.sort((a, b) => {
-        const nameA = a.toUpperCase();
-        const nameB = b.toUpperCase();
-        if (nameA === 'GLOBAL' || nameB === 'GLOBAL') {
-          return -2;
-        }
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-
-      setShiCountries(sortedCountries);
-
-      getChartData('Global');
-
-      setTrendArrows();
-    }
-  }, [habitatTableData]);
-
-
-  const onCountryChange = (event) => {
-    setSelectedCountry(event.currentTarget.value);
-    getChartData(event.currentTarget.value);
-  }
-
   const getChartData = (countrySelected) => {
     const dates = [];
     const currentCountry = dataByCountry[countryName];
@@ -109,34 +87,43 @@ function HabitatContainer(props) {
     const selectedCountryScores = { area: [], connectivity: [], total: [] };
 
     if (currentCountry) {
-      currentCountry.shs?.forEach(row => {
+      currentCountry.shs?.forEach((row) => {
         defaultCountryScores.area.push(row.propchange * 100);
       });
 
-      dataByCountry[countrySelected]?.shs.forEach(row => {
+      dataByCountry[countrySelected]?.shs.forEach((row) => {
         dates.push(row.year);
         selectedCountryScores.area.push(row.propchange * 100);
       });
 
       if (currentCountry.frag.length > 0) {
         const fragYear = currentCountry.frag?.[0].gisfrag;
-        currentCountry?.frag?.forEach(row => {
-          defaultCountryScores.connectivity.push((row.gisfrag / fragYear) * 100);
+        currentCountry?.frag?.forEach((row) => {
+          defaultCountryScores.connectivity.push(
+            (row.gisfrag / fragYear) * 100
+          );
         });
 
-        const selectedFragYear = dataByCountry[countrySelected]?.frag?.[0].gisfrag;
-        dataByCountry[countrySelected]?.frag?.forEach(row => {
-          selectedCountryScores.connectivity.push((row.gisfrag / selectedFragYear) * 100);
+        const selectedFragYear =
+          dataByCountry[countrySelected]?.frag?.[0].gisfrag;
+        dataByCountry[countrySelected]?.frag?.forEach((row) => {
+          selectedCountryScores.connectivity.push(
+            (row.gisfrag / selectedFragYear) * 100
+          );
         });
       }
 
       for (let index = 0; index < dates.length; index += 1) {
-        const dcTotal = (defaultCountryScores.area[index] +
-          defaultCountryScores.connectivity[index]) / 2;
+        const dcTotal =
+          (defaultCountryScores.area[index] +
+            defaultCountryScores.connectivity[index]) /
+          2;
         defaultCountryScores.total.push(dcTotal);
 
-        const scTotal = (selectedCountryScores.area[index] +
-          selectedCountryScores.connectivity[index]) / 2;
+        const scTotal =
+          (selectedCountryScores.area[index] +
+            selectedCountryScores.connectivity[index]) /
+          2;
         selectedCountryScores.total.push(scTotal);
       }
     }
@@ -210,12 +197,17 @@ function HabitatContainer(props) {
         },
       ],
     });
-  }
+  };
+
+  const onCountryChange = (event) => {
+    setSelectedCountry(event.currentTarget.value);
+    getChartData(event.currentTarget.value);
+  };
 
   const updateCountry = (country) => {
     setSelectedCountry(country.value);
     getChartData(country.value);
-  }
+  };
 
   const setTrendArrows = () => {
     const hs = habitatScore;
@@ -245,20 +237,50 @@ function HabitatContainer(props) {
 
     // this.countryHabitatScoreTitle = this.translate.instant('habitat_change', { change: this.countryHabitatChange, country: this.country, year: 2001 });
     // this.globalHabitatScoreTitle = this.translate.instant('habitat_global_change', { change: this.globalHabitatChange, year: 2001 });
-  }
+  };
 
-  return <HabitatComponent
-    selectedCountry={selectedCountry}
-    shiCountries={shiCountries}
-    chartData={chartData}
-    globalTrend={globalTrend}
-    countryTrend={countryTrend}
-    globalTrendIcon={globalTrendIcon}
-    countryTrendIcon={countryTrendIcon}
-    chartOptions={chartOptions}
-    updateCountry={updateCountry}
-    onCountryChange={onCountryChange}
-    {...props} />;
+  useEffect(() => {
+    if (habitatTableData.length) {
+      const countries = habitatTableData.map((item) => item.country);
+
+      const sortedCountries = countries.sort((a, b) => {
+        const nameA = a.toUpperCase();
+        const nameB = b.toUpperCase();
+        if (nameA === 'GLOBAL' || nameB === 'GLOBAL') {
+          return -2;
+        }
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+
+      setShiCountries(sortedCountries);
+
+      getChartData('Global');
+
+      setTrendArrows();
+    }
+  }, [habitatTableData]);
+
+  return (
+    <HabitatComponent
+      selectedCountry={selectedCountry}
+      shiCountries={shiCountries}
+      chartData={chartData}
+      globalTrend={globalTrend}
+      countryTrend={countryTrend}
+      globalTrendIcon={globalTrendIcon}
+      countryTrendIcon={countryTrendIcon}
+      chartOptions={chartOptions}
+      updateCountry={updateCountry}
+      onCountryChange={onCountryChange}
+      {...props}
+    />
+  );
 }
 
 export default HabitatContainer;

@@ -51,3 +51,7 @@ export const LAYER_OPTIONS = {
   POINT_OBSERVATIONS: 'POINT_OBSERVATIONS',
   ADMINISTRATIVE_LAYERS: 'ADMINISTRATIVE_LAYERS',
 };
+
+export const TAXA_IMAGE_URL = 'https://mol.org/static/img/groups/taxa_';
+export const SPECIES_IMAGE_URL =
+  'https://storage.googleapis.com/mol-assets2/thumbs/';
