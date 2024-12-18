@@ -17,6 +17,7 @@ function SpeciesFilterComponent(props) {
     selectedRegionOption,
     setSelectedRegionOption,
     setSelectedIndex,
+    setSelectedTaxa,
   } = props;
 
   const filterStart = [
@@ -119,6 +120,7 @@ function SpeciesFilterComponent(props) {
   }, [taxaList]);
 
   const handleBack = () => {
+    setSelectedTaxa(null);
     setSelectedRegionOption(null);
     setSelectedIndex(NAVIGATION.REGION);
   };

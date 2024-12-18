@@ -8,6 +8,8 @@ import { Loading } from 'he-components';
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
 
+import { TAXA_IMAGE_URL } from 'constants/dashboard-constants.js';
+
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import { LightModeContext } from '../../context/light-mode';
@@ -216,14 +218,16 @@ function SpeciesListComponent(props) {
         {!selectedTaxa &&
           filteredTaxaList?.map((taxa, index) => {
             return (
-              <div
+              <button
+                type="button"
                 className={styles.title}
                 key={index}
                 onClick={() => updateSelectedTaxa(taxa.taxa)}
               >
                 <img
+                  alt={taxa?.title}
                   className={styles.thumb}
-                  src={`https://mol.org/static/img/groups/taxa_${taxa.taxa}.png`}
+                  src={`${TAXA_IMAGE_URL}${taxa.taxa}.png`}
                 />
                 <div className={styles.header}>
                   <span style={{ marginRight: '5px' }}>{taxa.count}</span>
@@ -236,7 +240,7 @@ function SpeciesListComponent(props) {
                     {getTaxaTitle(taxa?.title, taxa?.taxa)}
                   </span>
                 </div>
-              </div>
+              </button>
             );
           })}
       </div>

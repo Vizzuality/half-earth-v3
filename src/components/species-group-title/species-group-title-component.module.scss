@@ -22,14 +22,13 @@
   min-height: calc(100% - 170px);
 }
 .name {
-  // line-height: 23px;
   .sci {
     font-weight: 300;
-    font-size: 14px;
+    font-size: $font-size-sm;
     font-style: italic;
   }
   .common {
-    font-size: 16px;
+    font-size: $font-size-base;
     font-weight: 500;
   }
 }

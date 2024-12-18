@@ -47,9 +47,8 @@ function FilterComponent(props) {
     clearCounts();
 
     let allTaxa = taxaList;
-    if (selectedTaxa !== '') {
-      // allTaxa = allTaxa.filter((taxa) => taxa.taxa === selectedTaxa);
-      allTaxa = taxaList[selectedTaxa];
+    if (selectedTaxa) {
+      allTaxa = allTaxa.filter((taxa) => taxa.taxa === selectedTaxa);
     }
 
     const filtered = [];
