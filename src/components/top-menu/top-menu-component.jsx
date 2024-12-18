@@ -4,11 +4,13 @@ import { useT } from '@transifex/react';
 
 import IdentityManager from '@arcgis/core/identity/IdentityManager';
 
+import UserAvatar from 'icons/user_icon.svg?react';
+
 import styles from './top-menu-styles.module.scss';
 
 function UserProfile(props) {
   const t = useT();
-  const { user, setLoggedIn } = props;
+  const { setLoggedIn } = props;
   const logOut = () => {
     IdentityManager.destroyCredentials();
     setLoggedIn(false);
@@ -21,12 +23,7 @@ function UserProfile(props) {
         className={styles.profile}
         rel="noreferrer"
       >
-        <img
-          src={user.thumbnailUrl}
-          width="30px"
-          height="30px"
-          alt="User profile"
-        />
+        <UserAvatar />
       </a>
       <span>|</span>
       <button type="button" onClick={logOut}>
