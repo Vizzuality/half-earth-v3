@@ -53,6 +53,7 @@ export const LAYER_OPTIONS = {
   EXPERT_RANGE_MAPS: 'EXPERT_RANGE_MAPS',
 };
 
-export const TAXA_IMAGE_URL = 'https://mol.org/static/img/groups/taxa_';
+export const TAXA_IMAGE_URL = 'icons/dashboard/';
+
 export const SPECIES_IMAGE_URL =
   'https://storage.googleapis.com/mol-assets2/thumbs/';

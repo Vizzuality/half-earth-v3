@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import cx from 'classnames';
 
@@ -6,8 +6,10 @@ import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
   SPECIES_IMAGE_URL,
-  TAXA_IMAGE_URL,
 } from 'constants/dashboard-constants.js';
+
+import { LightModeContext } from '../../context/light-mode';
+import TaxaImageComponent from '../taxa-image';
 
 import styles from './species-group-component.module.scss';
 
@@ -16,6 +18,7 @@ function SpeciesGroupComponent(props) {
     props;
   // eslint-disable-next-line camelcase
   const { asset_url, common_name, scientific_name } = species;
+  const { lightMode } = useContext(LightModeContext);
 
   const selectSpecies = (selectedSpecies) => {
     setSelectedIndex(NAVIGATION.DATA_LAYER);
@@ -29,7 +32,7 @@ function SpeciesGroupComponent(props) {
   return (
     <button
       type="button"
-      className={styles.speciesBox}
+      className={cx(lightMode ? styles.light : '', styles.speciesBox)}
       onClick={() => selectSpecies(species)}
     >
       <div className={styles.imgBox}>
@@ -40,13 +43,7 @@ function SpeciesGroupComponent(props) {
             src={`${SPECIES_IMAGE_URL}${asset_url}.jpg`}
           />
         )}
-        {!asset_url && (
-          <img
-            alt={`${selectedTaxaObj.taxa}`}
-            loading="lazy"
-            src={`${TAXA_IMAGE_URL}${selectedTaxaObj.taxa}.png`}
-          />
-        )}
+        {!asset_url && <TaxaImageComponent taxa={selectedTaxaObj.taxa} />}
       </div>
       <div className={cx(styles.speciesText, styles.name)}>
         <div className={styles.common}>{common_name}</div>

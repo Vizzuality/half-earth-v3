@@ -8,13 +8,13 @@ import { Loading } from 'he-components';
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
 
-import { TAXA_IMAGE_URL } from 'constants/dashboard-constants.js';
-
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import { LightModeContext } from '../../context/light-mode';
 import SpeciesGroupContainer from '../species-group';
 // import SpeciesGroupTitleContainer from '../species-group-title';
+
+import TaxaImageComponent from '../taxa-image';
 
 import styles from './species-list-component-styles.module.scss';
 
@@ -224,11 +224,7 @@ function SpeciesListComponent(props) {
                 key={index}
                 onClick={() => updateSelectedTaxa(taxa.taxa)}
               >
-                <img
-                  alt={taxa?.title}
-                  className={styles.thumb}
-                  src={`${TAXA_IMAGE_URL}${taxa.taxa}.png`}
-                />
+                <TaxaImageComponent taxa={taxa.taxa} />
                 <div className={styles.header}>
                   <span style={{ marginRight: '5px' }}>{taxa.count}</span>
                   <span

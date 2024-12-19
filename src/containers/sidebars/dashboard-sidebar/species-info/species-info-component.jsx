@@ -1,31 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
-import { TAXA_IMAGE_URL } from 'constants/dashboard-constants.js';
+import TaxaImageComponent from 'components/taxa-image';
+
+import { TAXA_IMAGE_URL } from 'constants/dashboard-constants';
 
 import CongoImage from 'images/dashboard/Congolacerta_vauereselli_hendrick_hinkel.jpg';
 import HypImage from 'images/dashboard/Hyperolius_tuberculatus_brian_gratwicke.jpg';
 import LepImage from 'images/dashboard/Leptopelis_christyi_gauvain_saucy.jpeg';
 
-import { LightModeContext } from '../../../../context/light-mode';
-
 import styles from './species-info-styles.module.scss';
 
 function SpeciesInfoComponent(props) {
   const { speciesInfo } = props;
-  const [taxaImage, setTaxaImage] = useState();
   const [speciesImage, setSpeciesImage] = useState();
 
   const { lightMode } = useContext(LightModeContext);
   useEffect(() => {
     if (speciesInfo) {
       const spImage =
-        speciesInfo?.image.url ?? `${TAXA_IMAGE_URL}${speciesInfo?.taxa}.png`;
-
-      if (speciesInfo?.taxa && speciesInfo?.taxa !== 'animals') {
-        setTaxaImage(`${TAXA_IMAGE_URL}${speciesInfo?.taxa}.png`);
-      }
+        speciesInfo?.image.url ??
+        `${TAXA_IMAGE_URL}${speciesInfo?.taxa}_icon.svg`;
 
       if (speciesInfo.scientificname === 'Leptopelis christyi') {
         setSpeciesImage(LepImage);
@@ -46,9 +43,7 @@ function SpeciesInfoComponent(props) {
         <div className={styles.info}>
           <span className={styles.commonName}>{speciesInfo?.commonname}</span>
           <span className={styles.taxa}>{speciesInfo?.scientificname}</span>
-          {speciesInfo?.image.url && taxaImage && (
-            <img src={taxaImage} alt="taxa" />
-          )}
+          <TaxaImageComponent taxa={speciesInfo?.taxa} />
         </div>
       </div>
       <p className={styles.description}>{speciesInfo?.info?.[0].content}</p>
