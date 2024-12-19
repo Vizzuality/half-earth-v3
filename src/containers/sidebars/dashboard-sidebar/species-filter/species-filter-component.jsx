@@ -13,11 +13,11 @@ import styles from '../dashboard-sidebar-styles.module.scss';
 function SpeciesFilterComponent(props) {
   const t = useT();
   const {
-    taxaList,
     selectedRegionOption,
     setSelectedRegionOption,
     setSelectedIndex,
     setSelectedTaxa,
+    speciesListLoading,
   } = props;
 
   const filterStart = [
@@ -111,13 +111,8 @@ function SpeciesFilterComponent(props) {
     },
   ];
 
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState(filterStart);
-
-  useEffect(() => {
-    if (!taxaList.length) return;
-    setIsLoading(false);
-  }, [taxaList]);
 
   const handleBack = () => {
     setSelectedTaxa(null);
@@ -138,10 +133,10 @@ function SpeciesFilterComponent(props) {
         <FilterContainer
           filters={filters}
           setFilters={setFilters}
-          isLoading={isLoading}
+          isLoading={speciesListLoading}
           {...props}
         />
-        <SpeciesListContainer isLoading={isLoading} {...props} />
+        <SpeciesListContainer isLoading={speciesListLoading} {...props} />
       </div>
     </div>
   );

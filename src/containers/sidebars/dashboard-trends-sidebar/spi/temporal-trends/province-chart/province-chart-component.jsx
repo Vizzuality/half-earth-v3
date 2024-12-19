@@ -50,11 +50,11 @@ function ProvinceChartComponent(props) {
         label: '',
         data: [0, 0],
         backgroundColor: [
-          getCSSVariable('area-protected'),
+          getCSSVariable('bubble'),
           getCSSVariable('white-opacity-20'),
         ],
         borderColor: [
-          getCSSVariable('area-protected'),
+          getCSSVariable('bubble'),
           getCSSVariable('white-opacity-20'),
         ],
         borderWidth: 1,
@@ -98,7 +98,7 @@ function ProvinceChartComponent(props) {
           getCSSVariable('bubble');
       }
       chart.data.datasets[index].backgroundColor =
-        getCSSVariable('area-protected');
+        getCSSVariable('bubble-selected');
       setPreviousIndex(index);
       chart.update();
     }
@@ -134,11 +134,11 @@ function ProvinceChartComponent(props) {
           label: '',
           data: [SPI, 100 - SPI],
           backgroundColor: [
-            getCSSVariable('area-protected'),
+            getCSSVariable('bubble'),
             getCSSVariable('white-opacity-20'),
           ],
           borderColor: [
-            getCSSVariable('area-protected'),
+            getCSSVariable('bubble'),
             getCSSVariable('white-opacity-20'),
           ],
           borderWidth: 1,
@@ -320,15 +320,14 @@ function ProvinceChartComponent(props) {
               width="125x"
               height="75px"
               data={spiArcData}
-              value={percentAreaProtected}
-              isPercent
+              value={countrySPI}
             />
             <div className={styles.values}>
-              <b>{countrySPI?.toFixed(1)}</b>
-              <span>{t('SPI')}</span>
+              <b>{percentAreaProtected.toFixed(1)}%</b>
+              <span>{t('Area Protected')}</span>
             </div>
             <span />
-            <span>{t('Area Protected')}</span>
+            <span style={{ alignSelf: 'baseline' }}>{t('SPI')}</span>
           </div>
         </div>
       )}

@@ -49,6 +49,7 @@ function DashboardHomeComponent(props) {
       limit: 100,
       page: 0,
       lang: locale || 'en',
+      // region_id: '1eff8980-479e-4eac-b386-b4db859b275d',
     };
     const params = new URLSearchParams(searchParams);
     const searchSpecies = await fetch(`${searchURL}?${params}`);

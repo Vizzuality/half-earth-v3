@@ -45,6 +45,14 @@
     span{
       color: var(--font-color);
     }
+
+    .disabled{
+      span{
+        color: var(--font-color);
+        font-style: italic;
+        opacity: 0.5;
+      }
+    }
   }
 
   .search{

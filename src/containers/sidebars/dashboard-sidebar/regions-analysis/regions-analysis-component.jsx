@@ -157,6 +157,13 @@ function RegionsAnalysisComponent(props) {
               label={t('Forest Titles')}
             />
           )}
+          <FormControlLabel
+            value={REGION_OPTIONS.DRAW}
+            control={<Radio />}
+            className={styles.disabled}
+            disabled
+            label={t('Draw on Map - Coming soon')}
+          />
           {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}
           {/* <FormControlLabel value="communityForests" control={<Radio />} label={t('Community Forests')} /> */}
         </RadioGroup>

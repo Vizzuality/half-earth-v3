@@ -17,10 +17,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import { NAVIGATION } from 'constants/dashboard-constants';
 import {
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
-  AMPHIBIAN_LOOKUP,
-  BIRDS_LOOKUP,
-  MAMMALS_LOOKUP,
-  REPTILES_LOOKUP,
+  WDPA_OECM_FEATURE_DATA_LAYER,
 } from 'constants/layers-slugs';
 import {
   COUNTRIES_DATA_SERVICE_URL,
@@ -65,6 +62,7 @@ function DashboardContainer(props) {
   const [selectedProvince, setSelectedProvince] = useState();
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
+  const [speciesListLoading, setSpeciesListLoading] = useState(true);
   const [user, setUser] = useState();
   const getQueryParams = () => {
     if (queryParams) {
@@ -349,12 +347,76 @@ function DashboardContainer(props) {
     };
   };
 
+  const getOccurenceSpecies = async (speciesData) => {
+    const url = DASHBOARD_URLS.SPECIES_OCCURENCE_URL;
+    let whereClause = `ISO3 = '${countryISO}'`;
+
+    if (selectedRegion) {
+      const { GID_1, WDPA_PID } = selectedRegion;
+      if (GID_1) {
+        whereClause = `GID_1 = '${GID_1}'`;
+      }
+
+      if (WDPA_PID) {
+        whereClause = `WDPA_PID = '${WDPA_PID}'`;
+      }
+    }
+
+    const occurenceFeatures = await EsriFeatureService.getFeatures({
+      url,
+      whereClause,
+      returnGeometry: false,
+    });
+
+    const list = [...speciesData];
+
+    occurenceFeatures.forEach((feature) => {
+      const { taxa, species, attributes } = feature.attributes;
+
+      const { source, species_url, threat_status } = JSON.parse(
+        attributes.replace(/NaN/g, 'null')
+      );
+
+      const speciesToAdd = {
+        common_name: species,
+        scientific_name: species,
+        threat_status,
+        source,
+        species_url,
+        taxa,
+      };
+
+      list.find((t) => t.taxa === taxa)?.species.push(speciesToAdd);
+    });
+
+    list.forEach((t) => {
+      t.count = t.species.length;
+    });
+
+    setTaxaList(list);
+    console.log(taxaList);
+    setSpeciesListLoading(false);
+  };
+
   const newGetSpeciesList = async () => {
-    const whereClause = selectedRegion
-      ? `GID_1 = '${selectedRegion.GID_1}'`
-      : `GID_0 = '${countryISO}'`;
+    setSpeciesListLoading(true);
+    let url = LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER];
+    let whereClause = `GID_0 = '${countryISO}'`;
+
+    if (selectedRegion) {
+      const { GID_1, WDPA_PID } = selectedRegion;
+      if (GID_1) {
+        whereClause = `GID_1 = '${GID_1}'`;
+      }
+
+      if (WDPA_PID) {
+        whereClause = `WDPA_PID = '${WDPA_PID}'`;
+        url = LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER];
+      }
+    }
+
     const features = await EsriFeatureService.getFeatures({
-      url: LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER],
+      url,
       whereClause,
       returnGeometry: false,
     });
@@ -379,40 +441,8 @@ function DashboardContainer(props) {
 
       const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
-      setTaxaList(speciesData);
+      getOccurenceSpecies(speciesData);
     }
-  };
-
-  const getOccurenceSpecies = async () => {
-    const whereClause = selectedRegion
-      ? `GID_1 = '${selectedRegion.GID_1}'`
-      : `ISO3 = '${countryISO}'`;
-    const occurenceFeatures = await EsriFeatureService.getFeatures({
-      url: DASHBOARD_URLS.SPECIES_OCCURENCE_URL,
-      whereClause,
-      returnGeometry: false,
-    });
-
-    occurenceFeatures.forEach((feature) => {
-      const { taxa, species, attributes } = feature.attributes;
-
-      console.log(attributes);
-      const { source, species_url, threat_status } = JSON.parse(
-        attributes.replace(/NaN/g, 'null')
-      );
-
-      const speciesToAdd = {
-        common_name: species,
-        scientific_name: species,
-        threat_status,
-        source,
-        species_url,
-        taxa,
-      };
-
-      taxaList.find((t) => t.taxa === taxa).species.push(speciesToAdd);
-    });
-    console.log(occurenceFeatures);
   };
 
   const getSpiDataByCountry = (d) => {
@@ -568,11 +598,6 @@ function DashboardContainer(props) {
     user,
   ]);
 
-  useEffect(() => {
-    if (!taxaList.length) return;
-    getOccurenceSpecies();
-  }, [taxaList]);
-
   return (
     <DashboardComponent
       handleMapLoad={handleMapLoad}
@@ -608,6 +633,7 @@ function DashboardContainer(props) {
       setProvinceName={setProvinceName}
       user={user}
       setUser={setUser}
+      speciesListLoading={speciesListLoading}
       {...props}
     />
   );

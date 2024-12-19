@@ -50,7 +50,7 @@
     .arcGrid{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: 70px 30px;
+      grid-template-rows: 70px 20px;
       justify-items: center;
       border-radius: 5px;
       height: 100px;
@@ -77,7 +77,7 @@
         .score{
           color: var(--font-color);
           text-align: center;
-          font-family: "Open Sans";
+          font-family: $font-family-1;
           font-size: 20px;
           font-style: normal;
           font-weight: 700;
@@ -88,17 +88,16 @@
 
         b {
           color: var(--font-color);
-          font-family: "Open Sans";
+          font-family: $font-family-1;
           font-size: 16px;
           font-style: normal;
           font-weight: 600;
           line-height: normal;
-          align-self: end;
         }
 
         span{
           color: var(--font-color);
-          font-family: "Open Sans";
+          font-family: $font-family-1;
           font-size: 12px;
           font-style: italic;
           font-weight: 600;
