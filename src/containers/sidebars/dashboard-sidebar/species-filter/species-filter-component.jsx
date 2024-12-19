@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -28,9 +28,7 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Refined Range Map',
           active: false,
-          test: (species) =>
-            species.datasetList.map((d) => d.product_type).indexOf('range') >
-            -1,
+          test: (species) => species.source.indexOf('range') > -1,
           count: 0,
           type: 'and',
           result: false,
@@ -44,9 +42,7 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Occurrence',
           active: false,
-          test: (species) =>
-            species.datasetList.map((d) => d.product_type).indexOf('points') >
-            -1,
+          test: (species) => species.source.indexOf('GBIF') > -1,
           count: 0,
           result: false,
           type: 'and',
@@ -70,7 +66,8 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Critically Endangered',
           active: false,
-          test: (species) => species.traits?.threat_status_code === 'CR',
+          test: (species) =>
+            species.threat_status.toUpperCase() === 'CRITICALLY ENDANGERED',
           count: 0,
           result: false,
           type: 'or',
@@ -79,14 +76,16 @@ function SpeciesFilterComponent(props) {
           name: 'Endangered',
           result: false,
           active: false,
-          test: (species) => species.traits?.threat_status_code === 'EN',
+          test: (species) =>
+            species.threat_status.toUpperCase() === 'ENDANGERED',
           count: 0,
           type: 'or',
         },
         {
           name: 'Vulnerable',
           active: false,
-          test: (species) => species.traits?.threat_status_code === 'VU',
+          test: (species) =>
+            species.threat_status.toUpperCase() === 'VULNERABLE',
           count: 0,
           type: 'or',
           result: false,
@@ -94,7 +93,8 @@ function SpeciesFilterComponent(props) {
         {
           name: 'Least Concern',
           active: false,
-          test: (species) => species.traits?.threat_status_code === 'LC',
+          test: (species) =>
+            species.threat_status.toUpperCase() === 'LEAST CONCERN',
           count: 0,
           type: 'or',
           result: false,
@@ -103,7 +103,7 @@ function SpeciesFilterComponent(props) {
           name: 'Unknown',
           active: false,
           result: false,
-          test: (species) => species.traits?.threat_status_code === undefined,
+          test: (species) => species.threat_status === undefined,
           count: 0,
           type: 'or',
         },
@@ -111,7 +111,6 @@ function SpeciesFilterComponent(props) {
     },
   ];
 
-  // const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState(filterStart);
 
   const handleBack = () => {

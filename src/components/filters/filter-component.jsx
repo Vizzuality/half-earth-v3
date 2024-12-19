@@ -60,64 +60,64 @@ function FilterComponent(props) {
       })
     );
     // TODO: FIGURE OUT FILTERS
-    // // allTaxa.forEach((taxa) => {
-    // Object.values(allTaxa).forEach((taxa) => {
-    //   const candidateTaxa = { ...taxa };
-    //   const candidateSpecies = [];
-    //   taxa.species.forEach((species) => {
-    //     const speciesFilters = [];
-    //     const speciesOrFilters = [];
-    //     filters.forEach((filterGroup) => {
-    //       filterGroup.filters.forEach((filter) => {
-    //         const result = filter.test(species);
-    //         filter.result = result;
-    //         if (isAnyActive && filter.active) {
-    //           if (filter.type === 'and') {
-    //             speciesFilters.push(result);
-    //           } else if (filter.type === 'or') {
-    //             speciesOrFilters.push(result);
-    //           }
-    //         }
-    //       });
-    //     });
-    //     const allAnd =
-    //       speciesFilters.every((x) => x) && speciesFilters.length > 0;
-    //     const anyOr = speciesOrFilters.indexOf(true) !== -1;
-    //     let inCandidate = false;
-    //     if (!isAnyActive) {
-    //       inCandidate = true;
-    //       candidateSpecies.push(species);
-    //       // only ands
-    //     } else if (allAnd && speciesOrFilters.length === 0) {
-    //       inCandidate = true;
-    //       candidateSpecies.push(species);
-    //       // only or's
-    //     } else if (speciesFilters.length === 0 && anyOr) {
-    //       inCandidate = true;
-    //       candidateSpecies.push(species);
-    //     } else if (allAnd && anyOr) {
-    //       inCandidate = true;
-    //       candidateSpecies.push(species);
-    //     }
+    allTaxa.forEach((taxa) => {
+      // Object.values(allTaxa).forEach((taxa) => {
+      const candidateTaxa = { ...taxa };
+      const candidateSpecies = [];
+      taxa.species.forEach((species) => {
+        const speciesFilters = [];
+        const speciesOrFilters = [];
+        filters.forEach((filterGroup) => {
+          filterGroup.filters.forEach((filter) => {
+            const result = filter.test(species);
+            filter.result = result;
+            if (isAnyActive && filter.active) {
+              if (filter.type === 'and') {
+                speciesFilters.push(result);
+              } else if (filter.type === 'or') {
+                speciesOrFilters.push(result);
+              }
+            }
+          });
+        });
+        const allAnd =
+          speciesFilters.every((x) => x) && speciesFilters.length > 0;
+        const anyOr = speciesOrFilters.indexOf(true) !== -1;
+        let inCandidate = false;
+        if (!isAnyActive) {
+          inCandidate = true;
+          candidateSpecies.push(species);
+          // only ands
+        } else if (allAnd && speciesOrFilters.length === 0) {
+          inCandidate = true;
+          candidateSpecies.push(species);
+          // only or's
+        } else if (speciesFilters.length === 0 && anyOr) {
+          inCandidate = true;
+          candidateSpecies.push(species);
+        } else if (allAnd && anyOr) {
+          inCandidate = true;
+          candidateSpecies.push(species);
+        }
 
-    //     const onAnd = allAnd || speciesFilters.length === 0;
+        const onAnd = allAnd || speciesFilters.length === 0;
 
-    //     filters.forEach((filterGroup) => {
-    //       filterGroup.filters.forEach((filter) => {
-    //         if (onAnd && filter.result) {
-    //           filter.count += 1;
-    //         }
-    //       });
-    //     });
-    //   });
+        filters.forEach((filterGroup) => {
+          filterGroup.filters.forEach((filter) => {
+            if (onAnd && filter.result) {
+              filter.count += 1;
+            }
+          });
+        });
+      });
 
-    //   candidateTaxa.species = candidateSpecies;
-    //   candidateTaxa.count = candidateSpecies.length;
-    //   filtered.push(candidateTaxa);
-    // });
+      candidateTaxa.species = candidateSpecies;
+      candidateTaxa.count = candidateSpecies.length;
+      filtered.push(candidateTaxa);
+    });
 
     // setAnyActive(isAnyActive);
-    setFilteredTaxaList(allTaxa);
+    setFilteredTaxaList(filtered);
   };
 
   const activateFilter = (filter) => {

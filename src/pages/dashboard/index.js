@@ -52,7 +52,7 @@ function DashboardContainer(props) {
   const [dataByCountry, setDataByCountry] = useState(null);
   const [spiDataByCountry, setSpiDataByCountry] = useState(null);
   const [selectedTaxa, setSelectedTaxa] = useState('');
-  const [filteredTaxaList, setFilteredTaxaList] = useState();
+  const [filteredTaxaList, setFilteredTaxaList] = useState([]);
   const [scientificName, setScientificName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
   const [loggedIn, setLoggedIn] = useState(true);
@@ -170,18 +170,6 @@ function DashboardContainer(props) {
     setDataLayerData(dataLayersData);
   };
 
-  const sortTaxaList = (taxa) => {
-    return taxa?.sort((a, b) => {
-      if (a.sortby < b.sortby) {
-        return -1;
-      }
-      if (a.sortby > b.sortby) {
-        return 1;
-      }
-      return 0;
-    });
-  };
-
   const makeSpeciesListParams = (args, summary = false) => {
     const params = {};
     params.lang = locale || 'en';
@@ -222,66 +210,6 @@ function DashboardContainer(props) {
       params.summary = 'true';
     }
     return params;
-  };
-
-  const getSpeciesList = async () => {
-    const speciesListUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/species/list`;
-    // https://utility.arcgis.com/usrsvcs/servers/f09f7630ec964885bb2a968c7f1a8bea/rest/services/gadm0_aoi_summaries_updated_20240326/FeatureServer/0
-
-    // TODO: Use mol-country-attribute.json file to find MOL Region ID for ISO value
-    const params = makeSpeciesListParams({
-      region_id: '44b3bc0a-e617-4785-9123-7e6e5349b07d',
-      ...selectedRegion,
-    });
-
-    // province
-    // region_attribute:'GID_1',
-    // region_attribute_value:'COD.10_1'
-    const response = await fetch(speciesListUrl, {
-      method: 'POST',
-      body: JSON.stringify(params),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json, text/plain, */*',
-      },
-    });
-    const responseData = await response.json();
-
-    const seasons = ['', 'Resident', 'Breeding', 'Non-breeding', 'Passage', ''];
-
-    responseData.taxas?.forEach((taxa) => {
-      const taxaDatasetSet = new Set();
-      taxa.species.forEach((species) => {
-        const speciesDatasets = Object.keys(species.dataset);
-        speciesDatasets.forEach((d) => {
-          taxaDatasetSet.add(d);
-        });
-        const speciesDataset2 = {};
-        speciesDatasets.forEach((k) => {
-          speciesDataset2[responseData.datasets[k].dataset_id] =
-            species.dataset[k];
-        });
-        species.datasetList = speciesDatasets.map((dsid) => ({
-          dataset_id: responseData.datasets[dsid].dataset_id,
-          product_type: responseData.datasets[dsid].product_type,
-          title: responseData.datasets[dsid].title,
-          seasonality: species.dataset[dsid],
-          seasonalityString: species.dataset[dsid]
-            .map((s) => (s === null ? 'Resident' : seasons[s]))
-            .filter((s) => s.length > 0)
-            .join(', '),
-        }));
-        species.dataset = speciesDataset2;
-      });
-      taxa.datasets = {};
-      Array.from(taxaDatasetSet).forEach((d) => {
-        const ds = responseData.datasets[d];
-        taxa.datasets[ds.dataset_id] = ds;
-      });
-    });
-
-    const taxa = sortTaxaList(responseData.taxas);
-    setTaxaList(taxa);
   };
 
   const getTaxaSpecies = async (taxa, slices) => {
@@ -326,7 +254,7 @@ function DashboardContainer(props) {
       ({ scientific_name, common_name, attributes }) => {
         const { source, species_url, threat_status } = JSON.parse(
           attributes.replace(/NaN/g, 'null')
-        );
+        )[0];
 
         return {
           common_name,
@@ -375,7 +303,7 @@ function DashboardContainer(props) {
 
       const { source, species_url, threat_status } = JSON.parse(
         attributes.replace(/NaN/g, 'null')
-      );
+      )[0];
 
       const speciesToAdd = {
         common_name: species,
@@ -394,11 +322,10 @@ function DashboardContainer(props) {
     });
 
     setTaxaList(list);
-    console.log(taxaList);
     setSpeciesListLoading(false);
   };
 
-  const newGetSpeciesList = async () => {
+  const getSpeciesList = async () => {
     setSpeciesListLoading(true);
     let url = LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER];
     let whereClause = `GID_0 = '${countryISO}'`;
@@ -548,7 +475,7 @@ function DashboardContainer(props) {
         setCountryDataError(error);
       });
 
-    newGetSpeciesList();
+    getSpeciesList();
 
     // Cleanup event listener on component unmount
     return () => {
@@ -558,7 +485,7 @@ function DashboardContainer(props) {
 
   useEffect(() => {
     if (!selectedRegion) return;
-    newGetSpeciesList();
+    getSpeciesList();
   }, [selectedRegion]);
 
   useEffect(() => {

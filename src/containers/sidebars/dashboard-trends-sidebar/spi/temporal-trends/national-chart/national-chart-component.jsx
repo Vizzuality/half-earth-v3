@@ -179,7 +179,8 @@ function TemporalTrendsSpiNationalChartComponent(props) {
                 value={currentScore?.SPI}
               />
               <div className={styles.values}>
-                <b>{currentScore.GlobalRanking}</b>
+                <b>82</b>
+                {/* <b>{currentScore.GlobalRanking}</b> */}
                 <span>{t('Global Ranking')}</span>
               </div>
               <span />
