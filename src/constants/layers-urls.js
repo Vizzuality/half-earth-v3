@@ -485,4 +485,8 @@ export const DASHBOARD_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_mammals_final/FeatureServer',
   REPTILES_LOOKUP:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_reptiles_final/FeatureServer',
+  PRECALC_AOI:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm1_precalculated_aoi_summaries_updated_20240321/FeatureServer',
+  WDPA_PRECALC:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_precalculated_aoi_summaries_updated_20240408/FeatureServer',
 };

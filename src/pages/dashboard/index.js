@@ -16,12 +16,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION } from 'constants/dashboard-constants';
 import {
-  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
-  WDPA_OECM_FEATURE_DATA_LAYER,
-} from 'constants/layers-slugs';
-import {
   COUNTRIES_DATA_SERVICE_URL,
-  LAYERS_URLS,
   DASHBOARD_URLS,
 } from 'constants/layers-urls';
 import { layersConfig } from 'constants/mol-layers-configs';
@@ -327,7 +322,7 @@ function DashboardContainer(props) {
 
   const getSpeciesList = async () => {
     setSpeciesListLoading(true);
-    let url = LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER];
+    let url = DASHBOARD_URLS.PRECALC_AOI;
     let whereClause = `GID_0 = '${countryISO}'`;
 
     if (selectedRegion) {
@@ -338,7 +333,7 @@ function DashboardContainer(props) {
 
       if (WDPA_PID) {
         whereClause = `WDPA_PID = '${WDPA_PID}'`;
-        url = LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER];
+        url = DASHBOARD_URLS.WDPA_PRECALC;
       }
     }
 
