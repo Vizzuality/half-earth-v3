@@ -52,7 +52,7 @@ $info-width: 300px;
           color: var(--font-color);
           text-align: center;
           font-family: "Roboto Condensed";
-          font-size: 12px;
+          font-size: $font-size-xs;
           font-style: normal;
           font-weight: 500;
           line-height: normal;
@@ -102,7 +102,7 @@ $info-width: 300px;
       gap: 10px;
       color: var(--font-color);
       margin: 0 0 calc($site-gutter / 2) 0;
-      font-size: 24px;
+      font-size: $font-size-rg;
       line-height: 1.5;
     }
 
@@ -110,12 +110,12 @@ $info-width: 300px;
       @extend %bodyText;
       color: var(--font-color);
       margin: 0 0 calc($site-gutter / 2) 0;
-      font-size: 14px;
+      font-size: $font-size-sm;
     }
 
     .spsSpeciesTitle{
       color: var(--font-color);
-      font-family: "Open Sans";
+      font-family: $font-family-1;
       font-size: 15px;
       font-style: normal;
       font-weight: 400;
@@ -150,8 +150,8 @@ $info-width: 300px;
 
             .name{
               color: var(--font-color);
-              font-family: "Open Sans";
-              font-size: 12px;
+              font-family: $font-family-1;
+              font-size: $font-size-xs;
               font-style: normal;
               font-weight: 600;
               line-height: normal;
@@ -159,7 +159,7 @@ $info-width: 300px;
 
             .scientificname{
               color: var(--font-color);
-              font-family: "Open Sans";
+              font-family: $font-family-1;
               font-size: 11px;
               font-style: italic;
               font-weight: 400;
@@ -170,7 +170,7 @@ $info-width: 300px;
             .addToMap{
               color: var(--font-color);
               font-family: "Roboto Mono";
-              font-size: 9px;
+              font-size: $font-size-xxxs;
               font-style: normal;
               font-weight: 300;
               line-height: normal;
@@ -183,8 +183,8 @@ $info-width: 300px;
 
           .spsScore{
             color: var(--font-color);
-            font-family: "Open Sans";
-            font-size: 14px;
+            font-family: $font-family-1;
+            font-size: $font-size-sm;
             font-style: normal;
             font-weight: 700;
             line-height: normal;
@@ -203,8 +203,8 @@ $info-width: 300px;
 
       .helpText{
         color: var(--font-color);
-        font-family: "Open Sans";
-        font-size: 9px;
+        font-family: $font-family-1;
+        font-size: $font-size-xxxs;
         font-style: italic;
         font-weight: 400;
         line-height: normal;

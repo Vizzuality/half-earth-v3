@@ -24,7 +24,7 @@
   }
 
   .sectionTitle{
-    font-size: 18px;
+    font-size: $font-size-tick;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1.5;
@@ -75,7 +75,7 @@
       display: flex;
       gap: 8px;
       align-items: center;
-      font-size: 14px;
+      font-size: $font-size-sm;
       font-weight: 700;
       text-transform: uppercase;
       line-height: 1.5;

@@ -29,7 +29,7 @@
       span{
         color: var(--font-color);
         font-family: "Open Sans";
-        font-size: 13px;
+        font-size: $font-size-xs;
         font-style: italic;
         font-weight: 400;
         line-height: normal;
@@ -37,7 +37,7 @@
         b{
           color: var(--font-color);
           font-family: "Open Sans";
-          font-size: 14px;
+          font-size: $font-size-sm;
           font-style: normal;
           font-weight: 600;
           line-height: normal;
@@ -63,7 +63,7 @@
         align-self: flex-end;
 
         b{
-          font-size: 20px;
+          font-size: $font-size-ml;
         }
       }
 

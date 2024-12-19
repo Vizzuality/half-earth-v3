@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 
-import { useT } from '@transifex/react';
-
 import {
   Chart as ChartJS,
   LinearScale,
@@ -20,8 +18,6 @@ import styles from './province-chart-styles.module.scss';
 ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function ProvinceChartComponent() {
-  const t = useT();
-
   const { lightMode } = useContext(LightModeContext);
 
   return (

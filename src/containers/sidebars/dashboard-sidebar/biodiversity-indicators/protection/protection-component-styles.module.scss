@@ -9,7 +9,6 @@
   --selected-font-color: #{$white};
   --save-button-text: #{$dark-text};
   --border-color-hover: #{$brand-color-main-hover};
-  --small-font: 14px;
 
   display: flex;
   flex-direction: column;
@@ -46,7 +45,7 @@
         color: var(--font-color);
         text-align: center;
         font-family: STIX Two Text;
-        font-size: var(--small-font);
+        font-size: $font-size-sm;
         font-style: italic;
         font-weight: 500;
         line-height: normal;
@@ -80,7 +79,7 @@
             color: var(--font-color);
             text-align: center;
             font-family: STIX Two Text;
-            font-size: 18px;
+            font-size: $font-size-tick;
             font-style: normal;
             font-weight: 600;
             line-height: normal;
@@ -89,7 +88,7 @@
           .desc {
             color: var(--font-color);
             font-family: STIX Two Text;
-            font-size: var(--small-font);
+            font-size: $font-size-sm;
             font-style: italic;
             font-weight: 500;
             line-height: normal;
@@ -114,7 +113,7 @@
       .compare {
         color: var(--font-color);
         font-family: STIX Two Text;
-        font-size: var(--small-font);
+        font-size: $font-size-sm;
         font-style: italic;
         font-weight: 400;
         line-height: normal;
@@ -129,7 +128,7 @@
       text-align: center;
       color: var(--font-color);
       font-family: STIX Two Text;
-      font-size: var(--small-font);
+      font-size: $font-size-sm;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
@@ -159,7 +158,7 @@
     label {
       color: var(--font-color);
       font-family: STIX Two Text;
-      font-size: var(--small-font);
+      font-size: $font-size-sm;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
@@ -193,7 +192,7 @@
     th,
     td {
       font-family: STIX Two Text;
-      font-size: var(--small-font);
+      font-size: $font-size-sm;
       font-style: normal;
       font-weight: 400;
       line-height: normal;

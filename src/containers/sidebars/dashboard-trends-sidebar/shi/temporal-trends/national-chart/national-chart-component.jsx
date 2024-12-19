@@ -41,7 +41,7 @@ function NationalChartComponent(props) {
     ? getCSSVariable('dark-opacity')
     : getCSSVariable('white-opacity-20');
   const blankData = {
-    labels: ['Global SPI', 'Remaining'],
+    labels: [t('Global SPI'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -71,7 +71,7 @@ function NationalChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Year',
+          text: t('Year'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {
@@ -87,7 +87,7 @@ function NationalChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Species Habitat Index',
+          text: t('Species Habitat Index'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
         },
         grid: {

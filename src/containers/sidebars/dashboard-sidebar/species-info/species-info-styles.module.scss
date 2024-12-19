@@ -33,7 +33,7 @@
 
       .commonName{
         @extend %display1;
-        font-size: 24px;
+        font-size: $font-size-rg;
         line-height: 1.5;
       }
 
@@ -45,7 +45,7 @@
 
       .taxa{
         font-style: italic;
-        font-size: 18px;
+        font-size: $font-size-tick;
         line-height: 1.5;
       }
 
@@ -60,6 +60,6 @@
     @extend %bodyText;
     color: var(--font-color);
     margin: 0 0 calc($site-gutter / 2) 0;
-    font-size: 14px;
+    font-size: $font-size-sm;
   }
 }

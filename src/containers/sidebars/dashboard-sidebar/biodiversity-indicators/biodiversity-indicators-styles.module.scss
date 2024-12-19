@@ -24,7 +24,7 @@
   }
 
   .sectionTitle{
-    font-size: 18px;
+    font-size: $font-size-tick;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1.5;
@@ -32,7 +32,7 @@
   }
 
   .speciesName{
-    font-size: 18px;
+    font-size: $font-size-tick;
     text-transform: capitalize;
     font-style: italic;
     line-height: 1.5;
@@ -56,8 +56,8 @@
       label{
         color: var(--font-color);
         text-align: center;
-        font-family: "Roboto Flex";
-        font-size: 22px;
+        font-family: $font-family-roboto-flex;
+        font-size: $font-size-rg;
         font-style: normal;
         font-weight: 600;
         line-height: normal;
@@ -66,8 +66,8 @@
       span{
         color: var(--font-color);
         text-align: center;
-        font-family: "Roboto Condensed";
-        font-size: 12px;
+        font-family: $font-family-roboto-condensed;
+        font-size: $font-size-xs;
         font-style: normal;
         font-weight: 500;
         line-height: normal;
@@ -90,7 +90,7 @@
   }
 
   p{
-    font-size: 12px;
+    font-size: $font-size-xs;
     color: var(--font-color);
   }
 

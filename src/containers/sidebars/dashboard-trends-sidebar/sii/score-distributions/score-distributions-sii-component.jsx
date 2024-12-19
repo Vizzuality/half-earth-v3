@@ -72,7 +72,7 @@ function ScoreDistributionsSiiComponent(props) {
       labels,
       datasets: [
         {
-          label: 'Items',
+          label: t('Items'),
           data: Object.values(taxaSet),
           backgroundColor: getCSSVariable('birds'),
         },

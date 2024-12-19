@@ -24,7 +24,7 @@
   }
 
   .sectionTitle{
-    font-size: 18px;
+    font-size: $font-size-tick;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1.5;
@@ -32,7 +32,7 @@
   }
 
   p{
-    font-size: 12px;
+    font-size: $font-size-xs;
     color: var(--font-color);
   }
 
