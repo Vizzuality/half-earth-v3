@@ -23,7 +23,7 @@
 
   .titleRow {
     .title {
-      font-size: 18px;
+      font-size: $font-size-tick;
       font-weight: 700;
     }
 
@@ -37,7 +37,7 @@
   }
 
   .filterGroupTitle {
-    font-size: 16px;
+    font-size: $font-size-base;
     padding: 15px 0 8px;
   }
 
@@ -57,7 +57,7 @@
   gap: 10px;
 
   .title {
-    font-size: 18px;
+    font-size: $font-size-tick;
     font-weight: 700;
     text-transform: uppercase;
     cursor: default;
@@ -118,7 +118,7 @@
   margin-left: auto;
   text-align: right;
   margin-right: 15px;
-  font-size: 12px;
+  font-size: $font-size-xs;
 }
 
 .speciesList {

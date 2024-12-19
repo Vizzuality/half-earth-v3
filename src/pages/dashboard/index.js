@@ -333,9 +333,12 @@ function DashboardContainer(props) {
   };
 
   const newGetSpeciesList = async () => {
+    const whereClause = selectedRegion
+      ? `GID_1 = '${selectedRegion.GID_1}'`
+      : `GID_0 = '${countryISO}'`;
     const features = await EsriFeatureService.getFeatures({
       url: LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER],
-      whereClause: `GID_1 = '${selectedRegion.GID_1}'`,
+      whereClause,
       returnGeometry: false,
     });
 
@@ -484,6 +487,8 @@ function DashboardContainer(props) {
       .catch((error) => {
         setCountryDataError(error);
       });
+
+    newGetSpeciesList();
 
     // Cleanup event listener on component unmount
     return () => {
