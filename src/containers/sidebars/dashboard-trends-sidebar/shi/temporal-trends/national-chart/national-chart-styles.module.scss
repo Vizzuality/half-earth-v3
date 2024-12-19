@@ -128,15 +128,15 @@
         color: var(--font-color);
 
         &.habitat {
-          background-color: $reptiles-color;
+          background-color: $habitat;
         }
 
         &.area {
-          background-color: $bubbles;
+          background-color: $area;
         }
 
         &.connectivity{
-          background-color: $mammals-color;
+          background-color: $connectivity;
         }
       }
     }

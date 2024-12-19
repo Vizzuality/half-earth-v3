@@ -46,8 +46,8 @@ function NationalChartComponent(props) {
       {
         label: '',
         data: [0, 0],
-        backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
-        borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
+        backgroundColor: [getCSSVariable('habitat'), emptyArcColor],
+        borderColor: [getCSSVariable('habitat'), emptyArcColor],
         borderWidth: 1,
       },
     ],
@@ -114,12 +114,12 @@ function NationalChartComponent(props) {
         {
           label: t('Average Area Score'),
           data: filteredData.map((item) => item.SHI_AreaScore),
-          borderColor: getCSSVariable('bubble'),
+          borderColor: getCSSVariable('area'),
         },
         {
           label: t('Average Connectivity Score'),
           data: filteredData.map((item) => item.SHI_AvgConnectivityScore),
-          borderColor: getCSSVariable('mammals'),
+          borderColor: getCSSVariable('connectivity'),
         },
         {
           label: t('Average Habitat Score'),
@@ -129,7 +129,7 @@ function NationalChartComponent(props) {
                 parseFloat(item.SHI_AvgConnectivityScore)) /
               2
           ),
-          borderColor: getCSSVariable('reptiles'),
+          borderColor: getCSSVariable('habitat'),
         },
       ],
     });
@@ -157,8 +157,8 @@ function NationalChartComponent(props) {
         {
           label: '',
           data: [SHI_AvgHabitatScore * 100, 100 - SHI_AvgHabitatScore * 100],
-          backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
-          borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
+          backgroundColor: [getCSSVariable('habitat'), emptyArcColor],
+          borderColor: [getCSSVariable('habitat'), emptyArcColor],
           borderWidth: 1,
         },
       ],

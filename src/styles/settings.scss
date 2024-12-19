@@ -26,6 +26,12 @@ $bubbles: #FF7841;
 $white-opacity: rgba(255, 255, 255, 0.1);
 $white-opacity-20: rgba($white, 0.2);
 
+$connectivity: #8578EB;
+$habitat: #3AA8EE;
+$area: #7DDECC;
+$area-protected: #3ABC64;
+
+
 // Project colors
 $space-background: #09141a;
 $navy-he: $elephant;
@@ -321,4 +327,9 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
   --mol-blue: #{$mol-blue};
   --mol-green: #{$mol-green};
   --dark-opacity: #{$dark-opacity};
+
+  --connectivity: #{$connectivity};
+  --habitat: #{$habitat};
+  --area: #{$area};
+  --area-protected: #{$area-protected};
 }

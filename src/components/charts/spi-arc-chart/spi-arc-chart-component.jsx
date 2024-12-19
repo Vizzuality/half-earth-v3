@@ -29,7 +29,7 @@ ChartJS.register(
 
 function SpiArcChartComponent(props) {
   const t = useT();
-  const { scores, width, height, data, img, species, value } = props;
+  const { scores, width, height, data, img, species, value, isPercent } = props;
   const { lightMode } = useContext(LightModeContext);
   const [score, setScore] = useState(0);
 
@@ -72,6 +72,11 @@ function SpiArcChartComponent(props) {
     return [count, 100 - count];
   };
 
+  const getScore = () => {
+    if (!isPercent) return score;
+    return `${score}%`;
+  };
+
   useEffect(() => {
     if (!value) return;
     setScore(value.toFixed(1));
@@ -96,7 +101,7 @@ function SpiArcChartComponent(props) {
           </div>
         </div>
       )}
-      {!scores && <div className={styles.globalScore}>{score}</div>}
+      {!scores && <div className={styles.globalScore}>{getScore()}</div>}
     </div>
   );
 }

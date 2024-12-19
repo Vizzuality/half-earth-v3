@@ -50,11 +50,11 @@ function ProvinceChartComponent(props) {
         label: '',
         data: [0, 0],
         backgroundColor: [
-          getCSSVariable('temporal-spi'),
+          getCSSVariable('area-protected'),
           getCSSVariable('white-opacity-20'),
         ],
         borderColor: [
-          getCSSVariable('temporal-spi'),
+          getCSSVariable('area-protected'),
           getCSSVariable('white-opacity-20'),
         ],
         borderWidth: 1,
@@ -98,7 +98,7 @@ function ProvinceChartComponent(props) {
           getCSSVariable('bubble');
       }
       chart.data.datasets[index].backgroundColor =
-        getCSSVariable('bubble-selected');
+        getCSSVariable('area-protected');
       setPreviousIndex(index);
       chart.update();
     }
@@ -134,11 +134,11 @@ function ProvinceChartComponent(props) {
           label: '',
           data: [SPI, 100 - SPI],
           backgroundColor: [
-            getCSSVariable('temporal-spi'),
+            getCSSVariable('area-protected'),
             getCSSVariable('white-opacity-20'),
           ],
           borderColor: [
-            getCSSVariable('temporal-spi'),
+            getCSSVariable('area-protected'),
             getCSSVariable('white-opacity-20'),
           ],
           borderWidth: 1,
@@ -321,6 +321,7 @@ function ProvinceChartComponent(props) {
               height="75px"
               data={spiArcData}
               value={percentAreaProtected}
+              isPercent
             />
             <div className={styles.values}>
               <b>{countrySPI?.toFixed(1)}</b>

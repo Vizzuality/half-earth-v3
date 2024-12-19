@@ -45,8 +45,8 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       {
         label: '',
         data: [0, 0],
-        backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
-        borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
+        backgroundColor: [getCSSVariable('bubbles'), emptyArcColor],
+        borderColor: [getCSSVariable('bubbles'), emptyArcColor],
         borderWidth: 1,
       },
     ],
@@ -114,8 +114,8 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         {
           label: '',
           data: [SPI, 100 - SPI],
-          backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
-          borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
+          backgroundColor: [getCSSVariable('bubble'), emptyArcColor],
+          borderColor: [getCSSVariable('bubble'), emptyArcColor],
           borderWidth: 1,
         },
       ],
@@ -127,8 +127,8 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         {
           label: '',
           data: [PercentAreaProtected, 100 - PercentAreaProtected],
-          backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
-          borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
+          backgroundColor: [getCSSVariable('area-protected'), emptyArcColor],
+          borderColor: [getCSSVariable('area-protected'), emptyArcColor],
           borderWidth: 1,
         },
       ],
@@ -145,7 +145,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         {
           label: t('Area protected'),
           data: countryData.map((item) => item.PercentAreaProtected),
-          borderColor: getCSSVariable('mammals'),
+          borderColor: getCSSVariable('area-protected'),
         },
       ],
     });
@@ -170,6 +170,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
                 height="75px"
                 data={areaProtectedData}
                 value={areaProtected}
+                isPercent
               />
               <SpiArcChartComponent
                 width="125x"
