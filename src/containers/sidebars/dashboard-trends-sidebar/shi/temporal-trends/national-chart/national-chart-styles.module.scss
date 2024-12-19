@@ -28,16 +28,16 @@
 
       span{
         color: var(--font-color);
-        font-family: "Open Sans";
-        font-size: 13px;
+        font-family: $font-family-1;
+        font-size: $font-size-xs;
         font-style: italic;
         font-weight: 400;
         line-height: normal;
 
         b{
           color: var(--font-color);
-          font-family: "Open Sans";
-          font-size: 14px;
+          font-family: $font-family-1;
+          font-size: $font-size-sm;
           font-style: normal;
           font-weight: 600;
           line-height: normal;
@@ -76,7 +76,7 @@
         .score{
           color: var(--font-color);
           text-align: center;
-          font-family: "Open Sans";
+          font-family: $font-family-1;
           font-size: 20px;
           font-style: normal;
           font-weight: 700;
@@ -87,8 +87,8 @@
 
         b {
           color: var(--font-color);
-          font-family: "Open Sans";
-          font-size: 16px;
+          font-family: $font-family-1;
+          font-size: $font-size-base;
           font-style: normal;
           font-weight: 600;
           line-height: normal;
@@ -96,8 +96,8 @@
 
         span{
           color: var(--font-color);
-          font-family: "Open Sans";
-          font-size: 12px;
+          font-family: $font-family-1;
+          font-size: $font-size-xs;
           font-style: italic;
           font-weight: 600;
           line-height: normal;
@@ -110,5 +110,34 @@
     width: 100%;
     margin-top: 25px;
     max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .legend{
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.25rem;
+      color: var(--font-color);
+
+      .legendBox {
+        width: 30px;
+        height: 8px;
+        color: var(--font-color);
+
+        &.habitat {
+          background-color: $reptiles-color;
+        }
+
+        &.area {
+          background-color: $bubbles;
+        }
+
+        &.connectivity{
+          background-color: $mammals-color;
+        }
+      }
+    }
   }
 }

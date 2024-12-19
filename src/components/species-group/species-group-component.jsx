@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
 import {
   NAVIGATION,
@@ -8,7 +9,6 @@ import {
   SPECIES_IMAGE_URL,
 } from 'constants/dashboard-constants.js';
 
-import { LightModeContext } from '../../context/light-mode';
 import TaxaImageComponent from '../taxa-image';
 
 import styles from './species-group-component.module.scss';

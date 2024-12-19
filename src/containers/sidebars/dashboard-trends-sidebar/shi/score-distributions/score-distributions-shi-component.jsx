@@ -272,14 +272,14 @@ function ScoreDistributionsShiComponent(props) {
           </ul>
         )}
         <div className={styles.options}>
-          {!showTable && (
+          {/* {!showTable && (
             <Button
               type="rectangular"
               className={cx(styles.saveButton, styles.notActive)}
               label={t('View full table')}
               handleClick={() => setShowTable(true)}
             />
-          )}
+          )} */}
           {showTable && (
             <Button
               type="rectangular"

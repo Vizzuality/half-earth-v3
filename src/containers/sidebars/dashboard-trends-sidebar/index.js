@@ -76,7 +76,7 @@ function DashboardTrendsSidebarContainer(props) {
 
       const shiValues = countries.find((item) => item.Year === SHI_LATEST_YEAR);
       const siiValues = countries.find((item) => item.Year === SII_LATEST_YEAR);
-      setShiValue(parseFloat(shiValues.SHI).toFixed(1));
+      setShiValue(parseFloat(shiValues.SHI_AvgHabitatScore * 100).toFixed(1));
       setSiiValue((siiValues.SII * 100).toFixed(1));
       setCountryData(countries);
     });

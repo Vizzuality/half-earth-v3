@@ -5,13 +5,12 @@ import { useT } from '@transifex/react';
 import DoneIcon from '@mui/icons-material/Done';
 import { Chip } from '@mui/material';
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import Button from 'components/button';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-
-import { LightModeContext } from '../../context/light-mode';
 
 import styles from './filter-component-styles.module.scss';
 

@@ -36,7 +36,7 @@ function DashboardTrendsSidebar(props) {
       const foundLayer = map.layers.items.find((item) => item.id === region);
       if (foundLayer) {
         // map.remove(foundLayer);
-        if (tabClicked === TABS.SII) {
+        if (tabClicked === TABS.SII || tabClicked === TABS.SHI) {
           foundLayer.visible = false;
         } else {
           foundLayer.visible = true;

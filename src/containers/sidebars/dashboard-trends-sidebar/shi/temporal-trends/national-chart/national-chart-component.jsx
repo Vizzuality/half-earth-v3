@@ -137,8 +137,12 @@ function NationalChartComponent(props) {
     const headerValues = countryData.find(
       (item) => item.Year === SHI_LATEST_YEAR
     );
-    const { SHI_AreaScore, SHI_AvgConnectivityScore, SHI_GlobalRanking, SHI } =
-      headerValues;
+    const {
+      SHI_AreaScore,
+      SHI_AvgConnectivityScore,
+      SHI_GlobalRanking,
+      SHI_AvgHabitatScore,
+    } = headerValues;
 
     setNationalScores({
       areaScore: parseFloat(SHI_AreaScore).toFixed(1),
@@ -152,7 +156,7 @@ function NationalChartComponent(props) {
       datasets: [
         {
           label: '',
-          data: [SHI, 100 - SHI],
+          data: [SHI_AvgHabitatScore * 100, 100 - SHI_AvgHabitatScore * 100],
           backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
           borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
           borderWidth: 1,
@@ -160,7 +164,7 @@ function NationalChartComponent(props) {
       ],
     };
 
-    setShiValue(parseFloat(SHI));
+    setShiValue(parseFloat(SHI_AvgHabitatScore * 100));
     setShiData(shi);
     setIsLoading(false);
   }, [countryData]);
@@ -201,6 +205,14 @@ function NationalChartComponent(props) {
           </div>
           {data && (
             <div className={styles.chart}>
+              <div className={styles.legend}>
+                <div className={cx(styles.legendBox, styles.habitat)} />
+                <span>{t('Habitat Score')}</span>
+                <div className={cx(styles.legendBox, styles.area)} />
+                <span>{t('Area Score')}</span>
+                <div className={cx(styles.legendBox, styles.connectivity)} />
+                <span>{t('Connectivity Score')}</span>
+              </div>
               <Line options={options} data={data} />
             </div>
           )}

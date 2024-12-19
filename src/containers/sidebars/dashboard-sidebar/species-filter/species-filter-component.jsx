@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useT } from '@transifex/react';
 
 import Button from 'components/button';
+import FilterContainer from 'components/filters';
+import SpeciesListContainer from 'components/species-list';
 
 import { NAVIGATION } from 'constants/dashboard-constants.js';
 
-import FilterContainer from '../../../../components/filters';
-import SpeciesListContainer from '../../../../components/species-list';
 import styles from '../dashboard-sidebar-styles.module.scss';
 
 function SpeciesFilterComponent(props) {

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useT } from '@transifex/react';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import Button from 'components/button';
@@ -10,7 +11,6 @@ import SearchInput from 'components/search-input';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
-import { LightModeContext } from '../../context/light-mode';
 import SpeciesGroupContainer from '../species-group';
 // import SpeciesGroupTitleContainer from '../species-group-title';
 
