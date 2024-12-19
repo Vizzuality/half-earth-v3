@@ -26,8 +26,8 @@ function DashboardHomeComponent(props) {
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const searchURL =
-    'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/spatial_species_search';
+  const searchURL = 'https://dev-api.mol.org/2.x/species/groupsearch';
+  // 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/spatial_species_search';
 
   const handleSearch = (searchText) => {
     setSearchInput(searchText.currentTarget.value);
@@ -45,9 +45,8 @@ function DashboardHomeComponent(props) {
 
   const getSearchResults = async () => {
     const searchParams = {
-      region_id: '1eff8980-479e-4eac-b386-b4db859b275d',
       query: searchInput,
-      limit: 10,
+      limit: 100,
       page: 0,
       lang: locale || 'en',
     };
@@ -98,7 +97,7 @@ function DashboardHomeComponent(props) {
             <ul className={styles.searchResults}>
               {searchResults.map((item, index) => (
                 <li key={index} onClick={() => handleSearchSelect(item)}>
-                  {item.scientificname}
+                  <b>{item.scientificname}</b> - <span>{item.vernacular}</span>
                 </li>
               ))}
             </ul>

@@ -92,6 +92,11 @@
           padding: 5px;
           color: #{$white};
 
+          span{
+            font-size: $font-size-sm;
+            font-style: italic;
+          }
+
           &:hover{
             background-color:#{$white};
             color: var(--border-color);

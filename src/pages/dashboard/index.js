@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import countryDataActions from 'redux_modules/country-data';
@@ -291,16 +292,16 @@ function DashboardContainer(props) {
 
     switch (taxa) {
       case 'amphibians':
-        url = LAYERS_URLS[AMPHIBIAN_LOOKUP];
+        url = DASHBOARD_URLS.AMPHIBIAN_LOOKUP;
         break;
       case 'birds':
-        url = LAYERS_URLS[BIRDS_LOOKUP];
+        url = DASHBOARD_URLS.BIRDS_LOOKUP;
         break;
       case 'mammals':
-        url = LAYERS_URLS[MAMMALS_LOOKUP];
+        url = DASHBOARD_URLS.MAMMALS_LOOKUP;
         break;
       case 'reptiles':
-        url = LAYERS_URLS[REPTILES_LOOKUP];
+        url = DASHBOARD_URLS.REPTILES_LOOKUP;
         break;
       default:
         break;
@@ -322,14 +323,30 @@ function DashboardContainer(props) {
     };
   };
 
-  const sampleFilterSpecies = {
-    name: '',
-    common_name: '',
-    scientific_name: '',
-    threat_status: '',
-    source: '',
-    image_url: '',
-    taxa: '',
+  const getSpeciesDetails = (speciesData, taxa) => {
+    const species = speciesData.species.map(
+      ({ scientific_name, common_name, attributes }) => {
+        const { source, species_url, threat_status } = JSON.parse(
+          attributes.replace(/NaN/g, 'null')
+        );
+
+        return {
+          common_name,
+          scientific_name,
+          threat_status,
+          source,
+          species_url,
+          taxa,
+        };
+      }
+    );
+
+    return {
+      count: speciesData.species.length,
+      species,
+      taxa,
+      title: taxa,
+    };
   };
 
   const newGetSpeciesList = async () => {
@@ -355,33 +372,46 @@ function DashboardContainer(props) {
           getTaxaSpecies('mammals', mammals),
         ]);
 
-      const speciesData = [amphibianData, birdsData, reptilesData, mammalsData];
+      const ampSpecies = getSpeciesDetails(amphibianData, 'amphibians');
+      const birdSpecies = getSpeciesDetails(birdsData, 'birds');
+      const repSpecies = getSpeciesDetails(reptilesData, 'reptiles');
+      const mamSpecies = getSpeciesDetails(mammalsData, 'mammals');
 
-      const speciesList = speciesData.species?.map((species) => {
-        const { name, common_name, scientific_name, taxa } = species;
-        return {
-          name,
-          common_name,
-          scientific_name,
-          threat_status: '',
-          source: '',
-          image_url: '',
-          taxa,
-        };
-      });
+      const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
       setTaxaList(speciesData);
-      console.log('Species Data', speciesData);
     }
   };
 
   const getOccurenceSpecies = async () => {
+    const whereClause = selectedRegion
+      ? `GID_1 = '${selectedRegion.GID_1}'`
+      : `ISO3 = '${countryISO}'`;
     const occurenceFeatures = await EsriFeatureService.getFeatures({
       url: DASHBOARD_URLS.SPECIES_OCCURENCE_URL,
-      whereClause: `GID_1 = '${selectedRegion.GID_1}'`,
+      whereClause,
       returnGeometry: false,
     });
 
+    occurenceFeatures.forEach((feature) => {
+      const { taxa, species, attributes } = feature.attributes;
+
+      console.log(attributes);
+      const { source, species_url, threat_status } = JSON.parse(
+        attributes.replace(/NaN/g, 'null')
+      );
+
+      const speciesToAdd = {
+        common_name: species,
+        scientific_name: species,
+        threat_status,
+        source,
+        species_url,
+        taxa,
+      };
+
+      taxaList.find((t) => t.taxa === taxa).species.push(speciesToAdd);
+    });
     console.log(occurenceFeatures);
   };
 
@@ -498,9 +528,7 @@ function DashboardContainer(props) {
 
   useEffect(() => {
     if (!selectedRegion) return;
-    // getSpeciesList();
     newGetSpeciesList();
-    getOccurenceSpecies();
   }, [selectedRegion]);
 
   useEffect(() => {
@@ -539,6 +567,11 @@ function DashboardContainer(props) {
     provinceName,
     user,
   ]);
+
+  useEffect(() => {
+    if (!taxaList.length) return;
+    getOccurenceSpecies();
+  }, [taxaList]);
 
   return (
     <DashboardComponent
