@@ -154,7 +154,7 @@ function RegionsAnalysisComponent(props) {
             <FormControlLabel
               value={REGION_OPTIONS.FORESTS}
               control={<Radio />}
-              label={t('Forest Tiles')}
+              label={t('Forest Titles')}
             />
           )}
           {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}
