@@ -161,7 +161,11 @@ function DataLayerComponent(props) {
   };
 
   const handleBack = () => {
-    setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+    if (selectedRegion) {
+      setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+    } else {
+      setSelectedIndex(NAVIGATION.HOME);
+    }
   };
 
   const getHabitatMapData = async () => {
@@ -229,13 +233,11 @@ function DataLayerComponent(props) {
         }}
       >
         <span className={styles.sectionTitle}>{t('Data Layers')}</span>
-        {selectedRegion && (
-          <Button
-            className={styles.back}
-            handleClick={handleBack}
-            label={t('Back')}
-          />
-        )}
+        <Button
+          className={styles.back}
+          handleClick={handleBack}
+          label={t('Back')}
+        />
       </div>
       <hr className={hrTheme.dark} />
 
