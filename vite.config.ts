@@ -1,9 +1,13 @@
 import path from 'path';
-
-import react from '@vitejs/plugin-react';
 import { defineConfig, transformWithEsbuild } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
+
+import basicSsl from '@vitejs/plugin-basic-ssl';
+import react from '@vitejs/plugin-react';
+
+// vite.config.js
+
 // Custom Vite plugin for directory-named resolution
 function directoryNamedResolver() {
   return {
@@ -74,6 +78,14 @@ export default defineConfig({
     directoryNamedResolver(),
     moduleScssResolver(),
     svgr(),
+    basicSsl({
+      /** name of certification */
+      name: 'test',
+      /** custom trust domains */
+      domains: ['*.custom.com'],
+      /** custom certification directory */
+      certDir: '/Users/.../.devServer/cert',
+    }),
   ],
   optimizeDeps: {
     force: true,
@@ -97,7 +109,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: undefined,
-     },
+      },
     },
   },
   resolve: {
@@ -118,6 +130,7 @@ export default defineConfig({
       sideEffects: path.resolve(__dirname, 'src/side-effects'),
       actions: path.resolve(__dirname, 'src/store/actions'),
       utils: path.resolve(__dirname, 'src/utils'),
+      context: path.resolve(__dirname, 'src/context'),
       constants: path.resolve(__dirname, 'src/constants'),
       redux_modules: path.resolve(__dirname, 'src/store/redux-modules'),
       services: path.resolve(__dirname, 'src/services'),
