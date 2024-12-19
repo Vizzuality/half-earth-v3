@@ -115,46 +115,40 @@ function DashboardHomeComponent(props) {
             <div className={styles.species}>
               <button
                 type="button"
-                id="pop1"
-                name="pop1"
-                className={cx(styles.navCard, styles.chat)}
-                onClick={() => selectSpecies('Leptopelis christyi')}
+                className={cx(styles.navCard, styles.first)}
+                onClick={() => selectSpecies('Myotis bocagii')}
               >
                 <div className={styles.outline} />
-                <label htmlFor="pop1">Christy's Forest Treefrog</label>
-                <p>Leptopelis christyi</p>
+                <span>Rufous Mouse Eared Bat</span>
+                <p>Myotis bocagii</p>
               </button>
               <button
                 type="button"
-                id="pop2"
-                name="pop2"
-                className={cx(styles.navCard, styles.pilio)}
-                onClick={() => selectSpecies('Congolacerta vauereselli')}
+                className={cx(styles.navCard, styles.second)}
+                onClick={() => selectSpecies('Hyperolius castaneus')}
               >
                 <div className={styles.outline} />
-                <label htmlFor="pop2">Sparse-Scaled Forest Lizard</label>
-                <p>Congolacerta vauereselli</p>
+                <span>Ahl&apos;s Reed Frog</span>
+                <p>Hyperolius castaneus</p>
               </button>
               <button
                 type="button"
-                id="pop3"
-                name="pop3"
-                className={cx(styles.navCard, styles.egg)}
-                onClick={() => selectSpecies('Hyperolius tuberculatus')}
+                className={cx(styles.navCard, styles.third)}
+                onClick={() => selectSpecies('Chiromantis rufescens')}
               >
                 <div className={styles.outline} />
-                <label htmlFor="pop3">Rainforest Reed Frog</label>
-                <p>Hyperolius tuberculatus</p>
+                <span>African Foam-Nest Treefrog</span>
+                <p>Chiromantis rufescens</p>
               </button>
               <button
                 type="button"
                 id="pop4"
                 name="pop4"
-                className={cx(styles.navCard, styles.frog)}
+                className={cx(styles.navCard, styles.fourth)}
                 onClick={() => selectSpecies('Bitis nasicornis')}
               >
                 <div className={styles.outline} />
-                <label htmlFor="pop4">Rhinoceros Viper</label>
+                <span>Rhinoceros Viper</span>
                 <p>Bitis nasicornis</p>
               </button>
             </div>

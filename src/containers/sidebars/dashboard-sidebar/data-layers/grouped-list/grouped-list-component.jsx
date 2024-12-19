@@ -174,11 +174,22 @@ function GroupedListComponent(props) {
     } else if (id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
       if (isPrivate) {
         if (!item.isActive) {
-          const layer = EsriFeatureService.getFeatureLayer(
-            SPECIES_LAYER_IDS.Hyperolius_tuberculatus,
-            null,
-            id
-          );
+          let url;
+
+          switch (speciesInfo.scientificname.toLowerCase()) {
+            case 'myotis bocagii':
+              url = SPECIES_LAYER_IDS.Myotis_bocagii;
+              break;
+            case 'hyperolius castaneus':
+              url = SPECIES_LAYER_IDS.Hyperolius_castaneus;
+              break;
+            case 'chiromantis rufescens':
+              url = SPECIES_LAYER_IDS.Chiromantis_rufescens;
+              break;
+            default:
+              break;
+          }
+          const layer = EsriFeatureService.getFeatureLayer(url, null, id);
 
           setRegionLayers((rl) => ({
             ...rl,

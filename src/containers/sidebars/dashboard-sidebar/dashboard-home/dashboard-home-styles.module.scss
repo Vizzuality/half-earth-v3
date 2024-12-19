@@ -130,19 +130,19 @@
           padding: 0;
           align-items: center;
 
-          &.chat{
-            background-image: url('../../../../assets/images/dashboard/Leptopelis_christyi_gauvain_saucy.jpeg');
+          &.first{
+            background-image: url('../../../../assets/images/dashboard/Myotis_bocagii.jpg');
           }
 
-          &.pilio{
-            background-image: url('../../../../assets/images/dashboard/Congolacerta_vauereselli_hendrick_hinkel.jpg');
+          &.second{
+            background-image: url('../../../../assets/images/dashboard/Hyperolius_castaneus.jpg');
           }
 
-          &.egg{
-            background-image: url('../../../../assets/images/dashboard/Hyperolius_tuberculatus_brian_gratwicke.jpg');
+          &.third{
+            background-image: url('../../../../assets/images/dashboard/Chiromantis_rufescens.jpg');
           }
 
-          &.frog{
+          &.fourth{
             background-image: url('../../../../assets/images/dashboard/viper.jpg');
           }
 
@@ -164,7 +164,7 @@
             outline-style: none;
           }
 
-          label{
+          span{
             font-weight: 600;
             font-size: 16px;
             letter-spacing: 0em;

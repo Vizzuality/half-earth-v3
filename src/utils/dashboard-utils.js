@@ -32,7 +32,7 @@ export const DASHBOARD_TABLE_URL =
 
 // temporary for DRC demo
 export const SPECIES_LAYER_IDS = {
-  Hyperolius_tuberculatus: '7122017b85ca49598afed95402b63cc8',
-  Congolacerta_vauereselli: '7122017b85ca49598afed95402b63cc8',
-  Leptopelis_christyi: '7122017b85ca49598afed95402b63cc8',
+  Myotis_bocagii: 'c41c9e06c2284b44be9fc41d144e63ba',
+  Hyperolius_castaneus: 'a8d710cd5a5f4124b90ff189cdcdfeba',
+  Chiromantis_rufescens: 'eb1019801a8b44bebd98e0452ef20132',
 };
