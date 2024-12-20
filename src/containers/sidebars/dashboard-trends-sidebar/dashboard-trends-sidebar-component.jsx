@@ -27,22 +27,50 @@ function DashboardTrendsSidebar(props) {
     tabOption,
     setTabOption,
     regionLayers,
+    countryISO,
     map,
   } = props;
 
   const showHideLayers = (tabClicked) => {
     const layers = regionLayers;
-    Object.keys(layers).forEach((region) => {
-      const foundLayer = map.layers.items.find((item) => item.id === region);
-      if (foundLayer) {
-        // map.remove(foundLayer);
-        if (tabClicked === TABS.SII || tabClicked === TABS.SHI) {
-          foundLayer.visible = false;
-        } else {
+    // Object.keys(layers).forEach((region) => {
+    // const foundLayer = map.layers.items.find(
+    //   (item) => item.id === region || item.id === `${countryISO}-outline`
+    // );
+    // if (foundLayer) {
+    // map.remove(foundLayer);
+    if (tabClicked === TABS.SII) {
+      const foundLayer = map.layers.items.find(
+        (item) => item.id === 'PROVINCES'
+      );
+      foundLayer.visible = false;
+
+      const outlineLayer = map.layers.items.find(
+        (item) => item.id === `${countryISO}-outline`
+      );
+      outlineLayer.visible = false;
+    } else if (tabClicked === TABS.SHI) {
+      const foundLayer = map.layers.items.find(
+        (item) => item.id === 'PROVINCES'
+      );
+      foundLayer.visible = false;
+
+      const outlineLayer = map.layers.items.find(
+        (item) => item.id === `${countryISO}-outline`
+      );
+      outlineLayer.visible = true;
+    } else {
+      Object.keys(layers).forEach((region) => {
+        const foundLayer = map.layers.items.find(
+          (item) => item.id === region || item.id === `${countryISO}-outline`
+        );
+        if (foundLayer) {
           foundLayer.visible = true;
         }
-      }
-    });
+
+        // });
+      });
+    }
 
     setTabOption(tabClicked);
   };

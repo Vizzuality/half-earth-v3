@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID } from 'utils/dashboard-utils.js';
+import {
+  PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
+  PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+} from 'utils/dashboard-utils.js';
 
 import last from 'lodash/last';
 
@@ -13,7 +16,6 @@ import {
   SHI_LATEST_YEAR,
   SPI_LATEST_YEAR,
   SII_LATEST_YEAR,
-  SHI_TREND_LATEST_YEAR,
 } from 'constants/dashboard-constants.js';
 import {
   COUNTRIES_DATA_SERVICE_URL,
@@ -108,7 +110,6 @@ function DashboardTrendsSidebarContainer(props) {
   const getShiProvinceData = (provinceURL) => {
     EsriFeatureService.getFeatures(provinceURL).then((features) => {
       const data = features.map((f) => f.attributes);
-      console.log(data);
       setShiProvinceTrendData(data);
     });
   };
@@ -143,14 +144,21 @@ function DashboardTrendsSidebarContainer(props) {
       PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
       countryISO
     );
+    map.add(layer);
+
+    const outlineFeatureLayer = EsriFeatureService.getFeatureLayer(
+      PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+      countryISO,
+      `${countryISO}-outline`
+    );
+    map.add(outlineFeatureLayer);
 
     // eslint-disable-next-line no-shadow
     setRegionLayers((regionLayers) => ({
       ...regionLayers,
       [LAYER_OPTIONS.PROVINCES]: layer,
+      [`${countryISO}-outline`]: outlineFeatureLayer,
     }));
-
-    map.add(layer);
 
     // rezoom to country
     if (geometry) {
