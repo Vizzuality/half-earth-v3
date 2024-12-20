@@ -84,6 +84,7 @@ function DataLayerComponent(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState();
   const [showHabitatChart, setShowHabitatChart] = useState(false);
+  const [isHabitatChartLoading, setIsHabitatChartLoading] = useState(false);
 
   const chartOptions = {
     plugins: {
@@ -257,11 +258,14 @@ function DataLayerComponent(props) {
             dataPoints={dataPoints}
             setDataPoints={setDataPoints}
             setShowHabitatChart={setShowHabitatChart}
+            setIsHabitatChartLoading={setIsHabitatChartLoading}
             {...props}
           />
+          {chartData && isHabitatChartLoading && <Loading height={200} />}
           {chartData && showHabitatChart && (
             <Line options={chartOptions} data={chartData} />
           )}
+
           <hr className={hrTheme.dark} />
           <button
             className={styles.distributionTitle}

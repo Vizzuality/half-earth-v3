@@ -29,10 +29,12 @@ function GroupedListComponent(props) {
     countryISO,
     setDataPoints,
     map,
+    view,
     speciesInfo,
     regionLayers,
     setRegionLayers,
     setShowHabitatChart,
+    setIsHabitatChartLoading,
     isPrivate,
   } = props;
   const t = useT();
@@ -139,7 +141,7 @@ function GroupedListComponent(props) {
     } else if (id === LAYER_OPTIONS.HABITAT) {
       const layerName = id;
       if (!item.isActive) {
-        setShowHabitatChart(true);
+        setIsHabitatChartLoading(true);
         const webTileLayer = EsriFeatureService.getXYZLayer(
           speciesInfo.scientificname.replace(' ', '_'),
           layerName,
@@ -162,6 +164,15 @@ function GroupedListComponent(props) {
             [layerName]: layer,
           }));
           map.add(layer);
+
+          view.whenLayerView(layer).then((layerView) => {
+            layerView.watch('updating', (val) => {
+              if (!val) {
+                setIsHabitatChartLoading(false);
+                setShowHabitatChart(true);
+              }
+            });
+          });
         });
       } else {
         setShowHabitatChart(false);

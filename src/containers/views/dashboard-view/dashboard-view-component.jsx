@@ -5,6 +5,7 @@ import { DASHBOARD } from 'router';
 import loadable from '@loadable/component';
 
 import * as promiseUtils from '@arcgis/core/core/promiseUtils.js';
+import { Loading } from 'he-components';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
