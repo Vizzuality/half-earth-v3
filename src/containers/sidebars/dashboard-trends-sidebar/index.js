@@ -13,6 +13,7 @@ import {
   SHI_LATEST_YEAR,
   SPI_LATEST_YEAR,
   SII_LATEST_YEAR,
+  SHI_TREND_LATEST_YEAR,
 } from 'constants/dashboard-constants.js';
 import {
   COUNTRIES_DATA_SERVICE_URL,
@@ -46,6 +47,7 @@ function DashboardTrendsSidebarContainer(props) {
   const [shiScoresData, setShiScoresData] = useState([]);
   const [selectSpiSpeciesData, setSpiSelectSpeciesData] = useState([]);
   const [selectShiSpeciesData, setShiSelectSpeciesData] = useState([]);
+  const [shiProvinceTrendData, setShiProvinceTrendData] = useState([]);
 
   const [shiValue, setShiValue] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
@@ -100,6 +102,14 @@ function DashboardTrendsSidebarContainer(props) {
     EsriFeatureService.getFeatures(selectSpeciesURL).then((features) => {
       const data = features.map((f) => f.attributes);
       setSpiSelectSpeciesData(data);
+    });
+  };
+
+  const getShiProvinceData = (provinceURL) => {
+    EsriFeatureService.getFeatures(provinceURL).then((features) => {
+      const data = features.map((f) => f.attributes);
+      console.log(data);
+      setShiProvinceTrendData(data);
     });
   };
 
@@ -160,7 +170,7 @@ function DashboardTrendsSidebarContainer(props) {
     const provinceURL = {
       url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
       whereClause: `iso3 = '${countryISO}' and Year = ${SPI_LATEST_YEAR}`,
-      // orderByFields: ['region_name'],
+      orderByFields: ['region_name'],
     };
     getProvinceData(provinceURL);
 
@@ -170,6 +180,13 @@ function DashboardTrendsSidebarContainer(props) {
       orderByFields: ['year'],
     };
     getCountryData(countryURL);
+
+    const shiProvinceURL = {
+      url: DASHBOARD_URLS.SHI_PROVINCE_TREND_URL,
+      whereClause: `iso3 = '${countryISO}'`,
+      orderByFields: ['region_name'],
+    };
+    getShiProvinceData(shiProvinceURL);
 
     const shiSpeciesScoresURL = {
       url: DASHBOARD_URLS.SHI_SPECIES_URL,
@@ -224,6 +241,7 @@ function DashboardTrendsSidebarContainer(props) {
       setActiveTrend={setActiveTrend}
       shiActiveTrend={shiActiveTrend}
       setShiActiveTrend={setShiActiveTrend}
+      shiProvinceTrendData={shiProvinceTrendData}
       {...props}
     />
   );

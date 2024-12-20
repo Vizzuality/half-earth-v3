@@ -53,13 +53,6 @@
         }
       }
 
-      &[aria-label="Species"]{
-        svg{
-          width: 50px;
-          margin-left: -7px;
-        }
-      }
-
       &.selected,
       &:hover{
         background: var(--nav-button-bg);

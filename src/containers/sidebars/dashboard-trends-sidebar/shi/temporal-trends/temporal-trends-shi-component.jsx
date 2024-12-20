@@ -31,7 +31,7 @@ function TemporalTrendsShiComponent(props) {
   };
 
   useEffect(() => {
-    if (countryISO === 'CODDRC') {
+    if (countryISO === 'COD') {
       setActiveSHITrend(PROVINCE_TREND);
     }
   }, []);
@@ -60,7 +60,7 @@ function TemporalTrendsShiComponent(props) {
         </p>
         <div className={styles.options}>
           <div className={styles.btnGroup}>
-            {countryISO === 'CODDRC' && (
+            {countryISO === 'COD' && (
               <Button
                 type="rectangular"
                 className={cx(styles.saveButton, {

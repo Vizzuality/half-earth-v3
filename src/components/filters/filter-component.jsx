@@ -82,7 +82,7 @@ function FilterComponent(props) {
         });
         const allAnd =
           speciesFilters.every((x) => x) && speciesFilters.length > 0;
-        const anyOr = speciesOrFilters.indexOf(true) !== -1;
+        const anyOr = speciesOrFilters.includes(true);
         let inCandidate = false;
         if (!isAnyActive) {
           inCandidate = true;
