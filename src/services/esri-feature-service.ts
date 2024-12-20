@@ -71,6 +71,17 @@ function getFeatureLayer(portalItemId, countryISO, id) {
   });
 }
 
+function getFeatureOccurenceLayer(portalItemId, scientificName, id) {
+  return new FeatureLayer({
+    portalItem: {
+      id: portalItemId,
+    },
+    outFields: ['*'],
+    definitionExpression: `scientific= '${scientificName}'`,
+    id,
+  });
+}
+
 function getCSVLayer() {
   return new CSVLayer({
     // needs to be public accesible URL for csv file
@@ -207,4 +218,5 @@ export default {
   getMVTSource,
   addProtectedAreaLayer,
   getCSVLayer,
+  getFeatureOccurenceLayer,
 };

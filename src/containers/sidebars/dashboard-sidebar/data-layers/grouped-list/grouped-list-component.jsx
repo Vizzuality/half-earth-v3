@@ -6,6 +6,7 @@ import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   SPECIES_LAYER_IDS,
 } from 'utils/dashboard-utils';
+import { GBIF_OCCURENCE_URL } from 'utils/dashboard-utils.js';
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -267,19 +268,30 @@ function GroupedListComponent(props) {
 
           if (layerName.match(/EBIRD/)) {
             name = `ebird_${speciesInfo.scientificname.replace(' ', '_')}`;
+
+            layer = EsriFeatureService.getGeoJsonLayer(
+              name,
+              layerName,
+              countryISO
+            );
+            setRegionLayers((rl) => ({
+              ...rl,
+              [layerName]: layer,
+            }));
           } else if (layerName.match(/GBIF/)) {
             name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`;
-          }
 
-          layer = EsriFeatureService.getGeoJsonLayer(
-            name,
-            layerName,
-            countryISO
-          );
-          setRegionLayers((rl) => ({
-            ...rl,
-            [layerName]: layer,
-          }));
+            layer = EsriFeatureService.getFeatureOccurenceLayer(
+              GBIF_OCCURENCE_URL,
+              speciesInfo.scientificname,
+              layerName
+            );
+
+            setRegionLayers((rl) => ({
+              ...rl,
+              [layerName]: layer,
+            }));
+          }
 
           let layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT);
 
