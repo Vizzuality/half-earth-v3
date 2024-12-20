@@ -271,7 +271,7 @@ function DashboardContainer(props) {
   };
 
   const getOccurenceSpecies = async (speciesData) => {
-    const url = DASHBOARD_URLS.SPECIES_OCCURENCE_URL;
+    let url = DASHBOARD_URLS.SPECIES_OCCURENCE_URL;
     let whereClause = `ISO3 = '${countryISO}'`;
 
     if (selectedRegion) {
@@ -281,7 +281,8 @@ function DashboardContainer(props) {
       }
 
       if (WDPA_PID) {
-        whereClause = `WDPA_PID = '${WDPA_PID}'`;
+        url = DASHBOARD_URLS.WDPA_OCCURENCE_URL;
+        whereClause = `wdpaid = '${WDPA_PID}'`;
       }
     }
 
