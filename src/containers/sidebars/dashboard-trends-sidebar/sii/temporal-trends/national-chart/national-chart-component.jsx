@@ -117,8 +117,8 @@ function NationalChartComponent(props) {
           {
             label: '',
             data: [siiVal, 100 - siiVal],
-            backgroundColor: [getCSSVariable('temporal-spi'), emptyArcColor],
-            borderColor: [getCSSVariable('temporal-spi'), emptyArcColor],
+            backgroundColor: [getCSSVariable('bubble'), emptyArcColor],
+            borderColor: [getCSSVariable('bubble'), emptyArcColor],
             borderWidth: 1,
           },
         ],
