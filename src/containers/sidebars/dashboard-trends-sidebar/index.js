@@ -38,6 +38,7 @@ function DashboardTrendsSidebarContainer(props) {
     geometry,
     setSelectedRegionOption,
     selectedProvince,
+    tabOption,
   } = props;
 
   const [geo, setGeo] = useState(null);
@@ -144,6 +145,7 @@ function DashboardTrendsSidebarContainer(props) {
       PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
       countryISO
     );
+    layer.visible = tabOption === 2;
     map.add(layer);
 
     const outlineFeatureLayer = EsriFeatureService.getFeatureLayer(
@@ -151,7 +153,7 @@ function DashboardTrendsSidebarContainer(props) {
       countryISO,
       `${countryISO}-outline`
     );
-    outlineFeatureLayer.visible = false;
+    outlineFeatureLayer.visible = tabOption === 1;
     map.add(outlineFeatureLayer);
 
     // eslint-disable-next-line no-shadow
