@@ -17,7 +17,7 @@ function SpeciesGroupComponent(props) {
   const { species, selectedTaxaObj, setSelectedIndex, setScientificName } =
     props;
   // eslint-disable-next-line camelcase
-  const { asset_url, common_name, scientific_name } = species;
+  const { species_url, common_name, scientific_name } = species;
   const { lightMode } = useContext(LightModeContext);
 
   const selectSpecies = (selectedSpecies) => {
@@ -36,14 +36,14 @@ function SpeciesGroupComponent(props) {
       onClick={() => selectSpecies(species)}
     >
       <div className={styles.imgBox}>
-        {asset_url && (
+        {species_url && (
           <img
             alt={`${selectedTaxaObj.taxa}`}
             loading="lazy"
-            src={`${SPECIES_IMAGE_URL}${asset_url}.jpg`}
+            src={`${species_url}`}
           />
         )}
-        {!asset_url && <TaxaImageComponent taxa={selectedTaxaObj.taxa} />}
+        {!species_url && <TaxaImageComponent taxa={selectedTaxaObj.taxa} />}
       </div>
       <div className={cx(styles.speciesText, styles.name)}>
         <div className={styles.common}>{common_name}</div>
