@@ -45,33 +45,45 @@ function DashboardTrendsSidebar(props) {
       const foundLayer = map.layers.items.find(
         (item) => item.id === REGION_OPTIONS.PROVINCES
       );
-      foundLayer.visible = false;
+      if (foundLayer) {
+        foundLayer.visible = false;
+      }
 
       const outlineLayer = map.layers.items.find(
         (item) => item.id === `${countryISO}-outline`
       );
-      outlineLayer.visible = false;
+      if (outlineLayer) {
+        outlineLayer.visible = false;
+      }
     } else if (tabClicked === TABS.SHI) {
       const foundLayer = map.layers.items.find(
         (item) => item.id === REGION_OPTIONS.PROVINCES
       );
-      foundLayer.visible = false;
+      if (foundLayer) {
+        foundLayer.visible = false;
+      }
 
       const outlineLayer = map.layers.items.find(
         (item) => item.id === `${countryISO}-outline`
       );
-      outlineLayer.visible = true;
+      if (outlineLayer) {
+        outlineLayer.visible = true;
+      }
     } else {
       Object.keys(layers).forEach(() => {
         const foundLayer = map.layers.items.find(
           (item) => item.id === REGION_OPTIONS.PROVINCES
         );
-        foundLayer.visible = true;
+        if (foundLayer) {
+          foundLayer.visible = true;
+        }
 
         const outlineLayer = map.layers.items.find(
           (item) => item.id === `${countryISO}-outline`
         );
-        outlineLayer.visible = false;
+        if (outlineLayer) {
+          outlineLayer.visible = false;
+        }
       });
     }
 

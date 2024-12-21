@@ -141,27 +141,42 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     if (!map && !view) return;
 
+    // if (tabOption === 2) {
     const layer = EsriFeatureService.getFeatureLayer(
       PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
       countryISO
     );
-    layer.visible = tabOption === 2;
     map.add(layer);
-
-    const outlineFeatureLayer = EsriFeatureService.getFeatureLayer(
-      SHI_LAYER_ID,
-      countryISO,
-      `${countryISO}-outline`
-    );
-    outlineFeatureLayer.visible = tabOption === 1;
-    map.add(outlineFeatureLayer);
 
     // eslint-disable-next-line no-shadow
     setRegionLayers((regionLayers) => ({
       ...regionLayers,
       [LAYER_OPTIONS.PROVINCES]: layer,
+    }));
+    // }
+
+    if (tabOption === 2) {
+      layer.visible = true;
+    }
+
+    // if (tabOption === 1) {
+    const outlineFeatureLayer = EsriFeatureService.getFeatureLayer(
+      SHI_LAYER_ID,
+      countryISO,
+      `${countryISO}-outline`
+    );
+    map.add(outlineFeatureLayer);
+
+    // eslint-disable-next-line no-shadow
+    setRegionLayers((regionLayers) => ({
+      ...regionLayers,
       [`${countryISO}-outline`]: outlineFeatureLayer,
     }));
+
+    if (tabOption === 1) {
+      outlineFeatureLayer.visible = true;
+    }
+    // }
 
     // rezoom to country
     if (geometry) {

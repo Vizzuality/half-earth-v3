@@ -240,7 +240,7 @@ function ProvinceChartComponent(props) {
   }, [provinces]);
 
   useEffect(() => {
-    if (provinces.length && bubbleData) {
+    if (provinces.length && bubbleData && !clickedRegion) {
       if (provinceName) {
         const region = provinces.find(
           (item) => item.region_name === provinceName
@@ -255,7 +255,7 @@ function ProvinceChartComponent(props) {
   }, [provinces, bubbleData]);
 
   useEffect(() => {
-    if (selectedProvince) {
+    if (selectedProvince && !clickedRegion) {
       handleProvinceSelected(selectedProvince);
       setFoundIndex(
         provinces.findIndex(
@@ -269,7 +269,7 @@ function ProvinceChartComponent(props) {
     if (clickedRegion && provinces.length) {
       const region = provinces.find(
         (item) =>
-          item.region_name === clickedRegion.NAME_1 || clickedRegion.region_name
+          item.region_name === clickedRegion.NAME_1 ?? clickedRegion.region_name
       );
       getProvinceScores(region);
 
