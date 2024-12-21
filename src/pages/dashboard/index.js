@@ -354,7 +354,7 @@ function DashboardContainer(props) {
     });
 
     if (features && features[0]) {
-      if (selectedRegion.mgc) {
+      if (selectedRegion?.mgc) {
         const speciesData = {
           species: features.map((s) => {
             const { scientificname, taxa, attributes } = s.attributes;
