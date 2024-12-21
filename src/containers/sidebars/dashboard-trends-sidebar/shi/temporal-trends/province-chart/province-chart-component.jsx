@@ -22,6 +22,8 @@ import last from 'lodash/last';
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
+import SHILegend from '../../../../../../assets/images/dashboard/shi_legend.png';
+
 import styles from './province-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
@@ -267,6 +269,13 @@ function ProvinceChartComponent(props) {
         </div>
       )}
       <div className={styles.chart}>
+        <div className={styles.mapLegend}>
+          <img src={SHILegend} alt="spi-legend" />
+          <div className={styles.legendValues}>
+            <span>0</span>
+            <span>100</span>
+          </div>
+        </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.habitat)} />
           <span>{t('Habitat Score')}</span>
