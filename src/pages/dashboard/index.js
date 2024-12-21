@@ -311,7 +311,16 @@ function DashboardContainer(props) {
           taxa,
         };
 
-        list.find((t) => t.taxa === taxa)?.species.push(speciesToAdd);
+        const foundTaxa = list.find((t) => t.taxa === taxa);
+
+        const foundSpecies = foundTaxa?.species.find(
+          (speciesToFind) =>
+            speciesToFind.scientific_name === speciesToAdd.scientific_name
+        );
+
+        if (!foundSpecies) {
+          foundTaxa?.species.push(speciesToAdd);
+        }
       });
 
       list.forEach((t) => {
