@@ -38,7 +38,7 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const NATIONAL_SCORES = {
-    HABITAT_SCORE: 'steward',
+    HABITAT_SCORE: 'habitat',
     AREA_SCORE: 'areascore',
     CONNECTIVITY_SCORE: 'connectivity',
   };

@@ -480,7 +480,7 @@ export const DASHBOARD_URLS = {
   SHI_SPECIES_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_species_shi_scores_year_2024/FeatureServer',
   SHI_HISTOGRAM_URL:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shs_summary_for_stacked_bar_chart/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shs_summary_for_stacked_bar_chart_2021/FeatureServer',
   SHI_PROVINCE_HISTOGRAM_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_shs_bin_count_2022/FeatureServer',
   SHI_PROVINCE_SPECIES_URL:
