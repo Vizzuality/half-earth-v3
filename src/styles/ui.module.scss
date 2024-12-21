@@ -55,6 +55,16 @@ $scrollbar-width: 4px;
   }
 }
 
+@mixin lightBackdropBlur($colour: rgba(255, 255, 255, 0.7), $fallback: $space-background, $fallbackOpacity: 0.7) {
+  background-color: rgba($fallback, $fallbackOpacity);
+
+  @supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
+      background-color: $colour;
+      -webkit-backdrop-filter: blur($blur-level);
+      backdrop-filter: blur($blur-level);
+  }
+}
+
 %spacer {
   height: 1px;
   background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
