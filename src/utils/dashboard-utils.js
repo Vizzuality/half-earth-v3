@@ -5,6 +5,7 @@ export const PROVINCE_FEATURE_GLOBAL_OUTLINE_ID =
 
 // DRC LAYERS
 export const PROTECTED_AREA_FEATURE_URL = '6b13aac7863a44bb915d1847dfc5dfd9';
+export const SHI_LAYER_ID = '41981d576d6042aea14595de0fb924f2';
 export const DRC_REGION_FEATURE_ID = '95cac457c0244a2286d914148c24af98';
 export const EXPERT_RANGE_MAP_URL =
   'https://next-api-dot-map-of-life.appspot.com/2.x/species/drc_rangemap';

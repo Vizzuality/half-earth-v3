@@ -57,6 +57,7 @@ function ScoreDistributionsSpiComponent(props) {
       x: {
         type: 'linear',
         offset: false,
+        beginAtZero: false,
         stacked: true,
         display: true,
         title: {
@@ -77,6 +78,7 @@ function ScoreDistributionsSpiComponent(props) {
       y: {
         stacked: true,
         display: true,
+        beginAtZero: false,
         title: {
           display: true,
           text: t('Number of Species'),
@@ -87,7 +89,7 @@ function ScoreDistributionsSpiComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          stepSize: 100,
+          stepSize: 10,
         },
       },
     },
@@ -119,7 +121,7 @@ function ScoreDistributionsSpiComponent(props) {
 
     // Loop through each number and place it in the appropriate bucket
     locationData.forEach((a) => {
-      const bin = a.bin.split(',')[1].replace(']', '');
+      const bin = a.bin.split(',')[1].replace(/ /gi, '');
 
       taxaSet.amphibians[bin] = a.amphibians;
       taxaSet.birds[bin] = a.birds;

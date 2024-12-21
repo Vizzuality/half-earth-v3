@@ -28,8 +28,16 @@ function ScoreDistributionsShiComponent(props) {
     setSelectedIndex,
     shiScoresData,
     selectShiSpeciesData,
+    shiActiveTrend,
   } = props;
+
   const SCORES = {
+    HABITAT_SCORE: 'habitat',
+    AREA_SCORE: 'area',
+    CONNECTIVITY_SCORE: 'connectivity',
+  };
+
+  const NATIONAL_SCORES = {
     HABITAT_SCORE: 'steward',
     AREA_SCORE: 'areascore',
     CONNECTIVITY_SCORE: 'connectivity',
@@ -116,71 +124,147 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const displayData = (score) => {
-    const taxaSet = {
-      amphibians: {
-        [SCORES.AREA_SCORE]: {},
-        [SCORES.HABITAT_SCORE]: {},
-        [SCORES.CONNECTIVITY_SCORE]: {},
-      },
-      birds: {
-        [SCORES.AREA_SCORE]: {},
-        [SCORES.HABITAT_SCORE]: {},
-        [SCORES.CONNECTIVITY_SCORE]: {},
-      },
-      mammals: {
-        [SCORES.AREA_SCORE]: {},
-        [SCORES.HABITAT_SCORE]: {},
-        [SCORES.CONNECTIVITY_SCORE]: {},
-      },
-      reptiles: {
-        [SCORES.AREA_SCORE]: {},
-        [SCORES.HABITAT_SCORE]: {},
-        [SCORES.CONNECTIVITY_SCORE]: {},
-      },
-    };
+    if (shiActiveTrend === 'NATIONAL') {
+      if (score === SCORES.HABITAT_SCORE) {
+        score = NATIONAL_SCORES.HABITAT_SCORE;
+      } else if (score === SCORES.AREA_SCORE) {
+        score = NATIONAL_SCORES.AREA_SCORE;
+      } else if (score === SCORES.CONNECTIVITY_SCORE) {
+        score = NATIONAL_SCORES.CONNECTIVITY_SCORE;
+      }
 
-    // Loop through each number and place it in the appropriate bucket
-    shiScoresData.forEach((a) => {
-      const bin = a.binned.split(',')[0].replace(/ /gi, '');
+      const taxaSet = {
+        amphibians: {
+          [NATIONAL_SCORES.AREA_SCORE]: {},
+          [NATIONAL_SCORES.HABITAT_SCORE]: {},
+          [NATIONAL_SCORES.CONNECTIVITY_SCORE]: {},
+        },
+        birds: {
+          [NATIONAL_SCORES.AREA_SCORE]: {},
+          [NATIONAL_SCORES.HABITAT_SCORE]: {},
+          [NATIONAL_SCORES.CONNECTIVITY_SCORE]: {},
+        },
+        mammals: {
+          [NATIONAL_SCORES.AREA_SCORE]: {},
+          [NATIONAL_SCORES.HABITAT_SCORE]: {},
+          [NATIONAL_SCORES.CONNECTIVITY_SCORE]: {},
+        },
+        reptiles: {
+          [NATIONAL_SCORES.AREA_SCORE]: {},
+          [NATIONAL_SCORES.HABITAT_SCORE]: {},
+          [NATIONAL_SCORES.CONNECTIVITY_SCORE]: {},
+        },
+      };
 
-      taxaSet.amphibians[score][bin] = a[`${score}_amphibians`];
-      taxaSet.birds[score][bin] = a[`${score}_birds`];
-      taxaSet.mammals[score][bin] = a[`${score}_mammals`];
-      taxaSet.reptiles[score][bin] = a[`${score}_reptiles`];
-    });
+      // Loop through each number and place it in the appropriate bucket
+      shiScoresData.forEach((a) => {
+        const bin = a.binned.split(',')[0].replace(/ /gi, '');
 
-    const uniqueKeys = new Set([
-      ...Object.keys(taxaSet.birds[score]),
-      ...Object.keys(taxaSet.mammals[score]),
-      ...Object.keys(taxaSet.reptiles[score]),
-      ...Object.keys(taxaSet.amphibians[score]),
-    ]);
+        taxaSet.amphibians[score][bin] = a[`${score}_amphibians`];
+        taxaSet.birds[score][bin] = a[`${score}_birds`];
+        taxaSet.mammals[score][bin] = a[`${score}_mammals`];
+        taxaSet.reptiles[score][bin] = a[`${score}_reptiles`];
+      });
 
-    setChartData({
-      labels: [...uniqueKeys].map((key) => key),
-      datasets: [
-        {
-          label: t('Birds'),
-          data: Object.values(taxaSet.birds[score]),
-          backgroundColor: getCSSVariable('birds'),
+      const uniqueKeys = new Set([
+        ...Object.keys(taxaSet.birds[score]),
+        ...Object.keys(taxaSet.mammals[score]),
+        ...Object.keys(taxaSet.reptiles[score]),
+        ...Object.keys(taxaSet.amphibians[score]),
+      ]);
+
+      setChartData({
+        labels: [...uniqueKeys].map((key) => key),
+        datasets: [
+          {
+            label: t('Birds'),
+            data: Object.values(taxaSet.birds[score]),
+            backgroundColor: getCSSVariable('birds'),
+          },
+          {
+            label: t('Mammals'),
+            data: Object.values(taxaSet.mammals[score]),
+            backgroundColor: getCSSVariable('mammals'),
+          },
+          {
+            label: t('Reptiles'),
+            data: Object.values(taxaSet.reptiles[score]),
+            backgroundColor: getCSSVariable('reptiles'),
+          },
+          {
+            label: t('Amphibians'),
+            data: Object.values(taxaSet.amphibians[score]),
+            backgroundColor: getCSSVariable('amphibians'),
+          },
+        ],
+      });
+    } else {
+      const taxaSet = {
+        amphibians: {
+          [SCORES.AREA_SCORE]: {},
+          [SCORES.HABITAT_SCORE]: {},
+          [SCORES.CONNECTIVITY_SCORE]: {},
         },
-        {
-          label: t('Mammals'),
-          data: Object.values(taxaSet.mammals[score]),
-          backgroundColor: getCSSVariable('mammals'),
+        birds: {
+          [SCORES.AREA_SCORE]: {},
+          [SCORES.HABITAT_SCORE]: {},
+          [SCORES.CONNECTIVITY_SCORE]: {},
         },
-        {
-          label: t('Reptiles'),
-          data: Object.values(taxaSet.reptiles[score]),
-          backgroundColor: getCSSVariable('reptiles'),
+        mammals: {
+          [SCORES.AREA_SCORE]: {},
+          [SCORES.HABITAT_SCORE]: {},
+          [SCORES.CONNECTIVITY_SCORE]: {},
         },
-        {
-          label: t('Amphibians'),
-          data: Object.values(taxaSet.amphibians[score]),
-          backgroundColor: getCSSVariable('amphibians'),
+        reptiles: {
+          [SCORES.AREA_SCORE]: {},
+          [SCORES.HABITAT_SCORE]: {},
+          [SCORES.CONNECTIVITY_SCORE]: {},
         },
-      ],
-    });
+      };
+
+      // Loop through each number and place it in the appropriate bucket
+      shiScoresData.forEach((a) => {
+        const bin = a.binned.split(',')[0].replace(/ /gi, '');
+
+        taxaSet.amphibians[score][bin] = a[`${score}_amphibians`];
+        taxaSet.birds[score][bin] = a[`${score}_birds`];
+        taxaSet.mammals[score][bin] = a[`${score}_mammals`];
+        taxaSet.reptiles[score][bin] = a[`${score}_reptiles`];
+      });
+
+      const uniqueKeys = new Set([
+        ...Object.keys(taxaSet.birds[score]),
+        ...Object.keys(taxaSet.mammals[score]),
+        ...Object.keys(taxaSet.reptiles[score]),
+        ...Object.keys(taxaSet.amphibians[score]),
+      ]);
+
+      setChartData({
+        labels: [...uniqueKeys].map((key) => key),
+        datasets: [
+          {
+            label: t('Birds'),
+            data: Object.values(taxaSet.birds[score]),
+            backgroundColor: getCSSVariable('birds'),
+          },
+          {
+            label: t('Mammals'),
+            data: Object.values(taxaSet.mammals[score]),
+            backgroundColor: getCSSVariable('mammals'),
+          },
+          {
+            label: t('Reptiles'),
+            data: Object.values(taxaSet.reptiles[score]),
+            backgroundColor: getCSSVariable('reptiles'),
+          },
+          {
+            label: t('Amphibians'),
+            data: Object.values(taxaSet.amphibians[score]),
+            backgroundColor: getCSSVariable('amphibians'),
+          },
+        ],
+      });
+    }
     setIsLoading(false);
   };
 
@@ -250,20 +334,20 @@ function ScoreDistributionsShiComponent(props) {
           <ul className={styles.spsSpecies}>
             {spsSpecies.map((s) => {
               return (
-                <li key={s.ScientificName}>
+                <li key={s.scientificname}>
                   <button
                     type="button"
                     onClick={() => selectSpecies(s.species)}
                   >
-                    <img src={s.SpeciesImage} alt="species" />
+                    <img src={s.species_url} alt="species" />
                     <div className={styles.spsInfo}>
-                      <span className={styles.name}>{s.ScientificName}</span>
+                      <span className={styles.name}>{s.scientificname}</span>
                       <span className={styles.scientificname}>
-                        {s.ScientificName}
+                        {s.scientificname}
                       </span>
                     </div>
                     <span className={styles.spsScore}>
-                      SHS: {s.HabitatScore.toFixed(1)}
+                      SHS: {s.habitat_score.toFixed(1)}
                     </span>
                   </button>
                 </li>

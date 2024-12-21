@@ -327,7 +327,7 @@ function DashboardContainer(props) {
     let whereClause = `GID_0 = '${countryISO}'`;
 
     if (selectedRegion) {
-      const { GID_1, WDPA_PID } = selectedRegion;
+      const { GID_1, WDPA_PID, mgc } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
       }
@@ -335,6 +335,11 @@ function DashboardContainer(props) {
       if (WDPA_PID) {
         whereClause = `WDPA_PID = '${WDPA_PID}'`;
         url = DASHBOARD_URLS.WDPA_PRECALC;
+      }
+
+      if (mgc) {
+        whereClause = `mgc_id = '${mgc}'`;
+        url = DASHBOARD_URLS.FOREST;
       }
     }
 

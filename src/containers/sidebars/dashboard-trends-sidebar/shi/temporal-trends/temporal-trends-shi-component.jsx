@@ -18,21 +18,26 @@ import ProvinceChartContainer from './province-chart';
 
 function TemporalTrendsShiComponent(props) {
   const t = useT();
-  const { shiValue, countryName, countryISO } = props;
+  const {
+    shiValue,
+    countryName,
+    countryISO,
+    shiActiveTrend,
+    setShiActiveTrend,
+  } = props;
 
   // const [chartData, setChartData] = useState();
   const [lostAvg, setLostAvg] = useState(0);
-  const [activeSHITrend, setActiveSHITrend] = useState(NATIONAL_TREND);
   const { lightMode } = useContext(LightModeContext);
   const [startYear] = useState(2001);
 
   const handleActionChange = (event) => {
-    setActiveSHITrend(event.currentTarget.innerText);
+    setShiActiveTrend(event.currentTarget.innerText);
   };
 
   useEffect(() => {
     if (countryISO === 'COD') {
-      setActiveSHITrend(PROVINCE_TREND);
+      setShiActiveTrend(PROVINCE_TREND);
     }
   }, []);
 
@@ -64,7 +69,7 @@ function TemporalTrendsShiComponent(props) {
               <Button
                 type="rectangular"
                 className={cx(styles.saveButton, {
-                  [styles.notActive]: activeSHITrend === NATIONAL_TREND,
+                  [styles.notActive]: shiActiveTrend === NATIONAL_TREND,
                 })}
                 label={PROVINCE_TREND}
                 handleClick={handleActionChange}
@@ -73,7 +78,7 @@ function TemporalTrendsShiComponent(props) {
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeSHITrend === PROVINCE_TREND,
+                [styles.notActive]: shiActiveTrend === PROVINCE_TREND,
               })}
               label={NATIONAL_TREND}
               handleClick={handleActionChange}
@@ -92,10 +97,10 @@ function TemporalTrendsShiComponent(props) {
           </span> */}
         </div>
       </div>
-      {activeSHITrend === NATIONAL_TREND && (
+      {shiActiveTrend === NATIONAL_TREND && (
         <NationalChartContainer {...props} />
       )}
-      {activeSHITrend === PROVINCE_TREND && (
+      {shiActiveTrend === PROVINCE_TREND && (
         <ProvinceChartContainer {...props} />
       )}
     </div>

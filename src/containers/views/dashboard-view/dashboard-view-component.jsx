@@ -65,7 +65,8 @@ function DashboardViewComponent(props) {
     return view.whenLayerView(
       regionLayers[LAYER_OPTIONS.PROVINCES] ||
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
-        regionLayers[LAYER_OPTIONS.FORESTS]
+        regionLayers[LAYER_OPTIONS.FORESTS] ||
+        regionLayers[`${countryISO}-outline`]
     );
   };
 
@@ -111,7 +112,7 @@ function DashboardViewComponent(props) {
               {
                 setTaxaList([]);
 
-                const { WDPA_PID, GID_1, territoire } = hits.attributes;
+                const { WDPA_PID, GID_1, mgc } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
                   setSelectedRegion({ WDPA_PID });
@@ -122,7 +123,7 @@ function DashboardViewComponent(props) {
                 }
 
                 if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
-                  setSelectedRegion({ territoire });
+                  setSelectedRegion({ mgc });
                 }
               }
               break;

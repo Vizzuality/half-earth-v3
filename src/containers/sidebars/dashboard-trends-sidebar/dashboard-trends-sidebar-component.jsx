@@ -4,6 +4,8 @@ import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 
+import { REGION_OPTIONS } from 'constants/dashboard-constants.js';
+
 import styles from './dashboard-trends-sidebar-styles.module.scss';
 import ShiContainer from './shi';
 import SiiContainer from './sii';
@@ -41,7 +43,7 @@ function DashboardTrendsSidebar(props) {
     // map.remove(foundLayer);
     if (tabClicked === TABS.SII) {
       const foundLayer = map.layers.items.find(
-        (item) => item.id === 'PROVINCES'
+        (item) => item.id === REGION_OPTIONS.PROVINCES
       );
       foundLayer.visible = false;
 
@@ -51,7 +53,7 @@ function DashboardTrendsSidebar(props) {
       outlineLayer.visible = false;
     } else if (tabClicked === TABS.SHI) {
       const foundLayer = map.layers.items.find(
-        (item) => item.id === 'PROVINCES'
+        (item) => item.id === REGION_OPTIONS.PROVINCES
       );
       foundLayer.visible = false;
 
@@ -60,15 +62,16 @@ function DashboardTrendsSidebar(props) {
       );
       outlineLayer.visible = true;
     } else {
-      Object.keys(layers).forEach((region) => {
+      Object.keys(layers).forEach(() => {
         const foundLayer = map.layers.items.find(
-          (item) => item.id === region || item.id === `${countryISO}-outline`
+          (item) => item.id === REGION_OPTIONS.PROVINCES
         );
-        if (foundLayer) {
-          foundLayer.visible = true;
-        }
+        foundLayer.visible = true;
 
-        // });
+        const outlineLayer = map.layers.items.find(
+          (item) => item.id === `${countryISO}-outline`
+        );
+        outlineLayer.visible = false;
       });
     }
 

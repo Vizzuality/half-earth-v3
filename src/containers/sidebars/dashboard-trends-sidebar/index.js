@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import {
   PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
-  PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+  SHI_LAYER_ID,
 } from 'utils/dashboard-utils.js';
 
 import last from 'lodash/last';
@@ -147,10 +147,11 @@ function DashboardTrendsSidebarContainer(props) {
     map.add(layer);
 
     const outlineFeatureLayer = EsriFeatureService.getFeatureLayer(
-      PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+      SHI_LAYER_ID,
       countryISO,
       `${countryISO}-outline`
     );
+    outlineFeatureLayer.visible = false;
     map.add(outlineFeatureLayer);
 
     // eslint-disable-next-line no-shadow
@@ -175,13 +176,6 @@ function DashboardTrendsSidebarContainer(props) {
     removeRegionLayers();
     setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
 
-    const provinceURL = {
-      url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
-      whereClause: `iso3 = '${countryISO}' and Year = ${SPI_LATEST_YEAR}`,
-      orderByFields: ['region_name'],
-    };
-    getProvinceData(provinceURL);
-
     const countryURL = {
       url: DASHBOARD_URLS.COUNTRY_URL,
       whereClause: `ISO3 = '${countryISO}'`,
@@ -189,48 +183,70 @@ function DashboardTrendsSidebarContainer(props) {
     };
     getCountryData(countryURL);
 
+    // GET SPI Province Trend Data
+    const provinceURL = {
+      url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
+      whereClause: `iso3 = '${countryISO}' and Year = ${SPI_LATEST_YEAR}`,
+      orderByFields: ['region_name'],
+    };
+    getProvinceData(provinceURL);
+
+    // GET SHI Province Trend Data
     const shiProvinceURL = {
       url: DASHBOARD_URLS.SHI_PROVINCE_TREND_URL,
-      whereClause: `iso3 = '${countryISO}'`,
+      whereClause: `GID_0 = '${countryISO}'`,
       orderByFields: ['region_name'],
     };
     getShiProvinceData(shiProvinceURL);
-
-    const shiSpeciesScoresURL = {
-      url: DASHBOARD_URLS.SHI_SPECIES_URL,
-      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR} and HabitatScore >= 1 and HabitatScore <= 5 and SpeciesImage IS NOT NULL`,
-      // orderByFields: ['region_name'],
-    };
-    getShiSelectSpeciesData(shiSpeciesScoresURL);
-
-    const shiScoresURL = {
-      url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
-      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR}`,
-      // orderByFields: ['region_name'],
-    };
-    getScoresData(shiScoresURL);
   }, []);
 
   useEffect(() => {
     if (!selectedProvince) return;
+
+    let whereClause = `ISO3_regional = '${
+      selectedProvince.iso3_regional ?? selectedProvince.GID_1
+    }'`;
+    let shiWhereClause = `iso3 = '${countryISO}' and iso3_regional = '${
+      selectedProvince.iso3_regional ?? selectedProvince.GID_1
+    }'`;
+    if (activeTrend === NATIONAL_TREND || shiActiveTrend === NATIONAL_TREND) {
+      whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
+      shiWhereClause = `iso3 = '${countryISO}'`;
+    }
+
+    // GET SPI
     const scoreDataURL = {
       url: DASHBOARD_URLS.SPI_HISTOGRAM_URL,
-      whereClause: `ISO3 = '${countryISO}' and YEAR = ${SPI_LATEST_YEAR}`,
+      whereClause: `${whereClause}`,
     };
     getSpiScoreData(scoreDataURL);
 
-    let whereClause = `ISO3_regional = '${selectedProvince.iso3_regional}' and species_protection_score_all >= 0 and species_protection_score_all <= 5 and species_url IS NOT NULL`;
-    if (activeTrend === NATIONAL_TREND) {
-      whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX' and species_protection_score_all >= 0 and species_protection_score_all <= 5 and species_url IS NOT NULL`;
-    }
-
     const selectSpeciesURL = {
       url: DASHBOARD_URLS.SPI_REGION_SPECIES_URL,
-      whereClause,
+      whereClause: `${whereClause} and species_protection_score_all >= 0 and species_protection_score_all <= 5 and species_url IS NOT NULL`,
     };
-
     getSpiSelectSpeciesData(selectSpeciesURL);
-  }, [selectedProvince, activeTrend]);
+
+    if (shiActiveTrend === NATIONAL_TREND) {
+      const shiScoresDataURL = {
+        url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
+        whereClause: `${shiWhereClause}`,
+      };
+      getScoresData(shiScoresDataURL);
+    } else {
+      const shiScoresDataURL = {
+        url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
+        whereClause: `${shiWhereClause}`,
+      };
+      getScoresData(shiScoresDataURL);
+    }
+
+    const shiSpeciesScoresURL = {
+      url: DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL,
+      whereClause: `${whereClause} and habitat_score >= 1 and habitat_score <= 5 and species_url IS NOT NULL`,
+    };
+    getShiSelectSpeciesData(shiSpeciesScoresURL);
+  }, [selectedProvince, activeTrend, shiActiveTrend]);
 
   return (
     <Component
