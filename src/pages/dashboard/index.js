@@ -281,7 +281,7 @@ function DashboardContainer(props) {
       }
 
       if (WDPA_PID) {
-        url = DASHBOARD_URLS.WDPA_OCCURENCE_URL;
+        url = DASHBOARD_URLS.WDPA;
         whereClause = `wdpaid = '${WDPA_PID}'`;
       }
     }
