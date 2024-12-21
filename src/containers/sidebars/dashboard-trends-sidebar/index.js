@@ -235,19 +235,25 @@ function DashboardTrendsSidebarContainer(props) {
         whereClause: `${shiWhereClause}`,
       };
       getScoresData(shiScoresDataURL);
+
+      const shiSpeciesScoresURL = {
+        url: DASHBOARD_URLS.SHI_SPECIES_URL,
+        whereClause: `${shiWhereClause} and HabitatScore >= 1 and HabitatScore <= 5 and SpeciesImage IS NOT NULL`,
+      };
+      getShiSelectSpeciesData(shiSpeciesScoresURL);
     } else {
       const shiScoresDataURL = {
         url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
         whereClause: `${shiWhereClause}`,
       };
       getScoresData(shiScoresDataURL);
-    }
 
-    const shiSpeciesScoresURL = {
-      url: DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL,
-      whereClause: `${whereClause} and habitat_score >= 1 and habitat_score <= 5 and species_url IS NOT NULL`,
-    };
-    getShiSelectSpeciesData(shiSpeciesScoresURL);
+      const shiSpeciesScoresURL = {
+        url: DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL,
+        whereClause: `${whereClause} and habitat_score >= 1 and habitat_score <= 5 and species_url IS NOT NULL`,
+      };
+      getShiSelectSpeciesData(shiSpeciesScoresURL);
+    }
   }, [selectedProvince, activeTrend, shiActiveTrend]);
 
   return (

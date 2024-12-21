@@ -334,20 +334,24 @@ function ScoreDistributionsShiComponent(props) {
           <ul className={styles.spsSpecies}>
             {spsSpecies.map((s) => {
               return (
-                <li key={s.scientificname}>
+                <li key={s.scientificname ?? s.ScientificName}>
                   <button
                     type="button"
                     onClick={() => selectSpecies(s.species)}
                   >
-                    <img src={s.species_url} alt="species" />
+                    <img src={s.species_url ?? s.SpeciesImage} alt="species" />
                     <div className={styles.spsInfo}>
-                      <span className={styles.name}>{s.scientificname}</span>
+                      <span className={styles.name}>
+                        {s.scientificname ?? s.ScientificName}
+                      </span>
                       <span className={styles.scientificname}>
-                        {s.scientificname}
+                        {s.scientificname ?? s.ScientificName}
                       </span>
                     </div>
                     <span className={styles.spsScore}>
-                      SHS: {s.habitat_score.toFixed(1)}
+                      SHS:{' '}
+                      {s.habitat_score?.toFixed(1) ??
+                        s.HabitatScore?.toFixed(1)}
                     </span>
                   </button>
                 </li>

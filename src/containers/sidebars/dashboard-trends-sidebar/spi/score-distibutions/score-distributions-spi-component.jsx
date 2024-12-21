@@ -57,7 +57,6 @@ function ScoreDistributionsSpiComponent(props) {
       x: {
         type: 'linear',
         offset: false,
-        beginAtZero: false,
         stacked: true,
         display: true,
         title: {
@@ -78,7 +77,6 @@ function ScoreDistributionsSpiComponent(props) {
       y: {
         stacked: true,
         display: true,
-        beginAtZero: false,
         title: {
           display: true,
           text: t('Number of Species'),
