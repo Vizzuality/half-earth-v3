@@ -286,38 +286,42 @@ function DashboardContainer(props) {
       }
     }
 
-    const occurenceFeatures = await EsriFeatureService.getFeatures({
-      url,
-      whereClause,
-      returnGeometry: false,
-    });
+    if (!selectedRegion?.mgc) {
+      const occurenceFeatures = await EsriFeatureService.getFeatures({
+        url,
+        whereClause,
+        returnGeometry: false,
+      });
 
-    const list = [...speciesData];
+      const list = [...speciesData];
 
-    occurenceFeatures.forEach((feature) => {
-      const { taxa, species, attributes } = feature.attributes;
+      occurenceFeatures.forEach((feature) => {
+        const { taxa, species, attributes } = feature.attributes;
 
-      const { source, species_url, threat_status } = JSON.parse(
-        attributes.replace(/NaN/g, 'null')
-      )[0];
+        const { source, species_url, threat_status } = JSON.parse(
+          attributes.replace(/NaN/g, 'null')
+        )[0];
 
-      const speciesToAdd = {
-        common_name: species,
-        scientific_name: species,
-        threat_status,
-        source,
-        species_url,
-        taxa,
-      };
+        const speciesToAdd = {
+          common_name: species,
+          scientific_name: species,
+          threat_status,
+          source,
+          species_url,
+          taxa,
+        };
 
-      list.find((t) => t.taxa === taxa)?.species.push(speciesToAdd);
-    });
+        list.find((t) => t.taxa === taxa)?.species.push(speciesToAdd);
+      });
 
-    list.forEach((t) => {
-      t.count = t.species.length;
-    });
+      list.forEach((t) => {
+        t.count = t.species.length;
+      });
 
-    setTaxaList(list);
+      setTaxaList(list);
+    } else {
+      setTaxaList(speciesData);
+    }
     setSpeciesListLoading(false);
   };
 
@@ -350,26 +354,84 @@ function DashboardContainer(props) {
     });
 
     if (features && features[0]) {
-      const { attributes } = features[0];
+      if (selectedRegion.mgc) {
+        const speciesData = {
+          species: features.map((s) => {
+            const { scientificname, taxa, attributes } = s.attributes;
 
-      const { amphibians, birds, reptiles, mammals } = attributes;
+            const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
+            return {
+              common_name: scientificname,
+              scientific_name: scientificname,
+              threat_status: json[0].threat_status,
+              source: json[0].source ?? '',
+              taxa,
+            };
+          }),
+        };
 
-      const [amphibianData, birdsData, reptilesData, mammalsData] =
-        await Promise.all([
-          getTaxaSpecies('amphibians', amphibians),
-          getTaxaSpecies('birds', birds),
-          getTaxaSpecies('reptiles', reptiles),
-          getTaxaSpecies('mammals', mammals),
-        ]);
+        const amphibians = speciesData.species.filter(
+          (item) => item.taxa === 'amphibians'
+        );
+        const birds = speciesData.species.filter(
+          (item) => item.taxa === 'birds'
+        );
+        const reptiles = speciesData.species.filter(
+          (item) => item.taxa === 'reptiles'
+        );
+        const mammals = speciesData.species.filter(
+          (item) => item.taxa === 'mammals'
+        );
 
-      const ampSpecies = getSpeciesDetails(amphibianData, 'amphibians');
-      const birdSpecies = getSpeciesDetails(birdsData, 'birds');
-      const repSpecies = getSpeciesDetails(reptilesData, 'reptiles');
-      const mamSpecies = getSpeciesDetails(mammalsData, 'mammals');
+        const ampSpecies = {
+          count: amphibians.length,
+          species: amphibians,
+          taxa: 'amphibians',
+          title: t('amphibians'),
+        };
+        const birdSpecies = {
+          count: birds.length,
+          species: birds,
+          taxa: 'birds',
+          title: t('birds'),
+        };
+        const repSpecies = {
+          count: reptiles.length,
+          species: reptiles,
+          taxa: 'reptiles',
+          title: t('reptiles'),
+        };
+        const mamSpecies = {
+          count: mammals.length,
+          species: mammals,
+          taxa: 'mammals',
+          title: t('mammals'),
+        };
+        const data = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
-      const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
+        getOccurenceSpecies(data);
+      } else {
+        const { attributes } = features[0];
 
-      getOccurenceSpecies(speciesData);
+        const { amphibians, birds, reptiles, mammals } = attributes;
+
+        const [amphibianData, birdsData, reptilesData, mammalsData] =
+          await Promise.all([
+            getTaxaSpecies('amphibians', amphibians),
+            getTaxaSpecies('birds', birds),
+            getTaxaSpecies('reptiles', reptiles),
+            getTaxaSpecies('mammals', mammals),
+          ]);
+
+        const ampSpecies = getSpeciesDetails(amphibianData, 'amphibians');
+        const birdSpecies = getSpeciesDetails(birdsData, 'birds');
+        const repSpecies = getSpeciesDetails(reptilesData, 'reptiles');
+        const mamSpecies = getSpeciesDetails(mammalsData, 'mammals');
+
+        const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
+
+        getOccurenceSpecies(speciesData);
+      }
     }
   };
 
