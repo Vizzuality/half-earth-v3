@@ -157,6 +157,8 @@ function DashboardTrendsSidebarContainer(props) {
 
     if (tabOption === 2) {
       layer.visible = true;
+    } else {
+      layer.visible = false;
     }
 
     // if (tabOption === 1) {
@@ -175,8 +177,15 @@ function DashboardTrendsSidebarContainer(props) {
 
     if (tabOption === 1) {
       outlineFeatureLayer.visible = true;
+    } else {
+      outlineFeatureLayer.visible = false;
     }
     // }
+
+    if (tabOption === 3) {
+      layer.visible = false;
+      outlineFeatureLayer.visible = false;
+    }
 
     // rezoom to country
     if (geometry) {
