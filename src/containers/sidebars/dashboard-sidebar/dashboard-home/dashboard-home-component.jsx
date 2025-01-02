@@ -131,7 +131,7 @@ function DashboardHomeComponent(props) {
                     width={200}
                     height={200}
                   />
-                  <span>{species.common_name_en}</span>
+                  <span>{species.local_name || species.common_name_en}</span>
                   <p>{species.species_name}</p>
                 </button>
               ))}
