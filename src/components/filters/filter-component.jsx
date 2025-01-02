@@ -23,6 +23,7 @@ function FilterComponent(props) {
     filters,
     setFilters,
     isLoading,
+    updateActiveFilter,
   } = props;
 
   const [anyActive, setAnyActive] = useState(false);
@@ -116,12 +117,12 @@ function FilterComponent(props) {
       filtered.push(candidateTaxa);
     });
 
-    // setAnyActive(isAnyActive);
+    setAnyActive(isAnyActive);
     setFilteredTaxaList(filtered);
   };
 
   const activateFilter = (filter) => {
-    filter.active = !filter.active;
+    updateActiveFilter(filter);
     refreshCounts();
   };
 
@@ -169,7 +170,7 @@ function FilterComponent(props) {
                   return (
                     <Chip
                       key={idx}
-                      icon={filter.active ? <DoneIcon /> : <></>}
+                      icon={filter.active ? <DoneIcon /> : ''}
                       color={filter.active ? 'success' : 'primary'}
                       label={`${t(filter.name)}: ${filter.count}`}
                       onClick={() => activateFilter(filter)}

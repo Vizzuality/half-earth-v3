@@ -30,6 +30,8 @@ $connectivity: #8578EB;
 $habitat: #3AA8EE;
 $area: #7DDECC;
 $area-protected: #3ABC64;
+$habitat-country: #2F2CAE;
+$habitat-country-compare: #228D19;
 
 
 // Project colors
@@ -336,4 +338,6 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
   --habitat: #{$habitat};
   --area: #{$area};
   --area-protected: #{$area-protected};
+  --habitat-country: #{$habitat-country};
+  --habitat-country-compare: #{$habitat-country-compare};
 }

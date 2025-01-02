@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
-import GroupLayer from '@arcgis/core/layers/GroupLayer';
-import TileLayer from '@arcgis/core/layers/TileLayer';
+// import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+// import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+// import GroupLayer from '@arcgis/core/layers/GroupLayer';
+// import TileLayer from '@arcgis/core/layers/TileLayer';
+import { createDefaultDashboardLayers } from 'utils/dashboard-utils';
+
 import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
 
+// import { DASHBOARD_LAYER_SLUGS, DASHBOARD_URLS } from 'constants/dashboard';
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
-// import Popup from "@arcgis/core/widgets/Popup.js";
 
 import Component from './component';
 import mapStateToProps from './selectors';
@@ -62,6 +64,7 @@ function ViewContainer(props) {
         },
         { duration: 1000 }
       );
+
       // set the group layer opacity to 1
       // also increase the layer brightness and add drop-shadow to make the clicked country stand out.
       groupLayer.effect = 'brightness(1.5) drop-shadow(0, 0px, 12px)';
@@ -70,44 +73,17 @@ function ViewContainer(props) {
   };
 
   useEffect(() => {
-    const countries = new FeatureLayer({
-      portalItem: {
-        id: '53a1e68de7e4499cad77c80daba46a94',
-      },
-      id: 'INITIAL_COUNTRY_LAYER',
-    });
-    setCountryLayer(countries);
-
-    const graphics = new GraphicsLayer({
-      blendMode: 'destination-in',
-      title: 'layer',
-    });
-    setGraphicsLayer(graphics);
-
-    const tileLayer = new TileLayer({
-      portalItem: {
-        // bottom layer in the group layer
-        id: '10df2279f9684e4a9f6a7f08febac2a9', // world imagery
-      },
-    });
-
-    const group = new GroupLayer({
-      id: 'INITIAL_GROUP_LAYER',
-      layers: [
-        tileLayer,
-        // world imagery layer will show where it overlaps with the graphicslayer
-        graphics,
-      ],
-      opacity: 0, // initially this layer will be transparent
-    });
-    setGroupLayer(group);
+    const layers = createDefaultDashboardLayers();
+    setCountryLayer(layers.countries);
+    setGraphicsLayer(layers.graphics);
+    setGroupLayer(layers.group);
 
     const flatMap = new Map({
       basemap: SATELLITE_BASEMAP_LAYER,
       ground: {
         surfaceColor: '#070710',
       },
-      layers: [countries, group],
+      layers: [layers.countries, layers.group],
     });
 
     setMap(flatMap);

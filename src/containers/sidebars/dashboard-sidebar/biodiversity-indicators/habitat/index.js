@@ -134,11 +134,11 @@ function HabitatContainer(props) {
         {
           label: `${countryName} Area`,
           fill: false,
-          backgroundColor: '#2F2CAE',
-          borderColor: '#2F2CAE',
+          backgroundColor: getCSSVariable('habitat-country'),
+          borderColor: getCSSVariable('habitat-country'),
           borderDash: [5, 5],
-          pointBackgroundColor: '#2F2CAE',
-          pointBorderColor: '#2F2CAE',
+          pointBackgroundColor: getCSSVariable('habitat-country'),
+          pointBorderColor: getCSSVariable('habitat-country'),
           pointStyle: false,
           data: defaultCountryScores.area,
         },
@@ -146,30 +146,30 @@ function HabitatContainer(props) {
           label: `${countryName} Connectivity`,
           fill: false,
           borderDash: [3, 3],
-          backgroundColor: '#2F2CAE',
-          borderColor: '#2F2CAE',
-          pointBackgroundColor: '#2F2CAE',
-          pointBorderColor: '#2F2CAE',
+          backgroundColor: getCSSVariable('habitat-country'),
+          borderColor: getCSSVariable('habitat-country'),
+          pointBackgroundColor: getCSSVariable('habitat-country'),
+          pointBorderColor: getCSSVariable('habitat-country'),
           pointStyle: false,
           data: defaultCountryScores.connectivity,
         },
         {
           label: `${countryName} Total`,
           fill: false,
-          backgroundColor: '#2F2CAE',
-          borderColor: '#2F2CAE',
-          pointBackgroundColor: '#2F2CAE',
-          pointBorderColor: '#2F2CAE',
+          backgroundColor: getCSSVariable('habitat-country'),
+          borderColor: getCSSVariable('habitat-country'),
+          pointBackgroundColor: getCSSVariable('habitat-country'),
+          pointBorderColor: getCSSVariable('habitat-country'),
           pointStyle: false,
           data: defaultCountryScores.total,
         },
         {
           label: `${countrySelected} Area`,
           fill: false,
-          backgroundColor: '#228D19',
-          borderColor: '#228D19',
-          pointBackgroundColor: '#228D19',
-          pointBorderColor: '#228D19',
+          backgroundColor: getCSSVariable('habitat-country-compare'),
+          borderColor: getCSSVariable('habitat-country-compare'),
+          pointBackgroundColor: getCSSVariable('habitat-country-compare'),
+          pointBorderColor: getCSSVariable('habitat-country-compare'),
           borderDash: [5, 5],
           pointStyle: false,
           data: selectedCountryScores.area,
@@ -177,10 +177,10 @@ function HabitatContainer(props) {
         {
           label: `${countrySelected} Connectivity`,
           fill: false,
-          backgroundColor: '#228D19',
-          borderColor: '#228D19',
-          pointBackgroundColor: '#228D19',
-          pointBorderColor: '#228D19',
+          backgroundColor: getCSSVariable('habitat-country-compare'),
+          borderColor: getCSSVariable('habitat-country-compare'),
+          pointBackgroundColor: getCSSVariable('habitat-country-compare'),
+          pointBorderColor: getCSSVariable('habitat-country-compare'),
           borderDash: [3, 3],
           pointStyle: false,
           data: selectedCountryScores.connectivity,
@@ -188,10 +188,10 @@ function HabitatContainer(props) {
         {
           label: `${countrySelected} Total`,
           fill: false,
-          backgroundColor: '#228D19',
-          borderColor: '#228D19',
-          pointBackgroundColor: '#228D19',
-          pointBorderColor: '#228D19',
+          backgroundColor: getCSSVariable('habitat-country-compare'),
+          borderColor: getCSSVariable('habitat-country-compare'),
+          pointBackgroundColor: getCSSVariable('habitat-country-compare'),
+          pointBorderColor: getCSSVariable('habitat-country-compare'),
           pointStyle: false,
           data: selectedCountryScores.total,
         },
@@ -234,9 +234,6 @@ function HabitatContainer(props) {
       setGlobalTrend(TRENDS.DOWNWARD);
       setGlobalTrendIcon(<Stable />);
     }
-
-    // this.countryHabitatScoreTitle = this.translate.instant('habitat_change', { change: this.countryHabitatChange, country: this.country, year: 2001 });
-    // this.globalHabitatScoreTitle = this.translate.instant('habitat_global_change', { change: this.globalHabitatChange, year: 2001 });
   };
 
   useEffect(() => {

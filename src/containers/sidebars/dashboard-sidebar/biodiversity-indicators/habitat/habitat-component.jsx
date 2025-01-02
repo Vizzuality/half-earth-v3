@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './habitat-component-styles.module.scss';
-import { T, useT } from '@transifex/react';
-import cx from 'classnames';
+import { Line } from 'react-chartjs-2';
+
+import { useT } from '@transifex/react';
 
 import {
   Chart as ChartJS,
@@ -12,121 +12,121 @@ import {
   Legend,
   CategoryScale,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import cx from 'classnames';
 
-ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend, CategoryScale);
+import styles from './habitat-component-styles.module.scss';
+
+ChartJS.register(
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+  Legend,
+  CategoryScale
+);
+
+const formatValue = (value) => {
+  return value.toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+  });
+};
 
 function HabitatComponent(props) {
   const t = useT();
   const {
-    habitatScore,
-    globalHabitatScore,
     countryName,
     habitatTableData,
     lightMode,
     selectedCountry,
     shiCountries,
     chartData,
-    globalTrend,
-    countryTrend,
-    globalTrendIcon,
-    countryTrendIcon,
     onCountryChange,
     chartOptions,
     updateCountry,
-    startYear } = props;
+  } = props;
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      {/* <div className={styles.scores}>
-        <div className={styles.metric}>
-          <label>{t(countryName)}</label>
-          <div className={styles.score}>
-            <span className={cx(styles['material-symbols-outlined'], styles[countryTrend])}>
-              {countryTrendIcon}
-            </span>
-            <div className={styles.results}>
-              <b>{habitatScore}%</b>
-              <span className={styles.desc}>
-                <T
-                  _str='Suitable habitat lost in {countryName} since {startYear}'
-                  countryName={t(countryName)}
-                  startYear={startYear}
-                />
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className={styles.metric}>
-          <label>{t('Globally')}</label>
-          <div className={styles.score}>
-            <span className={cx(styles['material-symbols-outlined'], styles[globalTrend])}>
-              {globalTrendIcon}
-            </span>
-            <div className={styles.results}>
-              <b>{(globalHabitatScore).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</b>
-              <span className={styles.desc}>{t('Suitable habitat lost globally since 2001')}</span>
-            </div>
-          </div>
-        </div>
-      </div> */}
       <div className={styles.chart}>
         <div className={styles.compareWrap}>
-          <label className={styles.compare}>{t('Compare')}</label>
+          <span className={styles.compare}>{t('Compare')}</span>
           <select value={selectedCountry} onChange={onCountryChange}>
-            {shiCountries.map(item => (
-              <option key={item} value={item}>{item}</option>
+            {shiCountries.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
             ))}
           </select>
         </div>
         <div className={styles.labels}>
-          <label className={styles.dashed}>{t('Area')}</label>
-          <label className={styles.dotted}>{t('Connectivity')}</label>
-          <label className={styles.solid}>{t('Total')}</label>
+          <span className={styles.dashed}>{t('Area')}</span>
+          <span className={styles.dotted}>{t('Connectivity')}</span>
+          <span className={styles.solid}>{t('Total')}</span>
         </div>
         <div className={styles.legend}>
-          <div className={cx(styles.legendBox, styles.blue)}></div>
-          <label>{t(countryName)}</label>
-          <div className={cx(styles.legendBox, styles.green)}></div>
-          <label>{selectedCountry}</label>
+          <div className={cx(styles.legendBox, styles.blue)} />
+          <span>{t(countryName)}</span>
+          <div className={cx(styles.legendBox, styles.green)} />
+          <span>{selectedCountry}</span>
         </div>
         {chartData && <Line options={chartOptions} data={chartData} />}
-        {habitatTableData.length &&
+        {habitatTableData.length && (
           <table className={styles.dataTable}>
             <thead>
               <tr>
-                <th className={cx(styles.textLeft, styles.w28)}>{t('Country')}</th>
-                <th className={cx(styles.textCenter, styles.w14)}>{t('Stewardship')}</th>
-                <th className={cx(styles.textCenter, styles.w14)}>{t('Connectivity Score')}</th>
-                <th className={cx(styles.textCenter, styles.w14)}>{t('Area Score')}</th>
-                <th className={cx(styles.textCenter, styles.w14)}>{t('Total SHS')}</th>
+                <th className={cx(styles.textLeft, styles.w28)}>
+                  {t('Country')}
+                </th>
+                <th className={cx(styles.textCenter, styles.w14)}>
+                  {t('Stewardship')}
+                </th>
+                <th className={cx(styles.textCenter, styles.w14)}>
+                  {t('Connectivity Score')}
+                </th>
+                <th className={cx(styles.textCenter, styles.w14)}>
+                  {t('Area Score')}
+                </th>
+                <th className={cx(styles.textCenter, styles.w14)}>
+                  {t('Total SHS')}
+                </th>
               </tr>
             </thead>
             <tbody>
-              {habitatTableData.map(row => (
-                <tr key={row.country} onClick={() => updateCountry({ value: row.country })}
-                  className={(selectedCountry === row.country || countryName === row.country) ? styles.highlighted : ''}
+              {habitatTableData.map((row) => (
+                <tr
+                  key={row.country}
+                  onClick={() => updateCountry({ value: row.country })}
+                  className={
+                    selectedCountry === row.country ||
+                    countryName === row.country
+                      ? styles.highlighted
+                      : ''
+                  }
                 >
                   <td>{row.country}</td>
-                  <td className={styles.textCenter}>{row.stewardship.toLocaleString(undefined, { maximumFractionDigits: 2 })}%</td>
                   <td className={styles.textCenter}>
-                    {(row.countryConnectivityScore * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                    {formatValue(row.stewardship)}%
                   </td>
                   <td className={styles.textCenter}>
-                    {(row.countryAreaScore * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                    {formatValue(row.countryConnectivityScore * 100)}
                   </td>
-                  <td className={styles.textCenter}>{row.shs.toLocaleString(undefined, { maximumFractionDigits: 2 })}%</td>
+                  <td className={styles.textCenter}>
+                    {formatValue(row.countryAreaScore * 100)}
+                  </td>
+                  <td className={styles.textCenter}>{formatValue(row.shs)}%</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        }
+        )}
         <p>
-          {t('*The Species Habitat Score is calculated using the habitat suitable range map and remote sensing layers.')}
+          {t(
+            '*The Species Habitat Score is calculated using the habitat suitable range map and remote sensing layers.'
+          )}
         </p>
       </div>
-    </div >
-  )
+    </div>
+  );
 }
 
-export default HabitatComponent
+export default HabitatComponent;

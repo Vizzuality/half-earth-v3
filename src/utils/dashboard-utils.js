@@ -1,3 +1,11 @@
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import TileLayer from '@arcgis/core/layers/TileLayer';
+
+import { DASHBOARD_LAYER_SLUGS } from 'constants/dashboard-constants';
+import { DASHBOARD_URLS } from 'constants/layers-urls';
+
 export const PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID =
   'e3dca98a5bf74c9898c30f72baf6b1ba';
 export const PROVINCE_FEATURE_GLOBAL_OUTLINE_ID =
@@ -38,4 +46,41 @@ export const SPECIES_LAYER_IDS = {
   Myotis_bocagii: 'c41c9e06c2284b44be9fc41d144e63ba',
   Hyperolius_castaneus: 'a8d710cd5a5f4124b90ff189cdcdfeba',
   Chiromantis_rufescens: 'eb1019801a8b44bebd98e0452ef20132',
+};
+
+export const createDefaultDashboardLayers = () => {
+  const countries = new FeatureLayer({
+    portalItem: {
+      id: DASHBOARD_URLS.INITIAL_COUNTRY_LAYER,
+    },
+    id: DASHBOARD_LAYER_SLUGS.INITIAL_COUNTRY_LAYER,
+  });
+
+  const graphics = new GraphicsLayer({
+    blendMode: 'destination-in',
+    title: 'layer',
+  });
+
+  const tileLayer = new TileLayer({
+    portalItem: {
+      // bottom layer in the group layer
+      id: '10df2279f9684e4a9f6a7f08febac2a9', // world imagery
+    },
+  });
+
+  const group = new GroupLayer({
+    id: DASHBOARD_LAYER_SLUGS.INITIAL_GROUP_LAYER,
+    layers: [
+      tileLayer,
+      // world imagery layer will show where it overlaps with the graphicslayer
+      graphics,
+    ],
+    opacity: 0, // initially this layer will be transparent
+  });
+
+  return {
+    countries,
+    graphics,
+    group,
+  };
 };

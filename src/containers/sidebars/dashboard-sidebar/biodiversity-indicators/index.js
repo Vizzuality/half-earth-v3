@@ -11,9 +11,17 @@ import {
   LAYER_TITLE_TYPES,
 } from 'constants/dashboard-constants';
 
-import country_attrs from '../mol-country-attributes.json';
-
 import BioDiversityComponent from './biodiversity-indicators-component';
+
+const roundUpNumber = (val) => {
+  if (val > 10000) {
+    return Math.round(val / 1000) * 1000;
+  }
+  if (val > 1000) {
+    return Math.round(val / 100) * 100;
+  }
+  return val;
+};
 
 function BioDiversityContainer(props) {
   const {
@@ -27,9 +35,6 @@ function BioDiversityContainer(props) {
     countryISO,
   } = props;
 
-  const protectedAreaMin = 10000;
-  const protectedAreaMax = 250000;
-
   const { lightMode } = useContext(LightModeContext);
   const [selectedTab, setSelectedTab] = useState(2);
   const [habitatScore, setHabitatScore] = useState('0.00');
@@ -38,8 +43,6 @@ function BioDiversityContainer(props) {
   const [protectionScore, setProtectionScore] = useState();
   const [globalProtectionScore, setGlobalProtectionScore] = useState('0.00');
   const [protectionTableData, setProtectionTableData] = useState([]);
-  const [protectionArea, setProtectionArea] = useState('0');
-  const [globalProtectionArea, setGlobalProtectionArea] = useState('0');
   const [startYear, setStartYear] = useState(1950);
 
   const removeRegionLayers = () => {
@@ -97,12 +100,11 @@ function BioDiversityContainer(props) {
     }
 
     const scores = {
-      habitatScore: (
+      habitat: (
         ((countryAreaScore + countryConnectivityScore) / 2) *
         100
       ).toFixed(1),
-      globalHabitatScore:
-        ((globalAreaScore + globalConnectivityScore) / 2) * 100,
+      globalHabitat: ((globalAreaScore + globalConnectivityScore) / 2) * 100,
     };
 
     return scores;
@@ -149,45 +151,6 @@ function BioDiversityContainer(props) {
     setHabitatTableData(tableData);
   };
 
-  const getProtectionScore = (protection, hdm) => {
-    const cattr = country_attrs.filter((r) => r.NAME === countryName)[0];
-
-    const refinedRangeSize = hdm.refined_grouped_stats.filter(
-      (r) => r.ZONEID === cattr.GEO_ID
-    )[0].sum;
-
-    const protectionTargetArea = targetProtectedArea(refinedRangeSize);
-
-    const globalProtectionTargetArea = targetProtectedArea(
-      hdm.refined_range_size
-    );
-
-    const reserveList = protection.filter((r2) => r2.ISO3 === cattr.ISO3);
-    // const globalReserveList = protection;
-
-    const protectionArea = reserveList
-      .map((r) => r.sum)
-      .reduce((a, b) => a + b, 0);
-
-    // could replace hdm.refined_grouped_stats with globalReserveList
-    const globalProtectionArea = protection
-      .map((r) => r.sum)
-      .reduce((a, b) => a + b, 0);
-
-    setProtectionArea(protectionArea);
-    setGlobalProtectionArea(globalProtectionArea);
-
-    const area = protectionArea / protectionTargetArea;
-    const globalArea = globalProtectionArea / globalProtectionTargetArea;
-
-    const scores = {
-      protectionScore: Math.min(area * 100, 100).toFixed(1),
-      globalProtectionScore: Math.min(globalArea * 100, 100).toFixed(1),
-    };
-
-    return scores;
-  };
-
   const getProtectionTableData = (spiData) => {
     const tableData = [];
 
@@ -210,41 +173,12 @@ function BioDiversityContainer(props) {
     setProtectionTableData(tableData);
   };
 
-  const targetProtectedArea = (rs) => {
-    if (rs <= protectedAreaMin) {
-      return rs;
-    }
-    if (rs >= protectedAreaMax) {
-      return 0.15 * rs;
-    }
-    return (
-      // eslint-disable-next-line operator-linebreak
-      rs *
-      // eslint-disable-next-line operator-linebreak
-      (((1 - 0.15) /
-        (Math.log10(protectedAreaMin) - Math.log10(protectedAreaMax))) *
-        // eslint-disable-next-line operator-linebreak
-        (Math.log10(rs) - Math.log10(protectedAreaMin)) +
-        1)
-    );
-  };
-
-  const roundUpNumber = (val) => {
-    if (val > 10000) {
-      return Math.round(val / 1000) * 1000;
-    }
-    if (val > 1000) {
-      return Math.round(val / 100) * 100;
-    }
-    return val;
-  };
-
   // get habitat score information
   useEffect(() => {
     if (dataByCountry && data) {
-      const { habitatScore, globalHabitatScore } = getHabitatScore();
-      setHabitatScore(habitatScore);
-      setGlobalHabitatScore(globalHabitatScore);
+      const { habitat, globalHabitat } = getHabitatScore();
+      setHabitatScore(habitat);
+      setGlobalHabitatScore(globalHabitat);
 
       getHabitatTableData();
     }
@@ -307,8 +241,6 @@ function BioDiversityContainer(props) {
       protectionScore={protectionScore}
       globalProtectionScore={globalProtectionScore}
       protectionTableData={protectionTableData}
-      protectionArea={protectionArea}
-      globalProtectionArea={globalProtectionArea}
       startYear={startYear}
       {...props}
     />

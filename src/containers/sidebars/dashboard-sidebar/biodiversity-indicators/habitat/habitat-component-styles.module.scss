@@ -49,10 +49,9 @@
         }
       }
 
-      label {
+      span {
         color: var(--font-color);
         text-align: center;
-        font-family: STIX Two Text;
         font-size: $font-size-sm;
         font-style: italic;
         font-weight: 500;
@@ -72,7 +71,6 @@
           b {
             color: var(--font-color);
             text-align: center;
-            font-family: STIX Two Text;
             font-size: 18px;
             font-style: normal;
             font-weight: 600;
@@ -81,7 +79,6 @@
 
           .desc {
             color: var(--font-color);
-            font-family: STIX Two Text;
             font-size: $font-size-sm;
             font-style: italic;
             font-weight: 500;
@@ -107,7 +104,6 @@
 
       .compare {
         color: var(--font-color);
-        font-family: STIX Two Text;
         font-size: $font-size-sm;
         font-style: italic;
         font-weight: 400;
@@ -122,7 +118,6 @@
       min-width: 100px;
       text-align: center;
       color: var(--font-color);
-      font-family: STIX Two Text;
       font-size: $font-size-sm;
       font-style: normal;
       font-weight: 500;
@@ -150,9 +145,8 @@
       width: 100%;
     }
 
-    label {
+    span {
       color: var(--font-color);
-      font-family: STIX Two Text;
       font-size: $font-size-sm;
       font-style: normal;
       font-weight: 500;
@@ -186,7 +180,6 @@
 
     th,
     td {
-      font-family: STIX Two Text;
       font-size: $font-size-sm;
       font-style: normal;
       font-weight: 400;

@@ -119,6 +119,20 @@ function SpeciesFilterComponent(props) {
     setSelectedIndex(NAVIGATION.REGION);
   };
 
+  const updateActiveFilter = (filter) => {
+    const newFilters = filters.map((filterGroup) => {
+      const newFilterGroup = { ...filterGroup };
+      newFilterGroup.filters = filterGroup.filters.map((f) => {
+        if (f.name === filter.name) {
+          f.active = !f.active;
+        }
+        return f;
+      });
+      return newFilterGroup;
+    });
+    setFilters(newFilters);
+  };
+
   return (
     <div className={styles.wrapper}>
       {selectedRegionOption && (
@@ -133,6 +147,7 @@ function SpeciesFilterComponent(props) {
           filters={filters}
           setFilters={setFilters}
           isLoading={speciesListLoading}
+          updateActiveFilter={updateActiveFilter}
           {...props}
         />
         <SpeciesListContainer isLoading={speciesListLoading} {...props} />
