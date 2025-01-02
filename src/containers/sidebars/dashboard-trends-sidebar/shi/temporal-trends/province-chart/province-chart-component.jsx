@@ -189,14 +189,14 @@ function ProvinceChartComponent(props) {
   };
 
   useEffect(() => {
-    if (selectedProvince) {
+    if (selectedProvince && shiProvinceTrendData.length) {
       setIsLoading(false);
       getChartData();
     }
-  }, [selectedProvince]);
+  }, [selectedProvince, shiProvinceTrendData]);
 
   useEffect(() => {
-    if (shiProvinceTrendData.length) {
+    if (shiProvinceTrendData.length && provinces.length) {
       if (provinceName) {
         const region = shiProvinceTrendData.find(
           (item) => item.region_name === provinceName

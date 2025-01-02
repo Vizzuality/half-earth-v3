@@ -121,6 +121,7 @@ function DashboardHomeComponent(props) {
             <div className={styles.species}>
               {prioritySpeciesList.map((species) => (
                 <button
+                  key={species.species_name}
                   type="button"
                   className={cx(styles.navCard)}
                   onClick={() => selectSpecies(species.species_name)}
