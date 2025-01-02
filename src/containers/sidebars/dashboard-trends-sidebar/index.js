@@ -45,7 +45,7 @@ function DashboardTrendsSidebarContainer(props) {
   const [countryData, setCountryData] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
-  const [shiActiveTrend, setShiActiveTrend] = useState(PROVINCE_TREND);
+  const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
   const [spiScoresData, setSpiScoresData] = useState([]);
   const [shiScoresData, setShiScoresData] = useState([]);
   const [selectSpiSpeciesData, setSpiSelectSpeciesData] = useState([]);
@@ -124,6 +124,10 @@ function DashboardTrendsSidebarContainer(props) {
 
   // find and zoom to region
   useEffect(() => {
+    if (countryISO === 'COD') {
+      setShiActiveTrend(PROVINCE_TREND);
+    }
+
     EsriFeatureService.getFeatures({
       url: COUNTRIES_DATA_SERVICE_URL,
       whereClause: `GID_0 = '${countryISO}'`,
