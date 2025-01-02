@@ -337,7 +337,9 @@ function ScoreDistributionsShiComponent(props) {
                 <li key={s.scientificname ?? s.ScientificName}>
                   <button
                     type="button"
-                    onClick={() => selectSpecies(s.species)}
+                    onClick={() =>
+                      selectSpecies(s.scientificname ?? s.ScientificName)
+                    }
                   >
                     <img src={s.species_url ?? s.SpeciesImage} alt="species" />
                     <div className={styles.spsInfo}>
