@@ -137,23 +137,6 @@
           padding: 0;
           align-items: center;
 
-          &.first{
-            background-image: url('../../../../assets/images/dashboard/Myotis_bocagii.jpg');
-          }
-
-          &.second{
-            background-image: url('../../../../assets/images/dashboard/Hyperolius_castaneus.jpg');
-          }
-
-          &.third{
-            background-image: url('../../../../assets/images/dashboard/Chiromantis_rufescens.jpg');
-          }
-
-          &.fourth{
-            background-image: url('../../../../assets/images/dashboard/viper.jpg');
-          }
-
-
           &.regions{
             background-image: url('../../../../assets/images/drc_region_logos.jpg');
           }
@@ -179,11 +162,12 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: var(--font-color);
+            color: var(--dark-color);
+            background-color: var(--font-color);
             margin: 0 12px;
             transition: color .3s;
             cursor: pointer;
-            text-shadow: 1px 1px var(--dark-color)
+            width: 100%;
           }
 
           p{

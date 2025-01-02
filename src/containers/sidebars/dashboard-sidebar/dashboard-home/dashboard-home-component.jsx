@@ -122,11 +122,16 @@ function DashboardHomeComponent(props) {
               {prioritySpeciesList.map((species) => (
                 <button
                   type="button"
-                  className={cx(styles.navCard, styles.first)}
+                  className={cx(styles.navCard)}
                   onClick={() => selectSpecies(species.species_name)}
                 >
-                  <div className={styles.outline} />
-                  <span>Rufous Mouse Eared Bat</span>
+                  <img
+                    src={species.image_url}
+                    alt={species.species_name}
+                    width={200}
+                    height={200}
+                  />
+                  <span>{species.common_name_en}</span>
                   <p>{species.species_name}</p>
                 </button>
               ))}
