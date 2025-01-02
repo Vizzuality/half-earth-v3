@@ -58,6 +58,7 @@ function DashboardContainer(props) {
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
   const [speciesListLoading, setSpeciesListLoading] = useState(true);
+  const [prioritySpeciesList, setPrioritySpeciesList] = useState([]);
   const [user, setUser] = useState();
   const getQueryParams = () => {
     if (queryParams) {
@@ -487,6 +488,21 @@ function DashboardContainer(props) {
     setDataByCountry(countryData);
   };
 
+  const getPrioritySpeciesList = async () => {
+    const url = DASHBOARD_URLS.PRIORITY_SPECIES;
+    const whereClause = `country_code = '${countryISO}'`;
+
+    const features = await EsriFeatureService.getFeatures({
+      url,
+      whereClause,
+      returnGeometry: false,
+    });
+
+    const species = features.map(({ attributes }) => attributes);
+
+    setPrioritySpeciesList(species);
+  };
+
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({
       map,
@@ -548,6 +564,7 @@ function DashboardContainer(props) {
       });
 
     getSpeciesList();
+    getPrioritySpeciesList();
 
     // Cleanup event listener on component unmount
     return () => {
@@ -633,6 +650,7 @@ function DashboardContainer(props) {
       user={user}
       setUser={setUser}
       speciesListLoading={speciesListLoading}
+      prioritySpeciesList={prioritySpeciesList}
       {...props}
     />
   );

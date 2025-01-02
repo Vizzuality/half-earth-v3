@@ -505,4 +505,6 @@ export const DASHBOARD_URLS = {
   ],
   FOREST:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/forest_title_refined_range_species/FeatureServer',
+  PRIORITY_SPECIES:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/priority_species/FeatureServer',
 };

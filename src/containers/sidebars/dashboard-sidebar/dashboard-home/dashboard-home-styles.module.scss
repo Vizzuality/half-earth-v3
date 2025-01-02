@@ -88,18 +88,20 @@
         list-style: none;
 
         li{
-          cursor: pointer;
-          padding: 5px;
-          color: #{$white};
+          button{
+            cursor: pointer;
+            padding: 5px;
+            color: #{$white};
 
-          span{
-            font-size: $font-size-sm;
-            font-style: italic;
-          }
+            span{
+              font-size: $font-size-sm;
+              font-style: italic;
+            }
 
-          &:hover{
-            background-color:#{$white};
-            color: var(--border-color);
+            &:hover{
+              background-color:#{$white};
+              color: var(--border-color);
+            }
           }
         }
       }

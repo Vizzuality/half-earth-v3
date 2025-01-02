@@ -20,7 +20,7 @@ import styles from './dashboard-home-styles.module.scss';
 function DashboardHomeComponent(props) {
   const t = useT();
   const locale = useLocale();
-  const { countryISO, setSelectedIndex, setScientificName } = props;
+  const { setSelectedIndex, setScientificName, prioritySpeciesList } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [searchInput, setSearchInput] = useState('');
@@ -97,8 +97,14 @@ function DashboardHomeComponent(props) {
           {searchInput && searchResults.length > 0 && (
             <ul className={styles.searchResults}>
               {searchResults.map((item, index) => (
-                <li key={index} onClick={() => handleSearchSelect(item)}>
-                  <b>{item.scientificname}</b> - <span>{item.vernacular}</span>
+                <li key={index}>
+                  <button
+                    type="button"
+                    onClick={() => handleSearchSelect(item)}
+                  >
+                    <b>{item.scientificname}</b> -{' '}
+                    <span>{item.vernacular}</span>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -109,48 +115,21 @@ function DashboardHomeComponent(props) {
             handleClick={handleExploreAllSpecies}
           />
         </div>
-        {countryISO === 'COD' && (
+        {prioritySpeciesList.length > 0 && (
           <div className={styles.mostPopular}>
             <span className={styles.sectionTitle}>{t('Popular Species')}</span>
             <div className={styles.species}>
-              <button
-                type="button"
-                className={cx(styles.navCard, styles.first)}
-                onClick={() => selectSpecies('Myotis bocagii')}
-              >
-                <div className={styles.outline} />
-                <span>Rufous Mouse Eared Bat</span>
-                <p>Myotis bocagii</p>
-              </button>
-              <button
-                type="button"
-                className={cx(styles.navCard, styles.second)}
-                onClick={() => selectSpecies('Hyperolius castaneus')}
-              >
-                <div className={styles.outline} />
-                <span>Ahl&apos;s Reed Frog</span>
-                <p>Hyperolius castaneus</p>
-              </button>
-              <button
-                type="button"
-                className={cx(styles.navCard, styles.third)}
-                onClick={() => selectSpecies('Chiromantis rufescens')}
-              >
-                <div className={styles.outline} />
-                <span>African Foam-Nest Treefrog</span>
-                <p>Chiromantis rufescens</p>
-              </button>
-              <button
-                type="button"
-                id="pop4"
-                name="pop4"
-                className={cx(styles.navCard, styles.fourth)}
-                onClick={() => selectSpecies('Bitis nasicornis')}
-              >
-                <div className={styles.outline} />
-                <span>Rhinoceros Viper</span>
-                <p>Bitis nasicornis</p>
-              </button>
+              {prioritySpeciesList.map((species) => (
+                <button
+                  type="button"
+                  className={cx(styles.navCard, styles.first)}
+                  onClick={() => selectSpecies(species.species_name)}
+                >
+                  <div className={styles.outline} />
+                  <span>Rufous Mouse Eared Bat</span>
+                  <p>{species.species_name}</p>
+                </button>
+              ))}
             </div>
           </div>
         )}
