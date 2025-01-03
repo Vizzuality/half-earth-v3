@@ -1,1 +1,16 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
 
+.container{
+  --font-color: #{$white};
+
+  &.light{
+    --font-color: #{$black};
+  }
+
+  width: 100%;
+  height: max-content;
+  border-left: 1px solid var(--font-color);
+}

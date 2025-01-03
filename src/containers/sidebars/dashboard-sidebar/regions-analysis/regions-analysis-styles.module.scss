@@ -4,11 +4,6 @@
 @import 'styles/common-animations.module';
 
 .container{
-  display: flex;
-  flex-direction: column;
-  padding: 5px 10px;
-  width: 100%;
-
   --font-color: #{$white};
   --border-color: #{$brand-color-main};
   --selected-font-color: #{$white};
@@ -22,6 +17,13 @@
     --save-button-text: #{$white};
     --border-color-hover: #{$mol-blue};
   }
+
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+  width: 100%;
+  height: max-content;
+  border-left: 1px solid var(--font-color);
 
   .sectionTitle{
     font-size: $font-size-tick;

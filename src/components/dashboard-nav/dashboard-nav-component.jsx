@@ -18,7 +18,7 @@ import styles from './dashboard-nav-styles.module.scss';
 
 function DashboardNavComponent(props) {
   const t = useT();
-  const { selectedIndex, setSelectedIndex, scientificName, countryISO } = props;
+  const { selectedIndex, setSelectedIndex, scientificName } = props;
   const { lightMode } = useContext(LightModeContext);
 
   const titles = {

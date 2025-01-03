@@ -23,6 +23,9 @@
     --border-color-hover: #{$mol-blue};
   }
 
+  height: max-content;
+  border-left: 1px solid var(--font-color);
+
   .sectionTitle{
     font-size: $font-size-tick;
     font-weight: 700;

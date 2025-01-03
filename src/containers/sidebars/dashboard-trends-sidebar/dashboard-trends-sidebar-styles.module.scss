@@ -8,7 +8,14 @@ $trends-width: 1000px;
 $info-width: 300px;
 
 .container{
+  --font-color: #{$white};
+  &.light{
+    --font-color: #{$black};
+  }
+
   width: $trends-width;
+  height: max-content;
+  border-left: 1px solid var(--font-color);
 
   header{
     display: flex;

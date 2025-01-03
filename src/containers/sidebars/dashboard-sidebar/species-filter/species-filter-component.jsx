@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { useT } from '@transifex/react';
+
+import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
 import Button from 'components/button';
 import FilterContainer from 'components/filters';
@@ -10,8 +13,12 @@ import { NAVIGATION } from 'constants/dashboard-constants.js';
 
 import styles from '../dashboard-sidebar-styles.module.scss';
 
+import filterStyles from './species-filter-styles.module.scss';
+
 function SpeciesFilterComponent(props) {
   const t = useT();
+  const { lightMode } = useContext(LightModeContext);
+
   const {
     selectedRegionOption,
     setSelectedRegionOption,
@@ -134,25 +141,32 @@ function SpeciesFilterComponent(props) {
   };
 
   return (
-    <div className={styles.wrapper}>
-      {selectedRegionOption && (
-        <Button
-          className={styles.back}
-          handleClick={handleBack}
-          label={t('Clear region selected')}
-        />
+    <section
+      className={cx(
+        lightMode ? filterStyles.light : '',
+        filterStyles.container
       )}
-      <div className={styles.filters}>
-        <FilterContainer
-          filters={filters}
-          setFilters={setFilters}
-          isLoading={speciesListLoading}
-          updateActiveFilter={updateActiveFilter}
-          {...props}
-        />
-        <SpeciesListContainer isLoading={speciesListLoading} {...props} />
+    >
+      <div className={styles.wrapper}>
+        {selectedRegionOption && (
+          <Button
+            className={styles.back}
+            handleClick={handleBack}
+            label={t('Clear region selected')}
+          />
+        )}
+        <div className={styles.filters}>
+          <FilterContainer
+            filters={filters}
+            setFilters={setFilters}
+            isLoading={speciesListLoading}
+            updateActiveFilter={updateActiveFilter}
+            {...props}
+          />
+          <SpeciesListContainer isLoading={speciesListLoading} {...props} />
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
