@@ -33,7 +33,6 @@ function ScoreDistributionsSpiComponent(props) {
   } = props;
   const { lightMode } = useContext(LightModeContext);
   const [chartData, setChartData] = useState();
-  // const [showTable, setShowTable] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
@@ -199,17 +198,11 @@ function ScoreDistributionsSpiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          {/* <T
-            _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates. {lowAvgBold} have the lowest average protection score while {highAvgBold} have the highest."
-            lowAvgBold={<b>{lowAvg}</b>}
-            highAvgBold={<b>{highAvg}</b>}
-          /> */}
           <T _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates." />
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SPS between')}{' '}
-          <b>{/* {lowBucket} - {highBucket}: */}0 - 5:</b>
+          {t('Species with SPS between')} <b>0 - 5:</b>
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}
@@ -241,23 +234,6 @@ function ScoreDistributionsSpiComponent(props) {
               })}
           </ul>
         )}
-        {/* <div className={styles.options}>
-          {!showTable && <Button
-            type="rectangular"
-            className={cx(styles.saveButton, styles.notActive)}
-            label={t('View full table')}
-            handleClick={() => setShowTable(true)}
-          />}
-          {showTable && <Button
-            type="rectangular"
-            className={cx(styles.saveButton, styles.notActive)}
-            label={t('Close full table')}
-            handleClick={() => setShowTable(false)}
-          />}
-          <span className={styles.helpText}>
-            {t('Open and download a full table of species scores and relevant traits at national and province levels.')}
-          </span>
-        </div> */}
       </div>
       <div
         className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}

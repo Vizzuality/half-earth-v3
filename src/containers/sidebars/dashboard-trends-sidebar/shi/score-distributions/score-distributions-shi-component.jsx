@@ -123,13 +123,14 @@ function ScoreDistributionsShiComponent(props) {
     // }
   };
 
-  const displayData = (score) => {
+  const displayData = (selectedScore) => {
+    let score;
     if (shiActiveTrend === 'NATIONAL') {
-      if (score === SCORES.HABITAT_SCORE) {
+      if (selectedScore === SCORES.HABITAT_SCORE) {
         score = NATIONAL_SCORES.HABITAT_SCORE;
-      } else if (score === SCORES.AREA_SCORE) {
+      } else if (selectedScore === SCORES.AREA_SCORE) {
         score = NATIONAL_SCORES.AREA_SCORE;
-      } else if (score === SCORES.CONNECTIVITY_SCORE) {
+      } else if (selectedScore === SCORES.CONNECTIVITY_SCORE) {
         score = NATIONAL_SCORES.CONNECTIVITY_SCORE;
       }
 
@@ -291,8 +292,6 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const getChartData = async () => {
-    // setResponseData(selectShiSpeciesData);
-    // loadSpecies(selectShiSpeciesData);
     displayData(SCORES.HABITAT_SCORE);
   };
 
