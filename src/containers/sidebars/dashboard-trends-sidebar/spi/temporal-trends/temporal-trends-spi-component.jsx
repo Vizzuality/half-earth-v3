@@ -119,11 +119,11 @@ function TemporalTrendsSpiComponent(props) {
                   handleClick={() => setShowTable(false)}
                 />
               )}
-              <span className={styles.helpText}>
+              {/* <span className={styles.helpText}>
                 {t(
                   'Open and download a full table of annual national and province level SPI over time.'
                 )}
-              </span>
+              </span> */}
             </>
           )}
         </div>

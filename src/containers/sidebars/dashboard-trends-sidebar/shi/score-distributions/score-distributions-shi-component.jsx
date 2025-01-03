@@ -377,11 +377,11 @@ function ScoreDistributionsShiComponent(props) {
               handleClick={() => setShowTable(false)}
             />
           )}
-          <span className={styles.helpText}>
+          {/* <span className={styles.helpText}>
             {t(
               'Open and download a full table of species scores and relevant traits at national and province levels.'
             )}
-          </span>
+          </span> */}
         </div>
       </div>
       <div className={compStyles.chartArea}>
