@@ -61,8 +61,9 @@ function TemporalTrendsSiiComponent(props) {
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
           <T
-            _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryName} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {highestObservationBold} and {lowestObservationBold}."
+            _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryBold} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {highestObservationBold} and {lowestObservationBold}."
             currentYear={currentYear}
+            countryBold={<b>{countryName}</b>}
             currentObservationBold={<b>{latestValues.spi}%</b>}
             countryName={countryName}
             startYear={firstValues.year}

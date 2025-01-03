@@ -84,3 +84,10 @@ export const createDefaultDashboardLayers = () => {
     group,
   };
 };
+
+export function numberToLocaleStringWithOneDecimal(number) {
+  return number.toLocaleString(undefined, {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  });
+}

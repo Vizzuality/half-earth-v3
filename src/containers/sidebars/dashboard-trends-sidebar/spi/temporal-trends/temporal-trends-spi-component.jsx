@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { useT, T } from '@transifex/react';
 
+import { numberToLocaleStringWithOneDecimal } from 'utils/dashboard-utils.js';
+
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 import last from 'lodash/last';
 
 import Button from 'components/button';
 
-import { LightModeContext } from '../../../../../context/light-mode';
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
@@ -69,7 +71,8 @@ function TemporalTrendsSpiComponent(props) {
             countryName={countryName}
             areaBold={
               <b>
-                {areaProtected.toFixed(1)} km<sup>2</sup>
+                {numberToLocaleStringWithOneDecimal(areaProtected)} km
+                <sup>2</sup>
               </b>
             }
             areaProtectedPercentBold={<b>{areaProtectedPercent}%</b>}
