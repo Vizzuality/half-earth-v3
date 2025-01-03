@@ -124,7 +124,7 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const displayData = (selectedScore) => {
-    let score;
+    let score = selectedScore;
     if (shiActiveTrend === 'NATIONAL') {
       if (selectedScore === SCORES.HABITAT_SCORE) {
         score = NATIONAL_SCORES.HABITAT_SCORE;
