@@ -140,15 +140,14 @@ function AnalyzeAreasContainer(props) {
     if (selectedAnalysisLayer === HALF_EARTH_FUTURE_TILE_LAYER) {
       setIsFirstLoad(false);
     }
-  }, [selectedAnalysisLayer, precalculatedAOIOptions, setSelectedOption]);
+  }, [selectedAnalysisLayer, precalculatedAOIOptions]);
 
   useEffect(() => {
     if(resetOption){
-      handleOptionSelection({
-        slug: CLEAR_SELECTIONS,
-        label: CLEAR_SELECTIONS,
-        title: CLEAR_SELECTIONS,
-      });
+      if(selectedAnalysisLayer !== precalculatedAOIOptions[0].title){
+        handleOptionSelection(precalculatedAOIOptions[0]);
+      }
+      setSelectedOption(precalculatedAOIOptions[0]);
     }
   }, [resetOption])
 
@@ -309,12 +308,13 @@ function AnalyzeAreasContainer(props) {
   const watchUtils = useWatchUtils();
 
   const handleOptionSelection = async (option) => {
-    console.log(option)
     if (option?.slug === HALF_EARTH_FUTURE_TILE_LAYER && isFirstLoad) {
       setShowProgress(true);
     }
+
     handleLayerToggle(option?.slug);
     changeUI({ selectedAnalysisLayer: option?.slug });
+
     setTooltipIsVisible(false);
 
     watchUtils.watch(() =>
