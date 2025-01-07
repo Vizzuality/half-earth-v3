@@ -14,6 +14,10 @@ import uiStyles from 'styles/ui.module.scss';
 import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
 import styles from './data-global-sidebar-styles.module.scss';
 import mapStateToProps from './selectors';
+import { useEffect, useState } from 'react';
+import { batchToggleLayers } from 'utils/layer-manager-utils';
+
+import dataScene from 'containers/scenes/data-scene/data-scene-config.js';
 
 function DataGlobalSidebarComponent({
   map,
@@ -26,10 +30,43 @@ function DataGlobalSidebarComponent({
   onboardingType,
   waitingInteraction,
   sidebarTabActive,
+  changeGlobe,
   aoiId,
   changeUI,
 }) {
   const [mapLayersTab, analyzeAreasTab] = getSidebarTabs();
+  const [resetOption, setResetOption] = useState(false);
+
+  useEffect(() => {
+    if(!sidebarTabActive) return;
+
+    clearLayers();
+  }, [sidebarTabActive]);
+
+  const clearLayers = () => {
+    const initialLayers = dataScene.globe.activeLayers;
+    const layersToToggle = [];
+
+    activeLayers.forEach(layer => {
+      if(!initialLayers.some(l => l.title === layer.title)){
+        layersToToggle.push({
+          layerId: layer.title,
+        })
+      }
+    })
+
+    if(layersToToggle.length){
+      batchToggleLayers(
+        layersToToggle.map((l) => l.layerId),
+        activeLayers,
+        changeGlobe,
+        {}
+      );
+    }
+
+    setResetOption(true);
+  };
+
   return (
     <div className={cx(styles.container, className)}>
       <TabsSidebar
@@ -82,6 +119,7 @@ function DataGlobalSidebarComponent({
               <AnalyzeAreasSidebarCard
                 activeLayers={activeLayers}
                 view={view}
+                resetOption={resetOption}
                 onboardingStep={onboardingStep}
                 onboardingType={onboardingType}
               />
