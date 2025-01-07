@@ -213,9 +213,7 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (clickedRegion && shiProvinceTrendData.length) {
       const region = provinces.find((item) => {
-        return (
-          item.region_name === clickedRegion.NAME_1 || clickedRegion.region_name
-        );
+        return item.region_name === clickedRegion.NAME_1;
       });
       getProvinceScores(region);
     }

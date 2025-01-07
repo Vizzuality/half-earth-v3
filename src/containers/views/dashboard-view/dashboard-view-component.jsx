@@ -5,7 +5,7 @@ import { DASHBOARD } from 'router';
 import loadable from '@loadable/component';
 
 import * as promiseUtils from '@arcgis/core/core/promiseUtils.js';
-import { Loading } from 'he-components';
+import { LightModeProvider } from 'context/light-mode';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
@@ -13,6 +13,7 @@ import SideMenu from 'containers/menus/sidemenu';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
 import MapView from 'components/map-view';
+import TopMenuContainer from 'components/top-menu';
 
 import {
   LAYER_OPTIONS,
@@ -20,8 +21,7 @@ import {
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
 
-import TopMenuContainer from '../../../components/top-menu';
-import { LightModeProvider } from '../../../context/light-mode';
+import { TABS } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -49,6 +49,7 @@ function DashboardViewComponent(props) {
     scientificName,
     regionLayers,
     setRegionLayers,
+    tabOption,
     setSelectedProvince,
   } = props;
 
@@ -219,6 +220,18 @@ function DashboardViewComponent(props) {
       setLayerView(layer);
     }
   }, [regionLayers, view]);
+
+  useEffect(async () => {
+    console.log(tabOption);
+    let layer;
+    if (tabOption === TABS.SPI) {
+      layer = await view.whenLayerView(regionLayers[LAYER_OPTIONS.PROVINCES]);
+    } else if (tabOption === TABS.SHI) {
+      layer = await view.whenLayerView(regionLayers[`${countryISO}-outline`]);
+    }
+
+    setLayerView(layer);
+  }, [tabOption]);
 
   useEffect(() => {
     if (!layerView) return;

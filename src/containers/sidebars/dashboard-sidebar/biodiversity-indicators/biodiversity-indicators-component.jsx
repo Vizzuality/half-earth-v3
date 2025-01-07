@@ -61,20 +61,22 @@ function BioDiversityComponent(props) {
               })}
               onClick={() => setSelectedTab(TABS.SPI)}
             >
-              <label>{protectionScore}%</label>
+              <span className={styles.perc}>{protectionScore}%</span>
               <span>{t('Protection Score')}</span>
             </button>
-            <button
-              type="button"
-              aria-label={t('Species Habitat Index')}
-              className={cx({
-                [styles.selected]: selectedTab === TABS.SHI,
-              })}
-              onClick={() => setSelectedTab(TABS.SHI)}
-            >
-              <label>{habitatScore}%</label>
-              <span>{t('Habitat Score')}</span>
-            </button>
+            {habitatScore === '0.00' && (
+              <button
+                type="button"
+                aria-label={t('Species Habitat Index')}
+                className={cx({
+                  [styles.selected]: selectedTab === TABS.SHI,
+                })}
+                onClick={() => setSelectedTab(TABS.SHI)}
+              >
+                <span className={styles.perc}>{habitatScore}%</span>
+                <span>{t('Habitat Score')}</span>
+              </button>
+            )}
             {/* <button
             type="button"
             aria-label={t('Species Information Index')}

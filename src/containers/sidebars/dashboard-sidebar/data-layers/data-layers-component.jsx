@@ -47,6 +47,7 @@ function DataLayerComponent(props) {
 
   const { lightMode } = useContext(LightModeContext);
   const [dataPoints, setDataPoints] = useState();
+  const [valuesExists, setValuesExists] = useState(false);
   const [privateDataPoints, setPrivateDataPoints] = useState([
     {
       label: t('Point Observations'),
@@ -177,25 +178,29 @@ function DataLayerComponent(props) {
     // remove Year row
     d.data.shift();
 
-    setChartData({
-      labels: d.data.map((item) => item[0]),
-      datasets: [
-        {
-          fill: false,
-          backgroundColor: 'rgba(24, 186, 180, 1)',
-          borderColor: 'rgba(24, 186, 180, 1)',
-          pointStyle: false,
-          data: d.data.map((item) => item[2]),
-        },
-        {
-          fill: '-1',
-          backgroundColor: 'rgba(24, 186, 180, 0.7)',
-          borderColor: 'rgba(24, 186, 180, 1)',
-          pointStyle: false,
-          data: d.data.map((item) => item[3]),
-        },
-      ],
-    });
+    if (d.data.length) {
+      setValuesExists(true);
+
+      setChartData({
+        labels: d.data.map((item) => item[0]),
+        datasets: [
+          {
+            fill: false,
+            backgroundColor: 'rgba(24, 186, 180, 1)',
+            borderColor: 'rgba(24, 186, 180, 1)',
+            pointStyle: false,
+            data: d.data.map((item) => item[2]),
+          },
+          {
+            fill: '-1',
+            backgroundColor: 'rgba(24, 186, 180, 0.7)',
+            borderColor: 'rgba(24, 186, 180, 1)',
+            pointStyle: false,
+            data: d.data.map((item) => item[3]),
+          },
+        ],
+      });
+    }
   };
 
   useEffect(() => {
@@ -261,8 +266,8 @@ function DataLayerComponent(props) {
             setIsHabitatChartLoading={setIsHabitatChartLoading}
             {...props}
           />
-          {chartData && isHabitatChartLoading && <Loading height={200} />}
-          {chartData && showHabitatChart && (
+          {isHabitatChartLoading && <Loading height={200} />}
+          {valuesExists && showHabitatChart && (
             <Line options={chartOptions} data={chartData} />
           )}
 

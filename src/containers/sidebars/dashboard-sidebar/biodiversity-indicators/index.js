@@ -208,6 +208,8 @@ function BioDiversityContainer(props) {
   }, [habitatTableData]);
 
   useEffect(() => {
+    if (!speciesInfo) return;
+
     removeRegionLayers();
     const protectedLayers = EsriFeatureService.addProtectedAreaLayer(
       null,
@@ -228,7 +230,7 @@ function BioDiversityContainer(props) {
       map.add(protectedLayers);
       map.add(layer);
     });
-  }, []);
+  }, [speciesInfo]);
 
   return (
     <BioDiversityComponent

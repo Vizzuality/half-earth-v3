@@ -14,7 +14,7 @@ import SpiContainer from './spi';
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 
-const TABS = {
+export const TABS = {
   SHI: 1,
   SPI: 2,
   SII: 3,

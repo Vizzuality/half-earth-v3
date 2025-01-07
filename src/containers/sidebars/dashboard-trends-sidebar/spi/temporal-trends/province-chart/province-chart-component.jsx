@@ -270,15 +270,12 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (clickedRegion && provinces.length) {
       const region = provinces.find(
-        (item) =>
-          item.region_name === clickedRegion.NAME_1 || clickedRegion.region_name
+        (item) => item.region_name === clickedRegion.NAME_1
       );
       getProvinceScores(region);
 
       const foundIdx = bubbleData?.datasets.findIndex(
-        (item) =>
-          item.region_name ===
-          (clickedRegion.NAME_1 || clickedRegion.region_name)
+        (item) => item.region_name === clickedRegion.NAME_1
       );
       if (foundIdx) {
         highlightProvinceBubble(foundIdx);
