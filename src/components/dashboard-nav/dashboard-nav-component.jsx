@@ -18,7 +18,13 @@ import styles from './dashboard-nav-styles.module.scss';
 
 function DashboardNavComponent(props) {
   const t = useT();
-  const { selectedIndex, setSelectedIndex, scientificName } = props;
+  const {
+    selectedIndex,
+    setSelectedIndex,
+    scientificName,
+    setSelectedRegion,
+    setScientificName,
+  } = props;
   const { lightMode } = useContext(LightModeContext);
 
   const titles = {
@@ -30,8 +36,13 @@ function DashboardNavComponent(props) {
     TRENDS: 'trends',
   };
 
-  const updateHistory = (page, title) => {
+  const updateHistory = (page) => {
     window.history.pushState({ selectedIndex: page }, '', ``);
+
+    if (page !== NAVIGATION.DATA_LAYER && page !== NAVIGATION.BIO_IND) {
+      setSelectedRegion(null);
+      setScientificName(null);
+    }
     setSelectedIndex(page);
   };
 

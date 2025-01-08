@@ -138,8 +138,7 @@ function DashboardViewComponent(props) {
                     scientificName,
                     selectedIndex,
                     regionLayers: al,
-                    selectedRegion:
-                      hits.attributes.NAME_1 ?? hits.attributes.region_name,
+                    selectedRegion: hits.attributes.NAME_1,
                   },
                 });
                 setClickedRegion(hits.attributes);
@@ -215,23 +214,18 @@ function DashboardViewComponent(props) {
   }, [view]);
 
   useEffect(async () => {
+    let layer;
     if (view && Object.keys(regionLayers).length) {
-      const layer = await getLayerView();
+      if (tabOption === TABS.SPI) {
+        layer = await view.whenLayerView(regionLayers[LAYER_OPTIONS.PROVINCES]);
+      } else if (tabOption === TABS.SHI) {
+        layer = await view.whenLayerView(regionLayers[`${countryISO}-outline`]);
+      } else {
+        layer = await getLayerView();
+      }
       setLayerView(layer);
     }
-  }, [regionLayers, view]);
-
-  useEffect(async () => {
-    console.log(tabOption);
-    let layer;
-    if (tabOption === TABS.SPI) {
-      layer = await view.whenLayerView(regionLayers[LAYER_OPTIONS.PROVINCES]);
-    } else if (tabOption === TABS.SHI) {
-      layer = await view.whenLayerView(regionLayers[`${countryISO}-outline`]);
-    }
-
-    setLayerView(layer);
-  }, [tabOption]);
+  }, [regionLayers, view, tabOption]);
 
   useEffect(() => {
     if (!layerView) return;

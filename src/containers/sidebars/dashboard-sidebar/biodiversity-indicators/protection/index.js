@@ -8,13 +8,8 @@ import ProtectionComponent from './protection-component';
 
 function ProtectionContainer(props) {
   const t = useT();
-  const {
-    protectionTableData,
-    countryName,
-    dataByCountry,
-    lightMode,
-    spiDataByCountry,
-  } = props;
+  const { protectionTableData, countryName, lightMode, spiDataByCountry } =
+    props;
   const [selectedCountry, setSelectedCountry] = useState('Global');
   const [shiCountries, setShiCountries] = useState([]);
   const [globalScore, setGlobalScore] = useState(0);
