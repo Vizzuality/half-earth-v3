@@ -160,9 +160,8 @@
             font-weight: 600;
             font-size: $font-size-base;
             letter-spacing: 0em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
+            padding-top: 5px;
             text-align: center;
             color: var(--dark-color);
             background-color: var(--font-color);
