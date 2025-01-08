@@ -43,19 +43,14 @@ function ScoreDistributionsShiComponent(props) {
     CONNECTIVITY_SCORE: 'connectivity',
   };
 
-  const lowAvg = 'Amphibians';
-  const highAvg = 'birds';
-
   const [chartData, setChartData] = useState();
-  const [responseData, setResponseData] = useState();
+  const [responseData] = useState();
   const [showTable, setShowTable] = useState(false);
   const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
   const [isLoading, setIsLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const { lightMode } = useContext(LightModeContext);
-  const [lowBucket, setLowBucket] = useState(0);
-  const [highBucket, setHighBucket] = useState(5);
 
   const options = {
     plugins: {
@@ -314,18 +309,11 @@ function ScoreDistributionsShiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          <T
-            _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates. {lowAvgBold} have the lowest average habitat score while {highAvgBold} have the highest."
-            lowAvgBold={<b>{lowAvg}</b>}
-            highAvgBold={<b>{highAvg}</b>}
-          />
+          <T _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates." />
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SHS between')}{' '}
-          <b>
-            {lowBucket} - {highBucket}:
-          </b>
+          {t('Species with SHS between')} <b>0 - 5:</b>
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}

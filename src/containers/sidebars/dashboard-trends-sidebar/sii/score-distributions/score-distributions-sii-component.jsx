@@ -1,25 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react';
 
-import { useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
-import Button from 'components/button';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
-import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 
-import { LightModeContext } from '../../../../../context/light-mode';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
-import DistributionsTableContainer from '../../shi/score-distributions/distributions-table';
 
 import compStyles from './score-distributions-sii-styles.module.scss';
 
 function ScoreDistributionsSiiComponent(props) {
   const t = useT();
-  const { countryData, siiData } = props;
+  const { siiData } = props;
   const { lightMode } = useContext(LightModeContext);
   const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
   const lowAvg = 'Amphibians';
@@ -59,7 +56,7 @@ function ScoreDistributionsSiiComponent(props) {
       // Determine the bucket index based on the floor value of the number
       const bucketIndex = Math.floor(number / 5);
 
-      if (!taxaSet.hasOwnProperty(bucketIndex)) {
+      if (!(bucketIndex in taxaSet)) {
         taxaSet[bucketIndex] = 1;
       } else {
         taxaSet[bucketIndex] += 1;
@@ -164,9 +161,7 @@ function ScoreDistributionsSiiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          View the distribution of the individual Species Information Scores for
-          all terrestrial vertebrates. <b>{lowAvg}</b> have the lowest average
-          information score while <b>{highAvg}</b> have the highest.
+          <T _str="View the distribution of the individual Species Information Scores for all terrestrial vertebrates." />
         </p>
 
         <span className={styles.spsSpeciesTitle}>

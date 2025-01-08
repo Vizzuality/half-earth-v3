@@ -1,3 +1,4 @@
+import { orderBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { T, useT } from '@transifex/react';
@@ -48,6 +49,10 @@ function TemporalTrendsSiiComponent(props) {
         year: allVertValues[0].year,
         spi: (allVertValues[0].sii * 100).toFixed(1),
       });
+
+      const orderBySII = [...allVertValues].sort((a, b) => a.sii - b.sii);
+      setLowestObservation(orderBySII[0].sii);
+      setHighestObservation(last(orderBySII).sii);
     }
   };
 
@@ -61,7 +66,7 @@ function TemporalTrendsSiiComponent(props) {
         <span className={styles.title}>{t('Temporal Trends')}</span>
         <p className={styles.description}>
           <T
-            _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryBold} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {highestObservationBold} and {lowestObservationBold}."
+            _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryBold} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {lowestObservationBold} and {highestObservationBold}."
             currentYear={currentYear}
             countryBold={<b>{countryName}</b>}
             currentObservationBold={<b>{latestValues.spi}%</b>}
