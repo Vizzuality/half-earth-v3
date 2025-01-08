@@ -87,9 +87,7 @@ function ProvinceChartComponent(props) {
     const results = await layerView?.queryFeatures(searchQuery);
 
     const foundRegion = results?.features.filter(
-      (feat) =>
-        (feat.attributes.NAME_1 ?? feat.attributes.region_nam) ===
-        province.region_name
+      (feat) => feat.attributes.region_name === province.region_name
     );
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
@@ -148,16 +146,14 @@ function ProvinceChartComponent(props) {
 
     const currentValue = last(filteredData);
     setFilteredProvince(currentValue);
+    const alteredCurrentValue = currentValue.habitat_index * 100;
 
     const shi = {
       labels: [t('Global SHI'), t('Remaining')],
       datasets: [
         {
           label: '',
-          data: [
-            currentValue.shi_clipped_scaled,
-            100 - currentValue.shi_clipped_scaled,
-          ],
+          data: [alteredCurrentValue, 100 - alteredCurrentValue],
           backgroundColor: [getCSSVariable('habitat'), emptyArcColor],
           borderColor: [getCSSVariable('habitat'), emptyArcColor],
           borderWidth: 1,
@@ -171,17 +167,17 @@ function ProvinceChartComponent(props) {
       datasets: [
         {
           label: t('Average Area Score'),
-          data: filteredData.map((item) => item.area_clipped_scaled),
+          data: filteredData.map((item) => item.area_score * 100),
           borderColor: getCSSVariable('area'),
         },
         {
           label: t('Average Connectivity Score'),
-          data: filteredData.map((item) => item.connectivity_clipped_scaled),
+          data: filteredData.map((item) => item.connectivity * 100),
           borderColor: getCSSVariable('connectivity'),
         },
         {
           label: t('Average Habitat Score'),
-          data: filteredData.map((item) => item.shi_clipped_scaled),
+          data: filteredData.map((item) => item.habitat_index * 100),
           borderColor: getCSSVariable('habitat'),
         },
       ],
@@ -243,17 +239,17 @@ function ProvinceChartComponent(props) {
               <span>{t('Year')}</span>
             </div>
             <div className={styles.values}>
-              <b>{filteredProvince.area_clipped_scaled.toFixed(1)}</b>
+              <b>{(filteredProvince.area_score * 100).toFixed(1)}</b>
               <span>{t('Area Score')}</span>
             </div>
             <SpiArcChartComponent
               width="125x"
               height="75px"
               data={shiData}
-              value={filteredProvince.shi_clipped_scaled}
+              value={filteredProvince.habitat_index * 100}
             />
             <div className={styles.values}>
-              <b>{filteredProvince.connectivity_clipped_scaled.toFixed(1)}</b>
+              <b>{(filteredProvince.connectivity * 100).toFixed(1)}</b>
               <span>{t('Connectivity Score')}</span>
             </div>
             <div className={styles.values}>
