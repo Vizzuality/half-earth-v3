@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-// import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-// import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
-// import GroupLayer from '@arcgis/core/layers/GroupLayer';
-// import TileLayer from '@arcgis/core/layers/TileLayer';
 import { createDefaultDashboardLayers } from 'utils/dashboard-utils';
 
 import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
 
-// import { DASHBOARD_LAYER_SLUGS, DASHBOARD_URLS } from 'constants/dashboard';
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 
 import Component from './component';

@@ -9,9 +9,9 @@ import { LightModeContext } from 'context/light-mode';
 
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
 
-import { NAVIGATION } from 'constants/dashboard-constants.js';
+import DashboardNav from 'components/dashboard-nav';
 
-import DashboardNav from '../../../components/dashboard-nav';
+import { NAVIGATION } from 'constants/dashboard-constants.js';
 
 import BioDiversityContainer from './biodiversity-indicators';
 import DashboardHomeContainer from './dashboard-home';
@@ -44,7 +44,6 @@ function DashboardSidebar(props) {
   };
 
   useEffect(() => {
-    // TODO: find out why this doesn't work
     if (
       selectedIndex !== NAVIGATION.TRENDS &&
       selectedIndex !== NAVIGATION.EXPLORE_SPECIES

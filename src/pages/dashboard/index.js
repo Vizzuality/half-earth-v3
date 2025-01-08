@@ -166,48 +166,6 @@ function DashboardContainer(props) {
     setDataLayerData(dataLayersData);
   };
 
-  const makeSpeciesListParams = (args, summary = false) => {
-    const params = {};
-    params.lang = locale || 'en';
-    if (args.lat) {
-      params.lat = args.lat.toString();
-    }
-    if (args.lng) {
-      params.lng = args.lng.toString();
-    }
-    if (args.radius) {
-      params.radius = args.radius.toString();
-    }
-    if (args.wkt) {
-      params.wkt = args.wkt;
-    }
-
-    if (args.geojson) {
-      params.geojson = args.geojson;
-    }
-    if (args.region_id) {
-      params.region_id = args.region_id;
-    }
-    if (args.WDPA_PID) {
-      params.region_attribute = 'WDPA_PID';
-      params.region_dataset_id = 'wdpa';
-      params.region_attribute_value = args.WDPA_PID;
-    }
-    if (args.GID_1) {
-      params.region_attribute = 'GID_1';
-      params.region_attribute_value = args.GID_1;
-      params.region_dataset_id = 'gadm_states';
-    }
-    // if(args.region_dataset_id){
-    //   params.region_dataset_id = args.region_dataset_id;
-    // }
-
-    if (summary) {
-      params.summary = 'true';
-    }
-    return params;
-  };
-
   const getTaxaSpecies = async (taxa, slices) => {
     const json = JSON.parse(slices);
     let url;

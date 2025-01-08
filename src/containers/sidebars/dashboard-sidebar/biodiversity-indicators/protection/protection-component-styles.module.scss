@@ -38,13 +38,12 @@
 
       .material-symbols-outlined {
         font-size: 48px;
-        color: #c72929;
+        color: $warning;
       }
 
-      label {
+      span {
         color: var(--font-color);
         text-align: center;
-        font-family: STIX Two Text;
         font-size: $font-size-sm;
         font-style: italic;
         font-weight: 500;
@@ -78,7 +77,6 @@
           b {
             color: var(--font-color);
             text-align: center;
-            font-family: STIX Two Text;
             font-size: $font-size-tick;
             font-style: normal;
             font-weight: 600;
@@ -87,7 +85,6 @@
 
           .desc {
             color: var(--font-color);
-            font-family: STIX Two Text;
             font-size: $font-size-sm;
             font-style: italic;
             font-weight: 500;
@@ -112,7 +109,6 @@
 
       .compare {
         color: var(--font-color);
-        font-family: STIX Two Text;
         font-size: $font-size-sm;
         font-style: italic;
         font-weight: 400;
@@ -127,7 +123,6 @@
       min-width: 100px;
       text-align: center;
       color: var(--font-color);
-      font-family: STIX Two Text;
       font-size: $font-size-sm;
       font-style: normal;
       font-weight: 500;
@@ -155,9 +150,8 @@
       width: 100%;
     }
 
-    label {
+    span {
       color: var(--font-color);
-      font-family: STIX Two Text;
       font-size: $font-size-sm;
       font-style: normal;
       font-weight: 500;
@@ -175,11 +169,11 @@
         height: 8px;
 
         &.blue {
-          background-color: #2f2cae;
+          background-color: $habitat-country;
         }
 
         &.green {
-          background-color: #228d19;
+          background-color: $habitat-country-compare;
         }
       }
     }
@@ -191,7 +185,6 @@
 
     th,
     td {
-      font-family: STIX Two Text;
       font-size: $font-size-sm;
       font-style: normal;
       font-weight: 400;
@@ -229,11 +222,11 @@
         border: 1px solid transparent;
 
         &:nth-child(odd) {
-          background-color: #d9d9d9;
+          background-color: $alto;
         }
 
         &:nth-child(even) {
-          background-color: #ededed;
+          background-color: $wild-sand;
         }
 
         &:hover {

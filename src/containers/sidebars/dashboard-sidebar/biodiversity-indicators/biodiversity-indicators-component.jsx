@@ -8,8 +8,6 @@ import { Loading } from 'he-components';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import styles from './biodiversity-indicators-styles.module.scss';
-
-// import country_attrs from '../mol-country-attributes.json';
 import HabitatContainer from './habitat';
 import ProtectionContainer from './protection';
 

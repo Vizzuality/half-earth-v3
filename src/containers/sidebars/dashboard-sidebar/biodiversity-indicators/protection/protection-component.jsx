@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from './protection-component-styles.module.scss';
+import { Line } from 'react-chartjs-2';
+
 import { T, useT } from '@transifex/react';
-import cx from 'classnames';
 
 import {
   Chart as ChartJS,
@@ -12,8 +12,18 @@ import {
   Legend,
   CategoryScale,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
-ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend, CategoryScale);
+import cx from 'classnames';
+
+import styles from './protection-component-styles.module.scss';
+
+ChartJS.register(
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+  Legend,
+  CategoryScale
+);
 
 function ProtectionComponent(props) {
   const t = useT();
@@ -30,7 +40,7 @@ function ProtectionComponent(props) {
     onCountryChange,
     shiCountries,
     chartData,
-    chartOptions
+    chartOptions,
   } = props;
 
   const [totalArea, setTotalArea] = useState(0);
@@ -78,57 +88,92 @@ function ProtectionComponent(props) {
       </div> */}
       <div className={styles.chart}>
         <div className={styles.compareWrap}>
-          <label className={styles.compare}>{t('Compare')}</label>
+          <span className={styles.compare}>{t('Compare')}</span>
           <select value={selectedCountry} onChange={onCountryChange}>
-            {shiCountries.map(item => (
-              <option key={item} value={item}>{item}</option>
+            {shiCountries.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
             ))}
           </select>
         </div>
         <div className={styles.legend}>
-          <div className={cx(styles.legendBox, styles.blue)}></div>
-          <label>{t(countryName)}</label>
-          <div className={cx(styles.legendBox, styles.green)}></div>
-          <label>{selectedCountry}</label>
+          <div className={cx(styles.legendBox, styles.blue)} />
+          <span>{t(countryName)}</span>
+          <div className={cx(styles.legendBox, styles.green)} />
+          <span>{selectedCountry}</span>
         </div>
         {chartData && <Line options={chartOptions} data={chartData} />}
-        {protectionTableData.length &&
+        {protectionTableData.length && (
           <table className={styles.dataTable}>
             <thead>
               <tr>
-                <th className={cx(styles.textLeft, styles.w20)}>{t('Country')}</th>
+                <th className={cx(styles.textLeft, styles.w20)}>
+                  {t('Country')}
+                </th>
                 <th className={cx(styles.textCenter)}>{t('Stewardship')}</th>
-                <th className={cx(styles.textCenter, styles.w28)}>{t('Range Protected')}</th>
-                <th className={cx(styles.textCenter, styles.w28)}>{t('Target Protected')}</th>
-                <th className={cx(styles.textCenter, styles.w12)}>{t('Total SPS')}</th>
+                <th className={cx(styles.textCenter, styles.w28)}>
+                  {t('Range Protected')}
+                </th>
+                <th className={cx(styles.textCenter, styles.w28)}>
+                  {t('Target Protected')}
+                </th>
+                <th className={cx(styles.textCenter, styles.w12)}>
+                  {t('Total SPS')}
+                </th>
               </tr>
             </thead>
             <tbody>
-              {protectionTableData.map(row => (
-                <tr key={row.country} onClick={() => updateCountry({ value: row.country })}
-                  className={(selectedCountry === row.country || countryName === row.country) ? styles.highlighted : ''}
+              {protectionTableData.map((row) => (
+                <tr
+                  key={row.country}
+                  onClick={() => updateCountry({ value: row.country })}
+                  className={
+                    selectedCountry === row.country ||
+                    countryName === row.country
+                      ? styles.highlighted
+                      : ''
+                  }
                 >
                   <td>{row.country}</td>
-                  <td className={styles.textCenter}>{row.stewardship.toLocaleString(undefined, { maximumFractionDigits: 2 })}%</td>
                   <td className={styles.textCenter}>
-                    {row.rangeProtected.toLocaleString(undefined, { maximumFractionDigits: 2 })} km<sup>2</sup>
+                    {row.stewardship.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })}
+                    %
                   </td>
                   <td className={styles.textCenter}>
-                    {row.targetProtected.toLocaleString(undefined, { maximumFractionDigits: 2 })} km<sup>2</sup>
+                    {row.rangeProtected.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })}{' '}
+                    km<sup>2</sup>
                   </td>
-                  <td className={styles.textCenter}>{row.sps.toLocaleString(undefined, { maximumFractionDigits: 2 })}%</td>
+                  <td className={styles.textCenter}>
+                    {row.targetProtected.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })}{' '}
+                    km<sup>2</sup>
+                  </td>
+                  <td className={styles.textCenter}>
+                    {row.sps.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })}
+                    %
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        }
+        )}
 
         <p>
-          {t('*The Species Protection Score is calculated using the habitat suitable range map and the WDPA Protected Areas.')}
+          {t(
+            '*The Species Protection Score is calculated using the habitat suitable range map and the WDPA Protected Areas.'
+          )}
         </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default ProtectionComponent
+export default ProtectionComponent;
