@@ -62,7 +62,7 @@ function BioDiversityComponent(props) {
               <span className={styles.perc}>{protectionScore}%</span>
               <span>{t('Protection Score')}</span>
             </button>
-            {habitatScore === '0.00' && (
+            {habitatScore !== '0.00' && (
               <button
                 type="button"
                 aria-label={t('Species Habitat Index')}
