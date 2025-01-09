@@ -254,7 +254,7 @@ function DashboardContainer(props) {
 
       const list = [...speciesData];
 
-      occurenceFeatures.forEach((feature) => {
+      occurenceFeatures?.forEach((feature) => {
         const { taxa, species, attributes } = feature.attributes;
 
         const { source, species_url, threat_status } = JSON.parse(
