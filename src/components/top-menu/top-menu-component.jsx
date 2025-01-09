@@ -35,7 +35,6 @@ function UserProfile(props) {
 }
 
 function TopMenuComponent(props) {
-  const { user } = props;
   return (
     // <div className={styles.container}>{user && <UserProfile {...props} />}</div>
     <div className={styles.container}>
