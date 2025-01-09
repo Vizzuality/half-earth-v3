@@ -51,8 +51,8 @@ function TemporalTrendsSiiComponent(props) {
       });
 
       const orderBySII = [...allVertValues].sort((a, b) => a.sii - b.sii);
-      setLowestObservation(orderBySII[0].sii);
-      setHighestObservation(last(orderBySII).sii);
+      setLowestObservation(orderBySII[0].sii * 100);
+      setHighestObservation((last(orderBySII).sii * 100).toFixed(1));
     }
   };
 
