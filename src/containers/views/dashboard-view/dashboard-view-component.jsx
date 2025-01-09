@@ -60,6 +60,7 @@ function DashboardViewComponent(props) {
   const [layerView, setLayerView] = useState();
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
+  const [showTopNav, setShowTopNav] = useState(true);
   let hoverHighlight;
 
   const getLayerView = async () => {
@@ -206,6 +207,10 @@ function DashboardViewComponent(props) {
     highlight = layerView?.highlight(foundRegion.graphic);
   };
 
+  function isIframe() {
+    return window.parent !== window;
+  }
+
   useEffect(() => {
     if (!view) return;
     view.on('click', (event) => {
@@ -244,6 +249,14 @@ function DashboardViewComponent(props) {
     setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
   }, [layerView]);
 
+  useEffect(() => {
+    if (isIframe()) {
+      setShowTopNav(false);
+    } else {
+      setShowTopNav(true);
+    }
+  }, []);
+
   return (
     <MapView
       onMapLoad={onMapLoad}
@@ -259,7 +272,7 @@ function DashboardViewComponent(props) {
       }}
     >
       <LightModeProvider>
-        <TopMenuContainer {...props} />
+        {showTopNav && <TopMenuContainer {...props} />}
         <DashboardSidebarContainer
           map={map}
           view={view}
