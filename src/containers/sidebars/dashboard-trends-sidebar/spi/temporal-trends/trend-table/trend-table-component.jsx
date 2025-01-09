@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useT } from '@transifex/react';
 
+import { numberToLocaleStringWithOneDecimal } from 'utils/dashboard-utils.js';
+
 import tableStyles from 'components/protected-areas-table/protected-areas-table-styles.module.scss';
 
 import ArrowDown from 'icons/arrow_down.svg?react';
@@ -127,14 +129,19 @@ function TrendTableComponent(props) {
                   <td className={tableStyles.firstColumn}>{row.region_name}</td>
                   <td>{row.SPI.toFixed(1)}</td>
                   <td>
-                    {row.Area.toFixed(1) ?? 0}
+                    {numberToLocaleStringWithOneDecimal(row.Area) ?? 0}
                     km<sup>2</sup>
                   </td>
                   <td>
-                    {row.AreaProtected?.toFixed(1) ?? 0}
+                    {numberToLocaleStringWithOneDecimal(row.AreaProtected) ?? 0}
                     km<sup>2</sup>
                   </td>
-                  <td>{row.VertebrateRichness}</td>
+                  <td>
+                    {numberToLocaleStringWithOneDecimal(
+                      row.VertebrateRichness,
+                      0
+                    )}
+                  </td>
                 </tr>
               ))}
           </tbody>

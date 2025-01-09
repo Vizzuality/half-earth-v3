@@ -85,9 +85,9 @@ export const createDefaultDashboardLayers = () => {
   };
 };
 
-export function numberToLocaleStringWithOneDecimal(number) {
+export function numberToLocaleStringWithOneDecimal(number, fractionDigits = 1) {
   return number.toLocaleString(undefined, {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
   });
 }

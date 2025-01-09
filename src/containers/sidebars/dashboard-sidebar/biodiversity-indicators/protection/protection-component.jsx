@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { T, useT } from '@transifex/react';
+import { useT } from '@transifex/react';
+
+import { numberToLocaleStringWithOneDecimal } from 'utils/dashboard-utils.js';
 
 import {
   Chart as ChartJS,
@@ -30,10 +32,6 @@ function ProtectionComponent(props) {
   const {
     protectionTableData,
     countryName,
-    protectionScore,
-    globalProtectionScore,
-    protectionArea,
-    globalProtectionArea,
     lightMode,
     selectedCountry,
     updateCountry,
@@ -42,9 +40,6 @@ function ProtectionComponent(props) {
     chartData,
     chartOptions,
   } = props;
-
-  const [totalArea, setTotalArea] = useState(0);
-  const [globalArea, setGlobalArea] = useState(0);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -137,28 +132,24 @@ function ProtectionComponent(props) {
                 >
                   <td>{row.country}</td>
                   <td className={styles.textCenter}>
-                    {row.stewardship.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}
-                    %
+                    {numberToLocaleStringWithOneDecimal(row.stewardship)}%
                   </td>
                   <td className={styles.textCenter}>
-                    {row.rangeProtected.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}{' '}
-                    km<sup>2</sup>
+                    {numberToLocaleStringWithOneDecimal(
+                      parseFloat(row.rangeProtected)
+                    )}{' '}
+                    km
+                    <sup>2</sup>
                   </td>
                   <td className={styles.textCenter}>
-                    {row.targetProtected.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}{' '}
-                    km<sup>2</sup>
+                    {numberToLocaleStringWithOneDecimal(
+                      parseFloat(row.targetProtected)
+                    )}{' '}
+                    km
+                    <sup>2</sup>
                   </td>
                   <td className={styles.textCenter}>
-                    {row.sps.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}
-                    %
+                    {numberToLocaleStringWithOneDecimal(row.sps)}%
                   </td>
                 </tr>
               ))}

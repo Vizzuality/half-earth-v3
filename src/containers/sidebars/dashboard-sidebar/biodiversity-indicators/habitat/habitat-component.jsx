@@ -3,6 +3,8 @@ import { Line } from 'react-chartjs-2';
 
 import { useT } from '@transifex/react';
 
+import { numberToLocaleStringWithOneDecimal } from 'utils/dashboard-utils.js';
+
 import {
   Chart as ChartJS,
   LinearScale,
@@ -24,12 +26,6 @@ ChartJS.register(
   Legend,
   CategoryScale
 );
-
-const formatValue = (value) => {
-  return value.toLocaleString(undefined, {
-    maximumFractionDigits: 2,
-  });
-};
 
 function HabitatComponent(props) {
   const t = useT();
@@ -105,15 +101,21 @@ function HabitatComponent(props) {
                 >
                   <td>{row.country}</td>
                   <td className={styles.textCenter}>
-                    {formatValue(row.stewardship)}%
+                    {numberToLocaleStringWithOneDecimal(row.stewardship)}%
                   </td>
                   <td className={styles.textCenter}>
-                    {formatValue(row.countryConnectivityScore * 100)}
+                    {numberToLocaleStringWithOneDecimal(
+                      row.countryConnectivityScore * 100
+                    )}
                   </td>
                   <td className={styles.textCenter}>
-                    {formatValue(row.countryAreaScore * 100)}
+                    {numberToLocaleStringWithOneDecimal(
+                      row.countryAreaScore * 100
+                    )}
                   </td>
-                  <td className={styles.textCenter}>{formatValue(row.shs)}%</td>
+                  <td className={styles.textCenter}>
+                    {numberToLocaleStringWithOneDecimal(row.shs)}%
+                  </td>
                 </tr>
               ))}
             </tbody>
