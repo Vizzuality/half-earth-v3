@@ -28,6 +28,7 @@ function DashboardLoginComponent(props) {
     const portal = new Portal();
     portal.authMode = 'immediate';
     portal.load().then(() => {
+      console.log(portal.user);
       setLoggedIn(true);
       setUser(portal.user);
     });
@@ -35,7 +36,7 @@ function DashboardLoginComponent(props) {
 
   useEffect(() => {
     IdentityManager.registerOAuthInfos([info]);
-
+    IdentityManager.getCredential(info.portalUrl);
     IdentityManager.checkSignInStatus(info.portalUrl)
       .then(handleLoginSuccess)
       .catch((error) => {

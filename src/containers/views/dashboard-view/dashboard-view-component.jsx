@@ -13,7 +13,7 @@ import SideMenu from 'containers/menus/sidemenu';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
 import MapView from 'components/map-view';
-import TopMenuContainer from 'components/top-menu';
+// import TopMenuContainer from 'components/top-menu';
 
 import {
   LAYER_OPTIONS,
@@ -259,7 +259,7 @@ function DashboardViewComponent(props) {
       }}
     >
       <LightModeProvider>
-        <TopMenuContainer {...props} />
+        {/* <TopMenuContainer {...props} /> */}
         <DashboardSidebarContainer
           map={map}
           view={view}
