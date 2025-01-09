@@ -10,10 +10,9 @@ import Button from 'components/button';
 
 import styles from './dashboard-login-styles.module.scss';
 
-const { ARCGIS_OAUTH_APP_ID } = import.meta.env;
-
+// TODO: Research why storing appId in .env file returns undefined
 const info = new OAuthInfo({
-  appId: ARCGIS_OAUTH_APP_ID,
+  appId: '7Xx7eWvI655rXo2l',
   popup: false,
 });
 
