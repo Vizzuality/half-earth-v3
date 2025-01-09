@@ -491,17 +491,8 @@ function DashboardContainer(props) {
     setData({ habitatTrendData, spiScoreData });
   };
 
-  function getParentUrl() {
-    if (window.parent && window.parent !== window) {
-      try {
-        return window.parent.location.href;
-      } catch (error) {
-        console.error('Error accessing parent URL:', error);
-        return null;
-      }
-    } else {
-      return null;
-    }
+  function isIframe() {
+    return window.parent !== window;
   }
 
   // Get Country information, allows to get country name
@@ -587,9 +578,7 @@ function DashboardContainer(props) {
   ]);
 
   useEffect(() => {
-    const parentUrl = getParentUrl();
-
-    if (parentUrl?.includes('.hub.arcgis.com')) {
+    if (isIframe) {
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
