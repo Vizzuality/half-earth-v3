@@ -578,7 +578,7 @@ function DashboardContainer(props) {
   ]);
 
   useEffect(() => {
-    if (isIframe) {
+    if (isIframe()) {
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
