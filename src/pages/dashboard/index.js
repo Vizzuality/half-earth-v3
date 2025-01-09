@@ -12,6 +12,8 @@ import * as urlActions from 'actions/url-actions';
 import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { setBasemap } from 'utils/layer-manager-utils.js';
 
+import Portal from '@arcgis/core/portal/Portal';
+
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION } from 'constants/dashboard-constants';
@@ -579,7 +581,12 @@ function DashboardContainer(props) {
 
   useEffect(() => {
     if (isIframe()) {
-      setLoggedIn(true);
+      const portal = new Portal();
+      portal.authMode = 'immediate';
+      portal.load().then(() => {
+        console.log('Logged in user', portal);
+        setLoggedIn(true);
+      });
     } else {
       setLoggedIn(false);
     }
