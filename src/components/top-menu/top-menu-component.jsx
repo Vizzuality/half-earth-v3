@@ -16,13 +16,9 @@ function UserProfile(props) {
     setLoggedIn(false);
   };
 
-  // useEffect(() => {
-  //   logOut();
-  // }, []);
-
   return (
     <>
-      {/* <a
+      <a
         href="https://eowilson.maps.arcgis.com/home/index.html"
         target="_blank"
         className={styles.profile}
@@ -33,7 +29,7 @@ function UserProfile(props) {
       <span>|</span>
       <button type="button" onClick={logOut}>
         {t('Logout')}
-      </button> */}
+      </button>
     </>
   );
 }

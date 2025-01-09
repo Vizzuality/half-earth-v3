@@ -36,7 +36,6 @@ function DashboardLoginComponent(props) {
 
   useEffect(() => {
     IdentityManager.registerOAuthInfos([info]);
-    IdentityManager.getCredential(info.portalUrl);
     IdentityManager.checkSignInStatus(info.portalUrl)
       .then(handleLoginSuccess)
       .catch((error) => {

@@ -50,7 +50,7 @@ function DashboardContainer(props) {
   const [filteredTaxaList, setFilteredTaxaList] = useState([]);
   const [scientificName, setScientificName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState();
   const [selectedRegion, setSelectedRegion] = useState();
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState('');
@@ -60,6 +60,7 @@ function DashboardContainer(props) {
   const [speciesListLoading, setSpeciesListLoading] = useState(true);
   const [prioritySpeciesList, setPrioritySpeciesList] = useState([]);
   const [user, setUser] = useState();
+
   const getQueryParams = () => {
     if (queryParams) {
       const {
@@ -490,6 +491,19 @@ function DashboardContainer(props) {
     setData({ habitatTrendData, spiScoreData });
   };
 
+  function getParentUrl() {
+    if (window.parent && window.parent !== window) {
+      try {
+        return window.parent.location.href;
+      } catch (error) {
+        console.error('Error accessing parent URL:', error);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
   // Get Country information, allows to get country name
   useEffect(() => {
     getQueryParams();
@@ -571,6 +585,16 @@ function DashboardContainer(props) {
     provinceName,
     user,
   ]);
+
+  useEffect(() => {
+    const parentUrl = getParentUrl();
+
+    if (parentUrl?.includes('.hub.arcgis.com')) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
 
   return (
     <DashboardComponent
