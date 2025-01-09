@@ -581,12 +581,7 @@ function DashboardContainer(props) {
 
   useEffect(() => {
     if (isIframe()) {
-      const portal = new Portal();
-      portal.authMode = 'immediate';
-      portal.load().then(() => {
-        console.log('Logged in user', portal);
-        setLoggedIn(true);
-      });
+      setLoggedIn(true);
     } else {
       setLoggedIn(false);
     }
