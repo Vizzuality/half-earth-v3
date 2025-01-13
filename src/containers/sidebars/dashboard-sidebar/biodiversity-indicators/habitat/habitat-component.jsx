@@ -47,11 +47,14 @@ function HabitatComponent(props) {
         <div className={styles.compareWrap}>
           <span className={styles.compare}>{t('Compare')}</span>
           <select value={selectedCountry} onChange={onCountryChange}>
-            {shiCountries.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
+            {shiCountries.map(
+              (item) =>
+                item !== countryName && (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                )
+            )}
           </select>
         </div>
         <div className={styles.labels}>
