@@ -482,7 +482,7 @@ function GroupedListComponent(props) {
           {key.items?.length === 0 && (
             <button
               type="button"
-              className={styles.children}
+              className={cx(styles.children, styles.ml40)}
               onClick={() => displaySingleLayer(key)}
             >
               <FormControlLabel
