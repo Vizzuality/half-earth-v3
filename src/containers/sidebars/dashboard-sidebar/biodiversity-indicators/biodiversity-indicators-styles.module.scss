@@ -34,6 +34,14 @@
     color: var(--font-color);
   }
 
+  .commonName{
+    font-size: $font-size-tick;
+    text-transform: capitalize;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--font-color);
+  }
+
   .speciesName{
     font-size: $font-size-tick;
     text-transform: capitalize;
