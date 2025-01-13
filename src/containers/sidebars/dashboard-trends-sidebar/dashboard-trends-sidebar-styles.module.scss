@@ -24,10 +24,11 @@ $info-width: 300px;
     padding: 0 10px;
 
     .title{
+      @extend %display1;
       display: flex;
       flex-direction: column;
-      width: 310px;
       color: var(--font-color);
+      font-size: $font-size-rg;
     }
 
     .tabs{
@@ -107,7 +108,7 @@ $info-width: 300px;
       gap: 10px;
       color: var(--font-color);
       margin: 0 0 calc($site-gutter / 2) 0;
-      font-size: $font-size-rg;
+      font-size: 22px;
       line-height: 1.5;
     }
 

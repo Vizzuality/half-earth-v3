@@ -6,6 +6,7 @@
 .species{
   display: flex;
   flex-direction: column;
+  gap: 10px;
   padding: $paragraph-gutter;
 
   --font-color: #{$white};
@@ -63,5 +64,19 @@
     color: var(--font-color);
     margin: 0 0 calc($site-gutter / 2) 0;
     font-size: $font-size-sm;
+  }
+
+  .source{
+    display: flex;
+    gap: 8px;
+
+    span{
+      font-weight: 700;
+      color: var(--font-color);
+    }
+
+    a{
+      color:var(--border-color);
+    }
   }
 }

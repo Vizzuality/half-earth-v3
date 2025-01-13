@@ -7,15 +7,12 @@ import TaxaImageComponent from 'components/taxa-image';
 
 import { TAXA_IMAGE_URL } from 'constants/dashboard-constants';
 
-import CongoImage from 'images/dashboard/Congolacerta_vauereselli_hendrick_hinkel.jpg';
-import HypImage from 'images/dashboard/Hyperolius_tuberculatus_brian_gratwicke.jpg';
-import LepImage from 'images/dashboard/Leptopelis_christyi_gauvain_saucy.jpeg';
-
 import styles from './species-info-styles.module.scss';
 
 function SpeciesInfoComponent(props) {
   const { speciesInfo } = props;
   const [speciesImage, setSpeciesImage] = useState();
+  const [wikiLink, setWikiLink] = useState();
 
   const { lightMode } = useContext(LightModeContext);
   useEffect(() => {
@@ -24,15 +21,14 @@ function SpeciesInfoComponent(props) {
         speciesInfo?.image.url ??
         `${TAXA_IMAGE_URL}${speciesInfo?.taxa}_icon.svg`;
 
-      if (speciesInfo.scientificname === 'Leptopelis christyi') {
-        setSpeciesImage(LepImage);
-      } else if (speciesInfo.scientificname === 'Congolacerta vauereselli') {
-        setSpeciesImage(CongoImage);
-      } else if (speciesInfo.scientificname === 'Hyperolius tuberculatus') {
-        setSpeciesImage(HypImage);
-      } else {
-        setSpeciesImage(spImage);
-      }
+      setSpeciesImage(spImage);
+
+      setWikiLink(
+        `https://en.wikipedia.org/wiki/${speciesInfo.scientificname.replace(
+          ' ',
+          '_'
+        )}`
+      );
     }
   }, [speciesInfo]);
 
@@ -47,6 +43,12 @@ function SpeciesInfoComponent(props) {
         </div>
       </div>
       <p className={styles.description}>{speciesInfo?.info?.[0].content}</p>
+      <div className={styles.source}>
+        <span>Source:</span>
+        <a href={wikiLink} target="_blank" rel="noreferrer">
+          Wikipedia
+        </a>
+      </div>
     </div>
   );
 }

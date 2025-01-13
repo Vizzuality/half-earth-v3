@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -21,6 +21,7 @@ export const TABS = {
 };
 
 function DashboardTrendsSidebar(props) {
+  const [title, setTitle] = useState();
   const t = useT();
   const {
     shiValue,
@@ -90,12 +91,26 @@ function DashboardTrendsSidebar(props) {
     setTabOption(tabClicked);
   };
 
+  useEffect(() => {
+    switch (tabOption) {
+      case TABS.SHI:
+        setTitle(t('Species Habitat Index'));
+        break;
+      case TABS.SII:
+        setTitle(t('Species Information Index'));
+        break;
+      case TABS.SPI:
+      default:
+        setTitle(t('Species Protection Index'));
+        break;
+    }
+  }, [tabOption]);
+
   return (
     <div className={styles.container}>
       <header>
         <div className={styles.title}>
-          {/* <b>{t('Conservation Metrics')}</b>
-          <label>République démocratique du Congo</label> */}
+          <b>{title}</b>
         </div>
         <div className={styles.tabs}>
           <button
