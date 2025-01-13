@@ -5,6 +5,10 @@ import { useT } from '@transifex/react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
+import Button from 'components/button';
+
+import { NAVIGATION } from 'constants/dashboard-constants.js';
+
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import styles from './biodiversity-indicators-styles.module.scss';
@@ -26,6 +30,8 @@ function BioDiversityComponent(props) {
     protectionArea,
     speciesInfo,
     globalProtectionArea,
+    selectedRegion,
+    setSelectedIndex,
   } = props;
 
   const TABS = {
@@ -35,6 +41,14 @@ function BioDiversityComponent(props) {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const handleBack = () => {
+    if (selectedRegion) {
+      setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+    } else {
+      setSelectedIndex(NAVIGATION.HOME);
+    }
+  };
+
   useEffect(() => {
     if (!protectionScore) return;
     setIsLoading(false);
@@ -42,9 +56,22 @@ function BioDiversityComponent(props) {
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
-      <span className={styles.sectionTitle}>
-        {t('Biodiversity Indicators')}
-      </span>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <span className={styles.sectionTitle}>
+          {t('Biodiversity Indicators')}
+        </span>
+        <Button
+          className={styles.back}
+          handleClick={handleBack}
+          label={t('Back')}
+        />
+      </div>
       <hr className={hrTheme.dark} />
       <span className={styles.commonName}>{speciesInfo?.commonname}</span>
       <span className={styles.speciesName}>{speciesInfo?.scientificname}</span>

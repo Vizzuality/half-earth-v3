@@ -242,12 +242,12 @@ function ProvinceChartComponent(props) {
               <b>{(filteredProvince.area_score * 100).toFixed(1)}</b>
               <span>{t('Area Score')}</span>
             </div>
-            <SpiArcChartComponent
+            {/* <SpiArcChartComponent
               width="125x"
               height="75px"
               data={shiData}
               value={filteredProvince.habitat_index * 100}
-            />
+            /> */}
             <div className={styles.values}>
               <b>{(filteredProvince.connectivity * 100).toFixed(1)}</b>
               <span>{t('Connectivity Score')}</span>
@@ -256,9 +256,9 @@ function ProvinceChartComponent(props) {
               <b>{filteredProvince.habitat_index_rank}</b>
               <span>{t('Rank')}</span>
             </div>
-            <span />
-            <span />
-            <span>{t('SHI')}</span>
+            {/* <span />
+            <span /> */}
+            {/* <span>{t('SHI')}</span> */}
           </div>
         </div>
       )}
