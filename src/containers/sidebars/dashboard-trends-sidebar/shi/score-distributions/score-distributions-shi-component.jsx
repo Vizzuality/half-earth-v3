@@ -52,6 +52,11 @@ function ScoreDistributionsShiComponent(props) {
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const { lightMode } = useContext(LightModeContext);
 
+  const toolTipTitle = (tooltipItems) => {
+    const bucket = parseInt(tooltipItems[0].label, 10);
+    return `${bucket} - ${bucket + 5}`;
+  };
+
   const options = {
     plugins: {
       title: {
@@ -59,6 +64,11 @@ function ScoreDistributionsShiComponent(props) {
       },
       legend: {
         display: false,
+      },
+      tooltip: {
+        callbacks: {
+          title: toolTipTitle,
+        },
       },
     },
     responsive: true,

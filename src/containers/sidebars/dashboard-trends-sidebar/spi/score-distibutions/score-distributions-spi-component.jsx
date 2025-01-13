@@ -38,6 +38,11 @@ function ScoreDistributionsSpiComponent(props) {
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
 
+  const toolTipTitle = (tooltipItems) => {
+    const bucket = parseInt(tooltipItems[0].label, 10);
+    return `${bucket - 5} - ${bucket}`;
+  };
+
   const options = {
     plugins: {
       title: {
@@ -45,6 +50,11 @@ function ScoreDistributionsSpiComponent(props) {
       },
       legend: {
         display: false,
+      },
+      tooltip: {
+        callbacks: {
+          title: toolTipTitle,
+        },
       },
     },
     responsive: true,
