@@ -107,7 +107,7 @@ function TemporalTrendsSpiComponent(props) {
                 <Button
                   type="rectangular"
                   className={cx(styles.saveButton, styles.notActive)}
-                  label={t('View full table')}
+                  label={t('View Full Province table')}
                   handleClick={() => setShowTable(true)}
                 />
               )}
