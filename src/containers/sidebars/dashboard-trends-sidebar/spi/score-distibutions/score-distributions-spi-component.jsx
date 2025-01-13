@@ -62,6 +62,10 @@ function ScoreDistributionsSpiComponent(props) {
           display: true,
           text: t('Protection Score'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -80,6 +84,10 @@ function ScoreDistributionsSpiComponent(props) {
           display: true,
           text: t('Number of Species'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
         },
         grid: {
           color: getCSSVariable('oslo-gray'),

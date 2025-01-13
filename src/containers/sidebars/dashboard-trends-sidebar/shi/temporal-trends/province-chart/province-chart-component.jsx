@@ -111,6 +111,10 @@ function ProvinceChartComponent(props) {
           display: true,
           text: t('Year'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -127,6 +131,10 @@ function ProvinceChartComponent(props) {
           display: true,
           text: t('Species Habitat Index'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
         },
         grid: {
           color: getCSSVariable('oslo-gray'),

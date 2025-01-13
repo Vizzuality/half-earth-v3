@@ -73,6 +73,10 @@ function TemporalTrendsSpiNationalChartComponent(props) {
           display: true,
           text: 'Year',
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -88,6 +92,10 @@ function TemporalTrendsSpiNationalChartComponent(props) {
           display: true,
           text: t('SPI / Percent of Area Protected'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
         },
         grid: {
           color: getCSSVariable('oslo-gray'),

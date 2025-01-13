@@ -205,6 +205,10 @@ function ProvinceChartComponent(props) {
           display: true,
           text: t('Total Area (1000 km2)'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
@@ -220,6 +224,10 @@ function ProvinceChartComponent(props) {
           display: true,
           text: t('Species Protection Index'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
         },
         grid: {
           color: getCSSVariable('oslo-gray'),
