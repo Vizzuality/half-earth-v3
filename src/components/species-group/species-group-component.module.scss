@@ -62,6 +62,14 @@
     text-align: left;
     font-size: $font-size-sm;
     color: var(--font-color);
+
+    .common{
+      font-weight: 700;
+    }
+
+    .sci{
+      font-style: italic;
+    }
   }
   .openDataset {
     text-decoration: underline;

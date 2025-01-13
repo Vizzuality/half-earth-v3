@@ -6,7 +6,6 @@ import { LightModeContext } from 'context/light-mode';
 import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
-  SPECIES_IMAGE_URL,
 } from 'constants/dashboard-constants.js';
 
 import TaxaImageComponent from '../taxa-image';
