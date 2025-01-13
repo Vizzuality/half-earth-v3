@@ -48,8 +48,7 @@ $info-width: 300px;
         label{
           color: var(--font-color);
           text-align: center;
-          font-family: "Roboto Flex";
-          font-size: 22px;
+          font-size: $font-size-rg;
           font-style: normal;
           font-weight: 600;
           line-height: normal;
@@ -58,8 +57,7 @@ $info-width: 300px;
         span{
           color: var(--font-color);
           text-align: center;
-          font-family: "Roboto Condensed";
-          font-size: $font-size-xs;
+          font-size: $font-size-base;
           font-style: normal;
           font-weight: 500;
           line-height: normal;

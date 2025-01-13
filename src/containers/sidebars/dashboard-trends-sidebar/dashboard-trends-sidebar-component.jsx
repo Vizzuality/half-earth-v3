@@ -101,18 +101,18 @@ function DashboardTrendsSidebar(props) {
           <button
             type="button"
             name="spi"
-            aria-label={t('Species Protection Index')}
+            aria-label={t('Protection')}
             className={cx({
               [styles.selected]: tabOption === TABS.SPI,
             })}
             onClick={() => showHideLayers(TABS.SPI)}
           >
             <label htmlFor="spi">{spiValue}</label>
-            <span>{t('Species Protection Index')}</span>
+            <span>{t('Protection')}</span>
           </button>
           <button
             type="button"
-            aria-label={t('Species Habitat Index')}
+            aria-label={t('Habitat')}
             className={cx({
               [styles.selected]: tabOption === TABS.SHI,
             })}
@@ -120,12 +120,12 @@ function DashboardTrendsSidebar(props) {
             name="shi"
           >
             <label htmlFor="shi">{shiValue}</label>
-            <span>{t('Species Habitat Index')}</span>
+            <span>{t('Habitat')}</span>
           </button>
 
           <button
             type="button"
-            aria-label={t('Species Information Index')}
+            aria-label={t('Information')}
             className={cx({
               [styles.selected]: tabOption === TABS.SII,
             })}
@@ -133,7 +133,7 @@ function DashboardTrendsSidebar(props) {
             name="sii"
           >
             <label htmlFor="sii">{siiValue}</label>
-            <span>{t('Species Information Index')}</span>
+            <span>{t('Information')}</span>
           </button>
         </div>
       </header>
