@@ -214,23 +214,24 @@
     th {
       vertical-align: bottom;
       color: var(--font-color);
+      font-weight: 700;
     }
 
     tbody {
       tr {
-        height: 30px;
-        border: 1px solid transparent;
+        height: 40px;
+        border-bottom: 1px solid var(--font-color);
+        background-color: $wild-sand;
 
-        &:nth-child(odd) {
-          background-color: $alto;
-        }
+        // &:nth-child(odd) {
+        //   background-color: $alto;
+        // }
 
-        &:nth-child(even) {
-          background-color: $wild-sand;
-        }
+        // &:nth-child(even) {
+        //   background-color: $wild-sand;
+        // }
 
         &:hover {
-          border: 1px solid var(--font-color);
           cursor: pointer;
         }
 
@@ -238,12 +239,15 @@
           border-bottom: 1px solid var(--font-color);
         }
 
-        &.highlighted {
-          background-color: rgba(0, 0, 0, 0.4);
-
+        &.defaultCountry{
+          background-color: $white;
           td{
-            color: #{$white};
+            font-weight: 700;
           }
+        }
+
+        &.highlighted {
+          background-color: $alto;
         }
       }
 

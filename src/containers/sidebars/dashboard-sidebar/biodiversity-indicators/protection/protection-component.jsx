@@ -126,12 +126,12 @@ function ProtectionComponent(props) {
                 <tr
                   key={row.country}
                   onClick={() => updateCountry({ value: row.country })}
-                  className={
-                    selectedCountry === row.country ||
-                    countryName === row.country
-                      ? styles.highlighted
-                      : ''
+                  className={`${
+                    selectedCountry === row.country ? styles.highlighted : ''
                   }
+                    ${
+                      countryName === row.country ? styles.defaultCountry : ''
+                    }`}
                 >
                   <td>{row.country}</td>
                   <td className={styles.textCenter}>
