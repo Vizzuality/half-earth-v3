@@ -41,13 +41,15 @@ function ExpandedInfo(props) {
 
   const { rangemap, image, info, scientificname } = data[0];
 
+  const imageUrl = `https://cdn.mol.org/thumbnails/square_thumb_${scientificname.replace(' ', '_')}.png`;
+
   return (
     <div className={styles.expandedInfo}>
       <div className={styles.imagesContainer}>
         <Image
           title={`${speciesName} ${t(' Range map')}`}
           alt={`${speciesName} ${t(' Range map')}`}
-          src={rangemap}
+          src={imageUrl}
           className={styles.image}
         />
         <Image
