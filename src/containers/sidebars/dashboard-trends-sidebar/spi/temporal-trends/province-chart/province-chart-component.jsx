@@ -82,7 +82,8 @@ function ProvinceChartComponent(props) {
       const { AreaProtected, SPI, region_name } = region;
       data.push({
         ...region,
-        data: [{ label: region_name, x: AreaProtected, y: SPI, r: 10 }],
+        label: region_name,
+        data: [{ x: AreaProtected, y: SPI, r: 8 }],
         backgroundColor: getCSSVariable('bubble'),
         borderColor: getCSSVariable('white'),
       });
