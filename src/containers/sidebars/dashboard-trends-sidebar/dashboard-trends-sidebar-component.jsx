@@ -91,43 +91,25 @@ function DashboardTrendsSidebar(props) {
     setTabOption(tabClicked);
   };
 
-  useEffect(() => {
-    switch (tabOption) {
-      case TABS.SHI:
-        setTitle(t('Species Habitat Index'));
-        break;
-      case TABS.SII:
-        setTitle(t('Species Information Index'));
-        break;
-      case TABS.SPI:
-      default:
-        setTitle(t('Species Protection Index'));
-        break;
-    }
-  }, [tabOption]);
-
   return (
     <div className={styles.container}>
       <header>
-        <div className={styles.title}>
-          <b>{title}</b>
-        </div>
         <div className={styles.tabs}>
           <button
             type="button"
             name="spi"
-            aria-label={t('Protection')}
+            aria-label={t('Species Protection Index')}
             className={cx({
               [styles.selected]: tabOption === TABS.SPI,
             })}
             onClick={() => showHideLayers(TABS.SPI)}
           >
             <label htmlFor="spi">{spiValue}</label>
-            <span>{t('Protection')}</span>
+            <span>{t('Species Protection Index')}</span>
           </button>
           <button
             type="button"
-            aria-label={t('Habitat')}
+            aria-label={t('Species Habitat Index')}
             className={cx({
               [styles.selected]: tabOption === TABS.SHI,
             })}
@@ -135,12 +117,12 @@ function DashboardTrendsSidebar(props) {
             name="shi"
           >
             <label htmlFor="shi">{shiValue}</label>
-            <span>{t('Habitat')}</span>
+            <span>{t('Species Habitat Index')}</span>
           </button>
 
           <button
             type="button"
-            aria-label={t('Information')}
+            aria-label={t('Species Information Index')}
             className={cx({
               [styles.selected]: tabOption === TABS.SII,
             })}
@@ -148,7 +130,7 @@ function DashboardTrendsSidebar(props) {
             name="sii"
           >
             <label htmlFor="sii">{siiValue}</label>
-            <span>{t('Information')}</span>
+            <span>{t('Species Information Index')}</span>
           </button>
         </div>
       </header>

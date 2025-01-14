@@ -35,8 +35,6 @@ $info-width: 300px;
       display: flex;
       justify-content: space-evenly;
       margin-top: 10px;
-      padding-left: 26px;
-      padding-right: 5px;
       flex-grow: 1;
       border-bottom: solid 2px var(--border-color);
 
@@ -58,7 +56,7 @@ $info-width: 300px;
         span{
           color: var(--font-color);
           text-align: center;
-          font-size: $font-size-base;
+          font-size: $font-size-ml;
           font-style: normal;
           font-weight: 500;
           line-height: normal;
