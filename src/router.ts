@@ -14,10 +14,10 @@ export const MAP_IFRAME = 'location/MAP_IFRAME';
 export const DASHBOARD = 'location/DASHBOARD';
 
 export const routes: RoutesMap<{ path: string; page?: string }> = {
-  [LANDING]: {
-    path: '/',
-    page: 'landing',
-  },
+  // [LANDING]: {
+  //   path: '/',
+  //   page: 'landing',
+  // },
   [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe',
@@ -39,7 +39,7 @@ export const routes: RoutesMap<{ path: string; page?: string }> = {
     page: 'aoi',
   },
   [DASHBOARD]: {
-    path: '/dashboard/:iso',
+    path: '/',
     page: 'dashboard',
   },
   [NOT_FOUND]: {
