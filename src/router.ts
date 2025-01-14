@@ -44,7 +44,7 @@ export const routes: RoutesMap<{ path: string; page?: string }> = {
   },
   [NOT_FOUND]: {
     path: '/404',
-    thunk: (dispatch) => dispatch(redirect({ type: LANDING })),
+    thunk: (dispatch) => dispatch(redirect({ type: DASHBOARD })),
   },
 };
 
