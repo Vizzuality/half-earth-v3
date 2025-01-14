@@ -6,6 +6,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
+import logo from 'logos/institut-congolais.png';
 
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
 
@@ -70,6 +71,7 @@ function DashboardSidebar(props) {
         {!lightMode && <LightModeIcon className={styles.icon} />}
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
+      <img className={styles.logo} src={logo} alt="Logo" />
       <h1>{countryName}</h1>
 
       <div className={styles.regionFilter}>
