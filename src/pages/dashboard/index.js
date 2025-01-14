@@ -12,8 +12,6 @@ import * as urlActions from 'actions/url-actions';
 import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { setBasemap } from 'utils/layer-manager-utils.js';
 
-import Portal from '@arcgis/core/portal/Portal';
-
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION } from 'constants/dashboard-constants';
@@ -52,7 +50,7 @@ function DashboardContainer(props) {
   const [filteredTaxaList, setFilteredTaxaList] = useState([]);
   const [scientificName, setScientificName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
-  const [loggedIn, setLoggedIn] = useState();
+  const [loggedIn, setLoggedIn] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState();
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState('');
@@ -579,13 +577,13 @@ function DashboardContainer(props) {
     user,
   ]);
 
-  useEffect(() => {
-    if (isIframe()) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isIframe()) {
+  //     setLoggedIn(true);
+  //   } else {
+  //     setLoggedIn(false);
+  //   }
+  // }, []);
 
   return (
     <DashboardComponent

@@ -28,7 +28,6 @@ function DashboardLoginComponent(props) {
     const portal = new Portal();
     portal.authMode = 'immediate';
     portal.load().then(() => {
-      console.log(portal.user);
       setLoggedIn(true);
       setUser(portal.user);
     });
