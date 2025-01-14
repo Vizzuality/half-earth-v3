@@ -491,9 +491,9 @@ function DashboardContainer(props) {
     setData({ habitatTrendData, spiScoreData });
   };
 
-  function isIframe() {
-    return window.parent !== window;
-  }
+  // function isIframe() {
+  //   return window.parent !== window;
+  // }
 
   // Get Country information, allows to get country name
   useEffect(() => {

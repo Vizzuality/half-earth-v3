@@ -60,7 +60,7 @@ function DashboardViewComponent(props) {
   const [layerView, setLayerView] = useState();
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
-  const [showTopNav, setShowTopNav] = useState(true);
+  // const [showTopNav, setShowTopNav] = useState(true);
   let hoverHighlight;
 
   const getLayerView = async () => {
@@ -207,9 +207,9 @@ function DashboardViewComponent(props) {
     highlight = layerView?.highlight(foundRegion.graphic);
   };
 
-  function isIframe() {
-    return window.parent !== window;
-  }
+  // function isIframe() {
+  //   return window.parent !== window;
+  // }
 
   useEffect(() => {
     if (!view) return;
@@ -221,10 +221,16 @@ function DashboardViewComponent(props) {
   useEffect(async () => {
     let layer;
     if (view && Object.keys(regionLayers).length) {
-      if (tabOption === TABS.SPI) {
-        layer = await view.whenLayerView(regionLayers[LAYER_OPTIONS.PROVINCES]);
-      } else if (tabOption === TABS.SHI) {
-        layer = await view.whenLayerView(regionLayers[`${countryISO}-outline`]);
+      if (selectedIndex === NAVIGATION.TRENDS) {
+        if (tabOption === TABS.SPI) {
+          layer = await view.whenLayerView(
+            regionLayers[LAYER_OPTIONS.PROVINCES]
+          );
+        } else if (tabOption === TABS.SHI) {
+          layer = await view.whenLayerView(
+            regionLayers[`${countryISO}-outline`]
+          );
+        }
       } else {
         layer = await getLayerView();
       }
@@ -249,13 +255,13 @@ function DashboardViewComponent(props) {
     setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
   }, [layerView]);
 
-  useEffect(() => {
-    if (isIframe()) {
-      setShowTopNav(false);
-    } else {
-      setShowTopNav(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isIframe()) {
+  //     setShowTopNav(false);
+  //   } else {
+  //     setShowTopNav(true);
+  //   }
+  // }, []);
 
   return (
     <MapView
@@ -272,7 +278,7 @@ function DashboardViewComponent(props) {
       }}
     >
       <LightModeProvider>
-        {showTopNav && <TopMenuContainer {...props} />}
+        <TopMenuContainer {...props} />
         <DashboardSidebarContainer
           map={map}
           view={view}
