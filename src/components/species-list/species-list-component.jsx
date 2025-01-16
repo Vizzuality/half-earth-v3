@@ -61,7 +61,7 @@ function SpeciesListComponent(props) {
     setSelectedTaxa(taxa);
     const fc = {};
 
-    const sto = filteredTaxaList?.find((t) => t.taxa === taxa);
+    const sto = filteredTaxaList?.find((tax) => tax.taxa === taxa);
     if (sto === undefined) return;
 
     setInFilter(sto?.species?.length);
@@ -95,6 +95,18 @@ function SpeciesListComponent(props) {
     setSelectedTaxaObj(sto);
   };
 
+  const sortFilteredSpecies = (species) => {
+    return species?.sort((a, b) => {
+      if (a.scientific_name < b.scientific_name) {
+        return -1;
+      }
+      if (a.scientific_name > b.scientific_name) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
   const applyFilter = () => {
     // this.virtualScroll?.scrollToIndex(0);
     const inFilterCheck = (sp) => sp.common_name?.indexOf(filter) > -1;
@@ -118,7 +130,7 @@ function SpeciesListComponent(props) {
       updateResult.visible = inFilterCheck(result);
       if (updateResult.visible) {
         let inf = inFilter;
-        setInFilter(inf++);
+        setInFilter((inf += 1));
         fc[updateResult.family].visibleCount += 1;
 
         group[catName] = group[catName] ?? [];
@@ -168,18 +180,6 @@ function SpeciesListComponent(props) {
     setSelectedTaxa('');
   };
 
-  const sortFilteredSpecies = (species) => {
-    return species?.sort((a, b) => {
-      if (a.scientific_name < b.scientific_name) {
-        return -1;
-      }
-      if (a.scientific_name > b.scientific_name) {
-        return 1;
-      }
-      return 0;
-    });
-  };
-
   useEffect(() => {
     if (!selectedTaxa) return;
     updateSelectedTaxa(selectedTaxa);
@@ -216,12 +216,12 @@ function SpeciesListComponent(props) {
       <hr className={hrTheme.dark} />
       <div className={styles.taxaList}>
         {!selectedTaxa &&
-          filteredTaxaList?.map((taxa, index) => {
+          filteredTaxaList?.map((taxa) => {
             return (
               <button
                 type="button"
                 className={styles.title}
-                key={index}
+                key={taxa.taxa}
                 onClick={() => updateSelectedTaxa(taxa.taxa)}
               >
                 <TaxaImageComponent taxa={taxa.taxa} />

@@ -37,6 +37,7 @@ function GroupedListComponent(props) {
     setShowHabitatChart,
     setIsHabitatChartLoading,
     isPrivate,
+    setMapLegendLayers,
   } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
@@ -69,17 +70,18 @@ function GroupedListComponent(props) {
     setDataPoints(updatedDataPoints);
   };
 
-  const displaySingleLayer = (item) => {
+  const displaySingleLayer = async (item) => {
+    let updatedDataPoints = [];
+
     if (item.items?.length === 0) {
-      const updatedDataPoints = dataPoints.map((dp) => {
+      updatedDataPoints = dataPoints.map((dp) => {
         if (dp.id === item.id) {
           return { ...dp, isActive: !dp.isActive };
         }
         return dp;
       });
-      setDataPoints(updatedDataPoints);
     } else {
-      const updatedDataPoints = dataPoints.map((dp) => {
+      updatedDataPoints = dataPoints.map((dp) => {
         if (dp.id === item.parentId) {
           return {
             ...dp,
@@ -94,58 +96,34 @@ function GroupedListComponent(props) {
         }
         return dp;
       });
-      setDataPoints(updatedDataPoints);
     }
 
+    setDataPoints(updatedDataPoints);
+
     const id = item.id ?? item.parentId;
+    let layer;
+
     if (id === LAYER_OPTIONS.PROTECTED_AREAS) {
       if (!item.isActive) {
-        const layers = EsriFeatureService.addProtectedAreaLayer(
+        layer = await EsriFeatureService.addProtectedAreaLayer(
           null,
           countryISO
         );
-
-        setRegionLayers((rl) => ({
-          ...rl,
-          [id]: layers,
-        }));
-        map.add(layers);
-      } else {
-        const layer = regionLayers[id];
-        setRegionLayers((rl) => {
-          const { [id]: name, ...rest } = rl;
-          return rest;
-        });
-        map.remove(layer);
       }
     } else if (id === LAYER_OPTIONS.ADMINISTRATIVE_LAYERS) {
       if (!item.isActive) {
-        const layer = EsriFeatureService.getFeatureLayer(
+        layer = await EsriFeatureService.getFeatureLayer(
           PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
           countryISO,
           id
         );
-
-        setRegionLayers((rl) => ({
-          ...rl,
-          [id]: layer,
-        }));
-        map.add(layer);
-      } else {
-        const layer = regionLayers[id];
-        setRegionLayers((rl) => {
-          const { [id]: name, ...rest } = rl;
-          return rest;
-        });
-        map.remove(layer);
       }
     } else if (id === LAYER_OPTIONS.HABITAT) {
-      const layerName = id;
       if (!item.isActive) {
         setIsHabitatChartLoading(true);
-        const webTileLayer = EsriFeatureService.getXYZLayer(
+        layer = await EsriFeatureService.getXYZLayer(
           speciesInfo.scientificname.replace(' ', '_'),
-          layerName,
+          id,
           LAYER_TITLE_TYPES.TREND
         );
 
@@ -159,29 +137,16 @@ function GroupedListComponent(props) {
           layerIndex = map.layers.items.length;
         }
 
-        webTileLayer.then((layer) => {
-          setRegionLayers((rl) => ({
-            ...rl,
-            [layerName]: layer,
-          }));
-          map.add(layer);
-
-          view.whenLayerView(layer).then((layerView) => {
-            layerView.watch('updating', (val) => {
-              if (!val) {
-                setIsHabitatChartLoading(false);
-                setShowHabitatChart(true);
-              }
-            });
+        view.whenLayerView(layer).then((layerView) => {
+          layerView.watch('updating', (val) => {
+            if (!val) {
+              setIsHabitatChartLoading(false);
+              setShowHabitatChart(true);
+            }
           });
         });
       } else {
         setShowHabitatChart(false);
-        setRegionLayers((rl) => {
-          const { [layerName]: name, ...rest } = rl;
-          return rest;
-        });
-        map.remove(regionLayers[layerName]);
       }
     } else if (id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
       if (isPrivate) {
@@ -201,40 +166,54 @@ function GroupedListComponent(props) {
             default:
               break;
           }
-          const layer = EsriFeatureService.getFeatureLayer(url, null, id);
-
-          setRegionLayers((rl) => ({
-            ...rl,
-            [id]: layer,
-          }));
-          map.add(layer);
-        } else {
-          const layer = regionLayers.POINT_OBSERVATIONS;
-          setRegionLayers((rl) => {
-            const { [id]: name, ...rest } = rl;
-            return rest;
-          });
-          map.remove(layer);
+          layer = await EsriFeatureService.getFeatureLayer(url, null, id);
         }
       }
     }
+
+    // check if item is active to add/remove from Map Legend
+    if (!item.isActive) {
+      setMapLegendLayers((ml) => [...ml, item]);
+
+      setRegionLayers((rl) => ({
+        ...rl,
+        [id]: layer,
+      }));
+      map.add(layer);
+    } else {
+      setMapLegendLayers((ml) => {
+        const filtered = ml.filter(
+          (l) => l.id !== item.id || l.parentId !== item.parentId
+        );
+        return filtered;
+      });
+
+      // remove layer from map
+      const layerToRemove = regionLayers[id];
+      setRegionLayers((rl) => {
+        const { [id]: name, ...rest } = rl;
+        return rest;
+      });
+      map.remove(layerToRemove);
+    }
   };
 
-  const findLayerToShow = (item) => {
+  const findLayerToShow = async (item) => {
     const layerParent = item.type_title.toUpperCase();
     const layerName = item.dataset_title.toUpperCase();
     let layer;
+    let layerIndex;
 
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive) {
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
-          const webTileLayer = EsriFeatureService.getXYZLayer(
+          layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
             layerName,
             LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS
           );
 
-          let layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT) - 1;
+          layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT) - 1;
 
           if (layerIndex < 0) {
             layerIndex = searchForLayers('GBIF (2023)') - 1;
@@ -244,20 +223,29 @@ function GroupedListComponent(props) {
             layerIndex = map.layers.items.length;
           }
 
-          webTileLayer.then((l) => {
-            setRegionLayers((rl) => ({
-              ...rl,
-              [layerName]: l,
-            }));
-            map.add(l, layerIndex);
-          });
+          item.isActive = true;
+          setRegionLayers((rl) => ({
+            ...rl,
+            [layerName]: layer,
+          }));
+          map.add(layer, layerIndex);
+
+          setMapLegendLayers((ml) => [...ml, item]);
         }
       } else {
+        item.isActive = false;
         setRegionLayers((rl) => {
           const { [layerName]: name, ...rest } = rl;
           return rest;
         });
         map.remove(regionLayers[layerName]);
+
+        setMapLegendLayers((ml) => {
+          const filtered = ml.filter(
+            (l) => l.id !== item.id || l.parentId !== item.parentId
+          );
+          return filtered;
+        });
       }
     }
 
@@ -269,56 +257,63 @@ function GroupedListComponent(props) {
           if (layerName.match(/EBIRD/)) {
             name = `ebird_${speciesInfo.scientificname.replace(' ', '_')}`;
 
-            layer = EsriFeatureService.getGeoJsonLayer(
+            layer = await EsriFeatureService.getGeoJsonLayer(
               name,
               layerName,
               countryISO
             );
-            setRegionLayers((rl) => ({
-              ...rl,
-              [layerName]: layer,
-            }));
           } else if (layerName.match(/GBIF/)) {
             name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`;
 
-            layer = EsriFeatureService.getFeatureOccurenceLayer(
+            layer = await EsriFeatureService.getFeatureOccurenceLayer(
               GBIF_OCCURENCE_URL,
               speciesInfo.scientificname,
               layerName
             );
-
-            setRegionLayers((rl) => ({
-              ...rl,
-              [layerName]: layer,
-            }));
           }
 
-          let layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT);
+          layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT);
 
           if (layerIndex < 0) {
             layerIndex = map.layers.items.length;
           }
-          map.add(layer, layerIndex + 1);
+
+          layerIndex += 1;
+          item.isActive = true;
+          setRegionLayers((rl) => ({
+            ...rl,
+            [layerName]: layer,
+          }));
+          map.add(layer, layerIndex);
+
+          setMapLegendLayers((ml) => [...ml, item]);
         }
       } else {
-        // const { [layerName]: name, ...rest } = regionLayers;
+        item.isActive = false;
         setRegionLayers((rl) => {
           const { [layerName]: name, ...rest } = rl;
           return rest;
         });
-
         map.remove(regionLayers[layerName]);
+
+        setMapLegendLayers((ml) => {
+          const filtered = ml.filter(
+            (l) => l.id !== item.id || l.parentId !== item.parentId
+          );
+          return filtered;
+        });
       }
     }
 
     if (layerParent === LAYER_TITLE_TYPES.REGIONAL_CHECKLISTS) {
       if (!item.isActive) {
-        const layer = EsriFeatureService.getMVTSource();
+        layer = await EsriFeatureService.getMVTSource();
 
         setRegionLayers((rl) => ({
           ...rl,
           [layerName]: layer,
         }));
+        map.add(layer, layerIndex);
 
         map.addSource('mapTiles', {
           type: 'vector',
@@ -340,8 +335,6 @@ function GroupedListComponent(props) {
         map.remove(regionLayers[layerName]);
       }
     }
-
-    displaySingleLayer(item);
   };
 
   // update value of all children
@@ -362,15 +355,6 @@ function GroupedListComponent(props) {
       return dp;
     });
     setDataPoints(updatedDataPoints);
-
-    // setDataPoints({
-    //   ...dataPoints,
-    //   [item]: {
-    //     ...item,
-    //     isActive,
-    //     items: [...typeItems],
-    //   },
-    // });
   };
 
   // check if some but not all children are selected

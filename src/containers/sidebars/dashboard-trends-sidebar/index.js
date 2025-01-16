@@ -25,6 +25,7 @@ import {
 import Component, {
   NATIONAL_TREND,
   PROVINCE_TREND,
+  TABS,
 } from './dashboard-trends-sidebar-component.jsx';
 import mapStateToProps from './selectors';
 
@@ -110,8 +111,10 @@ function DashboardTrendsSidebarContainer(props) {
 
   const getShiProvinceData = (provinceURL) => {
     EsriFeatureService.getFeatures(provinceURL).then((features) => {
-      const data = features.map((f) => f.attributes);
-      setShiProvinceTrendData(data);
+      if (features) {
+        const data = features.map((f) => f.attributes);
+        setShiProvinceTrendData(data);
+      }
     });
   };
 
@@ -120,6 +123,34 @@ function DashboardTrendsSidebarContainer(props) {
       const data = features.map((f) => f.attributes);
       setShiSelectSpeciesData(data);
     });
+  };
+
+  const getNationalData = () => {
+    const shiScoresDataURL = {
+      url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
+      whereClause: `iso3 = '${countryISO}'`,
+    };
+    getScoresData(shiScoresDataURL);
+
+    const shiSpeciesScoresURL = {
+      url: DASHBOARD_URLS.SHI_SPECIES_URL,
+      whereClause: `iso3 = '${countryISO}' and HabitatScore >= 1 and HabitatScore <= 5 and SpeciesImage IS NOT NULL`,
+    };
+    getShiSelectSpeciesData(shiSpeciesScoresURL);
+  };
+
+  const getProvinceSpiData = (whereClause) => {
+    const scoreDataURL = {
+      url: DASHBOARD_URLS.SPI_HISTOGRAM_URL,
+      whereClause: `${whereClause}`,
+    };
+    getSpiScoreData(scoreDataURL);
+
+    const selectSpeciesURL = {
+      url: DASHBOARD_URLS.SPI_REGION_SPECIES_URL,
+      whereClause: `${whereClause} and species_protection_score_all >= 0 and species_protection_score_all <= 5 and species_url IS NOT NULL`,
+    };
+    getSpiSelectSpeciesData(selectSpeciesURL);
   };
 
   // find and zoom to region
@@ -231,56 +262,41 @@ function DashboardTrendsSidebarContainer(props) {
   }, []);
 
   useEffect(() => {
-    if (!selectedProvince) return;
+    if (
+      !selectedProvince &&
+      (tabOption === TABS.SHI || tabOption === TABS.SII)
+    ) {
+      getNationalData();
+    } else if (selectedProvince) {
+      const shiWhereClause = `iso3 = '${countryISO}' and iso3_regional = '${
+        selectedProvince.iso3_regional ?? selectedProvince.GID_1
+      }'`;
 
-    let whereClause = `ISO3_regional = '${
-      selectedProvince.iso3_regional ?? selectedProvince.GID_1
-    }'`;
-    let shiWhereClause = `iso3 = '${countryISO}' and iso3_regional = '${
-      selectedProvince.iso3_regional ?? selectedProvince.GID_1
-    }'`;
-    if (activeTrend === NATIONAL_TREND || shiActiveTrend === NATIONAL_TREND) {
-      whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
-      shiWhereClause = `iso3 = '${countryISO}'`;
-    }
+      let whereClause = `ISO3_regional = '${
+        selectedProvince.iso3_regional ?? selectedProvince.GID_1
+      }'`;
+      if (activeTrend === NATIONAL_TREND) {
+        whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
+      }
 
-    // GET SPI
-    const scoreDataURL = {
-      url: DASHBOARD_URLS.SPI_HISTOGRAM_URL,
-      whereClause: `${whereClause}`,
-    };
-    getSpiScoreData(scoreDataURL);
+      // GET SPI
+      getProvinceSpiData(whereClause);
 
-    const selectSpeciesURL = {
-      url: DASHBOARD_URLS.SPI_REGION_SPECIES_URL,
-      whereClause: `${whereClause} and species_protection_score_all >= 0 and species_protection_score_all <= 5 and species_url IS NOT NULL`,
-    };
-    getSpiSelectSpeciesData(selectSpeciesURL);
+      if (shiActiveTrend === NATIONAL_TREND) {
+        getNationalData();
+      } else {
+        const shiScoresDataURL = {
+          url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
+          whereClause: `${shiWhereClause}`,
+        };
+        getScoresData(shiScoresDataURL);
 
-    if (shiActiveTrend === NATIONAL_TREND) {
-      const shiScoresDataURL = {
-        url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
-        whereClause: `${shiWhereClause}`,
-      };
-      getScoresData(shiScoresDataURL);
-
-      const shiSpeciesScoresURL = {
-        url: DASHBOARD_URLS.SHI_SPECIES_URL,
-        whereClause: `${shiWhereClause} and HabitatScore >= 1 and HabitatScore <= 5 and SpeciesImage IS NOT NULL`,
-      };
-      getShiSelectSpeciesData(shiSpeciesScoresURL);
-    } else {
-      const shiScoresDataURL = {
-        url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
-        whereClause: `${shiWhereClause}`,
-      };
-      getScoresData(shiScoresDataURL);
-
-      const shiSpeciesScoresURL = {
-        url: DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL,
-        whereClause: `${whereClause} and habitat_score >= 1 and habitat_score <= 5 and species_url IS NOT NULL`,
-      };
-      getShiSelectSpeciesData(shiSpeciesScoresURL);
+        const shiSpeciesScoresURL = {
+          url: DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL,
+          whereClause: `${whereClause} and habitat_score >= 1 and habitat_score <= 5 and species_url IS NOT NULL`,
+        };
+        getShiSelectSpeciesData(shiSpeciesScoresURL);
+      }
     }
   }, [selectedProvince, activeTrend, shiActiveTrend]);
 

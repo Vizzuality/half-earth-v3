@@ -60,6 +60,12 @@ export const LAYER_OPTIONS = {
   EXPERT_RANGE_MAPS: 'EXPERT_RANGE_MAPS',
 };
 
+export const DATA_POINT_TYPE = {
+  PRIVATE: 'PRIVATE',
+  PUBLIC: 'PUBLIC',
+  REGIONS_DATA: 'REGIONS_DATA',
+};
+
 export const TAXA_IMAGE_URL = 'icons/dashboard/';
 
 export const SPECIES_IMAGE_URL =

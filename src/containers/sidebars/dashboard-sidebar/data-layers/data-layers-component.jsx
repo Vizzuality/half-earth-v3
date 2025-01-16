@@ -21,7 +21,11 @@ import { Loading } from 'he-components';
 
 import Button from 'components/button';
 
-import { LAYER_OPTIONS, NAVIGATION } from 'constants/dashboard-constants.js';
+import {
+  LAYER_OPTIONS,
+  NAVIGATION,
+  DATA_POINT_TYPE,
+} from 'constants/dashboard-constants.js';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
@@ -55,6 +59,7 @@ function DataLayerComponent(props) {
       total_no_rows: '',
       isActive: false,
       showChildren: false,
+      type: DATA_POINT_TYPE.PRIVATE,
       id: LAYER_OPTIONS.POINT_OBSERVATIONS,
     },
   ]);
@@ -65,6 +70,7 @@ function DataLayerComponent(props) {
       total_no_rows: '',
       isActive: false,
       showChildren: false,
+      type: DATA_POINT_TYPE.REGIONS_DATA,
       id: LAYER_OPTIONS.PROTECTED_AREAS,
     },
     // 'Proposed Protection': {
@@ -79,6 +85,7 @@ function DataLayerComponent(props) {
       total_no_rows: '',
       isActive: false,
       showChildren: false,
+      type: DATA_POINT_TYPE.REGIONS_DATA,
       id: LAYER_OPTIONS.ADMINISTRATIVE_LAYERS,
     },
   ]);
@@ -146,6 +153,7 @@ function DataLayerComponent(props) {
             isActive: false,
             showChildren: false,
             items: [],
+            type: DATA_POINT_TYPE.PUBLIC,
             id:
               groupKey.toUpperCase() === 'EXPERT RANGE MAPS'
                 ? LAYER_OPTIONS.EXPERT_RANGE_MAPS
@@ -219,6 +227,7 @@ function DataLayerComponent(props) {
         total_no_rows: '',
         isActive: false,
         showChildren: false,
+        type: DATA_POINT_TYPE.PUBLIC,
       },
     ];
     setDataPoints(publicData);
