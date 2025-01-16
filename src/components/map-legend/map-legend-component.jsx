@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -8,9 +8,16 @@ function MapLegendComponent(props) {
   const { mapLegendLayers } = props;
   const t = useT();
 
-  useEffect(() => {
-    console.log(mapLegendLayers);
-  }, [mapLegendLayers]);
+  const getLayerIcon = (layer) => {
+    // Add logic to determine the icon based on the layer properties
+    if (layer.type === 'raster') {
+      return '🗺️'; // Example icon for raster layers
+    }
+    if (layer.type === 'vector') {
+      return '📊'; // Example icon for vector layers
+    }
+    return '❓'; // Default icon for unknown layer types
+  };
 
   return (
     <div className={styles.container}>
@@ -23,7 +30,7 @@ function MapLegendComponent(props) {
             <div className={styles.info}>
               <b>{layer.label?.toLowerCase()}</b>
               <span>{layer.parent}</span>
-              <span>Image</span>
+              <span>{getLayerIcon(layer)}</span>
             </div>
           </li>
         ))}

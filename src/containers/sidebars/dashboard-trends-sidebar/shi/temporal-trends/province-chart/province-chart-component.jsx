@@ -257,6 +257,10 @@ function ProvinceChartComponent(props) {
               value={filteredProvince.habitat_index * 100}
             /> */}
             <div className={styles.values}>
+              <b>{(filteredProvince.habitat_index * 100).toFixed(1)}</b>
+              <span>{t('SHI')}</span>
+            </div>
+            <div className={styles.values}>
               <b>{(filteredProvince.connectivity * 100).toFixed(1)}</b>
               <span>{t('Connectivity Score')}</span>
             </div>

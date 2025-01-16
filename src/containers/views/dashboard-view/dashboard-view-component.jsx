@@ -52,6 +52,7 @@ function DashboardViewComponent(props) {
     setRegionLayers,
     tabOption,
     setSelectedProvince,
+    mapLegendLayers,
   } = props;
 
   const [map, setMap] = useState(null);
@@ -61,6 +62,8 @@ function DashboardViewComponent(props) {
   const [layerView, setLayerView] = useState();
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
+
+  const [showLegend, setShowLegend] = useState(false);
   // const [showTopNav, setShowTopNav] = useState(true);
   let hoverHighlight;
 
@@ -256,6 +259,15 @@ function DashboardViewComponent(props) {
     setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
   }, [layerView]);
 
+  useEffect(() => {
+    console.log(mapLegendLayers);
+    if (Object.values(mapLegendLayers).length > 0) {
+      setShowLegend(true);
+    } else {
+      setShowLegend(false);
+    }
+  }, [mapLegendLayers]);
+
   // useEffect(() => {
   //   if (isIframe()) {
   //     setShowTopNav(false);
@@ -280,7 +292,7 @@ function DashboardViewComponent(props) {
     >
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
-        <MapLegendContainer {...props} />
+        {showLegend && <MapLegendContainer {...props} />}
         <DashboardSidebarContainer
           map={map}
           view={view}
