@@ -59,6 +59,7 @@ function DashboardContainer(props) {
   const [provinceName, setProvinceName] = useState();
   const [speciesListLoading, setSpeciesListLoading] = useState(true);
   const [prioritySpeciesList, setPrioritySpeciesList] = useState([]);
+  const [mapLegendLayers, setMapLegendLayers] = useState([]);
   const [user, setUser] = useState();
 
   const getQueryParams = () => {
@@ -162,6 +163,11 @@ function DashboardContainer(props) {
           dld.no_rows = 0;
         }
       }
+
+      dld.parent = dld.type_title;
+      dld.label = dld.dataset_title;
+
+      return dld;
     });
 
     setDataLayerData(dataLayersData);
@@ -457,9 +463,11 @@ function DashboardContainer(props) {
       returnGeometry: false,
     });
 
-    const species = features.map(({ attributes }) => attributes);
+    if (features) {
+      const species = features.map(({ attributes }) => attributes);
 
-    setPrioritySpeciesList(species);
+      setPrioritySpeciesList(species);
+    }
   };
 
   const handleMapLoad = (map, activeLayers) => {
@@ -622,6 +630,8 @@ function DashboardContainer(props) {
       setUser={setUser}
       speciesListLoading={speciesListLoading}
       prioritySpeciesList={prioritySpeciesList}
+      mapLegendLayers={mapLegendLayers}
+      setMapLegendLayers={setMapLegendLayers}
       {...props}
     />
   );
