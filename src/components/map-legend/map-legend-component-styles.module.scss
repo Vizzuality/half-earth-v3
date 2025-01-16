@@ -1,0 +1,47 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  position: absolute;
+  top: 25px;
+  left: 630px;
+  background-color: $app-background;
+  padding: 8px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px 0px $black;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .title{
+    font-weight: 700;
+    padding-bottom: 10px;
+  }
+
+  .layers{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    color: $white;
+
+    li{
+      display: flex;
+
+      .info{
+        display: flex;
+        flex-direction: column;
+        text-transform: capitalize;
+        font-size: $font-size-xs;
+
+        span{
+          font-style: italic;
+        }
+      }
+    }
+  }
+}
