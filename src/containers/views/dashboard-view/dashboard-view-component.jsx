@@ -12,6 +12,7 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
+import MapLegendContainer from 'components/map-legend';
 import MapView from 'components/map-view';
 import TopMenuContainer from 'components/top-menu';
 
@@ -21,7 +22,6 @@ import {
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
 
-import MapLegendContainer from '../../../components/map-legend';
 import { TABS } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
@@ -280,7 +280,7 @@ function DashboardViewComponent(props) {
     >
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
-        {/* <MapLegendContainer {...props} /> */}
+        <MapLegendContainer {...props} />
         <DashboardSidebarContainer
           map={map}
           view={view}

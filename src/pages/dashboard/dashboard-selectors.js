@@ -5,7 +5,8 @@ import { selectGlobeUrlState } from 'selectors/location-selectors';
 
 import dashboardViewConfig from '../../containers/views/dashboard-view/dashboard-view-config';
 
-const selectCountryIso = () => window.location.hostname;
+const selectCountryIso = () =>
+  window.location.hostname.split('.')[0].toUpperCase();
 const selectCountriesData = ({ countryData }) =>
   countryData && (countryData.data || null);
 const selectQueryParams = ({ location }) => location.query;
@@ -22,13 +23,10 @@ export const getActiveLayers = createSelector(
   (viewSettings) => viewSettings.activeLayers
 );
 
-export const getCountryISO = createSelector(selectCountryIso, (countryISO) => {
-  const parts = countryISO.split('.');
-
-  if (parts.length > 1) {
-    return parts[0].toUpperCase();
-  }
-});
+export const getCountryISO = createSelector(
+  selectCountryIso,
+  (countryISO) => countryISO
+);
 
 const getCountryData = createSelector(
   [selectCountriesData, selectCountryIso],
