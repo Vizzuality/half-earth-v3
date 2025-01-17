@@ -37,6 +37,7 @@ function BioDiversityContainer(props) {
     setRegionLayers,
     countryISO,
     setMapLegendLayers,
+    view,
   } = props;
 
   const t = useT();
@@ -179,6 +180,32 @@ function BioDiversityContainer(props) {
     setProtectionTableData(tableData);
   };
 
+  const getLayerIcon = (layer, item) => {
+    view.whenLayerView(layer).then(() => {
+      const { renderer } = layer; // Get the renderer
+
+      if (renderer) {
+        const { symbol, uniqueValueGroups } = renderer;
+
+        if (symbol) {
+          const { url, outline } = symbol;
+
+          if (url) {
+            item.imageUrl = url;
+          }
+
+          if (outline) {
+            item.outline = outline;
+          }
+        } else if (uniqueValueGroups) {
+          item.classes = uniqueValueGroups[0].classes;
+        }
+      }
+
+      setMapLegendLayers((ml) => [...ml, item]);
+    });
+  };
+
   const addBioDiversityLayers = async () => {
     const protectedLayers = await EsriFeatureService.addProtectedAreaLayer(
       null,
@@ -215,7 +242,10 @@ function BioDiversityContainer(props) {
       type: DATA_POINT_TYPE.PUBLIC,
     };
 
-    setMapLegendLayers([protectedAreaLayer, habitatLayer]);
+    getLayerIcon(protectedLayers, protectedAreaLayer);
+    getLayerIcon(webTileLayer, habitatLayer);
+
+    // setMapLegendLayers([protectedAreaLayer, habitatLayer]);
   };
 
   // get habitat score information

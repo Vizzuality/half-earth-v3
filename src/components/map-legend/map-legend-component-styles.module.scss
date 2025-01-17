@@ -42,7 +42,21 @@
           font-style: italic;
         }
 
+        .wrapper{
+          display: flex;
+          gap: 5px;
+          margin-top: 5px;
+        }
 
+        .column{
+          flex-direction: column;
+        }
+
+        .box{
+          width: 50px;
+          height: 15px;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+        }
       }
     }
   }
