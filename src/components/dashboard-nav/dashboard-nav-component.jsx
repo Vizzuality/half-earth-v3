@@ -24,6 +24,7 @@ function DashboardNavComponent(props) {
     scientificName,
     setSelectedRegion,
     setScientificName,
+    setMapLegendLayers,
   } = props;
   const { lightMode } = useContext(LightModeContext);
 
@@ -38,6 +39,8 @@ function DashboardNavComponent(props) {
 
   const updateHistory = (page) => {
     window.history.pushState({ selectedIndex: page }, '', ``);
+
+    setMapLegendLayers([]);
 
     if (page !== NAVIGATION.DATA_LAYER && page !== NAVIGATION.BIO_IND) {
       setSelectedRegion(null);

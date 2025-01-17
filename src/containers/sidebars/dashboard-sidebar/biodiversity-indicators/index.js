@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import { useT } from '@transifex/react';
+
 import { LightModeContext } from 'context/light-mode';
 import last from 'lodash/last';
 
@@ -9,6 +11,7 @@ import {
   INITIAL_LAYERS,
   LAYER_OPTIONS,
   LAYER_TITLE_TYPES,
+  DATA_POINT_TYPE,
 } from 'constants/dashboard-constants';
 
 import BioDiversityComponent from './biodiversity-indicators-component';
@@ -33,7 +36,10 @@ function BioDiversityContainer(props) {
     speciesInfo,
     setRegionLayers,
     countryISO,
+    setMapLegendLayers,
   } = props;
+
+  const t = useT();
 
   const { lightMode } = useContext(LightModeContext);
   const [selectedTab, setSelectedTab] = useState(2);
@@ -173,6 +179,45 @@ function BioDiversityContainer(props) {
     setProtectionTableData(tableData);
   };
 
+  const addBioDiversityLayers = async () => {
+    const protectedLayers = await EsriFeatureService.addProtectedAreaLayer(
+      null,
+      countryISO
+    );
+    map.add(protectedLayers);
+
+    const layerName = LAYER_OPTIONS.HABITAT;
+    const webTileLayer = await EsriFeatureService.getXYZLayer(
+      speciesInfo.scientificname.replace(' ', '_'),
+      layerName,
+      LAYER_TITLE_TYPES.TREND
+    );
+
+    setRegionLayers({
+      ...regionLayers,
+      [layerName]: webTileLayer,
+      [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers,
+    });
+    map.add(webTileLayer);
+
+    // Add layers to Map Legend
+    const protectedAreaLayer = {
+      label: t(LAYER_TITLE_TYPES.PROTECTED_AREAS),
+      id: LAYER_OPTIONS.PROTECTED_AREAS,
+      showChildren: false,
+      type: DATA_POINT_TYPE.PUBLIC,
+    };
+
+    const habitatLayer = {
+      label: t(LAYER_TITLE_TYPES.HABITAT),
+      id: LAYER_OPTIONS.HABITAT,
+      showChildren: false,
+      type: DATA_POINT_TYPE.PUBLIC,
+    };
+
+    setMapLegendLayers([protectedAreaLayer, habitatLayer]);
+  };
+
   // get habitat score information
   useEffect(() => {
     if (dataByCountry && data) {
@@ -211,25 +256,7 @@ function BioDiversityContainer(props) {
     if (!speciesInfo) return;
 
     removeRegionLayers();
-    const protectedLayers = EsriFeatureService.addProtectedAreaLayer(
-      null,
-      countryISO
-    );
-    const layerName = LAYER_OPTIONS.HABITAT;
-    const webTileLayer = EsriFeatureService.getXYZLayer(
-      speciesInfo.scientificname.replace(' ', '_'),
-      layerName,
-      LAYER_TITLE_TYPES.TREND
-    );
-    webTileLayer.then((layer) => {
-      setRegionLayers({
-        ...regionLayers,
-        [layerName]: layer,
-        [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers,
-      });
-      map.add(protectedLayers);
-      map.add(layer);
-    });
+    addBioDiversityLayers();
   }, [speciesInfo]);
 
   return (

@@ -24,7 +24,7 @@ function MapLegendComponent(props) {
       <span className={styles.title}>{t('Map Legend')}</span>
       <ul className={styles.layers}>
         {Object.values(mapLegendLayers).map((layer) => (
-          <li>
+          <li key={layer.id}>
             {/* <button type="button">Up</button>
             <button type="button">Down</button> */}
             <div className={styles.info}>

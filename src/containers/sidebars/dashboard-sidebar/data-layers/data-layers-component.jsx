@@ -25,6 +25,7 @@ import {
   LAYER_OPTIONS,
   NAVIGATION,
   DATA_POINT_TYPE,
+  LAYER_TITLE_TYPES,
 } from 'constants/dashboard-constants.js';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -221,7 +222,7 @@ function DataLayerComponent(props) {
     const publicData = [
       ...groupByTypeTitle(dataLayerData),
       {
-        label: 'Habitat Loss/Gain',
+        label: t(LAYER_TITLE_TYPES.HABITAT),
         items: [],
         id: LAYER_OPTIONS.HABITAT,
         total_no_rows: '',

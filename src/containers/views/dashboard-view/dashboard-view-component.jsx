@@ -260,7 +260,6 @@ function DashboardViewComponent(props) {
   }, [layerView]);
 
   useEffect(() => {
-    console.log(mapLegendLayers);
     if (Object.values(mapLegendLayers).length > 0) {
       setShowLegend(true);
     } else {
