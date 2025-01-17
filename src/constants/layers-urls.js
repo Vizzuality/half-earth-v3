@@ -465,7 +465,7 @@ export const LAYERS_URLS = {
 export const DASHBOARD_URLS = {
   INITIAL_COUNTRY_LAYER: '53a1e68de7e4499cad77c80daba46a94',
   COUNTRY_URL:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_0/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_1/FeatureServer',
   SPECIES_OCCURENCE_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_COD/FeatureServer',
   WDPA_OCCURENCE_URL:
