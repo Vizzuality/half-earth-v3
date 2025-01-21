@@ -12,6 +12,7 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
+import LayerInfoModalContainer from 'components/layer-info-modal';
 import MapLegendContainer from 'components/map-legend';
 import MapView from 'components/map-view';
 import TopMenuContainer from 'components/top-menu';
@@ -62,6 +63,8 @@ function DashboardViewComponent(props) {
   const [layerView, setLayerView] = useState();
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
+
+  const [layerInfo, setLayerInfo] = useState();
 
   const [showLegend, setShowLegend] = useState(false);
   // const [showTopNav, setShowTopNav] = useState(true);
@@ -289,6 +292,12 @@ function DashboardViewComponent(props) {
         url: `https://js.arcgis.com/${API_VERSION}`,
       }}
     >
+      {layerInfo && (
+        <LayerInfoModalContainer
+          layerInfo={layerInfo}
+          setLayerInfo={setLayerInfo}
+        />
+      )}
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
         {showLegend && <MapLegendContainer {...props} />}
@@ -303,6 +312,7 @@ function DashboardViewComponent(props) {
           handleRegionSelected={handleRegionSelected}
           layerView={layerView}
           selectedRegion={selectedRegion}
+          setLayerInfo={setLayerInfo}
           {...props}
         />
       </LightModeProvider>

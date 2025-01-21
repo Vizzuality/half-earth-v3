@@ -70,6 +70,11 @@
 
   .parent{
     grid-template-columns: 15px 1fr 30px 50px;
+
+    button{
+      fill: var(--font-color);
+      color: var(--font-color);
+    }
   }
 
   .children{
@@ -78,7 +83,8 @@
     grid-template-columns: 1fr 30px 50px;
 
     button{
-      color: var(--font-color)
+      fill: var(--font-color);
+      color: var(--font-color);
     }
   }
 

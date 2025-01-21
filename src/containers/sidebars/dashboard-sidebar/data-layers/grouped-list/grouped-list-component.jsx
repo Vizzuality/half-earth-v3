@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   SPECIES_LAYER_IDS,
+  GBIF_OCCURENCE_URL,
 } from 'utils/dashboard-utils';
-import { GBIF_OCCURENCE_URL } from 'utils/dashboard-utils.js';
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -19,8 +19,10 @@ import {
   LAYER_TITLE_TYPES,
   LAYER_OPTIONS,
 } from 'constants/dashboard-constants.js';
+import { DASHBOARD_URLS } from 'constants/layers-urls';
 
 import ArrowIcon from 'icons/arrow_right.svg?react';
+import InfoIcon from 'icons/info.svg?react';
 
 import styles from './grouped-list-styles.module.scss';
 
@@ -37,6 +39,7 @@ function GroupedListComponent(props) {
     setShowHabitatChart,
     setIsHabitatChartLoading,
     isPrivate,
+    setLayerInfo,
     setMapLegendLayers,
   } = props;
   const t = useT();
@@ -446,8 +449,14 @@ function GroupedListComponent(props) {
     return control;
   };
 
-  const displayInfo = (item) => {
-    alert(item.dataset_title);
+  // display info for each layer
+  const displayInfo = async (item) => {
+    const response = await fetch(
+      `${DASHBOARD_URLS.DATASET_LAYER_INFO}${item.dataset_id}`
+    );
+    const data = await response.json();
+    console.log(data);
+    setLayerInfo({ info: data.metadata, title: item.label });
   };
 
   return (
@@ -457,7 +466,11 @@ function GroupedListComponent(props) {
           {key.items?.length > 0 && (
             <>
               <div className={styles.parent}>
-                <button type="button" onClick={() => displayChildren(key)}>
+                <button
+                  type="button"
+                  onClick={() => displayChildren(key)}
+                  aria-label="Toggle children visibility"
+                >
                   <ArrowIcon
                     className={cx(styles.arrowIcon, {
                       [styles.isOpened]: key.showChildren,
@@ -475,8 +488,12 @@ function GroupedListComponent(props) {
                   }
                 />
                 <span>{key.total_no_rows}</span>
-                <button type="button" onClick={() => displayInfo(key)}>
-                  i
+                <button
+                  type="button"
+                  onClick={() => displayInfo(key)}
+                  aria-label="Toggle info visibility"
+                >
+                  <InfoIcon />
                 </button>
               </div>
               {key.showChildren && (
@@ -485,8 +502,12 @@ function GroupedListComponent(props) {
                     <li key={item.dataset_id} className={styles.children}>
                       {getCheckbox(item)}
                       <span>{item.no_rows}</span>
-                      <button type="button" onClick={() => displayInfo(item)}>
-                        i
+                      <button
+                        type="button"
+                        onClick={() => displayInfo(item)}
+                        aria-label="Toggle info visibility"
+                      >
+                        <InfoIcon />
                       </button>
                     </li>
                   ))}
@@ -506,8 +527,12 @@ function GroupedListComponent(props) {
                 }
               />
               <span />
-              <button type="button" onClick={() => displayInfo(key)}>
-                i
+              <button
+                type="button"
+                onClick={() => displayInfo(key)}
+                aria-label="Toggle info visibility"
+              >
+                <InfoIcon />
               </button>
             </div>
           )}
