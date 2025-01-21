@@ -45,7 +45,7 @@
     display: grid;
     column-gap: 15px;
     align-items: center;
-    margin-left: 15px;
+    padding-left: 10px;
     color: var(--font-color);
     text-transform: capitalize;
 
@@ -73,11 +73,13 @@
   }
 
   .children{
+    width: 100%;
+    padding-left: 40px;
     grid-template-columns: 1fr 30px 50px;
-  }
 
-  .ml40{
-    margin-left: 40px;
+    button{
+      color: var(--font-color)
+    }
   }
 
   .productTypeLogo {

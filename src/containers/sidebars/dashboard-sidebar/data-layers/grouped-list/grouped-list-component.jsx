@@ -446,6 +446,10 @@ function GroupedListComponent(props) {
     return control;
   };
 
+  const displayInfo = (item) => {
+    alert(item.dataset_title);
+  };
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {dataPoints.map((key) => (
@@ -470,20 +474,20 @@ function GroupedListComponent(props) {
                     />
                   }
                 />
-                {/* Place holder, remove span when new icons are available */}
-                <span />
-                {/* <img className={styles.productTypeLogo}
-                  src={`https://cdn.mol.org/static/images/legends/datatypes/${(dataPoints[key].items[0]?.product_type === 'points' ? 'points_agg' : dataPoints[key].items[0]?.product_type)}.png`} /> */}
                 <span>{key.total_no_rows}</span>
+                <button type="button" onClick={() => displayInfo(key)}>
+                  i
+                </button>
               </div>
               {key.showChildren && (
                 <ul>
                   {key.items.map((item) => (
                     <li key={item.dataset_id} className={styles.children}>
                       {getCheckbox(item)}
-
-                      <span />
                       <span>{item.no_rows}</span>
+                      <button type="button" onClick={() => displayInfo(item)}>
+                        i
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -491,18 +495,21 @@ function GroupedListComponent(props) {
             </>
           )}
           {key.items?.length === 0 && (
-            <button
-              type="button"
-              className={cx(styles.children, styles.ml40)}
-              onClick={() => displaySingleLayer(key)}
-            >
+            <div className={cx(styles.children)}>
               <FormControlLabel
                 label={t(key.label)}
-                control={<Checkbox checked={key.isActive} />}
+                control={
+                  <Checkbox
+                    onChange={() => displaySingleLayer(key)}
+                    checked={key.isActive}
+                  />
+                }
               />
               <span />
-              <span>{key.total_no_rows}</span>
-            </button>
+              <button type="button" onClick={() => displayInfo(key)}>
+                i
+              </button>
+            </div>
           )}
         </div>
       ))}
