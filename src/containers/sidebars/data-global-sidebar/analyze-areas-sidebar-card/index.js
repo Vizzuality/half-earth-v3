@@ -115,6 +115,7 @@ function AnalyzeAreasContainer(props) {
     changeUI,
     selectedAnalysisLayer,
     selectedAnalysisTab,
+    resetOption
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(
@@ -139,7 +140,16 @@ function AnalyzeAreasContainer(props) {
     if (selectedAnalysisLayer === HALF_EARTH_FUTURE_TILE_LAYER) {
       setIsFirstLoad(false);
     }
-  }, [selectedAnalysisLayer, precalculatedAOIOptions, setSelectedOption]);
+  }, [selectedAnalysisLayer, precalculatedAOIOptions]);
+
+  useEffect(() => {
+    if(resetOption){
+      if(selectedAnalysisLayer !== precalculatedAOIOptions[0].title){
+        handleOptionSelection(precalculatedAOIOptions[0]);
+      }
+      setSelectedOption(precalculatedAOIOptions[0]);
+    }
+  }, [resetOption])
 
   const postDrawCallback = (geometry) => {
     const hash = createHashFromGeometry(geometry);
@@ -213,6 +223,7 @@ function AnalyzeAreasContainer(props) {
   const handleLayerToggle = (newSelectedOption) => {
     const protectedAreasSelected =
       newSelectedOption === WDPA_OECM_FEATURE_LAYER;
+    const protectedAreasFormerSelected = selectedOption?.slug === WDPA_OECM_FEATURE_LAYER;
 
     const getLayersToToggle = () => {
       const formerSelectedSlug = selectedOption?.slug;
@@ -240,13 +251,24 @@ function AnalyzeAreasContainer(props) {
         });
       }
 
+      const additionalProtectedAreasLayers = [
+        PROTECTED_AREAS_VECTOR_TILE_LAYER,
+        COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+      ];
       if (protectedAreasSelected) {
-        const additionalProtectedAreasLayers = [
-          PROTECTED_AREAS_VECTOR_TILE_LAYER,
-          COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-        ];
         additionalProtectedAreasLayers.forEach((layer) => {
           if (!activeLayers.some((l) => l.title === layer)) {
+            layersToToggle.push({
+              layerId: layer,
+              category: LAYERS_CATEGORIES.PROTECTION,
+            });
+          }
+        });
+      }
+
+      if(protectedAreasFormerSelected){
+        additionalProtectedAreasLayers.forEach((layer) => {
+          if (activeLayers.some((l) => l.title === PROTECTED_AREAS_VECTOR_TILE_LAYER)) {
             layersToToggle.push({
               layerId: layer,
               category: LAYERS_CATEGORIES.PROTECTION,
@@ -289,8 +311,10 @@ function AnalyzeAreasContainer(props) {
     if (option?.slug === HALF_EARTH_FUTURE_TILE_LAYER && isFirstLoad) {
       setShowProgress(true);
     }
+
     handleLayerToggle(option?.slug);
     changeUI({ selectedAnalysisLayer: option?.slug });
+
     setTooltipIsVisible(false);
 
     watchUtils.watch(() =>
