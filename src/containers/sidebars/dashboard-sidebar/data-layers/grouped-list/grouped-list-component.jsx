@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -19,10 +19,11 @@ import {
   LAYER_TITLE_TYPES,
   LAYER_OPTIONS,
 } from 'constants/dashboard-constants.js';
-import { DASHBOARD_URLS } from 'constants/layers-urls';
 
 import ArrowIcon from 'icons/arrow_right.svg?react';
-import InfoIcon from 'icons/info.svg?react';
+
+import ToggleLayerInfoContainer from '../../../../../components/toggle-layer-info';
+import ToggleOpacityContainer from '../../../../../components/toggle-opacity';
 
 import styles from './grouped-list-styles.module.scss';
 
@@ -39,17 +40,10 @@ function GroupedListComponent(props) {
     setShowHabitatChart,
     setIsHabitatChartLoading,
     isPrivate,
-    setLayerInfo,
     setMapLegendLayers,
   } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
-
-  const parentLayers = [
-    LAYER_OPTIONS.EXPERT_RANGE_MAPS,
-    LAYER_OPTIONS.POINT_OBSERVATIONS,
-    LAYER_OPTIONS.HABITAT,
-  ];
 
   const expertRangeMapIds = [
     'ec694c34-bddd-4111-ba99-926a5f7866e8',
@@ -378,6 +372,7 @@ function GroupedListComponent(props) {
 
     const typeItems = item.items;
 
+    // eslint-disable-next-line array-callback-return
     typeItems.map((i) => {
       findLayerToShow(i);
       i.isActive = isActive;
@@ -454,35 +449,6 @@ function GroupedListComponent(props) {
     return control;
   };
 
-  // display info for each layer
-  const displayInfo = async (item) => {
-    let parent = false;
-    let url = `${DASHBOARD_URLS.DATASET_LAYER_INFO}${item.dataset_id}`;
-
-    if (parentLayers.includes(item.id)) {
-      url = `${DASHBOARD_URLS.DATASET_LAYER_GROUP_INFO}`;
-    }
-
-    if (item.id === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
-      url += `?id=range`;
-      parent = true;
-    } else if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
-      url += `?id=points`;
-      parent = true;
-    } else if (item.id === LAYER_OPTIONS.HABITAT) {
-      url += `?id=points`;
-      parent = true;
-    }
-    // DATASET_LAYER_GROUP_INFO
-    const response = await fetch(url);
-    const data = await response.json();
-    if (parent) {
-      setLayerInfo({ info: data, title: item.label });
-    } else {
-      setLayerInfo({ info: data.metadata, title: item.label });
-    }
-  };
-
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {dataPoints.map((key) => (
@@ -512,13 +478,8 @@ function GroupedListComponent(props) {
                   }
                 />
                 <span>{key.total_no_rows}</span>
-                <button
-                  type="button"
-                  onClick={() => displayInfo(key)}
-                  aria-label="Toggle info visibility"
-                >
-                  <InfoIcon />
-                </button>
+                <ToggleOpacityContainer layer={key} />
+                <ToggleLayerInfoContainer layer={key} {...props} />
               </div>
               {key.showChildren && (
                 <ul>
@@ -526,13 +487,8 @@ function GroupedListComponent(props) {
                     <li key={item.dataset_id} className={styles.children}>
                       {getCheckbox(item)}
                       <span>{item.no_rows}</span>
-                      <button
-                        type="button"
-                        onClick={() => displayInfo(item)}
-                        aria-label="Toggle info visibility"
-                      >
-                        <InfoIcon />
-                      </button>
+                      <ToggleOpacityContainer layer={item} />
+                      <ToggleLayerInfoContainer layer={item} {...props} />
                     </li>
                   ))}
                 </ul>
@@ -551,13 +507,8 @@ function GroupedListComponent(props) {
                 }
               />
               <span />
-              <button
-                type="button"
-                onClick={() => displayInfo(key)}
-                aria-label="Toggle info visibility"
-              >
-                <InfoIcon />
-              </button>
+              <ToggleOpacityContainer layer={key} />
+              <ToggleLayerInfoContainer layer={key} {...props} />
             </div>
           )}
         </div>
