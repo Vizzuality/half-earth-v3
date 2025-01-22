@@ -509,4 +509,5 @@ export const DASHBOARD_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/priority_species/FeatureServer',
   DATASET_LAYER_INFO:
     'https://dev-api.mol.org/2.x/datasets/metadata?dataset_id=',
+  DATASET_LAYER_GROUP_INFO: 'https://dev-api.mol.org/2.x/datasets/type',
 };

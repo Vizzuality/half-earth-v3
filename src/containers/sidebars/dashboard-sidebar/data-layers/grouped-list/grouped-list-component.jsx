@@ -45,6 +45,12 @@ function GroupedListComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
+  const parentLayers = [
+    LAYER_OPTIONS.EXPERT_RANGE_MAPS,
+    LAYER_OPTIONS.POINT_OBSERVATIONS,
+    LAYER_OPTIONS.HABITAT,
+  ];
+
   const expertRangeMapIds = [
     'ec694c34-bddd-4111-ba99-926a5f7866e8',
     '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
@@ -451,12 +457,31 @@ function GroupedListComponent(props) {
 
   // display info for each layer
   const displayInfo = async (item) => {
-    const response = await fetch(
-      `${DASHBOARD_URLS.DATASET_LAYER_INFO}${item.dataset_id}`
-    );
+    let parent = false;
+    let url = `${DASHBOARD_URLS.DATASET_LAYER_INFO}${item.dataset_id}`;
+
+    if (parentLayers.includes(item.id)) {
+      url = `${DASHBOARD_URLS.DATASET_LAYER_GROUP_INFO}`;
+    }
+
+    if (item.id === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
+      url += `?id=range`;
+      parent = true;
+    } else if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
+      url += `?id=points`;
+      parent = true;
+    } else if (item.id === LAYER_OPTIONS.HABITAT) {
+      url += `?id=points`;
+      parent = true;
+    }
+    // DATASET_LAYER_GROUP_INFO
+    const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
-    setLayerInfo({ info: data.metadata, title: item.label });
+    if (parent) {
+      setLayerInfo({ info: data, title: item.label });
+    } else {
+      setLayerInfo({ info: data.metadata, title: item.label });
+    }
   };
 
   return (

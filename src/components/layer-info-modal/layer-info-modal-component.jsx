@@ -9,33 +9,46 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
     setLayerInfo(null);
   };
 
+  const getInfo = (item) => {
+    if (!item.children) {
+      return (
+        <tr key={item.label}>
+          <td>
+            <b>{item.label}</b>
+          </td>
+          <td>{item.value}</td>
+        </tr>
+      );
+    }
+    return item.children.map((child) => (
+      <tr key={child.label}>
+        <td>
+          <b>{child.label}</b>
+        </td>
+        <td>{child.value}</td>
+      </tr>
+    ));
+  };
+
   return (
-    <div className={styles.container}>
-      <header>
-        <h2>{title}</h2>
-        <button
-          type="button"
-          className={styles.closeButton}
-          onClick={closeModal}
-        >
-          X
-        </button>
-      </header>
-      <table>
-        <tbody>
-          {info?.map((item) =>
-            item.children.map((child) => (
-              <tr key={child.label}>
-                <td>
-                  <b>{child.label}</b>
-                </td>
-                <td>{child.value}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className={styles.overlay} onClick={closeModal} />
+      <div className={styles.container}>
+        <header>
+          <h2>{title}</h2>
+          <button
+            type="button"
+            className={styles.closeButton}
+            onClick={closeModal}
+          >
+            X
+          </button>
+        </header>
+        <table>
+          <tbody>{info?.map((item) => getInfo(item))}</tbody>
+        </table>
+      </div>
+    </>
   );
 }
 
