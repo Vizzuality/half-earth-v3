@@ -15,7 +15,7 @@ import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 import LayerInfoModalContainer from 'components/layer-info-modal';
 import MapLegendContainer from 'components/map-legend';
 import MapView from 'components/map-view';
-import TopMenuContainer from 'components/top-menu';
+// import TopMenuContainer from 'components/top-menu';
 
 import {
   LAYER_OPTIONS,
@@ -300,7 +300,7 @@ function DashboardViewComponent(props) {
       )}
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
-        {showLegend && <MapLegendContainer {...props} />}
+        {showLegend && <MapLegendContainer map={map} {...props} />}
         <DashboardSidebarContainer
           map={map}
           view={view}

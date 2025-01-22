@@ -32,6 +32,17 @@
     li{
       display: flex;
 
+      .arrows{
+        width: 30px;
+        color: $white;
+        fill: $white;
+
+        &.disabled{
+          fill: $white-opacity-20;
+          cursor: default;
+        }
+      }
+
       .info{
         display: flex;
         flex-direction: column;

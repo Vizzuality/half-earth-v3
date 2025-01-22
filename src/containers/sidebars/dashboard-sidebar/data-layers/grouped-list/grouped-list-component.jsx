@@ -101,7 +101,7 @@ function GroupedListComponent(props) {
         }
       }
 
-      setMapLegendLayers((ml) => [...ml, item]);
+      setMapLegendLayers((ml) => [item, ...ml]);
     });
   };
 
@@ -208,7 +208,6 @@ function GroupedListComponent(props) {
 
     // check if item is active to add/remove from Map Legend
     if (!item.isActive) {
-      // setMapLegendLayers((ml) => [...ml, item]);
       getLayerIcon(layer, item);
 
       setRegionLayers((rl) => ({
@@ -266,7 +265,7 @@ function GroupedListComponent(props) {
           }));
           map.add(layer, layerIndex);
 
-          setMapLegendLayers((ml) => [...ml, item]);
+          setMapLegendLayers((ml) => [item, ...ml]);
         }
       } else {
         item.isActive = false;
