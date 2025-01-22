@@ -16,7 +16,7 @@ function ToggleOpacityComponent({ layer, map }) {
 
   const updateOpacity = (layerToFind, value) => {
     const foundLayer = map.layers.items.find(
-      (l) => l.id.toUpperCase() === layerToFind.label.toUpperCase()
+      (l) => l.id.toUpperCase() === layerToFind.id.toUpperCase()
     );
     foundLayer.opacity = value;
     setOpacityValue(value);
@@ -61,7 +61,7 @@ function ToggleOpacityComponent({ layer, map }) {
             min={0}
             max={1}
             step={0.1}
-            defaultValue={opacityValue}
+            value={opacityValue}
             onChange={(e, value) => updateOpacity(layer, value)}
           />
         </div>

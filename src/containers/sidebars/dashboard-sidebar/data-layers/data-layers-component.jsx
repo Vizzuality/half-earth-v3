@@ -163,6 +163,7 @@ function DataLayerComponent(props) {
         }
         obj.isActive = false;
         obj.parentId = grouped[groupKey].id;
+        obj.id = obj.label;
         grouped[groupKey].items.push(obj); // Push the current object into the 'item' array of the matching group
         grouped[groupKey].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
       }
