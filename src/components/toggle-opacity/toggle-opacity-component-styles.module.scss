@@ -4,14 +4,39 @@
 
   .opacityLabel{
     position: absolute;
-    top: 100%;
+    top: 110%;
     display: flex;
     width: 100px;
     left: -50px;
     padding: 0 15px;
-    background-color: $white-opacity-20;
+    background-color: $oslo-gray;
     border-radius: 15px;
+    border: 1px solid $white;
     align-items: center;
     justify-content: center;
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 51px;
+        bottom: 100%;
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-bottom-color: $white;
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 53px;
+        bottom: 100%;
+        width: 0;
+        height: 0;
+        border: 8px solid transparent;
+        border-bottom-color: $oslo-gray;
+    }
   }
 }
