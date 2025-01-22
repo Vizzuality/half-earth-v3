@@ -1,23 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState, createRef } from 'react';
 
 import { useT } from '@transifex/react';
 
+import { Slider } from '@mui/material';
+
 import DropIcon from 'icons/drop.svg?react';
 
-function ToggleOpacityComponent({ layer }) {
+import styles from './toggle-opacity-component-styles.module.scss';
+
+function ToggleOpacityComponent({ layer, map }) {
   const t = useT();
-  const displayOpacity = (item) => {
-    console.log(item);
+  const ref = createRef();
+  const [showOpacity, setShowOpacity] = useState(false);
+  const [opacityValue, setOpacityValue] = useState(1);
+
+  const updateOpacity = (layerToFind, value) => {
+    const foundLayer = map.layers.items.find(
+      (l) => l.id.toUpperCase() === layerToFind.label.toUpperCase()
+    );
+    foundLayer.opacity = value;
+    setOpacityValue(value);
   };
+
+  const displayOpacity = () => {
+    setShowOpacity(!showOpacity);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if the click occurred outside the component
+      if (ref.current && !ref.current.contains(event.target)) {
+        // Perform actions when clicked outside
+        setShowOpacity(false);
+      }
+    };
+
+    // Attach the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref]);
+
   return (
-    <button
-      type="button"
-      onClick={() => displayOpacity(layer)}
-      aria-label="Toggle opacity"
-      title={t('Change layer opacity')}
-    >
-      <DropIcon />
-    </button>
+    <div className={styles.opacity} ref={ref}>
+      <button
+        type="button"
+        onClick={() => displayOpacity(layer)}
+        aria-label="Toggle opacity"
+        title={t('Change layer opacity')}
+      >
+        <DropIcon />
+      </button>
+      {showOpacity && (
+        <div className={styles.opacityLabel}>
+          <Slider
+            className={styles.slider}
+            min={0}
+            max={1}
+            step={0.1}
+            defaultValue={opacityValue}
+            onChange={(e, value) => updateOpacity(layer, value)}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 

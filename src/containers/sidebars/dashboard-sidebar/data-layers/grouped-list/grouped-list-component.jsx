@@ -478,7 +478,7 @@ function GroupedListComponent(props) {
                   }
                 />
                 <span>{key.total_no_rows}</span>
-                <ToggleOpacityContainer layer={key} />
+                <span />
                 <ToggleLayerInfoContainer layer={key} {...props} />
               </div>
               {key.showChildren && (
@@ -487,7 +487,10 @@ function GroupedListComponent(props) {
                     <li key={item.dataset_id} className={styles.children}>
                       {getCheckbox(item)}
                       <span>{item.no_rows}</span>
-                      <ToggleOpacityContainer layer={item} />
+                      {item.isActive && (
+                        <ToggleOpacityContainer layer={item} {...props} />
+                      )}
+                      {!item.isActive && <span />}
                       <ToggleLayerInfoContainer layer={item} {...props} />
                     </li>
                   ))}
@@ -507,7 +510,10 @@ function GroupedListComponent(props) {
                 }
               />
               <span />
-              <ToggleOpacityContainer layer={key} />
+              {key.isActive && (
+                <ToggleOpacityContainer layer={key} {...props} />
+              )}
+              {!key.isActive && <span />}
               <ToggleLayerInfoContainer layer={key} {...props} />
             </div>
           )}

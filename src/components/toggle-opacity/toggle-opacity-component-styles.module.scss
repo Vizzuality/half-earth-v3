@@ -1,0 +1,17 @@
+@import 'styles/settings';
+.opacity{
+  position:relative;
+
+  .opacityLabel{
+    position: absolute;
+    top: 100%;
+    display: flex;
+    width: 100px;
+    left: -50px;
+    padding: 0 15px;
+    background-color: $white-opacity-20;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+  }
+}
