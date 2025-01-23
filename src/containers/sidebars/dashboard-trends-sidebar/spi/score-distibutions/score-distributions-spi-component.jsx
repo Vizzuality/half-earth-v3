@@ -29,7 +29,7 @@ function ScoreDistributionsSpiComponent(props) {
     setSelectedIndex,
     setScientificName,
     spiScoresData,
-    selectSpiSpeciesData,
+    spiSelectSpeciesData,
   } = props;
   const { lightMode } = useContext(LightModeContext);
   const [chartData, setChartData] = useState();
@@ -181,10 +181,10 @@ function ScoreDistributionsSpiComponent(props) {
 
   const loadSpecies = () => {
     const species = [
-      selectSpiSpeciesData[0],
-      selectSpiSpeciesData[1],
-      selectSpiSpeciesData[2],
-      selectSpiSpeciesData[3],
+      spiSelectSpeciesData[0],
+      spiSelectSpeciesData[1],
+      spiSelectSpeciesData[2],
+      spiSelectSpeciesData[3],
     ];
     setSpsSpecies(species);
 
@@ -205,10 +205,10 @@ function ScoreDistributionsSpiComponent(props) {
   }, [spiScoresData, activeTrend]);
 
   useEffect(() => {
-    if (!selectSpiSpeciesData.length) return;
+    if (!spiSelectSpeciesData.length) return;
     setIsSpeciesLoading(true);
     loadSpecies();
-  }, [selectSpiSpeciesData]);
+  }, [spiSelectSpeciesData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>

@@ -49,8 +49,8 @@ function DashboardTrendsSidebarContainer(props) {
   const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
   const [spiScoresData, setSpiScoresData] = useState([]);
   const [shiScoresData, setShiScoresData] = useState([]);
-  const [selectSpiSpeciesData, setSpiSelectSpeciesData] = useState([]);
-  const [selectShiSpeciesData, setShiSelectSpeciesData] = useState([]);
+  const [spiSelectSpeciesData, setSpiSelectSpeciesData] = useState([]);
+  const [shiSelectSpeciesData, setShiSelectSpeciesData] = useState([]);
   const [shiProvinceTrendData, setShiProvinceTrendData] = useState([]);
 
   const [shiValue, setShiValue] = useState(0);
@@ -120,7 +120,7 @@ function DashboardTrendsSidebarContainer(props) {
 
   const getShiSelectSpeciesData = (scoresDataURL) => {
     EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
-      const data = features.map((f) => f.attributes);
+      const data = features?.map((f) => f.attributes);
       setShiSelectSpeciesData(data);
     });
   };
@@ -131,12 +131,6 @@ function DashboardTrendsSidebarContainer(props) {
       whereClause: `iso3 = '${countryISO}'`,
     };
     getScoresData(shiScoresDataURL);
-
-    const shiSpeciesScoresURL = {
-      url: DASHBOARD_URLS.SHI_SPECIES_URL,
-      whereClause: `iso3 = '${countryISO}' and HabitatScore >= 1 and HabitatScore <= 5 and SpeciesImage IS NOT NULL`,
-    };
-    getShiSelectSpeciesData(shiSpeciesScoresURL);
   };
 
   const getProvinceSpiData = (whereClause) => {
@@ -152,6 +146,21 @@ function DashboardTrendsSidebarContainer(props) {
     };
     getSpiSelectSpeciesData(selectSpeciesURL);
   };
+
+  useEffect(() => {
+    if (!shiScoresData.length) return;
+
+    const scoreRange = shiScoresData[0].binned.split(',');
+    const shiSpeciesScoresURL = {
+      url: DASHBOARD_URLS.SHI_SPECIES_URL,
+      whereClause: `iso3 = '${countryISO}' and HabitatScore >= ${
+        parseInt(scoreRange[0], 10) / 100
+      } and HabitatScore <= ${
+        parseInt(scoreRange[1], 10) / 100
+      } and SpeciesImage IS NOT NULL`,
+    };
+    getShiSelectSpeciesData(shiSpeciesScoresURL);
+  }, [shiScoresData]);
 
   // find and zoom to region
   useEffect(() => {
@@ -310,8 +319,8 @@ function DashboardTrendsSidebarContainer(props) {
       countryData={countryData}
       spiScoresData={spiScoresData}
       shiScoresData={shiScoresData}
-      selectSpiSpeciesData={selectSpiSpeciesData}
-      selectShiSpeciesData={selectShiSpeciesData}
+      spiSelectSpeciesData={spiSelectSpeciesData}
+      shiSelectSpeciesData={shiSelectSpeciesData}
       geo={geo}
       activeTrend={activeTrend}
       setActiveTrend={setActiveTrend}

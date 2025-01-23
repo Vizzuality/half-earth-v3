@@ -27,7 +27,7 @@ function ScoreDistributionsShiComponent(props) {
     setScientificName,
     setSelectedIndex,
     shiScoresData,
-    selectShiSpeciesData,
+    shiSelectSpeciesData,
     shiActiveTrend,
   } = props;
 
@@ -290,12 +290,14 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const loadSpecies = () => {
-    const species = [
-      selectShiSpeciesData[0],
-      selectShiSpeciesData[1],
-      selectShiSpeciesData[2],
-      selectShiSpeciesData[3],
-    ];
+    const maxItems = 4;
+    const species = shiSelectSpeciesData.slice(0, maxItems);
+
+    const lastItem = species[species.length - 1];
+    const low = (species[0].habitat_score ?? species[0].HabitatScore) * 100;
+    const high = (lastItem.habitat_score ?? lastItem.HabitatScore) * 100;
+    setLowDist(low.toFixed(1));
+    setHighDist(high.toFixed(1));
     setSpsSpecies(species);
     setIsSpeciesLoading(false);
   };
@@ -318,10 +320,10 @@ function ScoreDistributionsShiComponent(props) {
   }, [shiScoresData]);
 
   useEffect(() => {
-    if (!selectShiSpeciesData.length) return;
+    if (!shiSelectSpeciesData || !shiSelectSpeciesData.length) return;
     setIsSpeciesLoading(true);
     loadSpecies();
-  }, [selectShiSpeciesData]);
+  }, [shiSelectSpeciesData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
