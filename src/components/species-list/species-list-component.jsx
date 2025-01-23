@@ -214,6 +214,11 @@ function SpeciesListComponent(props) {
         )}
       </div>
       <hr className={hrTheme.dark} />
+      <p className={styles.comingSoon}>
+        {t(
+          'Fish, tree, and select invertebrate and other plant taxa coming soon'
+        )}
+      </p>
       <div className={styles.taxaList}>
         {!selectedTaxa &&
           filteredTaxaList?.map((taxa) => {

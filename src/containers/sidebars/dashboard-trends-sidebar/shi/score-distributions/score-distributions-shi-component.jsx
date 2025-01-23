@@ -49,6 +49,8 @@ function ScoreDistributionsShiComponent(props) {
   const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
   const [isLoading, setIsLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
+  const [lowDist, setLowDist] = useState(0);
+  const [highDist, setHighDist] = useState(7);
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const { lightMode } = useContext(LightModeContext);
 
@@ -331,7 +333,10 @@ function ScoreDistributionsShiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SHS between')} <b>0 - 5:</b>
+          {t('Species with SHS between')}{' '}
+          <b>
+            {lowDist} - {highDist}:
+          </b>
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}

@@ -15,6 +15,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
+import Button from 'components/button';
+
 import EsriFeatureService from 'services/esri-feature-service';
 
 import {
@@ -126,12 +128,13 @@ function RegionsAnalysisComponent(props) {
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <span className={styles.sectionTitle}>{t('Regions Analysis')}</span>
-      <hr className={hrTheme.dark} />
-      <p>
+      <span className={styles.sectionSubtitle}>
         {t(
-          'Select a region type below to display on the map and explore species lists for each region.'
+          'Explore high quality biodiversity expectations for any area of interest'
         )}
-      </p>
+      </span>
+      <hr className={hrTheme.dark} />
+      <p>{t('Select a region type below to display on the map')}</p>
       <div className={styles.choices}>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
@@ -157,16 +160,23 @@ function RegionsAnalysisComponent(props) {
               label={t('Forest Titles')}
             />
           )}
-          <FormControlLabel
-            value={REGION_OPTIONS.DRAW}
-            control={<Radio />}
-            className={styles.disabled}
-            disabled
-            label={t('Draw on Map - Coming soon')}
-          />
           {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}
           {/* <FormControlLabel value="communityForests" control={<Radio />} label={t('Community Forests')} /> */}
         </RadioGroup>
+        <div className={styles.comingSoon}>
+          <span>{t('Coming Soon')}</span>
+          <span>{t('Upload or draw a custom area on the map')}</span>
+          <Button
+            className={styles.disabled}
+            type="rectangular"
+            label={t('Upload a shapefile')}
+          />
+          <Button
+            className={styles.disabled}
+            type="rectangular"
+            label={t('Draw an area')}
+          />
+        </div>
       </div>
       {/* <div className={styles.search}>
         <SearchLocation
