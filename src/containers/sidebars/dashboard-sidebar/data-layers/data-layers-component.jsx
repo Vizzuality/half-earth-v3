@@ -47,8 +47,15 @@ ChartJS.register(
 
 function DataLayerComponent(props) {
   const t = useT();
-  const { speciesInfo, dataLayerData, selectedRegion, setSelectedIndex } =
-    props;
+  const {
+    speciesInfo,
+    dataLayerData,
+    selectedRegion,
+    setSelectedIndex,
+    setSpeciesInfo,
+    setDataLayerData,
+    setMapLegendLayers,
+  } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [dataPoints, setDataPoints] = useState();
@@ -173,6 +180,10 @@ function DataLayerComponent(props) {
   };
 
   const handleBack = () => {
+    setDataLayerData(null);
+    setSpeciesInfo(null);
+    setMapLegendLayers([]);
+
     if (selectedRegion) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {

@@ -598,8 +598,10 @@ function DashboardContainer(props) {
       handleMapLoad={handleMapLoad}
       geometry={geometry}
       speciesInfo={speciesInfo}
+      setSpeciesInfo={setSpeciesInfo}
       data={data}
       dataLayerData={dataLayerData}
+      setDataLayerData={setDataLayerData}
       dataByCountry={dataByCountry}
       spiDataByCountry={spiDataByCountry}
       taxaList={taxaList}
