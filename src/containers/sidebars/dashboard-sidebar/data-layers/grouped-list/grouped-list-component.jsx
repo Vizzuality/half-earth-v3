@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -40,6 +40,7 @@ function GroupedListComponent(props) {
     setShowHabitatChart,
     setIsHabitatChartLoading,
     isPrivate,
+    mapLegendLayers,
     setMapLegendLayers,
   } = props;
   const t = useT();
@@ -231,10 +232,10 @@ function GroupedListComponent(props) {
     const layerParent = item.type_title.toUpperCase();
     const layerName = item.dataset_title.toUpperCase();
     let layer;
-    let layerIndex;
+    let layerIndex = searchForLayers(layerName);
 
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
-      if (!item.isActive) {
+      if (!item.isActive || layerIndex < 0) {
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
           layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
@@ -279,7 +280,7 @@ function GroupedListComponent(props) {
     }
 
     if (layerParent === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
-      if (!item.isActive) {
+      if (!item.isActive || layerIndex < 0) {
         if (pointObservationIds.find((id) => id === item.dataset_id)) {
           let name;
 
@@ -448,6 +449,24 @@ function GroupedListComponent(props) {
 
     return control;
   };
+
+  const activateDefault = () => {
+    if (!map) return;
+    const defaultLayers = dataPoints.filter((dp) => dp.isActive);
+    defaultLayers.forEach((item) => {
+      if (item.items?.length > 0) {
+        item.items.forEach((point) => {
+          findLayerToShow(point);
+        });
+      } else {
+        displaySingleLayer(item);
+      }
+    });
+  };
+
+  useEffect(() => {
+    activateDefault();
+  }, [map]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>

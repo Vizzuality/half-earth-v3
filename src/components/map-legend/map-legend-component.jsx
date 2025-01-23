@@ -9,6 +9,8 @@ import { LAYER_OPTIONS } from 'constants/dashboard-constants.js';
 import ArrowDownIcon from 'icons/arrow-down-solid.svg?react';
 import ArrowUpIcon from 'icons/arrow-up-solid.svg?react';
 
+import HabitatLegendImage from 'images/hab_change_colorRamp.png';
+
 import styles from './map-legend-component-styles.module.scss';
 
 function MapLegendComponent(props) {
@@ -64,6 +66,12 @@ function MapLegendComponent(props) {
             );
           })}
         </div>
+      );
+    }
+
+    if (layer.id === LAYER_OPTIONS.HABITAT) {
+      return (
+        <img src={HabitatLegendImage} width="100%" height={20} alt="Habitat" />
       );
     }
     return '❓'; // Default icon for unknown layer types

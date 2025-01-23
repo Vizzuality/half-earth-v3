@@ -151,7 +151,7 @@ function DataLayerComponent(props) {
           grouped[groupKey] = {
             label: obj.type_title,
             total_no_rows: 0,
-            isActive: false,
+            isActive: true,
             showChildren: false,
             items: [],
             type: DATA_POINT_TYPE.PUBLIC,
@@ -161,7 +161,7 @@ function DataLayerComponent(props) {
                 : LAYER_OPTIONS.POINT_OBSERVATIONS,
           }; // Create a new object with the original object's properties and an empty 'item' array
         }
-        obj.isActive = false;
+        obj.isActive = true;
         obj.parentId = grouped[groupKey].id;
         obj.id = obj.label;
         grouped[groupKey].items.push(obj); // Push the current object into the 'item' array of the matching group
