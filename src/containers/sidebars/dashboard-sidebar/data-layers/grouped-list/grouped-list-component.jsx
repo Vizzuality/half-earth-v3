@@ -13,6 +13,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
+import ToggleLayerInfoContainer from 'components/toggle-layer-info';
+import ToggleOpacityContainer from 'components/toggle-opacity';
+
 import EsriFeatureService from 'services/esri-feature-service';
 
 import {
@@ -21,9 +24,6 @@ import {
 } from 'constants/dashboard-constants.js';
 
 import ArrowIcon from 'icons/arrow_right.svg?react';
-
-import ToggleLayerInfoContainer from '../../../../../components/toggle-layer-info';
-import ToggleOpacityContainer from '../../../../../components/toggle-opacity';
 
 import styles from './grouped-list-styles.module.scss';
 
@@ -40,7 +40,6 @@ function GroupedListComponent(props) {
     setShowHabitatChart,
     setIsHabitatChartLoading,
     isPrivate,
-    mapLegendLayers,
     setMapLegendLayers,
   } = props;
   const t = useT();
