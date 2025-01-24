@@ -363,9 +363,7 @@ function ScoreDistributionsShiComponent(props) {
                       </span>
                     </div>
                     <span className={styles.spsScore}>
-                      SHS:{' '}
-                      {s.habitat_score?.toFixed(1) ??
-                        s.HabitatScore?.toFixed(1)}
+                      SHS: {(s.HabitatScore * 100).toFixed(1)}
                     </span>
                   </button>
                 </li>
