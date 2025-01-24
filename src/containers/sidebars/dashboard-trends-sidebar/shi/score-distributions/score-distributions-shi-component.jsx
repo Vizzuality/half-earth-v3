@@ -429,6 +429,36 @@ function ScoreDistributionsShiComponent(props) {
                 }
               />
             </div>
+            <div className={styles.chartLegend}>
+              <div className={styles.legendItem}>
+                {t('Birds')}
+                <div
+                  className={cx(styles.legendColor, styles.birds)}
+                  style={{ backgroundColor: getCSSVariable('birds') }}
+                />
+              </div>
+              <div className={styles.legendItem}>
+                {t('Mammals')}
+                <div
+                  className={cx(styles.legendColor, styles.mammals)}
+                  style={{ backgroundColor: getCSSVariable('mammals') }}
+                />
+              </div>
+              <div className={styles.legendItem}>
+                {t('Reptiles')}
+                <div
+                  className={cx(styles.legendColor, styles.reptiles)}
+                  style={{ backgroundColor: getCSSVariable('reptiles') }}
+                />
+              </div>
+              <div className={styles.legendItem}>
+                {t('Amphibians')}
+                <div
+                  className={cx(styles.legendColor, styles.amphibians)}
+                  style={{ backgroundColor: getCSSVariable('amphibians') }}
+                />
+              </div>
+            </div>
             {isLoading && <Loading height={200} />}
             {!isLoading && (
               <DistributionsChartComponent data={chartData} options={options} />

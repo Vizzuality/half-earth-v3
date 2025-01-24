@@ -244,4 +244,39 @@ $info-width: 300px;
     color: var(--font-color);
     border: 1px solid var(--border-color);
   }
+
+  .chartLegend{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+
+    .legendItem{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--font-color);
+      text-transform: uppercase;
+      font-weight: 700;
+
+      .legendColor{
+        width: 100px;
+        height: 1rem;
+
+        &.birds{
+          background-color: $birds-color;
+        }
+        &.mammals{
+          background-color: $mammals-color;
+        }
+        &.reptiles{
+          background-color: $reptiles-color;
+        }
+        &.amphibians{
+          background-color: $amphibians-color;
+        }
+      }
+    }
+  }
 }
