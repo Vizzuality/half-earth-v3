@@ -56,7 +56,7 @@ function ScoreDistributionsShiComponent(props) {
 
   const toolTipTitle = (tooltipItems) => {
     const bucket = parseInt(tooltipItems[0].label, 10);
-    return `${bucket} - ${bucket + 5}`;
+    return `${bucket} - ${bucket + 7}`;
   };
 
   const options = {
@@ -363,7 +363,9 @@ function ScoreDistributionsShiComponent(props) {
                       </span>
                     </div>
                     <span className={styles.spsScore}>
-                      SHS: {(s.HabitatScore * 100).toFixed(1)}
+                      SHS:{' '}
+                      {s.habitat_score && (s.habitat_score * 100).toFixed(1)}
+                      {s.HabitatScore && (s.HabitatScore * 100).toFixed(1)}
                     </span>
                   </button>
                 </li>

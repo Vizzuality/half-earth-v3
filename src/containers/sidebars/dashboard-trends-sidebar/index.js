@@ -150,14 +150,40 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     if (!shiScoresData.length) return;
 
-    const scoreRange = shiScoresData[0].binned.split(',');
-    const shiSpeciesScoresURL = {
-      url: DASHBOARD_URLS.SHI_SPECIES_URL,
-      whereClause: `iso3 = '${countryISO}' and HabitatScore >= ${
+    let url = DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL;
+    let whereClause = `iso3_regional = '${
+      selectedProvince?.iso3_regional ?? selectedProvince?.GID_1
+    }'`;
+
+    // find first bin with a habitat score > 0
+    const bin = shiScoresData.find((item) => {
+      return (
+        item.habitat_amphibians > 0 ||
+        item.habitat_birds > 0 ||
+        item.habitat_mammals > 0 ||
+        item.habitat_reptiles > 0
+      );
+    });
+
+    const scoreRange = bin.binned.split(',');
+    let andClause = ` and habitat_score >= ${
+      parseInt(scoreRange[0].trim(/ /gi), 10) / 100
+    } and habitat_score <= ${
+      parseInt(scoreRange[1].trim(/ /gi), 10) / 100
+    } and species_url IS NOT NULL`;
+    if (shiActiveTrend === NATIONAL_TREND) {
+      url = DASHBOARD_URLS.SHI_SPECIES_URL;
+      whereClause = `ISO3 = '${countryISO}'`;
+      andClause = ` and HabitatScore >= ${
         parseInt(scoreRange[0], 10) / 100
       } and HabitatScore <= ${
         parseInt(scoreRange[1], 10) / 100
-      } and SpeciesImage IS NOT NULL`,
+      } and SpeciesImage IS NOT NULL`;
+    }
+
+    const shiSpeciesScoresURL = {
+      url,
+      whereClause: `${whereClause}${andClause}`,
     };
     getShiSelectSpeciesData(shiSpeciesScoresURL);
   }, [shiScoresData]);
@@ -272,7 +298,7 @@ function DashboardTrendsSidebarContainer(props) {
 
   useEffect(() => {
     if (
-      !selectedProvince &&
+      (!selectedProvince || shiActiveTrend === NATIONAL_TREND) &&
       (tabOption === TABS.SHI || tabOption === TABS.SII)
     ) {
       getNationalData();
@@ -291,21 +317,21 @@ function DashboardTrendsSidebarContainer(props) {
       // GET SPI
       getProvinceSpiData(whereClause);
 
-      if (shiActiveTrend === NATIONAL_TREND) {
-        getNationalData();
-      } else {
-        const shiScoresDataURL = {
-          url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
-          whereClause: `${shiWhereClause}`,
-        };
-        getScoresData(shiScoresDataURL);
+      // if (shiActiveTrend === NATIONAL_TREND) {
+      //   getNationalData();
+      // } else {
+      const shiScoresDataURL = {
+        url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
+        whereClause: `${shiWhereClause}`,
+      };
+      getScoresData(shiScoresDataURL);
 
-        const shiSpeciesScoresURL = {
-          url: DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL,
-          whereClause: `${whereClause} and habitat_score >= 1 and habitat_score <= 5 and species_url IS NOT NULL`,
-        };
-        getShiSelectSpeciesData(shiSpeciesScoresURL);
-      }
+      // const shiSpeciesScoresURL = {
+      //   url: DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL,
+      //   whereClause: `${whereClause} and habitat_score >= 1 and habitat_score <= 5 and species_url IS NOT NULL`,
+      // };
+      // getShiSelectSpeciesData(shiSpeciesScoresURL);
+      // }
     }
   }, [selectedProvince, activeTrend, shiActiveTrend]);
 
