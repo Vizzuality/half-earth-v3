@@ -43,12 +43,12 @@ function DashboardNavComponent(props) {
     window.history.pushState({ selectedIndex: page }, '', ``);
 
     setMapLegendLayers([]);
-    setDataLayerData(null);
-    setSpeciesInfo(null);
 
     if (page !== NAVIGATION.DATA_LAYER && page !== NAVIGATION.BIO_IND) {
       setSelectedRegion(null);
       setScientificName(null);
+      setDataLayerData(null);
+      setSpeciesInfo(null);
     }
     setSelectedIndex(page);
   };

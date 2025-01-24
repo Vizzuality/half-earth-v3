@@ -156,16 +156,6 @@ function GroupedListComponent(props) {
           LAYER_TITLE_TYPES.TREND
         );
 
-        let layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT) - 1;
-
-        if (layerIndex < 0) {
-          layerIndex = searchForLayers('GBIF (2023)') - 1;
-        }
-
-        if (layerIndex < 0) {
-          layerIndex = map.layers.items.length;
-        }
-
         view.whenLayerView(layer).then((layerView) => {
           layerView.watch('updating', (val) => {
             if (!val) {
@@ -231,7 +221,7 @@ function GroupedListComponent(props) {
     const layerParent = item.type_title.toUpperCase();
     const layerName = item.dataset_title.toUpperCase();
     let layer;
-    let layerIndex = searchForLayers(layerName);
+    const layerIndex = searchForLayers(layerName);
 
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive || layerIndex < 0) {
@@ -242,22 +232,12 @@ function GroupedListComponent(props) {
             LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS
           );
 
-          layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT) - 1;
-
-          if (layerIndex < 0) {
-            layerIndex = searchForLayers('GBIF (2023)') - 1;
-          }
-
-          if (layerIndex < 0) {
-            layerIndex = map.layers.items.length;
-          }
-
           item.isActive = true;
           setRegionLayers((rl) => ({
             ...rl,
             [layerName]: layer,
           }));
-          map.add(layer, layerIndex);
+          map.add(layer);
 
           setMapLegendLayers((ml) => [item, ...ml]);
         }
@@ -301,19 +281,12 @@ function GroupedListComponent(props) {
             );
           }
 
-          layerIndex = searchForLayers(LAYER_OPTIONS.HABITAT);
-
-          if (layerIndex < 0) {
-            layerIndex = map.layers.items.length;
-          }
-
-          layerIndex += 1;
           item.isActive = true;
           setRegionLayers((rl) => ({
             ...rl,
             [layerName]: layer,
           }));
-          map.add(layer, layerIndex);
+          map.add(layer);
 
           getLayerIcon(layer, item);
         }
@@ -342,7 +315,7 @@ function GroupedListComponent(props) {
           ...rl,
           [layerName]: layer,
         }));
-        map.add(layer, layerIndex);
+        map.add(layer);
 
         map.addSource('mapTiles', {
           type: 'vector',
