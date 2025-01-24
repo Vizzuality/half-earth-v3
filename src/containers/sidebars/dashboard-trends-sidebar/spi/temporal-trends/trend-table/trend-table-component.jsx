@@ -26,7 +26,7 @@ function TrendTableComponent(props) {
               <th className={tableStyles.firstColumn}>
                 <div className={tableStyles.headerColumnContainer}>
                   <span>{t('Province')}</span>
-                  <div className={tableStyles.arrowsContainer}>
+                  {/* <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
                         handleSortChange({ value: 'NAME', ascending: true })
@@ -37,13 +37,13 @@ function TrendTableComponent(props) {
                         handleSortChange({ value: 'NAME', ascending: false })
                       }
                     />
-                  </div>
+                  </div> */}
                 </div>
               </th>
               <th>
                 <div className={tableStyles.headerColumnContainer}>
                   <span>{t('SPI')}</span>
-                  <div className={tableStyles.arrowsContainer}>
+                  {/* <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
                         handleSortChange({ value: 'GOV_TYPE', ascending: true })
@@ -57,15 +57,15 @@ function TrendTableComponent(props) {
                         })
                       }
                     />
-                  </div>
+                  </div> */}
                 </div>
               </th>
               <th>
                 <div className={tableStyles.headerColumnContainer}>
                   <span>
-                    {t('Area')}(km<sup>2</sup>)
+                    {t('Total Area')} (km<sup>2</sup>)
                   </span>
-                  <div className={tableStyles.arrowsContainer}>
+                  {/* <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
                         handleSortChange({ value: 'DESIG', ascending: true })
@@ -76,13 +76,15 @@ function TrendTableComponent(props) {
                         handleSortChange({ value: 'DESIG', ascending: false })
                       }
                     />
-                  </div>
+                  </div> */}
                 </div>
               </th>
               <th>
                 <div className={tableStyles.headerColumnContainer}>
-                  <span>{t('Area Protected')}</span>
-                  <div className={tableStyles.arrowsContainer}>
+                  <span>
+                    {t('Area Protected')} (km<sup>2</sup>)
+                  </span>
+                  {/* <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
                         handleSortChange({
@@ -99,13 +101,13 @@ function TrendTableComponent(props) {
                         })
                       }
                     />
-                  </div>
+                  </div> */}
                 </div>
               </th>
               <th>
                 <div className={tableStyles.headerColumnContainer}>
                   <span>{t('Vertebrate Richness')}</span>
-                  <div className={tableStyles.arrowsContainer}>
+                  {/* <div className={tableStyles.arrowsContainer}>
                     <ArrowUp
                       onClick={() =>
                         handleSortChange({ value: 'STATUS', ascending: true })
@@ -116,7 +118,7 @@ function TrendTableComponent(props) {
                         handleSortChange({ value: 'STATUS', ascending: false })
                       }
                     />
-                  </div>
+                  </div> */}
                 </div>
               </th>
             </tr>
@@ -128,13 +130,9 @@ function TrendTableComponent(props) {
                 <tr key={`wdpa-row-${row.NAME}-${index}`}>
                   <td className={tableStyles.firstColumn}>{row.region_name}</td>
                   <td>{row.SPI.toFixed(1)}</td>
-                  <td>
-                    {numberToLocaleStringWithOneDecimal(row.Area) ?? 0}
-                    km<sup>2</sup>
-                  </td>
+                  <td>{numberToLocaleStringWithOneDecimal(row.Area) ?? 0}</td>
                   <td>
                     {numberToLocaleStringWithOneDecimal(row.AreaProtected) ?? 0}
-                    km<sup>2</sup>
                   </td>
                   <td>
                     {numberToLocaleStringWithOneDecimal(

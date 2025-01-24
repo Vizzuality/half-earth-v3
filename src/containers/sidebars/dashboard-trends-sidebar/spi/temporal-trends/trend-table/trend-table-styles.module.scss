@@ -18,12 +18,20 @@
     overflow-y: auto;
 
     table{
-      font-size: $font-size-xxs;
+      font-size: $font-size-xs;
 
       th{
         span{
           color: $white;
           text-align: center;
+        }
+      }
+
+      tbody {
+        tr {
+          height: 40px;
+          border-bottom: 1px solid var(--font-color);
+          background-color: $wild-sand;
         }
       }
     }
