@@ -202,8 +202,8 @@ function MapLegendComponent(props) {
               </>
             )}
             <div className={styles.info}>
-              <b>{layer.label?.toLowerCase()}</b>
-              <span>{layer.parent}</span>
+              <b>{layer.label?.toUpperCase()}</b>
+              {layer.parent && <span>{layer.parent}</span>}
               {getLayerIcon(layer)}
             </div>
           </li>

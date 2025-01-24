@@ -499,10 +499,6 @@ function DashboardContainer(props) {
     setData({ habitatTrendData, spiScoreData });
   };
 
-  // function isIframe() {
-  //   return window.parent !== window;
-  // }
-
   // Get Country information, allows to get country name
   useEffect(() => {
     getQueryParams();
@@ -584,14 +580,6 @@ function DashboardContainer(props) {
     provinceName,
     user,
   ]);
-
-  // useEffect(() => {
-  //   if (isIframe()) {
-  //     setLoggedIn(true);
-  //   } else {
-  //     setLoggedIn(false);
-  //   }
-  // }, []);
 
   return (
     <DashboardComponent

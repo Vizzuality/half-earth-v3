@@ -46,7 +46,6 @@
       .info{
         display: flex;
         flex-direction: column;
-        text-transform: capitalize;
         font-size: $font-size-xs;
 
         span{
@@ -73,10 +72,9 @@
   }
 
   .mapLegend{
-    height: 15px;
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-top: 3px;
 
     img{
       width: 100%;

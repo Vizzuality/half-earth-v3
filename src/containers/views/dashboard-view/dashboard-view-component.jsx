@@ -214,10 +214,6 @@ function DashboardViewComponent(props) {
     highlight = layerView?.highlight(foundRegion.graphic);
   };
 
-  // function isIframe() {
-  //   return window.parent !== window;
-  // }
-
   useEffect(() => {
     if (!view) return;
     view.on('click', (event) => {
@@ -269,14 +265,6 @@ function DashboardViewComponent(props) {
       setShowLegend(false);
     }
   }, [mapLegendLayers]);
-
-  // useEffect(() => {
-  //   if (isIframe()) {
-  //     setShowTopNav(false);
-  //   } else {
-  //     setShowTopNav(true);
-  //   }
-  // }, []);
 
   return (
     <MapView
