@@ -23,8 +23,6 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 
 import { SPI_LATEST_YEAR } from 'constants/dashboard-constants.js';
 
-import SPILegend from '../../../../../../assets/images/dashboard/spi_legend.png';
-
 import styles from './province-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
@@ -341,16 +339,7 @@ function ProvinceChartComponent(props) {
       )}
       <div className={styles.chart}>
         {bubbleData && (
-          <>
-            <div className={styles.mapLegend}>
-              <img src={SPILegend} alt="spi-legend" />
-              <div className={styles.legendValues}>
-                <span>0</span>
-                <span>100</span>
-              </div>
-            </div>
-            <Bubble options={options} data={bubbleData} ref={chartRef} />
-          </>
+          <Bubble options={options} data={bubbleData} ref={chartRef} />
         )}
       </div>
     </div>

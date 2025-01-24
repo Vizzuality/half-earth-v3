@@ -71,4 +71,22 @@
       }
     }
   }
+
+  .mapLegend{
+    height: 15px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    img{
+      width: 100%;
+      height: 15px;
+    }
+
+    .legendValues{
+      color: white;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }

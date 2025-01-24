@@ -40,6 +40,7 @@ function DashboardTrendsSidebarContainer(props) {
     setSelectedRegionOption,
     selectedProvince,
     tabOption,
+    setMapLegendLayers,
   } = props;
 
   const [geo, setGeo] = useState(null);
@@ -211,7 +212,6 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     if (!map && !view) return;
 
-    // if (tabOption === 2) {
     const layer = EsriFeatureService.getFeatureLayer(
       PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
       countryISO
@@ -223,15 +223,15 @@ function DashboardTrendsSidebarContainer(props) {
       ...regionLayers,
       [LAYER_OPTIONS.PROVINCES]: layer,
     }));
-    // }
 
-    if (tabOption === 2) {
+    if (tabOption === TABS.SPI) {
       layer.visible = true;
+      const item = { label: 'SPI', parent: '', id: REGION_OPTIONS.PROVINCES };
+      setMapLegendLayers([item]);
     } else {
       layer.visible = false;
     }
 
-    // if (tabOption === 1) {
     const outlineFeatureLayer = EsriFeatureService.getFeatureLayer(
       SHI_LAYER_ID,
       countryISO,
@@ -245,14 +245,15 @@ function DashboardTrendsSidebarContainer(props) {
       [`${countryISO}-outline`]: outlineFeatureLayer,
     }));
 
-    if (tabOption === 1) {
+    if (tabOption === TABS.SHI) {
       outlineFeatureLayer.visible = true;
+      const item = { label: 'SHI', parent: '', id: `${countryISO}-outline` };
+      setMapLegendLayers([item]);
     } else {
       outlineFeatureLayer.visible = false;
     }
-    // }
 
-    if (tabOption === 3) {
+    if (tabOption === TABS.SII) {
       layer.visible = false;
       outlineFeatureLayer.visible = false;
     }

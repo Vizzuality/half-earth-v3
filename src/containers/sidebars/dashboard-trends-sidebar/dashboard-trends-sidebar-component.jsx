@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -21,7 +21,6 @@ export const TABS = {
 };
 
 function DashboardTrendsSidebar(props) {
-  const [title, setTitle] = useState();
   const t = useT();
   const {
     shiValue,
@@ -32,67 +31,61 @@ function DashboardTrendsSidebar(props) {
     regionLayers,
     countryISO,
     map,
+    setMapLegendLayers,
   } = props;
 
   const showHideLayers = (tabClicked) => {
     const layers = regionLayers;
-    // Object.keys(layers).forEach((region) => {
-    // const foundLayer = map.layers.items.find(
-    //   (item) => item.id === region || item.id === `${countryISO}-outline`
-    // );
-    // if (foundLayer) {
-    // map.remove(foundLayer);
+
+    const foundProvinceLayer = map.layers.items.find(
+      (item) => item.id === REGION_OPTIONS.PROVINCES
+    );
+
+    const outlineLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-outline`
+    );
+
     if (tabClicked === TABS.SII) {
-      const foundLayer = map.layers.items.find(
-        (item) => item.id === REGION_OPTIONS.PROVINCES
-      );
-      if (foundLayer) {
-        foundLayer.visible = false;
+      if (foundProvinceLayer) {
+        foundProvinceLayer.visible = false;
       }
 
-      const outlineLayer = map.layers.items.find(
-        (item) => item.id === `${countryISO}-outline`
-      );
       if (outlineLayer) {
         outlineLayer.visible = false;
       }
+
+      setMapLegendLayers([]);
     } else if (tabClicked === TABS.SHI) {
-      const foundLayer = map.layers.items.find(
-        (item) => item.id === REGION_OPTIONS.PROVINCES
-      );
-      if (foundLayer) {
-        foundLayer.visible = false;
+      if (foundProvinceLayer) {
+        foundProvinceLayer.visible = false;
       }
 
-      const outlineLayer = map.layers.items.find(
-        (item) => item.id === `${countryISO}-outline`
-      );
       if (outlineLayer) {
         outlineLayer.visible = true;
       }
+
+      const item = { label: 'SHI', parent: '', id: `${countryISO}-outline` };
+      setMapLegendLayers([item]);
     } else {
       Object.keys(layers).forEach(() => {
-        const foundLayer = map.layers.items.find(
-          (item) => item.id === REGION_OPTIONS.PROVINCES
-        );
-        if (foundLayer) {
-          foundLayer.visible = true;
+        if (foundProvinceLayer) {
+          foundProvinceLayer.visible = true;
         }
 
-        const outlineLayer = map.layers.items.find(
-          (item) => item.id === `${countryISO}-outline`
-        );
         if (outlineLayer) {
           outlineLayer.visible = false;
         }
       });
+
+      const item = { label: 'SPI', parent: '', id: REGION_OPTIONS.PROVINCES };
+      setMapLegendLayers([item]);
     }
 
     setTabOption(tabClicked);
   };
 
   return (
-    <div className={styles.container}>
+    <div id="dashboard-sidebar" className={styles.container}>
       <header>
         <div className={styles.tabs}>
           <button

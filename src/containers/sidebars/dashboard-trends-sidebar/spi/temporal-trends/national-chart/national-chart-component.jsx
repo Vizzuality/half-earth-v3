@@ -20,8 +20,6 @@ import last from 'lodash/last';
 
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
-import SPILegend from '../../../../../../assets/images/dashboard/spi_legend.png';
-
 import styles from './national-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
@@ -200,13 +198,6 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       )}
       {data && (
         <div className={styles.chart}>
-          <div className={styles.mapLegend}>
-            <img src={SPILegend} alt="spi-legend" />
-            <div className={styles.legendValues}>
-              <span>0</span>
-              <span>100</span>
-            </div>
-          </div>
           <Line options={options} data={data} />
         </div>
       )}

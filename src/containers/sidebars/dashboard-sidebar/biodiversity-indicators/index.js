@@ -244,8 +244,6 @@ function BioDiversityContainer(props) {
 
     getLayerIcon(protectedLayers, protectedAreaLayer);
     getLayerIcon(webTileLayer, habitatLayer);
-
-    // setMapLegendLayers([protectedAreaLayer, habitatLayer]);
   };
 
   // get habitat score information

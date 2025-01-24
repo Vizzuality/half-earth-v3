@@ -56,6 +56,7 @@ function DashboardSidebar(props) {
 
   return (
     <div
+      id="dashboard-sidebar"
       className={cx(
         lightMode ? styles.light : '',
         selectedIndex === NAVIGATION.TRENDS ? styles.trends : '',

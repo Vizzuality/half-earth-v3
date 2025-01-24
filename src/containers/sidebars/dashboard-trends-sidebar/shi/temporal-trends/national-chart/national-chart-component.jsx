@@ -22,8 +22,6 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 
 import { SHI_LATEST_YEAR } from 'constants/dashboard-constants.js';
 
-import SHILegend from '../../../../../../assets/images/dashboard/shi_legend.png';
-
 import styles from './national-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
@@ -215,13 +213,6 @@ function NationalChartComponent(props) {
           </div>
           {data && (
             <div className={styles.chart}>
-              <div className={styles.mapLegend}>
-                <img src={SHILegend} alt="spi-legend" />
-                <div className={styles.legendValues}>
-                  <span>0</span>
-                  <span>100</span>
-                </div>
-              </div>
               <div className={styles.legend}>
                 <div className={cx(styles.legendBox, styles.habitat)} />
                 <span>{t('Habitat Score')}</span>
