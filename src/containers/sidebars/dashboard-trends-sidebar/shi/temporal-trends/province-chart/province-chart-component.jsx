@@ -40,23 +40,6 @@ function ProvinceChartComponent(props) {
     layerView,
   } = props;
 
-  const emptyArcColor = lightMode
-    ? getCSSVariable('dark-opacity')
-    : getCSSVariable('white-opacity-20');
-  const blankData = {
-    labels: [t('Global SPI'), t('Remaining')],
-    datasets: [
-      {
-        label: '',
-        data: [0, 0],
-        backgroundColor: [getCSSVariable('habitat'), emptyArcColor],
-        borderColor: [getCSSVariable('habitat'), emptyArcColor],
-        borderWidth: 1,
-      },
-    ],
-  };
-  const [shiData, setShiData] = useState(blankData);
-
   const [isLoading, setIsLoading] = useState(true);
   const [foundIndex, setFoundIndex] = useState(0);
   const [data, setData] = useState();
@@ -150,21 +133,6 @@ function ProvinceChartComponent(props) {
 
     const currentValue = last(filteredData);
     setFilteredProvince(currentValue);
-    const alteredCurrentValue = currentValue.habitat_index * 100;
-
-    const shi = {
-      labels: [t('Global SHI'), t('Remaining')],
-      datasets: [
-        {
-          label: '',
-          data: [alteredCurrentValue, 100 - alteredCurrentValue],
-          backgroundColor: [getCSSVariable('habitat'), emptyArcColor],
-          borderColor: [getCSSVariable('habitat'), emptyArcColor],
-          borderWidth: 1,
-        },
-      ],
-    };
-    setShiData(shi);
 
     setData({
       labels: filteredData.map((item) => item.year),
@@ -246,12 +214,6 @@ function ProvinceChartComponent(props) {
               <b>{(filteredProvince.area_score * 100).toFixed(1)}</b>
               <span>{t('Area Score')}</span>
             </div>
-            {/* <SpiArcChartComponent
-              width="125x"
-              height="75px"
-              data={shiData}
-              value={filteredProvince.habitat_index * 100}
-            /> */}
             <div className={styles.values}>
               <b>{(filteredProvince.habitat_index * 100).toFixed(1)}</b>
               <span>{t('SHI')}</span>
