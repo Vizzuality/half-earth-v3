@@ -1,3 +1,4 @@
+import { orderBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
@@ -151,11 +152,6 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     if (!shiScoresData.length) return;
 
-    let url = DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL;
-    let whereClause = `iso3_regional = '${
-      selectedProvince?.iso3_regional ?? selectedProvince?.GID_1
-    }'`;
-
     // find first bin with a habitat score > 0
     const bin = shiScoresData.find((item) => {
       return (
@@ -167,26 +163,37 @@ function DashboardTrendsSidebarContainer(props) {
     });
 
     const scoreRange = bin.binned.split(',');
-    let andClause = ` and habitat_score >= ${
-      parseInt(scoreRange[0].trim(/ /gi), 10) / 100
-    } and habitat_score <= ${
-      parseInt(scoreRange[1].trim(/ /gi), 10) / 100
-    } and species_url IS NOT NULL`;
-    if (shiActiveTrend === NATIONAL_TREND) {
-      url = DASHBOARD_URLS.SHI_SPECIES_URL;
-      whereClause = `ISO3 = '${countryISO}'`;
-      andClause = ` and HabitatScore >= ${
-        parseInt(scoreRange[0], 10) / 100
-      } and HabitatScore <= ${
-        parseInt(scoreRange[1], 10) / 100
-      } and SpeciesImage IS NOT NULL`;
+
+    let habitatScore = 'HabitatScore';
+    let speciesURL = 'SpeciesImage';
+    let url = DASHBOARD_URLS.SHI_SPECIES_URL;
+    let whereClause = `ISO3 = '${countryISO}'`;
+
+    if (shiActiveTrend === PROVINCE_TREND) {
+      url = DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL;
+      whereClause = `iso3_regional = '${
+        selectedProvince?.iso3_regional ?? selectedProvince?.GID_1
+      }'`;
+      habitatScore = 'habitat_score';
+      speciesURL = 'species_url';
     }
+
+    const andClause = `and ${habitatScore} >= ${
+      parseInt(scoreRange[0], 10) / 100
+    } and ${habitatScore} <= ${
+      parseInt(scoreRange[1], 10) / 100
+    } and ${speciesURL} IS NOT NULL`;
 
     const shiSpeciesScoresURL = {
       url,
-      whereClause: `${whereClause}${andClause}`,
+      whereClause: `${whereClause} ${andClause}`,
+      orderByFields: [habitatScore],
     };
-    getShiSelectSpeciesData(shiSpeciesScoresURL);
+    if (shiActiveTrend === PROVINCE_TREND && selectedProvince) {
+      getShiSelectSpeciesData(shiSpeciesScoresURL);
+    } else if (shiActiveTrend === NATIONAL_TREND) {
+      getShiSelectSpeciesData(shiSpeciesScoresURL);
+    }
   }, [shiScoresData]);
 
   // find and zoom to region
@@ -299,7 +306,7 @@ function DashboardTrendsSidebarContainer(props) {
 
   useEffect(() => {
     if (
-      (!selectedProvince || shiActiveTrend === NATIONAL_TREND) &&
+      shiActiveTrend === NATIONAL_TREND &&
       (tabOption === TABS.SHI || tabOption === TABS.SII)
     ) {
       getNationalData();
@@ -318,21 +325,17 @@ function DashboardTrendsSidebarContainer(props) {
       // GET SPI
       getProvinceSpiData(whereClause);
 
-      // if (shiActiveTrend === NATIONAL_TREND) {
-      //   getNationalData();
-      // } else {
       const shiScoresDataURL = {
         url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
         whereClause: `${shiWhereClause}`,
+        orderByFields: [
+          'habitat_amphibians',
+          'habitat_birds',
+          'habitat_mammals',
+          'habitat_reptiles',
+        ],
       };
       getScoresData(shiScoresDataURL);
-
-      // const shiSpeciesScoresURL = {
-      //   url: DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL,
-      //   whereClause: `${whereClause} and habitat_score >= 1 and habitat_score <= 5 and species_url IS NOT NULL`,
-      // };
-      // getShiSelectSpeciesData(shiSpeciesScoresURL);
-      // }
     }
   }, [selectedProvince, activeTrend, shiActiveTrend]);
 
