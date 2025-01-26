@@ -16,7 +16,7 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
           <td>
             <b>{item.label}</b>
           </td>
-          <td>{item.value}</td>
+          <td dangerouslySetInnerHTML={{ __html: item.value }} />
         </tr>
       );
     }
@@ -25,7 +25,7 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
         <td>
           <b>{child.label}</b>
         </td>
-        <td>{child.value}</td>
+        <td dangerouslySetInnerHTML={{ __html: item.value }} />
       </tr>
     ));
   };

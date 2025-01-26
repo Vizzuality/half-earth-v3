@@ -42,7 +42,7 @@ function ToggleLayerInfoComponent(props) {
           {
             label: 'Description',
             value: t(
-              'From the World Database of Protected Areas (protectedplant.net).'
+              'From the World Database of Protected Areas (<a href="http://protectedplant.net" style="color: #18bab4;" target="_blank">protectedplant.net</a>).'
             ),
           },
         ];
@@ -51,7 +51,7 @@ function ToggleLayerInfoComponent(props) {
           {
             label: 'Description',
             value: t(
-              'From the Database of Global Administrative Areas (gadm.org).'
+              'From the Database of Global Administrative Areas (<a href="http://gadm.org" style="color: #18bab4;" target="_blank">gadm.org</a>).'
             ),
           },
         ];
