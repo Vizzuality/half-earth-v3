@@ -44,6 +44,7 @@ function DashboardViewComponent(props) {
     selectedIndex,
     setSelectedIndex,
     setSelectedRegion,
+    setExploreAllSpecies,
     selectedRegion,
     selectedRegionOption,
     setTaxaList,
@@ -120,6 +121,7 @@ function DashboardViewComponent(props) {
             case NAVIGATION.REGION:
               {
                 setTaxaList([]);
+                setExploreAllSpecies(false);
 
                 const { WDPA_PID, GID_1, mgc } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);

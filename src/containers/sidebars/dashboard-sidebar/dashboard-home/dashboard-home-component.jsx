@@ -20,7 +20,12 @@ import styles from './dashboard-home-styles.module.scss';
 function DashboardHomeComponent(props) {
   const t = useT();
   const locale = useLocale();
-  const { setSelectedIndex, setScientificName, prioritySpeciesList } = props;
+  const {
+    setSelectedIndex,
+    setScientificName,
+    prioritySpeciesList,
+    setExploreAllSpecies,
+  } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [searchInput, setSearchInput] = useState('');
@@ -40,6 +45,7 @@ function DashboardHomeComponent(props) {
   };
 
   const handleExploreAllSpecies = () => {
+    setExploreAllSpecies(true);
     setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
   };
 

@@ -55,6 +55,7 @@ function DashboardContainer(props) {
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState('');
   const [selectedProvince, setSelectedProvince] = useState();
+  const [exploreAllSpecies, setExploreAllSpecies] = useState(false);
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
   const [speciesListLoading, setSpeciesListLoading] = useState(true);
@@ -622,6 +623,8 @@ function DashboardContainer(props) {
       prioritySpeciesList={prioritySpeciesList}
       mapLegendLayers={mapLegendLayers}
       setMapLegendLayers={setMapLegendLayers}
+      setExploreAllSpecies={setExploreAllSpecies}
+      exploreAllSpecies={exploreAllSpecies}
       {...props}
     />
   );

@@ -56,6 +56,7 @@ function DataLayerComponent(props) {
     setScientificName,
     setDataLayerData,
     setMapLegendLayers,
+    exploreAllSpecies,
   } = props;
 
   const { lightMode } = useContext(LightModeContext);
@@ -186,7 +187,7 @@ function DataLayerComponent(props) {
     setScientificName(null);
     setMapLegendLayers([]);
 
-    if (selectedRegion) {
+    if (selectedRegion || exploreAllSpecies) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {
       setSelectedIndex(NAVIGATION.HOME);
