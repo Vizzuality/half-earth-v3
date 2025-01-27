@@ -16,7 +16,7 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
           <td>
             <b>{item.label}</b>
           </td>
-          <td dangerouslySetInnerHTML={{ __html: item.value }} />
+          <td>{item.value}</td>
         </tr>
       );
     }
@@ -25,14 +25,21 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
         <td>
           <b>{child.label}</b>
         </td>
-        <td dangerouslySetInnerHTML={{ __html: item.value }} />
+        <td>{item.value}</td>
       </tr>
     ));
   };
 
   return (
     <>
-      <div className={styles.overlay} onClick={closeModal} />
+      <div
+        className={styles.overlay}
+        role="button"
+        aria-label="overlay"
+        onClick={closeModal}
+        onKeyDown={closeModal}
+        tabIndex={0}
+      />
       <div className={styles.container}>
         <header>
           <h2>{title}</h2>

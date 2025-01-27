@@ -53,6 +53,7 @@ function DataLayerComponent(props) {
     selectedRegion,
     setSelectedIndex,
     setSpeciesInfo,
+    setScientificName,
     setDataLayerData,
     setMapLegendLayers,
   } = props;
@@ -182,6 +183,7 @@ function DataLayerComponent(props) {
   const handleBack = () => {
     setDataLayerData(null);
     setSpeciesInfo(null);
+    setScientificName(null);
     setMapLegendLayers([]);
 
     if (selectedRegion) {

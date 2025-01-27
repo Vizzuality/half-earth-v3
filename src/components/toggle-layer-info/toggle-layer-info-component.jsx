@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useT } from '@transifex/react';
+import { useT, T } from '@transifex/react';
 
 import { LAYER_OPTIONS } from 'constants/dashboard-constants.js';
 import { DASHBOARD_URLS } from 'constants/layers-urls';
@@ -41,8 +41,19 @@ function ToggleLayerInfoComponent(props) {
         data = [
           {
             label: 'Description',
-            value: t(
-              'From the World Database of Protected Areas (<a href="http://protectedplant.net" style="color: #18bab4;" target="_blank">protectedplant.net</a>).'
+            value: (
+              <T
+                _str="From the World Database of Protected Areas ({link})."
+                link={
+                  <a
+                    href="http://protectedplant.net"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    protectedplant.net
+                  </a>
+                }
+              />
             ),
           },
         ];
@@ -50,8 +61,15 @@ function ToggleLayerInfoComponent(props) {
         data = [
           {
             label: 'Description',
-            value: t(
-              'From the Database of Global Administrative Areas (<a href="http://gadm.org" style="color: #18bab4;" target="_blank">gadm.org</a>).'
+            value: (
+              <T
+                _str="From the Database of Global Administrative Areas ({link})."
+                link={
+                  <a href="http://gadm.org" target="_blank" rel="noreferrer">
+                    gadm.org
+                  </a>
+                }
+              />
             ),
           },
         ];
