@@ -139,21 +139,8 @@
           padding: 0;
           align-items: center;
 
-          &.regions{
-            background-image: url('../../../../assets/images/drc_region_logos.jpg');
-          }
-
-          &.trends{
-              background-image: url('../../../../assets/images/drc_metrics_logos.jpg');
-          }
-
-          .outline{
-            border-bottom: none;
-            height: 100%;
-            // margin: 12px 12px 0;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            outline-style: none;
+          img{
+            aspect-ratio: 4/3;
           }
 
           span{
