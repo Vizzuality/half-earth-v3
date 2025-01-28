@@ -116,7 +116,7 @@ function MapLegendComponent(props) {
   const findLayerOnMap = (layer) => {
     // find layer to move on map
     const layerIndex = map.layers.items.findIndex(
-      (l) => l.id.toUpperCase() === layer.label.toUpperCase()
+      (l) => l.id.toUpperCase() === layer.id.toUpperCase()
     );
     const foundObject = map.layers.items[layerIndex];
 
