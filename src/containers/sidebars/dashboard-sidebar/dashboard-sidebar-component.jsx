@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -6,7 +6,8 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
-import logo from 'logos/institut-congolais.png';
+import codLogo from 'logos/institut-congolais.png';
+import sleLogo from 'logos/sierra-leone.png';
 
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
 
@@ -25,6 +26,7 @@ function DashboardSidebar(props) {
   const t = useT();
   const {
     countryName,
+    countryISO,
     selectedIndex,
     map,
     regionLayers,
@@ -33,6 +35,7 @@ function DashboardSidebar(props) {
   } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
+  const [logo, setLogo] = useState();
 
   const removeRegionLayers = () => {
     const layers = regionLayers;
@@ -54,6 +57,14 @@ function DashboardSidebar(props) {
     }
   }, [selectedIndex]);
 
+  useEffect(() => {
+    if (countryISO.toUpperCase() === 'SLE') {
+      setLogo(<img className={styles.logo} src={sleLogo} alt="Logo" />);
+    } else {
+      setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);
+    }
+  }, []);
+
   return (
     <div
       id="dashboard-sidebar"
@@ -72,7 +83,8 @@ function DashboardSidebar(props) {
         {!lightMode && <LightModeIcon className={styles.icon} />}
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
-      <img className={styles.logo} src={logo} alt="Logo" />
+      {logo}
+
       <h1>{countryName}</h1>
 
       <div className={styles.regionFilter}>

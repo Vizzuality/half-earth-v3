@@ -14,7 +14,6 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
 import ToggleLayerInfoContainer from 'components/toggle-layer-info';
-import ToggleOpacityContainer from 'components/toggle-opacity';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
