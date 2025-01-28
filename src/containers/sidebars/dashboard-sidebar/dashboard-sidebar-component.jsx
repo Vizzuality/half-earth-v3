@@ -86,7 +86,6 @@ function DashboardSidebar(props) {
       {logo}
 
       <h1>{countryName}</h1>
-
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />
         {selectedIndex === NAVIGATION.HOME && (

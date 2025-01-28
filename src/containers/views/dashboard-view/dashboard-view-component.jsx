@@ -64,6 +64,7 @@ function DashboardViewComponent(props) {
   const [layerView, setLayerView] = useState();
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
+  const [regionName, setRegionName] = useState();
 
   const [layerInfo, setLayerInfo] = useState();
 
@@ -123,7 +124,8 @@ function DashboardViewComponent(props) {
                 setTaxaList([]);
                 setExploreAllSpecies(false);
 
-                const { WDPA_PID, GID_1, mgc } = hits.attributes;
+                const { WDPA_PID, GID_1, mgc, NAME, region_name, territoire } =
+                  hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
                   setSelectedRegion({ WDPA_PID });
@@ -136,6 +138,8 @@ function DashboardViewComponent(props) {
                 if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
                   setSelectedRegion({ mgc });
                 }
+
+                setRegionName(NAME || region_name || territoire);
               }
               break;
             case NAVIGATION.TRENDS:
@@ -179,25 +183,24 @@ function DashboardViewComponent(props) {
         view.closePopup();
 
         if (hits) {
-          let regionName;
+          let name;
           if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
             if (hits.attributes.ISO3 === countryISO) {
-              regionName = hits.attributes.NAME;
+              name = hits.attributes.NAME;
             }
           } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
             if (hits.attributes.GID_0 === countryISO) {
-              regionName =
-                hits.attributes.NAME_1 ?? hits.attributes.region_name;
+              name = hits.attributes.NAME_1 ?? hits.attributes.region_name;
             }
           } else if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
-            regionName = hits.attributes.territoire;
+            name = hits.attributes.territoire;
           }
 
-          if (regionName) {
+          if (name) {
             hoverHighlight = layerView.highlight(hits.graphic);
             view.openPopup({
               // Set the popup's title to the coordinates of the location
-              title: `${regionName}`,
+              title: `${name}`,
               location: view.toMap({ x: event.x, y: event.y }),
             });
           }
@@ -303,6 +306,7 @@ function DashboardViewComponent(props) {
           layerView={layerView}
           selectedRegion={selectedRegion}
           setLayerInfo={setLayerInfo}
+          regionName={regionName}
           {...props}
         />
       </LightModeProvider>

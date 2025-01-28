@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -9,7 +9,7 @@ import Button from 'components/button';
 import FilterContainer from 'components/filters';
 import SpeciesListContainer from 'components/species-list';
 
-import { NAVIGATION } from 'constants/dashboard-constants.js';
+import { NAVIGATION, REGION_OPTIONS } from 'constants/dashboard-constants.js';
 
 import styles from '../dashboard-sidebar-styles.module.scss';
 
@@ -25,6 +25,8 @@ function SpeciesFilterComponent(props) {
     setSelectedIndex,
     setSelectedTaxa,
     speciesListLoading,
+    selectedRegion,
+    regionName,
   } = props;
 
   const filterStart = [
@@ -119,6 +121,7 @@ function SpeciesFilterComponent(props) {
   ];
 
   const [filters, setFilters] = useState(filterStart);
+  const [regionLabel, setRegionLabel] = useState();
 
   const handleBack = () => {
     setSelectedTaxa(null);
@@ -140,6 +143,24 @@ function SpeciesFilterComponent(props) {
     setFilters(newFilters);
   };
 
+  useEffect(() => {
+    if (!selectedRegion) return;
+
+    switch (selectedRegionOption) {
+      case REGION_OPTIONS.PROTECTED_AREAS:
+        setRegionLabel(t('Protected Areas'));
+        break;
+      case REGION_OPTIONS.PROVINCES:
+        setRegionLabel(t('Provinces'));
+        break;
+      case REGION_OPTIONS.FORESTS:
+        setRegionLabel(t('Forest Titles'));
+        break;
+      default:
+        break;
+    }
+  }, [selectedRegionOption, selectedRegion]);
+
   return (
     <section
       className={cx(
@@ -149,11 +170,17 @@ function SpeciesFilterComponent(props) {
     >
       <div className={styles.wrapper}>
         {selectedRegionOption && (
-          <Button
-            className={styles.back}
-            handleClick={handleBack}
-            label={t('Clear region selected')}
-          />
+          <div className={filterStyles.selectedRegion}>
+            <div className={filterStyles.regionInfo}>
+              <h2>{regionName}</h2>
+              <span>{regionLabel}</span>
+            </div>
+            <Button
+              className={styles.back}
+              handleClick={handleBack}
+              label={t('Clear region selected')}
+            />
+          </div>
         )}
         <div className={styles.filters}>
           <FilterContainer
