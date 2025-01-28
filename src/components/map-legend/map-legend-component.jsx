@@ -172,7 +172,7 @@ function MapLegendComponent(props) {
 
   return (
     <div className={styles.container} style={{ left: leftPosition }}>
-      <span className={styles.title}>{t('Map Legend')}</span>
+      <span className={styles.title}>{t('Map Legend')}asdfsdf</span>
       <ul className={styles.layers}>
         {Object.values(mapLegendLayers).map((layer, index) => (
           <li key={`${layer.id}-${layer.label}`}>
