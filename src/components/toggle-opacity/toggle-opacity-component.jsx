@@ -4,7 +4,7 @@ import { useT } from '@transifex/react';
 
 import { Slider } from '@mui/material';
 
-import DropIcon from 'icons/drop.svg?react';
+import OpacityIcon from 'icons/dashboard/opacity_icon.svg?react';
 
 import styles from './toggle-opacity-component-styles.module.scss';
 
@@ -52,7 +52,7 @@ function ToggleOpacityComponent({ layer, map }) {
         aria-label="Toggle opacity"
         title={t('Change layer opacity')}
       >
-        <DropIcon />
+        <OpacityIcon />
       </button>
       {showOpacity && (
         <div className={styles.opacityLabel}>

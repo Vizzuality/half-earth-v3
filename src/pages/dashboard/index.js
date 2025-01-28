@@ -383,9 +383,9 @@ function DashboardContainer(props) {
           taxa: 'mammals',
           title: t('mammals'),
         };
-        const data = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
+        const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
-        getOccurenceSpecies(data);
+        getOccurenceSpecies(groupData);
       } else {
         const { attributes } = features[0];
 

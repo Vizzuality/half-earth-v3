@@ -5,7 +5,9 @@ import { useT, T } from '@transifex/react';
 import { LAYER_OPTIONS } from 'constants/dashboard-constants.js';
 import { DASHBOARD_URLS } from 'constants/layers-urls';
 
-import InfoIcon from 'icons/info.svg?react';
+import InfoIcon from 'icons/dashboard/info_icon.svg?react';
+
+import styles from './toggle-layer-info-component-styles.module.scss';
 
 function ToggleLayerInfoComponent(props) {
   const { layer, setLayerInfo } = props;
@@ -106,6 +108,7 @@ function ToggleLayerInfoComponent(props) {
       {layer.type !== 'PRIVATE' && (
         <button
           type="button"
+          className={styles.info}
           onClick={() => displayInfo(layer)}
           aria-label="Toggle info visibility"
           title={t('Info and metadata')}

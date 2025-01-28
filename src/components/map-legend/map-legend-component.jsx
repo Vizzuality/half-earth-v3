@@ -4,13 +4,14 @@ import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 
+import ToggleOpacityContainer from 'components/toggle-opacity';
+
 import {
   LAYER_OPTIONS,
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
 
-import ArrowDownIcon from 'icons/arrow-down-solid.svg?react';
-import ArrowUpIcon from 'icons/arrow-up-solid.svg?react';
+import ArrowUpIcon from 'icons/dashboard/arrow_icon.svg?react';
 
 import SHILegendImage from 'images/dashboard/shi_legend.png';
 import SPILegendImage from 'images/dashboard/spi_legend.png';
@@ -175,6 +176,12 @@ function MapLegendComponent(props) {
       <ul className={styles.layers}>
         {Object.values(mapLegendLayers).map((layer, index) => (
           <li key={`${layer.id}-${layer.label}`}>
+            <div className={styles.info}>
+              <b>{layer.label?.toUpperCase()}</b>
+              {layer.parent && <span>{layer.parent}</span>}
+              {getLayerIcon(layer)}
+            </div>
+            <ToggleOpacityContainer layer={layer} {...props} />
             {!hideArrows(layer) && (
               <>
                 <button
@@ -190,22 +197,17 @@ function MapLegendComponent(props) {
                 </button>
                 <button
                   type="button"
-                  className={cx(styles.arrows, {
+                  className={cx(styles.arrows, styles.down, {
                     [styles.disabled]: index === mapLegendLayers.length - 1,
                   })}
                   aria-label={t('Move layer down')}
                   onClick={() => moveLayerDown(layer)}
                   disabled={index === mapLegendLayers.length - 1}
                 >
-                  <ArrowDownIcon />
+                  <ArrowUpIcon />
                 </button>
               </>
             )}
-            <div className={styles.info}>
-              <b>{layer.label?.toUpperCase()}</b>
-              {layer.parent && <span>{layer.parent}</span>}
-              {getLayerIcon(layer)}
-            </div>
           </li>
         ))}
       </ul>

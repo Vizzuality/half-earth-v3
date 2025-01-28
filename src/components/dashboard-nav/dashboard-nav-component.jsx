@@ -59,6 +59,7 @@ function DashboardNavComponent(props) {
         <button
           type="button"
           aria-label={t('Home')}
+          title={t('Home')}
           className={cx({
             [styles.selected]: selectedIndex === NAVIGATION.HOME,
           })}
@@ -69,6 +70,7 @@ function DashboardNavComponent(props) {
         <button
           type="button"
           aria-label={t('Regions')}
+          title={t('Regions')}
           className={cx({
             [styles.selected]: selectedIndex === NAVIGATION.REGION,
           })}
@@ -79,6 +81,7 @@ function DashboardNavComponent(props) {
         <button
           type="button"
           aria-label={t('Species')}
+          title={t('Species')}
           className={cx({
             [styles.selected]:
               selectedIndex >= NAVIGATION.SPECIES &&
@@ -96,7 +99,8 @@ function DashboardNavComponent(props) {
               <button
                 type="button"
                 disabled={!scientificName}
-                aria-label={t('Data Analysis')}
+                aria-label={t('Data Layers')}
+                title={t('Data Layers')}
                 className={cx({
                   [styles.selected]: selectedIndex === NAVIGATION.DATA_LAYER,
                   [styles.disabled]: !scientificName,
@@ -110,7 +114,8 @@ function DashboardNavComponent(props) {
               <button
                 type="button"
                 disabled={!scientificName}
-                aria-label={t('Biodiversity Indicators')}
+                aria-label={t('Conservation Status')}
+                title={t('Conservation Status')}
                 className={cx({
                   [styles.selected]: selectedIndex === NAVIGATION.BIO_IND,
                   [styles.disabled]: !scientificName,
@@ -126,6 +131,7 @@ function DashboardNavComponent(props) {
         <button
           type="button"
           aria-label={t('Trends')}
+          title={t('Trends')}
           className={cx({
             [styles.selected]: selectedIndex === NAVIGATION.TRENDS,
           })}
