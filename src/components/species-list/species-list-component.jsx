@@ -109,7 +109,13 @@ function SpeciesListComponent(props) {
 
   const applyFilter = () => {
     // this.virtualScroll?.scrollToIndex(0);
-    const inFilterCheck = (sp) => sp.common_name?.indexOf(filter) > -1;
+    const inFilterCheck = (sp) => {
+      console.log(sp);
+      return (
+        sp.common_name?.toLowerCase().indexOf(filter) > -1 ||
+        sp.scientific_name?.toLowerCase().indexOf(filter) > -1
+      );
+    };
     setInFilter(0);
 
     // clear the counts
@@ -173,7 +179,7 @@ function SpeciesListComponent(props) {
   };
 
   const handleSearch = (event) => {
-    setFilter(event.currentTarget.value.toLowerCase().trim());
+    setFilter(event.currentTarget.value.toLowerCase());
   };
 
   const clearSelection = () => {
