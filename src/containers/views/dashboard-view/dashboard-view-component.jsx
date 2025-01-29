@@ -184,16 +184,29 @@ function DashboardViewComponent(props) {
 
         if (hits) {
           let name;
+          let popupContent;
+          const {
+            NAME,
+            NAME_1,
+            territoire,
+            region_name,
+            DESIG,
+            DESIG_TYPE,
+            STATUS,
+            STATUS_YR,
+          } = hits.attributes;
+
           if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
             if (hits.attributes.ISO3 === countryISO) {
-              name = hits.attributes.NAME;
+              name = NAME;
+              popupContent = `<ul><li>${DESIG}</li><li>${DESIG_TYPE}</li><li>${STATUS}</li><li>${STATUS_YR}</li></ul>`;
             }
           } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
             if (hits.attributes.GID_0 === countryISO) {
-              name = hits.attributes.NAME_1 ?? hits.attributes.region_name;
+              name = NAME_1 ?? region_name;
             }
           } else if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
-            name = hits.attributes.territoire;
+            name = territoire;
           }
 
           if (name) {
@@ -201,7 +214,9 @@ function DashboardViewComponent(props) {
             view.openPopup({
               // Set the popup's title to the coordinates of the location
               title: `${name}`,
+              content: popupContent,
               location: view.toMap({ x: event.x, y: event.y }),
+              includeDefaultActions: false,
             });
           }
         }
