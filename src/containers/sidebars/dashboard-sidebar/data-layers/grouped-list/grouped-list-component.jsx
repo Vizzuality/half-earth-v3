@@ -377,48 +377,40 @@ function GroupedListComponent(props) {
   };
 
   const getCheckbox = (item) => {
-    let control = (
-      <FormControlLabel
-        label={t(item.dataset_title)}
-        style={{
-          textTransform: item.dataset_title.match(/(jetz|ebird)/i)
-            ? 'none'
-            : '',
-        }}
-        control={
-          <Checkbox
-            onClick={() => findLayerToShow(item)}
-            checked={item.isActive}
-          />
-        }
-      />
+    const foundExpertRange = expertRangeMapIds.find(
+      (id) => id === item.dataset_id
     );
-    console.log('dug');
-    if (item.parentId === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
-      if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
-        control = (
-          <FormControlLabel
-            label={t(item.dataset_title)}
-            disabled
-            control={<Checkbox disabled className={styles.disabled} />}
-          />
-        );
-      }
-    }
+    const foundPointOb = pointObservationIds.find(
+      (id) => id === item.dataset_id
+    );
 
-    if (item.parentId === LAYER_OPTIONS.POINT_OBSERVATIONS) {
-      if (!pointObservationIds.find((id) => id === item.dataset_id)) {
-        control = (
-          <FormControlLabel
-            label={t(item.dataset_title)}
-            disabled
-            control={<Checkbox disabled className={styles.disabled} />}
-          />
-        );
-      }
-    }
+    if (foundExpertRange || foundPointOb) {
+      const control = (
+        <FormControlLabel
+          label={t(item.dataset_title)}
+          style={{
+            textTransform: item.dataset_title.match(/(jetz|ebird)/i)
+              ? 'none'
+              : '',
+          }}
+          control={
+            <Checkbox
+              onClick={() => findLayerToShow(item)}
+              checked={item.isActive}
+            />
+          }
+        />
+      );
 
-    return control;
+      return (
+        <li key={item.dataset_id} className={styles.children}>
+          {control}
+          <span>{item.no_rows}</span>
+          <span />
+          <ToggleLayerInfoContainer layer={item} {...props} />
+        </li>
+      );
+    }
   };
 
   const activateDefault = () => {
@@ -472,16 +464,7 @@ function GroupedListComponent(props) {
                 <ToggleLayerInfoContainer layer={key} {...props} />
               </div>
               {key.showChildren && (
-                <ul>
-                  {key.items.map((item) => (
-                    <li key={item.dataset_id} className={styles.children}>
-                      {getCheckbox(item)}
-                      <span>{item.no_rows}</span>
-                      <span />
-                      <ToggleLayerInfoContainer layer={item} {...props} />
-                    </li>
-                  ))}
-                </ul>
+                <ul>{key.items.map((item) => getCheckbox(item))}</ul>
               )}
             </>
           )}
