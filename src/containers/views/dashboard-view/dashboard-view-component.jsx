@@ -4,6 +4,8 @@ import { DASHBOARD } from 'router';
 
 import loadable from '@loadable/component';
 
+import { useT } from '@transifex/react';
+
 import * as promiseUtils from '@arcgis/core/core/promiseUtils.js';
 import { LightModeProvider } from 'context/light-mode';
 
@@ -24,6 +26,8 @@ import {
 } from 'constants/dashboard-constants.js';
 
 import { TABS } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
+
+import styles from './dashboard-view-component-styles.module.scss';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -56,6 +60,7 @@ function DashboardViewComponent(props) {
     setSelectedProvince,
     mapLegendLayers,
   } = props;
+  const t = useT();
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
@@ -199,7 +204,35 @@ function DashboardViewComponent(props) {
           if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
             if (hits.attributes.ISO3 === countryISO) {
               name = NAME;
-              popupContent = `<ul><li>${DESIG}</li><li>${DESIG_TYPE}</li><li>${STATUS}</li><li>${STATUS_YR}</li></ul>`;
+              popupContent = `
+                <table class=${styles.popup}>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <b>${t('Description')}</b>
+                      </td>
+                      <td style="vertical-align:top">${DESIG}</td>
+                    </tr>
+                    <tr>
+                      <td style="vertical-align:top">
+                        <b>${t('Type')}</b>
+                      </td>
+                      <td style="vertical-align:top">${DESIG_TYPE}</td>
+                    </tr>
+                    <tr>
+                      <td style="vertical-align:top">
+                        <b>${t('Status')}</b>
+                      </td>
+                      <td style="vertical-align:top">${STATUS}</td>
+                    </tr>
+                    <tr>
+                      <td style="vertical-align:top">
+                        <b>${t('Year')}</b>
+                      </td>
+                      <td style="vertical-align:top">${STATUS_YR}</td>
+                    </tr>
+                  </tbody>
+                </table>`;
             }
           } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
             if (hits.attributes.GID_0 === countryISO) {
@@ -211,6 +244,12 @@ function DashboardViewComponent(props) {
 
           if (name) {
             hoverHighlight = layerView.highlight(hits.graphic);
+            view.popup.dockEnabled = true;
+            view.popup.dockOptions = {
+              buttonEnabled: false,
+              position: 'bottom-right',
+            };
+
             view.openPopup({
               // Set the popup's title to the coordinates of the location
               title: `${name}`,

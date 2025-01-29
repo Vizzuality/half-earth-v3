@@ -170,7 +170,7 @@ function FilterComponent(props) {
                   return (
                     <Chip
                       key={idx}
-                      icon={filter.active ? <DoneIcon /> : ''}
+                      icon={filter.active ? <DoneIcon /> : <span />}
                       color={filter.active ? 'success' : 'primary'}
                       label={`${t(filter.name)}: ${filter.count}`}
                       onClick={() => activateFilter(filter)}
