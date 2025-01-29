@@ -104,6 +104,18 @@ function DataLayerComponent(props) {
   const [showHabitatChart, setShowHabitatChart] = useState(false);
   const [isHabitatChartLoading, setIsHabitatChartLoading] = useState(false);
 
+  const expertRangeMapIds = [
+    'ec694c34-bddd-4111-ba99-926a5f7866e8',
+    '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
+    '98f229de-6131-41ef-aff1-7a52212b5a15',
+    'd542e050-2ae5-457e-8476-027741538965',
+  ];
+
+  const pointObservationIds = [
+    '9905692e-6a28-4310-b01e-476a471e5bf8',
+    '794adb49-7458-41c4-a1c0-56537fdbec1d',
+  ];
+
   const chartOptions = {
     plugins: {
       title: {
@@ -174,7 +186,18 @@ function DataLayerComponent(props) {
         obj.parentId = grouped[groupKey].id;
         obj.id = obj.label;
         grouped[groupKey].items.push(obj); // Push the current object into the 'item' array of the matching group
-        grouped[groupKey].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+
+        // TODO: remove logic when not filtering out results
+        const foundExpertRange = expertRangeMapIds.find(
+          (id) => id === obj.dataset_id
+        );
+        const foundPointOb = pointObservationIds.find(
+          (id) => id === obj.dataset_id
+        );
+
+        if (foundExpertRange || foundPointOb) {
+          grouped[groupKey].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+        }
       }
     });
 
