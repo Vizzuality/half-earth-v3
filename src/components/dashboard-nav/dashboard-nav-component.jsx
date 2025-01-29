@@ -93,7 +93,8 @@ function DashboardNavComponent(props) {
         >
           <BirdsIcon />
         </button>
-        {selectedIndex >= NAVIGATION.SPECIES &&
+        {scientificName &&
+          selectedIndex >= NAVIGATION.SPECIES &&
           selectedIndex <= NAVIGATION.REGION_ANALYSIS && (
             <div className={styles.subNav}>
               <button
