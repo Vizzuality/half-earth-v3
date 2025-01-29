@@ -393,7 +393,7 @@ function GroupedListComponent(props) {
         }
       />
     );
-
+    console.log('dug');
     if (item.parentId === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
       if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
         control = (
