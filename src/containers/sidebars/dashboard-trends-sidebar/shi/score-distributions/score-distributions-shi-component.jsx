@@ -29,6 +29,7 @@ function ScoreDistributionsShiComponent(props) {
     shiScoresData,
     shiSelectSpeciesData,
     shiActiveTrend,
+    setMapLegendLayers,
   } = props;
 
   const SCORES = {
@@ -303,6 +304,7 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const selectSpecies = (scientificname) => {
+    setMapLegendLayers([]);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);

@@ -168,7 +168,7 @@ function MapLegendComponent(props) {
     const left = style.getPropertyValue('left');
 
     setLeftPosition(`${rect.width + parseInt(left, 10) + 10}px`);
-  }, []);
+  }, [mapLegendLayers]);
 
   return (
     <div className={styles.container} style={{ left: leftPosition }}>

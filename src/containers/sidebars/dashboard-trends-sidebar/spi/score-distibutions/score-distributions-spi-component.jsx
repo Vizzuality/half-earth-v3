@@ -28,6 +28,7 @@ function ScoreDistributionsSpiComponent(props) {
     selectedProvince,
     setSelectedIndex,
     setScientificName,
+    setMapLegendLayers,
     spiScoresData,
     spiSelectSpeciesData,
   } = props;
@@ -192,6 +193,7 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const selectSpecies = (scientificname) => {
+    setMapLegendLayers([]);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
