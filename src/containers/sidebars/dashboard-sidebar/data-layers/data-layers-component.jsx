@@ -260,7 +260,7 @@ function DataLayerComponent(props) {
     const publicData = [
       ...groupByTypeTitle(dataLayerData),
       {
-        label: t(LAYER_TITLE_TYPES.HABITAT),
+        label: t('Habitat Loss/Gain'),
         items: [],
         id: LAYER_OPTIONS.HABITAT,
         total_no_rows: '',
