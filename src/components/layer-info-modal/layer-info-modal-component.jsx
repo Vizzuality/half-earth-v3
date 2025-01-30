@@ -25,7 +25,7 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
         <td>
           <b>{child.label}</b>
         </td>
-        <td>{item.value}</td>
+        <td>{child.value}</td>
       </tr>
     ));
   };
