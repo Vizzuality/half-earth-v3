@@ -45,6 +45,7 @@ export const NAVIGATION = {
   REGION_ANALYSIS: 6,
   TRENDS: 7,
   EXPLORE_SPECIES: 8,
+  INFO: 9,
 };
 
 export const LAYER_OPTIONS = {

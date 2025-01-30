@@ -9,6 +9,7 @@ import { LightModeContext } from 'context/light-mode';
 import { NAVIGATION } from 'constants/dashboard-constants.js';
 
 import BirdsIcon from 'icons/bird_icon.svg?react';
+import InfoIcon from 'icons/dashboard/info_icon.svg?react';
 import SpeciesIcon from 'icons/gauge_icon.svg?react';
 import HomeIcon from 'icons/house-solid.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
@@ -37,6 +38,7 @@ function DashboardNavComponent(props) {
     BIO_DIVERSITY: 'bio-diversity',
     REGION_ANALYSIS: 'region-analysis',
     TRENDS: 'trends',
+    INFO: 'info',
   };
 
   const updateHistory = (page) => {
@@ -66,17 +68,6 @@ function DashboardNavComponent(props) {
           onClick={() => updateHistory(NAVIGATION.HOME, titles.HOME)}
         >
           <HomeIcon />
-        </button>
-        <button
-          type="button"
-          aria-label={t('Regions')}
-          title={t('Regions')}
-          className={cx({
-            [styles.selected]: selectedIndex === NAVIGATION.REGION,
-          })}
-          onClick={() => updateHistory(NAVIGATION.REGION, titles.REGIONS)}
-        >
-          <SouthAmericaIcon />
         </button>
         <button
           type="button"
@@ -131,6 +122,17 @@ function DashboardNavComponent(props) {
           )}
         <button
           type="button"
+          aria-label={t('Regions')}
+          title={t('Regions')}
+          className={cx({
+            [styles.selected]: selectedIndex === NAVIGATION.REGION,
+          })}
+          onClick={() => updateHistory(NAVIGATION.REGION, titles.REGIONS)}
+        >
+          <SouthAmericaIcon />
+        </button>
+        <button
+          type="button"
           aria-label={t('Trends')}
           title={t('Trends')}
           className={cx({
@@ -139,6 +141,17 @@ function DashboardNavComponent(props) {
           onClick={() => updateHistory(NAVIGATION.TRENDS, titles.TRENDS)}
         >
           <TimeLineIcon />
+        </button>
+        <button
+          type="button"
+          aria-label={t('Tutorials')}
+          title={t('Tutorials')}
+          className={cx({
+            [styles.selected]: selectedIndex === NAVIGATION.INFO,
+          })}
+          onClick={() => updateHistory(NAVIGATION.INFO, titles.INFO)}
+        >
+          <InfoIcon />
         </button>
       </div>
     </section>

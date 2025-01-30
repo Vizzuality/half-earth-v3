@@ -21,6 +21,7 @@ import styles from './dashboard-sidebar-styles.module.scss';
 import DataLayerContainer from './data-layers';
 import RegionsAnalysisContainer from './regions-analysis';
 import SpeciesFilterContainer from './species-filter';
+import SpeciesHomeContainer from './species-home';
 
 function DashboardSidebar(props) {
   const t = useT();
@@ -98,7 +99,7 @@ function DashboardSidebar(props) {
           <RegionsAnalysisContainer {...props} />
         )}
         {!scientificName && selectedIndex === NAVIGATION.DATA_LAYER && (
-          <DashboardHomeContainer {...props} />
+          <SpeciesHomeContainer {...props} />
         )}
         {scientificName &&
           (selectedIndex === NAVIGATION.SPECIES ||
