@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 
 import { DASHBOARD } from 'router';
 
 import loadable from '@loadable/component';
-
-import { useT } from '@transifex/react';
 
 import * as promiseUtils from '@arcgis/core/core/promiseUtils.js';
 import { LightModeProvider } from 'context/light-mode';
@@ -25,9 +24,8 @@ import {
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
 
+import DashboardPopupComponent from '../../../components/dashboard-popup/dashboard-popup-component';
 import { TABS } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
-
-import styles from './dashboard-view-component-styles.module.scss';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -60,7 +58,6 @@ function DashboardViewComponent(props) {
     setSelectedProvince,
     mapLegendLayers,
   } = props;
-  const t = useT();
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
@@ -80,6 +77,7 @@ function DashboardViewComponent(props) {
   const getLayerView = async () => {
     return view.whenLayerView(
       regionLayers[LAYER_OPTIONS.PROVINCES] ||
+        regionLayers[LAYER_OPTIONS.ADMINISTRATIVE_LAYERS] ||
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
         regionLayers[LAYER_OPTIONS.FORESTS] ||
         regionLayers[`${countryISO}-outline`]
@@ -129,6 +127,7 @@ function DashboardViewComponent(props) {
                 setTaxaList([]);
                 setExploreAllSpecies(false);
 
+                // eslint-disable-next-line camelcase
                 const { WDPA_PID, GID_1, mgc, NAME, region_name, territoire } =
                   hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
@@ -144,6 +143,7 @@ function DashboardViewComponent(props) {
                   setSelectedRegion({ mgc });
                 }
 
+                // eslint-disable-next-line camelcase
                 setRegionName(NAME || region_name || territoire);
               }
               break;
@@ -179,89 +179,53 @@ function DashboardViewComponent(props) {
     let hits;
 
     try {
-      if (
-        selectedIndex !== NAVIGATION.BIO_IND &&
-        selectedIndex !== NAVIGATION.DATA_LAYER
-      ) {
-        hits = await hitTest(event);
-        hoverHighlight?.remove();
-        view.closePopup();
+      hits = await hitTest(event);
+      hoverHighlight?.remove();
+      view.closePopup();
 
-        if (hits) {
-          let name;
-          let popupContent;
-          const {
-            NAME,
-            NAME_1,
-            territoire,
-            region_name,
-            DESIG,
-            DESIG_TYPE,
-            STATUS,
-            STATUS_YR,
-          } = hits.attributes;
+      if (hits) {
+        let name;
+        // eslint-disable-next-line camelcase
+        const { NAME, NAME_1, territoire, region_name, DESIG } =
+          hits.attributes;
 
-          if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
-            if (hits.attributes.ISO3 === countryISO) {
-              name = NAME;
-              popupContent = `
-                <table class=${styles.popup}>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <b>${t('Description')}</b>
-                      </td>
-                      <td style="vertical-align:top">${DESIG}</td>
-                    </tr>
-                    <tr>
-                      <td style="vertical-align:top">
-                        <b>${t('Type')}</b>
-                      </td>
-                      <td style="vertical-align:top">${DESIG_TYPE}</td>
-                    </tr>
-                    <tr>
-                      <td style="vertical-align:top">
-                        <b>${t('Status')}</b>
-                      </td>
-                      <td style="vertical-align:top">${STATUS}</td>
-                    </tr>
-                    <tr>
-                      <td style="vertical-align:top">
-                        <b>${t('Year')}</b>
-                      </td>
-                      <td style="vertical-align:top">${STATUS_YR}</td>
-                    </tr>
-                  </tbody>
-                </table>`;
-            }
-          } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
-            if (hits.attributes.GID_0 === countryISO) {
-              name = NAME_1 ?? region_name;
-            }
-          } else if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
-            name = territoire;
-          }
+        const countryMatch =
+          hits.attributes.ISO3 === countryISO ||
+          hits.attributes.GID_0 === countryISO;
 
-          if (name) {
-            hoverHighlight = layerView.highlight(hits.graphic);
-            view.popup.dockEnabled = true;
-            view.popup.dockOptions = {
-              buttonEnabled: false,
-              position: 'bottom-right',
-            };
-
-            view.openPopup({
-              // Set the popup's title to the coordinates of the location
-              title: `${name}`,
-              content: popupContent,
-              location: view.toMap({ x: event.x, y: event.y }),
-              includeDefaultActions: false,
-            });
-          }
+        if (countryMatch) {
+          // eslint-disable-next-line camelcase
+          name = NAME || NAME_1 || region_name;
+        } else {
+          name = territoire;
         }
-      } else {
-        view.closePopup();
-        hoverHighlight?.remove();
+
+        if (name) {
+          hoverHighlight = layerView.highlight(hits.graphic);
+          view.popup.dockEnabled = false;
+          view.popup.dockOptions = {
+            buttonEnabled: false,
+            position: 'auto',
+          };
+
+          if (DESIG) {
+            const container = document.createElement('div');
+            view.popup.content = container;
+            ReactDOM.render(
+              <DashboardPopupComponent {...hits.attributes} />,
+              container
+            );
+          } else {
+            view.popup.content = '';
+          }
+
+          view.openPopup({
+            // Set the popup's title to the coordinates of the location
+            title: `${name}`,
+            location: view.toMap({ x: event.x, y: event.y }),
+            includeDefaultActions: false,
+          });
+        }
       }
     } catch (error) {
       throw Error(error);
@@ -293,12 +257,18 @@ function DashboardViewComponent(props) {
             regionLayers[`${countryISO}-outline`]
           );
         }
+      } else if (selectedIndex === NAVIGATION.DATA_LAYER) {
+        const topLayer = mapLegendLayers[0];
+        if (topLayer) {
+          layer = await view.whenLayerView(regionLayers[topLayer.id]);
+        }
       } else {
         layer = await getLayerView();
       }
+
       setLayerView(layer);
     }
-  }, [regionLayers, view, tabOption]);
+  }, [regionLayers, view, tabOption, mapLegendLayers]);
 
   useEffect(() => {
     if (!layerView) return;

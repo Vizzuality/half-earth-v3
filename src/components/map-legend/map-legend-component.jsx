@@ -175,7 +175,7 @@ function MapLegendComponent(props) {
       <span className={styles.title}>{t('Map Legend')}</span>
       <ul className={styles.layers}>
         {Object.values(mapLegendLayers).map((layer, index) => (
-          <li key={`${layer.id}-${layer.label}`}>
+          <li key={`${layer.id}-${layer.label}-${index}`}>
             <div className={styles.info}>
               <b>{layer.label?.toUpperCase()}</b>
               {layer.parent && <span>{layer.parent}</span>}
