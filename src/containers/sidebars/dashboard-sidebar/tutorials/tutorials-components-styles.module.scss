@@ -1,0 +1,129 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  display: flex;
+  flex-direction: column;
+  padding: 5px 20px;
+  width: 100%;
+
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --selected-font-color: #{$white};
+  --save-button-text: #{$dark-text};
+  --border-color-hover: #{$brand-color-main-hover};
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    --selected-font-color: #{$white};
+    --save-button-text: #{$white};
+    --border-color-hover: #{$mol-blue};
+  }
+
+  height: max-content;
+  border-left: 1px solid var(--font-color);
+
+  color: var(--font-color);
+
+  .sectionTitle{
+    font-size: $font-size-tick;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: var(--font-color);
+  }
+
+  button{
+    color: var(--font-color);
+    text-align: left;
+  }
+
+  .help{
+    display: flex;
+    gap: 10px;
+
+    nav{
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      align-items: flex-start;
+      gap: 10px;
+
+      h3{
+        margin: 0;
+        font-style: italic;
+        font-size: $font-size-xs;
+        font-weight: 400;
+      }
+
+      .section{
+        font-size: $font-size-tick;
+        text-transform: uppercase;
+      }
+
+      ul{
+        margin:-5px 0 0;
+        list-style: none;
+        padding: 0 0 0 20px;
+
+        li{
+          button{
+            text-transform: uppercase;
+            font-size: $font-size-sm;
+          }
+        }
+      }
+    }
+
+    .information{
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+    }
+  }
+
+  .title{
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    width: 100%;
+
+    svg {
+      width: 40px;
+      height: 40px;
+      color: var(--font-color);
+      fill: var(--font-color);
+    }
+
+    h2{
+      text-transform: uppercase;
+      margin: 0 0 5px;
+      font-size: $font-size-rg;
+    }
+  }
+
+  .subTitle{
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    width: 100%;
+
+    svg {
+      width: 30px;
+      height: 30px;
+      color: var(--font-color);
+      fill: var(--font-color);
+    }
+
+    h3{
+      margin: 0 0 5px;
+      font-size: $font-size-base;
+      font-style: italic;
+      font-weight: 400;
+    }
+  }
+}

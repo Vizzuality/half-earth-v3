@@ -25,7 +25,6 @@ import {
   LAYER_OPTIONS,
   NAVIGATION,
   DATA_POINT_TYPE,
-  LAYER_TITLE_TYPES,
 } from 'constants/dashboard-constants.js';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';

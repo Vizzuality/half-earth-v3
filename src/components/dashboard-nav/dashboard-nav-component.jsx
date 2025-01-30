@@ -10,7 +10,7 @@ import { NAVIGATION } from 'constants/dashboard-constants.js';
 
 import BirdsIcon from 'icons/bird_icon.svg?react';
 import InfoIcon from 'icons/dashboard/info_icon.svg?react';
-import SpeciesIcon from 'icons/gauge_icon.svg?react';
+import IndicatorIcon from 'icons/gauge_icon.svg?react';
 import HomeIcon from 'icons/house-solid.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
 import TimeLineIcon from 'icons/timeline.svg?react';
@@ -116,7 +116,7 @@ function DashboardNavComponent(props) {
                   updateHistory(NAVIGATION.BIO_IND, titles.BIO_DIVERSITY)
                 }
               >
-                <SpeciesIcon />
+                <IndicatorIcon />
               </button>
             </div>
           )}

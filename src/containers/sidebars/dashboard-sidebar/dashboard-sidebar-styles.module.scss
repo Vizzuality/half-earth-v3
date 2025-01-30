@@ -6,6 +6,7 @@
 $top: 25px;
 $sidebar-species-width: 600px;
 $trends-width: 1000px;
+$tutorial-width: 60vw;
 
 .container {
   @extend %verticalScrollbar;
@@ -23,6 +24,10 @@ $trends-width: 1000px;
 
   &.trends{
     width: $trends-width;
+  }
+
+  &.tutorial{
+    width: $tutorial-width;
   }
 
   --nav-button-bg: #{$white};

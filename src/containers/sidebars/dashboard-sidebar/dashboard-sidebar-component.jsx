@@ -22,6 +22,7 @@ import DataLayerContainer from './data-layers';
 import RegionsAnalysisContainer from './regions-analysis';
 import SpeciesFilterContainer from './species-filter';
 import SpeciesHomeContainer from './species-home';
+import TutorialsContainer from './tutorials';
 
 function DashboardSidebar(props) {
   const t = useT();
@@ -72,6 +73,7 @@ function DashboardSidebar(props) {
       className={cx(
         lightMode ? styles.light : '',
         selectedIndex === NAVIGATION.TRENDS ? styles.trends : '',
+        selectedIndex === NAVIGATION.INFO ? styles.tutorial : '',
         styles.container
       )}
     >
@@ -112,6 +114,7 @@ function DashboardSidebar(props) {
         {selectedIndex === NAVIGATION.TRENDS && (
           <DashboardTrendsSidebarContainer {...props} />
         )}
+        {selectedIndex === NAVIGATION.INFO && <TutorialsContainer {...props} />}
       </div>
     </div>
   );
