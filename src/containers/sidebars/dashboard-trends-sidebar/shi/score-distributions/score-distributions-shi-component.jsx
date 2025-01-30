@@ -417,7 +417,7 @@ function ScoreDistributionsShiComponent(props) {
                 className={cx(styles.saveButton, {
                   [styles.notActive]: activeScore !== SCORES.AREA_SCORE,
                 })}
-                label={t('Area')}
+                label={t('Area Score')}
                 handleClick={() => handleActiveChange(SCORES.AREA_SCORE)}
               />
               <Button
@@ -425,7 +425,7 @@ function ScoreDistributionsShiComponent(props) {
                 className={cx(styles.saveButton, {
                   [styles.notActive]: activeScore !== SCORES.CONNECTIVITY_SCORE,
                 })}
-                label={t('Connectivity')}
+                label={t('Connectivity Score')}
                 handleClick={() =>
                   handleActiveChange(SCORES.CONNECTIVITY_SCORE)
                 }

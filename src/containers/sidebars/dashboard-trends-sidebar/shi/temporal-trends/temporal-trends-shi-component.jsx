@@ -60,7 +60,7 @@ function TemporalTrendsShiComponent(props) {
         </p>
         <p className={styles.description}>
           {t(
-            'The Area Score addresses changes in habitat extent while the Connectivity Score addresses changes in the fragmentation of habitat.'
+            'The Area component addresses changes in habitat extent while the Connectivity component addresses changes in the fragmentation of habitat.'
           )}
         </p>
         <div className={styles.options}>

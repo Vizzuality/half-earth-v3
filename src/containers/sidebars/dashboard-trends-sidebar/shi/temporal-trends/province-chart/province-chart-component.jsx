@@ -212,7 +212,7 @@ function ProvinceChartComponent(props) {
             </div>
             <div className={styles.values}>
               <b>{(filteredProvince.area_score * 100).toFixed(1)}</b>
-              <span>{t('Area Score')}</span>
+              <span>{t('Area Component')}</span>
             </div>
             <div className={styles.values}>
               <b>{(filteredProvince.habitat_index * 100).toFixed(1)}</b>
@@ -220,7 +220,7 @@ function ProvinceChartComponent(props) {
             </div>
             <div className={styles.values}>
               <b>{(filteredProvince.connectivity * 100).toFixed(1)}</b>
-              <span>{t('Connectivity Score')}</span>
+              <span>{t('Connectivity Component')}</span>
             </div>
             <div className={styles.values}>
               <b>{filteredProvince.habitat_index_rank}</b>
@@ -235,11 +235,11 @@ function ProvinceChartComponent(props) {
       <div className={styles.chart}>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.habitat)} />
-          <span>{t('Habitat Score')}</span>
+          <span>{t('SHI')}</span>
           <div className={cx(styles.legendBox, styles.area)} />
-          <span>{t('Area Score')}</span>
+          <span>{t('Area')}</span>
           <div className={cx(styles.legendBox, styles.connectivity)} />
-          <span>{t('Connectivity Score')}</span>
+          <span>{t('Connectivity')}</span>
         </div>
         {data && <Line options={options} data={data} />}
       </div>
