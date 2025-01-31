@@ -69,10 +69,12 @@ function DashboardSidebar(props) {
   }, []);
 
   useEffect(() => {
-    if (lightMode) {
-      setLogo(<img className={styles.logo} src={codWhiteLogo} alt="Logo" />);
-    } else {
-      setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);
+    if (countryISO.toUpperCase() !== 'SLE') {
+      if (lightMode) {
+        setLogo(<img className={styles.logo} src={codWhiteLogo} alt="Logo" />);
+      } else {
+        setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);
+      }
     }
   }, [lightMode]);
 
