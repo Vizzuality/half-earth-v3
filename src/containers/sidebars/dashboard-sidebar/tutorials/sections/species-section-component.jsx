@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 
 import { useT } from '@transifex/react';
 
+import { tutorialSections } from 'utils/dashboard-utils.js';
+
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
@@ -20,17 +22,17 @@ function SpeciesSectionComponent() {
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.title}>
         <BirdsIcon />
-        <h2 id="species">{t('Species')}</h2>
+        <h2 id={tutorialSections.SPECIES}>{t('Species')}</h2>
       </div>
       <p>{t(SECTION_INFO.SPECIES)}</p>
       <div className={styles.subTitle}>
         <StacksIcon />
-        <h3 id="data-layers">{t('Data Layers')}</h3>
+        <h3 id={tutorialSections.DATA_LAYERS}>{t('Data Layers')}</h3>
       </div>
       <p>{t(SECTION_INFO.DATA_LAYER)}</p>
       <div className={styles.subTitle}>
         <IndicatorIcon />
-        <h3 id="indicator-scores">{t('Indicator Scores')}</h3>
+        <h3 id={tutorialSections.INDICATOR_SCORES}>{t('Indicator Scores')}</h3>
       </div>
       <p>{t(SECTION_INFO.INDICATOR_SCORES)}</p>
     </section>

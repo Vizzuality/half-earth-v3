@@ -1,6 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { useT } from '@transifex/react';
+
+import { tutorialSections } from 'utils/dashboard-utils.js';
 
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
@@ -15,9 +17,9 @@ import styles from './tutorials-components-styles.module.scss';
 function TutorialsComponent() {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
+  const [selectedSection, setSelectedSection] = useState();
 
   const goToSection = (section) => {
-    console.log(section);
     const sectionElement = document.getElementById(section);
     sectionElement.scrollIntoView({ behavior: 'smooth' });
   };
@@ -32,20 +34,23 @@ function TutorialsComponent() {
           <button
             type="button"
             className={styles.section}
-            onClick={() => goToSection('species')}
+            onClick={() => goToSection(tutorialSections.SPECIES)}
           >
             {t('Species')}
           </button>
           <ul>
             <li>
-              <button type="button" onClick={() => goToSection('data-layers')}>
+              <button
+                type="button"
+                onClick={() => goToSection(tutorialSections.DATA_LAYERS)}
+              >
                 {t('Data Layers')}
               </button>
             </li>
             <li>
               <button
                 type="button"
-                onClick={() => goToSection('indicator-scores')}
+                onClick={() => goToSection(tutorialSections.INDICATOR_SCORES)}
               >
                 {t('Indicator Scores')}
               </button>
@@ -54,30 +59,39 @@ function TutorialsComponent() {
           <button
             type="button"
             className={styles.section}
-            onClick={() => goToSection('regions')}
+            onClick={() => goToSection(tutorialSections.REGIONS)}
           >
             {t('Regions')}
           </button>
           <button
             type="button"
             className={styles.section}
-            onClick={() => goToSection('indicators')}
+            onClick={() => goToSection(tutorialSections.INDICATORS)}
           >
             {t('Indicators')}
           </button>
           <ul>
             <li>
-              <button type="button" onClick={() => goToSection('spi')}>
+              <button
+                type="button"
+                onClick={() => goToSection(tutorialSections.SPI)}
+              >
                 {t('Species Protection Index')}
               </button>
             </li>
             <li>
-              <button type="button" onClick={() => goToSection('shi')}>
+              <button
+                type="button"
+                onClick={() => goToSection(tutorialSections.SHI)}
+              >
                 {t('Species Habitat Index')}
               </button>
             </li>
             <li>
-              <button type="button" onClick={() => goToSection('sii')}>
+              <button
+                type="button"
+                onClick={() => goToSection(tutorialSections.SII)}
+              >
                 {t('Species Informcation Index')}
               </button>
             </li>

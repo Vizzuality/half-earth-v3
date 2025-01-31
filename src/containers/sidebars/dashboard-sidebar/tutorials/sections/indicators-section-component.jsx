@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 
 import { useT } from '@transifex/react';
 
+import { tutorialSections } from 'utils/dashboard-utils.js';
+
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
@@ -26,10 +28,10 @@ function IndicatorsSectionComponent() {
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.title}>
         <TimeLineIcon />
-        <h2 id="indicators">{t('Indicators')}</h2>
+        <h2 id={tutorialSections.INDICATORS}>{t('Indicators')}</h2>
       </div>
       <div className={styles.subTitle}>
-        <h3 id="spi">{t('Species Protection Index')}</h3>
+        <h3 id={tutorialSections.SPI}>{t('Species Protection Index')}</h3>
       </div>
       <p>{t(SECTION_INFO.SPI)}</p>
       <p>{t(SECTION_INFO.SPI_TWO)}</p>
@@ -55,7 +57,7 @@ function IndicatorsSectionComponent() {
         alt="Species Protection Index - Score Distributions"
       />
       <div className={styles.subTitle}>
-        <h3 id="shi">{t('Species Habitat Index')}</h3>
+        <h3 id={tutorialSections.SHI}>{t('Species Habitat Index')}</h3>
       </div>
       <p>{t(SECTION_INFO.SHI)}</p>
       <p>{t(SECTION_INFO.SHI_TWO)}</p>
@@ -80,7 +82,7 @@ function IndicatorsSectionComponent() {
         alt="Species Habitat Index - Score Distributions"
       />
       <div className={styles.subTitle}>
-        <h3 id="sii">{t('Species Information Index')}</h3>
+        <h3 id={tutorialSections.SII}>{t('Species Information Index')}</h3>
       </div>
       <p>{t(SECTION_INFO.SII)}</p>
       <p>{t(SECTION_INFO.SII_TWO)}</p>

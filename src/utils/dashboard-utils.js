@@ -6,6 +6,17 @@ import TileLayer from '@arcgis/core/layers/TileLayer';
 import { DASHBOARD_LAYER_SLUGS } from 'constants/dashboard-constants';
 import { DASHBOARD_URLS } from 'constants/layers-urls';
 
+export const tutorialSections = {
+  SPECIES: 'species',
+  DATA_LAYERS: 'data-layers',
+  INDICATOR_SCORES: 'indicator-scores',
+  REGIONS: 'regions',
+  INDICATORS: 'indicators',
+  SPI: 'spi',
+  SHI: 'shi',
+  SII: 'sii',
+};
+
 export const PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID =
   'e3dca98a5bf74c9898c30f72baf6b1ba';
 export const PROVINCE_FEATURE_GLOBAL_OUTLINE_ID =
