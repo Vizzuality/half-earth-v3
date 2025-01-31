@@ -17,7 +17,7 @@ function RegionsSectionComponent() {
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.title}>
         <SouthAmericaIcon />
-        <h2>{t('Regions')}</h2>
+        <h2 id="regions">{t('Regions')}</h2>
       </div>
       <p>{t(SECTION_INFO.SPECIES)}</p>
     </section>

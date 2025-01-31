@@ -48,7 +48,7 @@
     nav{
       display: flex;
       flex-direction: column;
-      width: 50%;
+      width: 35%;
       align-items: flex-start;
       gap: 10px;
 
@@ -62,6 +62,7 @@
       .section{
         font-size: $font-size-tick;
         text-transform: uppercase;
+        font-weight: 700;
       }
 
       ul{
@@ -70,6 +71,7 @@
         padding: 0 0 0 20px;
 
         li{
+          padding: 5px 0;
           button{
             text-transform: uppercase;
             font-size: $font-size-sm;
@@ -103,6 +105,7 @@
       text-transform: uppercase;
       margin: 0 0 5px;
       font-size: $font-size-rg;
+      scroll-margin-top: 10px;
     }
   }
 
@@ -124,6 +127,7 @@
       font-size: $font-size-base;
       font-style: italic;
       font-weight: 400;
+      scroll-margin-top: 10px;
     }
   }
 }

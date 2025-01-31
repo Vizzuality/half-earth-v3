@@ -18,19 +18,19 @@ function IndicatorsSectionComponent() {
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.title}>
         <TimeLineIcon />
-        <h2>{t('Indicators')}</h2>
+        <h2 id="indicators">{t('Indicators')}</h2>
       </div>
       <p>{t(SECTION_INFO.SPECIES)}</p>
       <div className={styles.subTitle}>
-        <h3>{t('Species Protection Index')}</h3>
+        <h3 id="spi">{t('Species Protection Index')}</h3>
       </div>
       <p>{t(SECTION_INFO.INDICATORS)}</p>
       <div className={styles.subTitle}>
-        <h3>{t('Species Habitat Index')}</h3>
+        <h3 id="shi">{t('Species Habitat Index')}</h3>
       </div>
       <p>{t(SECTION_INFO.INDICATORS)}</p>
       <div className={styles.subTitle}>
-        <h3>{t('Species Information Index')}</h3>
+        <h3 id="sii">{t('Species Information Index')}</h3>
       </div>
       <p>{t(SECTION_INFO.INDICATORS)}</p>
     </section>

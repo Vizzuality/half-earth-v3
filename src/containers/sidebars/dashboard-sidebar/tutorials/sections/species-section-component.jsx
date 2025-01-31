@@ -20,17 +20,17 @@ function SpeciesSectionComponent() {
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
       <div className={styles.title}>
         <BirdsIcon />
-        <h2>{t('Species')}</h2>
+        <h2 id="species">{t('Species')}</h2>
       </div>
       <p>{t(SECTION_INFO.SPECIES)}</p>
       <div className={styles.subTitle}>
         <StacksIcon />
-        <h3>{t('Data Layers')}</h3>
+        <h3 id="data-layers">{t('Data Layers')}</h3>
       </div>
       <p>{t(SECTION_INFO.DATA_LAYER)}</p>
       <div className={styles.subTitle}>
         <IndicatorIcon />
-        <h3>{t('Indicator Scores')}</h3>
+        <h3 id="indicator-scores">{t('Indicator Scores')}</h3>
       </div>
       <p>{t(SECTION_INFO.INDICATORS)}</p>
     </section>

@@ -18,6 +18,8 @@ function TutorialsComponent() {
 
   const goToSection = (section) => {
     console.log(section);
+    const sectionElement = document.getElementById(section);
+    sectionElement.scrollIntoView({ behavior: 'smooth' });
   };
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -30,18 +32,21 @@ function TutorialsComponent() {
           <button
             type="button"
             className={styles.section}
-            onClick={() => goToSection('dl')}
+            onClick={() => goToSection('species')}
           >
             {t('Species')}
           </button>
           <ul>
             <li>
-              <button type="button" onClick={() => goToSection('dl')}>
+              <button type="button" onClick={() => goToSection('data-layers')}>
                 {t('Data Layers')}
               </button>
             </li>
             <li>
-              <button type="button" onClick={() => goToSection('dl')}>
+              <button
+                type="button"
+                onClick={() => goToSection('indicator-scores')}
+              >
                 {t('Indicator Scores')}
               </button>
             </li>
@@ -49,30 +54,30 @@ function TutorialsComponent() {
           <button
             type="button"
             className={styles.section}
-            onClick={() => goToSection('dl')}
+            onClick={() => goToSection('regions')}
           >
             {t('Regions')}
           </button>
           <button
             type="button"
             className={styles.section}
-            onClick={() => goToSection('dl')}
+            onClick={() => goToSection('indicators')}
           >
             {t('Indicators')}
           </button>
           <ul>
             <li>
-              <button type="button" onClick={() => goToSection('dl')}>
+              <button type="button" onClick={() => goToSection('spi')}>
                 {t('Species Protection Index')}
               </button>
             </li>
             <li>
-              <button type="button" onClick={() => goToSection('dl')}>
+              <button type="button" onClick={() => goToSection('shi')}>
                 {t('Species Habitat Index')}
               </button>
             </li>
             <li>
-              <button type="button" onClick={() => goToSection('dl')}>
+              <button type="button" onClick={() => goToSection('sii')}>
                 {t('Species Informcation Index')}
               </button>
             </li>
