@@ -43,12 +43,11 @@
 
   .help{
     display: flex;
-    gap: 10px;
 
     nav{
       display: flex;
       flex-direction: column;
-      width: 35%;
+      min-width: 275px;
       align-items: flex-start;
       gap: 10px;
 
@@ -63,18 +62,58 @@
         font-size: $font-size-tick;
         text-transform: uppercase;
         font-weight: 700;
+        width: 100%;
+        padding: 5px;
+        position: relative;
+
+        &.selected{
+          background-color: rgba(255, 255, 255, 0.3);
+
+          &::after{
+            position: absolute;
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            right: 5px;
+            background-color: $brand-color-main;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
       }
 
       ul{
         margin:-5px 0 0;
         list-style: none;
         padding: 0 0 0 20px;
+        width: 100%;
 
         li{
           padding: 5px 0;
+
           button{
             text-transform: uppercase;
             font-size: $font-size-sm;
+            width: 100%;
+            padding: 5px;
+            position: relative;
+
+            &.selected{
+              background-color: rgba(255, 255, 255, 0.3);
+
+              &::after{
+                position: absolute;
+                content: "";
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                right: 5px;
+                background-color: $brand-color-main;
+                top: 50%;
+                transform: translateY(-50%);
+              }
+            }
           }
         }
       }
@@ -107,6 +146,7 @@
       margin: 0 0 5px;
       font-size: $font-size-rg;
       scroll-margin-top: 10px;
+      margin-top: 15px;
     }
   }
 
@@ -128,6 +168,7 @@
       font-size: $font-size-base;
       font-weight: 700;
       scroll-margin-top: 10px;
+      margin-top: 15px;
 
       &.sub{
         font-style: italic;
