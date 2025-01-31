@@ -6,7 +6,8 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
-import codLogo from 'logos/institut-congolais.png';
+import codLogo from 'logos/iccn_logo_clean.png';
+import codWhiteLogo from 'logos/iccn_logo_clean_whiteText.png';
 import sleLogo from 'logos/sierra-leone.png';
 
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
@@ -66,6 +67,14 @@ function DashboardSidebar(props) {
       setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);
     }
   }, []);
+
+  useEffect(() => {
+    if (lightMode) {
+      setLogo(<img className={styles.logo} src={codWhiteLogo} alt="Logo" />);
+    } else {
+      setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);
+    }
+  }, [lightMode]);
 
   return (
     <div
