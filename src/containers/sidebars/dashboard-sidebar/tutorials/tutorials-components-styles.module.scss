@@ -83,7 +83,8 @@
     .information{
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      overflow: auto;
+      height: calc(100vh - 300px);
       width: 100%;
     }
   }
@@ -125,9 +126,15 @@
     h3{
       margin: 0 0 5px;
       font-size: $font-size-base;
-      font-style: italic;
-      font-weight: 400;
+      font-weight: 700;
       scroll-margin-top: 10px;
+
+      &.sub{
+        font-style: italic;
+        text-decoration: underline;
+        font-weight: 400;
+        text-underline-offset: 5px;
+      }
     }
   }
 }

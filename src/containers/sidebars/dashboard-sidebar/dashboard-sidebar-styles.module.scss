@@ -21,6 +21,7 @@ $tutorial-width: 60vw;
   height: calc(100vh - #{$top} - 25px);
   width: $sidebar-species-width;
   z-index: $bring-to-front;
+  overflow: auto;
 
   &.trends{
     width: $trends-width;
@@ -28,6 +29,7 @@ $tutorial-width: 60vw;
 
   &.tutorial{
     width: $tutorial-width;
+    overflow: hidden;
   }
 
   --nav-button-bg: #{$white};

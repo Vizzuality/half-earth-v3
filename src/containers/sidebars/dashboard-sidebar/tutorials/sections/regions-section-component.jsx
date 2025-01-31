@@ -19,7 +19,8 @@ function RegionsSectionComponent() {
         <SouthAmericaIcon />
         <h2 id="regions">{t('Regions')}</h2>
       </div>
-      <p>{t(SECTION_INFO.SPECIES)}</p>
+      <p>{t(SECTION_INFO.REGIONS)}</p>
+      <p>{t(SECTION_INFO.REGIONS_TWO)}</p>
     </section>
   );
 }

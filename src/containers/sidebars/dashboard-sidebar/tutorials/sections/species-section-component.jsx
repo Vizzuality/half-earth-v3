@@ -32,7 +32,7 @@ function SpeciesSectionComponent() {
         <IndicatorIcon />
         <h3 id="indicator-scores">{t('Indicator Scores')}</h3>
       </div>
-      <p>{t(SECTION_INFO.INDICATORS)}</p>
+      <p>{t(SECTION_INFO.INDICATOR_SCORES)}</p>
     </section>
   );
 }
