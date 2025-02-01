@@ -8,6 +8,8 @@ import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
+import ImagePopupComponent from 'components/image-popup/image-popup-component';
+
 import regionsOne from 'images/dashboard/tutorials/species-regions-1.png?react';
 import regionsTwo from 'images/dashboard/tutorials/species-regions-2.png?react';
 
@@ -15,7 +17,7 @@ import styles from '../tutorials-components-styles.module.scss';
 
 import { SECTION_INFO } from './sections-info';
 
-function RegionsSectionComponent() {
+function RegionsSectionComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
   return (
@@ -25,9 +27,13 @@ function RegionsSectionComponent() {
         <h2 id={tutorialSections.REGIONS}>{t('Regions')}</h2>
       </div>
       <p>{t(SECTION_INFO.REGIONS)}</p>
-      <img src={regionsOne} alt="Regions" />
+      <ImagePopupComponent {...props}>
+        <img src={regionsOne} alt="Regions" />
+      </ImagePopupComponent>
       <p>{t(SECTION_INFO.REGIONS_TWO)}</p>
-      <img src={regionsTwo} alt="Regions" />
+      <ImagePopupComponent {...props}>
+        <img src={regionsTwo} alt="Regions" />
+      </ImagePopupComponent>
     </section>
   );
 }

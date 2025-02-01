@@ -7,6 +7,8 @@ import { tutorialSections } from 'utils/dashboard-utils.js';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
+import ImagePopupComponent from 'components/image-popup/image-popup-component';
+
 import TimeLineIcon from 'icons/timeline.svg?react';
 
 import shiProvinceImg from 'images/dashboard/tutorials/shi-province.png?react';
@@ -21,7 +23,7 @@ import styles from '../tutorials-components-styles.module.scss';
 
 import { SECTION_INFO } from './sections-info';
 
-function IndicatorsSectionComponent() {
+function IndicatorsSectionComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
   return (
@@ -42,20 +44,26 @@ function IndicatorsSectionComponent() {
         <h3 className={styles.sub}>{t('Temporal Trend')}</h3>
       </div>
       <p>{t(SECTION_INFO.SPI_TEMPORAL_TREND)}</p>
-      <img src={spiTrendImg} alt="Species Protection Index - Trends" />
+      <ImagePopupComponent {...props}>
+        <img src={spiTrendImg} alt="Species Protection Index - Trends" />
+      </ImagePopupComponent>
       <div className={styles.subTitle}>
         <h3 className={styles.sub}>{t('Province View')}</h3>
       </div>
       <p>{t(SECTION_INFO.SPI_PROVINCE_VIEW)}</p>
-      <img src={spiProvinceImg} alt="Species Protection Index - Provinces" />
+      <ImagePopupComponent {...props}>
+        <img src={spiProvinceImg} alt="Species Protection Index - Provinces" />
+      </ImagePopupComponent>
       <div className={styles.subTitle}>
         <h3 className={styles.sub}>{t('Score Distributions')}</h3>
       </div>
       <p>{t(SECTION_INFO.SPI_SCORE_DISTRIBUTIONS)}</p>
-      <img
-        src={spiScoreDistImg}
-        alt="Species Protection Index - Score Distributions"
-      />
+      <ImagePopupComponent {...props}>
+        <img
+          src={spiScoreDistImg}
+          alt="Species Protection Index - Score Distributions"
+        />
+      </ImagePopupComponent>
       <div className={styles.subTitle}>
         <h3 id={tutorialSections.SHI}>{t('Species Habitat Index')}</h3>
       </div>
@@ -67,20 +75,26 @@ function IndicatorsSectionComponent() {
         <h3 className={styles.sub}>{t('Temporal Trend')}</h3>
       </div>
       <p>{t(SECTION_INFO.SHI_TEMPORAL_TREND)}</p>
-      <img src={shiTrendImg} alt="Species Habitat Index - Trends" />
+      <ImagePopupComponent {...props}>
+        <img src={shiTrendImg} alt="Species Habitat Index - Trends" />
+      </ImagePopupComponent>
       <div className={styles.subTitle}>
         <h3 className={styles.sub}>{t('Province View')}</h3>
       </div>
       <p>{t(SECTION_INFO.SHI_PROVINCE_VIEW)}</p>
-      <img src={shiProvinceImg} alt="Species Habitat Index - Provinces" />
+      <ImagePopupComponent {...props}>
+        <img src={shiProvinceImg} alt="Species Habitat Index - Provinces" />
+      </ImagePopupComponent>
       <div className={styles.subTitle}>
         <h3 className={styles.sub}>{t('Score Distributions')}</h3>
       </div>
       <p>{t(SECTION_INFO.SHI_SCORE_DISTRIBUTIONS)}</p>
-      <img
-        src={shiScoreDistImg}
-        alt="Species Habitat Index - Score Distributions"
-      />
+      <ImagePopupComponent {...props}>
+        <img
+          src={shiScoreDistImg}
+          alt="Species Habitat Index - Score Distributions"
+        />
+      </ImagePopupComponent>
       <div className={styles.subTitle}>
         <h3 id={tutorialSections.SII}>{t('Species Information Index')}</h3>
       </div>
@@ -92,7 +106,9 @@ function IndicatorsSectionComponent() {
         <h3 className={styles.sub}>{t('Temporal Trends')}</h3>
       </div>
       <p>{t(SECTION_INFO.SII_TEMPORAL_TREND)}</p>
-      <img src={siiTrendImg} alt="Species Information Index - Trends" />
+      <ImagePopupComponent {...props}>
+        <img src={siiTrendImg} alt="Species Information Index - Trends" />
+      </ImagePopupComponent>
     </section>
   );
 }

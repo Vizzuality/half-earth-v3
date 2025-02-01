@@ -14,7 +14,7 @@ import RegionsSectionComponent from './sections/regions-section-component';
 import SpeciesSectionComponent from './sections/species-section-component';
 import styles from './tutorials-components-styles.module.scss';
 
-function TutorialsComponent() {
+function TutorialsComponent(props) {
   const t = useT();
   const divRef = useRef(null);
   const { lightMode } = useContext(LightModeContext);
@@ -159,9 +159,9 @@ function TutorialsComponent() {
           </ul>
         </nav>
         <div ref={divRef} className={styles.information}>
-          <SpeciesSectionComponent />
-          <RegionsSectionComponent />
-          <IndicatorsSectionComponent />
+          <SpeciesSectionComponent {...props} />
+          <RegionsSectionComponent {...props} />
+          <IndicatorsSectionComponent {...props} />
         </div>
       </div>
     </section>

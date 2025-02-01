@@ -13,16 +13,19 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
+import popUpStyles from 'components/image-popup/image-popup-component-styles.module.scss';
 import LayerInfoModalContainer from 'components/layer-info-modal';
 import MapLegendContainer from 'components/map-legend';
 import MapView from 'components/map-view';
-// import TopMenuContainer from 'components/top-menu';
 
+// import TopMenuContainer from 'components/top-menu';
 import {
   LAYER_OPTIONS,
   NAVIGATION,
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
+
+import MinimizeIcon from 'icons/minimize-solid.svg?react';
 
 import DashboardPopupComponent from '../../../components/dashboard-popup/dashboard-popup-component';
 import { TABS } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
@@ -67,6 +70,7 @@ function DashboardViewComponent(props) {
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
   const [regionName, setRegionName] = useState();
+  const [imagePopup, setImagePopup] = useState();
 
   const [layerInfo, setLayerInfo] = useState();
 
@@ -237,6 +241,10 @@ function DashboardViewComponent(props) {
     highlight = layerView?.highlight(foundRegion.graphic);
   };
 
+  const closeModal = () => {
+    setImagePopup(null);
+  };
+
   useEffect(() => {
     if (!view) return;
     view.on('click', (event) => {
@@ -315,6 +323,29 @@ function DashboardViewComponent(props) {
           setLayerInfo={setLayerInfo}
         />
       )}
+
+      {imagePopup && (
+        <>
+          <div
+            className={popUpStyles.overlay}
+            role="button"
+            aria-label="overlay"
+            onClick={closeModal}
+            onKeyDown={closeModal}
+            tabIndex={0}
+          />
+          <div className={popUpStyles.popUp}>
+            <button
+              type="button"
+              onClick={() => closeModal()}
+              aria-label="Close popup"
+            >
+              <MinimizeIcon />
+            </button>
+            {imagePopup}
+          </div>
+        </>
+      )}
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
         {showLegend && <MapLegendContainer map={map} {...props} />}
@@ -331,6 +362,7 @@ function DashboardViewComponent(props) {
           selectedRegion={selectedRegion}
           setLayerInfo={setLayerInfo}
           regionName={regionName}
+          setImagePopup={setImagePopup}
           {...props}
         />
       </LightModeProvider>
