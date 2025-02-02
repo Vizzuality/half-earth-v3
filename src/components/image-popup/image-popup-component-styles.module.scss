@@ -3,6 +3,9 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
+$button-width: 20px;
+$button-height: 20px;
+
 .overlay{
   position: fixed;
   top: 0;
@@ -29,18 +32,19 @@
   flex-direction: column;
   z-index: $over-modal;
 
-  img{
-    width: 100%;
-    padding: 0;
-  }
-
   button{
     position: absolute;
     top: 0;
     right: 0;
-    width: 30px;
-    height: 30px;
+    width: $button-width;
+    height: $button-height;
     background-color: $white;
+    padding: 0;
+  }
+
+  img{
+    width: 100%;
+    padding: 0;
   }
 }
 
@@ -56,8 +60,9 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 30px;
-    height: 30px;
+    width: $button-width;
+    height: $button-height;
     background-color: $white;
+    padding: 0;
   }
 }
