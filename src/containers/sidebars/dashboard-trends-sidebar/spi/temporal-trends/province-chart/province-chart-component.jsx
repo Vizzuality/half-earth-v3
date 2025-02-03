@@ -19,9 +19,14 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
+import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import { SPI_LATEST_YEAR } from 'constants/dashboard-constants.js';
+
+import InfoIcon from 'icons/dashboard/info_icon.svg?react';
+
+import spiTrendImg from 'images/dashboard/tutorials/tutorial_spi_temporalTrends-en.png?react';
 
 import styles from './province-chart-styles.module.scss';
 
@@ -41,6 +46,7 @@ function ProvinceChartComponent(props) {
     setProvinceName,
     handleRegionSelected,
     layerView,
+    setImagePopup,
   } = props;
 
   const blankData = {
@@ -184,6 +190,23 @@ function ProvinceChartComponent(props) {
     setFoundIndex(
       provinces.findIndex((prov) => prov.region_name === value.region_name)
     );
+  };
+
+  const displayInfo = () => {
+    const alt = t('Species Protection Index - Trends');
+    const desc = t(
+      'The Temporal Trends section shows the chagne in the National SPI and the total percent of area protected over time'
+    );
+    const tempTrendsInfo = (
+      <ChartInfoPopupComponent
+        title={t('Temporal Trends')}
+        description={desc}
+        imgSrc={spiTrendImg}
+        imgAlt={alt}
+      />
+    );
+
+    setImagePopup(tempTrendsInfo);
   };
 
   const options = {
@@ -339,7 +362,17 @@ function ProvinceChartComponent(props) {
       )}
       <div className={styles.chart}>
         {bubbleData && (
-          <Bubble options={options} data={bubbleData} ref={chartRef} />
+          <div className={styles.chartWrapper}>
+            <Bubble options={options} data={bubbleData} ref={chartRef} />
+            <button
+              type="button"
+              className={styles.info}
+              aria-label="How to interpret this graph"
+              onClick={displayInfo}
+            >
+              <InfoIcon />
+            </button>
+          </div>
         )}
       </div>
     </div>

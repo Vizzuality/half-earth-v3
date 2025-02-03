@@ -8,6 +8,7 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
+import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 
@@ -15,6 +16,10 @@ import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
 } from 'constants/dashboard-constants.js';
+
+import InfoIcon from 'icons/dashboard/info_icon.svg?react';
+
+import spiScoreDistImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-en.png?react';
 
 import { PROVINCE_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
@@ -31,6 +36,7 @@ function ScoreDistributionsSpiComponent(props) {
     setMapLegendLayers,
     spiScoresData,
     spiSelectSpeciesData,
+    setImagePopup,
   } = props;
   const { lightMode } = useContext(LightModeContext);
   const [chartData, setChartData] = useState();
@@ -199,6 +205,23 @@ function ScoreDistributionsSpiComponent(props) {
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
   };
 
+  const displayInfo = () => {
+    const alt = t('Species Protection Index - Trends');
+    const desc = t(
+      'The Temporal Trends section shows the chagne in the National SPI and the total percent of area protected over time'
+    );
+    const tempTrendsInfo = (
+      <ChartInfoPopupComponent
+        title={t('Score Distributions')}
+        description={desc}
+        imgSrc={spiScoreDistImg}
+        imgAlt={alt}
+      />
+    );
+
+    setImagePopup(tempTrendsInfo);
+  };
+
   useEffect(() => {
     if (!spiScoresData.length) return;
 
@@ -261,7 +284,17 @@ function ScoreDistributionsSpiComponent(props) {
         <SpeciesRichnessComponent {...props} />
         {isLoading && <Loading height={200} />}
         {!isLoading && (
-          <DistributionsChartComponent options={options} data={chartData} />
+          <div className={compStyles.chartWrapper}>
+            <DistributionsChartComponent options={options} data={chartData} />
+            <button
+              type="button"
+              className={compStyles.info}
+              aria-label="How to interpret this graph"
+              onClick={displayInfo}
+            >
+              <InfoIcon />
+            </button>
+          </div>
         )}
       </div>
     </div>

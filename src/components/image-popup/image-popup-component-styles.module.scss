@@ -5,6 +5,8 @@
 
 $button-width: 20px;
 $button-height: 20px;
+$close-button-width: 20px;
+$close-button-height: 20px;
 
 .overlay{
   position: fixed;
@@ -25,20 +27,22 @@ $button-height: 20px;
   width: 80%;
   max-width: 80%;
   overflow-y: auto;
-  background-color: $white;
-  padding: 5px;
+  background-color: $black;
+  padding: 5px 20px;
   color: $white;
   display: flex;
   flex-direction: column;
   z-index: $over-modal;
+  border-radius: 15px;
+  border: 2px solid $brand-color-main;
 
   button{
     position: absolute;
-    top: 0;
-    right: 0;
-    width: $button-width;
-    height: $button-height;
-    background-color: $white;
+    top: 5px;
+    right: 10px;
+    width: $close-button-width;
+    height: $close-button-height;
+    fill: $brand-color-main;
     padding: 0;
   }
 

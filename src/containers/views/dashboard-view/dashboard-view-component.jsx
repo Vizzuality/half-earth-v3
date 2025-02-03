@@ -13,6 +13,7 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
+import DashboardPopupComponent from 'components/dashboard-popup/dashboard-popup-component';
 import popUpStyles from 'components/image-popup/image-popup-component-styles.module.scss';
 import LayerInfoModalContainer from 'components/layer-info-modal';
 import MapLegendContainer from 'components/map-legend';
@@ -25,9 +26,8 @@ import {
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
 
-import MinimizeIcon from 'icons/minimize-solid.svg?react';
+import MinimizeIcon from 'icons/closes.svg?react';
 
-import DashboardPopupComponent from '../../../components/dashboard-popup/dashboard-popup-component';
 import { TABS } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
