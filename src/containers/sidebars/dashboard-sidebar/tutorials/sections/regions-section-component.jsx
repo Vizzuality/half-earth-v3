@@ -10,8 +10,8 @@ import { LightModeContext } from 'context/light-mode';
 
 import ImagePopupComponent from 'components/image-popup/image-popup-component';
 
-import regionsOne from 'images/dashboard/tutorials/tutorial_regions_landing-EN.png?react';
-import regionsTwo from 'images/dashboard/tutorials/tutorial_regions_speciesList-EN.png?react';
+import regionsOne from 'images/dashboard/tutorials/tutorial_regions_landing-en.png?react';
+import regionsTwo from 'images/dashboard/tutorials/tutorial_regions_speciesList-en.png?react';
 
 import styles from '../tutorials-components-styles.module.scss';
 

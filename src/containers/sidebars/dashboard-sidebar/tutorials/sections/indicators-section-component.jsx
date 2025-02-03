@@ -13,11 +13,11 @@ import TimeLineIcon from 'icons/timeline.svg?react';
 
 import shiProvinceImg from 'images/dashboard/tutorials/shi-province.png?react';
 import shiScoreDistImg from 'images/dashboard/tutorials/shi-score-dist.png?react';
-import shiTrendImg from 'images/dashboard/tutorials/tutorial_shi_temporalTrends-EN.png?react';
-import siiTrendImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-EN.png?react';
-import spiProvinceImg from 'images/dashboard/tutorials/tutorial_spi_provinces-EN.png?react';
-import spiScoreDistImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-EN.png?react';
-import spiTrendImg from 'images/dashboard/tutorials/tutorial_spi_temporalTrends-EN.png?react';
+import shiTrendImg from 'images/dashboard/tutorials/tutorial_shi_temporalTrends-en.png?react';
+import siiTrendImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-en.png?react';
+import spiProvinceImg from 'images/dashboard/tutorials/tutorial_spi_provinces-en.png?react';
+import spiScoreDistImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-en.png?react';
+import spiTrendImg from 'images/dashboard/tutorials/tutorial_spi_temporalTrends-en.png?react';
 
 import styles from '../tutorials-components-styles.module.scss';
 

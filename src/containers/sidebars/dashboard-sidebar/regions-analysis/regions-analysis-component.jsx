@@ -121,7 +121,8 @@ function RegionsAnalysisComponent(props) {
     if (selectedRegionOption && selectedRegion) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {
-      setSelectedRegionOption(null);
+      setSelectedRegionOption(REGION_OPTIONS.PROTECTED_AREAS);
+      displayLayer(REGION_OPTIONS.PROTECTED_AREAS);
     }
   }, []);
 

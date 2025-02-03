@@ -67,7 +67,7 @@ function TutorialsComponent(props) {
       <hr className={hrTheme.dark} />
       <div className={styles.help}>
         <nav>
-          <h3>Jump to:</h3>
+          <h3>{t('Jump to:')}</h3>
           <button
             type="button"
             className={cx(styles.section, {
