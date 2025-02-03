@@ -11,6 +11,7 @@ import {
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
 
+import ArrowIcon from 'icons/arrow_right.svg?react';
 import ArrowUpIcon from 'icons/dashboard/arrow_icon.svg?react';
 
 import SHILegendImage from 'images/dashboard/shi_legend.png';
@@ -23,6 +24,7 @@ function MapLegendComponent(props) {
   const { mapLegendLayers, map, setMapLegendLayers, countryISO } = props;
   const t = useT();
   const [leftPosition, setLeftPosition] = useState(0);
+  const [collapse, setCollapse] = useState(false);
 
   const getLayerIcon = (layer) => {
     if (layer.parentId === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
@@ -171,8 +173,26 @@ function MapLegendComponent(props) {
   }, [mapLegendLayers]);
 
   return (
-    <div className={styles.container} style={{ left: leftPosition }}>
-      <span className={styles.title}>{t('Map Legend')}</span>
+    <div
+      className={cx(styles.container, {
+        [styles.collapse]: collapse,
+      })}
+      style={{ left: leftPosition }}
+    >
+      <div className={styles.titleWrapper}>
+        <span className={styles.title}>{t('Map Legend')}</span>
+        <button
+          type="button"
+          onClick={() => setCollapse(!collapse)}
+          aria-label="Collapse legend"
+        >
+          <ArrowIcon
+            className={cx(styles.arrowIcon, {
+              [styles.isOpened]: collapse,
+            })}
+          />
+        </button>
+      </div>
       <ul className={styles.layers}>
         {Object.values(mapLegendLayers).map((layer, index) => (
           <li key={`${layer.id}-${layer.label}-${index}`}>

@@ -16,10 +16,44 @@
   flex-direction: column;
   gap: 8px;
   z-index: 4;
+  max-height: 100vh;
+  overflow: hidden;
+  height: auto;
+  transition: max-height 0.3s ease-out;
 
-  .title{
-    font-weight: 700;
+  &.collapse{
+    max-height: 40px;
+  }
+
+  .titleWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     padding-bottom: 10px;
+
+    .title{
+      font-weight: 700;
+    }
+
+    button{
+      color: $white;
+
+      .arrowIcon {
+        fill: $white;
+        transform: rotate(-90deg);
+
+        &.isOpened {
+          transform:rotate(90deg);
+        }
+
+        transition: transform 0.2s ease;
+
+        > path {
+          fill: inherit;
+        }
+      }
+    }
   }
 
   .layers{
