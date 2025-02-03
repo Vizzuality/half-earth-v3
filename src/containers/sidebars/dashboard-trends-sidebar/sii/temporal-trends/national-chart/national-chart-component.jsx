@@ -18,7 +18,14 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
+import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
+
+import InfoIcon from 'icons/dashboard/info_icon.svg?react';
+
+import siiTrendImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-en.png?react';
+
+import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
 import styles from './national-chart-styles.module.scss';
 
@@ -26,7 +33,7 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
-  const { nationalChartData } = props;
+  const { nationalChartData, setImagePopup } = props;
   const [data, setData] = useState();
   const [siiValue, setSiiValue] = useState(0);
   const { lightMode } = useContext(LightModeContext);
@@ -103,6 +110,21 @@ function NationalChartComponent(props) {
     },
   };
 
+  const displayInfo = () => {
+    const alt = t('Species Protection Index - Trends');
+    const desc = t(SECTION_INFO.SII_TEMPORAL_TREND);
+    const tempTrendsInfo = (
+      <ChartInfoPopupComponent
+        title={t('Temporal Trends')}
+        description={desc}
+        imgSrc={siiTrendImg}
+        imgAlt={alt}
+      />
+    );
+
+    setImagePopup(tempTrendsInfo);
+  };
+
   useEffect(() => {
     if (nationalChartData.length) {
       setData({
@@ -167,7 +189,17 @@ function NationalChartComponent(props) {
           </div>
           {data && (
             <div className={styles.chart}>
-              <Line options={options} data={data} />
+              <div className={styles.chartWrapper}>
+                <Line options={options} data={data} />
+                <button
+                  type="button"
+                  className={styles.info}
+                  aria-label="How to interpret this graph"
+                  onClick={displayInfo}
+                >
+                  <InfoIcon />
+                </button>
+              </div>
             </div>
           )}
         </>

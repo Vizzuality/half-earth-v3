@@ -109,5 +109,22 @@
     width: 100%;
     margin-top: 25px;
     max-width: 580px;
+
+    .chartWrapper{
+      position:relative;
+
+      .info{
+        position: absolute;
+        top: -5px;
+        right: 0;
+        color: var(--font-color);
+        fill: var(--font-color);
+        width: 30px;
+        height: 30px;
+        border: 1px solid;
+        border-radius: 50%;
+        padding: 0;
+      }
+    }
   }
 }

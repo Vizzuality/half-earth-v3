@@ -26,7 +26,9 @@ import { SPI_LATEST_YEAR } from 'constants/dashboard-constants.js';
 
 import InfoIcon from 'icons/dashboard/info_icon.svg?react';
 
-import spiTrendImg from 'images/dashboard/tutorials/tutorial_spi_temporalTrends-en.png?react';
+import spiProvinceImg from 'images/dashboard/tutorials/tutorial_spi_provinces-en.png?react';
+
+import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
 import styles from './province-chart-styles.module.scss';
 
@@ -194,14 +196,12 @@ function ProvinceChartComponent(props) {
 
   const displayInfo = () => {
     const alt = t('Species Protection Index - Trends');
-    const desc = t(
-      'The Temporal Trends section shows the chagne in the National SPI and the total percent of area protected over time'
-    );
+    const desc = t(SECTION_INFO.SPI_PROVINCE_VIEW);
     const tempTrendsInfo = (
       <ChartInfoPopupComponent
-        title={t('Temporal Trends')}
+        title={t('Province View')}
         description={desc}
-        imgSrc={spiTrendImg}
+        imgSrc={spiProvinceImg}
         imgAlt={alt}
       />
     );

@@ -20,6 +20,14 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
+import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
+
+import InfoIcon from 'icons/dashboard/info_icon.svg?react';
+
+import shiProvinceImg from 'images/dashboard/tutorials/shi-province.png?react';
+
+import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
+
 import styles from './province-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
@@ -38,6 +46,7 @@ function ProvinceChartComponent(props) {
     setProvinceName,
     handleRegionSelected,
     layerView,
+    setImagePopup,
   } = props;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -156,6 +165,21 @@ function ProvinceChartComponent(props) {
     });
   };
 
+  const displayInfo = () => {
+    const alt = t('Species Protection Index - Trends');
+    const desc = t(SECTION_INFO.SHI_PROVINCE_VIEW);
+    const tempTrendsInfo = (
+      <ChartInfoPopupComponent
+        title={t('Province View')}
+        description={desc}
+        imgSrc={shiProvinceImg}
+        imgAlt={alt}
+      />
+    );
+
+    setImagePopup(tempTrendsInfo);
+  };
+
   useEffect(() => {
     if (selectedProvince && shiProvinceTrendData.length) {
       setIsLoading(false);
@@ -241,7 +265,19 @@ function ProvinceChartComponent(props) {
           <div className={cx(styles.legendBox, styles.connectivity)} />
           <span>{t('Connectivity')}</span>
         </div>
-        {data && <Line options={options} data={data} />}
+        {data && (
+          <div className={styles.chartWrapper}>
+            <Line options={options} data={data} />
+            <button
+              type="button"
+              className={styles.info}
+              aria-label="How to interpret this graph"
+              onClick={displayInfo}
+            >
+              <InfoIcon />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

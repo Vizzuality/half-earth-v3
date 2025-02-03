@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
 import Button from 'components/button';
 
-import { LightModeContext } from '../../../../../context/light-mode';
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,

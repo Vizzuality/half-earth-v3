@@ -21,6 +21,7 @@ import InfoIcon from 'icons/dashboard/info_icon.svg?react';
 
 import spiScoreDistImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-en.png?react';
 
+import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sections-info';
 import { PROVINCE_TREND } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
@@ -206,10 +207,8 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const displayInfo = () => {
-    const alt = t('Species Protection Index - Trends');
-    const desc = t(
-      'The Temporal Trends section shows the chagne in the National SPI and the total percent of area protected over time'
-    );
+    const alt = t('Species Protection Index - Score Distributions');
+    const desc = t(SECTION_INFO.SPI_SCORE_DISTRIBUTIONS);
     const tempTrendsInfo = (
       <ChartInfoPopupComponent
         title={t('Score Distributions')}

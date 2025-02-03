@@ -9,6 +9,7 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import Button from 'components/button';
+import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 
 import {
@@ -16,6 +17,11 @@ import {
   SPECIES_SELECTED_COOKIE,
 } from 'constants/dashboard-constants.js';
 
+import InfoIcon from 'icons/dashboard/info_icon.svg?react';
+
+import shiScoreDistImg from 'images/dashboard/tutorials/shi-score-dist.png?react';
+
+import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sections-info';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import DistributionsTableContainer from './distributions-table';
@@ -30,6 +36,7 @@ function ScoreDistributionsShiComponent(props) {
     shiSelectSpeciesData,
     shiActiveTrend,
     setMapLegendLayers,
+    setImagePopup,
   } = props;
 
   const SCORES = {
@@ -314,6 +321,21 @@ function ScoreDistributionsShiComponent(props) {
     displayData(SCORES.HABITAT_SCORE);
   };
 
+  const displayInfo = () => {
+    const alt = t('Species Protection Index - Trends');
+    const desc = t(SECTION_INFO.SHI_SCORE_DISTRIBUTIONS);
+    const tempTrendsInfo = (
+      <ChartInfoPopupComponent
+        title={t('Score Distributions')}
+        description={desc}
+        imgSrc={shiScoreDistImg}
+        imgAlt={alt}
+      />
+    );
+
+    setImagePopup(tempTrendsInfo);
+  };
+
   useEffect(() => {
     if (!shiScoresData.length) return;
 
@@ -463,7 +485,20 @@ function ScoreDistributionsShiComponent(props) {
             </div>
             {isLoading && <Loading height={200} />}
             {!isLoading && (
-              <DistributionsChartComponent data={chartData} options={options} />
+              <div className={compStyles.chartWrapper}>
+                <DistributionsChartComponent
+                  data={chartData}
+                  options={options}
+                />
+                <button
+                  type="button"
+                  className={compStyles.info}
+                  aria-label="How to interpret this graph"
+                  onClick={displayInfo}
+                >
+                  <InfoIcon />
+                </button>
+              </div>
             )}
           </>
         )}

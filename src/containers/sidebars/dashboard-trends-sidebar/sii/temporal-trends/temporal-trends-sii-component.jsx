@@ -1,4 +1,3 @@
-import { orderBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { T, useT } from '@transifex/react';
