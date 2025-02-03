@@ -39,7 +39,6 @@ function RegionsAnalysisComponent(props) {
     setSelectedIndex,
     selectedRegion,
     setSelectedRegion,
-    scientificName,
     selectedIndex,
     selectedRegionOption,
     setSelectedRegionOption,
@@ -47,17 +46,20 @@ function RegionsAnalysisComponent(props) {
   } = props;
   const { lightMode } = useContext(LightModeContext);
 
-  const displayLayer = (option) => {
+  const displayLayer = async (option) => {
     let featureLayer;
     if (option === REGION_OPTIONS.PROTECTED_AREAS) {
-      featureLayer = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
+      featureLayer = await EsriFeatureService.addProtectedAreaLayer(
+        null,
+        countryISO
+      );
 
       setRegionLayers(() => ({
         [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.PROVINCES) {
-      featureLayer = EsriFeatureService.getFeatureLayer(
+      featureLayer = await EsriFeatureService.getFeatureLayer(
         PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
         countryISO
       );
@@ -67,7 +69,7 @@ function RegionsAnalysisComponent(props) {
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.FORESTS) {
-      featureLayer = EsriFeatureService.getFeatureLayer(
+      featureLayer = await EsriFeatureService.getFeatureLayer(
         DRC_REGION_FEATURE_ID,
         null,
         LAYER_OPTIONS.FORESTS
@@ -78,17 +80,6 @@ function RegionsAnalysisComponent(props) {
       }));
       map.add(featureLayer);
     }
-
-    browsePage({
-      type: DASHBOARD,
-      payload: { iso: countryISO.toLowerCase() },
-      query: {
-        scientificName,
-        selectedIndex,
-        regionLayers,
-        selectedRegionOption: option,
-      },
-    });
   };
 
   const removeRegionLayers = () => {
@@ -105,6 +96,7 @@ function RegionsAnalysisComponent(props) {
     map.remove(protectedAreaLayer);
     map.remove(provinceLayer);
     map.remove(forestLayer);
+    setRegionLayers({});
   };
 
   const optionSelected = (event) => {
@@ -117,12 +109,24 @@ function RegionsAnalysisComponent(props) {
   };
 
   useEffect(() => {
-    removeRegionLayers();
+    browsePage({
+      type: DASHBOARD,
+      payload: { iso: countryISO.toLowerCase() },
+      query: {
+        selectedIndex,
+        regionLayers,
+        selectedRegionOption,
+      },
+    });
+  }, [regionLayers]);
+
+  useEffect(() => {
     if (selectedRegionOption && selectedRegion) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {
-      setSelectedRegionOption(REGION_OPTIONS.PROTECTED_AREAS);
+      removeRegionLayers();
       displayLayer(REGION_OPTIONS.PROTECTED_AREAS);
+      setSelectedRegionOption(REGION_OPTIONS.PROTECTED_AREAS);
     }
   }, []);
 

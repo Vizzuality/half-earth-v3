@@ -60,8 +60,8 @@ function getVectorTileLayer(url, id, countryISO) {
   });
 }
 
-function getFeatureLayer(portalItemId, countryISO, id) {
-  return new FeatureLayer({
+async function getFeatureLayer(portalItemId, countryISO, id) {
+  const featureLayer = new FeatureLayer({
     portalItem: {
       id: portalItemId,
     },
@@ -69,6 +69,9 @@ function getFeatureLayer(portalItemId, countryISO, id) {
     definitionExpression: countryISO ? `GID_0 = '${countryISO}'` : '',
     id: id ?? LAYER_OPTIONS.PROVINCES,
   });
+
+  await featureLayer.load();
+  return featureLayer;
 }
 
 function getFeatureOccurenceLayer(portalItemId, scientificName, id) {
@@ -175,7 +178,7 @@ function addFeature({ url, features }: AddFeature) {
   });
 }
 
-function addProtectedAreaLayer(id, countryISO = 'COD') {
+async function addProtectedAreaLayer(id, countryISO = 'COD') {
   let featurePortalId = PROTECTED_AREA_FEATURE_URL;
 
   switch (countryISO) {
@@ -202,6 +205,8 @@ function addProtectedAreaLayer(id, countryISO = 'COD') {
     outFields: ['*'],
     id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
   });
+
+  await featureLayer.load(); // Ensure the layer is loaded
 
   return featureLayer;
 }

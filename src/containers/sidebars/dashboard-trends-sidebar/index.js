@@ -1,4 +1,3 @@
-import { orderBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
@@ -216,10 +215,10 @@ function DashboardTrendsSidebarContainer(props) {
     });
   }, [view, countryISO]);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!map && !view) return;
 
-    const layer = EsriFeatureService.getFeatureLayer(
+    const layer = await EsriFeatureService.getFeatureLayer(
       PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
       countryISO
     );
@@ -239,7 +238,7 @@ function DashboardTrendsSidebarContainer(props) {
       layer.visible = false;
     }
 
-    const outlineFeatureLayer = EsriFeatureService.getFeatureLayer(
+    const outlineFeatureLayer = await EsriFeatureService.getFeatureLayer(
       SHI_LAYER_ID,
       countryISO,
       `${countryISO}-outline`

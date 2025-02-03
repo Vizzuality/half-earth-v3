@@ -73,7 +73,8 @@ function DashboardViewComponent(props) {
   const [imagePopup, setImagePopup] = useState();
 
   const [layerInfo, setLayerInfo] = useState();
-
+  let timeoutId;
+  const timeoutThreshold = 100;
   const [showLegend, setShowLegend] = useState(false);
   // const [showTopNav, setShowTopNav] = useState(true);
   let hoverHighlight;
@@ -188,48 +189,52 @@ function DashboardViewComponent(props) {
       view.closePopup();
 
       if (hits) {
-        let name;
-        // eslint-disable-next-line camelcase
-        const { NAME, NAME_1, territoire, region_name, DESIG } =
-          hits.attributes;
+        clearTimeout(timeoutId);
 
-        const countryMatch =
-          hits.attributes.ISO3 === countryISO ||
-          hits.attributes.GID_0 === countryISO;
-
-        if (countryMatch) {
+        timeoutId = setTimeout(() => {
+          let name;
           // eslint-disable-next-line camelcase
-          name = NAME || NAME_1 || region_name;
-        } else {
-          name = territoire;
-        }
+          const { NAME, NAME_1, territoire, region_name, DESIG } =
+            hits.attributes;
 
-        if (name) {
-          hoverHighlight = layerView.highlight(hits.graphic);
-          view.popup.dockEnabled = false;
-          view.popup.dockOptions = {
-            buttonEnabled: false,
-            position: 'auto',
-          };
+          const countryMatch =
+            hits.attributes.ISO3 === countryISO ||
+            hits.attributes.GID_0 === countryISO;
 
-          if (DESIG) {
-            const container = document.createElement('div');
-            view.popup.content = container;
-            ReactDOM.render(
-              <DashboardPopupComponent {...hits.attributes} />,
-              container
-            );
+          if (countryMatch) {
+            // eslint-disable-next-line camelcase
+            name = NAME || NAME_1 || region_name;
           } else {
-            view.popup.content = '';
+            name = territoire;
           }
 
-          view.openPopup({
-            // Set the popup's title to the coordinates of the location
-            title: `${name}`,
-            location: view.toMap({ x: event.x, y: event.y }),
-            includeDefaultActions: false,
-          });
-        }
+          if (name) {
+            hoverHighlight = layerView.highlight(hits.graphic);
+            view.popup.dockEnabled = false;
+            view.popup.dockOptions = {
+              buttonEnabled: false,
+              position: 'auto',
+            };
+
+            if (DESIG) {
+              const container = document.createElement('div');
+              view.popup.content = container;
+              ReactDOM.render(
+                <DashboardPopupComponent {...hits.attributes} />,
+                container
+              );
+            } else {
+              view.popup.content = '';
+            }
+
+            view.openPopup({
+              // Set the popup's title to the coordinates of the location
+              title: `${name}`,
+              location: view.toMap({ x: event.x, y: event.y }),
+              includeDefaultActions: false,
+            });
+          }
+        }, timeoutThreshold);
       }
     } catch (error) {
       throw Error(error);
@@ -254,6 +259,7 @@ function DashboardViewComponent(props) {
 
   useEffect(async () => {
     let layer;
+
     if (view && Object.keys(regionLayers).length) {
       if (selectedIndex === NAVIGATION.TRENDS) {
         if (tabOption === TABS.SPI) {
