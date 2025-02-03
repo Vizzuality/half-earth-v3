@@ -13,8 +13,8 @@ import BirdsIcon from 'icons/bird_icon.svg?react';
 import IndicatorIcon from 'icons/gauge_icon.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
 
-import dataLayers from 'images/dashboard/tutorials/species-data-layers.png?react';
 import indicatorScores from 'images/dashboard/tutorials/species-indicator-scores.png?react';
+import dataLayers from 'images/dashboard/tutorials/tutorial_species_dataLayers-EN.png?react';
 
 import styles from '../tutorials-components-styles.module.scss';
 
