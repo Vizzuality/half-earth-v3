@@ -128,6 +128,11 @@ function SpeciesRichnessComponent(props) {
   };
 
   useEffect(() => {
+    if (!countryData) return;
+    getScores();
+  }, [countryData]);
+
+  useEffect(() => {
     if (!selectedProvince) return;
     getScores();
     if (activeTrend === NATIONAL_TREND || !selectedProvince) {
