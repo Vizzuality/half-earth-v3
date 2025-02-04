@@ -28,7 +28,6 @@
     .info{
       display: flex;
       flex-direction: column;
-      gap: 3px;
       color: var(--font-color);
       margin: 0 0 calc($site-gutter / 2) 0;
 
@@ -61,6 +60,7 @@
         width: max-content;
         padding: 5px 10px;
         border-radius: 5px;
+        margin-top: 4px;
         text-transform: uppercase;
 
         &.CR{
