@@ -18,12 +18,10 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
-import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import { SHI_LATEST_YEAR } from 'constants/dashboard-constants.js';
-
-import InfoIcon from 'icons/dashboard/info_icon.svg?react';
 
 import shiTrendImg from 'images/dashboard/tutorials/tutorial_shi_temporalTrends-en.png?react';
 
@@ -35,7 +33,8 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
-  const { countryData, setImagePopup } = props;
+  const { countryData } = props;
+  const [chartInfo, setChartInfo] = useState();
   const { lightMode } = useContext(LightModeContext);
   const [data, setData] = useState();
   const [shiValue, setShiValue] = useState(0);
@@ -116,20 +115,14 @@ function NationalChartComponent(props) {
     },
   };
 
-  const displayInfo = () => {
-    const alt = t('Species Protection Index - Trends');
-    const desc = t(SECTION_INFO.SHI_TEMPORAL_TREND);
-    const tempTrendsInfo = (
-      <ChartInfoPopupComponent
-        title={t('Temporal Trend')}
-        description={desc}
-        imgSrc={shiTrendImg}
-        imgAlt={alt}
-      />
-    );
-
-    setImagePopup(tempTrendsInfo);
-  };
+  useEffect(() => {
+    setChartInfo({
+      title: t('Temporal Trend'),
+      description: t(SECTION_INFO.SHI_TEMPORAL_TREND),
+      imgAlt: t('Species Protection Index - Trends'),
+      image: shiTrendImg,
+    });
+  }, []);
 
   useEffect(() => {
     if (!countryData.length) return;
@@ -243,17 +236,9 @@ function NationalChartComponent(props) {
                 <div className={cx(styles.legendBox, styles.connectivity)} />
                 <span>{t('Connectivity Score')}</span>
               </div>
-              <div className={styles.chartWrapper}>
+              <ChartInfoComponent chartInfo={chartInfo} {...props}>
                 <Line options={options} data={data} />
-                <button
-                  type="button"
-                  className={styles.info}
-                  aria-label="How to interpret this graph"
-                  onClick={displayInfo}
-                >
-                  <InfoIcon />
-                </button>
-              </div>
+              </ChartInfoComponent>
             </div>
           )}
         </>

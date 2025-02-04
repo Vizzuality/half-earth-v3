@@ -20,9 +20,7 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
-import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
-
-import InfoIcon from 'icons/dashboard/info_icon.svg?react';
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 
 import shiProvinceImg from 'images/dashboard/tutorials/shi-province.png?react';
 
@@ -46,12 +44,12 @@ function ProvinceChartComponent(props) {
     setProvinceName,
     handleRegionSelected,
     layerView,
-    setImagePopup,
   } = props;
 
   const [isLoading, setIsLoading] = useState(true);
   const [foundIndex, setFoundIndex] = useState(0);
   const [data, setData] = useState();
+  const [chartInfo, setChartInfo] = useState();
   const [filteredProvince, setFilteredProvince] = useState();
 
   const getProvinceScores = (province) => {
@@ -165,20 +163,14 @@ function ProvinceChartComponent(props) {
     });
   };
 
-  const displayInfo = () => {
-    const alt = t('Species Protection Index - Trends');
-    const desc = t(SECTION_INFO.SHI_PROVINCE_VIEW);
-    const tempTrendsInfo = (
-      <ChartInfoPopupComponent
-        title={t('Province View')}
-        description={desc}
-        imgSrc={shiProvinceImg}
-        imgAlt={alt}
-      />
-    );
-
-    setImagePopup(tempTrendsInfo);
-  };
+  useEffect(() => {
+    setChartInfo({
+      title: t('Province View'),
+      description: t(SECTION_INFO.SHI_PROVINCE_VIEW),
+      imgAlt: t('Species Protection Index - Trends'),
+      image: shiProvinceImg,
+    });
+  }, []);
 
   useEffect(() => {
     if (selectedProvince && shiProvinceTrendData.length) {
@@ -266,17 +258,9 @@ function ProvinceChartComponent(props) {
           <span>{t('Connectivity')}</span>
         </div>
         {data && (
-          <div className={styles.chartWrapper}>
+          <ChartInfoComponent chartInfo={chartInfo} {...props}>
             <Line options={options} data={data} />
-            <button
-              type="button"
-              className={styles.info}
-              aria-label="How to interpret this graph"
-              onClick={displayInfo}
-            >
-              <InfoIcon />
-            </button>
-          </div>
+          </ChartInfoComponent>
         )}
       </div>
     </div>

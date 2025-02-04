@@ -19,12 +19,10 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
-import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import { SPI_LATEST_YEAR } from 'constants/dashboard-constants.js';
-
-import InfoIcon from 'icons/dashboard/info_icon.svg?react';
 
 import spiProvinceImg from 'images/dashboard/tutorials/tutorial_spi_provinces-en.png?react';
 
@@ -48,7 +46,6 @@ function ProvinceChartComponent(props) {
     setProvinceName,
     handleRegionSelected,
     layerView,
-    setImagePopup,
   } = props;
 
   const blankData = {
@@ -81,6 +78,7 @@ function ProvinceChartComponent(props) {
   const [foundIndex, setFoundIndex] = useState(0);
   const [previousIndex, setPreviousIndex] = useState(-1);
   const [percentAreaProtected, setPercentAreaProtected] = useState(0);
+  const [chartInfo, setChartInfo] = useState();
 
   const getChartData = () => {
     const data = [];
@@ -194,20 +192,14 @@ function ProvinceChartComponent(props) {
     );
   };
 
-  const displayInfo = () => {
-    const alt = t('Species Protection Index - Trends');
-    const desc = t(SECTION_INFO.SPI_PROVINCE_VIEW);
-    const tempTrendsInfo = (
-      <ChartInfoPopupComponent
-        title={t('Province View')}
-        description={desc}
-        imgSrc={spiProvinceImg}
-        imgAlt={alt}
-      />
-    );
-
-    setImagePopup(tempTrendsInfo);
-  };
+  useEffect(() => {
+    setChartInfo({
+      title: t('Province View'),
+      description: t(SECTION_INFO.SPI_PROVINCE_VIEW),
+      imgAlt: t('Species Protection Index - Trends'),
+      image: spiProvinceImg,
+    });
+  }, []);
 
   const options = {
     plugins: {
@@ -362,17 +354,9 @@ function ProvinceChartComponent(props) {
       )}
       <div className={styles.chart}>
         {bubbleData && (
-          <div className={styles.chartWrapper}>
+          <ChartInfoComponent chartInfo={chartInfo} {...props}>
             <Bubble options={options} data={bubbleData} ref={chartRef} />
-            <button
-              type="button"
-              className={styles.info}
-              aria-label="How to interpret this graph"
-              onClick={displayInfo}
-            >
-              <InfoIcon />
-            </button>
-          </div>
+          </ChartInfoComponent>
         )}
       </div>
     </div>

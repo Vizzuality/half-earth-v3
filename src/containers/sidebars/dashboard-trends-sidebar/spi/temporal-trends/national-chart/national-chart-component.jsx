@@ -18,10 +18,8 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
-import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
-
-import InfoIcon from 'icons/dashboard/info_icon.svg?react';
 
 import spiTrendImg from 'images/dashboard/tutorials/tutorial_spi_temporalTrends-en.png?react';
 
@@ -35,7 +33,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
-  const { countryData, setImagePopup } = props;
+  const { countryData } = props;
 
   const [data, setData] = useState();
   const [currentScore, setCurrentScore] = useState();
@@ -57,7 +55,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       },
     ],
   };
-
+  const [chartInfo, setChartInfo] = useState();
   const [spiArcData, setSpiArcData] = useState(blankData);
   const [areaProtectedData, setAreaProtectedData] = useState(blankData);
 
@@ -112,20 +110,14 @@ function TemporalTrendsSpiNationalChartComponent(props) {
     },
   };
 
-  const displayInfo = () => {
-    const alt = t('Species Protection Index - Trends');
-    const desc = t(SECTION_INFO.SPI_TEMPORAL_TREND);
-    const tempTrendsInfo = (
-      <ChartInfoPopupComponent
-        title={t('Temporal Trends')}
-        description={desc}
-        imgSrc={spiTrendImg}
-        imgAlt={alt}
-      />
-    );
-
-    setImagePopup(tempTrendsInfo);
-  };
+  useEffect(() => {
+    setChartInfo({
+      title: t('Temporal Trends'),
+      description: t(SECTION_INFO.SPI_TEMPORAL_TREND),
+      imgAlt: t('Species Protection Index - Trends'),
+      image: spiTrendImg,
+    });
+  }, []);
 
   useEffect(() => {
     if (!countryData.length) return;
@@ -220,17 +212,9 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       )}
       {data && (
         <div className={styles.chart}>
-          <div className={styles.chartWrapper}>
+          <ChartInfoComponent chartInfo={chartInfo} {...props}>
             <Line options={options} data={data} />
-            <button
-              type="button"
-              className={styles.info}
-              aria-label="How to interpret this graph"
-              onClick={displayInfo}
-            >
-              <InfoIcon />
-            </button>
-          </div>
+          </ChartInfoComponent>
         </div>
       )}
     </div>

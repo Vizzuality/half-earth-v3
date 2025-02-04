@@ -18,10 +18,8 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
-import ChartInfoPopupComponent from 'components/chart-info-popup/chart-info-popup-component';
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
-
-import InfoIcon from 'icons/dashboard/info_icon.svg?react';
 
 import siiTrendImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-en.png?react';
 
@@ -33,7 +31,7 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
-  const { nationalChartData, setImagePopup } = props;
+  const { nationalChartData } = props;
   const [data, setData] = useState();
   const [siiValue, setSiiValue] = useState(0);
   const { lightMode } = useContext(LightModeContext);
@@ -42,6 +40,7 @@ function NationalChartComponent(props) {
     : getCSSVariable('white-opacity-20');
   const [isLoading, setIsLoading] = useState(true);
   const [lastYear, setLastYear] = useState();
+  const [chartInfo, setChartInfo] = useState();
   const [globalRanking, setGlobalRanking] = useState(0);
 
   const blankData = {
@@ -110,20 +109,14 @@ function NationalChartComponent(props) {
     },
   };
 
-  const displayInfo = () => {
-    const alt = t('Species Protection Index - Trends');
-    const desc = t(SECTION_INFO.SII_TEMPORAL_TREND);
-    const tempTrendsInfo = (
-      <ChartInfoPopupComponent
-        title={t('Temporal Trends')}
-        description={desc}
-        imgSrc={siiTrendImg}
-        imgAlt={alt}
-      />
-    );
-
-    setImagePopup(tempTrendsInfo);
-  };
+  useEffect(() => {
+    setChartInfo({
+      title: t('Temporal Trends'),
+      description: t(SECTION_INFO.SII_TEMPORAL_TREND),
+      imgAlt: t('Species Information Index - Trends'),
+      image: siiTrendImg,
+    });
+  }, []);
 
   useEffect(() => {
     if (nationalChartData.length) {
@@ -189,17 +182,9 @@ function NationalChartComponent(props) {
           </div>
           {data && (
             <div className={styles.chart}>
-              <div className={styles.chartWrapper}>
+              <ChartInfoComponent chartInfo={chartInfo} {...props}>
                 <Line options={options} data={data} />
-                <button
-                  type="button"
-                  className={styles.info}
-                  aria-label="How to interpret this graph"
-                  onClick={displayInfo}
-                >
-                  <InfoIcon />
-                </button>
-              </div>
+              </ChartInfoComponent>
             </div>
           )}
         </>
