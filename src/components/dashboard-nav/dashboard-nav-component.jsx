@@ -79,7 +79,7 @@ function DashboardNavComponent(props) {
               selectedIndex <= NAVIGATION.REGION_ANALYSIS,
           })}
           onClick={() => {
-            updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER);
+            updateHistory(NAVIGATION.SPECIES, titles.DATA_LAYER);
           }}
         >
           <BirdsIcon />

@@ -111,14 +111,12 @@ function DashboardSidebar(props) {
         {selectedIndex === NAVIGATION.REGION && (
           <RegionsAnalysisContainer {...props} />
         )}
-        {!scientificName && selectedIndex === NAVIGATION.DATA_LAYER && (
+        {selectedIndex === NAVIGATION.SPECIES && (
           <SpeciesHomeContainer {...props} />
         )}
-        {scientificName &&
-          (selectedIndex === NAVIGATION.SPECIES ||
-            selectedIndex === NAVIGATION.DATA_LAYER) && (
-            <DataLayerContainer {...props} />
-          )}
+        {selectedIndex === NAVIGATION.DATA_LAYER && (
+          <DataLayerContainer {...props} />
+        )}
         {selectedIndex === NAVIGATION.BIO_IND && (
           <BioDiversityContainer {...props} />
         )}
