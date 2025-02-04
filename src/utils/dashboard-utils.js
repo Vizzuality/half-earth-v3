@@ -17,6 +17,15 @@ export const tutorialSections = {
   SII: 'sii',
 };
 
+export const IUCNStatusTypes = {
+  CE: 'Critically Endangered',
+  EN: 'Endangered',
+  VU: 'Vulnerable',
+  NT: 'Near Threatened',
+  LC: 'Least Concern',
+  DD: 'Data Deficient',
+};
+
 export const PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID =
   'e3dca98a5bf74c9898c30f72baf6b1ba';
 export const PROVINCE_FEATURE_GLOBAL_OUTLINE_ID =

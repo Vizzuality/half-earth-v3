@@ -40,8 +40,8 @@
       }
 
       svg{
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         fill: var(--font-color);
       }
 
@@ -55,6 +55,43 @@
       img{
         width: 60px;
         height: 60px;
+      }
+
+      .status{
+        width: max-content;
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-transform: uppercase;
+
+        &.CR{
+          color: $critaclly-endangered-text;
+          background-color: $critaclly-endangered;
+        }
+
+        &.EN{
+          color: $endangered-text;
+          background-color: $endangered;
+        }
+
+        &.VU{
+          color: $vulnerable-text;
+          background-color: $vulnerable;
+        }
+
+        &.NT{
+          color: $near-threatened-text;
+          background-color: $near-threatened;
+        }
+
+        &.LC{
+          color: $least-concern-text;
+          background-color: $least-concern;
+        }
+
+        &.DD{
+          color: $data-deficient-text;
+          background-color: $data-deficient;
+        }
       }
     }
   }
