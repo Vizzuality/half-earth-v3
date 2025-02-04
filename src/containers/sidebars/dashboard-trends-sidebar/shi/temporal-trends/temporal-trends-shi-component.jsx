@@ -65,6 +65,14 @@ function TemporalTrendsShiComponent(props) {
         </p>
         <div className={styles.options}>
           <div className={styles.btnGroup}>
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend === PROVINCE_TREND,
+              })}
+              label={NATIONAL_TREND}
+              handleClick={handleActionChange}
+            />
             {countryISO === 'COD' && (
               <Button
                 type="rectangular"
@@ -75,14 +83,6 @@ function TemporalTrendsShiComponent(props) {
                 handleClick={handleActionChange}
               />
             )}
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: shiActiveTrend === PROVINCE_TREND,
-              })}
-              label={NATIONAL_TREND}
-              handleClick={handleActionChange}
-            />
           </div>
           <span className={styles.helpText}>
             {t('Toggle national SPI and province-level breakdown.')}

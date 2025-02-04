@@ -84,17 +84,17 @@ function TemporalTrendsSpiComponent(props) {
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === NATIONAL_TREND,
+                [styles.notActive]: activeTrend === PROVINCE_TREND,
               })}
-              label={PROVINCE_TREND}
+              label={NATIONAL_TREND}
               handleClick={handleActionChange}
             />
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === PROVINCE_TREND,
+                [styles.notActive]: activeTrend === NATIONAL_TREND,
               })}
-              label={NATIONAL_TREND}
+              label={PROVINCE_TREND}
               handleClick={handleActionChange}
             />
           </div>

@@ -46,7 +46,7 @@ function DashboardTrendsSidebarContainer(props) {
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState([]);
   const [provinces, setProvinces] = useState([]);
-  const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
+  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
   const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
   const [spiScoresData, setSpiScoresData] = useState([]);
   const [shiScoresData, setShiScoresData] = useState([]);
