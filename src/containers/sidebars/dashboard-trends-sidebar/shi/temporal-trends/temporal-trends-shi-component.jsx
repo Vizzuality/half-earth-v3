@@ -37,7 +37,7 @@ function TemporalTrendsShiComponent(props) {
 
   useEffect(() => {
     if (countryISO === 'COD') {
-      setShiActiveTrend(PROVINCE_TREND);
+      setShiActiveTrend(NATIONAL_TREND);
     }
   }, []);
 

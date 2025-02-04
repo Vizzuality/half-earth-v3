@@ -198,7 +198,7 @@ function DashboardTrendsSidebarContainer(props) {
   // find and zoom to region
   useEffect(() => {
     if (countryISO === 'COD') {
-      setShiActiveTrend(PROVINCE_TREND);
+      setShiActiveTrend(NATIONAL_TREND);
     }
 
     EsriFeatureService.getFeatures({
