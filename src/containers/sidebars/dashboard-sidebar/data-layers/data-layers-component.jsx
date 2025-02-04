@@ -56,6 +56,9 @@ function DataLayerComponent(props) {
     setDataLayerData,
     setMapLegendLayers,
     exploreAllSpecies,
+    mapLegendLayers,
+    regionLayers,
+    map,
   } = props;
 
   const { lightMode } = useContext(LightModeContext);
@@ -203,11 +206,20 @@ function DataLayerComponent(props) {
     return Object.values(grouped);
   };
 
+  const findMapLayersToRemove = () => {
+    mapLegendLayers.forEach((ml) => {
+      const layerToRemove = regionLayers[ml.id];
+      map.remove(layerToRemove);
+    });
+
+    setMapLegendLayers([]);
+  };
+
   const handleBack = () => {
     setDataLayerData(null);
     setSpeciesInfo(null);
     setScientificName(null);
-    setMapLegendLayers([]);
+    findMapLayersToRemove();
 
     if (selectedRegion || exploreAllSpecies) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);

@@ -110,7 +110,6 @@ function SpeciesListComponent(props) {
   const applyFilter = () => {
     // this.virtualScroll?.scrollToIndex(0);
     const inFilterCheck = (sp) => {
-      console.log(sp);
       return (
         sp.common_name?.toLowerCase().indexOf(filter) > -1 ||
         sp.scientific_name?.toLowerCase().indexOf(filter) > -1
