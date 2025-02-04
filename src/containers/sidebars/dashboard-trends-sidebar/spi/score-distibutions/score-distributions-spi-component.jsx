@@ -20,7 +20,10 @@ import {
 import spiScoreDistImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-en.png?react';
 
 import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sections-info';
-import { PROVINCE_TREND } from '../../dashboard-trends-sidebar-component';
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import compStyles from './score-distributions-spi-styles.module.scss';
@@ -231,7 +234,20 @@ function ScoreDistributionsSpiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          <T _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates." />
+          {activeTrend === PROVINCE_TREND && (
+            <T
+              _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrate {provinceBold}."
+              provinceBold={
+                <b>in the {selectedProvince?.region_name} province</b>
+              }
+            />
+          )}
+          {activeTrend === NATIONAL_TREND && (
+            <T
+              _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates {provinceBold}."
+              provinceBold={<b>at the national level.</b>}
+            />
+          )}
         </p>
 
         <span className={styles.spsSpeciesTitle}>

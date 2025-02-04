@@ -73,7 +73,7 @@ function SpeciesFilterComponent(props) {
       title: 'IUCN Status',
       filters: [
         {
-          name: 'Critically Endangered',
+          name: t('Critically Endangered'),
           active: false,
           test: (species) =>
             species.threat_status.toUpperCase() === 'CRITICALLY ENDANGERED',
@@ -82,7 +82,7 @@ function SpeciesFilterComponent(props) {
           type: 'or',
         },
         {
-          name: 'Endangered',
+          name: t('Endangered'),
           result: false,
           active: false,
           test: (species) =>
@@ -91,7 +91,7 @@ function SpeciesFilterComponent(props) {
           type: 'or',
         },
         {
-          name: 'Vulnerable',
+          name: t('Vulnerable'),
           active: false,
           test: (species) =>
             species.threat_status.toUpperCase() === 'VULNERABLE',
@@ -100,10 +100,28 @@ function SpeciesFilterComponent(props) {
           result: false,
         },
         {
-          name: 'Least Concern',
+          name: t('Near Threatened'),
+          active: false,
+          test: (species) =>
+            species.threat_status.toUpperCase() === 'NEAR THREATENED',
+          count: 0,
+          type: 'or',
+          result: false,
+        },
+        {
+          name: t('Least Concern'),
           active: false,
           test: (species) =>
             species.threat_status.toUpperCase() === 'LEAST CONCERN',
+          count: 0,
+          type: 'or',
+          result: false,
+        },
+        {
+          name: t('Data Deficient'),
+          active: false,
+          test: (species) =>
+            species.threat_status.toUpperCase() === 'DATA DEFICIENT',
           count: 0,
           type: 'or',
           result: false,

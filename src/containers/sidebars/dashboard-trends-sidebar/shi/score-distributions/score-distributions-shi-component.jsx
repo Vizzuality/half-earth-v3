@@ -20,6 +20,10 @@ import {
 import shiScoreDistImg from 'images/dashboard/tutorials/shi-score-dist.png?react';
 
 import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sections-info';
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import DistributionsTableContainer from './distributions-table';
@@ -34,6 +38,7 @@ function ScoreDistributionsShiComponent(props) {
     shiSelectSpeciesData,
     shiActiveTrend,
     setMapLegendLayers,
+    selectedProvince,
   } = props;
 
   const SCORES = {
@@ -347,7 +352,20 @@ function ScoreDistributionsShiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          <T _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates." />
+          {shiActiveTrend === PROVINCE_TREND && (
+            <T
+              _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates {provinceBold}."
+              provinceBold={
+                <b>in the {selectedProvince?.region_name} province</b>
+              }
+            />
+          )}
+          {shiActiveTrend === NATIONAL_TREND && (
+            <T
+              _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates {provinceBold}."
+              provinceBold={<b>at the national level.</b>}
+            />
+          )}
         </p>
 
         <span className={styles.spsSpeciesTitle}>

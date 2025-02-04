@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { DASHBOARD } from 'router';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
@@ -16,6 +16,7 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
 import Button from 'components/button';
+import SearchInput from 'components/search-input';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
@@ -31,6 +32,7 @@ import styles from './regions-analysis-styles.module.scss';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const {
     map,
     regionLayers,
@@ -45,6 +47,8 @@ function RegionsAnalysisComponent(props) {
     countryISO,
   } = props;
   const { lightMode } = useContext(LightModeContext);
+  const [searchInput, setSearchInput] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   const displayLayer = async (option) => {
     let featureLayer;
@@ -108,6 +112,33 @@ function RegionsAnalysisComponent(props) {
     setSelectedRegionOption(option);
   };
 
+  const handleSearch = (searchText) => {
+    setSearchInput(searchText.currentTarget.value);
+  };
+
+  const handleSearchSelect = (searchItem) => {
+    // setScientificName(searchItem.scientificname);
+    // localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
+    // setSelectedIndex(NAVIGATION.DATA_LAYER);
+  };
+
+  const getSearchResults = async () => {
+    const searchURL = `https://dev-api.mol.org/2.x/spatial/regions/search?lang=en&search_term=${searchInput}&region_dataset_id=&limit=100`;
+
+    const searchSpecies = await fetch(searchURL);
+    const results = await searchSpecies.json();
+    setSearchResults(results);
+  };
+
+  useEffect(() => {
+    if (!searchInput) return;
+    const handler = setTimeout(() => {
+      getSearchResults();
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [searchInput]);
+
   useEffect(() => {
     browsePage({
       type: DASHBOARD,
@@ -139,6 +170,28 @@ function RegionsAnalysisComponent(props) {
         )}
       </span>
       <hr className={hrTheme.dark} />
+      <div className={styles.explore}>
+        <SearchInput
+          className={cx(
+            styles.search,
+            searchInput && searchResults.length > 0 ? styles.showResults : ''
+          )}
+          placeholder={t('Search for a species by name')}
+          onChange={handleSearch}
+          value={searchInput}
+        />
+        {searchInput && searchResults.length > 0 && (
+          <ul className={styles.searchResults}>
+            {searchResults.map((item, index) => (
+              <li key={index}>
+                <button type="button" onClick={() => handleSearchSelect(item)}>
+                  <b>{item.scientificname}</b> - <span>{item.vernacular}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
       <p>{t('Select a region type below to display on the map')}</p>
       <div className={styles.choices}>
         <RadioGroup
