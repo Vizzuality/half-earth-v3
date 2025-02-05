@@ -319,13 +319,12 @@ function DashboardTrendsSidebarContainer(props) {
     } else {
       let whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
 
-      if (activeTrend === PROVINCE_TREND) {
-        whereClause = `ISO3_regional = '${
-          selectedProvince.iso3_regional ?? selectedProvince.GID_1
-        }'`;
-      }
-
       if (selectedProvince) {
+        if (activeTrend === PROVINCE_TREND) {
+          whereClause = `ISO3_regional = '${
+            selectedProvince.iso3_regional ?? selectedProvince.GID_1
+          }'`;
+        }
         const shiWhereClause = `iso3 = '${countryISO}' and iso3_regional = '${
           selectedProvince.iso3_regional ?? selectedProvince.GID_1
         }'`;
