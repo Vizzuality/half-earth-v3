@@ -17,6 +17,7 @@
   gap: 8px;
   z-index: 4;
   max-height: 100vh;
+  overflow: hidden;
   height: auto;
   transition: max-height 0.3s ease-out;
 
