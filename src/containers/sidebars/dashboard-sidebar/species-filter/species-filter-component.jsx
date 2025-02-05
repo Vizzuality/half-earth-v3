@@ -27,6 +27,7 @@ function SpeciesFilterComponent(props) {
     speciesListLoading,
     selectedRegion,
     setRegionName,
+    exploreAllSpecies,
     setSelectedRegion,
     regionName,
   } = props;
@@ -191,7 +192,7 @@ function SpeciesFilterComponent(props) {
       )}
     >
       <div className={styles.wrapper}>
-        {selectedRegionOption && (
+        {selectedRegionOption && !exploreAllSpecies && (
           <div className={filterStyles.selectedRegion}>
             <div className={filterStyles.regionInfo}>
               <h2>{regionName}</h2>
