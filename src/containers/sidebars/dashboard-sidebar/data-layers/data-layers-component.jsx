@@ -208,7 +208,7 @@ function DataLayerComponent(props) {
 
   const findMapLayersToRemove = () => {
     mapLegendLayers.forEach((ml) => {
-      const layerToRemove = regionLayers[ml.id];
+      const layerToRemove = regionLayers[ml.id.toUpperCase()];
       map.remove(layerToRemove);
     });
 
