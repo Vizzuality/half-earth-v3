@@ -238,6 +238,22 @@ function DashboardContainer(props) {
     return buckets;
   };
 
+  function removeDuplicatesByScientificName(arr) {
+    const seenScientificNames = new Set(); // Use a Set for efficient tracking
+    const uniqueObjects = [];
+
+    arr.forEach((obj) => {
+      const { scientific_name } = obj;
+
+      if (!seenScientificNames.has(scientific_name)) {
+        seenScientificNames.add(scientific_name);
+        uniqueObjects.push(obj);
+      }
+    });
+
+    return uniqueObjects;
+  }
+
   const getProtectAreasSpeciesDetails = (speciesData, taxa) => {
     const species = speciesData.species.map(
       ({ scientific_name, common_name, attributes }) => {
@@ -265,7 +281,7 @@ function DashboardContainer(props) {
   };
 
   const getSpeciesDetails = (speciesData, taxa) => {
-    const species = speciesData.map(({ attributes }) => {
+    const results = speciesData.map(({ attributes }) => {
       const { source, species_url, threat_status, commonnames } = JSON.parse(
         attributes.attributes.replace(/NaN/g, 'null')
       )[0];
@@ -279,6 +295,8 @@ function DashboardContainer(props) {
         taxa,
       };
     });
+
+    const species = removeDuplicatesByScientificName(results);
 
     return {
       count: speciesData.length,
@@ -316,7 +334,7 @@ function DashboardContainer(props) {
       occurenceFeatures?.forEach((feature) => {
         const { taxa, species, attributes } = feature.attributes;
 
-        const { source, species_url, threat_status, commonnames } = JSON.parse(
+        const { source, species_url, threat_status } = JSON.parse(
           attributes.replace(/NaN/g, 'null')
         )[0];
 
@@ -355,7 +373,7 @@ function DashboardContainer(props) {
   const getSpeciesList = async () => {
     setSpeciesListLoading(true);
     let url = DASHBOARD_URLS.PRECALC_AOI;
-    let whereClause = `GID_1 = '${countryISO}'`;
+    let whereClause = `ISO3 = '${countryISO}'`;
 
     if (selectedRegion) {
       const { GID_1, WDPA_PID, mgc } = selectedRegion;
@@ -437,7 +455,7 @@ function DashboardContainer(props) {
         const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
         getOccurenceSpecies(groupData);
-      } else if (selectedRegion?.GID_1) {
+      } else if (selectedRegion?.GID_1 || exploreAllSpecies) {
         const buckets = bucketByTaxa(features);
 
         // loop through buckets to get species info
@@ -445,9 +463,7 @@ function DashboardContainer(props) {
           return getSpeciesDetails(buckets[key], key);
         });
 
-        setTaxaList(speciesData);
-
-        setSpeciesListLoading(false);
+        getOccurenceSpecies(speciesData);
       } else {
         const { attributes } = features[0];
 
@@ -479,6 +495,10 @@ function DashboardContainer(props) {
 
         getOccurenceSpecies(speciesData);
       }
+    }
+
+    if (exploreAllSpecies) {
+      setExploreAllSpecies(false);
     }
   };
 
@@ -612,9 +632,9 @@ function DashboardContainer(props) {
   }, []);
 
   useEffect(() => {
-    if (!selectedRegion) return;
+    if (!selectedRegion && !exploreAllSpecies) return;
     getSpeciesList();
-  }, [selectedRegion]);
+  }, [selectedRegion, exploreAllSpecies]);
 
   useEffect(() => {
     if (!scientificName) return;

@@ -368,6 +368,7 @@ function DashboardViewComponent(props) {
           selectedRegion={selectedRegion}
           setLayerInfo={setLayerInfo}
           regionName={regionName}
+          setRegionName={setRegionName}
           setImagePopup={setImagePopup}
           {...props}
         />

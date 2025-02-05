@@ -26,6 +26,8 @@ function SpeciesFilterComponent(props) {
     setSelectedTaxa,
     speciesListLoading,
     selectedRegion,
+    setRegionName,
+    setSelectedRegion,
     regionName,
   } = props;
 
@@ -143,6 +145,8 @@ function SpeciesFilterComponent(props) {
 
   const handleBack = () => {
     setSelectedTaxa(null);
+    setSelectedRegion(null);
+    setRegionName('');
     setSelectedRegionOption(null);
     setSelectedIndex(NAVIGATION.REGION);
   };

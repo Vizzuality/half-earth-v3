@@ -20,7 +20,7 @@ function DashboardHomeComponent(props) {
 
   const sections = [
     {
-      id: NAVIGATION.DATA_LAYER,
+      id: NAVIGATION.SPECIES,
       icon: <BirdsIcon />,
       title: t('species'),
       description: t(
