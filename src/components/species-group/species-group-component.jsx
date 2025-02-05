@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 
+import { useLocale } from '@transifex/react';
+
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
@@ -13,6 +15,7 @@ import TaxaImageComponent from '../taxa-image';
 import styles from './species-group-component.module.scss';
 
 function SpeciesGroupComponent(props) {
+  const locale = useLocale();
   const { species, selectedTaxaObj, setSelectedIndex, setScientificName } =
     props;
   // eslint-disable-next-line camelcase
@@ -29,10 +32,20 @@ function SpeciesGroupComponent(props) {
   };
 
   const getCommonName = (commonName, scientificName) => {
-    const parsedName = JSON.parse(commonName);
+    if (commonName) {
+      try {
+        const parsedName = JSON.parse(commonName);
 
-    const name = parsedName.filter((pn) => pn.lang === 'fr');
-    return name[0]?.cmname || scientificName;
+        if (parsedName[0]?.cmname) {
+          const name = parsedName.filter((pn) => pn.lang === (locale || 'en'));
+          return name[0]?.cmname || scientificName;
+        }
+        return scientificName;
+      } catch {
+        return commonName;
+      }
+    }
+    return scientificName;
   };
 
   return (
