@@ -80,7 +80,7 @@ function getFeatureOccurenceLayer(portalItemId, scientificName, id) {
       id: portalItemId,
     },
     outFields: ['*'],
-    definitionExpression: `scientific= '${scientificName}'`,
+    definitionExpression: `species= '${scientificName}'`,
     id,
   });
 }

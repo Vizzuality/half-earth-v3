@@ -271,7 +271,7 @@ function GroupedListComponent(props) {
               countryISO
             );
           } else if (layerName.match(/GBIF/)) {
-            name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`;
+            name = `gbif_${speciesInfo.scientificname}`;
 
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
               GBIF_OCCURENCE_URL,
