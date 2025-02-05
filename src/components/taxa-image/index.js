@@ -4,6 +4,7 @@ import AmphibiansIcon from 'icons/dashboard/amphibian_icon.svg?react';
 import AntIcon from 'icons/dashboard/ant_icon.svg?react';
 import BirdsIcon from 'icons/dashboard/bird_icon.svg?react';
 import ButterFlyIcon from 'icons/dashboard/butterfly_icon.svg?react';
+import FishesIcon from 'icons/dashboard/fish_icon.svg?react';
 import MammalsIcon from 'icons/dashboard/mammal_icon.svg?react';
 import OdoanteIcon from 'icons/dashboard/odonate_icon.svg?react';
 import ReptilesImage from 'icons/dashboard/reptile_icon.svg?react';
@@ -38,6 +39,9 @@ function TaxaImageComponent(props) {
         break;
       case 'trees':
         icon = <TreeIcon />;
+        break;
+      case 'fishes':
+        icon = <FishesIcon />;
         break;
       default:
         break;

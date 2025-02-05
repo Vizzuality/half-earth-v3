@@ -28,6 +28,13 @@ function SpeciesGroupComponent(props) {
     );
   };
 
+  const getCommonName = (commonName, scientificName) => {
+    const parsedName = JSON.parse(commonName);
+
+    const name = parsedName.filter((pn) => pn.lang === 'fr');
+    return name[0]?.cmname || scientificName;
+  };
+
   return (
     <button
       type="button"
@@ -45,7 +52,9 @@ function SpeciesGroupComponent(props) {
         {!species_url && <TaxaImageComponent taxa={selectedTaxaObj.taxa} />}
       </div>
       <div className={cx(styles.speciesText, styles.name)}>
-        <div className={styles.common}>{common_name}</div>
+        <div className={styles.common}>
+          {getCommonName(common_name, scientific_name)}
+        </div>
         <div className={styles.sci}>{scientific_name}</div>
       </div>
     </button>

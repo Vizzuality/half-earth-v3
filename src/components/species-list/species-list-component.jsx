@@ -40,6 +40,7 @@ function SpeciesListComponent(props) {
       'CONIFERS',
       'CACTI',
       'PALMS',
+      'FISHES',
       'OTHER PLANTS*', // because the backend sends a * already
     ];
     if (taxa) {

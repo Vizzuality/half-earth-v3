@@ -211,7 +211,34 @@ function DashboardContainer(props) {
     };
   };
 
-  const getSpeciesDetails = (speciesData, taxa) => {
+  const bucketByTaxa = (arrayOfObjects) => {
+    const buckets = {};
+
+    arrayOfObjects.forEach((obj) => {
+      const { taxa } = obj.attributes;
+
+      if (taxa) {
+        // Check if taxa property exists and has a value
+        if (!buckets[taxa]) {
+          buckets[taxa] = []; // Create a new bucket if it doesn't exist
+        }
+        buckets[taxa].push(obj); // Add the object to the corresponding bucket
+      } else {
+        // Handle cases where the taxa property is missing or undefined.
+        // You might want to create a special bucket for these, or log a warning, or skip them.
+        if (!buckets.undefined) {
+          buckets.undefined = [];
+        }
+        buckets.undefined.push(obj);
+
+        console.warn("Object missing 'taxa' property:", obj); // Or simply skip the object
+      }
+    });
+
+    return buckets;
+  };
+
+  const getProtectAreasSpeciesDetails = (speciesData, taxa) => {
     const species = speciesData.species.map(
       ({ scientific_name, common_name, attributes }) => {
         const { source, species_url, threat_status } = JSON.parse(
@@ -231,6 +258,30 @@ function DashboardContainer(props) {
 
     return {
       count: speciesData.species.length,
+      species,
+      taxa,
+      title: taxa,
+    };
+  };
+
+  const getSpeciesDetails = (speciesData, taxa) => {
+    const species = speciesData.map(({ attributes }) => {
+      const { source, species_url, threat_status, commonnames } = JSON.parse(
+        attributes.attributes.replace(/NaN/g, 'null')
+      )[0];
+
+      return {
+        common_name: commonnames,
+        scientific_name: attributes.species,
+        threat_status,
+        source,
+        species_url,
+        taxa,
+      };
+    });
+
+    return {
+      count: speciesData.length,
       species,
       taxa,
       title: taxa,
@@ -265,12 +316,12 @@ function DashboardContainer(props) {
       occurenceFeatures?.forEach((feature) => {
         const { taxa, species, attributes } = feature.attributes;
 
-        const { source, species_url, threat_status } = JSON.parse(
+        const { source, species_url, threat_status, commonnames } = JSON.parse(
           attributes.replace(/NaN/g, 'null')
         )[0];
 
         const speciesToAdd = {
-          common_name: species,
+          common_name: species, // commonnames[0].cmname,
           scientific_name: species,
           threat_status,
           source,
@@ -278,7 +329,7 @@ function DashboardContainer(props) {
           taxa,
         };
 
-        const foundTaxa = list.find((t) => t.taxa === taxa);
+        const foundTaxa = list.find((sp) => sp.taxa === taxa);
 
         const foundSpecies = foundTaxa?.species.find(
           (speciesToFind) =>
@@ -290,8 +341,8 @@ function DashboardContainer(props) {
         }
       });
 
-      list.forEach((t) => {
-        t.count = t.species.length;
+      list.forEach((l) => {
+        l.count = l.species.length;
       });
 
       setTaxaList(list);
@@ -304,7 +355,7 @@ function DashboardContainer(props) {
   const getSpeciesList = async () => {
     setSpeciesListLoading(true);
     let url = DASHBOARD_URLS.PRECALC_AOI;
-    let whereClause = `GID_0 = '${countryISO}'`;
+    let whereClause = `GID_1 = '${countryISO}'`;
 
     if (selectedRegion) {
       const { GID_1, WDPA_PID, mgc } = selectedRegion;
@@ -386,6 +437,17 @@ function DashboardContainer(props) {
         const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
         getOccurenceSpecies(groupData);
+      } else if (selectedRegion?.GID_1) {
+        const buckets = bucketByTaxa(features);
+
+        // loop through buckets to get species info
+        const speciesData = Object.keys(buckets).map((key) => {
+          return getSpeciesDetails(buckets[key], key);
+        });
+
+        setTaxaList(speciesData);
+
+        setSpeciesListLoading(false);
       } else {
         const { attributes } = features[0];
 
@@ -399,10 +461,19 @@ function DashboardContainer(props) {
             getTaxaSpecies('mammals', mammals),
           ]);
 
-        const ampSpecies = getSpeciesDetails(amphibianData, 'amphibians');
-        const birdSpecies = getSpeciesDetails(birdsData, 'birds');
-        const repSpecies = getSpeciesDetails(reptilesData, 'reptiles');
-        const mamSpecies = getSpeciesDetails(mammalsData, 'mammals');
+        const ampSpecies = getProtectAreasSpeciesDetails(
+          amphibianData,
+          'amphibians'
+        );
+        const birdSpecies = getProtectAreasSpeciesDetails(birdsData, 'birds');
+        const repSpecies = getProtectAreasSpeciesDetails(
+          reptilesData,
+          'reptiles'
+        );
+        const mamSpecies = getProtectAreasSpeciesDetails(
+          mammalsData,
+          'mammals'
+        );
 
         const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 

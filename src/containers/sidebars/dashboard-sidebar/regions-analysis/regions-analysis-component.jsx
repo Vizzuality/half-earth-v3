@@ -170,7 +170,7 @@ function RegionsAnalysisComponent(props) {
         )}
       </span>
       <hr className={hrTheme.dark} />
-      <div className={styles.explore}>
+      {/* <div className={styles.explore}>
         <SearchInput
           className={cx(
             styles.search,
@@ -191,7 +191,7 @@ function RegionsAnalysisComponent(props) {
             ))}
           </ul>
         )}
-      </div>
+      </div> */}
       <p>{t('Select a region type below to display on the map')}</p>
       <div className={styles.choices}>
         <RadioGroup
