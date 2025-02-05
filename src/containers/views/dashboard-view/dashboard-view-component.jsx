@@ -73,11 +73,10 @@ function DashboardViewComponent(props) {
   const [imagePopup, setImagePopup] = useState();
 
   const [layerInfo, setLayerInfo] = useState();
-  let timeoutId;
-  const timeoutThreshold = 100;
   const [showLegend, setShowLegend] = useState(false);
   // const [showTopNav, setShowTopNav] = useState(true);
   let hoverHighlight;
+  let prevHoverName = '';
 
   const getLayerView = async () => {
     return view.whenLayerView(
@@ -185,30 +184,30 @@ function DashboardViewComponent(props) {
 
     try {
       hits = await hitTest(event);
-      hoverHighlight?.remove();
-      view.closePopup();
 
       if (hits) {
-        clearTimeout(timeoutId);
+        let name;
+        // eslint-disable-next-line camelcase
+        const { NAME, NAME_1, territoire, region_name, DESIG } =
+          hits.attributes;
 
-        timeoutId = setTimeout(() => {
-          let name;
+        const countryMatch =
+          hits.attributes.ISO3 === countryISO ||
+          hits.attributes.GID_0 === countryISO;
+
+        if (countryMatch) {
           // eslint-disable-next-line camelcase
-          const { NAME, NAME_1, territoire, region_name, DESIG } =
-            hits.attributes;
+          name = NAME || NAME_1 || region_name;
+        } else {
+          name = territoire;
+        }
 
-          const countryMatch =
-            hits.attributes.ISO3 === countryISO ||
-            hits.attributes.GID_0 === countryISO;
+        if (name) {
+          if (name !== prevHoverName) {
+            prevHoverName = name;
+            hoverHighlight?.remove();
+            view.closePopup();
 
-          if (countryMatch) {
-            // eslint-disable-next-line camelcase
-            name = NAME || NAME_1 || region_name;
-          } else {
-            name = territoire;
-          }
-
-          if (name) {
             hoverHighlight = layerView.highlight(hits.graphic);
             view.popup.dockEnabled = false;
             view.popup.dockOptions = {
@@ -234,7 +233,15 @@ function DashboardViewComponent(props) {
               includeDefaultActions: false,
             });
           }
-        }, timeoutThreshold);
+        } else {
+          prevHoverName = '';
+          hoverHighlight?.remove();
+          view.closePopup();
+        }
+      } else {
+        prevHoverName = '';
+        hoverHighlight?.remove();
+        view.closePopup();
       }
     } catch (error) {
       throw Error(error);

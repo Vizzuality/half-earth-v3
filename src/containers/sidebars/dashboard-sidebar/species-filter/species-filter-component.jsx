@@ -168,6 +168,7 @@ function SpeciesFilterComponent(props) {
 
   useEffect(() => {
     if (!selectedRegion) return;
+    console.log(exploreAllSpecies);
 
     switch (selectedRegionOption) {
       case REGION_OPTIONS.PROTECTED_AREAS:

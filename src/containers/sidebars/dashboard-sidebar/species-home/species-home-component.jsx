@@ -24,6 +24,9 @@ function SpeciesHomeComponent(props) {
     setSelectedIndex,
     setScientificName,
     prioritySpeciesList,
+    setSelectedRegionOption,
+    setSelectedTaxa,
+    setSelectedRegion,
     setExploreAllSpecies,
   } = props;
 
@@ -45,6 +48,9 @@ function SpeciesHomeComponent(props) {
   };
 
   const handleExploreAllSpecies = () => {
+    setSelectedRegion(null);
+    setSelectedRegionOption(null);
+    setSelectedTaxa(null);
     setExploreAllSpecies(true);
     setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
   };
