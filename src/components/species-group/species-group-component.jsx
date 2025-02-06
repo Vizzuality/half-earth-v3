@@ -37,8 +37,8 @@ function SpeciesGroupComponent(props) {
         const parsedName = JSON.parse(commonName);
 
         if (parsedName[0]?.cmname) {
-          const name = parsedName.filter((pn) => pn.lang === (locale || 'en'));
-          return name[0]?.cmname || scientificName;
+          const name = parsedName.find((pn) => pn.lang === locale);
+          return name?.cmname || parsedName[0]?.cmname;
         }
         return scientificName;
       } catch {
