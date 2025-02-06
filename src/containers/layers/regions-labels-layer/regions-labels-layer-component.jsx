@@ -25,7 +25,6 @@ function RegionsLabelsLayerComponent(props) {
         type: 'text',
         color: [213, 207, 202],
         font: {
-          family: 'Helvetica',
           size: 10,
           weight: 'normal',
         },
