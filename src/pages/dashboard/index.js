@@ -255,7 +255,7 @@ function DashboardContainer(props) {
   }
 
   const getProtectAreasSpeciesDetails = (speciesData, taxa) => {
-    const species = speciesData.species.map(
+    const results = speciesData.species.map(
       ({ scientific_name, common_name, attributes }) => {
         const { source, species_url, threat_status } = JSON.parse(
           attributes.replace(/NaN/g, 'null')
@@ -271,6 +271,8 @@ function DashboardContainer(props) {
         };
       }
     );
+
+    const species = removeDuplicatesByScientificName(results);
 
     return {
       count: speciesData.species.length,
@@ -331,32 +333,26 @@ function DashboardContainer(props) {
 
       const list = [...speciesData];
 
-      occurenceFeatures?.forEach((feature) => {
-        const { taxa, species, attributes } = feature.attributes;
+      const buckets = bucketByTaxa(occurenceFeatures);
 
-        const { source, species_url, threat_status } = JSON.parse(
-          attributes.replace(/NaN/g, 'null')
-        )[0];
+      // loop through buckets to get species info
+      const occurenceData = Object.keys(buckets).map((key) => {
+        return getSpeciesDetails(buckets[key], key);
+      });
 
-        const speciesToAdd = {
-          common_name: species, // commonnames[0].cmname,
-          scientific_name: species,
-          threat_status,
-          source,
-          species_url,
-          taxa,
-        };
+      occurenceData?.forEach((occurrence) => {
+        const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
 
-        const foundTaxa = list.find((sp) => sp.taxa === taxa);
+        occurrence.species.forEach((species) => {
+          const foundSpecies = foundTaxa?.species.find(
+            (speciesToFind) =>
+              speciesToFind.scientific_name === species.scientific_name
+          );
 
-        const foundSpecies = foundTaxa?.species.find(
-          (speciesToFind) =>
-            speciesToFind.scientific_name === speciesToAdd.scientific_name
-        );
-
-        if (!foundSpecies) {
-          foundTaxa?.species.push(speciesToAdd);
-        }
+          if (!foundSpecies) {
+            foundTaxa?.species.push(species);
+          }
+        });
       });
 
       list.forEach((l) => {
@@ -373,7 +369,7 @@ function DashboardContainer(props) {
   const getSpeciesList = async () => {
     setSpeciesListLoading(true);
     let url = DASHBOARD_URLS.PRECALC_AOI;
-    let whereClause = `ISO3 = '${countryISO}'`;
+    let whereClause = `GID_0 = '${countryISO}'`;
 
     if (selectedRegion) {
       const { GID_1, WDPA_PID, mgc } = selectedRegion;
@@ -455,15 +451,6 @@ function DashboardContainer(props) {
         const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
         getOccurenceSpecies(groupData);
-      } else if (selectedRegion?.GID_1 || exploreAllSpecies) {
-        const buckets = bucketByTaxa(features);
-
-        // loop through buckets to get species info
-        const speciesData = Object.keys(buckets).map((key) => {
-          return getSpeciesDetails(buckets[key], key);
-        });
-
-        getOccurenceSpecies(speciesData);
       } else {
         const { attributes } = features[0];
 
