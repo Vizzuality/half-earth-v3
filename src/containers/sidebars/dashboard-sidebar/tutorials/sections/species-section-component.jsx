@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { tutorialSections } from 'utils/dashboard-utils.js';
 
@@ -13,9 +13,9 @@ import BirdsIcon from 'icons/bird_icon.svg?react';
 import IndicatorIcon from 'icons/gauge_icon.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
 
-import dataLayers from 'images/dashboard/tutorials/tutorial_species_dataLayers-en.png?react';
-import indicatorScores from 'images/dashboard/tutorials/tutorial_species_indicatorGraph-en.png?react';
-import indicatorScoresTable from 'images/dashboard/tutorials/tutorial_species_indicatorTable-en.png?react';
+// import dataLayers from 'images/dashboard/tutorials/tutorial_species_dataLayers-en.png?react';
+// import indicatorScores from 'images/dashboard/tutorials/tutorial_species_indicatorGraph-en.png?react';
+// import indicatorScoresTable from 'images/dashboard/tutorials/tutorial_species_indicatorTable-en.png?react';
 
 import styles from '../tutorials-components-styles.module.scss';
 
@@ -23,6 +23,7 @@ import { SECTION_INFO } from './sections-info';
 
 function SpeciesSectionComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const { lightMode } = useContext(LightModeContext);
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -37,7 +38,12 @@ function SpeciesSectionComponent(props) {
       </div>
       <p>{t(SECTION_INFO.DATA_LAYER)}</p>
       <ImagePopupComponent {...props}>
-        <img src={dataLayers} alt="Data Layers" />
+        <img
+          src={`dashboard/tutorials/tutorial_species_dataLayers-${
+            locale || 'en'
+          }.png?react`}
+          alt="Data Layers"
+        />
       </ImagePopupComponent>
       <div className={styles.subTitle}>
         <IndicatorIcon />
@@ -45,10 +51,20 @@ function SpeciesSectionComponent(props) {
       </div>
       <p>{t(SECTION_INFO.INDICATOR_SCORES)}</p>
       <ImagePopupComponent {...props}>
-        <img src={indicatorScores} alt="Indicator Scores" />
+        <img
+          src={`dashboard/tutorials/tutorial_species_indicatorGraph-${
+            locale || 'en'
+          }.png?react`}
+          alt="Indicator Scores"
+        />
       </ImagePopupComponent>
       <ImagePopupComponent {...props}>
-        <img src={indicatorScoresTable} alt="Indicator Scores" />
+        <img
+          src={`dashboard/tutorials/tutorial_species_indicatorTable-${
+            locale || 'en'
+          }.png?react`}
+          alt="Indicator Scores"
+        />
       </ImagePopupComponent>
     </section>
   );

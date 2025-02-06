@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { DASHBOARD } from 'router';
 
-import { useLocale, useT } from '@transifex/react';
+import { useT } from '@transifex/react';
 
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
@@ -16,7 +16,7 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
 import Button from 'components/button';
-import SearchInput from 'components/search-input';
+// import SearchInput from 'components/search-input';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
@@ -32,7 +32,7 @@ import styles from './regions-analysis-styles.module.scss';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
-  const locale = useLocale();
+  // const locale = useLocale();
   const {
     map,
     regionLayers,
@@ -47,8 +47,8 @@ function RegionsAnalysisComponent(props) {
     countryISO,
   } = props;
   const { lightMode } = useContext(LightModeContext);
-  const [searchInput, setSearchInput] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  // const [searchInput, setSearchInput] = useState('');
+  // const [searchResults, setSearchResults] = useState([]);
 
   const displayLayer = async (option) => {
     let featureLayer;
@@ -112,32 +112,32 @@ function RegionsAnalysisComponent(props) {
     setSelectedRegionOption(option);
   };
 
-  const handleSearch = (searchText) => {
-    setSearchInput(searchText.currentTarget.value);
-  };
+  // const handleSearch = (searchText) => {
+  //   setSearchInput(searchText.currentTarget.value);
+  // };
 
-  const handleSearchSelect = (searchItem) => {
-    // setScientificName(searchItem.scientificname);
-    // localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
-    // setSelectedIndex(NAVIGATION.DATA_LAYER);
-  };
+  // const handleSearchSelect = (searchItem) => {
+  //   // setScientificName(searchItem.scientificname);
+  //   // localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
+  //   // setSelectedIndex(NAVIGATION.DATA_LAYER);
+  // };
 
-  const getSearchResults = async () => {
-    const searchURL = `https://dev-api.mol.org/2.x/spatial/regions/search?lang=en&search_term=${searchInput}&region_dataset_id=&limit=100`;
+  // const getSearchResults = async () => {
+  //   const searchURL = `https://dev-api.mol.org/2.x/spatial/regions/search?lang=en&search_term=${searchInput}&region_dataset_id=&limit=100`;
 
-    const searchSpecies = await fetch(searchURL);
-    const results = await searchSpecies.json();
-    setSearchResults(results);
-  };
+  //   const searchSpecies = await fetch(searchURL);
+  //   const results = await searchSpecies.json();
+  //   setSearchResults(results);
+  // };
 
-  useEffect(() => {
-    if (!searchInput) return;
-    const handler = setTimeout(() => {
-      getSearchResults();
-    }, 300);
+  // useEffect(() => {
+  //   if (!searchInput) return;
+  //   const handler = setTimeout(() => {
+  //     getSearchResults();
+  //   }, 300);
 
-    return () => clearTimeout(handler);
-  }, [searchInput]);
+  //   return () => clearTimeout(handler);
+  // }, [searchInput]);
 
   useEffect(() => {
     browsePage({

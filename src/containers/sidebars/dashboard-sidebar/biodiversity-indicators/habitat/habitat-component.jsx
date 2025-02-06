@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { numberToLocaleStringWithOneDecimal } from 'utils/dashboard-utils.js';
 
@@ -18,9 +18,6 @@ import cx from 'classnames';
 
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 
-import speciesIndicatorGraphImg from 'images/dashboard/tutorials/tutorial_species_indicatorGraph-en.png?react';
-import speciesIndicatorTableImg from 'images/dashboard/tutorials/tutorial_species_indicatorTable-en.png?react';
-
 import { SECTION_INFO } from '../../tutorials/sections/sections-info';
 
 import styles from './habitat-component-styles.module.scss';
@@ -36,6 +33,8 @@ ChartJS.register(
 
 function HabitatComponent(props) {
   const t = useT();
+  const locale = useLocale();
+
   const {
     countryName,
     habitatTableData,
@@ -53,6 +52,13 @@ function HabitatComponent(props) {
   const [tableInfo, setTableInfo] = useState();
 
   const updateChartInfo = () => {
+    const speciesIndicatorGraphImg = `dashboard/tutorials/tutorial_species_indicatorGraph-${
+      locale || 'en'
+    }.png?react`;
+    const speciesIndicatorTableImg = `dashboard/tutorials/tutorial_species_indicatorTable-${
+      locale || 'en'
+    }.png?react`;
+
     setChartInfo({
       title: t('Species Indicators - Graph'),
       description: t(SECTION_INFO.INDICATOR_SCORES),

@@ -2,6 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
+import {
+  PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+  DRC_REGION_FEATURE_ID,
+} from 'utils/dashboard-utils';
+
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
@@ -9,7 +14,13 @@ import Button from 'components/button';
 import FilterContainer from 'components/filters';
 import SpeciesListContainer from 'components/species-list';
 
-import { NAVIGATION, REGION_OPTIONS } from 'constants/dashboard-constants.js';
+import EsriFeatureService from 'services/esri-feature-service';
+
+import {
+  LAYER_OPTIONS,
+  NAVIGATION,
+  REGION_OPTIONS,
+} from 'constants/dashboard-constants.js';
 
 import styles from '../dashboard-sidebar-styles.module.scss';
 
@@ -30,6 +41,9 @@ function SpeciesFilterComponent(props) {
     exploreAllSpecies,
     setSelectedRegion,
     regionName,
+    setRegionLayers,
+    map,
+    countryISO,
   } = props;
 
   const filterStart = [
@@ -152,6 +166,59 @@ function SpeciesFilterComponent(props) {
     setSelectedIndex(NAVIGATION.REGION);
   };
 
+  const removeRegionLayers = () => {
+    const protectedAreaLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.PROTECTED_AREAS
+    );
+    const provinceLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.PROVINCES
+    );
+    const forestLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.FORESTS
+    );
+
+    map.remove(protectedAreaLayer);
+    map.remove(provinceLayer);
+    map.remove(forestLayer);
+    setRegionLayers({});
+  };
+
+  const displayLayer = async (option) => {
+    let featureLayer;
+    if (option === REGION_OPTIONS.PROTECTED_AREAS) {
+      featureLayer = await EsriFeatureService.addProtectedAreaLayer(
+        null,
+        countryISO
+      );
+
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
+      }));
+      map.add(featureLayer);
+    } else if (option === REGION_OPTIONS.PROVINCES) {
+      featureLayer = await EsriFeatureService.getFeatureLayer(
+        PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+        countryISO
+      );
+
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.PROVINCES]: featureLayer,
+      }));
+      map.add(featureLayer);
+    } else if (option === REGION_OPTIONS.FORESTS) {
+      featureLayer = await EsriFeatureService.getFeatureLayer(
+        DRC_REGION_FEATURE_ID,
+        null,
+        LAYER_OPTIONS.FORESTS
+      );
+
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.FORESTS]: featureLayer,
+      }));
+      map.add(featureLayer);
+    }
+  };
+
   const updateActiveFilter = (filter) => {
     const newFilters = filters.map((filterGroup) => {
       const newFilterGroup = { ...filterGroup };
@@ -168,7 +235,6 @@ function SpeciesFilterComponent(props) {
 
   useEffect(() => {
     if (!selectedRegion) return;
-    console.log(exploreAllSpecies);
 
     switch (selectedRegionOption) {
       case REGION_OPTIONS.PROTECTED_AREAS:
@@ -183,6 +249,9 @@ function SpeciesFilterComponent(props) {
       default:
         break;
     }
+
+    removeRegionLayers();
+    displayLayer(selectedRegionOption);
   }, [selectedRegionOption, selectedRegion]);
 
   return (

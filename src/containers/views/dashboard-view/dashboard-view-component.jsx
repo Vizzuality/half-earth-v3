@@ -60,6 +60,8 @@ function DashboardViewComponent(props) {
     tabOption,
     setSelectedProvince,
     mapLegendLayers,
+    regionName,
+    setRegionName,
   } = props;
 
   const [map, setMap] = useState(null);
@@ -69,7 +71,6 @@ function DashboardViewComponent(props) {
   const [layerView, setLayerView] = useState();
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
-  const [regionName, setRegionName] = useState();
   const [imagePopup, setImagePopup] = useState();
 
   const [layerInfo, setLayerInfo] = useState();
@@ -127,13 +128,21 @@ function DashboardViewComponent(props) {
         if (hits) {
           switch (selectedIndex) {
             case NAVIGATION.REGION:
+            case NAVIGATION.EXPLORE_SPECIES:
               {
                 setTaxaList([]);
                 setExploreAllSpecies(false);
 
                 // eslint-disable-next-line camelcase
-                const { WDPA_PID, GID_1, mgc, NAME, region_name, territoire } =
-                  hits.attributes;
+                const {
+                  WDPA_PID,
+                  GID_1,
+                  mgc,
+                  NAME,
+                  NAME_1,
+                  region_name,
+                  territoire,
+                } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
                   setSelectedRegion({ WDPA_PID });
@@ -148,7 +157,7 @@ function DashboardViewComponent(props) {
                 }
 
                 // eslint-disable-next-line camelcase
-                setRegionName(NAME || region_name || territoire);
+                setRegionName(NAME || NAME_1 || region_name || territoire);
               }
               break;
             case NAVIGATION.TRENDS:
