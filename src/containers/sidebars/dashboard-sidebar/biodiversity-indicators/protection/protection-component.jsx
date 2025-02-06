@@ -46,12 +46,13 @@ function ProtectionComponent(props) {
     shiCountries,
     chartData,
     chartOptions,
+    lang,
   } = props;
 
   const [chartInfo, setChartInfo] = useState();
   const [tableInfo, setTableInfo] = useState();
 
-  useEffect(() => {
+  const updateChartInfo = () => {
     setChartInfo({
       title: t('Species Indicators - Graph'),
       description: t(SECTION_INFO.INDICATOR_SCORES),
@@ -65,6 +66,14 @@ function ProtectionComponent(props) {
       imgAlt: t('Species Indicators Table'),
       image: speciesIndicatorTableImg,
     });
+  };
+
+  useEffect(() => {
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
   }, []);
 
   return (

@@ -44,6 +44,7 @@ function ProvinceChartComponent(props) {
     setProvinceName,
     handleRegionSelected,
     layerView,
+    lang,
   } = props;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -163,13 +164,21 @@ function ProvinceChartComponent(props) {
     });
   };
 
-  useEffect(() => {
+  const updateChartInfo = () => {
     setChartInfo({
       title: t('Province View'),
       description: t(SECTION_INFO.SHI_PROVINCE_VIEW),
       imgAlt: t('Species Protection Index - Trends'),
       image: shiProvinceImg,
     });
+  };
+
+  useEffect(() => {
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
   }, []);
 
   useEffect(() => {

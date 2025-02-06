@@ -39,6 +39,7 @@ function ScoreDistributionsShiComponent(props) {
     shiActiveTrend,
     setMapLegendLayers,
     selectedProvince,
+    lang,
   } = props;
 
   const SCORES = {
@@ -337,13 +338,21 @@ function ScoreDistributionsShiComponent(props) {
     loadSpecies();
   }, [shiSelectSpeciesData]);
 
-  useEffect(() => {
+  const updateChartInfo = () => {
     setChartInfo({
       title: t('Score Distributions'),
       description: t(SECTION_INFO.SHI_SCORE_DISTRIBUTIONS),
       imgAlt: t('Species Protection Index - Trends'),
       image: shiScoreDistImg,
     });
+  };
+
+  useEffect(() => {
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
   }, []);
 
   return (

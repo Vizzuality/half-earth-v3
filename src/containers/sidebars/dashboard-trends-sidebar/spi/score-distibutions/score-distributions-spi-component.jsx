@@ -38,6 +38,7 @@ function ScoreDistributionsSpiComponent(props) {
     setMapLegendLayers,
     spiScoresData,
     spiSelectSpeciesData,
+    lang,
   } = props;
   const { lightMode } = useContext(LightModeContext);
   const [chartData, setChartData] = useState();
@@ -206,13 +207,21 @@ function ScoreDistributionsSpiComponent(props) {
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
   };
 
-  useEffect(() => {
+  const updateChartInfo = () => {
     setChartInfo({
       title: t('Score Distributions'),
       description: t(SECTION_INFO.SPI_SCORE_DISTRIBUTIONS),
       imgAlt: t('Species Protection Index - Score Distributions'),
       image: spiScoreDistImg,
     });
+  };
+
+  useEffect(() => {
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
   }, []);
 
   useEffect(() => {

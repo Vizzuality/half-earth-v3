@@ -33,7 +33,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
-  const { countryData } = props;
+  const { countryData, lang } = props;
 
   const [data, setData] = useState();
   const [currentScore, setCurrentScore] = useState();
@@ -110,13 +110,21 @@ function TemporalTrendsSpiNationalChartComponent(props) {
     },
   };
 
-  useEffect(() => {
+  const updateChartInfo = () => {
     setChartInfo({
       title: t('Temporal Trends'),
       description: t(SECTION_INFO.SPI_TEMPORAL_TREND),
       imgAlt: t('Species Protection Index - Trends'),
       image: spiTrendImg,
     });
+  };
+
+  useEffect(() => {
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
   }, []);
 
   useEffect(() => {

@@ -33,7 +33,7 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
-  const { countryData } = props;
+  const { countryData, lang } = props;
   const [chartInfo, setChartInfo] = useState();
   const { lightMode } = useContext(LightModeContext);
   const [data, setData] = useState();
@@ -115,13 +115,21 @@ function NationalChartComponent(props) {
     },
   };
 
-  useEffect(() => {
+  const updateChartInfo = () => {
     setChartInfo({
       title: t('Temporal Trend'),
       description: t(SECTION_INFO.SHI_TEMPORAL_TREND),
       imgAlt: t('Species Protection Index - Trends'),
       image: shiTrendImg,
     });
+  };
+
+  useEffect(() => {
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
   }, []);
 
   useEffect(() => {
