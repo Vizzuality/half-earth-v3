@@ -89,7 +89,7 @@ function Blah() {
 export default Blah;
 export const SECTION_INFO = {
   SPECIES:
-    'On the species page, you can search for any bird, mammal, reptile, or amphibian species (with more taxonomic groups being added soon) and visit their page. Here, you can view the Data Layers tab and the Indicator Scores tab. ',
+    'On the species page, you can search for any bird, mammal, reptile, or amphibian species (with more taxonomic groups being added soon) and visit their page. Here, you can view the Data Layers tab and the Indicator Scores tab.',
   DATA_LAYER:
     "Here, all available spatial datasets are listed for the selected species. They are divided between publicly available data sourced from Map of Life and private data sourced from your organization's ArcGIS Online database. Additionally, there are a set of regional layers, including administrative boundaries and protected areas. These layers can be enabled to display on the map and further explored.",
   INDICATOR_SCORES:
