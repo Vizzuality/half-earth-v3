@@ -25,6 +25,10 @@ function MapLegendComponent(props) {
   const t = useT();
   const [leftPosition, setLeftPosition] = useState(0);
   const [collapse, setCollapse] = useState(false);
+  const spiLow = 0;
+  const spiHigh = 100;
+  const shiLow = 95;
+  const shiHigh = 100;
 
   const getLayerIcon = (layer) => {
     if (layer.parentId === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
@@ -89,8 +93,8 @@ function MapLegendComponent(props) {
         <div className={styles.mapLegend}>
           <img src={SPILegendImage} width="100%" height={20} alt="SPI" />
           <div className={styles.legendValues}>
-            <span>0</span>
-            <span>100</span>
+            <span>{spiLow}</span>
+            <span>{spiHigh}</span>
           </div>
         </div>
       );
@@ -100,8 +104,8 @@ function MapLegendComponent(props) {
         <div className={styles.mapLegend}>
           <img src={SHILegendImage} width="100%" height={20} alt="SHI" />
           <div className={styles.legendValues}>
-            <span>0</span>
-            <span>100</span>
+            <span>{shiLow}</span>
+            <span>{shiHigh}</span>
           </div>
         </div>
       );
