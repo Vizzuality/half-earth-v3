@@ -73,7 +73,7 @@ function NationalChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Year',
+          text: t('Year'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
           font: {
             size: 14,
