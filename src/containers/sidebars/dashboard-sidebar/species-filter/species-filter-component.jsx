@@ -35,10 +35,10 @@ function SpeciesFilterComponent(props) {
   const filterStart = [
     {
       name: 'dataset',
-      title: 'Expected Sources',
+      title: t('Expected Sources'),
       filters: [
         {
-          name: 'Refined Range Map',
+          name: t('Refined Range Map'),
           active: false,
           test: (species) => species.source.indexOf('range') > -1,
           count: 0,
@@ -49,10 +49,10 @@ function SpeciesFilterComponent(props) {
     },
     {
       name: 'dataset',
-      title: 'Recorded Sources',
+      title: t('Recorded Sources'),
       filters: [
         {
-          name: 'Occurrence',
+          name: t('Occurrence'),
           active: false,
           test: (species) => species.source.indexOf('GBIF') > -1,
           count: 0,
@@ -73,7 +73,7 @@ function SpeciesFilterComponent(props) {
     },
     {
       name: 'threat',
-      title: 'IUCN Status',
+      title: t('IUCN Status'),
       filters: [
         {
           name: t('Critically Endangered'),
@@ -130,7 +130,7 @@ function SpeciesFilterComponent(props) {
           result: false,
         },
         {
-          name: 'Unknown',
+          name: t('Unknown'),
           active: false,
           result: false,
           test: (species) => species.threat_status === undefined,
