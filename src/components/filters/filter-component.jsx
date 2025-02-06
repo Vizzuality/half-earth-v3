@@ -84,20 +84,15 @@ function FilterComponent(props) {
         const allAnd =
           speciesFilters.every((x) => x) && speciesFilters.length > 0;
         const anyOr = speciesOrFilters.includes(true);
-        let inCandidate = false;
         if (!isAnyActive) {
-          inCandidate = true;
           candidateSpecies.push(species);
           // only ands
         } else if (allAnd && speciesOrFilters.length === 0) {
-          inCandidate = true;
           candidateSpecies.push(species);
           // only or's
         } else if (speciesFilters.length === 0 && anyOr) {
-          inCandidate = true;
           candidateSpecies.push(species);
         } else if (allAnd && anyOr) {
-          inCandidate = true;
           candidateSpecies.push(species);
         }
 
@@ -159,17 +154,17 @@ function FilterComponent(props) {
       <hr className={hrTheme.dark} />
       {isLoading && <Loading height={200} />}
       {!isLoading &&
-        filters.map((filterGroup, index) => {
+        filters.map((filterGroup) => {
           return (
-            <div className={styles.filterList} key={index}>
+            <div className={styles.filterList} key={filterGroup.title}>
               <div className={styles.filterGroupTitle}>
                 {t(filterGroup.title)}
               </div>
               <div className={styles.filterbox}>
-                {filterGroup.filters.map((filter, idx) => {
+                {filterGroup.filters.map((filter) => {
                   return (
                     <Chip
-                      key={idx}
+                      key={filter.name}
                       icon={filter.active ? <DoneIcon /> : <span />}
                       color={filter.active ? 'success' : 'primary'}
                       label={`${t(filter.name)}: ${filter.count}`}
