@@ -42,6 +42,7 @@ function SpeciesFilterComponent(props) {
     setSelectedRegion,
     regionName,
     setRegionLayers,
+    regionLayers,
     map,
     countryISO,
   } = props;
@@ -158,65 +159,18 @@ function SpeciesFilterComponent(props) {
   const [filters, setFilters] = useState(filterStart);
   const [regionLabel, setRegionLabel] = useState();
 
+  const layersToFind = [
+    LAYER_OPTIONS.PROTECTED_AREAS,
+    LAYER_OPTIONS.PROVINCES,
+    LAYER_OPTIONS.FORESTS,
+  ];
+
   const handleBack = () => {
     setSelectedTaxa(null);
     setSelectedRegion(null);
     setRegionName('');
     setSelectedRegionOption(null);
     setSelectedIndex(NAVIGATION.REGION);
-  };
-
-  const removeRegionLayers = () => {
-    const protectedAreaLayer = map.layers.items.find(
-      (layer) => layer.id === LAYER_OPTIONS.PROTECTED_AREAS
-    );
-    const provinceLayer = map.layers.items.find(
-      (layer) => layer.id === LAYER_OPTIONS.PROVINCES
-    );
-    const forestLayer = map.layers.items.find(
-      (layer) => layer.id === LAYER_OPTIONS.FORESTS
-    );
-
-    map.remove(protectedAreaLayer);
-    map.remove(provinceLayer);
-    map.remove(forestLayer);
-    setRegionLayers({});
-  };
-
-  const displayLayer = async (option) => {
-    let featureLayer;
-    if (option === REGION_OPTIONS.PROTECTED_AREAS) {
-      featureLayer = await EsriFeatureService.addProtectedAreaLayer(
-        null,
-        countryISO
-      );
-
-      setRegionLayers(() => ({
-        [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
-      }));
-      map.add(featureLayer);
-    } else if (option === REGION_OPTIONS.PROVINCES) {
-      featureLayer = await EsriFeatureService.getFeatureLayer(
-        PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
-        countryISO
-      );
-
-      setRegionLayers(() => ({
-        [LAYER_OPTIONS.PROVINCES]: featureLayer,
-      }));
-      map.add(featureLayer);
-    } else if (option === REGION_OPTIONS.FORESTS) {
-      featureLayer = await EsriFeatureService.getFeatureLayer(
-        DRC_REGION_FEATURE_ID,
-        null,
-        LAYER_OPTIONS.FORESTS
-      );
-
-      setRegionLayers(() => ({
-        [LAYER_OPTIONS.FORESTS]: featureLayer,
-      }));
-      map.add(featureLayer);
-    }
   };
 
   const updateActiveFilter = (filter) => {
@@ -231,6 +185,48 @@ function SpeciesFilterComponent(props) {
       return newFilterGroup;
     });
     setFilters(newFilters);
+  };
+
+  const displayLayer = async (option) => {
+    const foundLayer = Object.keys(regionLayers).find((rl) =>
+      layersToFind.includes(rl)
+    );
+
+    if (!foundLayer) {
+      let featureLayer;
+      if (option === REGION_OPTIONS.PROTECTED_AREAS) {
+        featureLayer = await EsriFeatureService.addProtectedAreaLayer(
+          null,
+          countryISO
+        );
+
+        setRegionLayers(() => ({
+          [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
+        }));
+        map.add(featureLayer);
+      } else if (option === REGION_OPTIONS.PROVINCES) {
+        featureLayer = await EsriFeatureService.getFeatureLayer(
+          PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+          countryISO
+        );
+
+        setRegionLayers(() => ({
+          [LAYER_OPTIONS.PROVINCES]: featureLayer,
+        }));
+        map.add(featureLayer);
+      } else if (option === REGION_OPTIONS.FORESTS) {
+        featureLayer = await EsriFeatureService.getFeatureLayer(
+          DRC_REGION_FEATURE_ID,
+          null,
+          LAYER_OPTIONS.FORESTS
+        );
+
+        setRegionLayers(() => ({
+          [LAYER_OPTIONS.FORESTS]: featureLayer,
+        }));
+        map.add(featureLayer);
+      }
+    }
   };
 
   useEffect(() => {
@@ -249,10 +245,11 @@ function SpeciesFilterComponent(props) {
       default:
         break;
     }
-
-    removeRegionLayers();
-    displayLayer(selectedRegionOption);
   }, [selectedRegionOption, selectedRegion]);
+
+  useEffect(() => {
+    displayLayer(selectedRegionOption);
+  }, []);
 
   return (
     <section

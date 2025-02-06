@@ -53,7 +53,7 @@ function DashboardContainer(props) {
   const [loggedIn, setLoggedIn] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState();
   const [regionLayers, setRegionLayers] = useState({});
-  const [selectedRegionOption, setSelectedRegionOption] = useState('');
+  const [selectedRegionOption, setSelectedRegionOption] = useState(null);
   const [selectedProvince, setSelectedProvince] = useState();
   const [exploreAllSpecies, setExploreAllSpecies] = useState(false);
   const [tabOption, setTabOption] = useState(2);
