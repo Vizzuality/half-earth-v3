@@ -224,7 +224,7 @@ function DataLayerComponent(props) {
     if (selectedRegion || exploreAllSpecies) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {
-      setSelectedIndex(NAVIGATION.HOME);
+      setSelectedIndex(NAVIGATION.SPECIES);
     }
   };
 

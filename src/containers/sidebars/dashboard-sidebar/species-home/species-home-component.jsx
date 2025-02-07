@@ -70,6 +70,7 @@ function SpeciesHomeComponent(props) {
   };
 
   const selectSpecies = (scientificname) => {
+    setExploreAllSpecies(false);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);

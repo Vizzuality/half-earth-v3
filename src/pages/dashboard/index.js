@@ -490,9 +490,9 @@ function DashboardContainer(props) {
       }
     }
 
-    if (exploreAllSpecies) {
-      setExploreAllSpecies(false);
-    }
+    // if (exploreAllSpecies) {
+    //   setExploreAllSpecies(false);
+    // }
   };
 
   const getSpiDataByCountry = (d) => {
