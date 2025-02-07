@@ -49,7 +49,6 @@ $tutorial-width: 60vw;
     --save-button-text: #{$white};
     --border-color-hover: #{$mol-blue};
     @include lightBackdropBlur();
-    border: none;
   }
 
   .darkMode{
