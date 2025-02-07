@@ -5,6 +5,7 @@ import countryDataActions from 'redux_modules/country-data';
 
 import { DASHBOARD } from 'router';
 
+import { tx } from '@transifex/native';
 import { useLocale, useT } from '@transifex/react';
 
 import * as urlActions from 'actions/url-actions';
@@ -618,6 +619,10 @@ function DashboardContainer(props) {
 
     getSpeciesList();
     getPrioritySpeciesList();
+
+    if (countryISO === 'COD') {
+      tx.setCurrentLocale('fr');
+    }
 
     // Cleanup event listener on component unmount
     return () => {
