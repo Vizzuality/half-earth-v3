@@ -53,7 +53,7 @@ function TemporalTrendsShiComponent(props) {
           <T
             _str="Since {startYear}, the terrestrial vertebrate species of the {countryNameBold} have lost an average of {lostAvgBold} of their suitable habitat, leading to the country having a Species Habitat Index of {shiValueBold}."
             startYear={startYear}
-            countryNameBold={<b>{countryName}</b>}
+            countryNameBold={<b>{t(countryName)}</b>}
             lostAvgBold={<b>{lostAvg}%</b>}
             shiValueBold={<b>{shiValue}</b>}
           />

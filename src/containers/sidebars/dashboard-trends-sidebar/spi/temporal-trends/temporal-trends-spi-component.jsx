@@ -38,9 +38,8 @@ function TemporalTrendsSpiComponent(props) {
       const currentScore = last(countryData);
       setAreaProtectedPercent(currentScore.PercentAreaProtected.toFixed(1));
       setSpiInfo(
-        `${firstScore.SPI.toFixed(1)} in ${
-          firstScore.Year
-        } to ${currentScore.SPI.toFixed(1)} in ${currentScore.Year}`
+        `${firstScore.SPI.toFixed(1)} ${t('in')} ${firstScore.Year} ${t('to')}
+        ${currentScore.SPI.toFixed(1)} ${t('in')} ${currentScore.Year}`
       );
 
       const spiChange = currentScore.SPI - firstScore.SPI;
@@ -68,7 +67,7 @@ function TemporalTrendsSpiComponent(props) {
           <T
             _str="Since {startYear}, the {countryName} has added {areaBold} of land into its protected area network, representing {areaProtectedPercentBold} of the total land in the country, increasing its Species Protection Index from {spiInfoBold}"
             startYear={startYear}
-            countryName={countryName}
+            countryName={t(countryName)}
             areaBold={
               <b>
                 {numberToLocaleStringWithOneDecimal(areaProtected)} km

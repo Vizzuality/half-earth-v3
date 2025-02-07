@@ -247,10 +247,10 @@ function ScoreDistributionsSpiComponent(props) {
         <p className={styles.description}>
           {activeTrend === PROVINCE_TREND && (
             <T
-              _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrate {provinceBold}."
-              provinceBold={
-                <b>in the {selectedProvince?.region_name} province</b>
-              }
+              _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrate {inTheBold} {provinceBold} {provinceTextBold}."
+              inTheBold={<b>{t('in the')}</b>}
+              provinceBold={<b>{selectedProvince?.region_name}</b>}
+              provinceTextBold={<b>{t('province')}</b>}
             />
           )}
           {activeTrend === NATIONAL_TREND && (
