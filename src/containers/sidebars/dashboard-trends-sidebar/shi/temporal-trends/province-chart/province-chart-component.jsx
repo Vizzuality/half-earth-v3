@@ -208,11 +208,11 @@ function ProvinceChartComponent(props) {
   }, []);
 
   useEffect(() => {
-    if (selectedProvince && shiProvinceTrendData.length) {
+    if (shiProvinceTrendData.length) {
       setIsLoading(false);
       getBubbleChartData();
     }
-  }, [selectedProvince, shiProvinceTrendData]);
+  }, [shiProvinceTrendData]);
 
   useEffect(() => {
     if (shiProvinceTrendData.length && provinces.length) {
