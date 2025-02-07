@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import React, { useContext, useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Bubble } from 'react-chartjs-2';
 import Select from 'react-select';
 
 import { useT } from '@transifex/react';
@@ -32,6 +32,7 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function ProvinceChartComponent(props) {
   const t = useT();
+  const chartRef = useRef(null);
   const { lightMode } = useContext(LightModeContext);
   const {
     setSelectedProvince,
@@ -49,8 +50,9 @@ function ProvinceChartComponent(props) {
 
   const [isLoading, setIsLoading] = useState(true);
   const [foundIndex, setFoundIndex] = useState(0);
-  const [data, setData] = useState();
+  const [bubbleData, setBubbleData] = useState();
   const [chartInfo, setChartInfo] = useState();
+  const [previousIndex, setPreviousIndex] = useState(-1);
   const [filteredProvince, setFilteredProvince] = useState();
 
   const getProvinceScores = (province) => {
@@ -81,7 +83,35 @@ function ProvinceChartComponent(props) {
     setClickedRegion(null);
   };
 
-  const options = {
+  const highlightProvinceBubble = (index) => {
+    const chart = chartRef.current;
+
+    if (chart && index > -1) {
+      if (previousIndex > -1) {
+        chart.data.datasets[previousIndex].backgroundColor =
+          getCSSVariable('bubble');
+      }
+      chart.data.datasets[index].backgroundColor =
+        getCSSVariable('bubble-selected');
+      setPreviousIndex(index);
+      chart.update();
+    }
+  };
+
+  const selectClickedRegion = (elements, chart) => {
+    const { datasetIndex } = elements[0];
+
+    const value = bubbleData.datasets[datasetIndex];
+
+    highlightProvinceBubble(datasetIndex, chart);
+
+    handleProvinceSelected(value);
+    setFoundIndex(
+      provinces.findIndex((prov) => prov.region_name === value.region_name)
+    );
+  };
+
+  const bubbleOptions = {
     plugins: {
       title: {
         display: false,
@@ -96,7 +126,7 @@ function ProvinceChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: t('Year'),
+          text: t('Total Area (1000 km2)'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
           font: {
             size: 14,
@@ -108,7 +138,6 @@ function ProvinceChartComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          maxTicksLimit: 8,
         },
       },
       y: {
@@ -128,13 +157,17 @@ function ProvinceChartComponent(props) {
         },
         ticks: {
           color: getCSSVariable('oslo-gray'),
-          maxTicksLimit: 10,
         },
       },
     },
+    onClick: (event, elements, chart) => {
+      if (elements.length > 0) {
+        selectClickedRegion(elements, chart);
+      }
+    },
   };
 
-  const getChartData = () => {
+  const getBubbleChartData = () => {
     const filteredData = shiProvinceTrendData.filter(
       (prov) => prov.region_name === selectedProvince.region_name
     );
@@ -142,26 +175,19 @@ function ProvinceChartComponent(props) {
     const currentValue = last(filteredData);
     setFilteredProvince(currentValue);
 
-    setData({
-      labels: filteredData.map((item) => item.year),
-      datasets: [
-        {
-          label: t('Average Area Score'),
-          data: filteredData.map((item) => item.area_score * 100),
-          borderColor: getCSSVariable('area'),
-        },
-        {
-          label: t('Average Connectivity Score'),
-          data: filteredData.map((item) => item.connectivity * 100),
-          borderColor: getCSSVariable('connectivity'),
-        },
-        {
-          label: t('Average Habitat Score'),
-          data: filteredData.map((item) => item.habitat_index * 100),
-          borderColor: getCSSVariable('habitat'),
-        },
-      ],
+    const bData = [];
+    shiProvinceTrendData.forEach((region) => {
+      const { area_km2, habitat_index, region_name } = region;
+      bData.push({
+        ...region,
+        label: region_name,
+        data: [{ x: area_km2, y: habitat_index * 100, r: 8 }],
+        backgroundColor: getCSSVariable('bubble'),
+        borderColor: getCSSVariable('white'),
+      });
     });
+
+    setBubbleData({ datasets: bData });
   };
 
   const updateChartInfo = () => {
@@ -184,7 +210,7 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (selectedProvince && shiProvinceTrendData.length) {
       setIsLoading(false);
-      getChartData();
+      getBubbleChartData();
     }
   }, [selectedProvince, shiProvinceTrendData]);
 
@@ -258,17 +284,9 @@ function ProvinceChartComponent(props) {
         </div>
       )}
       <div className={styles.chart}>
-        <div className={styles.legend}>
-          <div className={cx(styles.legendBox, styles.habitat)} />
-          <span>{t('SHI')}</span>
-          <div className={cx(styles.legendBox, styles.area)} />
-          <span>{t('Area')}</span>
-          <div className={cx(styles.legendBox, styles.connectivity)} />
-          <span>{t('Connectivity')}</span>
-        </div>
-        {data && (
+        {bubbleData && (
           <ChartInfoComponent chartInfo={chartInfo} {...props}>
-            <Line options={options} data={data} />
+            <Bubble options={bubbleOptions} data={bubbleData} ref={chartRef} />
           </ChartInfoComponent>
         )}
       </div>

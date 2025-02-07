@@ -299,7 +299,7 @@ function DashboardTrendsSidebarContainer(props) {
     // GET SHI Province Trend Data
     const shiProvinceURL = {
       url: DASHBOARD_URLS.SHI_PROVINCE_TREND_URL,
-      whereClause: `iso3 = '${countryISO}'`,
+      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR}`,
       orderByFields: ['region_name'],
     };
     getShiProvinceData(shiProvinceURL);

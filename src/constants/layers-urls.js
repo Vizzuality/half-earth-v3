@@ -477,7 +477,7 @@ export const DASHBOARD_URLS = {
   SPI_HISTOGRAM_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_and_national_spi_bin_count_2024/FeatureServer',
   SHI_PROVINCE_TREND_URL:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_shs_COD/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_shs_COD_v2/FeatureServer',
   SHI_SPECIES_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_species_shi_scores_year_2024/FeatureServer',
   SHI_HISTOGRAM_URL:
