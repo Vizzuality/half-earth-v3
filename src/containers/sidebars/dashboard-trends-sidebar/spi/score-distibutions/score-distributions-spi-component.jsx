@@ -38,6 +38,7 @@ function ScoreDistributionsSpiComponent(props) {
     setMapLegendLayers,
     spiScoresData,
     spiSelectSpeciesData,
+    setFromTrends,
     lang,
   } = props;
   const { lightMode } = useContext(LightModeContext);
@@ -202,6 +203,7 @@ function ScoreDistributionsSpiComponent(props) {
 
   const selectSpecies = (scientificname) => {
     setMapLegendLayers([]);
+    setFromTrends(true);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);

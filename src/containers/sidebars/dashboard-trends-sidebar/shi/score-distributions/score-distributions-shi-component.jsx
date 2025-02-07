@@ -39,6 +39,7 @@ function ScoreDistributionsShiComponent(props) {
     shiActiveTrend,
     setMapLegendLayers,
     selectedProvince,
+    setFromTrends,
     lang,
   } = props;
 
@@ -316,6 +317,7 @@ function ScoreDistributionsShiComponent(props) {
 
   const selectSpecies = (scientificname) => {
     setMapLegendLayers([]);
+    setFromTrends(true);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);

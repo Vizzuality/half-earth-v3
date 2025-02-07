@@ -58,6 +58,7 @@ function DataLayerComponent(props) {
     exploreAllSpecies,
     mapLegendLayers,
     regionLayers,
+    fromTrends,
     map,
   } = props;
 
@@ -223,6 +224,8 @@ function DataLayerComponent(props) {
 
     if (selectedRegion || exploreAllSpecies) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+    } else if (fromTrends) {
+      setSelectedIndex(NAVIGATION.TRENDS);
     } else {
       setSelectedIndex(NAVIGATION.SPECIES);
     }

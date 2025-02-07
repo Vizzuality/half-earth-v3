@@ -52,6 +52,7 @@ function DashboardContainer(props) {
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
   const [loggedIn, setLoggedIn] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState();
+  const [fromTrends, setFromTrends] = useState(false);
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState(null);
   const [selectedProvince, setSelectedProvince] = useState();
@@ -705,6 +706,8 @@ function DashboardContainer(props) {
       setTabOption={setTabOption}
       provinceName={provinceName}
       setProvinceName={setProvinceName}
+      fromTrends={fromTrends}
+      setFromTrends={setFromTrends}
       user={user}
       setUser={setUser}
       speciesListLoading={speciesListLoading}

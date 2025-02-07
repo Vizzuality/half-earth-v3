@@ -27,6 +27,7 @@ function DashboardNavComponent(props) {
     setScientificName,
     setMapLegendLayers,
     setDataLayerData,
+    setFromTrends,
     setSpeciesInfo,
   } = props;
   const { lightMode } = useContext(LightModeContext);
@@ -44,6 +45,7 @@ function DashboardNavComponent(props) {
   const updateHistory = (page) => {
     window.history.pushState({ selectedIndex: page }, '', ``);
 
+    setFromTrends(false);
     setMapLegendLayers([]);
 
     if (page !== NAVIGATION.DATA_LAYER && page !== NAVIGATION.BIO_IND) {
