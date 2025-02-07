@@ -59,6 +59,12 @@ function ProvinceChartComponent(props) {
     const { region_name } = province;
 
     setSelectedProvince(province);
+    const filteredData = shiProvinceTrendData.filter(
+      (prov) => prov.region_name === province.region_name
+    );
+
+    const currentValue = last(filteredData);
+    setFilteredProvince(currentValue);
     setProvinceName(region_name);
     setFoundIndex(
       shiProvinceTrendData.findIndex(
@@ -168,13 +174,6 @@ function ProvinceChartComponent(props) {
   };
 
   const getBubbleChartData = () => {
-    const filteredData = shiProvinceTrendData.filter(
-      (prov) => prov.region_name === selectedProvince.region_name
-    );
-
-    const currentValue = last(filteredData);
-    setFilteredProvince(currentValue);
-
     const bData = [];
     shiProvinceTrendData.forEach((region) => {
       const { area_km2, habitat_index, region_name } = region;
@@ -256,31 +255,33 @@ function ProvinceChartComponent(props) {
               placeholder={t('Select Region')}
             />
           </div>
-          <div className={styles.arcGrid}>
-            <div className={styles.values}>
-              <b>{filteredProvince.year}</b>
-              <span>{t('Year')}</span>
-            </div>
-            <div className={styles.values}>
-              <b>{(filteredProvince.area_score * 100).toFixed(1)}</b>
-              <span>{t('Area Component')}</span>
-            </div>
-            <div className={styles.values}>
-              <b>{(filteredProvince.habitat_index * 100).toFixed(1)}</b>
-              <span>{t('SHI')}</span>
-            </div>
-            <div className={styles.values}>
-              <b>{(filteredProvince.connectivity * 100).toFixed(1)}</b>
-              <span>{t('Connectivity Component')}</span>
-            </div>
-            <div className={styles.values}>
-              <b>{filteredProvince.habitat_index_rank}</b>
-              <span>{t('Rank')}</span>
-            </div>
-            {/* <span />
+          {filteredProvince && (
+            <div className={styles.arcGrid}>
+              <div className={styles.values}>
+                <b>{filteredProvince?.year}</b>
+                <span>{t('Year')}</span>
+              </div>
+              <div className={styles.values}>
+                <b>{(filteredProvince.area_score * 100).toFixed(1)}</b>
+                <span>{t('Area Component')}</span>
+              </div>
+              <div className={styles.values}>
+                <b>{(filteredProvince.habitat_index * 100).toFixed(1)}</b>
+                <span>{t('SHI')}</span>
+              </div>
+              <div className={styles.values}>
+                <b>{(filteredProvince.connectivity * 100).toFixed(1)}</b>
+                <span>{t('Connectivity Component')}</span>
+              </div>
+              <div className={styles.values}>
+                <b>{filteredProvince?.habitat_index_rank}</b>
+                <span>{t('Rank')}</span>
+              </div>
+              {/* <span />
             <span /> */}
-            {/* <span>{t('SHI')}</span> */}
-          </div>
+              {/* <span>{t('SHI')}</span> */}
+            </div>
+          )}
         </div>
       )}
       <div className={styles.chart}>

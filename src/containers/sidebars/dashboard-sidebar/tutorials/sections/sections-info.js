@@ -81,6 +81,31 @@ function Blah() {
     t(
       'The Temporal Trends section shows the change in the National SII over time.'
     );
+    t('Title');
+    t('Source type');
+    t('Data type');
+    t('Online Database');
+    t('citation reference');
+    t('Description');
+    t(
+      'The Global Biodiversity Information Facility (GBIF) is an international open data infrastructure, funded by governments. It allows anyone, anywhere to access data about all types of life on Earth, shared across national boundaries via the Internet. By encouraging and helping institutions to publish data according to common standards, GBIF enables research not possible before, and informs better decisions to conserve and sustainably use the biological resources of the planet. GBIF operates through a network of nodes, coordinating the biodiversity information facilities of Participant countries and organizations, collaborating with each other and the Secretariat to share skills, experiences and technical capacity.'
+    );
+    t('Provider');
+    t('Class');
+    t('Citation of the taxonomy');
+    t('Contact details');
+    t('Group of species');
+    t(
+      'Birds, Mammals, Amphibians, Reptiles, Turtles, Moths, Butterflies, Dragonflies, Plants, Conifers, Trees, Palms'
+    );
+    t('Countries');
+    t('Geographic scope');
+    t('World');
+    t('Processing of geometries');
+    t(
+      'Points with invalid or missing latitude and longitude values were filtered out. In addition, reports from datasets already in MOL were filtered out, including eBird.'
+    );
+    t('Notes');
   }, []);
 
   return <div>Blah</div>;

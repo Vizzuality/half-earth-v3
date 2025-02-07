@@ -45,6 +45,7 @@ function DashboardTrendsSidebarContainer(props) {
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState([]);
+  const [shiCountryData, setShiCountryData] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
   const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
@@ -79,6 +80,14 @@ function DashboardTrendsSidebarContainer(props) {
       setShiValue(parseFloat(shiValues.SHI_AvgHabitatScore * 100).toFixed(1));
       setSiiValue((siiValues.SII * 100).toFixed(1));
       setCountryData(countries);
+    });
+  };
+
+  const getShiCountryData = (countryURL) => {
+    EsriFeatureService.getFeatures(countryURL).then((features) => {
+      const countries = features.map((f) => f.attributes);
+
+      setShiCountryData(countries);
     });
   };
 
@@ -288,6 +297,12 @@ function DashboardTrendsSidebarContainer(props) {
     };
     getCountryData(countryURL);
 
+    const shiCountryURL = {
+      url: DASHBOARD_URLS.SHI_COUNTRY_DATA_URL,
+      whereClause: `ISO3 = '${countryISO}'`,
+    };
+    getShiCountryData(shiCountryURL);
+
     // GET SPI Province Trend Data
     const provinceURL = {
       url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
@@ -355,6 +370,7 @@ function DashboardTrendsSidebarContainer(props) {
       siiValue={siiValue}
       provinces={provinces}
       countryData={countryData}
+      shiCountryData={shiCountryData}
       spiScoresData={spiScoresData}
       shiScoresData={shiScoresData}
       spiSelectSpeciesData={spiSelectSpeciesData}

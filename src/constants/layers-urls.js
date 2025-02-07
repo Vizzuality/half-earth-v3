@@ -486,6 +486,8 @@ export const DASHBOARD_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_shs_bin_count_2022/FeatureServer',
   SHI_PROVINCE_SPECIES_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_shs_scores_year_2022/FeatureServer',
+  SHI_COUNTRY_DATA_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_and_province_shs_by_taxa/FeatureServer',
   AMPHIBIAN_LOOKUP:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_amphibians_final/FeatureServer',
   BIRDS_LOOKUP:

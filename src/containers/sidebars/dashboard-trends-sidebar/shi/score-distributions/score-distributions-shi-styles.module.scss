@@ -9,7 +9,19 @@
   align-items: center;
   flex-grow: 1;
 
-  .btnGroup{
-    width: 80%;
+  --font-color: #{$white};
+
+  &.light{
+    --font-color: #{$black};
+  }
+
+  .title{
+    color: var(--font-color);
+    font-family: "Open Sans";
+    font-size: $font-size-sm;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
   }
 }

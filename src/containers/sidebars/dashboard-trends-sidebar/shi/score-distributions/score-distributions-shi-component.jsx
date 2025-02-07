@@ -11,6 +11,7 @@ import { Loading } from 'he-components';
 import Button from 'components/button';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
+import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 
 import {
   NAVIGATION,
@@ -25,9 +26,9 @@ import {
   PROVINCE_TREND,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
+import compStyles from '../../spi/score-distibutions/score-distributions-spi-styles.module.scss';
 
 import DistributionsTableContainer from './distributions-table';
-import compStyles from './score-distributions-shi-styles.module.scss';
 
 function ScoreDistributionsShiComponent(props) {
   const t = useT();
@@ -58,7 +59,7 @@ function ScoreDistributionsShiComponent(props) {
   const [chartData, setChartData] = useState();
   const [responseData] = useState();
   const [showTable, setShowTable] = useState(false);
-  const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
+  // const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
   const [isLoading, setIsLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
   const [lowDist, setLowDist] = useState(0);
@@ -297,10 +298,10 @@ function ScoreDistributionsShiComponent(props) {
     setIsLoading(false);
   };
 
-  const handleActiveChange = (score) => {
-    setActiveScore(score);
-    displayData(score);
-  };
+  // const handleActiveChange = (score) => {
+  //   setActiveScore(score);
+  //   displayData(score);
+  // };
 
   const loadSpecies = () => {
     const maxItems = 4;
@@ -374,7 +375,7 @@ function ScoreDistributionsShiComponent(props) {
           {shiActiveTrend === NATIONAL_TREND && (
             <T
               _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates {provinceBold}."
-              provinceBold={<b>at the national level.</b>}
+              provinceBold={<b>{t('at the national level')}</b>}
             />
           )}
         </p>
@@ -442,68 +443,12 @@ function ScoreDistributionsShiComponent(props) {
           </span> */}
         </div>
       </div>
-      <div className={compStyles.chartArea}>
+      <div
+        className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}
+      >
+        <SpeciesRichnessComponent shi {...props} />
         {!showTable && (
           <>
-            {/* <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} /> */}
-            <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeScore !== SCORES.HABITAT_SCORE,
-                })}
-                label={t('Habitat Score')}
-                handleClick={() => handleActiveChange(SCORES.HABITAT_SCORE)}
-              />
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeScore !== SCORES.AREA_SCORE,
-                })}
-                label={t('Area Score')}
-                handleClick={() => handleActiveChange(SCORES.AREA_SCORE)}
-              />
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeScore !== SCORES.CONNECTIVITY_SCORE,
-                })}
-                label={t('Connectivity Score')}
-                handleClick={() =>
-                  handleActiveChange(SCORES.CONNECTIVITY_SCORE)
-                }
-              />
-            </div>
-            <div className={styles.chartLegend}>
-              <div className={styles.legendItem}>
-                {t('Birds')}
-                <div
-                  className={cx(styles.legendColor, styles.birds)}
-                  style={{ backgroundColor: getCSSVariable('birds') }}
-                />
-              </div>
-              <div className={styles.legendItem}>
-                {t('Mammals')}
-                <div
-                  className={cx(styles.legendColor, styles.mammals)}
-                  style={{ backgroundColor: getCSSVariable('mammals') }}
-                />
-              </div>
-              <div className={styles.legendItem}>
-                {t('Reptiles')}
-                <div
-                  className={cx(styles.legendColor, styles.reptiles)}
-                  style={{ backgroundColor: getCSSVariable('reptiles') }}
-                />
-              </div>
-              <div className={styles.legendItem}>
-                {t('Amphibians')}
-                <div
-                  className={cx(styles.legendColor, styles.amphibians)}
-                  style={{ backgroundColor: getCSSVariable('amphibians') }}
-                />
-              </div>
-            </div>
             {isLoading && <Loading height={200} />}
             {!isLoading && (
               <ChartInfoComponent chartInfo={chartInfo} {...props}>
