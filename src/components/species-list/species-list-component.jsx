@@ -12,8 +12,6 @@ import SearchInput from 'components/search-input';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import SpeciesGroupContainer from '../species-group';
-// import SpeciesGroupTitleContainer from '../species-group-title';
-
 import TaxaImageComponent from '../taxa-image';
 
 import styles from './species-list-component-styles.module.scss';
