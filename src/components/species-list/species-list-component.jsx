@@ -224,7 +224,8 @@ function SpeciesListComponent(props) {
         )}
       </p>
       <div className={styles.taxaList}>
-        {!selectedTaxa &&
+        {!isLoading &&
+          !selectedTaxa &&
           filteredTaxaList?.map((taxa) => {
             return (
               <button

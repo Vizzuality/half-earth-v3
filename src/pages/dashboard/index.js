@@ -77,6 +77,7 @@ function DashboardContainer(props) {
         regionName,
         regionLayers,
         selectedRegionOption,
+        exploreAll,
       } = queryParams;
 
       if (species) {
@@ -101,6 +102,10 @@ function DashboardContainer(props) {
 
       if (province) {
         setProvinceName(province);
+      }
+
+      if (exploreAll) {
+        setExploreAllSpecies(true);
       }
 
       if (regionLayers) {
@@ -318,6 +323,11 @@ function DashboardContainer(props) {
 
   const getOccurenceSpecies = async (speciesData) => {
     let url = DASHBOARD_URLS.SPECIES_OCCURENCE_URL;
+
+    if (exploreAllSpecies) {
+      url = DASHBOARD_URLS.SPECIES_OCCURENCE_COUNTRY_URL;
+    }
+
     let whereClause = `ISO3 = '${countryISO}'`;
 
     if (selectedRegion) {
@@ -378,6 +388,10 @@ function DashboardContainer(props) {
     setSpeciesListLoading(true);
     let url = DASHBOARD_URLS.PRECALC_AOI;
     let whereClause = `GID_0 = '${countryISO}'`;
+
+    if (exploreAllSpecies) {
+      url = DASHBOARD_URLS.PRECALC_AOI_COUNTRY;
+    }
 
     if (selectedRegion) {
       const { GID_1, WDPA_PID, mgc } = selectedRegion;
@@ -491,10 +505,6 @@ function DashboardContainer(props) {
         getOccurenceSpecies(speciesData);
       }
     }
-
-    // if (exploreAllSpecies) {
-    //   setExploreAllSpecies(false);
-    // }
   };
 
   const getSpiDataByCountry = (d) => {
@@ -661,6 +671,7 @@ function DashboardContainer(props) {
         region: selectedRegion ?? undefined,
         regionName: regionName ?? undefined,
         selectedRegionOption: selectedRegionOption ?? undefined,
+        exploreAll: exploreAllSpecies ?? undefined,
         // province: provinceName ?? undefined,
         lang: user?.culture?.split('-')[0] ?? undefined,
       },
