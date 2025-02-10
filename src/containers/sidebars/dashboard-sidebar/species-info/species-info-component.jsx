@@ -50,9 +50,11 @@ function SpeciesInfoComponent(props) {
           <span className={styles.commonName}>{speciesInfo?.commonname}</span>
           <span className={styles.taxa}>{speciesInfo?.scientificname}</span>
           <TaxaImageComponent taxa={speciesInfo?.taxa} />
-          <span className={cx(styles.status, styles[speciesInfo?.redlist])}>
-            {getIUCNLabel(speciesInfo?.redlist)}
-          </span>
+          {speciesInfo?.redlist && (
+            <span className={cx(styles.status, styles[speciesInfo?.redlist])}>
+              {getIUCNLabel(speciesInfo?.redlist)}
+            </span>
+          )}
         </div>
       </div>
       <p className={styles.description}>{speciesInfo?.info?.[0].content}</p>

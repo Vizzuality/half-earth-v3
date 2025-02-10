@@ -18,7 +18,7 @@ export const tutorialSections = {
 };
 
 export const IUCNStatusTypes = {
-  CE: 'Critically Endangered',
+  CR: 'Critically Endangered',
   EN: 'Endangered',
   VU: 'Vulnerable',
   NT: 'Near Threatened',

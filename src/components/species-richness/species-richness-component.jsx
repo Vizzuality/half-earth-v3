@@ -82,7 +82,6 @@ function SpeciesRichnessComponent(props) {
     },
   });
   const [labelType, setLabelType] = useState('SPI');
-  const [data, setData] = useState();
   const [titleText, setTitleText] = useState();
 
   const getPercentage = (species) => {
@@ -91,81 +90,77 @@ function SpeciesRichnessComponent(props) {
   };
 
   const getScores = () => {
-    let formattedData = [];
-    if (selectedProvince && activeTrend === PROVINCE_TREND) {
-      const regionData = provinces.find(
-        (region) => region.region_name === selectedProvince.region_name
-      );
-      formattedData = regionData;
-    } else {
-      formattedData = last(countryData);
-    }
-
-    formattedData = data;
-
-    if (formattedData) {
-      if (shi) {
-        let filterValue = 'XXX';
-        if (selectedProvince && shiActiveTrend === PROVINCE_TREND) {
-          filterValue = selectedProvince.iso3_regional;
-        }
-        // eslint-disable-next-line camelcase
-        const { habitat_score_taxa, nspecies } = shiCountryData.find(
-          (sc) => sc.iso3_regional === filterValue
-        );
-
-        const values = JSON.parse(habitat_score_taxa)[0];
-        const total = JSON.parse(nspecies)[0];
-
-        setScores({
-          birds: {
-            count: values.birds,
-            total: total.birds,
-          },
-          mammals: {
-            count: values.mammals,
-            total: total.mammals,
-          },
-          reptiles: {
-            count: values.reptiles,
-            total: total.reptiles,
-          },
-          amphibians: {
-            count: values.amphibians,
-            total: total.amphibians,
-          },
-        });
-      } else {
-        const {
-          BirdSpeciesRichness,
-          BirdSPI,
-          MammalSpeciesRichness,
-          MammalSPI,
-          ReptileSpeciesRichness,
-          ReptileSPI,
-          AmphibianSpeciesRichness,
-          AmphibianSPI,
-        } = formattedData;
-
-        setScores({
-          birds: {
-            count: BirdSPI,
-            total: BirdSpeciesRichness,
-          },
-          mammals: {
-            count: MammalSPI,
-            total: MammalSpeciesRichness,
-          },
-          reptiles: {
-            count: ReptileSPI,
-            total: ReptileSpeciesRichness,
-          },
-          amphibians: {
-            count: AmphibianSPI,
-            total: AmphibianSpeciesRichness,
-          },
-        });
+    if (shi) {
+      let filterValue = 'XXX';
+      if (selectedProvince && shiActiveTrend === PROVINCE_TREND) {
+        filterValue = selectedProvince.iso3_regional;
       }
+      // eslint-disable-next-line camelcase
+      const { habitat_score_taxa, nspecies } = shiCountryData.find(
+        (sc) => sc.iso3_regional === filterValue
+      );
+
+      const values = JSON.parse(habitat_score_taxa)[0];
+      const total = JSON.parse(nspecies)[0];
+
+      setScores({
+        birds: {
+          count: values.birds,
+          total: total.birds,
+        },
+        mammals: {
+          count: values.mammals,
+          total: total.mammals,
+        },
+        reptiles: {
+          count: values.reptiles,
+          total: total.reptiles,
+        },
+        amphibians: {
+          count: values.amphibians,
+          total: total.amphibians,
+        },
+      });
+    } else {
+      let formattedData = [];
+      if (selectedProvince && activeTrend === PROVINCE_TREND) {
+        const regionData = provinces.find(
+          (region) => region.region_name === selectedProvince.region_name
+        );
+        formattedData = regionData;
+      } else {
+        formattedData = last(countryData);
+      }
+
+      const {
+        BirdSpeciesRichness,
+        BirdSPI,
+        MammalSpeciesRichness,
+        MammalSPI,
+        ReptileSpeciesRichness,
+        ReptileSPI,
+        AmphibianSpeciesRichness,
+        AmphibianSPI,
+      } = formattedData;
+
+      setScores({
+        birds: {
+          count: BirdSPI,
+          total: BirdSpeciesRichness,
+        },
+        mammals: {
+          count: MammalSPI,
+          total: MammalSpeciesRichness,
+        },
+        reptiles: {
+          count: ReptileSPI,
+          total: ReptileSpeciesRichness,
+        },
+        amphibians: {
+          count: AmphibianSPI,
+          total: AmphibianSpeciesRichness,
+        },
+      });
     }
   };
 
@@ -228,7 +223,6 @@ function SpeciesRichnessComponent(props) {
   const getData = () => {
     if (shi) {
       setLabelType(t('SHI'));
-      setData(shiCountryData);
 
       if (shiActiveTrend === NATIONAL_TREND || !selectedProvince) {
         setTitleText(`NATIONAL ${labelType} ${t('BY TAXONOMIC GROUP')}`);
@@ -241,7 +235,6 @@ function SpeciesRichnessComponent(props) {
       }
     } else {
       setLabelType(t('SPI'));
-      setData(countryData);
 
       if (activeTrend === NATIONAL_TREND || !selectedProvince) {
         setTitleText(`NATIONAL ${labelType} ${t('BY TAXONOMIC GROUP')}`);
