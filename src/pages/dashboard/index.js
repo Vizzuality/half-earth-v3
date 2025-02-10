@@ -361,16 +361,20 @@ function DashboardContainer(props) {
       occurenceData?.forEach((occurrence) => {
         const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
 
-        occurrence.species.forEach((species) => {
-          const foundSpecies = foundTaxa?.species.find(
-            (speciesToFind) =>
-              speciesToFind.scientific_name === species.scientific_name
-          );
+        if (foundTaxa) {
+          occurrence.species.forEach((species) => {
+            const foundSpecies = foundTaxa?.species.find(
+              (speciesToFind) =>
+                speciesToFind.scientific_name === species.scientific_name
+            );
 
-          if (!foundSpecies) {
-            foundTaxa?.species.push(species);
-          }
-        });
+            if (!foundSpecies) {
+              foundTaxa?.species.push(species);
+            }
+          });
+        } else {
+          list.push(occurrence);
+        }
       });
 
       list.forEach((l) => {
