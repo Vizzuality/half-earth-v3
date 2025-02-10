@@ -37,6 +37,8 @@ function SpeciesHomeComponent(props) {
   const searchURL = 'https://dev-api.mol.org/2.x/species/groupsearch';
   // 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/spatial_species_search';
 
+  let controller = null;
+
   const handleSearch = (searchText) => {
     setSearchInput(searchText.currentTarget.value);
   };
@@ -56,6 +58,9 @@ function SpeciesHomeComponent(props) {
   };
 
   const getSearchResults = async () => {
+    controller = new AbortController();
+    const { signal } = controller;
+
     const searchParams = {
       query: searchInput,
       limit: 100,
@@ -64,7 +69,7 @@ function SpeciesHomeComponent(props) {
       // region_id: '1eff8980-479e-4eac-b386-b4db859b275d',
     };
     const params = new URLSearchParams(searchParams);
-    const searchSpecies = await fetch(`${searchURL}?${params}`);
+    const searchSpecies = await fetch(`${searchURL}?${params}`, { signal });
     const results = await searchSpecies.json();
     setSearchResults(results);
   };
@@ -78,11 +83,17 @@ function SpeciesHomeComponent(props) {
 
   useEffect(() => {
     if (!searchInput) return;
-    const handler = setTimeout(() => {
-      getSearchResults();
-    }, 300);
 
-    return () => clearTimeout(handler);
+    if (controller) {
+      controller.abort();
+    }
+    getSearchResults();
+
+    return () => {
+      if (controller) {
+        controller.abort();
+      }
+    };
   }, [searchInput]);
 
   return (
@@ -109,17 +120,20 @@ function SpeciesHomeComponent(props) {
           />
           {searchInput && searchResults.length > 0 && (
             <ul className={styles.searchResults}>
-              {searchResults.map((item, index) => (
-                <li key={index}>
-                  <button
-                    type="button"
-                    onClick={() => handleSearchSelect(item)}
-                  >
-                    <b>{item.scientificname}</b> -{' '}
-                    <span>{item.vernacular}</span>
-                  </button>
-                </li>
-              ))}
+              {searchResults.map(
+                (item) =>
+                  item.tc_id && (
+                    <li key={item.tc_id}>
+                      <button
+                        type="button"
+                        onClick={() => handleSearchSelect(item)}
+                      >
+                        <b>{item.scientificname}</b> -{' '}
+                        <span>{item.vernacular}</span>
+                      </button>
+                    </li>
+                  )
+              )}
             </ul>
           )}
           <Button
