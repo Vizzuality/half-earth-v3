@@ -232,8 +232,8 @@ function GroupedListComponent(props) {
 
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive || layerIndex < 0) {
-        setIsLoading(true);
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
+          setIsLoading(true);
           layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
             layerName,
@@ -268,8 +268,8 @@ function GroupedListComponent(props) {
 
     if (layerParent === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
       if (!item.isActive || layerIndex < 0) {
-        setIsLoading(true);
         if (pointObservationIds.find((id) => id === item.dataset_id)) {
+          setIsLoading(true);
           let name;
 
           if (layerName.match(/EBIRD/)) {
