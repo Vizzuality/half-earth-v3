@@ -11,14 +11,6 @@ import ImagePopupComponent from 'components/image-popup/image-popup-component';
 
 import TimeLineIcon from 'icons/timeline.svg?react';
 
-// import shiProvinceImg from 'images/dashboard/tutorials/shi-province.png?react';
-// import shiScoreDistImg from 'images/dashboard/tutorials/shi-score-dist.png?react';
-// import shiTrendImg from 'images/dashboard/tutorials/tutorial_shi_temporalTrends-en.png?react';
-// import siiTrendImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-en.png?react';
-// import spiProvinceImg from 'images/dashboard/tutorials/tutorial_spi_provinces-en.png?react';
-// import spiScoreDistImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-en.png?react';
-// import spiTrendImg from 'images/dashboard/tutorials/tutorial_spi_temporalTrends-en.png?react';
-
 import styles from '../tutorials-components-styles.module.scss';
 
 import { SECTION_INFO } from './sections-info';
@@ -103,7 +95,9 @@ function IndicatorsSectionComponent(props) {
       <p>{t(SECTION_INFO.SHI_PROVINCE_VIEW)}</p>
       <ImagePopupComponent {...props}>
         <img
-          src={`dashboard/tutorials/shi-province-${locale || 'en'}.png?react`}
+          src={`dashboard/tutorials/tutorial_shi_provinces-${
+            locale || 'en'
+          }.png?react`}
           alt={t('Species Habitat Index - Provinces')}
         />
       </ImagePopupComponent>
