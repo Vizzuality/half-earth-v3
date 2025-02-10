@@ -77,6 +77,7 @@ function DashboardContainer(props) {
         regionName,
         regionLayers,
         selectedRegionOption,
+        exploreAll,
       } = queryParams;
 
       if (species) {
@@ -101,6 +102,10 @@ function DashboardContainer(props) {
 
       if (province) {
         setProvinceName(province);
+      }
+
+      if (exploreAll) {
+        setExploreAllSpecies(true);
       }
 
       if (regionLayers) {
@@ -500,10 +505,6 @@ function DashboardContainer(props) {
         getOccurenceSpecies(speciesData);
       }
     }
-
-    // if (exploreAllSpecies) {
-    //   setExploreAllSpecies(false);
-    // }
   };
 
   const getSpiDataByCountry = (d) => {
@@ -670,6 +671,7 @@ function DashboardContainer(props) {
         region: selectedRegion ?? undefined,
         regionName: regionName ?? undefined,
         selectedRegionOption: selectedRegionOption ?? undefined,
+        exploreAll: exploreAllSpecies ?? undefined,
         // province: provinceName ?? undefined,
         lang: user?.culture?.split('-')[0] ?? undefined,
       },
