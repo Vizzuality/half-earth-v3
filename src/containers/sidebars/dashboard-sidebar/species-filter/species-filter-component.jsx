@@ -69,7 +69,9 @@ function SpeciesFilterComponent(props) {
         {
           name: t('Occurrence'),
           active: false,
-          test: (species) => species.source.indexOf('GBIF') > -1,
+          test: (species) =>
+            species.source.indexOf('GBIF') > -1 ||
+            species.source.indexOf('eBird') > -1,
           count: 0,
           result: false,
           type: 'and',
