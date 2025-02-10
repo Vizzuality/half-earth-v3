@@ -59,7 +59,6 @@ function ScoreDistributionsShiComponent(props) {
   const [chartData, setChartData] = useState();
   const [responseData] = useState();
   const [showTable, setShowTable] = useState(false);
-  // const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
   const [isLoading, setIsLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
   const [lowDist, setLowDist] = useState(0);
@@ -297,11 +296,6 @@ function ScoreDistributionsShiComponent(props) {
     }
     setIsLoading(false);
   };
-
-  // const handleActiveChange = (score) => {
-  //   setActiveScore(score);
-  //   displayData(score);
-  // };
 
   const loadSpecies = () => {
     const maxItems = 4;

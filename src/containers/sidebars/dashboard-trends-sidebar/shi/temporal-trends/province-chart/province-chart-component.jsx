@@ -20,15 +20,23 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
+import Button from 'components/button';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 
 import shiProvinceImg from 'images/dashboard/tutorials/shi-province.png?react';
 
 import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
+import compStyles from '../../../dashboard-trends-sidebar-styles.module.scss';
 
 import styles from './province-chart-styles.module.scss';
 
 ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
+
+const SCORES = {
+  HABITAT_SCORE: 'habitat',
+  AREA_SCORE: 'area',
+  CONNECTIVITY_SCORE: 'connectivity',
+};
 
 function ProvinceChartComponent(props) {
   const t = useT();
@@ -52,6 +60,7 @@ function ProvinceChartComponent(props) {
   const [foundIndex, setFoundIndex] = useState(0);
   const [bubbleData, setBubbleData] = useState();
   const [chartInfo, setChartInfo] = useState();
+  const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
   const [previousIndex, setPreviousIndex] = useState(-1);
   const [filteredProvince, setFilteredProvince] = useState();
 
@@ -71,6 +80,37 @@ function ProvinceChartComponent(props) {
         (region) => region.region_name === region_name
       )
     );
+  };
+
+  const updateBubbleChartData = (score) => {
+    const bData = [];
+    shiProvinceTrendData.forEach((region) => {
+      const { area_km2, habitat_index, region_name, area_score, connectivity } =
+        region;
+
+      let yValue = habitat_index;
+
+      if (score === SCORES.AREA_SCORE) {
+        yValue = area_score;
+      } else if (score === SCORES.CONNECTIVITY_SCORE) {
+        yValue = connectivity;
+      }
+
+      bData.push({
+        ...region,
+        label: region_name,
+        data: [{ x: area_km2, y: yValue * 100, r: 8 }],
+        backgroundColor: getCSSVariable('bubble'),
+        borderColor: getCSSVariable('white'),
+      });
+    });
+
+    setBubbleData({ datasets: bData });
+  };
+
+  const handleActiveChange = (score) => {
+    setActiveScore(score);
+    updateBubbleChartData(score);
   };
 
   const handleProvinceSelected = async (province) => {
@@ -173,22 +213,6 @@ function ProvinceChartComponent(props) {
     },
   };
 
-  const getBubbleChartData = () => {
-    const bData = [];
-    shiProvinceTrendData.forEach((region) => {
-      const { area_km2, habitat_index, region_name } = region;
-      bData.push({
-        ...region,
-        label: region_name,
-        data: [{ x: area_km2, y: habitat_index * 100, r: 8 }],
-        backgroundColor: getCSSVariable('bubble'),
-        borderColor: getCSSVariable('white'),
-      });
-    });
-
-    setBubbleData({ datasets: bData });
-  };
-
   const updateChartInfo = () => {
     setChartInfo({
       title: t('Province View'),
@@ -209,7 +233,7 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (shiProvinceTrendData.length) {
       setIsLoading(false);
-      getBubbleChartData();
+      updateBubbleChartData(SCORES.HABITAT_SCORE);
     }
   }, [shiProvinceTrendData]);
 
@@ -284,6 +308,32 @@ function ProvinceChartComponent(props) {
           )}
         </div>
       )}
+      <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
+        <Button
+          type="rectangular"
+          className={cx(compStyles.saveButton, {
+            [compStyles.notActive]: activeScore !== SCORES.HABITAT_SCORE,
+          })}
+          label={t('Habitat Score')}
+          handleClick={() => handleActiveChange(SCORES.HABITAT_SCORE)}
+        />
+        <Button
+          type="rectangular"
+          className={cx(compStyles.saveButton, {
+            [compStyles.notActive]: activeScore !== SCORES.AREA_SCORE,
+          })}
+          label={t('Area Score')}
+          handleClick={() => handleActiveChange(SCORES.AREA_SCORE)}
+        />
+        <Button
+          type="rectangular"
+          className={cx(compStyles.saveButton, {
+            [compStyles.notActive]: activeScore !== SCORES.CONNECTIVITY_SCORE,
+          })}
+          label={t('Connectivity Score')}
+          handleClick={() => handleActiveChange(SCORES.CONNECTIVITY_SCORE)}
+        />
+      </div>
       <div className={styles.chart}>
         {bubbleData && (
           <ChartInfoComponent chartInfo={chartInfo} {...props}>
