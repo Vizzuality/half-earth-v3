@@ -370,6 +370,8 @@ function DashboardContainer(props) {
 
             if (!foundSpecies) {
               foundTaxa?.species.push(species);
+            } else {
+              foundSpecies.source += `,${species.source}`;
             }
           });
         } else {
