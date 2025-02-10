@@ -6,7 +6,9 @@ import { DASHBOARD } from 'router';
 import loadable from '@loadable/component';
 
 import * as promiseUtils from '@arcgis/core/core/promiseUtils.js';
+import zIndex from '@mui/material/styles/zIndex';
 import { LightModeProvider } from 'context/light-mode';
+import { Loading } from 'he-components';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
@@ -72,7 +74,7 @@ function DashboardViewComponent(props) {
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
   const [imagePopup, setImagePopup] = useState();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [layerInfo, setLayerInfo] = useState();
   const [showLegend, setShowLegend] = useState(false);
   // const [showTopNav, setShowTopNav] = useState(true);
@@ -346,6 +348,14 @@ function DashboardViewComponent(props) {
         />
       )}
 
+      {isLoading && (
+        <div
+          style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 4 }}
+        >
+          <Loading height={200} />
+        </div>
+      )}
+
       {imagePopup && (
         <>
           <div
@@ -386,6 +396,7 @@ function DashboardViewComponent(props) {
           regionName={regionName}
           setRegionName={setRegionName}
           setImagePopup={setImagePopup}
+          setIsLoading={setIsLoading}
           {...props}
         />
       </LightModeProvider>

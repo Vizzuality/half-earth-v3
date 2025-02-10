@@ -40,6 +40,7 @@ function GroupedListComponent(props) {
     setIsHabitatChartLoading,
     isPrivate,
     setMapLegendLayers,
+    setIsLoading,
   } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
@@ -133,6 +134,7 @@ function GroupedListComponent(props) {
 
     if (id === LAYER_OPTIONS.PROTECTED_AREAS) {
       if (!item.isActive) {
+        setIsLoading(true);
         layer = await EsriFeatureService.addProtectedAreaLayer(
           null,
           countryISO
@@ -140,6 +142,7 @@ function GroupedListComponent(props) {
       }
     } else if (id === LAYER_OPTIONS.ADMINISTRATIVE_LAYERS) {
       if (!item.isActive) {
+        setIsLoading(true);
         layer = await EsriFeatureService.getFeatureLayer(
           PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
           countryISO,
@@ -148,6 +151,7 @@ function GroupedListComponent(props) {
       }
     } else if (id === LAYER_OPTIONS.HABITAT) {
       if (!item.isActive) {
+        setIsLoading(true);
         setIsHabitatChartLoading(true);
         layer = await EsriFeatureService.getXYZLayer(
           speciesInfo.scientificname.replace(' ', '_'),
@@ -214,6 +218,10 @@ function GroupedListComponent(props) {
       });
       map.remove(layerToRemove);
     }
+
+    view.whenLayerView(layer).then(() => {
+      setIsLoading(false);
+    });
   };
 
   const findLayerToShow = async (item) => {
@@ -224,6 +232,7 @@ function GroupedListComponent(props) {
 
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive || layerIndex < 0) {
+        setIsLoading(true);
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
           layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
@@ -259,6 +268,7 @@ function GroupedListComponent(props) {
 
     if (layerParent === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
       if (!item.isActive || layerIndex < 0) {
+        setIsLoading(true);
         if (pointObservationIds.find((id) => id === item.dataset_id)) {
           let name;
 
@@ -308,6 +318,7 @@ function GroupedListComponent(props) {
 
     if (layerParent === LAYER_TITLE_TYPES.REGIONAL_CHECKLISTS) {
       if (!item.isActive) {
+        setIsLoading(true);
         layer = await EsriFeatureService.getMVTSource();
 
         setRegionLayers((rl) => ({
@@ -336,6 +347,10 @@ function GroupedListComponent(props) {
         map.remove(regionLayers[layerName]);
       }
     }
+
+    view.whenLayerView(layer).then(() => {
+      setIsLoading(false);
+    });
   };
 
   // update value of all children
