@@ -467,9 +467,9 @@ export const DASHBOARD_URLS = {
   COUNTRY_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_1/FeatureServer',
   SPECIES_OCCURENCE_COUNTRY_URL:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_list_cod/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_list_COD_v2/FeatureServer',
   SPECIES_OCCURENCE_URL:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_COD_v4/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_COD_v5/FeatureServer',
   WDPA_OCCURENCE_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/cd_occ_province_join/FeatureServer',
   SPI_PROVINCE_TREND_URL:
