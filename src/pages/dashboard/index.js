@@ -227,26 +227,28 @@ function DashboardContainer(props) {
   const bucketByTaxa = (arrayOfObjects) => {
     const buckets = {};
 
-    arrayOfObjects.forEach((obj) => {
-      const { taxa } = obj.attributes;
+    if (arrayOfObjects?.length) {
+      arrayOfObjects.forEach((obj) => {
+        const { taxa } = obj.attributes;
 
-      if (taxa) {
-        // Check if taxa property exists and has a value
-        if (!buckets[taxa]) {
-          buckets[taxa] = []; // Create a new bucket if it doesn't exist
-        }
-        buckets[taxa].push(obj); // Add the object to the corresponding bucket
-      } else {
-        // Handle cases where the taxa property is missing or undefined.
-        // You might want to create a special bucket for these, or log a warning, or skip them.
-        if (!buckets.undefined) {
-          buckets.undefined = [];
-        }
-        buckets.undefined.push(obj);
+        if (taxa) {
+          // Check if taxa property exists and has a value
+          if (!buckets[taxa]) {
+            buckets[taxa] = []; // Create a new bucket if it doesn't exist
+          }
+          buckets[taxa].push(obj); // Add the object to the corresponding bucket
+        } else {
+          // Handle cases where the taxa property is missing or undefined.
+          // You might want to create a special bucket for these, or log a warning, or skip them.
+          if (!buckets.undefined) {
+            buckets.undefined = [];
+          }
+          buckets.undefined.push(obj);
 
-        console.warn("Object missing 'taxa' property:", obj); // Or simply skip the object
-      }
-    });
+          console.warn("Object missing 'taxa' property:", obj); // Or simply skip the object
+        }
+      });
+    }
 
     return buckets;
   };
