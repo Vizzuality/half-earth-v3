@@ -9,6 +9,8 @@ import { Loading } from 'he-components';
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
 
+import { TAXA_NAMES } from 'constants/dashboard-constants.js';
+
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import SpeciesGroupContainer from '../species-group';
@@ -30,17 +32,7 @@ function SpeciesListComponent(props) {
   const [filter, setFilter] = useState();
 
   const getTaxaTitle = (label, taxa) => {
-    const taxaToCheck = [
-      'MAMMALS',
-      'BIRDS',
-      'REPTILES',
-      'AMPHIBIANS',
-      'CONIFERS',
-      'CACTI',
-      'PALMS',
-      'FISHES',
-      'OTHER PLANTS*', // because the backend sends a * already
-    ];
+    const taxaToCheck = Object.values(TAXA_NAMES);
     if (taxa) {
       if (taxa.match(SPHINGID_MOTHS)) {
         return `Old World ${label}*`;

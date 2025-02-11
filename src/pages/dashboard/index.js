@@ -119,7 +119,7 @@ function DashboardContainer(props) {
   };
 
   const getSpeciesData = async () => {
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${scientificName}`;
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=${locale}&scientificname=${scientificName}`;
     const response = await fetch(url);
     const d = await response.json();
     setSpeciesInfo(d[0]);
