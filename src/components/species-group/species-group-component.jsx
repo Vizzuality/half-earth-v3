@@ -55,14 +55,17 @@ function SpeciesGroupComponent(props) {
       onClick={() => selectSpecies(species)}
     >
       <div className={styles.imgBox}>
-        {species_url && (
+        {species_url && species_url !== 'NA' && (
           <img
             alt={`${selectedTaxaObj.taxa}`}
             loading="lazy"
             src={`${species_url}`}
           />
         )}
-        {!species_url && <TaxaImageComponent taxa={selectedTaxaObj.taxa} />}
+        {!species_url ||
+          (species_url === 'NA' && (
+            <TaxaImageComponent taxa={selectedTaxaObj.taxa} />
+          ))}
       </div>
       <div className={cx(styles.speciesText, styles.name)}>
         <div className={styles.common}>
