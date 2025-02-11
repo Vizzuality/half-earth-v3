@@ -81,7 +81,6 @@ function SpeciesRichnessComponent(props) {
       percentage: 0,
     },
   });
-  const [labelType, setLabelType] = useState('SPI');
   const [titleText, setTitleText] = useState();
 
   const getPercentage = (species) => {
@@ -222,36 +221,26 @@ function SpeciesRichnessComponent(props) {
 
   const getData = () => {
     if (shi) {
-      setLabelType(t('SHI'));
-
       if (shiActiveTrend === NATIONAL_TREND || !selectedProvince) {
-        setTitleText(`NATIONAL ${labelType} ${t('BY TAXONOMIC GROUP')}`);
+        setTitleText(`NATIONAL SHI ${t('BY TAXONOMIC GROUP')}`);
       } else if (shiActiveTrend === PROVINCE_TREND && selectedProvince) {
         setTitleText(
-          `${selectedProvince?.region_name} ${labelType} ${t(
-            'BY TAXONOMIC GROUP'
-          )}`
+          `${selectedProvince?.region_name} SHI ${t('BY TAXONOMIC GROUP')}`
         );
       }
-    } else {
-      setLabelType(t('SPI'));
-
-      if (activeTrend === NATIONAL_TREND || !selectedProvince) {
-        setTitleText(`NATIONAL ${labelType} ${t('BY TAXONOMIC GROUP')}`);
-      } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
-        setTitleText(
-          `${selectedProvince?.region_name} ${labelType} ${t(
-            'BY TAXONOMIC GROUP'
-          )}`
-        );
-      }
+    } else if (activeTrend === NATIONAL_TREND || !selectedProvince) {
+      setTitleText(`NATIONAL SPI ${t('BY TAXONOMIC GROUP')}`);
+    } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
+      setTitleText(
+        `${selectedProvince?.region_name} SPI ${t('BY TAXONOMIC GROUP')}`
+      );
     }
 
     getScores();
   };
 
   useEffect(() => {
-    if (!countryData.length && !shiCountryData.length) return;
+    if (!countryData.length || !shiCountryData.length) return;
     getData();
   }, [countryData, shiCountryData]);
 
