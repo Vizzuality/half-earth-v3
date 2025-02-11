@@ -266,7 +266,7 @@ function SpeciesListComponent(props) {
           </div>
           <SearchInput
             className={cx(styles.search)}
-            placeholder={`${t('Filter')} ${selectedTaxa}`}
+            placeholder={`${t('Filter')} ${t(selectedTaxa)}`}
             onChange={handleSearch}
             value={filter}
           />

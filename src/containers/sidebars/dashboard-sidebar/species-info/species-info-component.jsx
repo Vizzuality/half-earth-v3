@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { IUCNStatusTypes } from 'utils/dashboard-utils.js';
 
@@ -15,6 +15,7 @@ import styles from './species-info-styles.module.scss';
 
 function SpeciesInfoComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const { speciesInfo } = props;
   const [speciesImage, setSpeciesImage] = useState();
   const [wikiLink, setWikiLink] = useState();
@@ -34,7 +35,7 @@ function SpeciesInfoComponent(props) {
       setSpeciesImage(spImage);
 
       setWikiLink(
-        `https://en.wikipedia.org/wiki/${speciesInfo.scientificname.replace(
+        `https://${locale}.wikipedia.org/wiki/${speciesInfo.scientificname.replace(
           ' ',
           '_'
         )}`
