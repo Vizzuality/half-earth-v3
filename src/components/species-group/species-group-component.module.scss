@@ -1,0 +1,80 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+
+.speciesBox {
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+  --selected-font-color: #{$white};
+  --save-button-text: #{$dark-text};
+  --border-color-hover: #{$brand-color-main-hover};
+  color: var(--font-color);
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+    --selected-font-color: #{$white};
+    --save-button-text: #{$white};
+    --border-color-hover: #{$mol-blue};
+  }
+
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  font-family: $font-family-1;
+  font-size: $font-size-base;
+  color: var(--font-color);
+  width: 100%;
+
+  svg{
+    fill: var(--font-color);
+    width: 30px;
+    height: 30px;
+  }
+
+  .name {
+    padding: 5px 10px;
+  }
+
+  cursor: pointer;
+  .imgBox {
+    width: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    padding: 3px;
+    text-align: center;
+    overflow: hidden;
+    object-fit: cover;
+  }
+  img {
+    max-width: 32px;
+    min-width: 32px;
+    margin: 0 auto;
+    height: 32px;
+    border-radius: 2px;
+  }
+  .speciesText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    font-size: $font-size-sm;
+    color: var(--font-color);
+
+    .common{
+      font-weight: 700;
+    }
+
+    .sci{
+      font-style: italic;
+    }
+  }
+  .openDataset {
+    text-decoration: underline;
+    font-size: $font-size-sm;
+  }
+}
+
+

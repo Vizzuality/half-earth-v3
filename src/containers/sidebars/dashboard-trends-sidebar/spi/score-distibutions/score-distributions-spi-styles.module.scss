@@ -1,0 +1,49 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.chartArea{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+
+  --font-color: #{$white};
+
+  &.light{
+    --font-color: #{$black};
+  }
+
+  .btnGroup{
+    width: 600px
+  }
+
+  .title{
+    color: var(--font-color);
+    font-family: "Open Sans";
+    font-size: $font-size-sm;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+  }
+
+  .chartWrapper{
+    position:relative;
+    width: 100%;
+
+    .info{
+      position: absolute;
+      top: -5px;
+      right: 0;
+      color: var(--font-color);
+      fill: var(--font-color);
+      width: 30px;
+      height: 30px;
+      border: 1px solid;
+      border-radius: 50%;
+      padding: 0;
+    }
+  }
+}

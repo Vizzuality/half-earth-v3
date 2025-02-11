@@ -1,0 +1,11 @@
+.partners{
+  display: flex;
+  gap: 25px;
+  align-self: flex-end;
+  margin: 0 10px 10px 0;
+
+  img{
+    height: 30px;
+    max-width: 100%;
+  }
+}

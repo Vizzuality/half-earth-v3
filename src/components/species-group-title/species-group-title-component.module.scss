@@ -1,0 +1,34 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.familyTitle {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--font-color);
+  padding-bottom: 3px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  .sci {
+    padding-left: 10px;
+  }
+}
+.listBox {
+  min-height: calc(100% - 170px);
+}
+.name {
+  .sci {
+    font-weight: 300;
+    font-size: $font-size-sm;
+    font-style: italic;
+  }
+  .common {
+    font-size: $font-size-sm;
+    font-weight: 500;
+  }
+}

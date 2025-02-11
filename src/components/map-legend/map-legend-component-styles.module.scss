@@ -1,0 +1,132 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  position: absolute;
+  top: 25px;
+  left: 630px;
+  background-color: $app-background;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px 0px $black;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 4;
+  max-height: 100vh;
+  overflow: hidden;
+  height: auto;
+  transition: max-height 0.3s ease-out;
+
+  &.collapse{
+    max-height: 40px;
+  }
+
+  .titleWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10px;
+
+    .title{
+      font-weight: 700;
+    }
+
+    button{
+      color: $white;
+
+      .arrowIcon {
+        fill: $white;
+        transform: rotate(-90deg);
+
+        &.isOpened {
+          transform:rotate(90deg);
+        }
+
+        transition: transform 0.2s ease;
+
+        > path {
+          fill: inherit;
+        }
+      }
+    }
+  }
+
+  .layers{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+    color: $white;
+
+    li{
+      display: flex;
+      align-items: center;
+
+      .arrows{
+        width: 40px;
+        color: $white;
+        fill: $white;
+
+        &.down{
+          transform: rotate(180deg);
+        }
+
+        &.disabled{
+          fill: $white-opacity-20;
+          color: $white-opacity-20;
+          cursor: default;
+        }
+      }
+
+      .info{
+        display: flex;
+        flex-direction: column;
+        font-size: $font-size-xs;
+        width: 100%;
+
+        span{
+          font-style: italic;
+        }
+
+        .wrapper{
+          display: flex;
+          gap: 5px;
+          margin-top: 5px;
+        }
+
+        .column{
+          flex-direction: column;
+        }
+
+        .box{
+          width: 50px;
+          height: 15px;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+      }
+    }
+  }
+
+  .mapLegend{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3px;
+
+    img{
+      width: 100%;
+      height: 15px;
+    }
+
+    .legendValues{
+      color: white;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

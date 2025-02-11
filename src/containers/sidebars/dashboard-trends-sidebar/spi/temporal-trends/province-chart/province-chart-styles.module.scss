@@ -1,0 +1,131 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px 10px 26px;
+  flex-grow: 1;
+
+  --font-color: #{$white};
+  --border-color: #{$brand-color-main};
+
+  &.light{
+    --font-color: #{$black};
+    --border-color: #{$mol-blue};
+  }
+
+  .info{
+    display: flex;
+    gap: 15px;
+
+    .specs{
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
+      max-width: 180px;
+      min-width: 180px;
+
+      span{
+        color: var(--font-color);
+        font-family: $font-family-1;
+        font-size: $font-size-xs;
+        font-style: italic;
+        font-weight: 400;
+        line-height: normal;
+
+        b{
+          color: var(--font-color);
+          font-family: $font-family-1;
+          font-size: $font-size-sm;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+      }
+    }
+
+    .arcGrid{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 70px 20px;
+      justify-items: center;
+      border-radius: 5px;
+      height: 100px;
+      border: 1.5px solid $brand-color-main;
+      align-items: center;
+
+      .values{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-self: flex-end;
+
+        b{
+          font-size: $font-size-ml;
+        }
+      }
+
+      .spi{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .score{
+          color: var(--font-color);
+          text-align: center;
+          font-family: $font-family-1;
+          font-size: $font-size-ml;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+          margin-top: -35px;
+        }
+      }
+
+        b {
+          color: var(--font-color);
+          font-family: $font-family-1;
+          font-size: $font-size-base;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+
+        span{
+          color: var(--font-color);
+          font-family: $font-family-1;
+          font-size: $font-size-xs;
+          font-style: italic;
+          font-weight: 600;
+          line-height: normal;
+          text-transform: uppercase;
+        }
+    }
+  }
+  .chart{
+    width: 100%;
+    margin-top: 25px;
+    max-width: 580px;
+
+    .chartWrapper{
+      position:relative;
+
+      .info{
+        position: absolute;
+        top: -5px;
+        right: 0;
+        color: var(--font-color);
+        fill: var(--font-color);
+        width: 30px;
+        height: 30px;
+        border: 1px solid;
+        border-radius: 50%;
+        padding: 0;
+      }
+    }
+  }
+}

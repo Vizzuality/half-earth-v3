@@ -22,8 +22,17 @@ $medium-purple: #8b62e9;
 $tango: #e87926;
 $french-rose: #eb588f;
 $neon-carrot: #ff9c32;
+$bubbles: #3265E5;
 $white-opacity: rgba(255, 255, 255, 0.1);
 $white-opacity-20: rgba($white, 0.2);
+
+$connectivity: #8578EB;
+$habitat: #3AA8EE;
+$area: #7DDECC;
+$area-protected: #3ABC64;
+$habitat-country: #23C9E5;
+$habitat-country-compare: #228D19;
+
 
 // Project colors
 $space-background: #09141a;
@@ -51,6 +60,10 @@ $amphibians-color: $shamrock;
 $birds-color: $saffron-mango;
 $fishes-color: #38e5db;
 $reptiles-color: $conifer;
+
+// mol colors
+$mol-blue: #243474;
+$mol-green: #317D56;
 
 // layers
 $carbon-layer: #ff9500;
@@ -110,6 +123,12 @@ $spi-chart-gradient: linear-gradient(
 );
 $challenges-view-background: #040e14;
 $warning: #dc2626;
+$pointObservations: #54B04A;
+$habitatSuitableRange: #E7C750;
+$localInventories: #7D4182;
+$expertRangeMap: #5A9AB5;
+$regionalChecklist: #AE305C;
+$privatePointObservations: #E93C39;
 
 // country ranking
 $endemic-species: #f8d300;
@@ -159,6 +178,7 @@ $font-size-sm: 14px;
 $font-size-base: 1rem;
 $font-size-legend: 17px;
 $font-size-tick: 18px;
+$font-size-ml: 20px;
 $font-size-rg: 24px;
 $font-size-xl: 32px;
 $font-size-xxl: 40px;
@@ -173,6 +193,9 @@ $font-family-1: 'Open Sans', sans-serif;
 $font-family-1-light: 'Open Sans', sans-serif;
 $font-family-serif: 'ivypresto-display', serif;
 $font-family-sans-serif: 'Open Sans', sans-serif;
+$font-family-roboto: 'Roboto', sans-serif;
+$font-family-roboto-condensed: 'Roboto Condensed', sans-serif;
+$font-family-roboto-flex: 'Roboto Flex', sans-serif;
 
 // Layout
 $site-gutter: 20px;
@@ -260,6 +283,21 @@ $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
 $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape}) and (max-width: #{$breakpoint-desktop}) and (orientation:landscape)';
 $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
+// IUCN status colors
+$critaclly-endangered: #ce3030;
+$critaclly-endangered-text:#fecdce;
+$endangered: #ce6730;
+$endangered-text: #fece9b;
+$vulnerable: #cd9b01;
+$vulnerable-text: #ffffce;
+$near-threatened: #066767;
+$near-threatened-text: #a6d2a6;
+$least-concern: #066767;
+$least-concern-text: $white;
+$data-deficient: #808080;
+$data-deficient-text: $white;
+
+
 :root {
   // COLORS
   --shamrock: #{$shamrock};
@@ -283,6 +321,15 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
   --athens-gray: #{$athens-gray};
   --oslo-gray: #{$oslo-gray};
 
+  // TRENDS
+  --birds: #{$birds-color};
+  --mammals:#{$mammals-color};
+  --reptiles:#{$reptiles-color};
+  --amphibians: #{$amphibians-color};
+  --temporal-spi: #{$regionalChecklist};
+  --bubble: #{$bubbles};
+  --bubble-selected: #{$brand-color-main};
+
   // Landcover legend
   --water: #{$water};
   --trees: #{$trees};
@@ -296,4 +343,16 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
   // FONT FAMILIES
   --font-family-serif: #{$font-family-serif};
+
+  // MOL colors
+  --mol-blue: #{$mol-blue};
+  --mol-green: #{$mol-green};
+  --dark-opacity: #{$dark-opacity};
+
+  --connectivity: #{$connectivity};
+  --habitat: #{$habitat};
+  --area: #{$area};
+  --area-protected: #{$area-protected};
+  --habitat-country: #{$habitat-country};
+  --habitat-country-compare: #{$habitat-country-compare};
 }

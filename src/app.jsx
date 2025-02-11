@@ -31,6 +31,7 @@ const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
 const NationalReportCard = loadable(() => import('pages/nrc'));
 const NationalReportCardLanding = loadable(() => import('pages/nrc-landing'));
 const AreaOfInterest = loadable(() => import('pages/aoi'));
+const DashboardComponent = loadable(() => import('pages/dashboard'));
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type],
@@ -62,6 +63,10 @@ function AppLayout(props) {
       );
     case 'aoi':
       return <AreaOfInterest />;
+    case 'dashboard':
+      return <DashboardComponent {...props} />;
+    case 'dashboard-species':
+      return <DashboardSpeciesComponent />;
     default:
       return isMobile ? <LandingMobile /> : <Landing />;
   }

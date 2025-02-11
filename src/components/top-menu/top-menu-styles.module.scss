@@ -1,0 +1,56 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container{
+  --font-color: #{$white};
+  --bg-color: #{$brand-color-main};
+
+  &.light{
+    --font-color: #{$black};
+    --bg-color: #{$white};
+  }
+
+  position: absolute;
+  top: 0;
+  right: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-color);
+  padding: 4px 10px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-color: var(--font-color);
+  border-width: 1px;
+  border-style: solid;
+  border-top: none;
+  color: var(--font-color);
+
+  a{
+    color: var(--font-color);
+    text-decoration: none;
+    font-weight: 700;
+
+    &.profile{
+      height: 30px;
+    }
+
+    svg{
+      width: 20px;
+      height: 30px;
+      fill: var(--font-color);
+
+      rect{
+        width: 50px;
+      }
+    }
+  }
+
+  button{
+    color: var(--font-color);
+    font-weight: 700;
+    font-size: 16px;
+  }
+}

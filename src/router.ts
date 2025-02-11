@@ -1,6 +1,6 @@
+import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/state-to-url';
 
-import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import type { RoutesMap } from 'redux-first-router';
 
 export const LANDING = 'location/';
@@ -11,12 +11,13 @@ export const NATIONAL_REPORT_CARD_LANDING =
   'location/NATIONAL_REPORT_CARD_LANDING';
 export const AREA_OF_INTEREST = 'location/AREA_OF_INTEREST';
 export const MAP_IFRAME = 'location/MAP_IFRAME';
+export const DASHBOARD = 'location/DASHBOARD';
 
 export const routes: RoutesMap<{ path: string; page?: string }> = {
-  [LANDING]: {
-    path: '/',
-    page: 'landing',
-  },
+  // [LANDING]: {
+  //   path: '/',
+  //   page: 'landing',
+  // },
   [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe',
@@ -37,9 +38,13 @@ export const routes: RoutesMap<{ path: string; page?: string }> = {
     path: '/aoi/:id?',
     page: 'aoi',
   },
+  [DASHBOARD]: {
+    path: '/',
+    page: 'dashboard',
+  },
   [NOT_FOUND]: {
     path: '/404',
-    thunk: (dispatch) => dispatch(redirect({ type: LANDING })),
+    thunk: (dispatch) => dispatch(redirect({ type: DASHBOARD })),
   },
 };
 

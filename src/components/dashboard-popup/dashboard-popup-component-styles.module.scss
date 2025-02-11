@@ -1,0 +1,13 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.popup{
+  border-spacing: 10px 5px;
+  tbody{
+    td{
+      vertical-align: top;
+    }
+  }
+}
