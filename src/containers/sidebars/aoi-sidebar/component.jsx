@@ -302,11 +302,11 @@ function AOISidebar({
                   </div>
                 </TitleTooltip>
               </div>
-              <SpeciesCard
+              {speciesData.species?.length && <SpeciesCard
                 area={area}
                 speciesData={speciesData}
                 contextualData={contextualData}
-              />
+              />}
               <SidebarCard
                 map={map}
                 toggleType="radio"
