@@ -314,7 +314,7 @@ function ProvinceChartComponent(props) {
           className={cx(compStyles.saveButton, {
             [compStyles.notActive]: activeScore !== SCORES.HABITAT_SCORE,
           })}
-          label={t('Habitat Score')}
+          label={t('Habitat Index')}
           handleClick={() => handleActiveChange(SCORES.HABITAT_SCORE)}
         />
         <Button
@@ -322,7 +322,7 @@ function ProvinceChartComponent(props) {
           className={cx(compStyles.saveButton, {
             [compStyles.notActive]: activeScore !== SCORES.AREA_SCORE,
           })}
-          label={t('Area Score')}
+          label={t('Area Component')}
           handleClick={() => handleActiveChange(SCORES.AREA_SCORE)}
         />
         <Button
@@ -330,7 +330,7 @@ function ProvinceChartComponent(props) {
           className={cx(compStyles.saveButton, {
             [compStyles.notActive]: activeScore !== SCORES.CONNECTIVITY_SCORE,
           })}
-          label={t('Connectivity Score')}
+          label={t('Connectivity Component')}
           handleClick={() => handleActiveChange(SCORES.CONNECTIVITY_SCORE)}
         />
       </div>
