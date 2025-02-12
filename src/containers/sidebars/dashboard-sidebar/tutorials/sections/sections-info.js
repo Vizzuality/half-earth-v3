@@ -106,12 +106,18 @@ function Blah() {
     t(
       'The Temporal Trends section shows the change in the National SII over time.'
     );
+    t('Global Biodiversity Information Facility');
     t('Title');
     t('Source type');
     t('Data type');
     t('Online Database');
     t('citation reference');
     t('Description');
+    t('Categories');
+    t('Date when study began');
+    t('Date when study ended');
+    t('Scientific Paper');
+    t('Seasons');
     t(
       'The Global Biodiversity Information Facility (GBIF) is an international open data infrastructure, funded by governments. It allows anyone, anywhere to access data about all types of life on Earth, shared across national boundaries via the Internet. By encouraging and helping institutions to publish data according to common standards, GBIF enables research not possible before, and informs better decisions to conserve and sustainably use the biological resources of the planet. GBIF operates through a network of nodes, coordinating the biodiversity information facilities of Participant countries and organizations, collaborating with each other and the Secretariat to share skills, experiences and technical capacity.'
     );
