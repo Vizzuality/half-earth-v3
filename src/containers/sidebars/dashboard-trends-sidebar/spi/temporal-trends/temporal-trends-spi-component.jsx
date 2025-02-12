@@ -26,7 +26,6 @@ function TemporalTrendsSpiComponent(props) {
   const { countryName, activeTrend, setActiveTrend, countryData } = props;
 
   const [showTable, setShowTable] = useState(false);
-  const [spiInfo, setSpiInfo] = useState();
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
   const [areaProtected, setAreaProtected] = useState(0);
   const [startYear, setStartYear] = useState('1980');
@@ -37,11 +36,6 @@ function TemporalTrendsSpiComponent(props) {
       setStartYear(firstScore.Year);
       const currentScore = last(countryData);
       setAreaProtectedPercent(currentScore.PercentAreaProtected.toFixed(1));
-      setSpiInfo(
-        `${firstScore.SPI.toFixed(1)} in ${
-          firstScore.Year
-        } to ${currentScore.SPI.toFixed(1)} in ${currentScore.Year}`
-      );
 
       const spiChange = currentScore.SPI - firstScore.SPI;
       const totalRegionAreas = currentScore.AreaProtected;
@@ -68,7 +62,7 @@ function TemporalTrendsSpiComponent(props) {
           <T
             _str="Since {startYear}, the {countryName} has added {areaBold} of land into its protected area network, representing {areaProtectedPercentBold} of the total land in the country, increasing its Species Protection Index from {spiInfoBold}"
             startYear={startYear}
-            countryName={countryName}
+            countryName={t(countryName)}
             areaBold={
               <b>
                 {numberToLocaleStringWithOneDecimal(areaProtected)} km
@@ -76,7 +70,13 @@ function TemporalTrendsSpiComponent(props) {
               </b>
             }
             areaProtectedPercentBold={<b>{areaProtectedPercent}%</b>}
-            spiInfoBold={<b>{spiInfo}</b>}
+            spiInfoBold={
+              <b>{`${countryData[0]?.SPI.toFixed(1)} ${t('in')} ${
+                countryData[0]?.Year
+              } ${t('to')} ${last(countryData)?.SPI.toFixed(1)} ${t('in')} ${
+                last(countryData)?.Year
+              }`}</b>
+            }
           />
         </p>
         <div className={styles.options}>
@@ -84,17 +84,17 @@ function TemporalTrendsSpiComponent(props) {
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === NATIONAL_TREND,
+                [styles.notActive]: activeTrend === PROVINCE_TREND,
               })}
-              label={PROVINCE_TREND}
+              label={NATIONAL_TREND}
               handleClick={handleActionChange}
             />
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === PROVINCE_TREND,
+                [styles.notActive]: activeTrend === NATIONAL_TREND,
               })}
-              label={NATIONAL_TREND}
+              label={PROVINCE_TREND}
               handleClick={handleActionChange}
             />
           </div>

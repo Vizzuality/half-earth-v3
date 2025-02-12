@@ -9,11 +9,11 @@ import { Loading } from 'he-components';
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
 
+import { TAXA_NAMES } from 'constants/dashboard-constants.js';
+
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import SpeciesGroupContainer from '../species-group';
-// import SpeciesGroupTitleContainer from '../species-group-title';
-
 import TaxaImageComponent from '../taxa-image';
 
 import styles from './species-list-component-styles.module.scss';
@@ -32,16 +32,7 @@ function SpeciesListComponent(props) {
   const [filter, setFilter] = useState();
 
   const getTaxaTitle = (label, taxa) => {
-    const taxaToCheck = [
-      'MAMMALS',
-      'BIRDS',
-      'REPTILES',
-      'AMPHIBIANS',
-      'CONIFERS',
-      'CACTI',
-      'PALMS',
-      'OTHER PLANTS*', // because the backend sends a * already
-    ];
+    const taxaToCheck = Object.values(TAXA_NAMES);
     if (taxa) {
       if (taxa.match(SPHINGID_MOTHS)) {
         return `Old World ${label}*`;
@@ -110,7 +101,6 @@ function SpeciesListComponent(props) {
   const applyFilter = () => {
     // this.virtualScroll?.scrollToIndex(0);
     const inFilterCheck = (sp) => {
-      console.log(sp);
       return (
         sp.common_name?.toLowerCase().indexOf(filter) > -1 ||
         sp.scientific_name?.toLowerCase().indexOf(filter) > -1
@@ -225,8 +215,10 @@ function SpeciesListComponent(props) {
           'Fish, tree, and select invertebrate and other plant taxa coming soon'
         )}
       </p>
+      {isLoading && <Loading height={200} />}
       <div className={styles.taxaList}>
-        {!selectedTaxa &&
+        {!isLoading &&
+          !selectedTaxa &&
           filteredTaxaList?.map((taxa) => {
             return (
               <button
@@ -251,7 +243,6 @@ function SpeciesListComponent(props) {
             );
           })}
       </div>
-      {isLoading && <Loading height={200} />}
       {!isLoading && selectedTaxa && selectedTaxaObj && (
         <div className={styles.speciesList}>
           <div className={styles.header}>
@@ -267,7 +258,7 @@ function SpeciesListComponent(props) {
           </div>
           <SearchInput
             className={cx(styles.search)}
-            placeholder={`${t('Filter')} ${selectedTaxa}`}
+            placeholder={`${t(`Filter ${selectedTaxa}`)}`}
             onChange={handleSearch}
             value={filter}
           />

@@ -6,6 +6,30 @@ import TileLayer from '@arcgis/core/layers/TileLayer';
 import { DASHBOARD_LAYER_SLUGS } from 'constants/dashboard-constants';
 import { DASHBOARD_URLS } from 'constants/layers-urls';
 
+export const tutorialSections = {
+  SPECIES: 'species',
+  DATA_LAYERS: 'data-layers',
+  INDICATOR_SCORES: 'indicator-scores',
+  REGIONS: 'regions',
+  INDICATORS: 'indicators',
+  SPI: 'spi',
+  SHI: 'shi',
+  SII: 'sii',
+};
+
+export const IUCNStatusTypes = {
+  EX: 'Extinct',
+  EW: 'Extinct in the wild',
+  CR: 'Critically Endangered',
+  EN: 'Endangered',
+  VU: 'Vulnerable',
+  NT: 'Near Threatened',
+  LC: 'Least Concern',
+  DD: 'Data Deficient',
+  NE: 'Not evaluated',
+  UN: 'Unknown',
+};
+
 export const PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID =
   'e3dca98a5bf74c9898c30f72baf6b1ba';
 export const PROVINCE_FEATURE_GLOBAL_OUTLINE_ID =
@@ -36,7 +60,7 @@ export const PROTECTED_AREA_SLE_FEATURE_URL =
 export const PROTECTED_AREA_GUY_FEATURE_URL =
   'd610d9ad96bc4071a31b3aacdfbf844d';
 
-export const GBIF_OCCURENCE_URL = 'fa37779380764f939a4747e92b3d3fb2';
+export const GBIF_OCCURENCE_URL = '1ccb994557a74bc6bd773250d8eebc15';
 
 export const DASHBOARD_TABLE_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1/FeatureServer';

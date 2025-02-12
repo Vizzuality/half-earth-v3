@@ -10,7 +10,7 @@
 
   .opacityLabel{
     position: absolute;
-    top: 110%;
+    bottom: 100%;
     display: flex;
     width: 100px;
     left: -50px;
@@ -27,11 +27,11 @@
         display: block;
         position: absolute;
         left: 58px;
-        bottom: 100%;
+        top: 100%;
         width: 0;
         height: 0;
         border: 10px solid transparent;
-        border-bottom-color: $brand-color-main;
+        border-top-color: $brand-color-main;
       }
 
       &::after {
@@ -39,11 +39,11 @@
         display: block;
         position: absolute;
         left: 60px;
-        bottom: 100%;
+        top: 100%;
         width: 0;
         height: 0;
         border: 8px solid transparent;
-        border-bottom-color: $white;
+        border-top-color: $white;
     }
 
     .slider{

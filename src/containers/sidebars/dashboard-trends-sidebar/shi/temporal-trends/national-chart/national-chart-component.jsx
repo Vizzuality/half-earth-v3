@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -18,9 +18,15 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import { SHI_LATEST_YEAR } from 'constants/dashboard-constants.js';
+
+import shiTrendImg from 'images/dashboard/tutorials/tutorial_shi_temporalTrends-en.png?react';
+import shiTrendFRImg from 'images/dashboard/tutorials/tutorial_shi_temporalTrends-fr.png?react';
+
+import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
 import styles from './national-chart-styles.module.scss';
 
@@ -28,7 +34,9 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
-  const { countryData } = props;
+  const locale = useLocale();
+  const { countryData, lang } = props;
+  const [chartInfo, setChartInfo] = useState();
   const { lightMode } = useContext(LightModeContext);
   const [data, setData] = useState();
   const [shiValue, setShiValue] = useState(0);
@@ -108,6 +116,24 @@ function NationalChartComponent(props) {
       },
     },
   };
+
+  const updateChartInfo = () => {
+    setChartInfo({
+      title: t('Temporal Trend'),
+      description: t(SECTION_INFO.SHI_TEMPORAL_TREND),
+      imgAlt: t('Species Protection Index - Trends'),
+      image: locale === 'fr' ? shiTrendFRImg : shiTrendImg,
+    });
+  };
+
+  useEffect(() => {
+    if (!lang) return;
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
+  }, []);
 
   useEffect(() => {
     if (!countryData.length) return;
@@ -221,7 +247,9 @@ function NationalChartComponent(props) {
                 <div className={cx(styles.legendBox, styles.connectivity)} />
                 <span>{t('Connectivity Score')}</span>
               </div>
-              <Line options={options} data={data} />
+              <ChartInfoComponent chartInfo={chartInfo} {...props}>
+                <Line options={options} data={data} />
+              </ChartInfoComponent>
             </div>
           )}
         </>

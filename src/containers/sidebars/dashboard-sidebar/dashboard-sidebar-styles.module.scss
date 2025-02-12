@@ -6,6 +6,7 @@
 $top: 25px;
 $sidebar-species-width: 600px;
 $trends-width: 1000px;
+$tutorial-width: 60vw;
 
 .container {
   @extend %verticalScrollbar;
@@ -20,9 +21,15 @@ $trends-width: 1000px;
   height: calc(100vh - #{$top} - 25px);
   width: $sidebar-species-width;
   z-index: $bring-to-front;
+  overflow: auto;
 
   &.trends{
     width: $trends-width;
+  }
+
+  &.tutorial{
+    width: $tutorial-width;
+    overflow: hidden;
   }
 
   --nav-button-bg: #{$white};
@@ -42,7 +49,6 @@ $trends-width: 1000px;
     --save-button-text: #{$white};
     --border-color-hover: #{$mol-blue};
     @include lightBackdropBlur();
-    border: none;
   }
 
   .darkMode{

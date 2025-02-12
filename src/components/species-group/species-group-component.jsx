@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 
+import { useLocale } from '@transifex/react';
+
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
@@ -13,6 +15,7 @@ import TaxaImageComponent from '../taxa-image';
 import styles from './species-group-component.module.scss';
 
 function SpeciesGroupComponent(props) {
+  const locale = useLocale();
   const { species, selectedTaxaObj, setSelectedIndex, setScientificName } =
     props;
   // eslint-disable-next-line camelcase
@@ -28,6 +31,23 @@ function SpeciesGroupComponent(props) {
     );
   };
 
+  const getCommonName = (commonName, scientificName) => {
+    if (commonName) {
+      try {
+        const parsedName = JSON.parse(commonName);
+
+        if (parsedName[0]?.cmname) {
+          const name = parsedName.find((pn) => pn.lang === locale);
+          return name?.cmname || parsedName[0]?.cmname;
+        }
+        return scientificName;
+      } catch {
+        return commonName;
+      }
+    }
+    return scientificName;
+  };
+
   return (
     <button
       type="button"
@@ -35,17 +55,22 @@ function SpeciesGroupComponent(props) {
       onClick={() => selectSpecies(species)}
     >
       <div className={styles.imgBox}>
-        {species_url && (
+        {species_url && species_url !== 'NA' && (
           <img
             alt={`${selectedTaxaObj.taxa}`}
             loading="lazy"
             src={`${species_url}`}
           />
         )}
-        {!species_url && <TaxaImageComponent taxa={selectedTaxaObj.taxa} />}
+        {!species_url ||
+          (species_url === 'NA' && (
+            <TaxaImageComponent taxa={selectedTaxaObj.taxa} />
+          ))}
       </div>
       <div className={cx(styles.speciesText, styles.name)}>
-        <div className={styles.common}>{common_name}</div>
+        <div className={styles.common}>
+          {getCommonName(common_name, scientific_name)}
+        </div>
         <div className={styles.sci}>{scientific_name}</div>
       </div>
     </button>

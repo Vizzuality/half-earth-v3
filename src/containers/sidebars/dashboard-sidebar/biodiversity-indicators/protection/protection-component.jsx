@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { numberToLocaleStringWithOneDecimal } from 'utils/dashboard-utils.js';
 
@@ -16,6 +16,10 @@ import {
 } from 'chart.js';
 import cx from 'classnames';
 
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
+
+import { SECTION_INFO } from '../../tutorials/sections/sections-info';
+
 import styles from './protection-component-styles.module.scss';
 
 ChartJS.register(
@@ -29,6 +33,7 @@ ChartJS.register(
 
 function ProtectionComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const {
     protectionTableData,
     countryName,
@@ -39,48 +44,45 @@ function ProtectionComponent(props) {
     shiCountries,
     chartData,
     chartOptions,
+    lang,
   } = props;
+
+  const [chartInfo, setChartInfo] = useState();
+  const [tableInfo, setTableInfo] = useState();
+
+  const updateChartInfo = () => {
+    const speciesIndicatorGraphImg = `dashboard/tutorials/tutorial_species_indicatorGraph-${
+      locale || 'en'
+    }.png?react`;
+    const speciesIndicatorTableImg = `dashboard/tutorials/tutorial_species_indicatorTable-${
+      locale || 'en'
+    }.png?react`;
+
+    setChartInfo({
+      title: t('Species Indicators - Graph'),
+      description: t(SECTION_INFO.INDICATOR_SCORES),
+      imgAlt: t('Species Indicators Graph'),
+      image: speciesIndicatorGraphImg,
+    });
+
+    setTableInfo({
+      title: t('Species Indicators - Table'),
+      description: t(SECTION_INFO.INDICATOR_SCORES),
+      imgAlt: t('Species Indicators Table'),
+      image: speciesIndicatorTableImg,
+    });
+  };
+
+  useEffect(() => {
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
+  }, []);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
-      {/* <div className={styles.scores}>
-        <div className={styles.metric}>
-          <label>{t(countryName)}</label>
-          <div className={styles.score}>
-            <div className={styles.chartWrapper}>
-              <b>{protectionScore}</b>
-            </div>
-            <div className={styles.results}>
-              <b>{protectionArea.toLocaleString(undefined, { maximumFractionDigits: 2 })} km<sup>2</sup></b>
-              <span className={styles.desc}>
-                <T
-                  _str='of a total {totalArea} km{sup} suitable habitat within protected areas'
-                  sup={<sup>2</sup>}
-                  totalArea={totalArea}
-                />
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className={styles.metric}>
-          <label>{t('Globally')}</label>
-          <div className={styles.score}>
-            <div className={styles.chartWrapper}>
-              <b>{globalProtectionScore}</b>
-            </div>
-            <div className={styles.results}>
-              <b>{globalProtectionArea.toLocaleString(undefined, { maximumFractionDigits: 2 })} km<sup>2</sup></b>
-              <span className={styles.desc}>
-                <T
-                  _str='of a total {globalArea} km{sup} suitable habitat within protected areas'
-                  sup={<sup>2</sup>}
-                  globalArea={globalArea}
-                />
-              </span>
-            </div>
-          </div>
-        </div>
-      </div> */}
       <div className={styles.chart}>
         <div className={styles.compareWrap}>
           <span className={styles.compare}>{t('Compare')}</span>
@@ -89,7 +91,7 @@ function ProtectionComponent(props) {
               (item) =>
                 item !== countryName && (
                   <option key={item} value={item}>
-                    {item}
+                    {t(item)}
                   </option>
                 )
             )}
@@ -99,65 +101,71 @@ function ProtectionComponent(props) {
           <div className={cx(styles.legendBox, styles.blue)} />
           <span>{t(countryName)}</span>
           <div className={cx(styles.legendBox, styles.green)} />
-          <span>{selectedCountry}</span>
+          <span>{t(selectedCountry)}</span>
         </div>
-        {chartData && <Line options={chartOptions} data={chartData} />}
+        {chartData && (
+          <ChartInfoComponent chartInfo={chartInfo} {...props}>
+            <Line options={chartOptions} data={chartData} />
+          </ChartInfoComponent>
+        )}
         {protectionTableData.length && (
-          <table className={styles.dataTable}>
-            <thead>
-              <tr>
-                <th className={cx(styles.textLeft, styles.w20)}>
-                  {t('Country')}
-                </th>
-                <th className={cx(styles.textCenter)}>{t('Stewardship')}</th>
-                <th className={cx(styles.textCenter, styles.w28)}>
-                  {t('Range Protected')}
-                </th>
-                <th className={cx(styles.textCenter, styles.w28)}>
-                  {t('Target Protected')}
-                </th>
-                <th className={cx(styles.textCenter, styles.w12)}>
-                  {t('Total SPS')}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {protectionTableData.map((row) => (
-                <tr
-                  key={row.country}
-                  onClick={() => updateCountry({ value: row.country })}
-                  className={`${
-                    selectedCountry === row.country ? styles.highlighted : ''
-                  }
-                    ${
-                      countryName === row.country ? styles.defaultCountry : ''
-                    }`}
-                >
-                  <td>{row.country}</td>
-                  <td className={styles.textCenter}>
-                    {numberToLocaleStringWithOneDecimal(row.stewardship)}%
-                  </td>
-                  <td className={styles.textCenter}>
-                    {numberToLocaleStringWithOneDecimal(
-                      parseFloat(row.rangeProtected)
-                    )}{' '}
-                    km
-                    <sup>2</sup>
-                  </td>
-                  <td className={styles.textCenter}>
-                    {numberToLocaleStringWithOneDecimal(
-                      parseFloat(row.targetProtected)
-                    )}{' '}
-                    km
-                    <sup>2</sup>
-                  </td>
-                  <td className={styles.textCenter}>
-                    {numberToLocaleStringWithOneDecimal(row.sps)}%
-                  </td>
+          <ChartInfoComponent chartInfo={tableInfo} {...props}>
+            <table className={styles.dataTable}>
+              <thead>
+                <tr>
+                  <th className={cx(styles.textLeft, styles.w20)}>
+                    {t('Country')}
+                  </th>
+                  <th className={cx(styles.textCenter)}>{t('Stewardship')}</th>
+                  <th className={cx(styles.textCenter, styles.w28)}>
+                    {t('Range Protected')}
+                  </th>
+                  <th className={cx(styles.textCenter, styles.w28)}>
+                    {t('Target Protected')}
+                  </th>
+                  <th className={cx(styles.textCenter, styles.w12)}>
+                    {t('Total SPS')}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {protectionTableData.map((row) => (
+                  <tr
+                    key={row.country}
+                    onClick={() => updateCountry({ value: row.country })}
+                    className={`${
+                      selectedCountry === row.country ||
+                      countryName === row.country
+                        ? styles.highlighted
+                        : ''
+                    }`}
+                  >
+                    <td>{t(row.country)}</td>
+                    <td className={styles.textCenter}>
+                      {numberToLocaleStringWithOneDecimal(row.stewardship)}%
+                    </td>
+                    <td className={styles.textCenter}>
+                      {numberToLocaleStringWithOneDecimal(
+                        parseFloat(row.rangeProtected)
+                      )}{' '}
+                      km
+                      <sup>2</sup>
+                    </td>
+                    <td className={styles.textCenter}>
+                      {numberToLocaleStringWithOneDecimal(
+                        parseFloat(row.targetProtected)
+                      )}{' '}
+                      km
+                      <sup>2</sup>
+                    </td>
+                    <td className={styles.textCenter}>
+                      {numberToLocaleStringWithOneDecimal(row.sps)}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </ChartInfoComponent>
         )}
 
         <p>

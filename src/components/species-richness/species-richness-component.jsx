@@ -48,7 +48,15 @@ ChartJS.register(
 
 function SpeciesRichnessComponent(props) {
   const t = useT();
-  const { selectedProvince, activeTrend, provinces, countryData } = props;
+  const {
+    selectedProvince,
+    activeTrend,
+    provinces,
+    countryData,
+    shiActiveTrend,
+    shiCountryData,
+    shi,
+  } = props;
 
   const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
@@ -73,10 +81,7 @@ function SpeciesRichnessComponent(props) {
       percentage: 0,
     },
   });
-
-  const [titleText, setTitleText] = useState(
-    `NATIONAL ${t(' SPI BY TAXONOMIC GROUP')}`
-  );
+  const [titleText, setTitleText] = useState();
 
   const getPercentage = (species) => {
     const { count } = scores[species];
@@ -84,17 +89,48 @@ function SpeciesRichnessComponent(props) {
   };
 
   const getScores = () => {
-    let data = [];
-    if (selectedProvince && activeTrend === PROVINCE_TREND) {
-      const regionData = provinces.find(
-        (region) => region.region_name === selectedProvince.region_name
+    if (shi) {
+      let filterValue = 'XXX';
+      if (selectedProvince && shiActiveTrend === PROVINCE_TREND) {
+        filterValue = selectedProvince.iso3_regional;
+      }
+      // eslint-disable-next-line camelcase
+      const { habitat_score_taxa, nspecies } = shiCountryData.find(
+        (sc) => sc.iso3_regional === filterValue
       );
-      data = regionData;
-    } else {
-      data = last(countryData);
-    }
 
-    if (data) {
+      const values = JSON.parse(habitat_score_taxa)[0];
+      const total = JSON.parse(nspecies)[0];
+
+      setScores({
+        birds: {
+          count: values.birds,
+          total: total.birds,
+        },
+        mammals: {
+          count: values.mammals,
+          total: total.mammals,
+        },
+        reptiles: {
+          count: values.reptiles,
+          total: total.reptiles,
+        },
+        amphibians: {
+          count: values.amphibians,
+          total: total.amphibians,
+        },
+      });
+    } else {
+      let formattedData = [];
+      if (selectedProvince && activeTrend === PROVINCE_TREND) {
+        const regionData = provinces.find(
+          (region) => region.region_name === selectedProvince.region_name
+        );
+        formattedData = regionData;
+      } else {
+        formattedData = last(countryData);
+      }
+
       const {
         BirdSpeciesRichness,
         BirdSPI,
@@ -104,7 +140,7 @@ function SpeciesRichnessComponent(props) {
         ReptileSPI,
         AmphibianSpeciesRichness,
         AmphibianSPI,
-      } = data;
+      } = formattedData;
 
       setScores({
         birds: {
@@ -126,18 +162,6 @@ function SpeciesRichnessComponent(props) {
       });
     }
   };
-
-  useEffect(() => {
-    if (!selectedProvince) return;
-    getScores();
-    if (activeTrend === NATIONAL_TREND || !selectedProvince) {
-      setTitleText(`NATIONAL ${t(' SPI BY TAXONOMIC GROUP')}`);
-    } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      setTitleText(
-        `${selectedProvince?.region_name} ${t('SPI BY TAXONOMIC GROUP')}`
-      );
-    }
-  }, [selectedProvince, activeTrend]);
 
   const emptyArcColor = lightMode
     ? getCSSVariable('dark-opacity')
@@ -194,6 +218,36 @@ function SpeciesRichnessComponent(props) {
       },
     ],
   };
+
+  const getData = () => {
+    if (shi) {
+      if (shiActiveTrend === NATIONAL_TREND || !selectedProvince) {
+        setTitleText(`${t('NATIONAL SHI BY TAXONOMIC GROUP')}`);
+      } else if (shiActiveTrend === PROVINCE_TREND && selectedProvince) {
+        setTitleText(
+          `${selectedProvince?.region_name} SHI ${t('BY TAXONOMIC GROUP')}`
+        );
+      }
+    } else if (activeTrend === NATIONAL_TREND || !selectedProvince) {
+      setTitleText(`${t('NATIONAL SPI BY TAXONOMIC GROUP')}`);
+    } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
+      setTitleText(
+        `${selectedProvince?.region_name} SPI ${t('BY TAXONOMIC GROUP')}`
+      );
+    }
+
+    getScores();
+  };
+
+  useEffect(() => {
+    if (!countryData.length || !shiCountryData.length) return;
+    getData();
+  }, [countryData, shiCountryData]);
+
+  useEffect(() => {
+    if (!selectedProvince) return;
+    getData();
+  }, [selectedProvince, activeTrend, shiActiveTrend]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>

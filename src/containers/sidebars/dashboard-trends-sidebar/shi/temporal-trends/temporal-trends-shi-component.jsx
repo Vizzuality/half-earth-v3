@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
+import { LightModeContext } from 'context/light-mode';
 
 import Button from 'components/button';
 
-import { LightModeContext } from '../../../../../context/light-mode';
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
@@ -37,7 +37,7 @@ function TemporalTrendsShiComponent(props) {
 
   useEffect(() => {
     if (countryISO === 'COD') {
-      setShiActiveTrend(PROVINCE_TREND);
+      setShiActiveTrend(NATIONAL_TREND);
     }
   }, []);
 
@@ -53,18 +53,26 @@ function TemporalTrendsShiComponent(props) {
           <T
             _str="Since {startYear}, the terrestrial vertebrate species of the {countryNameBold} have lost an average of {lostAvgBold} of their suitable habitat, leading to the country having a Species Habitat Index of {shiValueBold}."
             startYear={startYear}
-            countryNameBold={<b>{countryName}</b>}
+            countryNameBold={<b>{t(countryName)}</b>}
             lostAvgBold={<b>{lostAvg}%</b>}
             shiValueBold={<b>{shiValue}</b>}
           />
         </p>
         <p className={styles.description}>
           {t(
-            'The Area Score addresses changes in habitat extent while the Connectivity Score addresses changes in the fragmentation of habitat.'
+            'The Area component addresses changes in habitat extent while the Connectivity component addresses changes in the fragmentation of habitat.'
           )}
         </p>
         <div className={styles.options}>
           <div className={styles.btnGroup}>
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend === PROVINCE_TREND,
+              })}
+              label={NATIONAL_TREND}
+              handleClick={handleActionChange}
+            />
             {countryISO === 'COD' && (
               <Button
                 type="rectangular"
@@ -75,17 +83,9 @@ function TemporalTrendsShiComponent(props) {
                 handleClick={handleActionChange}
               />
             )}
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: shiActiveTrend === PROVINCE_TREND,
-              })}
-              label={NATIONAL_TREND}
-              handleClick={handleActionChange}
-            />
           </div>
           <span className={styles.helpText}>
-            {t('Toggle national SPI and province-level breakdown.')}
+            {t('Toggle national SHI and province-level breakdown.')}
           </span>
           {/* <Button
             type="rectangular"

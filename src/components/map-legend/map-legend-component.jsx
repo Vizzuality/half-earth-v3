@@ -11,6 +11,7 @@ import {
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
 
+import ArrowIcon from 'icons/arrow_right.svg?react';
 import ArrowUpIcon from 'icons/dashboard/arrow_icon.svg?react';
 
 import SHILegendImage from 'images/dashboard/shi_legend.png';
@@ -23,6 +24,11 @@ function MapLegendComponent(props) {
   const { mapLegendLayers, map, setMapLegendLayers, countryISO } = props;
   const t = useT();
   const [leftPosition, setLeftPosition] = useState(0);
+  const [collapse, setCollapse] = useState(false);
+  const spiLow = 0;
+  const spiHigh = 100;
+  const shiLow = 95;
+  const shiHigh = 100;
 
   const getLayerIcon = (layer) => {
     if (layer.parentId === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
@@ -67,7 +73,10 @@ function MapLegendComponent(props) {
             const { color } = item.symbol;
             const backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
             return (
-              <div style={{ display: 'flex', gap: '5px' }}>
+              <div
+                style={{ display: 'flex', gap: '5px' }}
+                key={`${item.label}-${item.symbol}`}
+              >
                 <div className={styles.box} style={{ backgroundColor }} />
                 {t(item.label)}
               </div>
@@ -87,8 +96,8 @@ function MapLegendComponent(props) {
         <div className={styles.mapLegend}>
           <img src={SPILegendImage} width="100%" height={20} alt="SPI" />
           <div className={styles.legendValues}>
-            <span>0</span>
-            <span>100</span>
+            <span>{spiLow}</span>
+            <span>{spiHigh}</span>
           </div>
         </div>
       );
@@ -98,8 +107,8 @@ function MapLegendComponent(props) {
         <div className={styles.mapLegend}>
           <img src={SHILegendImage} width="100%" height={20} alt="SHI" />
           <div className={styles.legendValues}>
-            <span>0</span>
-            <span>100</span>
+            <span>{shiLow}</span>
+            <span>{shiHigh}</span>
           </div>
         </div>
       );
@@ -168,17 +177,35 @@ function MapLegendComponent(props) {
     const left = style.getPropertyValue('left');
 
     setLeftPosition(`${rect.width + parseInt(left, 10) + 10}px`);
-  }, []);
+  }, [mapLegendLayers]);
 
   return (
-    <div className={styles.container} style={{ left: leftPosition }}>
-      <span className={styles.title}>{t('Map Legend')}</span>
+    <div
+      className={cx(styles.container, {
+        [styles.collapse]: collapse,
+      })}
+      style={{ left: leftPosition }}
+    >
+      <div className={styles.titleWrapper}>
+        <span className={styles.title}>{t('Map Legend')}</span>
+        <button
+          type="button"
+          onClick={() => setCollapse(!collapse)}
+          aria-label="Collapse legend"
+        >
+          <ArrowIcon
+            className={cx(styles.arrowIcon, {
+              [styles.isOpened]: collapse,
+            })}
+          />
+        </button>
+      </div>
       <ul className={styles.layers}>
         {Object.values(mapLegendLayers).map((layer, index) => (
           <li key={`${layer.id}-${layer.label}`}>
             <div className={styles.info}>
-              <b>{layer.label?.toUpperCase()}</b>
-              {layer.parent && <span>{layer.parent}</span>}
+              <b>{t(layer.label?.toUpperCase())}</b>
+              {layer.parent && <span>{t(layer.parent)}</span>}
               {getLayerIcon(layer)}
             </div>
             <ToggleOpacityContainer layer={layer} {...props} />

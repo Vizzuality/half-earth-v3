@@ -16,6 +16,7 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
 import Button from 'components/button';
+// import SearchInput from 'components/search-input';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
@@ -31,6 +32,7 @@ import styles from './regions-analysis-styles.module.scss';
 
 function RegionsAnalysisComponent(props) {
   const t = useT();
+  // const locale = useLocale();
   const {
     map,
     regionLayers,
@@ -39,25 +41,29 @@ function RegionsAnalysisComponent(props) {
     setSelectedIndex,
     selectedRegion,
     setSelectedRegion,
-    scientificName,
     selectedIndex,
     selectedRegionOption,
     setSelectedRegionOption,
     countryISO,
   } = props;
   const { lightMode } = useContext(LightModeContext);
+  // const [searchInput, setSearchInput] = useState('');
+  // const [searchResults, setSearchResults] = useState([]);
 
-  const displayLayer = (option) => {
+  const displayLayer = async (option) => {
     let featureLayer;
     if (option === REGION_OPTIONS.PROTECTED_AREAS) {
-      featureLayer = EsriFeatureService.addProtectedAreaLayer(null, countryISO);
+      featureLayer = await EsriFeatureService.addProtectedAreaLayer(
+        null,
+        countryISO
+      );
 
       setRegionLayers(() => ({
         [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.PROVINCES) {
-      featureLayer = EsriFeatureService.getFeatureLayer(
+      featureLayer = await EsriFeatureService.getFeatureLayer(
         PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
         countryISO
       );
@@ -67,7 +73,7 @@ function RegionsAnalysisComponent(props) {
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.FORESTS) {
-      featureLayer = EsriFeatureService.getFeatureLayer(
+      featureLayer = await EsriFeatureService.getFeatureLayer(
         DRC_REGION_FEATURE_ID,
         null,
         LAYER_OPTIONS.FORESTS
@@ -78,17 +84,6 @@ function RegionsAnalysisComponent(props) {
       }));
       map.add(featureLayer);
     }
-
-    browsePage({
-      type: DASHBOARD,
-      payload: { iso: countryISO.toLowerCase() },
-      query: {
-        scientificName,
-        selectedIndex,
-        regionLayers,
-        selectedRegionOption: option,
-      },
-    });
   };
 
   const removeRegionLayers = () => {
@@ -105,6 +100,7 @@ function RegionsAnalysisComponent(props) {
     map.remove(protectedAreaLayer);
     map.remove(provinceLayer);
     map.remove(forestLayer);
+    setRegionLayers({});
   };
 
   const optionSelected = (event) => {
@@ -116,12 +112,52 @@ function RegionsAnalysisComponent(props) {
     setSelectedRegionOption(option);
   };
 
+  // const handleSearch = (searchText) => {
+  //   setSearchInput(searchText.currentTarget.value);
+  // };
+
+  // const handleSearchSelect = (searchItem) => {
+  //   // setScientificName(searchItem.scientificname);
+  //   // localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
+  //   // setSelectedIndex(NAVIGATION.DATA_LAYER);
+  // };
+
+  // const getSearchResults = async () => {
+  //   const searchURL = `https://dev-api.mol.org/2.x/spatial/regions/search?lang=en&search_term=${searchInput}&region_dataset_id=&limit=100`;
+
+  //   const searchSpecies = await fetch(searchURL);
+  //   const results = await searchSpecies.json();
+  //   setSearchResults(results);
+  // };
+
+  // useEffect(() => {
+  //   if (!searchInput) return;
+  //   const handler = setTimeout(() => {
+  //     getSearchResults();
+  //   }, 300);
+
+  //   return () => clearTimeout(handler);
+  // }, [searchInput]);
+
   useEffect(() => {
-    removeRegionLayers();
+    browsePage({
+      type: DASHBOARD,
+      payload: { iso: countryISO.toLowerCase() },
+      query: {
+        selectedIndex,
+        regionLayers,
+        selectedRegionOption,
+      },
+    });
+  }, [regionLayers]);
+
+  useEffect(() => {
     if (selectedRegionOption && selectedRegion) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {
-      setSelectedRegionOption(null);
+      removeRegionLayers();
+      displayLayer(REGION_OPTIONS.PROTECTED_AREAS);
+      setSelectedRegionOption(REGION_OPTIONS.PROTECTED_AREAS);
     }
   }, []);
 
@@ -134,6 +170,28 @@ function RegionsAnalysisComponent(props) {
         )}
       </span>
       <hr className={hrTheme.dark} />
+      {/* <div className={styles.explore}>
+        <SearchInput
+          className={cx(
+            styles.search,
+            searchInput && searchResults.length > 0 ? styles.showResults : ''
+          )}
+          placeholder={t('Search for a species by name')}
+          onChange={handleSearch}
+          value={searchInput}
+        />
+        {searchInput && searchResults.length > 0 && (
+          <ul className={styles.searchResults}>
+            {searchResults.map((item, index) => (
+              <li key={index}>
+                <button type="button" onClick={() => handleSearchSelect(item)}>
+                  <b>{item.scientificname}</b> - <span>{item.vernacular}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div> */}
       <p>{t('Select a region type below to display on the map')}</p>
       <div className={styles.choices}>
         <RadioGroup

@@ -40,6 +40,7 @@ function GroupedListComponent(props) {
     setIsHabitatChartLoading,
     isPrivate,
     setMapLegendLayers,
+    setIsLoading,
   } = props;
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
@@ -133,6 +134,7 @@ function GroupedListComponent(props) {
 
     if (id === LAYER_OPTIONS.PROTECTED_AREAS) {
       if (!item.isActive) {
+        setIsLoading(true);
         layer = await EsriFeatureService.addProtectedAreaLayer(
           null,
           countryISO
@@ -140,6 +142,7 @@ function GroupedListComponent(props) {
       }
     } else if (id === LAYER_OPTIONS.ADMINISTRATIVE_LAYERS) {
       if (!item.isActive) {
+        setIsLoading(true);
         layer = await EsriFeatureService.getFeatureLayer(
           PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
           countryISO,
@@ -148,6 +151,7 @@ function GroupedListComponent(props) {
       }
     } else if (id === LAYER_OPTIONS.HABITAT) {
       if (!item.isActive) {
+        setIsLoading(true);
         setIsHabitatChartLoading(true);
         layer = await EsriFeatureService.getXYZLayer(
           speciesInfo.scientificname.replace(' ', '_'),
@@ -192,12 +196,15 @@ function GroupedListComponent(props) {
     // check if item is active to add/remove from Map Legend
     if (!item.isActive) {
       getLayerIcon(layer, item);
-
-      setRegionLayers((rl) => ({
-        ...rl,
-        [id]: layer,
-      }));
       map.add(layer);
+
+      view.whenLayerView(layer).then(() => {
+        setRegionLayers((rl) => ({
+          ...rl,
+          [id]: layer,
+        }));
+        setIsLoading(false);
+      });
     } else {
       setMapLegendLayers((ml) => {
         const filtered = ml.filter(
@@ -214,6 +221,10 @@ function GroupedListComponent(props) {
       });
       map.remove(layerToRemove);
     }
+
+    view.whenLayerView(layer).then(() => {
+      setIsLoading(false);
+    });
   };
 
   const findLayerToShow = async (item) => {
@@ -225,6 +236,7 @@ function GroupedListComponent(props) {
     if (layerParent === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
       if (!item.isActive || layerIndex < 0) {
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
+          setIsLoading(true);
           layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
             layerName,
@@ -232,13 +244,36 @@ function GroupedListComponent(props) {
           );
 
           item.isActive = true;
-          setRegionLayers((rl) => ({
-            ...rl,
-            [layerName]: layer,
-          }));
-          map.add(layer);
 
-          setMapLegendLayers((ml) => [item, ...ml]);
+          // find index of gbif
+          const gbifIndex = map.layers.items.findIndex(
+            (l) => l.id.toUpperCase().indexOf('GBIF') > -1
+          );
+
+          const eBirdIndex = map.layers.items.findIndex(
+            (l) => l.id.toUpperCase().indexOf('EBIRD') > -1
+          );
+
+          if (gbifIndex > -1 && eBirdIndex > -1) {
+            const expertLayerIndex = Math.min(gbifIndex, eBirdIndex);
+            map.add(layer, expertLayerIndex);
+          } else if (gbifIndex > -1) {
+            map.add(layer, gbifIndex);
+          } else if (eBirdIndex > -1) {
+            map.add(layer, eBirdIndex);
+          } else {
+            map.add(layer);
+          }
+
+          view.whenLayerView(layer).then(() => {
+            setRegionLayers((rl) => ({
+              ...rl,
+              [layerName]: layer,
+            }));
+            setIsLoading(false);
+          });
+
+          setMapLegendLayers((ml) => [...ml, item]);
         }
       } else {
         item.isActive = false;
@@ -260,32 +295,34 @@ function GroupedListComponent(props) {
     if (layerParent === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
       if (!item.isActive || layerIndex < 0) {
         if (pointObservationIds.find((id) => id === item.dataset_id)) {
-          let name;
+          setIsLoading(true);
 
           if (layerName.match(/EBIRD/)) {
-            name = `ebird_${speciesInfo.scientificname.replace(' ', '_')}`;
-
-            layer = await EsriFeatureService.getGeoJsonLayer(
-              name,
-              layerName,
-              countryISO
-            );
-          } else if (layerName.match(/GBIF/)) {
-            name = `gbif_${speciesInfo.scientificname.replace(' ', '_')}`;
-
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
               GBIF_OCCURENCE_URL,
               speciesInfo.scientificname,
-              layerName
+              layerName,
+              'eBird'
+            );
+          } else if (layerName.match(/GBIF/)) {
+            layer = await EsriFeatureService.getFeatureOccurenceLayer(
+              GBIF_OCCURENCE_URL,
+              speciesInfo.scientificname,
+              layerName,
+              'GBIF'
             );
           }
 
           item.isActive = true;
-          setRegionLayers((rl) => ({
-            ...rl,
-            [layerName]: layer,
-          }));
           map.add(layer);
+
+          view.whenLayerView(layer).then(() => {
+            setRegionLayers((rl) => ({
+              ...rl,
+              [layerName]: layer,
+            }));
+            setIsLoading(false);
+          });
 
           getLayerIcon(layer, item);
         }
@@ -308,13 +345,18 @@ function GroupedListComponent(props) {
 
     if (layerParent === LAYER_TITLE_TYPES.REGIONAL_CHECKLISTS) {
       if (!item.isActive) {
+        setIsLoading(true);
         layer = await EsriFeatureService.getMVTSource();
 
-        setRegionLayers((rl) => ({
-          ...rl,
-          [layerName]: layer,
-        }));
         map.add(layer);
+
+        view.whenLayerView(layer).then(() => {
+          setRegionLayers((rl) => ({
+            ...rl,
+            [layerName]: layer,
+          }));
+          setIsLoading(false);
+        });
 
         map.addSource('mapTiles', {
           type: 'vector',
@@ -377,48 +419,40 @@ function GroupedListComponent(props) {
   };
 
   const getCheckbox = (item) => {
-    let control = (
-      <FormControlLabel
-        label={t(item.dataset_title)}
-        style={{
-          textTransform: item.dataset_title.match(/(jetz|ebird)/i)
-            ? 'none'
-            : '',
-        }}
-        control={
-          <Checkbox
-            onClick={() => findLayerToShow(item)}
-            checked={item.isActive}
-          />
-        }
-      />
+    const foundExpertRange = expertRangeMapIds.find(
+      (id) => id === item.dataset_id
+    );
+    const foundPointOb = pointObservationIds.find(
+      (id) => id === item.dataset_id
     );
 
-    if (item.parentId === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
-      if (!expertRangeMapIds.find((id) => id === item.dataset_id)) {
-        control = (
-          <FormControlLabel
-            label={t(item.dataset_title)}
-            disabled
-            control={<Checkbox disabled className={styles.disabled} />}
-          />
-        );
-      }
-    }
+    if (foundExpertRange || foundPointOb) {
+      const control = (
+        <FormControlLabel
+          label={t(item.dataset_title)}
+          style={{
+            textTransform: item.dataset_title.match(/(jetz|ebird)/i)
+              ? 'none'
+              : '',
+          }}
+          control={
+            <Checkbox
+              onClick={() => findLayerToShow(item)}
+              checked={item.isActive}
+            />
+          }
+        />
+      );
 
-    if (item.parentId === LAYER_OPTIONS.POINT_OBSERVATIONS) {
-      if (!pointObservationIds.find((id) => id === item.dataset_id)) {
-        control = (
-          <FormControlLabel
-            label={t(item.dataset_title)}
-            disabled
-            control={<Checkbox disabled className={styles.disabled} />}
-          />
-        );
-      }
+      return (
+        <li key={item.dataset_id} className={styles.children}>
+          {control}
+          <span>{item.no_rows}</span>
+          <span />
+          <ToggleLayerInfoContainer layer={item} {...props} />
+        </li>
+      );
     }
-
-    return control;
   };
 
   const activateDefault = () => {
@@ -472,16 +506,7 @@ function GroupedListComponent(props) {
                 <ToggleLayerInfoContainer layer={key} {...props} />
               </div>
               {key.showChildren && (
-                <ul>
-                  {key.items.map((item) => (
-                    <li key={item.dataset_id} className={styles.children}>
-                      {getCheckbox(item)}
-                      <span>{item.no_rows}</span>
-                      <span />
-                      <ToggleLayerInfoContainer layer={item} {...props} />
-                    </li>
-                  ))}
-                </ul>
+                <ul>{key.items.map((item) => getCheckbox(item))}</ul>
               )}
             </>
           )}

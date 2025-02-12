@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { T, useT } from '@transifex/react';
+import { T, useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -8,6 +8,7 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 
@@ -16,24 +17,35 @@ import {
   SPECIES_SELECTED_COOKIE,
 } from 'constants/dashboard-constants.js';
 
-import { PROVINCE_TREND } from '../../dashboard-trends-sidebar-component';
+import spiScoreDistImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-en.png?react';
+import spiScoreDistFRImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-fr.png?react';
+
+import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sections-info';
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import compStyles from './score-distributions-spi-styles.module.scss';
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const {
     activeTrend,
     selectedProvince,
     setSelectedIndex,
     setScientificName,
+    setMapLegendLayers,
     spiScoresData,
     spiSelectSpeciesData,
+    setFromTrends,
+    lang,
   } = props;
   const { lightMode } = useContext(LightModeContext);
   const [chartData, setChartData] = useState();
-
+  const [chartInfo, setChartInfo] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
@@ -192,10 +204,30 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const selectSpecies = (scientificname) => {
+    setMapLegendLayers([]);
+    setFromTrends(true);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
   };
+
+  const updateChartInfo = () => {
+    setChartInfo({
+      title: t('Score Distributions'),
+      description: t(SECTION_INFO.SPI_SCORE_DISTRIBUTIONS),
+      imgAlt: t('Species Protection Index - Score Distributions'),
+      image: locale === 'fr' ? spiScoreDistFRImg : spiScoreDistImg,
+    });
+  };
+
+  useEffect(() => {
+    if (!lang) return;
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
+  }, []);
 
   useEffect(() => {
     if (!spiScoresData.length) return;
@@ -216,7 +248,20 @@ function ScoreDistributionsSpiComponent(props) {
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          <T _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates." />
+          {activeTrend === PROVINCE_TREND && (
+            <T
+              _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrate {inTheBold} {provinceBold} {provinceTextBold}."
+              inTheBold={<b>{t('in the')}</b>}
+              provinceBold={<b>{selectedProvince?.region_name}</b>}
+              provinceTextBold={<b>{t('province')}</b>}
+            />
+          )}
+          {activeTrend === NATIONAL_TREND && (
+            <T
+              _str="View the distribution of the individual Species Protection Scores for all terrestrial vertebrates {provinceBold}."
+              provinceBold={<b>{t('at the national level')}</b>}
+            />
+          )}
         </p>
 
         <span className={styles.spsSpeciesTitle}>
@@ -259,7 +304,9 @@ function ScoreDistributionsSpiComponent(props) {
         <SpeciesRichnessComponent {...props} />
         {isLoading && <Loading height={200} />}
         {!isLoading && (
-          <DistributionsChartComponent options={options} data={chartData} />
+          <ChartInfoComponent chartInfo={chartInfo} {...props}>
+            <DistributionsChartComponent options={options} data={chartData} />
+          </ChartInfoComponent>
         )}
       </div>
     </div>

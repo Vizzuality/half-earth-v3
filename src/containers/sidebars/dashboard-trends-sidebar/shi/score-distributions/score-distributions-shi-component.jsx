@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { T, useT } from '@transifex/react';
+import { T, useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -9,26 +9,41 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import Button from 'components/button';
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
+import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
 
 import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
 } from 'constants/dashboard-constants.js';
 
+import shiScoreDistImg from 'images/dashboard/tutorials/tutorial_shi_scoreDist-en.png?react';
+import shiScoreDistFRImg from 'images/dashboard/tutorials/tutorial_shi_scoreDist-fr.png?react';
+
+import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sections-info';
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
+import compStyles from '../../spi/score-distibutions/score-distributions-spi-styles.module.scss';
 
 import DistributionsTableContainer from './distributions-table';
-import compStyles from './score-distributions-shi-styles.module.scss';
 
 function ScoreDistributionsShiComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const {
     setScientificName,
     setSelectedIndex,
     shiScoresData,
     shiSelectSpeciesData,
     shiActiveTrend,
+    setMapLegendLayers,
+    selectedProvince,
+    setFromTrends,
+    lang,
   } = props;
 
   const SCORES = {
@@ -46,12 +61,12 @@ function ScoreDistributionsShiComponent(props) {
   const [chartData, setChartData] = useState();
   const [responseData] = useState();
   const [showTable, setShowTable] = useState(false);
-  const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
   const [isLoading, setIsLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
   const [lowDist, setLowDist] = useState(0);
   const [highDist, setHighDist] = useState(7);
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
+  const [chartInfo, setChartInfo] = useState();
   const { lightMode } = useContext(LightModeContext);
 
   const toolTipTitle = (tooltipItems) => {
@@ -284,11 +299,6 @@ function ScoreDistributionsShiComponent(props) {
     setIsLoading(false);
   };
 
-  const handleActiveChange = (score) => {
-    setActiveScore(score);
-    displayData(score);
-  };
-
   const loadSpecies = () => {
     const maxItems = 4;
     const species = shiSelectSpeciesData.slice(0, maxItems);
@@ -303,6 +313,8 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const selectSpecies = (scientificname) => {
+    setMapLegendLayers([]);
+    setFromTrends(true);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
@@ -325,13 +337,44 @@ function ScoreDistributionsShiComponent(props) {
     loadSpecies();
   }, [shiSelectSpeciesData]);
 
+  const updateChartInfo = () => {
+    setChartInfo({
+      title: t('Score Distributions'),
+      description: t(SECTION_INFO.SHI_SCORE_DISTRIBUTIONS),
+      imgAlt: t('Species Protection Index - Trends'),
+      image: locale === 'fr' ? shiScoreDistFRImg : shiScoreDistImg,
+    });
+  };
+
+  useEffect(() => {
+    if (!lang) return;
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
+  }, []);
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>{t('Score Distributions')}</span>
 
         <p className={styles.description}>
-          <T _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates." />
+          {shiActiveTrend === PROVINCE_TREND && (
+            <T
+              _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates {inTheBold} {provinceBold} {provinceTextBold}."
+              inTheBold={<b>{t('in the')}</b>}
+              provinceBold={<b>{selectedProvince?.region_name}</b>}
+              provinceTextBold={<b>{t('province')}</b>}
+            />
+          )}
+          {shiActiveTrend === NATIONAL_TREND && (
+            <T
+              _str="View the distribution of the individual Species Habitat Scores, including the two components Area and Connectivity, for all terrestrial vertebrates {provinceBold}."
+              provinceBold={<b>{t('at the national level')}</b>}
+            />
+          )}
         </p>
 
         <span className={styles.spsSpeciesTitle}>
@@ -397,71 +440,20 @@ function ScoreDistributionsShiComponent(props) {
           </span> */}
         </div>
       </div>
-      <div className={compStyles.chartArea}>
+      <div
+        className={cx(lightMode ? compStyles.light : '', compStyles.chartArea)}
+      >
+        <SpeciesRichnessComponent shi {...props} />
         {!showTable && (
           <>
-            {/* <SpeciesRichnessComponent countryData={countryData} taxaData={taxaData} /> */}
-            <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeScore !== SCORES.HABITAT_SCORE,
-                })}
-                label={t('Habitat Score')}
-                handleClick={() => handleActiveChange(SCORES.HABITAT_SCORE)}
-              />
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeScore !== SCORES.AREA_SCORE,
-                })}
-                label={t('Area')}
-                handleClick={() => handleActiveChange(SCORES.AREA_SCORE)}
-              />
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeScore !== SCORES.CONNECTIVITY_SCORE,
-                })}
-                label={t('Connectivity')}
-                handleClick={() =>
-                  handleActiveChange(SCORES.CONNECTIVITY_SCORE)
-                }
-              />
-            </div>
-            <div className={styles.chartLegend}>
-              <div className={styles.legendItem}>
-                {t('Birds')}
-                <div
-                  className={cx(styles.legendColor, styles.birds)}
-                  style={{ backgroundColor: getCSSVariable('birds') }}
-                />
-              </div>
-              <div className={styles.legendItem}>
-                {t('Mammals')}
-                <div
-                  className={cx(styles.legendColor, styles.mammals)}
-                  style={{ backgroundColor: getCSSVariable('mammals') }}
-                />
-              </div>
-              <div className={styles.legendItem}>
-                {t('Reptiles')}
-                <div
-                  className={cx(styles.legendColor, styles.reptiles)}
-                  style={{ backgroundColor: getCSSVariable('reptiles') }}
-                />
-              </div>
-              <div className={styles.legendItem}>
-                {t('Amphibians')}
-                <div
-                  className={cx(styles.legendColor, styles.amphibians)}
-                  style={{ backgroundColor: getCSSVariable('amphibians') }}
-                />
-              </div>
-            </div>
             {isLoading && <Loading height={200} />}
             {!isLoading && (
-              <DistributionsChartComponent data={chartData} options={options} />
+              <ChartInfoComponent chartInfo={chartInfo} {...props}>
+                <DistributionsChartComponent
+                  data={chartData}
+                  options={options}
+                />
+              </ChartInfoComponent>
             )}
           </>
         )}

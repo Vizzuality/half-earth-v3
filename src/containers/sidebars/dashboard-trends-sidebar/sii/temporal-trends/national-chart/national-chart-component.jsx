@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -18,7 +18,13 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
+
+import siiTrendImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-en.png?react';
+import siiTrendFRImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-fr.png?react';
+
+import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
 import styles from './national-chart-styles.module.scss';
 
@@ -26,7 +32,8 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
-  const { nationalChartData } = props;
+  const locale = useLocale();
+  const { nationalChartData, lang } = props;
   const [data, setData] = useState();
   const [siiValue, setSiiValue] = useState(0);
   const { lightMode } = useContext(LightModeContext);
@@ -35,6 +42,7 @@ function NationalChartComponent(props) {
     : getCSSVariable('white-opacity-20');
   const [isLoading, setIsLoading] = useState(true);
   const [lastYear, setLastYear] = useState();
+  const [chartInfo, setChartInfo] = useState();
   const [globalRanking, setGlobalRanking] = useState(0);
 
   const blankData = {
@@ -67,7 +75,7 @@ function NationalChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Year',
+          text: t('Year'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
           font: {
             size: 14,
@@ -102,6 +110,24 @@ function NationalChartComponent(props) {
       },
     },
   };
+
+  const updateChartInfo = () => {
+    setChartInfo({
+      title: t('Temporal Trends'),
+      description: t(SECTION_INFO.SII_TEMPORAL_TREND),
+      imgAlt: t('Species Information Index - Trends'),
+      image: locale === 'fr' ? siiTrendFRImg : siiTrendImg,
+    });
+  };
+
+  useEffect(() => {
+    if (!lang) return;
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
+  }, []);
 
   useEffect(() => {
     if (nationalChartData.length) {
@@ -167,7 +193,9 @@ function NationalChartComponent(props) {
           </div>
           {data && (
             <div className={styles.chart}>
-              <Line options={options} data={data} />
+              <ChartInfoComponent chartInfo={chartInfo} {...props}>
+                <Line options={options} data={data} />
+              </ChartInfoComponent>
             </div>
           )}
         </>

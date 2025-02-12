@@ -283,6 +283,21 @@ $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
 $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape}) and (max-width: #{$breakpoint-desktop}) and (orientation:landscape)';
 $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
+// IUCN status colors
+$critaclly-endangered: #ce3030;
+$critaclly-endangered-text:#fecdce;
+$endangered: #ce6730;
+$endangered-text: #fece9b;
+$vulnerable: #cd9b01;
+$vulnerable-text: #ffffce;
+$near-threatened: #066767;
+$near-threatened-text: #a6d2a6;
+$least-concern: #066767;
+$least-concern-text: $white;
+$data-deficient: #808080;
+$data-deficient-text: $white;
+
+
 :root {
   // COLORS
   --shamrock: #{$shamrock};

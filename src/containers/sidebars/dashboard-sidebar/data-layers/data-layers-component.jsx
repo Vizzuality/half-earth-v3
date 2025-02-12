@@ -25,7 +25,6 @@ import {
   LAYER_OPTIONS,
   NAVIGATION,
   DATA_POINT_TYPE,
-  LAYER_TITLE_TYPES,
 } from 'constants/dashboard-constants.js';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -57,6 +56,10 @@ function DataLayerComponent(props) {
     setDataLayerData,
     setMapLegendLayers,
     exploreAllSpecies,
+    mapLegendLayers,
+    regionLayers,
+    fromTrends,
+    map,
   } = props;
 
   const { lightMode } = useContext(LightModeContext);
@@ -103,6 +106,18 @@ function DataLayerComponent(props) {
   const [chartData, setChartData] = useState();
   const [showHabitatChart, setShowHabitatChart] = useState(false);
   const [isHabitatChartLoading, setIsHabitatChartLoading] = useState(false);
+
+  const expertRangeMapIds = [
+    'ec694c34-bddd-4111-ba99-926a5f7866e8',
+    '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
+    '98f229de-6131-41ef-aff1-7a52212b5a15',
+    'd542e050-2ae5-457e-8476-027741538965',
+  ];
+
+  const pointObservationIds = [
+    '9905692e-6a28-4310-b01e-476a471e5bf8',
+    '794adb49-7458-41c4-a1c0-56537fdbec1d',
+  ];
 
   const chartOptions = {
     plugins: {
@@ -174,23 +189,45 @@ function DataLayerComponent(props) {
         obj.parentId = grouped[groupKey].id;
         obj.id = obj.label;
         grouped[groupKey].items.push(obj); // Push the current object into the 'item' array of the matching group
-        grouped[groupKey].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+
+        // TODO: remove logic when not filtering out results
+        const foundExpertRange = expertRangeMapIds.find(
+          (id) => id === obj.dataset_id
+        );
+        const foundPointOb = pointObservationIds.find(
+          (id) => id === obj.dataset_id
+        );
+
+        if (foundExpertRange || foundPointOb) {
+          grouped[groupKey].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+        }
       }
     });
 
     return Object.values(grouped);
   };
 
+  const findMapLayersToRemove = () => {
+    mapLegendLayers.forEach((ml) => {
+      const layerToRemove = regionLayers[ml.id.toUpperCase()];
+      map.remove(layerToRemove);
+    });
+
+    setMapLegendLayers([]);
+  };
+
   const handleBack = () => {
     setDataLayerData(null);
     setSpeciesInfo(null);
     setScientificName(null);
-    setMapLegendLayers([]);
+    findMapLayersToRemove();
 
     if (selectedRegion || exploreAllSpecies) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+    } else if (fromTrends) {
+      setSelectedIndex(NAVIGATION.TRENDS);
     } else {
-      setSelectedIndex(NAVIGATION.HOME);
+      setSelectedIndex(NAVIGATION.SPECIES);
     }
   };
 
@@ -199,10 +236,9 @@ function DataLayerComponent(props) {
     const response = await fetch(habitatMapUrl);
     const d = await response.json();
 
-    // remove Year row
-    d.data.shift();
-
-    if (d.data.length) {
+    if (d.data?.length) {
+      // remove Year row
+      d.data.shift();
       setValuesExists(true);
 
       setChartData({
@@ -237,7 +273,7 @@ function DataLayerComponent(props) {
     const publicData = [
       ...groupByTypeTitle(dataLayerData),
       {
-        label: t(LAYER_TITLE_TYPES.HABITAT),
+        label: t('Habitat Loss/Gain'),
         items: [],
         id: LAYER_OPTIONS.HABITAT,
         total_no_rows: '',

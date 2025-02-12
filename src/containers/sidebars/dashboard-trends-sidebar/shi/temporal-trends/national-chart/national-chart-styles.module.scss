@@ -60,6 +60,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        max-width: 100px;
         align-self: flex-end;
 
         b{
@@ -138,6 +139,24 @@
         &.connectivity{
           background-color: $connectivity;
         }
+      }
+    }
+
+    .chartWrapper{
+      position:relative;
+      width: 100%;
+
+      .info{
+        position: absolute;
+        top: -5px;
+        right: 0;
+        color: var(--font-color);
+        fill: var(--font-color);
+        width: 30px;
+        height: 30px;
+        border: 1px solid;
+        border-radius: 50%;
+        padding: 0;
       }
     }
   }

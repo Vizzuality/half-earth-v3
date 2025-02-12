@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Bubble } from 'react-chartjs-2';
 import Select from 'react-select';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -19,9 +19,15 @@ import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import { SPI_LATEST_YEAR } from 'constants/dashboard-constants.js';
+
+import spiProvinceImg from 'images/dashboard/tutorials/tutorial_spi_provinces-en.png?react';
+import spiProvinceFRImg from 'images/dashboard/tutorials/tutorial_spi_provinces-fr.png?react';
+
+import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
 import styles from './province-chart-styles.module.scss';
 
@@ -29,6 +35,7 @@ ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function ProvinceChartComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const chartRef = useRef(null);
   const { lightMode } = useContext(LightModeContext);
   const {
@@ -41,6 +48,7 @@ function ProvinceChartComponent(props) {
     setProvinceName,
     handleRegionSelected,
     layerView,
+    lang,
   } = props;
 
   const blankData = {
@@ -73,6 +81,7 @@ function ProvinceChartComponent(props) {
   const [foundIndex, setFoundIndex] = useState(0);
   const [previousIndex, setPreviousIndex] = useState(-1);
   const [percentAreaProtected, setPercentAreaProtected] = useState(0);
+  const [chartInfo, setChartInfo] = useState();
 
   const getChartData = () => {
     const data = [];
@@ -185,6 +194,24 @@ function ProvinceChartComponent(props) {
       provinces.findIndex((prov) => prov.region_name === value.region_name)
     );
   };
+
+  const updateChartInfo = () => {
+    setChartInfo({
+      title: t('Province View'),
+      description: t(SECTION_INFO.SPI_PROVINCE_VIEW),
+      imgAlt: t('Species Protection Index - Trends'),
+      image: locale === 'fr' ? spiProvinceFRImg : spiProvinceImg,
+    });
+  };
+
+  useEffect(() => {
+    if (!lang) return;
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
+  }, []);
 
   const options = {
     plugins: {
@@ -339,7 +366,9 @@ function ProvinceChartComponent(props) {
       )}
       <div className={styles.chart}>
         {bubbleData && (
-          <Bubble options={options} data={bubbleData} ref={chartRef} />
+          <ChartInfoComponent chartInfo={chartInfo} {...props}>
+            <Bubble options={options} data={bubbleData} ref={chartRef} />
+          </ChartInfoComponent>
         )}
       </div>
     </div>

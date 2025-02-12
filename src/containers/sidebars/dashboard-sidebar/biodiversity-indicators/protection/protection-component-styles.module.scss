@@ -181,7 +181,7 @@
 
   .dataTable {
     border-collapse: collapse;
-    width: 100%;
+    width: 94%;
 
     th,
     td {
@@ -198,12 +198,8 @@
         width: 7rem;
       }
 
-      &.w20{
-        width: 5rem;
-      }
-
-      &.w12{
-        width: 3rem;
+      &.w14{
+        width: 3.5rem;
       }
 
       &.textCenter{
@@ -214,24 +210,23 @@
     th {
       vertical-align: bottom;
       color: var(--font-color);
-      font-weight: 700;
     }
 
     tbody {
       tr {
-        height: 40px;
-        border-bottom: 1px solid var(--font-color);
-        background-color: $wild-sand;
+        height: 30px;
+        border: 1px solid transparent;
 
-        // &:nth-child(odd) {
-        //   background-color: $alto;
-        // }
+        &:nth-child(odd) {
+          background-color: $alto;
+        }
 
-        // &:nth-child(even) {
-        //   background-color: $wild-sand;
-        // }
+        &:nth-child(even) {
+          background-color: $wild-sand;
+        }
 
         &:hover {
+          border: 1px solid var(--font-color);
           cursor: pointer;
         }
 
@@ -239,15 +234,12 @@
           border-bottom: 1px solid var(--font-color);
         }
 
-        &.defaultCountry{
-          background-color: $white;
-          td{
-            font-weight: 700;
-          }
-        }
-
         &.highlighted {
-          background-color: $alto;
+          background-color: rgba(0, 0, 0, 0.4);
+
+          td{
+            color: #{$white};
+          }
         }
       }
 

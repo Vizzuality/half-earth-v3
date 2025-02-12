@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -18,7 +18,13 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 import last from 'lodash/last';
 
+import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
+
+import spiTrendImg from 'images/dashboard/tutorials/tutorial_spi_temporalTrends-en.png?react';
+import spiTrendFRImg from 'images/dashboard/tutorials/tutorial_spi_temporalTrends-fr.png?react';
+
+import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
 import styles from './national-chart-styles.module.scss';
 
@@ -26,9 +32,10 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function TemporalTrendsSpiNationalChartComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const { lightMode } = useContext(LightModeContext);
 
-  const { countryData } = props;
+  const { countryData, lang } = props;
 
   const [data, setData] = useState();
   const [currentScore, setCurrentScore] = useState();
@@ -50,7 +57,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       },
     ],
   };
-
+  const [chartInfo, setChartInfo] = useState();
   const [spiArcData, setSpiArcData] = useState(blankData);
   const [areaProtectedData, setAreaProtectedData] = useState(blankData);
 
@@ -69,7 +76,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: 'Year',
+          text: t('Year'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
           font: {
             size: 14,
@@ -104,6 +111,24 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       },
     },
   };
+
+  const updateChartInfo = () => {
+    setChartInfo({
+      title: t('Temporal Trends'),
+      description: t(SECTION_INFO.SPI_TEMPORAL_TREND),
+      imgAlt: t('Species Protection Index - Trends'),
+      image: locale === 'fr' ? spiTrendFRImg : spiTrendImg,
+    });
+  };
+
+  useEffect(() => {
+    if (!lang) return;
+    updateChartInfo();
+  }, [lang]);
+
+  useEffect(() => {
+    updateChartInfo();
+  }, []);
 
   useEffect(() => {
     if (!countryData.length) return;
@@ -198,7 +223,9 @@ function TemporalTrendsSpiNationalChartComponent(props) {
       )}
       {data && (
         <div className={styles.chart}>
-          <Line options={options} data={data} />
+          <ChartInfoComponent chartInfo={chartInfo} {...props}>
+            <Line options={options} data={data} />
+          </ChartInfoComponent>
         </div>
       )}
     </div>

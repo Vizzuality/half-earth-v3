@@ -6,7 +6,8 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
-import codLogo from 'logos/institut-congolais.png';
+import codLogo from 'logos/iccn_logo_clean.png';
+import codWhiteLogo from 'logos/iccn_logo_clean_whiteText.png';
 import sleLogo from 'logos/sierra-leone.png';
 
 import DashboardTrendsSidebarContainer from 'containers/sidebars/dashboard-trends-sidebar';
@@ -21,6 +22,8 @@ import styles from './dashboard-sidebar-styles.module.scss';
 import DataLayerContainer from './data-layers';
 import RegionsAnalysisContainer from './regions-analysis';
 import SpeciesFilterContainer from './species-filter';
+import SpeciesHomeContainer from './species-home';
+import TutorialsContainer from './tutorials';
 
 function DashboardSidebar(props) {
   const t = useT();
@@ -31,7 +34,6 @@ function DashboardSidebar(props) {
     map,
     regionLayers,
     setRegionLayers,
-    scientificName,
   } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
@@ -65,12 +67,23 @@ function DashboardSidebar(props) {
     }
   }, []);
 
+  useEffect(() => {
+    if (countryISO.toUpperCase() !== 'SLE') {
+      if (lightMode) {
+        setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);
+      } else {
+        setLogo(<img className={styles.logo} src={codWhiteLogo} alt="Logo" />);
+      }
+    }
+  }, [lightMode]);
+
   return (
     <div
       id="dashboard-sidebar"
       className={cx(
         lightMode ? styles.light : '',
         selectedIndex === NAVIGATION.TRENDS ? styles.trends : '',
+        selectedIndex === NAVIGATION.INFO ? styles.tutorial : '',
         styles.container
       )}
     >
@@ -85,8 +98,7 @@ function DashboardSidebar(props) {
       </button>
       {logo}
 
-      <h1>{countryName}</h1>
-
+      <h1>{t(countryName)}</h1>
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />
         {selectedIndex === NAVIGATION.HOME && (
@@ -98,20 +110,19 @@ function DashboardSidebar(props) {
         {selectedIndex === NAVIGATION.REGION && (
           <RegionsAnalysisContainer {...props} />
         )}
-        {!scientificName && selectedIndex === NAVIGATION.DATA_LAYER && (
-          <DashboardHomeContainer {...props} />
+        {selectedIndex === NAVIGATION.SPECIES && (
+          <SpeciesHomeContainer {...props} />
         )}
-        {scientificName &&
-          (selectedIndex === NAVIGATION.SPECIES ||
-            selectedIndex === NAVIGATION.DATA_LAYER) && (
-            <DataLayerContainer {...props} />
-          )}
+        {selectedIndex === NAVIGATION.DATA_LAYER && (
+          <DataLayerContainer {...props} />
+        )}
         {selectedIndex === NAVIGATION.BIO_IND && (
           <BioDiversityContainer {...props} />
         )}
         {selectedIndex === NAVIGATION.TRENDS && (
           <DashboardTrendsSidebarContainer {...props} />
         )}
+        {selectedIndex === NAVIGATION.INFO && <TutorialsContainer {...props} />}
       </div>
     </div>
   );

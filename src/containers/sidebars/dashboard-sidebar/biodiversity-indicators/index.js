@@ -38,6 +38,7 @@ function BioDiversityContainer(props) {
     countryISO,
     setMapLegendLayers,
     view,
+    setIsLoading,
   } = props;
 
   const t = useT();
@@ -207,6 +208,7 @@ function BioDiversityContainer(props) {
   };
 
   const addBioDiversityLayers = async () => {
+    setIsLoading(true);
     const protectedLayers = await EsriFeatureService.addProtectedAreaLayer(
       null,
       countryISO
@@ -226,6 +228,10 @@ function BioDiversityContainer(props) {
       [LAYER_OPTIONS.PROTECTED_AREAS]: protectedLayers,
     });
     map.add(webTileLayer);
+
+    view.whenLayerView(webTileLayer).then(() => {
+      setIsLoading(false);
+    });
 
     // Add layers to Map Legend
     const protectedAreaLayer = {

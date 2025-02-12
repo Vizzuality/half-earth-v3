@@ -9,7 +9,8 @@ import { LightModeContext } from 'context/light-mode';
 import { NAVIGATION } from 'constants/dashboard-constants.js';
 
 import BirdsIcon from 'icons/bird_icon.svg?react';
-import SpeciesIcon from 'icons/gauge_icon.svg?react';
+import InfoIcon from 'icons/dashboard/info_icon.svg?react';
+import IndicatorIcon from 'icons/gauge_icon.svg?react';
 import HomeIcon from 'icons/house-solid.svg?react';
 import StacksIcon from 'icons/stacks.svg?react';
 import TimeLineIcon from 'icons/timeline.svg?react';
@@ -26,6 +27,7 @@ function DashboardNavComponent(props) {
     setScientificName,
     setMapLegendLayers,
     setDataLayerData,
+    setFromTrends,
     setSpeciesInfo,
   } = props;
   const { lightMode } = useContext(LightModeContext);
@@ -37,11 +39,13 @@ function DashboardNavComponent(props) {
     BIO_DIVERSITY: 'bio-diversity',
     REGION_ANALYSIS: 'region-analysis',
     TRENDS: 'trends',
+    INFO: 'info',
   };
 
   const updateHistory = (page) => {
     window.history.pushState({ selectedIndex: page }, '', ``);
 
+    setFromTrends(false);
     setMapLegendLayers([]);
 
     if (page !== NAVIGATION.DATA_LAYER && page !== NAVIGATION.BIO_IND) {
@@ -69,17 +73,6 @@ function DashboardNavComponent(props) {
         </button>
         <button
           type="button"
-          aria-label={t('Regions')}
-          title={t('Regions')}
-          className={cx({
-            [styles.selected]: selectedIndex === NAVIGATION.REGION,
-          })}
-          onClick={() => updateHistory(NAVIGATION.REGION, titles.REGIONS)}
-        >
-          <SouthAmericaIcon />
-        </button>
-        <button
-          type="button"
           aria-label={t('Species')}
           title={t('Species')}
           className={cx({
@@ -88,12 +81,13 @@ function DashboardNavComponent(props) {
               selectedIndex <= NAVIGATION.REGION_ANALYSIS,
           })}
           onClick={() => {
-            updateHistory(NAVIGATION.DATA_LAYER, titles.DATA_LAYER);
+            updateHistory(NAVIGATION.SPECIES, titles.DATA_LAYER);
           }}
         >
           <BirdsIcon />
         </button>
-        {selectedIndex >= NAVIGATION.SPECIES &&
+        {scientificName &&
+          selectedIndex >= NAVIGATION.SPECIES &&
           selectedIndex <= NAVIGATION.REGION_ANALYSIS && (
             <div className={styles.subNav}>
               <button
@@ -124,10 +118,21 @@ function DashboardNavComponent(props) {
                   updateHistory(NAVIGATION.BIO_IND, titles.BIO_DIVERSITY)
                 }
               >
-                <SpeciesIcon />
+                <IndicatorIcon />
               </button>
             </div>
           )}
+        <button
+          type="button"
+          aria-label={t('Regions')}
+          title={t('Regions')}
+          className={cx({
+            [styles.selected]: selectedIndex === NAVIGATION.REGION,
+          })}
+          onClick={() => updateHistory(NAVIGATION.REGION, titles.REGIONS)}
+        >
+          <SouthAmericaIcon />
+        </button>
         <button
           type="button"
           aria-label={t('Trends')}
@@ -138,6 +143,17 @@ function DashboardNavComponent(props) {
           onClick={() => updateHistory(NAVIGATION.TRENDS, titles.TRENDS)}
         >
           <TimeLineIcon />
+        </button>
+        <button
+          type="button"
+          aria-label={t('Tutorials')}
+          title={t('Tutorials')}
+          className={cx({
+            [styles.selected]: selectedIndex === NAVIGATION.INFO,
+          })}
+          onClick={() => updateHistory(NAVIGATION.INFO, titles.INFO)}
+        >
+          <InfoIcon />
         </button>
       </div>
     </section>

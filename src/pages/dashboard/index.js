@@ -5,6 +5,7 @@ import countryDataActions from 'redux_modules/country-data';
 
 import { DASHBOARD } from 'router';
 
+import { tx } from '@transifex/native';
 import { useLocale, useT } from '@transifex/react';
 
 import * as urlActions from 'actions/url-actions';
@@ -52,12 +53,14 @@ function DashboardContainer(props) {
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
   const [loggedIn, setLoggedIn] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState();
+  const [fromTrends, setFromTrends] = useState(false);
   const [regionLayers, setRegionLayers] = useState({});
-  const [selectedRegionOption, setSelectedRegionOption] = useState('');
+  const [selectedRegionOption, setSelectedRegionOption] = useState(null);
   const [selectedProvince, setSelectedProvince] = useState();
   const [exploreAllSpecies, setExploreAllSpecies] = useState(false);
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
+  const [regionName, setRegionName] = useState();
   const [speciesListLoading, setSpeciesListLoading] = useState(true);
   const [prioritySpeciesList, setPrioritySpeciesList] = useState([]);
   const [mapLegendLayers, setMapLegendLayers] = useState([]);
@@ -71,12 +74,18 @@ function DashboardContainer(props) {
         trend,
         region,
         province,
+        regionName,
         regionLayers,
         selectedRegionOption,
+        exploreAll,
       } = queryParams;
 
       if (species) {
         setScientificName(species);
+      }
+
+      if (regionName) {
+        setRegionName(regionName);
       }
 
       if (tab) {
@@ -95,6 +104,10 @@ function DashboardContainer(props) {
         setProvinceName(province);
       }
 
+      if (exploreAll) {
+        setExploreAllSpecies(true);
+      }
+
       if (regionLayers) {
         setRegionLayers(regionLayers);
       }
@@ -106,7 +119,7 @@ function DashboardContainer(props) {
   };
 
   const getSpeciesData = async () => {
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=en&scientificname=${scientificName}`;
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=${locale}&scientificname=${scientificName}`;
     const response = await fetch(url);
     const d = await response.json();
     setSpeciesInfo(d[0]);
@@ -211,8 +224,53 @@ function DashboardContainer(props) {
     };
   };
 
-  const getSpeciesDetails = (speciesData, taxa) => {
-    const species = speciesData.species.map(
+  const bucketByTaxa = (arrayOfObjects) => {
+    const buckets = {};
+
+    if (arrayOfObjects?.length) {
+      arrayOfObjects.forEach((obj) => {
+        const { taxa } = obj.attributes;
+
+        if (taxa) {
+          // Check if taxa property exists and has a value
+          if (!buckets[taxa]) {
+            buckets[taxa] = []; // Create a new bucket if it doesn't exist
+          }
+          buckets[taxa].push(obj); // Add the object to the corresponding bucket
+        } else {
+          // Handle cases where the taxa property is missing or undefined.
+          // You might want to create a special bucket for these, or log a warning, or skip them.
+          if (!buckets.undefined) {
+            buckets.undefined = [];
+          }
+          buckets.undefined.push(obj);
+
+          console.warn("Object missing 'taxa' property:", obj); // Or simply skip the object
+        }
+      });
+    }
+
+    return buckets;
+  };
+
+  function removeDuplicatesByScientificName(arr) {
+    const seenScientificNames = new Set(); // Use a Set for efficient tracking
+    const uniqueObjects = [];
+
+    arr.forEach((obj) => {
+      const { scientific_name } = obj;
+
+      if (!seenScientificNames.has(scientific_name)) {
+        seenScientificNames.add(scientific_name);
+        uniqueObjects.push(obj);
+      }
+    });
+
+    return uniqueObjects;
+  }
+
+  const getProtectAreasSpeciesDetails = (speciesData, taxa) => {
+    const results = speciesData.species.map(
       ({ scientific_name, common_name, attributes }) => {
         const { source, species_url, threat_status } = JSON.parse(
           attributes.replace(/NaN/g, 'null')
@@ -229,6 +287,8 @@ function DashboardContainer(props) {
       }
     );
 
+    const species = removeDuplicatesByScientificName(results);
+
     return {
       count: speciesData.species.length,
       species,
@@ -237,8 +297,39 @@ function DashboardContainer(props) {
     };
   };
 
+  const getSpeciesDetails = (speciesData, taxa) => {
+    const results = speciesData.map(({ attributes }) => {
+      const { source, species_url, threat_status, commonnames } = JSON.parse(
+        attributes.attributes.replace(/NaN/g, 'null')
+      )[0];
+
+      return {
+        common_name: commonnames,
+        scientific_name: attributes.species,
+        threat_status,
+        source,
+        species_url,
+        taxa,
+      };
+    });
+
+    const species = removeDuplicatesByScientificName(results);
+
+    return {
+      count: speciesData.length,
+      species,
+      taxa,
+      title: taxa,
+    };
+  };
+
   const getOccurenceSpecies = async (speciesData) => {
     let url = DASHBOARD_URLS.SPECIES_OCCURENCE_URL;
+
+    if (exploreAllSpecies) {
+      url = DASHBOARD_URLS.SPECIES_OCCURENCE_COUNTRY_URL;
+    }
+
     let whereClause = `ISO3 = '${countryISO}'`;
 
     if (selectedRegion) {
@@ -262,36 +353,36 @@ function DashboardContainer(props) {
 
       const list = [...speciesData];
 
-      occurenceFeatures?.forEach((feature) => {
-        const { taxa, species, attributes } = feature.attributes;
+      const buckets = bucketByTaxa(occurenceFeatures);
 
-        const { source, species_url, threat_status } = JSON.parse(
-          attributes.replace(/NaN/g, 'null')
-        )[0];
+      // loop through buckets to get species info
+      const occurenceData = Object.keys(buckets).map((key) => {
+        return getSpeciesDetails(buckets[key], key);
+      });
 
-        const speciesToAdd = {
-          common_name: species,
-          scientific_name: species,
-          threat_status,
-          source,
-          species_url,
-          taxa,
-        };
+      occurenceData?.forEach((occurrence) => {
+        const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
 
-        const foundTaxa = list.find((t) => t.taxa === taxa);
+        if (foundTaxa) {
+          occurrence.species.forEach((species) => {
+            const foundSpecies = foundTaxa?.species.find(
+              (speciesToFind) =>
+                speciesToFind.scientific_name === species.scientific_name
+            );
 
-        const foundSpecies = foundTaxa?.species.find(
-          (speciesToFind) =>
-            speciesToFind.scientific_name === speciesToAdd.scientific_name
-        );
-
-        if (!foundSpecies) {
-          foundTaxa?.species.push(speciesToAdd);
+            if (!foundSpecies) {
+              foundTaxa?.species.push(species);
+            } else {
+              foundSpecies.source += `,${species.source}`;
+            }
+          });
+        } else {
+          // list.push(occurrence);
         }
       });
 
-      list.forEach((t) => {
-        t.count = t.species.length;
+      list.forEach((l) => {
+        l.count = l.species.length;
       });
 
       setTaxaList(list);
@@ -305,6 +396,10 @@ function DashboardContainer(props) {
     setSpeciesListLoading(true);
     let url = DASHBOARD_URLS.PRECALC_AOI;
     let whereClause = `GID_0 = '${countryISO}'`;
+
+    if (exploreAllSpecies) {
+      url = DASHBOARD_URLS.PRECALC_AOI_COUNTRY;
+    }
 
     if (selectedRegion) {
       const { GID_1, WDPA_PID, mgc } = selectedRegion;
@@ -399,10 +494,19 @@ function DashboardContainer(props) {
             getTaxaSpecies('mammals', mammals),
           ]);
 
-        const ampSpecies = getSpeciesDetails(amphibianData, 'amphibians');
-        const birdSpecies = getSpeciesDetails(birdsData, 'birds');
-        const repSpecies = getSpeciesDetails(reptilesData, 'reptiles');
-        const mamSpecies = getSpeciesDetails(mammalsData, 'mammals');
+        const ampSpecies = getProtectAreasSpeciesDetails(
+          amphibianData,
+          'amphibians'
+        );
+        const birdSpecies = getProtectAreasSpeciesDetails(birdsData, 'birds');
+        const repSpecies = getProtectAreasSpeciesDetails(
+          reptilesData,
+          'reptiles'
+        );
+        const mamSpecies = getProtectAreasSpeciesDetails(
+          mammalsData,
+          'mammals'
+        );
 
         const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
@@ -531,8 +635,11 @@ function DashboardContainer(props) {
         setCountryDataError(error);
       });
 
-    getSpeciesList();
     getPrioritySpeciesList();
+
+    if (countryISO === 'COD') {
+      tx.setCurrentLocale('fr');
+    }
 
     // Cleanup event listener on component unmount
     return () => {
@@ -541,9 +648,9 @@ function DashboardContainer(props) {
   }, []);
 
   useEffect(() => {
-    if (!selectedRegion) return;
+    if (!selectedRegion && !exploreAllSpecies) return;
     getSpeciesList();
-  }, [selectedRegion]);
+  }, [selectedRegion, exploreAllSpecies]);
 
   useEffect(() => {
     if (!scientificName) return;
@@ -569,6 +676,9 @@ function DashboardContainer(props) {
         tab: selectedIndex,
         trend: tabOption ?? undefined,
         region: selectedRegion ?? undefined,
+        regionName: regionName ?? undefined,
+        selectedRegionOption: selectedRegionOption ?? undefined,
+        exploreAll: exploreAllSpecies ?? undefined,
         // province: provinceName ?? undefined,
         lang: user?.culture?.split('-')[0] ?? undefined,
       },
@@ -578,6 +688,8 @@ function DashboardContainer(props) {
     selectedIndex,
     tabOption,
     selectedRegion,
+    regionName,
+    selectedRegionOption,
     provinceName,
     user,
   ]);
@@ -617,6 +729,8 @@ function DashboardContainer(props) {
       setTabOption={setTabOption}
       provinceName={provinceName}
       setProvinceName={setProvinceName}
+      fromTrends={fromTrends}
+      setFromTrends={setFromTrends}
       user={user}
       setUser={setUser}
       speciesListLoading={speciesListLoading}
@@ -625,6 +739,8 @@ function DashboardContainer(props) {
       setMapLegendLayers={setMapLegendLayers}
       setExploreAllSpecies={setExploreAllSpecies}
       exploreAllSpecies={exploreAllSpecies}
+      regionName={regionName}
+      setRegionName={setRegionName}
       {...props}
     />
   );

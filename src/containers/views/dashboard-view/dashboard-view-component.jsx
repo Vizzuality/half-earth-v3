@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 
 import { DASHBOARD } from 'router';
 
 import loadable from '@loadable/component';
 
 import * as promiseUtils from '@arcgis/core/core/promiseUtils.js';
+import zIndex from '@mui/material/styles/zIndex';
 import { LightModeProvider } from 'context/light-mode';
+import { Loading } from 'he-components';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
+import DashboardPopupComponent from 'components/dashboard-popup/dashboard-popup-component';
+import popUpStyles from 'components/image-popup/image-popup-component-styles.module.scss';
 import LayerInfoModalContainer from 'components/layer-info-modal';
 import MapLegendContainer from 'components/map-legend';
 import MapView from 'components/map-view';
-// import TopMenuContainer from 'components/top-menu';
 
+// import TopMenuContainer from 'components/top-menu';
 import {
   LAYER_OPTIONS,
   NAVIGATION,
   REGION_OPTIONS,
 } from 'constants/dashboard-constants.js';
+
+import MinimizeIcon from 'icons/closes.svg?react';
 
 import { TABS } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
@@ -55,6 +62,8 @@ function DashboardViewComponent(props) {
     tabOption,
     setSelectedProvince,
     mapLegendLayers,
+    regionName,
+    setRegionName,
   } = props;
 
   const [map, setMap] = useState(null);
@@ -64,16 +73,18 @@ function DashboardViewComponent(props) {
   const [layerView, setLayerView] = useState();
   const [onClickHandler, setOnClickHandler] = useState(null);
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
-
+  const [imagePopup, setImagePopup] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [layerInfo, setLayerInfo] = useState();
-
   const [showLegend, setShowLegend] = useState(false);
   // const [showTopNav, setShowTopNav] = useState(true);
   let hoverHighlight;
+  let prevHoverName = '';
 
   const getLayerView = async () => {
     return view.whenLayerView(
       regionLayers[LAYER_OPTIONS.PROVINCES] ||
+        regionLayers[LAYER_OPTIONS.ADMINISTRATIVE_LAYERS] ||
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
         regionLayers[LAYER_OPTIONS.FORESTS] ||
         regionLayers[`${countryISO}-outline`]
@@ -119,11 +130,21 @@ function DashboardViewComponent(props) {
         if (hits) {
           switch (selectedIndex) {
             case NAVIGATION.REGION:
+            case NAVIGATION.EXPLORE_SPECIES:
               {
                 setTaxaList([]);
                 setExploreAllSpecies(false);
 
-                const { WDPA_PID, GID_1, mgc } = hits.attributes;
+                // eslint-disable-next-line camelcase
+                const {
+                  WDPA_PID,
+                  GID_1,
+                  mgc,
+                  NAME,
+                  NAME_1,
+                  region_name,
+                  territoire,
+                } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
                   setSelectedRegion({ WDPA_PID });
@@ -136,6 +157,9 @@ function DashboardViewComponent(props) {
                 if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
                   setSelectedRegion({ mgc });
                 }
+
+                // eslint-disable-next-line camelcase
+                setRegionName(NAME || NAME_1 || region_name || territoire);
               }
               break;
             case NAVIGATION.TRENDS:
@@ -170,41 +194,65 @@ function DashboardViewComponent(props) {
     let hits;
 
     try {
-      if (
-        selectedIndex !== NAVIGATION.BIO_IND &&
-        selectedIndex !== NAVIGATION.DATA_LAYER
-      ) {
-        hits = await hitTest(event);
-        hoverHighlight?.remove();
-        view.closePopup();
+      hits = await hitTest(event);
 
-        if (hits) {
-          let regionName;
-          if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
-            if (hits.attributes.ISO3 === countryISO) {
-              regionName = hits.attributes.NAME;
-            }
-          } else if (selectedRegionOption === REGION_OPTIONS.PROVINCES) {
-            if (hits.attributes.GID_0 === countryISO) {
-              regionName =
-                hits.attributes.NAME_1 ?? hits.attributes.region_name;
-            }
-          } else if (selectedRegionOption === REGION_OPTIONS.FORESTS) {
-            regionName = hits.attributes.territoire;
-          }
+      if (hits) {
+        let name;
+        // eslint-disable-next-line camelcase
+        const { NAME, NAME_1, territoire, region_name, DESIG } =
+          hits.attributes;
 
-          if (regionName) {
+        const countryMatch =
+          hits.attributes.ISO3 === countryISO ||
+          hits.attributes.GID_0 === countryISO;
+
+        if (countryMatch) {
+          // eslint-disable-next-line camelcase
+          name = NAME || NAME_1 || region_name;
+        } else {
+          name = territoire;
+        }
+
+        if (name) {
+          if (name !== prevHoverName) {
+            prevHoverName = name;
+            hoverHighlight?.remove();
+            view.closePopup();
+
             hoverHighlight = layerView.highlight(hits.graphic);
+            view.popup.dockEnabled = false;
+            view.popup.dockOptions = {
+              buttonEnabled: false,
+              position: 'auto',
+            };
+
+            if (DESIG) {
+              const container = document.createElement('div');
+              view.popup.content = container;
+              ReactDOM.render(
+                <DashboardPopupComponent {...hits.attributes} />,
+                container
+              );
+            } else {
+              view.popup.content = '';
+            }
+
             view.openPopup({
               // Set the popup's title to the coordinates of the location
-              title: `${regionName}`,
+              title: `${name}`,
               location: view.toMap({ x: event.x, y: event.y }),
+              includeDefaultActions: false,
             });
           }
+        } else {
+          prevHoverName = '';
+          hoverHighlight?.remove();
+          view.closePopup();
         }
       } else {
-        view.closePopup();
+        prevHoverName = '';
         hoverHighlight?.remove();
+        view.closePopup();
       }
     } catch (error) {
       throw Error(error);
@@ -216,6 +264,10 @@ function DashboardViewComponent(props) {
     highlight = layerView?.highlight(foundRegion.graphic);
   };
 
+  const closeModal = () => {
+    setImagePopup(null);
+  };
+
   useEffect(() => {
     if (!view) return;
     view.on('click', (event) => {
@@ -225,6 +277,7 @@ function DashboardViewComponent(props) {
 
   useEffect(async () => {
     let layer;
+
     if (view && Object.keys(regionLayers).length) {
       if (selectedIndex === NAVIGATION.TRENDS) {
         if (tabOption === TABS.SPI) {
@@ -236,12 +289,18 @@ function DashboardViewComponent(props) {
             regionLayers[`${countryISO}-outline`]
           );
         }
+      } else if (selectedIndex === NAVIGATION.DATA_LAYER) {
+        const topLayer = mapLegendLayers[0];
+        if (topLayer) {
+          layer = await view.whenLayerView(regionLayers[topLayer.id]);
+        }
       } else {
         layer = await getLayerView();
       }
+
       setLayerView(layer);
     }
-  }, [regionLayers, view, tabOption]);
+  }, [regionLayers, view, tabOption, mapLegendLayers]);
 
   useEffect(() => {
     if (!layerView) return;
@@ -288,6 +347,37 @@ function DashboardViewComponent(props) {
           setLayerInfo={setLayerInfo}
         />
       )}
+
+      {isLoading && (
+        <div
+          style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 4 }}
+        >
+          <Loading height={200} />
+        </div>
+      )}
+
+      {imagePopup && (
+        <>
+          <div
+            className={popUpStyles.overlay}
+            role="button"
+            aria-label="overlay"
+            onClick={closeModal}
+            onKeyDown={closeModal}
+            tabIndex={0}
+          />
+          <div className={popUpStyles.popUp}>
+            <button
+              type="button"
+              onClick={() => closeModal()}
+              aria-label="Close popup"
+            >
+              <MinimizeIcon />
+            </button>
+            {imagePopup}
+          </div>
+        </>
+      )}
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
         {showLegend && <MapLegendContainer map={map} {...props} />}
@@ -303,6 +393,10 @@ function DashboardViewComponent(props) {
           layerView={layerView}
           selectedRegion={selectedRegion}
           setLayerInfo={setLayerInfo}
+          regionName={regionName}
+          setRegionName={setRegionName}
+          setImagePopup={setImagePopup}
+          setIsLoading={setIsLoading}
           {...props}
         />
       </LightModeProvider>

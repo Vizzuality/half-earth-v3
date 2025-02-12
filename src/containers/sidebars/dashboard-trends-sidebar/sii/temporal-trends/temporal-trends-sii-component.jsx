@@ -1,4 +1,3 @@
-import { orderBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { T, useT } from '@transifex/react';
@@ -68,7 +67,7 @@ function TemporalTrendsSiiComponent(props) {
           <T
             _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryBold} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {lowestObservationBold} and {highestObservationBold}."
             currentYear={currentYear}
-            countryBold={<b>{countryName}</b>}
+            countryBold={<b>{t(countryName)}</b>}
             currentObservationBold={<b>{latestValues.spi}%</b>}
             countryName={countryName}
             startYear={firstValues.year}
@@ -85,7 +84,7 @@ function TemporalTrendsSiiComponent(props) {
             />
           </div>
           {/* <span className={styles.helpText}>
-            {t('Toggle national SPI and province-level breakdown.')}
+            {t('Toggle national SII and province-level breakdown.')}
           </span> */}
           {/* <Button
             type="rectangular"

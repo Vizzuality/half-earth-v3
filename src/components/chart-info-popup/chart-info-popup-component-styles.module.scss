@@ -1,0 +1,28 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.title{
+  margin: 0;
+  font-style: italic;
+}
+
+.chartWrapper{
+  position:relative;
+  width: 100%;
+
+  .info{
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    color: var(--font-color);
+    fill: var(--font-color);
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    border-radius: 50%;
+    padding: 3px;
+    background-color: rgba(9, 20, 26, 0.4);
+  }
+}

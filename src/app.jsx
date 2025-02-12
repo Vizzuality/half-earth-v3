@@ -64,7 +64,7 @@ function AppLayout(props) {
     case 'aoi':
       return <AreaOfInterest />;
     case 'dashboard':
-      return <DashboardComponent />;
+      return <DashboardComponent {...props} />;
     case 'dashboard-species':
       return <DashboardSpeciesComponent />;
     default:

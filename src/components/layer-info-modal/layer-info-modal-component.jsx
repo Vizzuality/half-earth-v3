@@ -1,8 +1,11 @@
 import React from 'react';
 
+import { useT } from '@transifex/react';
+
 import styles from './layer-info-modal-styles.module.scss';
 
 function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
+  const t = useT();
   const { info, title } = layerInfo;
 
   const closeModal = () => {
@@ -14,7 +17,7 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
       return (
         <tr key={item.label}>
           <td>
-            <b>{item.label}</b>
+            <b>{t(item.label)}</b>
           </td>
           <td>{item.value}</td>
         </tr>
@@ -23,9 +26,9 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
     return item.children.map((child) => (
       <tr key={child.label}>
         <td>
-          <b>{child.label}</b>
+          <b>{t(child.label)}</b>
         </td>
-        <td>{item.value}</td>
+        <td>{t(child.value)}</td>
       </tr>
     ));
   };
@@ -42,7 +45,7 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
       />
       <div className={styles.container}>
         <header>
-          <h2>{title}</h2>
+          <h2>{t(title)}</h2>
           <button
             type="button"
             className={styles.closeButton}

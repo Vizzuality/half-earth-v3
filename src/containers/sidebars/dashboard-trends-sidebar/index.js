@@ -1,4 +1,3 @@
-import { orderBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
@@ -46,8 +45,9 @@ function DashboardTrendsSidebarContainer(props) {
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState([]);
+  const [shiCountryData, setShiCountryData] = useState([]);
   const [provinces, setProvinces] = useState([]);
-  const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
+  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
   const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
   const [spiScoresData, setSpiScoresData] = useState([]);
   const [shiScoresData, setShiScoresData] = useState([]);
@@ -69,13 +69,6 @@ function DashboardTrendsSidebarContainer(props) {
     });
   };
 
-  const getProvinceData = (provinceURL) => {
-    EsriFeatureService.getFeatures(provinceURL).then((features) => {
-      const regions = features.map((f) => f.attributes);
-      setProvinces(regions);
-    });
-  };
-
   const getCountryData = (countryURL) => {
     EsriFeatureService.getFeatures(countryURL).then((features) => {
       const countries = features.map((f) => f.attributes);
@@ -90,17 +83,25 @@ function DashboardTrendsSidebarContainer(props) {
     });
   };
 
+  const getShiCountryData = (countryURL) => {
+    EsriFeatureService.getFeatures(countryURL).then((features) => {
+      const countries = features.map((f) => f.attributes);
+
+      setShiCountryData(countries);
+    });
+  };
+
+  const getSpiProvinceData = (provinceURL) => {
+    EsriFeatureService.getFeatures(provinceURL).then((features) => {
+      const regions = features.map((f) => f.attributes);
+      setProvinces(regions);
+    });
+  };
+
   const getSpiScoreData = (scoresDataURL) => {
     EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
       const data = features.map((f) => f.attributes);
       setSpiScoresData(data);
-    });
-  };
-
-  const getScoresData = (scoresDataURL) => {
-    EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
-      const data = features.map((f) => f.attributes);
-      setShiScoresData(data);
     });
   };
 
@@ -120,6 +121,13 @@ function DashboardTrendsSidebarContainer(props) {
     });
   };
 
+  const getShiScoresData = (scoresDataURL) => {
+    EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
+      const data = features.map((f) => f.attributes);
+      setShiScoresData(data);
+    });
+  };
+
   const getShiSelectSpeciesData = (scoresDataURL) => {
     EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
       const data = features?.map((f) => f.attributes);
@@ -127,12 +135,12 @@ function DashboardTrendsSidebarContainer(props) {
     });
   };
 
-  const getNationalData = () => {
+  const getShiNationalData = () => {
     const shiScoresDataURL = {
       url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
       whereClause: `iso3 = '${countryISO}'`,
     };
-    getScoresData(shiScoresDataURL);
+    getShiScoresData(shiScoresDataURL);
   };
 
   const getProvinceSpiData = (whereClause) => {
@@ -149,6 +157,7 @@ function DashboardTrendsSidebarContainer(props) {
     getSpiSelectSpeciesData(selectSpeciesURL);
   };
 
+  // get SHI scores data
   useEffect(() => {
     if (!shiScoresData.length) return;
 
@@ -198,9 +207,9 @@ function DashboardTrendsSidebarContainer(props) {
 
   // find and zoom to region
   useEffect(() => {
-    if (countryISO === 'COD') {
-      setShiActiveTrend(PROVINCE_TREND);
-    }
+    // if (countryISO === 'COD') {
+    //   setShiActiveTrend(NATIONAL_TREND);
+    // }
 
     EsriFeatureService.getFeatures({
       url: COUNTRIES_DATA_SERVICE_URL,
@@ -216,10 +225,11 @@ function DashboardTrendsSidebarContainer(props) {
     });
   }, [view, countryISO]);
 
-  useEffect(() => {
+  // set layers for Indicator map
+  useEffect(async () => {
     if (!map && !view) return;
 
-    const layer = EsriFeatureService.getFeatureLayer(
+    const layer = await EsriFeatureService.getFeatureLayer(
       PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
       countryISO
     );
@@ -239,7 +249,7 @@ function DashboardTrendsSidebarContainer(props) {
       layer.visible = false;
     }
 
-    const outlineFeatureLayer = EsriFeatureService.getFeatureLayer(
+    const outlineFeatureLayer = await EsriFeatureService.getFeatureLayer(
       SHI_LAYER_ID,
       countryISO,
       `${countryISO}-outline`
@@ -287,21 +297,32 @@ function DashboardTrendsSidebarContainer(props) {
     };
     getCountryData(countryURL);
 
+    const shiCountryURL = {
+      url: DASHBOARD_URLS.SHI_COUNTRY_DATA_URL,
+      whereClause: `ISO3 = '${countryISO}'`,
+    };
+    getShiCountryData(shiCountryURL);
+
     // GET SPI Province Trend Data
     const provinceURL = {
       url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
       whereClause: `iso3 = '${countryISO}' and Year = ${SPI_LATEST_YEAR}`,
       orderByFields: ['region_name'],
     };
-    getProvinceData(provinceURL);
+    getSpiProvinceData(provinceURL);
 
     // GET SHI Province Trend Data
     const shiProvinceURL = {
       url: DASHBOARD_URLS.SHI_PROVINCE_TREND_URL,
-      whereClause: `iso3 = '${countryISO}'`,
+      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR}`,
       orderByFields: ['region_name'],
     };
     getShiProvinceData(shiProvinceURL);
+
+    const whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
+    getProvinceSpiData(whereClause);
+
+    getShiNationalData();
   }, []);
 
   useEffect(() => {
@@ -309,33 +330,35 @@ function DashboardTrendsSidebarContainer(props) {
       shiActiveTrend === NATIONAL_TREND &&
       (tabOption === TABS.SHI || tabOption === TABS.SII)
     ) {
-      getNationalData();
-    } else if (selectedProvince) {
-      const shiWhereClause = `iso3 = '${countryISO}' and iso3_regional = '${
-        selectedProvince.iso3_regional ?? selectedProvince.GID_1
-      }'`;
+      getShiNationalData();
+    } else {
+      let whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
 
-      let whereClause = `ISO3_regional = '${
-        selectedProvince.iso3_regional ?? selectedProvince.GID_1
-      }'`;
-      if (activeTrend === NATIONAL_TREND) {
-        whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
+      if (selectedProvince) {
+        if (activeTrend === PROVINCE_TREND) {
+          whereClause = `ISO3_regional = '${
+            selectedProvince.iso3_regional ?? selectedProvince.GID_1
+          }'`;
+        }
+        const shiWhereClause = `iso3 = '${countryISO}' and iso3_regional = '${
+          selectedProvince.iso3_regional ?? selectedProvince.GID_1
+        }'`;
+
+        const shiScoresDataURL = {
+          url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
+          whereClause: `${shiWhereClause}`,
+          orderByFields: [
+            'habitat_amphibians',
+            'habitat_birds',
+            'habitat_mammals',
+            'habitat_reptiles',
+          ],
+        };
+        getShiScoresData(shiScoresDataURL);
       }
 
       // GET SPI
       getProvinceSpiData(whereClause);
-
-      const shiScoresDataURL = {
-        url: DASHBOARD_URLS.SHI_PROVINCE_HISTOGRAM_URL,
-        whereClause: `${shiWhereClause}`,
-        orderByFields: [
-          'habitat_amphibians',
-          'habitat_birds',
-          'habitat_mammals',
-          'habitat_reptiles',
-        ],
-      };
-      getScoresData(shiScoresDataURL);
     }
   }, [selectedProvince, activeTrend, shiActiveTrend]);
 
@@ -347,6 +370,7 @@ function DashboardTrendsSidebarContainer(props) {
       siiValue={siiValue}
       provinces={provinces}
       countryData={countryData}
+      shiCountryData={shiCountryData}
       spiScoresData={spiScoresData}
       shiScoresData={shiScoresData}
       spiSelectSpeciesData={spiSelectSpeciesData}

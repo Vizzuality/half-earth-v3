@@ -466,8 +466,10 @@ export const DASHBOARD_URLS = {
   INITIAL_COUNTRY_LAYER: '53a1e68de7e4499cad77c80daba46a94',
   COUNTRY_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_1/FeatureServer',
+  SPECIES_OCCURENCE_COUNTRY_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_list_COD_v2/FeatureServer',
   SPECIES_OCCURENCE_URL:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_COD/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_COD_v5/FeatureServer',
   WDPA_OCCURENCE_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/cd_occ_province_join/FeatureServer',
   SPI_PROVINCE_TREND_URL:
@@ -477,7 +479,7 @@ export const DASHBOARD_URLS = {
   SPI_HISTOGRAM_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_and_national_spi_bin_count_2024/FeatureServer',
   SHI_PROVINCE_TREND_URL:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_shs_COD/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_shs_COD_v2/FeatureServer',
   SHI_SPECIES_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_species_shi_scores_year_2024/FeatureServer',
   SHI_HISTOGRAM_URL:
@@ -486,6 +488,8 @@ export const DASHBOARD_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_shs_bin_count_2022/FeatureServer',
   SHI_PROVINCE_SPECIES_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_shs_scores_year_2022/FeatureServer',
+  SHI_COUNTRY_DATA_URL:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_and_province_shs_by_taxa/FeatureServer',
   AMPHIBIAN_LOOKUP:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_amphibians_final/FeatureServer',
   BIRDS_LOOKUP:
@@ -494,6 +498,8 @@ export const DASHBOARD_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_mammals_final/FeatureServer',
   REPTILES_LOOKUP:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_reptiles_final/FeatureServer',
+  PRECALC_AOI_COUNTRY:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm0_aoi_summaries_updated_20240326/FeatureServer',
   PRECALC_AOI:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm1_precalculated_aoi_summaries_updated_20240321/FeatureServer',
   WDPA: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_occ_species_COD/FeatureServer',
@@ -510,4 +516,6 @@ export const DASHBOARD_URLS = {
   DATASET_LAYER_INFO:
     'https://dev-api.mol.org/2.x/datasets/metadata?dataset_id=',
   DATASET_LAYER_GROUP_INFO: 'https://dev-api.mol.org/2.x/datasets/type',
+  COD_OCCURRENCE_LAYER: '1ccb994557a74bc6bd773250d8eebc15',
+  COD_REGIONAL_SPECIES_LAYER: 'd9b12607731a42e8b463612d7b51ffa5',
 };
