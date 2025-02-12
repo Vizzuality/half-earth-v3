@@ -204,6 +204,8 @@ function ProvinceChartComponent(props) {
         ticks: {
           color: getCSSVariable('oslo-gray'),
         },
+        min: 90,
+        max: 100,
       },
     },
     onClick: (event, elements, chart) => {
