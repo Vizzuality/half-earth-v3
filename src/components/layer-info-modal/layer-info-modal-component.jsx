@@ -19,7 +19,7 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
           <td>
             <b>{t(item.label)}</b>
           </td>
-          <td>{item.value}</td>
+          <td>{t(item.value)}</td>
         </tr>
       );
     }
@@ -28,7 +28,7 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
         <td>
           <b>{t(child.label)}</b>
         </td>
-        <td>{child.value}</td>
+        <td>{t(child.value)}</td>
       </tr>
     ));
   };

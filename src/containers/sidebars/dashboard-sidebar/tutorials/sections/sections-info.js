@@ -6,6 +6,12 @@ function Blah() {
   const t = useT();
 
   useEffect(() => {
+    t(
+      'Hand-drawn maps from species experts as compiled in books or for a threat assessment. These maps estimate the extent of occurrence of a species over an extensive period (e.g. 10-30 years) and usually are not reliable for inferring presence for areas smaller than 100-200km in width.'
+    );
+    t(
+      'From museum specimen or field observations. They identify places were observer activity coincided with species occurrence and lack of point data alone is usually not useful for inferring the absence of a species. Note that these are not true points, but often carry a large spatial uncertainty (i.e. species found in 10km radius around here). Point data is often temporally specific and accurate.'
+    );
     t('Filter amphibians');
     t('Filter ants');
     t('Filter birds');
@@ -22,6 +28,9 @@ function Blah() {
     t('Not Evaluated');
     t('Inscribed');
     t('Proposed');
+    t(
+      'A real-time, online checklist program, eBird has revolutionized the way that the birding community reports and accesses information about birds. Launched in 2002 by the Cornell Lab of Ornithology and National Audubon Society, eBird provides rich data sources for basic information on bird abundance and distribution at a variety of spatial and temporal scales.'
+    );
     t(
       'On the species page, you can search for any bird, mammal, reptile, or amphibian species (with more taxonomic groups being added soon) and visit their page. Here, you can view the Data Layers tab and the Indicator Scores tab.'
     );
