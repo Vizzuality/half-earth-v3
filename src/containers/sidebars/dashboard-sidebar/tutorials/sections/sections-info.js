@@ -6,6 +6,19 @@ function Blah() {
   const t = useT();
 
   useEffect(() => {
+    t('Filter amphibians');
+    t('Filter ants');
+    t('Filter birds');
+    t('Filter butterflies');
+    t('Filter cacti');
+    t('Filter conifers');
+    t('Filter fishes');
+    t('Filter insects');
+    t('Filter mammals');
+    t('Filter moths');
+    t('Filter odonates');
+    t('Filter palms');
+    t('Filter reptiles');
     t(
       'On the species page, you can search for any bird, mammal, reptile, or amphibian species (with more taxonomic groups being added soon) and visit their page. Here, you can view the Data Layers tab and the Indicator Scores tab.'
     );
