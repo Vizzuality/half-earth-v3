@@ -5,6 +5,7 @@ import { useT } from '@transifex/react';
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   DRC_REGION_FEATURE_ID,
+  IUCNStatusTypes,
 } from 'utils/dashboard-utils';
 
 import cx from 'classnames';
@@ -96,7 +97,8 @@ function SpeciesFilterComponent(props) {
           name: t('Critically Endangered'),
           active: false,
           test: (species) =>
-            species.threat_status.toUpperCase() === 'CRITICALLY ENDANGERED',
+            species.threat_status.toUpperCase() ===
+            IUCNStatusTypes.CR.toUpperCase(),
           count: 0,
           result: false,
           type: 'or',
@@ -106,7 +108,8 @@ function SpeciesFilterComponent(props) {
           result: false,
           active: false,
           test: (species) =>
-            species.threat_status.toUpperCase() === 'ENDANGERED',
+            species.threat_status.toUpperCase() ===
+            IUCNStatusTypes.EN.toUpperCase(),
           count: 0,
           type: 'or',
         },
@@ -114,7 +117,8 @@ function SpeciesFilterComponent(props) {
           name: t('Vulnerable'),
           active: false,
           test: (species) =>
-            species.threat_status.toUpperCase() === 'VULNERABLE',
+            species.threat_status.toUpperCase() ===
+            IUCNStatusTypes.VU.toUpperCase(),
           count: 0,
           type: 'or',
           result: false,
@@ -123,7 +127,8 @@ function SpeciesFilterComponent(props) {
           name: t('Near Threatened'),
           active: false,
           test: (species) =>
-            species.threat_status.toUpperCase() === 'NEAR THREATENED',
+            species.threat_status.toUpperCase() ===
+            IUCNStatusTypes.NT.toUpperCase(),
           count: 0,
           type: 'or',
           result: false,
@@ -132,7 +137,8 @@ function SpeciesFilterComponent(props) {
           name: t('Least Concern'),
           active: false,
           test: (species) =>
-            species.threat_status.toUpperCase() === 'LEAST CONCERN',
+            species.threat_status.toUpperCase() ===
+            IUCNStatusTypes.LC.toUpperCase(),
           count: 0,
           type: 'or',
           result: false,
@@ -141,16 +147,29 @@ function SpeciesFilterComponent(props) {
           name: t('Data Deficient'),
           active: false,
           test: (species) =>
-            species.threat_status.toUpperCase() === 'DATA DEFICIENT',
+            species.threat_status.toUpperCase() ===
+            IUCNStatusTypes.DD.toUpperCase(),
           count: 0,
           type: 'or',
           result: false,
         },
         {
+          name: t('Not Evaluated'),
+          active: false,
+          result: false,
+          test: (species) =>
+            species.threat_status.toUpperCase() ===
+            IUCNStatusTypes.NE.toUpperCase(),
+          count: 0,
+          type: 'or',
+        },
+        {
           name: t('Unknown'),
           active: false,
           result: false,
-          test: (species) => species.threat_status === undefined,
+          test: (species) =>
+            species.threat_status.toUpperCase() ===
+            IUCNStatusTypes.UN.toUpperCase(),
           count: 0,
           type: 'or',
         },

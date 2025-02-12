@@ -18,12 +18,16 @@ export const tutorialSections = {
 };
 
 export const IUCNStatusTypes = {
+  EX: 'Extinct',
+  EW: 'Extinct in the wild',
   CR: 'Critically Endangered',
   EN: 'Endangered',
   VU: 'Vulnerable',
   NT: 'Near Threatened',
   LC: 'Least Concern',
   DD: 'Data Deficient',
+  NE: 'Not evaluated',
+  UN: 'Unknown',
 };
 
 export const PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID =
