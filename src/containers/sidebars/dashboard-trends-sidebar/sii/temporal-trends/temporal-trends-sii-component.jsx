@@ -84,7 +84,7 @@ function TemporalTrendsSiiComponent(props) {
             />
           </div>
           {/* <span className={styles.helpText}>
-            {t('Toggle national SPI and province-level breakdown.')}
+            {t('Toggle national SII and province-level breakdown.')}
           </span> */}
           {/* <Button
             type="rectangular"
