@@ -73,7 +73,10 @@ function MapLegendComponent(props) {
             const { color } = item.symbol;
             const backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
             return (
-              <div style={{ display: 'flex', gap: '5px' }}>
+              <div
+                style={{ display: 'flex', gap: '5px' }}
+                key={`${item.label}-${item.symbol}`}
+              >
                 <div className={styles.box} style={{ backgroundColor }} />
                 {t(item.label)}
               </div>
@@ -199,7 +202,7 @@ function MapLegendComponent(props) {
       </div>
       <ul className={styles.layers}>
         {Object.values(mapLegendLayers).map((layer, index) => (
-          <li key={`${layer.id}-${layer.label}-${index}`}>
+          <li key={`${layer.id}-${layer.label}`}>
             <div className={styles.info}>
               <b>{t(layer.label?.toUpperCase())}</b>
               {layer.parent && <span>{t(layer.parent)}</span>}
