@@ -113,6 +113,21 @@ function ProvinceChartComponent(props) {
     updateBubbleChartData(score);
   };
 
+  const highlightProvinceBubble = (index) => {
+    const chart = chartRef.current;
+
+    if (chart && index > -1) {
+      if (previousIndex > -1) {
+        chart.data.datasets[previousIndex].backgroundColor =
+          getCSSVariable('bubble');
+      }
+      chart.data.datasets[index].backgroundColor =
+        getCSSVariable('bubble-selected');
+      setPreviousIndex(index);
+      chart.update();
+    }
+  };
+
   const handleProvinceSelected = async (province) => {
     const searchQuery = {
       returnGeometry: true,
@@ -127,21 +142,11 @@ function ProvinceChartComponent(props) {
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
     setClickedRegion(null);
-  };
 
-  const highlightProvinceBubble = (index) => {
-    const chart = chartRef.current;
-
-    if (chart && index > -1) {
-      if (previousIndex > -1) {
-        chart.data.datasets[previousIndex].backgroundColor =
-          getCSSVariable('bubble');
-      }
-      chart.data.datasets[index].backgroundColor =
-        getCSSVariable('bubble-selected');
-      setPreviousIndex(index);
-      chart.update();
-    }
+    const foundIdx = bubbleData?.datasets.findIndex(
+      (item) => item.region_name === province.region_name
+    );
+    highlightProvinceBubble(foundIdx);
   };
 
   const selectClickedRegion = (elements, chart) => {
@@ -255,11 +260,29 @@ function ProvinceChartComponent(props) {
   }, [shiProvinceTrendData, provinces]);
 
   useEffect(() => {
+    if (selectedProvince && !clickedRegion) {
+      handleProvinceSelected(selectedProvince);
+      setFoundIndex(
+        provinces.findIndex(
+          (prov) => prov.region_name === selectedProvince.region_name
+        )
+      );
+    }
+  }, [selectedProvince]);
+
+  useEffect(() => {
     if (clickedRegion && shiProvinceTrendData.length) {
       const region = provinces.find((item) => {
         return item.region_name === clickedRegion.NAME_1;
       });
       getProvinceScores(region);
+
+      const foundIdx = bubbleData?.datasets.findIndex(
+        (item) => item.region_name === clickedRegion.NAME_1
+      );
+      if (foundIdx) {
+        highlightProvinceBubble(foundIdx);
+      }
     }
   }, [clickedRegion, shiProvinceTrendData]);
 
