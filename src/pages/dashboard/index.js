@@ -377,7 +377,7 @@ function DashboardContainer(props) {
             }
           });
         } else {
-          list.push(occurrence);
+          // list.push(occurrence);
         }
       });
 
