@@ -26,7 +26,6 @@ function TemporalTrendsSpiComponent(props) {
   const { countryName, activeTrend, setActiveTrend, countryData } = props;
 
   const [showTable, setShowTable] = useState(false);
-  const [spiInfo, setSpiInfo] = useState();
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
   const [areaProtected, setAreaProtected] = useState(0);
   const [startYear, setStartYear] = useState('1980');
@@ -37,10 +36,6 @@ function TemporalTrendsSpiComponent(props) {
       setStartYear(firstScore.Year);
       const currentScore = last(countryData);
       setAreaProtectedPercent(currentScore.PercentAreaProtected.toFixed(1));
-      setSpiInfo(
-        `${firstScore.SPI.toFixed(1)} ${t('in')} ${firstScore.Year} ${t('to')}
-        ${currentScore.SPI.toFixed(1)} ${t('in')} ${currentScore.Year}`
-      );
 
       const spiChange = currentScore.SPI - firstScore.SPI;
       const totalRegionAreas = currentScore.AreaProtected;
@@ -75,7 +70,13 @@ function TemporalTrendsSpiComponent(props) {
               </b>
             }
             areaProtectedPercentBold={<b>{areaProtectedPercent}%</b>}
-            spiInfoBold={<b>{spiInfo}</b>}
+            spiInfoBold={
+              <b>{`${countryData[0]?.SPI.toFixed(1)} ${t('in')} ${
+                countryData[0]?.Year
+              } ${t('to')} ${last(countryData)?.SPI.toFixed(1)} ${t('in')} ${
+                last(countryData)?.Year
+              }`}</b>
+            }
           />
         </p>
         <div className={styles.options}>

@@ -236,10 +236,9 @@ function DataLayerComponent(props) {
     const response = await fetch(habitatMapUrl);
     const d = await response.json();
 
-    // remove Year row
-    d.data.shift();
-
-    if (d.data.length) {
+    if (d.data?.length) {
+      // remove Year row
+      d.data.shift();
       setValuesExists(true);
 
       setChartData({

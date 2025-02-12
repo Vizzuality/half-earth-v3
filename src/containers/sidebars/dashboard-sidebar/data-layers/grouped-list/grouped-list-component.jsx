@@ -196,12 +196,15 @@ function GroupedListComponent(props) {
     // check if item is active to add/remove from Map Legend
     if (!item.isActive) {
       getLayerIcon(layer, item);
-
-      setRegionLayers((rl) => ({
-        ...rl,
-        [id]: layer,
-      }));
       map.add(layer);
+
+      view.whenLayerView(layer).then(() => {
+        setRegionLayers((rl) => ({
+          ...rl,
+          [id]: layer,
+        }));
+        setIsLoading(false);
+      });
     } else {
       setMapLegendLayers((ml) => {
         const filtered = ml.filter(
@@ -241,13 +244,27 @@ function GroupedListComponent(props) {
           );
 
           item.isActive = true;
-          setRegionLayers((rl) => ({
-            ...rl,
-            [layerName]: layer,
-          }));
-          map.add(layer);
 
-          setMapLegendLayers((ml) => [item, ...ml]);
+          // find index of gbif
+          const gbifIndex = map.layers.items.findIndex(
+            (l) => l.id.toUpperCase().indexOf('GBIF') > -1
+          );
+
+          if (gbifIndex > -1) {
+            map.add(layer, gbifIndex);
+          } else {
+            map.add(layer);
+          }
+
+          view.whenLayerView(layer).then(() => {
+            setRegionLayers((rl) => ({
+              ...rl,
+              [layerName]: layer,
+            }));
+            setIsLoading(false);
+          });
+
+          setMapLegendLayers((ml) => [...ml, item]);
         }
       } else {
         item.isActive = false;
@@ -291,11 +308,15 @@ function GroupedListComponent(props) {
           }
 
           item.isActive = true;
-          setRegionLayers((rl) => ({
-            ...rl,
-            [layerName]: layer,
-          }));
           map.add(layer);
+
+          view.whenLayerView(layer).then(() => {
+            setRegionLayers((rl) => ({
+              ...rl,
+              [layerName]: layer,
+            }));
+            setIsLoading(false);
+          });
 
           getLayerIcon(layer, item);
         }
@@ -321,11 +342,15 @@ function GroupedListComponent(props) {
         setIsLoading(true);
         layer = await EsriFeatureService.getMVTSource();
 
-        setRegionLayers((rl) => ({
-          ...rl,
-          [layerName]: layer,
-        }));
         map.add(layer);
+
+        view.whenLayerView(layer).then(() => {
+          setRegionLayers((rl) => ({
+            ...rl,
+            [layerName]: layer,
+          }));
+          setIsLoading(false);
+        });
 
         map.addSource('mapTiles', {
           type: 'vector',
@@ -347,10 +372,6 @@ function GroupedListComponent(props) {
         map.remove(regionLayers[layerName]);
       }
     }
-
-    view.whenLayerView(layer).then(() => {
-      setIsLoading(false);
-    });
   };
 
   // update value of all children
