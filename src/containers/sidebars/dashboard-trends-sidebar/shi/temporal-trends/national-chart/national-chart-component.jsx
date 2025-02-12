@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -24,6 +24,7 @@ import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-
 import { SHI_LATEST_YEAR } from 'constants/dashboard-constants.js';
 
 import shiTrendImg from 'images/dashboard/tutorials/tutorial_shi_temporalTrends-en.png?react';
+import shiTrendFRImg from 'images/dashboard/tutorials/tutorial_shi_temporalTrends-fr.png?react';
 
 import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
@@ -33,6 +34,7 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const { countryData, lang } = props;
   const [chartInfo, setChartInfo] = useState();
   const { lightMode } = useContext(LightModeContext);
@@ -120,11 +122,12 @@ function NationalChartComponent(props) {
       title: t('Temporal Trend'),
       description: t(SECTION_INFO.SHI_TEMPORAL_TREND),
       imgAlt: t('Species Protection Index - Trends'),
-      image: shiTrendImg,
+      image: locale === 'fr' ? shiTrendFRImg : shiTrendImg,
     });
   };
 
   useEffect(() => {
+    if (!lang) return;
     updateChartInfo();
   }, [lang]);
 

@@ -20,6 +20,8 @@ function Blah() {
     t('Filter palms');
     t('Filter reptiles');
     t('Not Evaluated');
+    t('Inscribed');
+    t('Proposed');
     t(
       'On the species page, you can search for any bird, mammal, reptile, or amphibian species (with more taxonomic groups being added soon) and visit their page. Here, you can view the Data Layers tab and the Indicator Scores tab.'
     );

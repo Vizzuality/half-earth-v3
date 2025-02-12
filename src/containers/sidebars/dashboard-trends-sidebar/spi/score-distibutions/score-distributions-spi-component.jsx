@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { T, useT } from '@transifex/react';
+import { T, useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -18,6 +18,7 @@ import {
 } from 'constants/dashboard-constants.js';
 
 import spiScoreDistImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-en.png?react';
+import spiScoreDistFRImg from 'images/dashboard/tutorials/tutorial_spi_scoreDist-fr.png?react';
 
 import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sections-info';
 import {
@@ -30,6 +31,7 @@ import compStyles from './score-distributions-spi-styles.module.scss';
 
 function ScoreDistributionsSpiComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const {
     activeTrend,
     selectedProvince,
@@ -214,11 +216,12 @@ function ScoreDistributionsSpiComponent(props) {
       title: t('Score Distributions'),
       description: t(SECTION_INFO.SPI_SCORE_DISTRIBUTIONS),
       imgAlt: t('Species Protection Index - Score Distributions'),
-      image: spiScoreDistImg,
+      image: locale === 'fr' ? spiScoreDistFRImg : spiScoreDistImg,
     });
   };
 
   useEffect(() => {
+    if (!lang) return;
     updateChartInfo();
   }, [lang]);
 

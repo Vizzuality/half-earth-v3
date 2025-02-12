@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Bubble } from 'react-chartjs-2';
 import Select from 'react-select';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -23,7 +23,8 @@ import last from 'lodash/last';
 import Button from 'components/button';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 
-import shiProvinceImg from 'images/dashboard/tutorials/shi-province.png?react';
+import shiProvinceImg from 'images/dashboard/tutorials/tutorial_shi_provinces-en.png?react';
+import shiProvinceFRImg from 'images/dashboard/tutorials/tutorial_shi_provinces-fr.png?react';
 
 import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 import compStyles from '../../../dashboard-trends-sidebar-styles.module.scss';
@@ -40,6 +41,7 @@ const SCORES = {
 
 function ProvinceChartComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const chartRef = useRef(null);
   const { lightMode } = useContext(LightModeContext);
   const {
@@ -225,11 +227,12 @@ function ProvinceChartComponent(props) {
       title: t('Province View'),
       description: t(SECTION_INFO.SHI_PROVINCE_VIEW),
       imgAlt: t('Species Protection Index - Trends'),
-      image: shiProvinceImg,
+      image: locale === 'fr' ? shiProvinceFRImg : shiProvinceImg,
     });
   };
 
   useEffect(() => {
+    if (!lang) return;
     updateChartInfo();
   }, [lang]);
 

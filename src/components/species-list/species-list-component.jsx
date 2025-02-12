@@ -215,6 +215,7 @@ function SpeciesListComponent(props) {
           'Fish, tree, and select invertebrate and other plant taxa coming soon'
         )}
       </p>
+      {isLoading && <Loading height={200} />}
       <div className={styles.taxaList}>
         {!isLoading &&
           !selectedTaxa &&
@@ -242,7 +243,6 @@ function SpeciesListComponent(props) {
             );
           })}
       </div>
-      {isLoading && <Loading height={200} />}
       {!isLoading && selectedTaxa && selectedTaxaObj && (
         <div className={styles.speciesList}>
           <div className={styles.header}>

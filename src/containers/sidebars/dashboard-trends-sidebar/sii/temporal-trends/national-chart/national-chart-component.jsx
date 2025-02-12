@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -22,6 +22,7 @@ import ChartInfoComponent from 'components/chart-info-popup/chart-info-component
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
 import siiTrendImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-en.png?react';
+import siiTrendFRImg from 'images/dashboard/tutorials/tutorial_sii_temporalTrends-fr.png?react';
 
 import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
@@ -31,6 +32,7 @@ ChartJS.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 function NationalChartComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const { nationalChartData, lang } = props;
   const [data, setData] = useState();
   const [siiValue, setSiiValue] = useState(0);
@@ -114,11 +116,12 @@ function NationalChartComponent(props) {
       title: t('Temporal Trends'),
       description: t(SECTION_INFO.SII_TEMPORAL_TREND),
       imgAlt: t('Species Information Index - Trends'),
-      image: siiTrendImg,
+      image: locale === 'fr' ? siiTrendFRImg : siiTrendImg,
     });
   };
 
   useEffect(() => {
+    if (!lang) return;
     updateChartInfo();
   }, [lang]);
 

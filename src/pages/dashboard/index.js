@@ -635,7 +635,6 @@ function DashboardContainer(props) {
         setCountryDataError(error);
       });
 
-    getSpeciesList();
     getPrioritySpeciesList();
 
     if (countryISO === 'COD') {

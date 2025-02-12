@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { T, useT } from '@transifex/react';
+import { T, useLocale, useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
 
@@ -18,7 +18,8 @@ import {
   SPECIES_SELECTED_COOKIE,
 } from 'constants/dashboard-constants.js';
 
-import shiScoreDistImg from 'images/dashboard/tutorials/shi-score-dist.png?react';
+import shiScoreDistImg from 'images/dashboard/tutorials/tutorial_shi_scoreDist-en.png?react';
+import shiScoreDistFRImg from 'images/dashboard/tutorials/tutorial_shi_scoreDist-fr.png?react';
 
 import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sections-info';
 import {
@@ -32,6 +33,7 @@ import DistributionsTableContainer from './distributions-table';
 
 function ScoreDistributionsShiComponent(props) {
   const t = useT();
+  const locale = useLocale();
   const {
     setScientificName,
     setSelectedIndex,
@@ -340,11 +342,12 @@ function ScoreDistributionsShiComponent(props) {
       title: t('Score Distributions'),
       description: t(SECTION_INFO.SHI_SCORE_DISTRIBUTIONS),
       imgAlt: t('Species Protection Index - Trends'),
-      image: shiScoreDistImg,
+      image: locale === 'fr' ? shiScoreDistFRImg : shiScoreDistImg,
     });
   };
 
   useEffect(() => {
+    if (!lang) return;
     updateChartInfo();
   }, [lang]);
 
