@@ -254,9 +254,13 @@ function GroupedListComponent(props) {
             (l) => l.id.toUpperCase().indexOf('EBIRD') > -1
           );
 
-          if (gbifIndex > -1 || eBirdIndex > -1) {
+          if (gbifIndex > -1 && eBirdIndex > -1) {
             const expertLayerIndex = Math.min(gbifIndex, eBirdIndex);
             map.add(layer, expertLayerIndex);
+          } else if (gbifIndex > -1) {
+            map.add(layer, gbifIndex);
+          } else if (eBirdIndex > -1) {
+            map.add(layer, eBirdIndex);
           } else {
             map.add(layer);
           }
