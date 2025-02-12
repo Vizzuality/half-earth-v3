@@ -201,8 +201,8 @@ function MapLegendComponent(props) {
         {Object.values(mapLegendLayers).map((layer, index) => (
           <li key={`${layer.id}-${layer.label}-${index}`}>
             <div className={styles.info}>
-              <b>{layer.label?.toUpperCase()}</b>
-              {layer.parent && <span>{layer.parent}</span>}
+              <b>{t(layer.label?.toUpperCase())}</b>
+              {layer.parent && <span>{t(layer.parent)}</span>}
               {getLayerIcon(layer)}
             </div>
             <ToggleOpacityContainer layer={layer} {...props} />

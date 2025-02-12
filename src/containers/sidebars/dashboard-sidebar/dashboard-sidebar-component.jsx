@@ -34,7 +34,6 @@ function DashboardSidebar(props) {
     map,
     regionLayers,
     setRegionLayers,
-    scientificName,
   } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
@@ -99,7 +98,7 @@ function DashboardSidebar(props) {
       </button>
       {logo}
 
-      <h1>{countryName}</h1>
+      <h1>{t(countryName)}</h1>
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />
         {selectedIndex === NAVIGATION.HOME && (

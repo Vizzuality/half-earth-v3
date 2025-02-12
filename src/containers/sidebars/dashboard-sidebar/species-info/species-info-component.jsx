@@ -60,9 +60,9 @@ function SpeciesInfoComponent(props) {
       </div>
       <p className={styles.description}>{speciesInfo?.info?.[0].content}</p>
       <div className={styles.source}>
-        <span>Source:</span>
+        <span>{t('Source')}:</span>
         <a href={wikiLink} target="_blank" rel="noreferrer">
-          Wikipedia
+          {t('Wikipedia')}
         </a>
       </div>
     </div>

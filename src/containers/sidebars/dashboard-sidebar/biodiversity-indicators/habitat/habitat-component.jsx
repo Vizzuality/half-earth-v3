@@ -92,7 +92,7 @@ function HabitatComponent(props) {
               (item) =>
                 item !== countryName && (
                   <option key={item} value={item}>
-                    {item}
+                    {t(item)}
                   </option>
                 )
             )}
@@ -107,7 +107,7 @@ function HabitatComponent(props) {
           <div className={cx(styles.legendBox, styles.blue)} />
           <span>{t(countryName)}</span>
           <div className={cx(styles.legendBox, styles.green)} />
-          <span>{selectedCountry}</span>
+          <span>{t(selectedCountry)}</span>
         </div>
         {chartData && (
           <ChartInfoComponent chartInfo={chartInfo} {...props}>
@@ -148,7 +148,7 @@ function HabitatComponent(props) {
                         : ''
                     }
                   >
-                    <td>{row.country}</td>
+                    <td>{t(row.country)}</td>
                     <td className={styles.textCenter}>
                       {numberToLocaleStringWithOneDecimal(row.stewardship)}%
                     </td>

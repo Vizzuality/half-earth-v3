@@ -222,14 +222,14 @@ function SpeciesRichnessComponent(props) {
   const getData = () => {
     if (shi) {
       if (shiActiveTrend === NATIONAL_TREND || !selectedProvince) {
-        setTitleText(`NATIONAL SHI ${t('BY TAXONOMIC GROUP')}`);
+        setTitleText(`${t('NATIONAL SHI BY TAXONOMIC GROUP')}`);
       } else if (shiActiveTrend === PROVINCE_TREND && selectedProvince) {
         setTitleText(
           `${selectedProvince?.region_name} SHI ${t('BY TAXONOMIC GROUP')}`
         );
       }
     } else if (activeTrend === NATIONAL_TREND || !selectedProvince) {
-      setTitleText(`NATIONAL SPI ${t('BY TAXONOMIC GROUP')}`);
+      setTitleText(`${t('NATIONAL SPI BY TAXONOMIC GROUP')}`);
     } else if (activeTrend === PROVINCE_TREND && selectedProvince) {
       setTitleText(
         `${selectedProvince?.region_name} SPI ${t('BY TAXONOMIC GROUP')}`
