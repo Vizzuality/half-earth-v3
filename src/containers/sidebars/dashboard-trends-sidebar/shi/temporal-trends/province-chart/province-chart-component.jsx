@@ -289,6 +289,15 @@ function ProvinceChartComponent(props) {
     }
   }, [clickedRegion, shiProvinceTrendData]);
 
+  useEffect(() => {
+    if (selectedProvince) {
+      const foundIdx = bubbleData?.datasets.findIndex(
+        (item) => item.region_name === selectedProvince.region_name
+      );
+      highlightProvinceBubble(foundIdx);
+    }
+  }, [activeScore]);
+
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
       {isLoading && <Loading height={200} />}
