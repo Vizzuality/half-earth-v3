@@ -250,8 +250,13 @@ function GroupedListComponent(props) {
             (l) => l.id.toUpperCase().indexOf('GBIF') > -1
           );
 
-          if (gbifIndex > -1) {
-            map.add(layer, gbifIndex);
+          const eBirdIndex = map.layers.items.findIndex(
+            (l) => l.id.toUpperCase().indexOf('EBIRD') > -1
+          );
+
+          if (gbifIndex > -1 || eBirdIndex > -1) {
+            const expertLayerIndex = Math.min(gbifIndex, eBirdIndex);
+            map.add(layer, expertLayerIndex);
           } else {
             map.add(layer);
           }
@@ -287,23 +292,20 @@ function GroupedListComponent(props) {
       if (!item.isActive || layerIndex < 0) {
         if (pointObservationIds.find((id) => id === item.dataset_id)) {
           setIsLoading(true);
-          let name;
 
           if (layerName.match(/EBIRD/)) {
-            name = `ebird_${speciesInfo.scientificname.replace(' ', '_')}`;
-
-            layer = await EsriFeatureService.getGeoJsonLayer(
-              name,
-              layerName,
-              countryISO
-            );
-          } else if (layerName.match(/GBIF/)) {
-            name = `gbif_${speciesInfo.scientificname}`;
-
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
               GBIF_OCCURENCE_URL,
               speciesInfo.scientificname,
-              layerName
+              layerName,
+              'eBird'
+            );
+          } else if (layerName.match(/GBIF/)) {
+            layer = await EsriFeatureService.getFeatureOccurenceLayer(
+              GBIF_OCCURENCE_URL,
+              speciesInfo.scientificname,
+              layerName,
+              'GBIF'
             );
           }
 
