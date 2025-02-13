@@ -52,6 +52,7 @@ function DashboardContainer(props) {
     'REDUNCA BOHOR',
     'ACINONYX JUBATUS',
     'PILIOCOLOBUS PENNANTII',
+    'DICEROS BICORNIS',
   ];
 
   const [geometry, setGeometry] = useState(null);
