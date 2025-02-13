@@ -40,6 +40,18 @@ function DashboardContainer(props) {
     browsePage,
   } = props;
 
+  const speciesToAvoid = [
+    'CEPHALOPHUS FOSTERI',
+    'CEPHALOPHUS ARRHENII',
+    'CEPHALOPHUS CASTANEUS',
+    'CEPHALOPHUS CURTICEPS',
+    'CEPHALOPHUS JOHNSTONI',
+    'CEPHALOPHUS NATALENSIS',
+    'KOBUS DEFASSA',
+    'OUREBIA HASTATA',
+    'REDUNCA BOHOR',
+  ];
+
   const [geometry, setGeometry] = useState(null);
   const [speciesInfo, setSpeciesInfo] = useState(null);
   const [data, setData] = useState(null);
@@ -258,11 +270,13 @@ function DashboardContainer(props) {
     const uniqueObjects = [];
 
     arr.forEach((obj) => {
-      const { scientific_name } = obj;
+      if (obj) {
+        const { scientific_name } = obj;
 
-      if (!seenScientificNames.has(scientific_name)) {
-        seenScientificNames.add(scientific_name);
-        uniqueObjects.push(obj);
+        if (!seenScientificNames.has(scientific_name)) {
+          seenScientificNames.add(scientific_name);
+          uniqueObjects.push(obj);
+        }
       }
     });
 
@@ -276,14 +290,19 @@ function DashboardContainer(props) {
           attributes.replace(/NaN/g, 'null')
         )[0];
 
-        return {
-          common_name,
-          scientific_name,
-          threat_status,
-          source,
-          species_url,
-          taxa,
-        };
+        const isFound = speciesToAvoid.includes(scientific_name.toUpperCase());
+
+        if (!isFound) {
+          return {
+            common_name,
+            scientific_name,
+            threat_status,
+            source,
+            species_url,
+            taxa,
+          };
+        }
+        console.log('found: ', scientific_name.toUpperCase());
       }
     );
 
@@ -365,15 +384,23 @@ function DashboardContainer(props) {
 
         if (foundTaxa) {
           occurrence.species.forEach((species) => {
-            const foundSpecies = foundTaxa?.species.find(
-              (speciesToFind) =>
-                speciesToFind.scientific_name === species.scientific_name
+            const isFound = speciesToAvoid.includes(
+              species.scientific_name.toUpperCase()
             );
 
-            if (!foundSpecies) {
-              foundTaxa?.species.push(species);
+            if (!isFound) {
+              const foundSpecies = foundTaxa?.species.find(
+                (speciesToFind) =>
+                  speciesToFind.scientific_name === species.scientific_name
+              );
+
+              if (!foundSpecies) {
+                foundTaxa?.species.push(species);
+              } else {
+                foundSpecies.source += `,${species.source}`;
+              }
             } else {
-              foundSpecies.source += `,${species.source}`;
+              console.log('found: ', species.scientific_name.toUpperCase());
             }
           });
         } else {
@@ -431,13 +458,21 @@ function DashboardContainer(props) {
             const { scientificname, taxa, attributes } = s.attributes;
 
             const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
-            return {
-              common_name: scientificname,
-              scientific_name: scientificname,
-              threat_status: json[0].threat_status,
-              source: json[0].source ?? '',
-              taxa,
-            };
+
+            const isFound = speciesToAvoid.includes(
+              scientificname.toUpperCase()
+            );
+
+            if (!isFound) {
+              return {
+                common_name: scientificname,
+                scientific_name: scientificname,
+                threat_status: json[0].threat_status,
+                source: json[0].source ?? '',
+                taxa,
+              };
+            }
+            console.log('found: ', scientificname);
           }),
         };
 
