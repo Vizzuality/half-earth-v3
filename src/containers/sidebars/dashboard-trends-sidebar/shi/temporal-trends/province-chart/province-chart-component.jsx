@@ -264,7 +264,6 @@ function ProvinceChartComponent(props) {
 
   useEffect(() => {
     if (selectedProvince && !clickedRegion) {
-      handleProvinceSelected(selectedProvince);
       setFoundIndex(
         provinces.findIndex(
           (prov) => prov.region_name === selectedProvince.region_name
@@ -290,13 +289,13 @@ function ProvinceChartComponent(props) {
   }, [clickedRegion, shiProvinceTrendData]);
 
   useEffect(() => {
-    if (selectedProvince) {
+    if (selectedProvince && bubbleData) {
       const foundIdx = bubbleData?.datasets.findIndex(
         (item) => item.region_name === selectedProvince.region_name
       );
       highlightProvinceBubble(foundIdx);
     }
-  }, [activeScore]);
+  }, [selectedProvince, bubbleData]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
