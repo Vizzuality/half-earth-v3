@@ -26,6 +26,17 @@ function SpeciesInfoComponent(props) {
     return t(IUCNStatusTypes[status]);
   };
 
+  const getLanguageContent = (info) => {
+    const found = info.find(
+      (values) => values.lang.toUpperCase() === locale.toUpperCase()
+    );
+
+    if (found) {
+      return found.content;
+    }
+    return info[0].content;
+  };
+
   useEffect(() => {
     if (speciesInfo) {
       const spImage =
@@ -58,7 +69,9 @@ function SpeciesInfoComponent(props) {
           )}
         </div>
       </div>
-      <p className={styles.description}>{speciesInfo?.info?.[0].content}</p>
+      <p className={styles.description}>
+        {speciesInfo?.info && getLanguageContent(speciesInfo?.info)}
+      </p>
       <div className={styles.source}>
         <span>{t('Source')}:</span>
         <a href={wikiLink} target="_blank" rel="noreferrer">

@@ -50,6 +50,10 @@ function DashboardContainer(props) {
     'KOBUS DEFASSA',
     'OUREBIA HASTATA',
     'REDUNCA BOHOR',
+    'MANIS GIGANTEA',
+    'MANIS TEMMINCKII',
+    'MANIS TETRADACTYLA',
+    'MANIS TRICUSPIS',
   ];
 
   const [geometry, setGeometry] = useState(null);
@@ -302,7 +306,6 @@ function DashboardContainer(props) {
             taxa,
           };
         }
-        console.log('found: ', scientific_name.toUpperCase());
       }
     );
 
@@ -399,8 +402,6 @@ function DashboardContainer(props) {
               } else {
                 foundSpecies.source += `,${species.source}`;
               }
-            } else {
-              console.log('found: ', species.scientific_name.toUpperCase());
             }
           });
         } else {
