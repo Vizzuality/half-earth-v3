@@ -516,6 +516,7 @@ export const DASHBOARD_URLS = {
   DATASET_LAYER_INFO:
     'https://dev-api.mol.org/2.x/datasets/metadata?dataset_id=',
   DATASET_LAYER_GROUP_INFO: 'https://dev-api.mol.org/2.x/datasets/type',
-  COD_OCCURRENCE_LAYER: '1ccb994557a74bc6bd773250d8eebc15',
+  COD_OCCURRENCE_LAYER:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_occurrence_records/FeatureServer',
   COD_REGIONAL_SPECIES_LAYER: 'd9b12607731a42e8b463612d7b51ffa5',
 };

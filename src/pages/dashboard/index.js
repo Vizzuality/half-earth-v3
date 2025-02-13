@@ -50,6 +50,8 @@ function DashboardContainer(props) {
     'KOBUS DEFASSA',
     'OUREBIA HASTATA',
     'REDUNCA BOHOR',
+    'ACINONYX JUBATUS',
+    'PILIOCOLOBUS PENNANTII',
   ];
 
   const [geometry, setGeometry] = useState(null);
@@ -138,6 +140,52 @@ function DashboardContainer(props) {
   };
 
   const getDataLayersData = async () => {
+    const gbifResponse = await EsriFeatureService.getFeatures({
+      url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+      whereClause: `species = '${scientificName}' and source = 'GBIF'`,
+      returnGeometry: false,
+    });
+
+    const gbifResponseItems = gbifResponse.map((item) => item.attributes);
+    const gbifSet = new Set(); // Use a Set for efficient tracking
+    const uniqueGbifObjects = [];
+
+    gbifResponseItems.forEach((obj) => {
+      if (obj) {
+        const { longitude, latitude } = obj;
+
+        const keyValue = `${longitude}-${latitude}`;
+
+        if (!gbifSet.has(keyValue)) {
+          gbifSet.add(keyValue);
+          uniqueGbifObjects.push(obj);
+        }
+      }
+    });
+
+    const eBirdResponse = await EsriFeatureService.getFeatures({
+      url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+      whereClause: `species = '${scientificName}' and source = 'GBIF'`,
+      returnGeometry: false,
+    });
+
+    const eBirdResponseItems = eBirdResponse.map((item) => item.attributes);
+    const ebirdSet = new Set(); // Use a Set for efficient tracking
+    const uniqueEBirdObjects = [];
+
+    eBirdResponseItems.forEach((obj) => {
+      if (obj) {
+        const { longitude, latitude } = obj;
+
+        const keyValue = `${longitude}-${latitude}`;
+
+        if (!ebirdSet.has(keyValue)) {
+          ebirdSet.add(keyValue);
+          uniqueEBirdObjects.push(obj);
+        }
+      }
+    });
+
     const dataLayerParams = {
       scientificname: scientificName,
       group: 'movement',
@@ -145,12 +193,8 @@ function DashboardContainer(props) {
     };
     const dparams = new URLSearchParams(dataLayerParams);
     const dataLayersURL = `https://dev-api.mol.org/2.x/species/datasets?${dparams}`;
-    const countryCode = { COG: 'CG', GAB: 'GA', COD: 'CD', LBR: 'LR' };
-    const speciesObservationCount = `https://storage.googleapis.com/cdn.mol.org/eow_demo/occ/${
-      countryCode[countryISO]
-    }_counts_${scientificName.replace(' ', '_')}.geojson`;
 
-    const apiCalls = [dataLayersURL, speciesObservationCount];
+    const apiCalls = [dataLayersURL];
 
     const apiResponses = await Promise.all(
       apiCalls.map(async (url) => {
@@ -164,27 +208,20 @@ function DashboardContainer(props) {
       })
     );
 
-    const [dataLayersData, speciesObservationData] = apiResponses;
-
-    const ebirdCount = speciesObservationData.find(
-      (sod) => sod.which === 'ebird'
-    );
-    const gbifCount = speciesObservationData.find(
-      (sod) => sod.which === 'gbif'
-    );
+    const [dataLayersData] = apiResponses;
 
     dataLayersData.map((dld) => {
       if (dld.dataset_title.toUpperCase().match(/EBIRD/)) {
-        if (ebirdCount) {
-          dld.no_rows = ebirdCount.n;
+        if (uniqueEBirdObjects.length) {
+          dld.no_rows = uniqueEBirdObjects.length;
         } else {
           dld.no_rows = 0;
         }
       }
 
       if (dld.dataset_title.toUpperCase().match(/GBIF/)) {
-        if (gbifCount) {
-          dld.no_rows = gbifCount.n;
+        if (uniqueGbifObjects.length) {
+          dld.no_rows = uniqueGbifObjects.length;
         } else {
           dld.no_rows = 0;
         }
