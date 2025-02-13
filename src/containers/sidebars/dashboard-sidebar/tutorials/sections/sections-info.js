@@ -137,6 +137,36 @@ function Blah() {
       'Points with invalid or missing latitude and longitude values were filtered out. In addition, reports from datasets already in MOL were filtered out, including eBird.'
     );
     t('Notes');
+    t('Contacts');
+    t('world');
+    t('global');
+    t('database');
+    t('Global expert rangemaps of 7238 amphibian species.');
+    t('International Union for Conservation of Nature');
+    t(
+      'Resident, Breeding Season, Non-breeding Season, Passage, Seasonal Occurence Uncertain'
+    );
+    t(
+      'Dissolved polygons and QCed for geometry issues and metadata accuracy and completeness. Clipped to GADM v3.6.'
+    );
+    t(
+      'One species is endemic to an island not included in the GADM clipping layer.'
+    );
+    t('Mammal range maps harmonised to the Mammal Diversity Database v1.2');
+    t(
+      'Digital range maps for the native ranges of extant mammals harmonised to the Mammal Diversity Database taxonomy (version 1.2)'
+    );
+    t(
+      'Using the Mammal range maps digitized from the Illustrated Checklist of the Mammals of the World (https://doi.org/10.48600/MOL-ZZRS-Q778) as a base, we retained any maps where there were no taxonomic or range differences (6102 species). The other 258 species were digitally interpreted or updated, either from information in scientific papers, via modifications to existing ranges, or by integrating expert knowledge from the project collaborators Connor Burgin and Nathan Upham. All geometries use EPSG 4326 as their reference system. Where needed, geometries were clipped to an oceans layer according to coastal boundaries defined in the Global Administrative Areas (GADM v3.6, https://gadm.org/index.html)'
+    );
+    t('Global expert rangemaps of 10914 reptile species.');
+    t('Global Assessment of Reptile Distributions');
+    t(
+      '22 species are endemic to islands not included in the GADM clipping layer. 104 species were manually georectified to align with GADM.'
+    );
+    t(
+      'Dissolved polygons and QCed for geometry issues and metadata accuracy and completeness. Manually georeferenced species misaligned with clipping layer. Clipped to GADM v3.6'
+    );
   }, []);
 
   return <div>Blah</div>;

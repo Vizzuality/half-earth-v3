@@ -47,7 +47,7 @@
   .choices{
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     color: var(--font-color);
 
     span{
@@ -68,7 +68,7 @@
       gap: 8px;
 
       span{
-        font-style: italic;
+        font-size: $font-size-sm;
       }
 
       button{

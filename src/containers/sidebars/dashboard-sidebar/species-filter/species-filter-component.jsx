@@ -159,17 +159,9 @@ function SpeciesFilterComponent(props) {
           result: false,
           test: (species) =>
             species.threat_status.toUpperCase() ===
-            IUCNStatusTypes.NE.toUpperCase(),
-          count: 0,
-          type: 'or',
-        },
-        {
-          name: t('Unknown'),
-          active: false,
-          result: false,
-          test: (species) =>
+              IUCNStatusTypes.NE.toUpperCase() ||
             species.threat_status.toUpperCase() ===
-            IUCNStatusTypes.UN.toUpperCase(),
+              IUCNStatusTypes.UN.toUpperCase(),
           count: 0,
           type: 'or',
         },
