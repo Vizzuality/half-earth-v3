@@ -50,10 +50,6 @@ function DashboardContainer(props) {
     'KOBUS DEFASSA',
     'OUREBIA HASTATA',
     'REDUNCA BOHOR',
-    'MANIS GIGANTEA',
-    'MANIS TEMMINCKII',
-    'MANIS TETRADACTYLA',
-    'MANIS TRICUSPIS',
   ];
 
   const [geometry, setGeometry] = useState(null);
