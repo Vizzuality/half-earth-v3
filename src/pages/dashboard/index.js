@@ -147,11 +147,11 @@ function DashboardContainer(props) {
       returnGeometry: false,
     });
 
-    const gbifResponseItems = gbifResponse.map((item) => item.attributes);
+    const gbifResponseItems = gbifResponse?.map((item) => item.attributes);
     const gbifSet = new Set(); // Use a Set for efficient tracking
     const uniqueGbifObjects = [];
 
-    gbifResponseItems.forEach((obj) => {
+    gbifResponseItems?.forEach((obj) => {
       if (obj) {
         const { longitude, latitude } = obj;
 
@@ -166,15 +166,15 @@ function DashboardContainer(props) {
 
     const eBirdResponse = await EsriFeatureService.getFeatures({
       url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
-      whereClause: `species = '${scientificName}' and source = 'GBIF'`,
+      whereClause: `species = '${scientificName}' and source = 'eBird'`,
       returnGeometry: false,
     });
 
-    const eBirdResponseItems = eBirdResponse.map((item) => item.attributes);
+    const eBirdResponseItems = eBirdResponse?.map((item) => item.attributes);
     const ebirdSet = new Set(); // Use a Set for efficient tracking
     const uniqueEBirdObjects = [];
 
-    eBirdResponseItems.forEach((obj) => {
+    eBirdResponseItems?.forEach((obj) => {
       if (obj) {
         const { longitude, latitude } = obj;
 
