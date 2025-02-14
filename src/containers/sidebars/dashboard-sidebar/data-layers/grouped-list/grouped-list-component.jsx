@@ -444,16 +444,14 @@ function GroupedListComponent(props) {
         />
       );
 
-      if (item.no_rows) {
-        return (
-          <li key={item.dataset_id} className={styles.children}>
-            {control}
-            <span>{item.no_rows}</span>
-            <span />
-            <ToggleLayerInfoContainer layer={item} {...props} />
-          </li>
-        );
-      }
+      return (
+        <li key={item.dataset_id} className={styles.children}>
+          {control}
+          <span>{item.no_rows}</span>
+          <span />
+          <ToggleLayerInfoContainer layer={item} {...props} />
+        </li>
+      );
     }
   };
 

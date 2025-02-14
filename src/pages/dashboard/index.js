@@ -211,30 +211,39 @@ function DashboardContainer(props) {
 
     const [dataLayersData] = apiResponses;
 
-    dataLayersData.map((dld) => {
-      if (dld.dataset_title.toUpperCase().match(/EBIRD/)) {
-        if (uniqueEBirdObjects.length) {
-          dld.no_rows = uniqueEBirdObjects.length;
-        } else {
-          dld.no_rows = 0;
+    const filteredData = dataLayersData
+      .filter((item) => {
+        return (
+          (!item.dataset_title.toUpperCase().match(/EBIRD/) &&
+            uniqueEBirdObjects.length === 0) ||
+          (!item.dataset_title.toUpperCase().match(/GBIF/) &&
+            uniqueGbifObjects.length === 0)
+        );
+      })
+      .map((dld) => {
+        if (dld.dataset_title.toUpperCase().match(/EBIRD/)) {
+          if (uniqueEBirdObjects.length > 0) {
+            dld.no_rows = uniqueEBirdObjects.length;
+          } else {
+            dld.no_rows = 0;
+          }
         }
-      }
 
-      if (dld.dataset_title.toUpperCase().match(/GBIF/)) {
-        if (uniqueGbifObjects.length) {
-          dld.no_rows = uniqueGbifObjects.length;
-        } else {
-          dld.no_rows = 0;
+        if (dld.dataset_title.toUpperCase().match(/GBIF/)) {
+          if (uniqueGbifObjects.length > 0) {
+            dld.no_rows = uniqueGbifObjects.length;
+          } else {
+            dld.no_rows = 0;
+          }
         }
-      }
 
-      dld.parent = dld.type_title;
-      dld.label = dld.dataset_title;
+        dld.parent = dld.type_title;
+        dld.label = dld.dataset_title;
 
-      return dld;
-    });
+        return dld;
+      });
 
-    setDataLayerData(dataLayersData);
+    setDataLayerData(filteredData);
   };
 
   const getTaxaSpecies = async (taxa, slices) => {

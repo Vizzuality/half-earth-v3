@@ -42,7 +42,7 @@ function SpeciesGroupComponent(props) {
         }
         return scientificName;
       } catch {
-        return commonName;
+        return commonName.split(',')[0];
       }
     }
     return scientificName;
