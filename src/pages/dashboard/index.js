@@ -520,18 +520,30 @@ function DashboardContainer(props) {
           }),
         };
 
-        const amphibians = speciesData.species.filter(
-          (item) => item.taxa === 'amphibians'
-        );
-        const birds = speciesData.species.filter(
-          (item) => item.taxa === 'birds'
-        );
-        const reptiles = speciesData.species.filter(
-          (item) => item.taxa === 'reptiles'
-        );
-        const mammals = speciesData.species.filter(
-          (item) => item.taxa === 'mammals'
-        );
+        const amphibians = speciesData.species.filter((item) => {
+          if (item) {
+            return item.taxa === 'amphibians';
+          }
+          return false;
+        });
+        const birds = speciesData.species.filter((item) => {
+          if (item) {
+            return item.taxa === 'birds';
+          }
+          return false;
+        });
+        const reptiles = speciesData.species.filter((item) => {
+          if (item) {
+            return item.taxa === 'reptiles';
+          }
+          return false;
+        });
+        const mammals = speciesData.species.filter((item) => {
+          if (item) {
+            return item.taxa === 'mammals';
+          }
+          return false;
+        });
 
         const ampSpecies = {
           count: amphibians.length,
