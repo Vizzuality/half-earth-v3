@@ -6,7 +6,6 @@ import { DASHBOARD } from 'router';
 import loadable from '@loadable/component';
 
 import * as promiseUtils from '@arcgis/core/core/promiseUtils.js';
-import zIndex from '@mui/material/styles/zIndex';
 import { LightModeProvider } from 'context/light-mode';
 import { Loading } from 'he-components';
 

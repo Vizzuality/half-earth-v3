@@ -16,13 +16,19 @@ import styles from './species-group-component.module.scss';
 
 function SpeciesGroupComponent(props) {
   const locale = useLocale();
-  const { species, selectedTaxaObj, setSelectedIndex, setScientificName } =
-    props;
+  const {
+    species,
+    selectedTaxaObj,
+    setSelectedIndex,
+    setScientificName,
+    setMapLegendLayers,
+  } = props;
   // eslint-disable-next-line camelcase
   const { species_url, common_name, scientific_name } = species;
   const { lightMode } = useContext(LightModeContext);
 
   const selectSpecies = (selectedSpecies) => {
+    setMapLegendLayers([]);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
     setScientificName(selectedSpecies.scientific_name);
     localStorage.setItem(
