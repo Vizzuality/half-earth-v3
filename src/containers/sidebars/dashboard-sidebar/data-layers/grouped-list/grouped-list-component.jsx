@@ -45,6 +45,8 @@ function GroupedListComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
+  let loadingCount = 0;
+
   const expertRangeMapIds = [
     'ec694c34-bddd-4111-ba99-926a5f7866e8',
     '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
@@ -135,6 +137,7 @@ function GroupedListComponent(props) {
     if (id === LAYER_OPTIONS.PROTECTED_AREAS) {
       if (!item.isActive) {
         setIsLoading(true);
+        loadingCount += 1;
         layer = await EsriFeatureService.addProtectedAreaLayer(
           null,
           countryISO
@@ -152,6 +155,7 @@ function GroupedListComponent(props) {
     } else if (id === LAYER_OPTIONS.HABITAT) {
       if (!item.isActive) {
         setIsLoading(true);
+        loadingCount += 1;
         setIsHabitatChartLoading(true);
         layer = await EsriFeatureService.getXYZLayer(
           speciesInfo.scientificname.replace(' ', '_'),
@@ -203,7 +207,10 @@ function GroupedListComponent(props) {
           ...rl,
           [id]: layer,
         }));
-        setIsLoading(false);
+        loadingCount -= 1;
+        if (loadingCount === 0) {
+          setIsLoading(false);
+        }
       });
     } else {
       setMapLegendLayers((ml) => {
@@ -223,7 +230,10 @@ function GroupedListComponent(props) {
     }
 
     view.whenLayerView(layer).then(() => {
-      setIsLoading(false);
+      loadingCount -= 1;
+      if (loadingCount === 0) {
+        setIsLoading(false);
+      }
     });
   };
 
@@ -237,6 +247,7 @@ function GroupedListComponent(props) {
       if (!item.isActive || layerIndex < 0) {
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
           setIsLoading(true);
+          loadingCount += 1;
           layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
             layerName,
@@ -270,7 +281,10 @@ function GroupedListComponent(props) {
               ...rl,
               [layerName]: layer,
             }));
-            setIsLoading(false);
+            loadingCount -= 1;
+            if (loadingCount === 0) {
+              setIsLoading(false);
+            }
           });
 
           setMapLegendLayers((ml) => [...ml, item]);
@@ -296,6 +310,7 @@ function GroupedListComponent(props) {
       if (!item.isActive || layerIndex < 0) {
         if (pointObservationIds.find((id) => id === item.dataset_id)) {
           setIsLoading(true);
+          loadingCount += 1;
 
           if (layerName.match(/EBIRD/)) {
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
@@ -321,7 +336,10 @@ function GroupedListComponent(props) {
               ...rl,
               [layerName]: layer,
             }));
-            setIsLoading(false);
+            loadingCount -= 1;
+            if (loadingCount === 0) {
+              setIsLoading(false);
+            }
           });
 
           getLayerIcon(layer, item);
@@ -346,6 +364,7 @@ function GroupedListComponent(props) {
     if (layerParent === LAYER_TITLE_TYPES.REGIONAL_CHECKLISTS) {
       if (!item.isActive) {
         setIsLoading(true);
+        loadingCount += 1;
         layer = await EsriFeatureService.getMVTSource();
 
         map.add(layer);
@@ -355,7 +374,10 @@ function GroupedListComponent(props) {
             ...rl,
             [layerName]: layer,
           }));
-          setIsLoading(false);
+          loadingCount -= 1;
+          if (loadingCount === 0) {
+            setIsLoading(false);
+          }
         });
 
         map.addSource('mapTiles', {
