@@ -128,6 +128,7 @@ export interface GetFeatures {
   url: string;
   whereClause?: string;
   orderByFields?: string[];
+  signal?: AbortSignal;
 }
 
 export interface GetLayer {

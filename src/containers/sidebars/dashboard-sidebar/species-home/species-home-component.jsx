@@ -8,6 +8,8 @@ import { LightModeContext } from 'context/light-mode';
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
 
+import EsriFeatureService from 'services/esri-feature-service';
+
 import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
@@ -34,7 +36,8 @@ function SpeciesHomeComponent(props) {
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const searchURL = 'https://dev-api.mol.org/2.x/species/groupsearch';
+  const searchURL =
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_species_list_for_search/FeatureServer';
   // 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/spatial_species_search';
 
   let controller = null;
@@ -61,16 +64,18 @@ function SpeciesHomeComponent(props) {
     controller = new AbortController();
     const { signal } = controller;
 
-    const searchParams = {
-      query: searchInput,
-      limit: 100,
-      page: 0,
-      lang: locale || 'en',
-      // region_id: '1eff8980-479e-4eac-b386-b4db859b275d',
-    };
-    const params = new URLSearchParams(searchParams);
-    const searchSpecies = await fetch(`${searchURL}?${params}`, { signal });
-    const results = await searchSpecies.json();
+    const commonName =
+      locale === 'fr' ? 'commonname_french' : 'commonname_english';
+
+    const searchSpecies = await EsriFeatureService.getFeatures({
+      url: searchURL,
+      whereClause: `scientificname like '%${searchInput}%' or ${commonName} like '%${searchInput}%'`,
+      returnGeometry: false,
+      signal,
+    });
+
+    // const searchSpecies = await fetch(`${searchURL}?${params}`, { signal });
+    const results = searchSpecies.map((feature) => feature.attributes);
     setSearchResults(results);
   };
 
@@ -122,14 +127,18 @@ function SpeciesHomeComponent(props) {
             <ul className={styles.searchResults}>
               {searchResults.map(
                 (item) =>
-                  item.tc_id && (
-                    <li key={item.tc_id}>
+                  item.scientificname && (
+                    <li key={item.scientificname}>
                       <button
                         type="button"
                         onClick={() => handleSearchSelect(item)}
                       >
                         <b>{item.scientificname}</b> -{' '}
-                        <span>{item.vernacular}</span>
+                        <span>
+                          {locale === 'fr'
+                            ? item.commonname_french
+                            : item.commonname_english}
+                        </span>
                       </button>
                     </li>
                   )

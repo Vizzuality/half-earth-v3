@@ -28,6 +28,7 @@ function getFeatures({
   },
   geometry = null,
   orderByFields = [],
+  signal = null,
 }: GetFeatures) {
   return new Promise((resolve) => {
     const layer = new FeatureLayer({
@@ -43,13 +44,18 @@ function getFeatures({
     // }
     // featureQuery.returnGeometry = returnGeometry;
     featureQuery.outSpatialReference = outSpatialReference;
-    layer.queryFeatures(featureQuery).then((results) => {
-      // TODO: TS-TODO: Type results.
-      if (results && results.features && results.features.length > 0) {
-        resolve(results.features);
-      }
-      resolve(null);
-    });
+    layer
+      .queryFeatures(featureQuery, { signal })
+      .then((results) => {
+        // TODO: TS-TODO: Type results.
+        if (results && results.features && results.features.length > 0) {
+          resolve(results.features);
+        }
+        resolve(null);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 }
 
