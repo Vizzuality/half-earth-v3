@@ -29,7 +29,11 @@ import {
 
 import MinimizeIcon from 'icons/closes.svg?react';
 
-import { TABS } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+  TABS,
+} from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -76,6 +80,8 @@ function DashboardViewComponent(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [layerInfo, setLayerInfo] = useState();
   const [showLegend, setShowLegend] = useState(false);
+  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
+  const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
   // const [showTopNav, setShowTopNav] = useState(true);
   let hoverHighlight;
   let prevHoverName = '';
@@ -314,9 +320,28 @@ function DashboardViewComponent(props) {
       setOnPointerMoveHandler(null);
     }
 
-    setOnClickHandler(view.on('click', (event) => handleRegionClicked(event)));
-    setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
-  }, [layerView]);
+    highlight?.remove();
+    hoverHighlight?.remove();
+
+    if (selectedIndex === NAVIGATION.TRENDS) {
+      if (tabOption === TABS.SPI && activeTrend === PROVINCE_TREND) {
+        setOnClickHandler(
+          view.on('click', (event) => handleRegionClicked(event))
+        );
+        setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
+      } else if (tabOption === TABS.SHI && shiActiveTrend === PROVINCE_TREND) {
+        setOnClickHandler(
+          view.on('click', (event) => handleRegionClicked(event))
+        );
+        setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
+      }
+    } else {
+      setOnClickHandler(
+        view.on('click', (event) => handleRegionClicked(event))
+      );
+      setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
+    }
+  }, [layerView, tabOption, activeTrend, shiActiveTrend]);
 
   useEffect(() => {
     if (Object.values(mapLegendLayers).length > 0) {
@@ -396,6 +421,10 @@ function DashboardViewComponent(props) {
           setRegionName={setRegionName}
           setImagePopup={setImagePopup}
           setIsLoading={setIsLoading}
+          activeTrend={activeTrend}
+          setActiveTrend={setActiveTrend}
+          shiActiveTrend={shiActiveTrend}
+          setShiActiveTrend={setShiActiveTrend}
           {...props}
         />
       </LightModeProvider>

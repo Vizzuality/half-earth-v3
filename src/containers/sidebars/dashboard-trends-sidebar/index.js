@@ -41,14 +41,15 @@ function DashboardTrendsSidebarContainer(props) {
     selectedProvince,
     tabOption,
     setMapLegendLayers,
+    activeTrend,
+    shiActiveTrend,
   } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState([]);
   const [shiCountryData, setShiCountryData] = useState([]);
   const [provinces, setProvinces] = useState([]);
-  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
-  const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
+
   const [spiScoresData, setSpiScoresData] = useState([]);
   const [shiScoresData, setShiScoresData] = useState([]);
   const [spiSelectSpeciesData, setSpiSelectSpeciesData] = useState([]);
@@ -376,10 +377,6 @@ function DashboardTrendsSidebarContainer(props) {
       spiSelectSpeciesData={spiSelectSpeciesData}
       shiSelectSpeciesData={shiSelectSpeciesData}
       geo={geo}
-      activeTrend={activeTrend}
-      setActiveTrend={setActiveTrend}
-      shiActiveTrend={shiActiveTrend}
-      setShiActiveTrend={setShiActiveTrend}
       shiProvinceTrendData={shiProvinceTrendData}
       {...props}
     />
