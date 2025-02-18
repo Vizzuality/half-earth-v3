@@ -9,8 +9,6 @@ import { LightModeContext } from 'context/light-mode';
 
 import TaxaImageComponent from 'components/taxa-image';
 
-import { TAXA_IMAGE_URL } from 'constants/dashboard-constants';
-
 import styles from './species-info-styles.module.scss';
 
 function SpeciesInfoComponent(props) {
@@ -41,7 +39,7 @@ function SpeciesInfoComponent(props) {
     if (speciesInfo) {
       let spImage =
         speciesInfo?.image.url ??
-        `${TAXA_IMAGE_URL}${speciesInfo?.taxa}_icon.svg`;
+        `dashboard/default_photo_${speciesInfo?.taxa}.png`;
 
       if (speciesInfo?.scientificname === 'Cercopithecus wolfi') {
         spImage =
