@@ -53,6 +53,7 @@ function DashboardContainer(props) {
     'ACINONYX JUBATUS',
     'PILIOCOLOBUS PENNANTII',
     'DICEROS BICORNIS',
+    'MECISTOPS CATAPHRACTUS',
   ];
 
   const [geometry, setGeometry] = useState(null);
