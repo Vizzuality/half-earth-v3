@@ -4,7 +4,6 @@ import { useT } from '@transifex/react';
 
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
-  SPECIES_LAYER_IDS,
   GBIF_OCCURENCE_URL,
 } from 'utils/dashboard-utils';
 
@@ -177,22 +176,12 @@ function GroupedListComponent(props) {
     } else if (id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
       if (isPrivate) {
         if (!item.isActive) {
-          let url;
-
-          switch (speciesInfo.scientificname.toLowerCase()) {
-            case 'myotis bocagii':
-              url = SPECIES_LAYER_IDS.Myotis_bocagii;
-              break;
-            case 'hyperolius castaneus':
-              url = SPECIES_LAYER_IDS.Hyperolius_castaneus;
-              break;
-            case 'chiromantis rufescens':
-              url = SPECIES_LAYER_IDS.Chiromantis_rufescens;
-              break;
-            default:
-              break;
-          }
-          layer = await EsriFeatureService.getFeatureLayer(url, null, id);
+          layer = await EsriFeatureService.getFeaturePrivateOccurenceLayer(
+            '34e596f26f3b4203937e872e91c630b1',
+            speciesInfo.scientificname,
+            'private_test',
+            item.dataset_title
+          );
         }
       }
     }
@@ -308,7 +297,10 @@ function GroupedListComponent(props) {
 
     if (layerParent === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
       if (!item.isActive || layerIndex < 0) {
-        if (pointObservationIds.find((id) => id === item.dataset_id)) {
+        if (
+          pointObservationIds.find((id) => id === item.dataset_id) ||
+          item.type === 'PRIVATE'
+        ) {
           setIsLoading(true);
           loadingCount += 1;
 
@@ -325,6 +317,13 @@ function GroupedListComponent(props) {
               speciesInfo.scientificname,
               layerName,
               'GBIF'
+            );
+          } else if (item.type === 'PRIVATE') {
+            layer = await EsriFeatureService.getFeaturePrivateOccurenceLayer(
+              '34e596f26f3b4203937e872e91c630b1',
+              speciesInfo.scientificname,
+              layerName,
+              item.dataset_title
             );
           }
 
@@ -448,7 +447,7 @@ function GroupedListComponent(props) {
       (id) => id === item.dataset_id
     );
 
-    if (foundExpertRange || foundPointOb) {
+    if (foundExpertRange || foundPointOb || item.type === 'PRIVATE') {
       const control = (
         <FormControlLabel
           label={t(item.dataset_title)}

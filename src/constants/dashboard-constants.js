@@ -86,7 +86,5 @@ export const DATA_POINT_TYPE = {
   REGIONS_DATA: 'REGIONS_DATA',
 };
 
-export const TAXA_IMAGE_URL = 'icons/dashboard/';
-
 export const SPECIES_IMAGE_URL =
   'https://storage.googleapis.com/mol-assets2/thumbs/';

@@ -25,6 +25,7 @@ import {
   LAYER_OPTIONS,
   NAVIGATION,
   DATA_POINT_TYPE,
+  LAYER_TITLE_TYPES,
 } from 'constants/dashboard-constants.js';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -54,6 +55,7 @@ function DataLayerComponent(props) {
     setSpeciesInfo,
     setScientificName,
     setDataLayerData,
+    privateOccurrenceData,
     setMapLegendLayers,
     exploreAllSpecies,
     mapLegendLayers,
@@ -284,6 +286,43 @@ function DataLayerComponent(props) {
     ];
     setDataPoints(publicData);
   }, [dataLayerData]);
+
+  useEffect(() => {
+    if (privateOccurrenceData.length > 0) {
+      const privateData = [];
+
+      const studyNameSet = new Set(); // Use a Set for efficient tracking
+
+      privateOccurrenceData.forEach((obj) => {
+        if (obj) {
+          const { study_name } = obj;
+
+          if (!studyNameSet.has(study_name)) {
+            studyNameSet.add(study_name);
+            privateData.push({
+              label: t(obj.study_name),
+              items: [],
+              no_rows: 1,
+              isActive: false,
+              type_title: LAYER_TITLE_TYPES.POINT_OBSERVATIONS,
+              showChildren: false,
+              type: DATA_POINT_TYPE.PRIVATE,
+              id: obj.study_name,
+              parent: `${t('Private: Point Observations')}`,
+              dataset_title: obj.study_name,
+            });
+          } else {
+            privateData.find((item) => item.id === obj.study_name).no_rows += 1;
+          }
+        }
+      });
+
+      privateDataPoints[0].items = privateData;
+      privateDataPoints[0].showChildren = true;
+
+      setPrivateDataPoints([privateDataPoints[0]]);
+    }
+  }, [privateOccurrenceData]);
 
   useEffect(() => {
     if (!dataPoints) return;

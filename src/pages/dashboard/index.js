@@ -60,6 +60,7 @@ function DashboardContainer(props) {
   const [speciesInfo, setSpeciesInfo] = useState(null);
   const [data, setData] = useState(null);
   const [dataLayerData, setDataLayerData] = useState(null);
+  const [privateOccurrenceData, setPrivateOccurrenceData] = useState([]);
   const [taxaList, setTaxaList] = useState([]);
   const [dataByCountry, setDataByCountry] = useState(null);
   const [spiDataByCountry, setSpiDataByCountry] = useState(null);
@@ -142,6 +143,19 @@ function DashboardContainer(props) {
   };
 
   const getDataLayersData = async () => {
+    const privateOccurrenceDataResponse = await EsriFeatureService.getFeatures({
+      url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_LAYER,
+      whereClause: `scientificname = '${scientificName}'`,
+      returnGeometry: false,
+    });
+    if (privateOccurrenceDataResponse?.length > 0) {
+      const privateOccurrenceItems = privateOccurrenceDataResponse.map(
+        (item) => item.attributes
+      );
+
+      setPrivateOccurrenceData(privateOccurrenceItems);
+    }
+
     const gbifResponse = await EsriFeatureService.getFeatures({
       url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
       whereClause: `species = '${scientificName}' and source = 'GBIF'`,
@@ -795,6 +809,7 @@ function DashboardContainer(props) {
       data={data}
       dataLayerData={dataLayerData}
       setDataLayerData={setDataLayerData}
+      privateOccurrenceData={privateOccurrenceData}
       dataByCountry={dataByCountry}
       spiDataByCountry={spiDataByCountry}
       taxaList={taxaList}

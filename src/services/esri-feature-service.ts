@@ -91,6 +91,22 @@ function getFeatureOccurenceLayer(portalItemId, scientificName, id, type) {
   });
 }
 
+function getFeaturePrivateOccurenceLayer(
+  portalItemId,
+  scientificName,
+  id,
+  study_name
+) {
+  return new FeatureLayer({
+    portalItem: {
+      id: portalItemId,
+    },
+    outFields: ['*'],
+    definitionExpression: `scientificname = '${scientificName}' and study_name = '${study_name}'`,
+    id,
+  });
+}
+
 function getCSVLayer() {
   return new CSVLayer({
     // needs to be public accesible URL for csv file
@@ -230,4 +246,5 @@ export default {
   addProtectedAreaLayer,
   getCSVLayer,
   getFeatureOccurenceLayer,
+  getFeaturePrivateOccurenceLayer,
 };
