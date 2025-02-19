@@ -34,15 +34,15 @@ function ToggleLayerInfoComponent(props) {
         data = [
           {
             label: 'Description',
-            value: t(
-              'The habitat loss/gain map is developed from the species expert range map, species habitat preference data, and annually-updated environmental and land cover data. These maps use the year 2001 as a baseline to determine a species total suitable habitat area, where suitable habitat is based on the application of habitat preferences and environmental/land cover data to the expert range map, and track what areas of the range have been lost or regained since 2001.'
-            ),
+            value:
+              'The habitat loss/gain map is developed from the species expert range map, species habitat preference data, and annually-updated environmental and land cover data. These maps use the year 2001 as a baseline to determine a species total suitable habitat area, where suitable habitat is based on the application of habitat preferences and environmental/land cover data to the expert range map, and track what areas of the range have been lost or regained since 2001.',
           },
         ];
       } else if (item.id === LAYER_OPTIONS.PROTECTED_AREAS) {
         data = [
           {
             label: 'Description',
+            id: item.id,
             value: (
               <T
                 _str="From the World Database of Protected Areas ({link})."
@@ -63,6 +63,7 @@ function ToggleLayerInfoComponent(props) {
         data = [
           {
             label: 'Description',
+            id: item.id,
             value: (
               <T
                 _str="From the Database of Global Administrative Areas ({link})."
