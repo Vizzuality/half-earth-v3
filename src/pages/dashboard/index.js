@@ -38,6 +38,7 @@ function DashboardContainer(props) {
     setCountryDataReady,
     setCountryDataError,
     browsePage,
+    lang,
   } = props;
 
   const speciesToAvoid = [
@@ -95,6 +96,7 @@ function DashboardContainer(props) {
         regionLayers,
         selectedRegionOption,
         exploreAll,
+        lang,
       } = queryParams;
 
       if (species) {
@@ -132,11 +134,15 @@ function DashboardContainer(props) {
       if (selectedRegionOption) {
         setSelectedRegionOption(selectedRegionOption);
       }
+
+      if (lang) {
+        tx.setCurrentLocale(lang);
+      }
     }
   };
 
   const getSpeciesData = async () => {
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=${locale}&scientificname=${scientificName}`;
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=${lang}&scientificname=${scientificName}`;
     const response = await fetch(url);
     const d = await response.json();
     setSpeciesInfo(d[0]);
@@ -710,8 +716,26 @@ function DashboardContainer(props) {
     setData({ habitatTrendData, spiScoreData });
   };
 
+  const handleBrowsePage = () => {
+    browsePage({
+      type: DASHBOARD,
+      payload: { iso: countryISO.toLowerCase() },
+      query: {
+        species: scientificName ?? undefined,
+        tab: selectedIndex,
+        trend: tabOption ?? undefined,
+        region: selectedRegion ?? undefined,
+        regionName: regionName ?? undefined,
+        selectedRegionOption: selectedRegionOption ?? undefined,
+        exploreAll: exploreAllSpecies ?? undefined,
+        // province: provinceName ?? undefined,
+        lang: tx.currentLocale ?? undefined,
+      },
+    });
+  };
+
   // Get Country information, allows to get country name
-  useEffect(() => {
+  useEffect(async () => {
     getQueryParams();
 
     // Function to handle back navigation
@@ -744,7 +768,7 @@ function DashboardContainer(props) {
     getPrioritySpeciesList();
 
     if (countryISO === 'COD') {
-      tx.setCurrentLocale('fr');
+      await tx.setCurrentLocale('fr');
     }
 
     // Cleanup event listener on component unmount
@@ -774,21 +798,7 @@ function DashboardContainer(props) {
   }, [dataLayerData]);
 
   useEffect(() => {
-    browsePage({
-      type: DASHBOARD,
-      payload: { iso: countryISO.toLowerCase() },
-      query: {
-        species: scientificName ?? undefined,
-        tab: selectedIndex,
-        trend: tabOption ?? undefined,
-        region: selectedRegion ?? undefined,
-        regionName: regionName ?? undefined,
-        selectedRegionOption: selectedRegionOption ?? undefined,
-        exploreAll: exploreAllSpecies ?? undefined,
-        // province: provinceName ?? undefined,
-        lang: user?.culture?.split('-')[0] ?? undefined,
-      },
-    });
+    handleBrowsePage();
   }, [
     scientificName,
     selectedIndex,

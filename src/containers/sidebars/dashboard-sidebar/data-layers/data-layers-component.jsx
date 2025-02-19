@@ -372,20 +372,24 @@ function DataLayerComponent(props) {
           )}
 
           <hr className={hrTheme.dark} />
-          <button
-            className={styles.distributionTitle}
-            type="button"
-            onClick={() => {}}
-          >
-            <span>{t('Species Data: Private')}</span>
-          </button>
-          <DataLayersGroupedList
-            dataPoints={privateDataPoints}
-            setDataPoints={setPrivateDataPoints}
-            isPrivate
-            {...props}
-          />
-          <hr className={hrTheme.dark} />
+          {privateOccurrenceData.length > 0 && (
+            <>
+              <button
+                className={styles.distributionTitle}
+                type="button"
+                onClick={() => {}}
+              >
+                <span>{t('Species Data: Private')}</span>
+              </button>
+              <DataLayersGroupedList
+                dataPoints={privateDataPoints}
+                setDataPoints={setPrivateDataPoints}
+                isPrivate
+                {...props}
+              />
+              <hr className={hrTheme.dark} />
+            </>
+          )}
           <button
             className={styles.distributionTitle}
             type="button"

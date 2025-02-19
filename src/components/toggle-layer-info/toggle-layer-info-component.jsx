@@ -28,7 +28,25 @@ function ToggleLayerInfoComponent(props) {
     let parent = false;
     let url = `${DASHBOARD_URLS.DATASET_LAYER_INFO}${item.dataset_id}`;
 
-    if (customLayers.includes(item.id)) {
+    if (layer.type === 'PRIVATE') {
+      if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
+        const data = [
+          {
+            label: 'Data type',
+            id: item.id,
+            value: 'Point Observations',
+          },
+          {
+            label: 'Description',
+            id: item.id,
+            value:
+              'Recorded observations of species collected by ranger or scientific teams. These data are those collected and uploaded by ICCN or its associates into the ICCN ArcGIS Online account. Note that each point may carry a large spatial uncertainty.',
+          },
+        ];
+
+        setLayerInfo({ info: data, title: item.label });
+      }
+    } else if (customLayers.includes(item.id)) {
       let data;
       if (item.id === LAYER_OPTIONS.HABITAT) {
         data = [
@@ -79,7 +97,7 @@ function ToggleLayerInfoComponent(props) {
       }
 
       setLayerInfo({ info: data, title: item.label });
-    } else if (layer.type !== 'PRIVATE') {
+    } else {
       if (parentLayers.includes(item.id)) {
         url = `${DASHBOARD_URLS.DATASET_LAYER_GROUP_INFO}`;
       }
@@ -102,22 +120,6 @@ function ToggleLayerInfoComponent(props) {
       } else {
         setLayerInfo({ info: data.metadata, title: item.label });
       }
-    } else if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
-      const data = [
-        {
-          label: 'Data type',
-          id: item.id,
-          value: 'Point Observations',
-        },
-        {
-          label: 'Description',
-          id: item.id,
-          value:
-            'Recorded observations of species collected by ranger or scientific teams. These data are those collected and uploaded by ICCN or its associates into the ICCN ArcGIS Online account. Note that each point may carry a large spatial uncertainty.',
-        },
-      ];
-
-      setLayerInfo({ info: data, title: item.label });
     }
   };
   return (
