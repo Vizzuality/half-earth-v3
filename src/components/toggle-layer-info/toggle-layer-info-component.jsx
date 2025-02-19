@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useT, T } from '@transifex/react';
 
+import EsriFeatureService from 'services/esri-feature-service';
+
 import { LAYER_OPTIONS } from 'constants/dashboard-constants.js';
 import { DASHBOARD_URLS } from 'constants/layers-urls';
 
@@ -44,6 +46,25 @@ function ToggleLayerInfoComponent(props) {
           },
         ];
 
+        setLayerInfo({ info: data, title: item.label });
+      } else {
+        const data = [];
+
+        const info = await EsriFeatureService.getFeatures({
+          url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_METADATA_LAYER,
+          whereClause: `study_name = '${item.label}'`,
+          outFields: ['description, date_range, region, taxa'],
+          returnGeometr: false,
+        });
+
+        const { attributes } = info[0];
+
+        Object.keys(attributes).forEach((key) => {
+          data.push({
+            label: key.replace(/_/g, ' '),
+            value: attributes[key],
+          });
+        });
         setLayerInfo({ info: data, title: item.label });
       }
     } else if (customLayers.includes(item.id)) {

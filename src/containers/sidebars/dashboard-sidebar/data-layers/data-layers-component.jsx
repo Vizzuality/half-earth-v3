@@ -21,6 +21,8 @@ import { Loading } from 'he-components';
 
 import Button from 'components/button';
 
+import EsriFeatureService from 'services/esri-feature-service';
+
 import {
   LAYER_OPTIONS,
   NAVIGATION,

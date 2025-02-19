@@ -27,6 +27,10 @@ function Blah() {
     t('Filter reptiles');
     t('Not Evaluated');
     t('Inscribed');
+    t('date range');
+    t('description');
+    t('region');
+    t('taxa');
     t('Proposed');
     t(
       'A real-time, online checklist program, eBird has revolutionized the way that the birding community reports and accesses information about birds. Launched in 2002 by the Cornell Lab of Ornithology and National Audubon Society, eBird provides rich data sources for basic information on bird abundance and distribution at a variety of spatial and temporal scales.'
