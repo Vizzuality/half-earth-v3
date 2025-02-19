@@ -79,7 +79,7 @@ function ToggleLayerInfoComponent(props) {
       }
 
       setLayerInfo({ info: data, title: item.label });
-    } else {
+    } else if (layer.type !== 'PRIVATE') {
       if (parentLayers.includes(item.id)) {
         url = `${DASHBOARD_URLS.DATASET_LAYER_GROUP_INFO}`;
       }
@@ -102,23 +102,34 @@ function ToggleLayerInfoComponent(props) {
       } else {
         setLayerInfo({ info: data.metadata, title: item.label });
       }
+    } else if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
+      const data = [
+        {
+          label: 'Data type',
+          id: item.id,
+          value: 'Point Observations',
+        },
+        {
+          label: 'Description',
+          id: item.id,
+          value:
+            'Recorded observations of species collected by ranger or scientific teams. These data are those collected and uploaded by ICCN or its associates into the ICCN ArcGIS Online account. Note that each point may carry a large spatial uncertainty.',
+        },
+      ];
+
+      setLayerInfo({ info: data, title: item.label });
     }
   };
   return (
-    <>
-      {layer.type !== 'PRIVATE' && (
-        <button
-          type="button"
-          className={styles.info}
-          onClick={() => displayInfo(layer)}
-          aria-label="Toggle info visibility"
-          title={t('Info and metadata')}
-        >
-          <InfoIcon />
-        </button>
-      )}
-      {layer.type === 'PRIVATE' && <span />}
-    </>
+    <button
+      type="button"
+      className={styles.info}
+      onClick={() => displayInfo(layer)}
+      aria-label="Toggle info visibility"
+      title={t('Info and metadata')}
+    >
+      <InfoIcon />
+    </button>
   );
 }
 
