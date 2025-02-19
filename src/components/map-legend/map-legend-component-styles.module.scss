@@ -109,6 +109,13 @@
           height: 15px;
           border: 1px solid rgba(255, 255, 255, 0.6);
         }
+
+        .circle{
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+        }
       }
     }
   }

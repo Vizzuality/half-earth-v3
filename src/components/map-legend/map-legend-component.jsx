@@ -49,6 +49,21 @@ function MapLegendComponent(props) {
       return <img src={layer.imageUrl} width={20} height={20} alt="Point" />;
     }
 
+    if (layer.color) {
+      const { color } = layer;
+      const backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+      return (
+        <div className={styles.wrapper}>
+          <div
+            className={layer.style === 'circle' ? styles.circle : styles.box}
+            style={{
+              backgroundColor,
+            }}
+          />
+        </div>
+      );
+    }
+
     // Use layer outline styles (Administrative Layers)
     if (layer.outline) {
       const { color } = layer.outline;

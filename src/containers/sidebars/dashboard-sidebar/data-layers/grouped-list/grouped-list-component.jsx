@@ -82,14 +82,22 @@ function GroupedListComponent(props) {
         const { symbol, uniqueValueGroups } = renderer;
 
         if (symbol) {
-          const { url, outline } = symbol;
+          const { url, outline, color, style } = symbol;
 
           if (url) {
             item.imageUrl = url;
           }
 
+          if (color) {
+            item.color = color;
+          }
+
           if (outline) {
             item.outline = outline;
+          }
+
+          if (style) {
+            item.style = style;
           }
         } else if (uniqueValueGroups) {
           item.classes = uniqueValueGroups[0].classes;
