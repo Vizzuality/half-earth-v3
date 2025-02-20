@@ -20,8 +20,7 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import Button from 'components/button';
-
-import EsriFeatureService from 'services/esri-feature-service';
+import SpeciesSearch from 'components/species-search';
 
 import {
   LAYER_OPTIONS,
@@ -348,62 +347,75 @@ function DataLayerComponent(props) {
         />
       </div>
       <hr className={hrTheme.dark} />
-
-      <SpeciesInfoContainer speciesInfo={speciesInfo} />
-      <hr className={hrTheme.dark} />
-      {isLoading && <Loading height={200} />}
-      {!isLoading && dataPoints && (
+      {speciesInfo && (
         <>
-          <button
-            className={styles.distributionTitle}
-            type="button"
-            onClick={() => {}}
-          >
-            <span>{t('Species Data: Public')}</span>
-          </button>
-          <DataLayersGroupedList
-            dataPoints={dataPoints}
-            setDataPoints={setDataPoints}
-            setShowHabitatChart={setShowHabitatChart}
-            setIsHabitatChartLoading={setIsHabitatChartLoading}
-            {...props}
-          />
-          {isHabitatChartLoading && <Loading height={200} />}
-          {valuesExists && showHabitatChart && (
-            <Line options={chartOptions} data={chartData} />
-          )}
-
+          <SpeciesInfoContainer speciesInfo={speciesInfo} />
           <hr className={hrTheme.dark} />
-          {privateOccurrenceData.length > 0 && (
+          {isLoading && <Loading height={200} />}
+          {!isLoading && dataPoints && (
             <>
               <button
                 className={styles.distributionTitle}
                 type="button"
                 onClick={() => {}}
               >
-                <span>{t('Species Data: Private')}</span>
+                <span>{t('Species Data: Public')}</span>
               </button>
               <DataLayersGroupedList
-                dataPoints={privateDataPoints}
-                setDataPoints={setPrivateDataPoints}
-                isPrivate
+                dataPoints={dataPoints}
+                setDataPoints={setDataPoints}
+                setShowHabitatChart={setShowHabitatChart}
+                setIsHabitatChartLoading={setIsHabitatChartLoading}
                 {...props}
               />
+              {isHabitatChartLoading && <Loading height={200} />}
+              {valuesExists && showHabitatChart && (
+                <Line options={chartOptions} data={chartData} />
+              )}
+
               <hr className={hrTheme.dark} />
+              {privateOccurrenceData.length > 0 && (
+                <>
+                  <button
+                    className={styles.distributionTitle}
+                    type="button"
+                    onClick={() => {}}
+                  >
+                    <span>{t('Species Data: Private')}</span>
+                  </button>
+                  <DataLayersGroupedList
+                    dataPoints={privateDataPoints}
+                    setDataPoints={setPrivateDataPoints}
+                    isPrivate
+                    {...props}
+                  />
+                  <hr className={hrTheme.dark} />
+                </>
+              )}
+              <button
+                className={styles.distributionTitle}
+                type="button"
+                onClick={() => {}}
+              >
+                <span>{t('Regions Data')}</span>
+              </button>
+              <DataLayersGroupedList
+                dataPoints={regionsData}
+                setDataPoints={setRegionsData}
+                {...props}
+              />
             </>
           )}
-          <button
-            className={styles.distributionTitle}
-            type="button"
-            onClick={() => {}}
-          >
-            <span>{t('Regions Data')}</span>
-          </button>
-          <DataLayersGroupedList
-            dataPoints={regionsData}
-            setDataPoints={setRegionsData}
-            {...props}
-          />
+        </>
+      )}
+      {!speciesInfo && (
+        <>
+          <p>
+            {t(
+              "Couln't retrieve any data for this species. Please search for another species."
+            )}
+          </p>
+          <SpeciesSearch {...props} />
         </>
       )}
     </section>
