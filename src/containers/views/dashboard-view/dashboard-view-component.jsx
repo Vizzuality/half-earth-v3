@@ -10,6 +10,7 @@ import RegionsLabelsLayer from 'containers/layers/regions-labels-layer';
 import SideMenu from 'containers/menus/sidemenu';
 import DashboardSidebarContainer from 'containers/sidebars/dashboard-sidebar';
 
+import AreaHighlightManagerComponent from 'components/AreaHighlightManager/area-highlight-manager-component';
 import popUpStyles from 'components/image-popup/image-popup-component-styles.module.scss';
 import LayerInfoModalContainer from 'components/layer-info-modal';
 import MapLegendContainer from 'components/map-legend';
@@ -19,7 +20,6 @@ import MapView from 'components/map-view';
 
 import MinimizeIcon from 'icons/closes.svg?react';
 
-import AreaHighlightManagerComponent from '../../../components/AreaHighlightManager/area-highlight-manager-component';
 import { NATIONAL_TREND } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
