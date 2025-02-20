@@ -38,6 +38,7 @@ function DashboardContainer(props) {
     setCountryDataReady,
     setCountryDataError,
     browsePage,
+    lang,
   } = props;
 
   const speciesToAvoid = [
@@ -53,12 +54,14 @@ function DashboardContainer(props) {
     'ACINONYX JUBATUS',
     'PILIOCOLOBUS PENNANTII',
     'DICEROS BICORNIS',
+    'MECISTOPS CATAPHRACTUS',
   ];
 
   const [geometry, setGeometry] = useState(null);
   const [speciesInfo, setSpeciesInfo] = useState(null);
   const [data, setData] = useState(null);
   const [dataLayerData, setDataLayerData] = useState(null);
+  const [privateOccurrenceData, setPrivateOccurrenceData] = useState([]);
   const [taxaList, setTaxaList] = useState([]);
   const [dataByCountry, setDataByCountry] = useState(null);
   const [spiDataByCountry, setSpiDataByCountry] = useState(null);
@@ -93,6 +96,7 @@ function DashboardContainer(props) {
         regionLayers,
         selectedRegionOption,
         exploreAll,
+        lang,
       } = queryParams;
 
       if (species) {
@@ -130,17 +134,34 @@ function DashboardContainer(props) {
       if (selectedRegionOption) {
         setSelectedRegionOption(selectedRegionOption);
       }
+
+      if (lang) {
+        tx.setCurrentLocale(lang);
+      }
     }
   };
 
   const getSpeciesData = async () => {
-    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=${locale}&scientificname=${scientificName}`;
+    const url = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info?lang=${lang}&scientificname=${scientificName}`;
     const response = await fetch(url);
     const d = await response.json();
     setSpeciesInfo(d[0]);
   };
 
   const getDataLayersData = async () => {
+    const privateOccurrenceDataResponse = await EsriFeatureService.getFeatures({
+      url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_LAYER,
+      whereClause: `scientificname = '${scientificName}'`,
+      returnGeometry: false,
+    });
+    if (privateOccurrenceDataResponse?.length > 0) {
+      const privateOccurrenceItems = privateOccurrenceDataResponse.map(
+        (item) => item.attributes
+      );
+
+      setPrivateOccurrenceData(privateOccurrenceItems);
+    }
+
     const gbifResponse = await EsriFeatureService.getFeatures({
       url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
       whereClause: `species = '${scientificName}' and source = 'GBIF'`,
@@ -520,18 +541,30 @@ function DashboardContainer(props) {
           }),
         };
 
-        const amphibians = speciesData.species.filter(
-          (item) => item.taxa === 'amphibians'
-        );
-        const birds = speciesData.species.filter(
-          (item) => item.taxa === 'birds'
-        );
-        const reptiles = speciesData.species.filter(
-          (item) => item.taxa === 'reptiles'
-        );
-        const mammals = speciesData.species.filter(
-          (item) => item.taxa === 'mammals'
-        );
+        const amphibians = speciesData.species.filter((item) => {
+          if (item) {
+            return item.taxa === 'amphibians';
+          }
+          return false;
+        });
+        const birds = speciesData.species.filter((item) => {
+          if (item) {
+            return item.taxa === 'birds';
+          }
+          return false;
+        });
+        const reptiles = speciesData.species.filter((item) => {
+          if (item) {
+            return item.taxa === 'reptiles';
+          }
+          return false;
+        });
+        const mammals = speciesData.species.filter((item) => {
+          if (item) {
+            return item.taxa === 'mammals';
+          }
+          return false;
+        });
 
         const ampSpecies = {
           count: amphibians.length,
@@ -683,8 +716,26 @@ function DashboardContainer(props) {
     setData({ habitatTrendData, spiScoreData });
   };
 
+  const handleBrowsePage = () => {
+    browsePage({
+      type: DASHBOARD,
+      payload: { iso: countryISO.toLowerCase() },
+      query: {
+        species: scientificName ?? undefined,
+        tab: selectedIndex,
+        trend: tabOption ?? undefined,
+        region: selectedRegion ?? undefined,
+        regionName: regionName ?? undefined,
+        selectedRegionOption: selectedRegionOption ?? undefined,
+        exploreAll: exploreAllSpecies ?? undefined,
+        // province: provinceName ?? undefined,
+        lang: tx.currentLocale ?? undefined,
+      },
+    });
+  };
+
   // Get Country information, allows to get country name
-  useEffect(() => {
+  useEffect(async () => {
     getQueryParams();
 
     // Function to handle back navigation
@@ -717,7 +768,7 @@ function DashboardContainer(props) {
     getPrioritySpeciesList();
 
     if (countryISO === 'COD') {
-      tx.setCurrentLocale('fr');
+      await tx.setCurrentLocale('fr');
     }
 
     // Cleanup event listener on component unmount
@@ -747,21 +798,7 @@ function DashboardContainer(props) {
   }, [dataLayerData]);
 
   useEffect(() => {
-    browsePage({
-      type: DASHBOARD,
-      payload: { iso: countryISO.toLowerCase() },
-      query: {
-        species: scientificName ?? undefined,
-        tab: selectedIndex,
-        trend: tabOption ?? undefined,
-        region: selectedRegion ?? undefined,
-        regionName: regionName ?? undefined,
-        selectedRegionOption: selectedRegionOption ?? undefined,
-        exploreAll: exploreAllSpecies ?? undefined,
-        // province: provinceName ?? undefined,
-        lang: user?.culture?.split('-')[0] ?? undefined,
-      },
-    });
+    handleBrowsePage();
   }, [
     scientificName,
     selectedIndex,
@@ -782,6 +819,7 @@ function DashboardContainer(props) {
       data={data}
       dataLayerData={dataLayerData}
       setDataLayerData={setDataLayerData}
+      privateOccurrenceData={privateOccurrenceData}
       dataByCountry={dataByCountry}
       spiDataByCountry={spiDataByCountry}
       taxaList={taxaList}

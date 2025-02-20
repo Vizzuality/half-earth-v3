@@ -24,6 +24,8 @@ import {
   LAYER_OPTIONS,
   NAVIGATION,
   REGION_OPTIONS,
+  LAYER_TITLE_TYPES,
+  DATA_POINT_TYPE,
 } from 'constants/dashboard-constants.js';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -38,11 +40,13 @@ function RegionsAnalysisComponent(props) {
     regionLayers,
     browsePage,
     setRegionLayers,
+    view,
     setSelectedIndex,
     selectedRegion,
     setSelectedRegion,
     selectedIndex,
     selectedRegionOption,
+    setMapLegendLayers,
     setSelectedRegionOption,
     countryISO,
   } = props;
@@ -50,8 +54,39 @@ function RegionsAnalysisComponent(props) {
   // const [searchInput, setSearchInput] = useState('');
   // const [searchResults, setSearchResults] = useState([]);
 
+  const getLayerIcon = (layer, item) => {
+    view.whenLayerView(layer).then(() => {
+      const { renderer } = layer; // Get the renderer
+
+      if (renderer) {
+        const { symbol, uniqueValueGroups } = renderer;
+
+        if (symbol) {
+          const { url, outline } = symbol;
+
+          if (url) {
+            item.imageUrl = url;
+          }
+
+          if (outline) {
+            item.outline = outline;
+          }
+        } else if (uniqueValueGroups) {
+          item.classes = uniqueValueGroups[0].classes;
+        }
+      }
+
+      setMapLegendLayers((ml) => [...ml, item]);
+    });
+  };
+
   const displayLayer = async (option) => {
     let featureLayer;
+    setMapLegendLayers((ml) => {
+      const filtered = ml.filter((l) => l.id !== LAYER_OPTIONS.PROTECTED_AREAS);
+      return filtered;
+    });
+
     if (option === REGION_OPTIONS.PROTECTED_AREAS) {
       featureLayer = await EsriFeatureService.addProtectedAreaLayer(
         null,
@@ -62,6 +97,16 @@ function RegionsAnalysisComponent(props) {
         [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
       }));
       map.add(featureLayer);
+
+      // Add layers to Map Legend
+      const protectedAreaLayer = {
+        label: t(LAYER_TITLE_TYPES.PROTECTED_AREAS),
+        id: LAYER_OPTIONS.PROTECTED_AREAS,
+        showChildren: false,
+        type: DATA_POINT_TYPE.PUBLIC,
+      };
+
+      getLayerIcon(featureLayer, protectedAreaLayer);
     } else if (option === REGION_OPTIONS.PROVINCES) {
       featureLayer = await EsriFeatureService.getFeatureLayer(
         PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,

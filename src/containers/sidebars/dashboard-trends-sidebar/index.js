@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
+import { removeRegionLayers } from 'utils/dashboard-utils';
 import {
   PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
   SHI_LAYER_ID,
@@ -41,14 +42,15 @@ function DashboardTrendsSidebarContainer(props) {
     selectedProvince,
     tabOption,
     setMapLegendLayers,
+    activeTrend,
+    shiActiveTrend,
   } = props;
 
   const [geo, setGeo] = useState(null);
   const [countryData, setCountryData] = useState([]);
   const [shiCountryData, setShiCountryData] = useState([]);
   const [provinces, setProvinces] = useState([]);
-  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
-  const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
+
   const [spiScoresData, setSpiScoresData] = useState([]);
   const [shiScoresData, setShiScoresData] = useState([]);
   const [spiSelectSpeciesData, setSpiSelectSpeciesData] = useState([]);
@@ -58,16 +60,6 @@ function DashboardTrendsSidebarContainer(props) {
   const [shiValue, setShiValue] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
   const [siiValue, setSiiValue] = useState(0);
-
-  const removeRegionLayers = () => {
-    const layers = regionLayers;
-    Object.keys(layers).forEach((region) => {
-      const foundLayer = map.layers.items.find((item) => item.id === region);
-      if (foundLayer) {
-        map.remove(foundLayer);
-      }
-    });
-  };
 
   const getCountryData = (countryURL) => {
     EsriFeatureService.getFeatures(countryURL).then((features) => {
@@ -287,7 +279,7 @@ function DashboardTrendsSidebarContainer(props) {
   }, [map, view]);
 
   useEffect(() => {
-    removeRegionLayers();
+    removeRegionLayers(map, regionLayers);
     setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
 
     const countryURL = {
@@ -376,10 +368,6 @@ function DashboardTrendsSidebarContainer(props) {
       spiSelectSpeciesData={spiSelectSpeciesData}
       shiSelectSpeciesData={shiSelectSpeciesData}
       geo={geo}
-      activeTrend={activeTrend}
-      setActiveTrend={setActiveTrend}
-      shiActiveTrend={shiActiveTrend}
-      setShiActiveTrend={setShiActiveTrend}
       shiProvinceTrendData={shiProvinceTrendData}
       {...props}
     />

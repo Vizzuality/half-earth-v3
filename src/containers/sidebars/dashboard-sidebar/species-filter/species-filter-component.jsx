@@ -21,6 +21,8 @@ import {
   LAYER_OPTIONS,
   NAVIGATION,
   REGION_OPTIONS,
+  LAYER_TITLE_TYPES,
+  DATA_POINT_TYPE,
 } from 'constants/dashboard-constants.js';
 
 import styles from '../dashboard-sidebar-styles.module.scss';
@@ -42,8 +44,10 @@ function SpeciesFilterComponent(props) {
     exploreAllSpecies,
     setSelectedRegion,
     regionName,
+    setMapLegendLayers,
     setRegionLayers,
     regionLayers,
+    view,
     map,
     countryISO,
   } = props;
@@ -186,6 +190,32 @@ function SpeciesFilterComponent(props) {
     setSelectedIndex(NAVIGATION.REGION);
   };
 
+  const getLayerIcon = (layer, item) => {
+    view.whenLayerView(layer).then(() => {
+      const { renderer } = layer; // Get the renderer
+
+      if (renderer) {
+        const { symbol, uniqueValueGroups } = renderer;
+
+        if (symbol) {
+          const { url, outline } = symbol;
+
+          if (url) {
+            item.imageUrl = url;
+          }
+
+          if (outline) {
+            item.outline = outline;
+          }
+        } else if (uniqueValueGroups) {
+          item.classes = uniqueValueGroups[0].classes;
+        }
+      }
+
+      setMapLegendLayers((ml) => [...ml, item]);
+    });
+  };
+
   const updateActiveFilter = (filter) => {
     const newFilters = filters.map((filterGroup) => {
       const newFilterGroup = { ...filterGroup };
@@ -217,6 +247,15 @@ function SpeciesFilterComponent(props) {
           [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
         }));
         map.add(featureLayer);
+
+        const protectedAreaLayer = {
+          label: t(LAYER_TITLE_TYPES.PROTECTED_AREAS),
+          id: LAYER_OPTIONS.PROTECTED_AREAS,
+          showChildren: false,
+          type: DATA_POINT_TYPE.PUBLIC,
+        };
+
+        getLayerIcon(featureLayer, protectedAreaLayer);
       } else if (option === REGION_OPTIONS.PROVINCES) {
         featureLayer = await EsriFeatureService.getFeatureLayer(
           PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
@@ -244,6 +283,8 @@ function SpeciesFilterComponent(props) {
 
   useEffect(() => {
     if (!selectedRegion) return;
+
+    // layerView.highlight(hits.graphic);
 
     switch (selectedRegionOption) {
       case REGION_OPTIONS.PROTECTED_AREAS:

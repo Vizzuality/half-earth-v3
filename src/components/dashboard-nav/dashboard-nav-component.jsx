@@ -28,6 +28,7 @@ function DashboardNavComponent(props) {
     setMapLegendLayers,
     setDataLayerData,
     setFromTrends,
+    speciesInfo,
     setSpeciesInfo,
   } = props;
   const { lightMode } = useContext(LightModeContext);
@@ -107,7 +108,7 @@ function DashboardNavComponent(props) {
               </button>
               <button
                 type="button"
-                disabled={!scientificName}
+                disabled={!scientificName || !speciesInfo}
                 aria-label={t('Conservation Status')}
                 title={t('Conservation Status')}
                 className={cx({

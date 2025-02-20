@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useT, T } from '@transifex/react';
 
+import EsriFeatureService from 'services/esri-feature-service';
+
 import { LAYER_OPTIONS } from 'constants/dashboard-constants.js';
 import { DASHBOARD_URLS } from 'constants/layers-urls';
 
@@ -28,21 +30,58 @@ function ToggleLayerInfoComponent(props) {
     let parent = false;
     let url = `${DASHBOARD_URLS.DATASET_LAYER_INFO}${item.dataset_id}`;
 
-    if (customLayers.includes(item.id)) {
+    if (layer.type === 'PRIVATE') {
+      if (item.id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
+        const data = [
+          {
+            label: 'Data type',
+            id: item.id,
+            value: 'Point Observations',
+          },
+          {
+            label: 'Description',
+            id: item.id,
+            value:
+              'Recorded observations of species collected by ranger or scientific teams. These data are those collected and uploaded by ICCN or its associates into the ICCN ArcGIS Online account. Note that each point may carry a large spatial uncertainty.',
+          },
+        ];
+
+        setLayerInfo({ info: data, title: item.label });
+      } else {
+        const data = [];
+
+        const info = await EsriFeatureService.getFeatures({
+          url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_METADATA_LAYER,
+          whereClause: `study_name = '${item.label}'`,
+          outFields: ['description, date_range, region, taxa'],
+          returnGeometr: false,
+        });
+
+        const { attributes } = info[0];
+
+        Object.keys(attributes).forEach((key) => {
+          data.push({
+            label: key.replace(/_/g, ' '),
+            value: attributes[key],
+          });
+        });
+        setLayerInfo({ info: data, title: item.label });
+      }
+    } else if (customLayers.includes(item.id)) {
       let data;
       if (item.id === LAYER_OPTIONS.HABITAT) {
         data = [
           {
             label: 'Description',
-            value: t(
-              'The habitat loss/gain map is developed from the species expert range map, species habitat preference data, and annually-updated environmental and land cover data. These maps use the year 2001 as a baseline to determine a species total suitable habitat area, where suitable habitat is based on the application of habitat preferences and environmental/land cover data to the expert range map, and track what areas of the range have been lost or regained since 2001.'
-            ),
+            value:
+              'The habitat loss/gain map is developed from the species expert range map, species habitat preference data, and annually-updated environmental and land cover data. These maps use the year 2001 as a baseline to determine a species total suitable habitat area, where suitable habitat is based on the application of habitat preferences and environmental/land cover data to the expert range map, and track what areas of the range have been lost or regained since 2001.',
           },
         ];
       } else if (item.id === LAYER_OPTIONS.PROTECTED_AREAS) {
         data = [
           {
             label: 'Description',
+            id: item.id,
             value: (
               <T
                 _str="From the World Database of Protected Areas ({link})."
@@ -63,6 +102,7 @@ function ToggleLayerInfoComponent(props) {
         data = [
           {
             label: 'Description',
+            id: item.id,
             value: (
               <T
                 _str="From the Database of Global Administrative Areas ({link})."
@@ -104,20 +144,15 @@ function ToggleLayerInfoComponent(props) {
     }
   };
   return (
-    <>
-      {layer.type !== 'PRIVATE' && (
-        <button
-          type="button"
-          className={styles.info}
-          onClick={() => displayInfo(layer)}
-          aria-label="Toggle info visibility"
-          title={t('Info and metadata')}
-        >
-          <InfoIcon />
-        </button>
-      )}
-      {layer.type === 'PRIVATE' && <span />}
-    </>
+    <button
+      type="button"
+      className={styles.info}
+      onClick={() => displayInfo(layer)}
+      aria-label="Toggle info visibility"
+      title={t('Info and metadata')}
+    >
+      <InfoIcon />
+    </button>
   );
 }
 

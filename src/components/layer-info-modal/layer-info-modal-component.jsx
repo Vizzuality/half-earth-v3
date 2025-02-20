@@ -2,11 +2,18 @@ import React from 'react';
 
 import { useT } from '@transifex/react';
 
+import { LAYER_OPTIONS } from 'constants/dashboard-constants.js';
+
 import styles from './layer-info-modal-styles.module.scss';
 
 function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
   const t = useT();
   const { info, title } = layerInfo;
+
+  const overrideInfo = [
+    LAYER_OPTIONS.ADMINISTRATIVE_LAYERS,
+    LAYER_OPTIONS.PROTECTED_AREAS,
+  ];
 
   const closeModal = () => {
     setLayerInfo(null);
@@ -19,7 +26,8 @@ function LayerInfoModalComponent({ layerInfo, setLayerInfo }) {
           <td>
             <b>{t(item.label)}</b>
           </td>
-          <td>{item.value}</td>
+          {overrideInfo.includes(item.id) && <td>{item.value}</td>}
+          {!overrideInfo.includes(item.id) && <td>{t(item.value)}</td>}
         </tr>
       );
     }

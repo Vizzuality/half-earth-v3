@@ -20,11 +20,13 @@ import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
 
 import Button from 'components/button';
+import SpeciesSearch from 'components/species-search';
 
 import {
   LAYER_OPTIONS,
   NAVIGATION,
   DATA_POINT_TYPE,
+  LAYER_TITLE_TYPES,
 } from 'constants/dashboard-constants.js';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -54,6 +56,7 @@ function DataLayerComponent(props) {
     setSpeciesInfo,
     setScientificName,
     setDataLayerData,
+    privateOccurrenceData,
     setMapLegendLayers,
     exploreAllSpecies,
     mapLegendLayers,
@@ -286,6 +289,43 @@ function DataLayerComponent(props) {
   }, [dataLayerData]);
 
   useEffect(() => {
+    if (privateOccurrenceData.length > 0) {
+      const privateData = [];
+
+      const studyNameSet = new Set(); // Use a Set for efficient tracking
+
+      privateOccurrenceData.forEach((obj) => {
+        if (obj) {
+          const { study_name } = obj;
+
+          if (!studyNameSet.has(study_name)) {
+            studyNameSet.add(study_name);
+            privateData.push({
+              label: t(obj.study_name),
+              items: [],
+              no_rows: 1,
+              isActive: false,
+              type_title: LAYER_TITLE_TYPES.POINT_OBSERVATIONS,
+              showChildren: false,
+              type: DATA_POINT_TYPE.PRIVATE,
+              id: obj.study_name,
+              parent: `${t('Private: Point Observations')}`,
+              dataset_title: obj.study_name,
+            });
+          } else {
+            privateData.find((item) => item.id === obj.study_name).no_rows += 1;
+          }
+        }
+      });
+
+      privateDataPoints[0].items = privateData;
+      privateDataPoints[0].showChildren = true;
+
+      setPrivateDataPoints([privateDataPoints[0]]);
+    }
+  }, [privateOccurrenceData]);
+
+  useEffect(() => {
     if (!dataPoints) return;
     setIsLoading(false);
   }, [dataPoints]);
@@ -307,58 +347,75 @@ function DataLayerComponent(props) {
         />
       </div>
       <hr className={hrTheme.dark} />
-
-      <SpeciesInfoContainer speciesInfo={speciesInfo} />
-      <hr className={hrTheme.dark} />
-      {isLoading && <Loading height={200} />}
-      {!isLoading && dataPoints && (
+      {speciesInfo && (
         <>
-          <button
-            className={styles.distributionTitle}
-            type="button"
-            onClick={() => {}}
-          >
-            <span>{t('Species Data: Public')}</span>
-          </button>
-          <DataLayersGroupedList
-            dataPoints={dataPoints}
-            setDataPoints={setDataPoints}
-            setShowHabitatChart={setShowHabitatChart}
-            setIsHabitatChartLoading={setIsHabitatChartLoading}
-            {...props}
-          />
-          {isHabitatChartLoading && <Loading height={200} />}
-          {valuesExists && showHabitatChart && (
-            <Line options={chartOptions} data={chartData} />
-          )}
+          <SpeciesInfoContainer speciesInfo={speciesInfo} />
+          <hr className={hrTheme.dark} />
+          {isLoading && <Loading height={200} />}
+          {!isLoading && dataPoints && (
+            <>
+              <button
+                className={styles.distributionTitle}
+                type="button"
+                onClick={() => {}}
+              >
+                <span>{t('Species Data: Public')}</span>
+              </button>
+              <DataLayersGroupedList
+                dataPoints={dataPoints}
+                setDataPoints={setDataPoints}
+                setShowHabitatChart={setShowHabitatChart}
+                setIsHabitatChartLoading={setIsHabitatChartLoading}
+                {...props}
+              />
+              {isHabitatChartLoading && <Loading height={200} />}
+              {valuesExists && showHabitatChart && (
+                <Line options={chartOptions} data={chartData} />
+              )}
 
-          <hr className={hrTheme.dark} />
-          <button
-            className={styles.distributionTitle}
-            type="button"
-            onClick={() => {}}
-          >
-            <span>{t('Species Data: Private')}</span>
-          </button>
-          <DataLayersGroupedList
-            dataPoints={privateDataPoints}
-            setDataPoints={setPrivateDataPoints}
-            isPrivate
-            {...props}
-          />
-          <hr className={hrTheme.dark} />
-          <button
-            className={styles.distributionTitle}
-            type="button"
-            onClick={() => {}}
-          >
-            <span>{t('Regions Data')}</span>
-          </button>
-          <DataLayersGroupedList
-            dataPoints={regionsData}
-            setDataPoints={setRegionsData}
-            {...props}
-          />
+              <hr className={hrTheme.dark} />
+              {privateOccurrenceData.length > 0 && (
+                <>
+                  <button
+                    className={styles.distributionTitle}
+                    type="button"
+                    onClick={() => {}}
+                  >
+                    <span>{t('Species Data: Private')}</span>
+                  </button>
+                  <DataLayersGroupedList
+                    dataPoints={privateDataPoints}
+                    setDataPoints={setPrivateDataPoints}
+                    isPrivate
+                    {...props}
+                  />
+                  <hr className={hrTheme.dark} />
+                </>
+              )}
+              <button
+                className={styles.distributionTitle}
+                type="button"
+                onClick={() => {}}
+              >
+                <span>{t('Regions Data')}</span>
+              </button>
+              <DataLayersGroupedList
+                dataPoints={regionsData}
+                setDataPoints={setRegionsData}
+                {...props}
+              />
+            </>
+          )}
+        </>
+      )}
+      {!speciesInfo && (
+        <>
+          <p>
+            {t(
+              "Couln't retrieve any data for this species. Please search for another species."
+            )}
+          </p>
+          <SpeciesSearch {...props} />
         </>
       )}
     </section>

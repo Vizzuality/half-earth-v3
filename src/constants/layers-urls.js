@@ -519,4 +519,8 @@ export const DASHBOARD_URLS = {
   COD_OCCURRENCE_LAYER:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_occurrence_records/FeatureServer',
   COD_REGIONAL_SPECIES_LAYER: 'd9b12607731a42e8b463612d7b51ffa5',
+  PRIVATE_COD_OCCURENCE_LAYER:
+    'https://services3.arcgis.com/Zyt0ectKCtAdsOa2/arcgis/rest/services/occurrences_RDC/FeatureServer',
+  PRIVATE_COD_OCCURENCE_METADATA_LAYER:
+    'https://services3.arcgis.com/Zyt0ectKCtAdsOa2/arcgis/rest/services/occurrence_metadata/FeatureServer',
 };

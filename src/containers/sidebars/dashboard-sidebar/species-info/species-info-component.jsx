@@ -9,8 +9,6 @@ import { LightModeContext } from 'context/light-mode';
 
 import TaxaImageComponent from 'components/taxa-image';
 
-import { TAXA_IMAGE_URL } from 'constants/dashboard-constants';
-
 import styles from './species-info-styles.module.scss';
 
 function SpeciesInfoComponent(props) {
@@ -39,9 +37,23 @@ function SpeciesInfoComponent(props) {
 
   useEffect(() => {
     if (speciesInfo) {
-      const spImage =
+      let spImage =
         speciesInfo?.image.url ??
-        `${TAXA_IMAGE_URL}${speciesInfo?.taxa}_icon.svg`;
+        `dashboard/default_photo_${speciesInfo?.taxa}.png`;
+
+      if (speciesInfo?.scientificname === 'Cercopithecus wolfi') {
+        spImage =
+          'https://inaturalist-open-data.s3.amazonaws.com/photos/103894451/large.jpg';
+      } else if (speciesInfo?.scientificname === 'Chiromantis rufescens') {
+        spImage =
+          'https://inaturalist-open-data.s3.amazonaws.com/photos/81338343/large.jpeg';
+      } else if (speciesInfo?.scientificname === 'Psittacus erithacus') {
+        spImage =
+          'https://inaturalist-open-data.s3.amazonaws.com/photos/47367883/medium.jpg';
+      } else if (speciesInfo?.scientificname === 'Bitis nasicornis') {
+        spImage =
+          'https://inaturalist-open-data.s3.amazonaws.com/photos/395167898/original.jpeg';
+      }
 
       setSpeciesImage(spImage);
 

@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 
-import { useLocale, useT } from '@transifex/react';
+import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
-import Button from 'components/button';
-import SearchInput from 'components/search-input';
+import SpeciesSearch from 'components/species-search';
 
 import {
   NAVIGATION,
@@ -19,60 +18,14 @@ import styles from './species-home-styles.module.scss';
 
 function SpeciesHomeComponent(props) {
   const t = useT();
-  const locale = useLocale();
   const {
     setSelectedIndex,
     setScientificName,
     prioritySpeciesList,
-    setSelectedRegionOption,
-    setSelectedTaxa,
-    setSelectedRegion,
     setExploreAllSpecies,
   } = props;
 
   const { lightMode } = useContext(LightModeContext);
-  const [searchInput, setSearchInput] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-
-  const searchURL = 'https://dev-api.mol.org/2.x/species/groupsearch';
-  // 'https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/spatial/regions/spatial_species_search';
-
-  let controller = null;
-
-  const handleSearch = (searchText) => {
-    setSearchInput(searchText.currentTarget.value);
-  };
-
-  const handleSearchSelect = (searchItem) => {
-    setScientificName(searchItem.scientificname);
-    localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
-    setSelectedIndex(NAVIGATION.DATA_LAYER);
-  };
-
-  const handleExploreAllSpecies = () => {
-    setSelectedRegion(null);
-    setSelectedRegionOption(null);
-    setSelectedTaxa(null);
-    setExploreAllSpecies(true);
-    setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
-  };
-
-  const getSearchResults = async () => {
-    controller = new AbortController();
-    const { signal } = controller;
-
-    const searchParams = {
-      query: searchInput,
-      limit: 100,
-      page: 0,
-      lang: locale || 'en',
-      // region_id: '1eff8980-479e-4eac-b386-b4db859b275d',
-    };
-    const params = new URLSearchParams(searchParams);
-    const searchSpecies = await fetch(`${searchURL}?${params}`, { signal });
-    const results = await searchSpecies.json();
-    setSearchResults(results);
-  };
 
   const selectSpecies = (scientificname) => {
     setExploreAllSpecies(false);
@@ -80,21 +33,6 @@ function SpeciesHomeComponent(props) {
     setScientificName(scientificname);
     localStorage.setItem(SPECIES_SELECTED_COOKIE, scientificname);
   };
-
-  useEffect(() => {
-    if (!searchInput) return;
-
-    if (controller) {
-      controller.abort();
-    }
-    getSearchResults();
-
-    return () => {
-      if (controller) {
-        controller.abort();
-      }
-    };
-  }, [searchInput]);
 
   return (
     <div className={cx(lightMode ? styles.light : '', styles.container)}>
@@ -108,40 +46,7 @@ function SpeciesHomeComponent(props) {
             'Explore species spatial data, view conservation status, and analyze regions where a species occurs'
           )}
         </p>
-        <div className={styles.explore}>
-          <SearchInput
-            className={cx(
-              styles.search,
-              searchInput && searchResults.length > 0 ? styles.showResults : ''
-            )}
-            placeholder={t('Search for a species by name')}
-            onChange={handleSearch}
-            value={searchInput}
-          />
-          {searchInput && searchResults.length > 0 && (
-            <ul className={styles.searchResults}>
-              {searchResults.map(
-                (item) =>
-                  item.tc_id && (
-                    <li key={item.tc_id}>
-                      <button
-                        type="button"
-                        onClick={() => handleSearchSelect(item)}
-                      >
-                        <b>{item.scientificname}</b> -{' '}
-                        <span>{item.vernacular}</span>
-                      </button>
-                    </li>
-                  )
-              )}
-            </ul>
-          )}
-          <Button
-            type="rectangular"
-            label={t('Explore all Species')}
-            handleClick={handleExploreAllSpecies}
-          />
-        </div>
+        <SpeciesSearch {...props} />
         {prioritySpeciesList.length > 0 && (
           <div className={styles.mostPopular}>
             <span className={styles.sectionTitle}>{t('Popular Species')}</span>

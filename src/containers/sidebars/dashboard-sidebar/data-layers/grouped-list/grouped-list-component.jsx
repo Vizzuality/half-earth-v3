@@ -4,7 +4,6 @@ import { useT } from '@transifex/react';
 
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
-  SPECIES_LAYER_IDS,
   GBIF_OCCURENCE_URL,
 } from 'utils/dashboard-utils';
 
@@ -45,6 +44,8 @@ function GroupedListComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
 
+  let loadingCount = 0;
+
   const expertRangeMapIds = [
     'ec694c34-bddd-4111-ba99-926a5f7866e8',
     '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
@@ -81,14 +82,22 @@ function GroupedListComponent(props) {
         const { symbol, uniqueValueGroups } = renderer;
 
         if (symbol) {
-          const { url, outline } = symbol;
+          const { url, outline, color, style } = symbol;
 
           if (url) {
             item.imageUrl = url;
           }
 
+          if (color) {
+            item.color = color;
+          }
+
           if (outline) {
             item.outline = outline;
+          }
+
+          if (style) {
+            item.style = style;
           }
         } else if (uniqueValueGroups) {
           item.classes = uniqueValueGroups[0].classes;
@@ -135,6 +144,7 @@ function GroupedListComponent(props) {
     if (id === LAYER_OPTIONS.PROTECTED_AREAS) {
       if (!item.isActive) {
         setIsLoading(true);
+        loadingCount += 1;
         layer = await EsriFeatureService.addProtectedAreaLayer(
           null,
           countryISO
@@ -152,6 +162,7 @@ function GroupedListComponent(props) {
     } else if (id === LAYER_OPTIONS.HABITAT) {
       if (!item.isActive) {
         setIsLoading(true);
+        loadingCount += 1;
         setIsHabitatChartLoading(true);
         layer = await EsriFeatureService.getXYZLayer(
           speciesInfo.scientificname.replace(' ', '_'),
@@ -173,22 +184,12 @@ function GroupedListComponent(props) {
     } else if (id === LAYER_OPTIONS.POINT_OBSERVATIONS) {
       if (isPrivate) {
         if (!item.isActive) {
-          let url;
-
-          switch (speciesInfo.scientificname.toLowerCase()) {
-            case 'myotis bocagii':
-              url = SPECIES_LAYER_IDS.Myotis_bocagii;
-              break;
-            case 'hyperolius castaneus':
-              url = SPECIES_LAYER_IDS.Hyperolius_castaneus;
-              break;
-            case 'chiromantis rufescens':
-              url = SPECIES_LAYER_IDS.Chiromantis_rufescens;
-              break;
-            default:
-              break;
-          }
-          layer = await EsriFeatureService.getFeatureLayer(url, null, id);
+          layer = await EsriFeatureService.getFeaturePrivateOccurenceLayer(
+            '34e596f26f3b4203937e872e91c630b1',
+            speciesInfo.scientificname,
+            'private_test',
+            item.dataset_title
+          );
         }
       }
     }
@@ -203,7 +204,10 @@ function GroupedListComponent(props) {
           ...rl,
           [id]: layer,
         }));
-        setIsLoading(false);
+        loadingCount -= 1;
+        if (loadingCount === 0) {
+          setIsLoading(false);
+        }
       });
     } else {
       setMapLegendLayers((ml) => {
@@ -223,7 +227,10 @@ function GroupedListComponent(props) {
     }
 
     view.whenLayerView(layer).then(() => {
-      setIsLoading(false);
+      loadingCount -= 1;
+      if (loadingCount === 0) {
+        setIsLoading(false);
+      }
     });
   };
 
@@ -237,6 +244,7 @@ function GroupedListComponent(props) {
       if (!item.isActive || layerIndex < 0) {
         if (expertRangeMapIds.find((id) => id === item.dataset_id)) {
           setIsLoading(true);
+          loadingCount += 1;
           layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
             layerName,
@@ -270,7 +278,10 @@ function GroupedListComponent(props) {
               ...rl,
               [layerName]: layer,
             }));
-            setIsLoading(false);
+            loadingCount -= 1;
+            if (loadingCount === 0) {
+              setIsLoading(false);
+            }
           });
 
           setMapLegendLayers((ml) => [...ml, item]);
@@ -294,8 +305,12 @@ function GroupedListComponent(props) {
 
     if (layerParent === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
       if (!item.isActive || layerIndex < 0) {
-        if (pointObservationIds.find((id) => id === item.dataset_id)) {
+        if (
+          pointObservationIds.find((id) => id === item.dataset_id) ||
+          item.type === 'PRIVATE'
+        ) {
           setIsLoading(true);
+          loadingCount += 1;
 
           if (layerName.match(/EBIRD/)) {
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
@@ -311,6 +326,13 @@ function GroupedListComponent(props) {
               layerName,
               'GBIF'
             );
+          } else if (item.type === 'PRIVATE') {
+            layer = await EsriFeatureService.getFeaturePrivateOccurenceLayer(
+              '34e596f26f3b4203937e872e91c630b1',
+              speciesInfo.scientificname,
+              layerName,
+              item.dataset_title
+            );
           }
 
           item.isActive = true;
@@ -321,7 +343,10 @@ function GroupedListComponent(props) {
               ...rl,
               [layerName]: layer,
             }));
-            setIsLoading(false);
+            loadingCount -= 1;
+            if (loadingCount === 0) {
+              setIsLoading(false);
+            }
           });
 
           getLayerIcon(layer, item);
@@ -346,6 +371,7 @@ function GroupedListComponent(props) {
     if (layerParent === LAYER_TITLE_TYPES.REGIONAL_CHECKLISTS) {
       if (!item.isActive) {
         setIsLoading(true);
+        loadingCount += 1;
         layer = await EsriFeatureService.getMVTSource();
 
         map.add(layer);
@@ -355,7 +381,10 @@ function GroupedListComponent(props) {
             ...rl,
             [layerName]: layer,
           }));
-          setIsLoading(false);
+          loadingCount -= 1;
+          if (loadingCount === 0) {
+            setIsLoading(false);
+          }
         });
 
         map.addSource('mapTiles', {
@@ -426,7 +455,7 @@ function GroupedListComponent(props) {
       (id) => id === item.dataset_id
     );
 
-    if (foundExpertRange || foundPointOb) {
+    if (foundExpertRange || foundPointOb || item.type === 'PRIVATE') {
       const control = (
         <FormControlLabel
           label={t(item.dataset_title)}

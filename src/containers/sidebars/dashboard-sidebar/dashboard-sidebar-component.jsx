@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
+import { removeRegionLayers } from 'utils/dashboard-utils';
+
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import cx from 'classnames';
@@ -39,22 +41,13 @@ function DashboardSidebar(props) {
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
   const [logo, setLogo] = useState();
 
-  const removeRegionLayers = () => {
-    const layers = regionLayers;
-    Object.keys(layers).forEach((region) => {
-      const foundLayer = map.layers.items.find((item) => item.id === region);
-      if (foundLayer) {
-        map.remove(foundLayer);
-      }
-    });
-  };
-
   useEffect(() => {
     if (
       selectedIndex !== NAVIGATION.TRENDS &&
       selectedIndex !== NAVIGATION.EXPLORE_SPECIES
     ) {
-      removeRegionLayers();
+      removeRegionLayers(map, regionLayers);
+
       setRegionLayers({});
     }
   }, [selectedIndex]);
