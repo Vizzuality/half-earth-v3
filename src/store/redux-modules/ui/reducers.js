@@ -9,6 +9,8 @@ export const initialState = {
   NRCSidebarView: 'main',
   fullRanking: false,
   landcoverBasemap: false,
+  selectedSpecies: null,
+  isSpeciesModalOpen: false,
 };
 
 const setSidebarTabActive = (state, { payload }) => ({
