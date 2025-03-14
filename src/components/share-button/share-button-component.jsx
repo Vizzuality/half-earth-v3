@@ -12,12 +12,12 @@ import styles from './share-button-styles.module';
 
 function ShareButtonComponent(props) {
   const t = useT();
-  const { theme, variant, setShareModalOpen } = props;
+  const { theme, variant, setShareModalOpen, tooltipPosition } = props;
 
   const tooltipId = {
     'data-tip': 'data-tip',
     'data-for': 'shareButtonId',
-    'data-place': 'right',
+    'data-place': tooltipPosition || 'right',
     'data-effect': 'solid',
     'data-delay-show': 0,
   };
@@ -51,6 +51,7 @@ ShareButtonComponent.propTypes = {
   theme: PropTypes.shape({
     shareButton: PropTypes.string,
   }),
+  tooltipPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
 };
 
 ShareButtonComponent.defaultProps = {
