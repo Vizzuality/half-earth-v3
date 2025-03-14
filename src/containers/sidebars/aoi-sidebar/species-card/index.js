@@ -205,13 +205,14 @@ function SpeciesCardContainer(props) {
       species &&
       sortSpecies(
         selectedSpeciesFilter.slug === 'all'
-          ? [...species]
+          ? [...species.filter(sp => sp.name.toLowerCase() !== 'falco peregrinus')]
           : [
               ...species.filter(
                 (sp) => sp.category === selectedSpeciesFilter.slug
-              ),
+              ).filter(sp => sp.name.toLowerCase() !== 'falco peregrinus'),
             ]
       );
+      // TODO: Remove the filter above once data is fixed
 
     if (speciesSorted) {
       setSpeciesToDisplay(speciesSorted);
