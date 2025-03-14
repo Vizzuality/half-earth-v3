@@ -306,6 +306,7 @@ function AOISidebar({
                 area={area}
                 speciesData={speciesData}
                 contextualData={contextualData}
+                areaName={areaName}
               />}
               <SidebarCard
                 map={map}

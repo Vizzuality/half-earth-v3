@@ -26,7 +26,7 @@ function SpeciesCardContainer(props) {
   const speciesFiltersSource = useMemo(() => getSpeciesFilters(), [locale]);
   const iucnList = useMemo(() => getIUCNList(), [locale]);
 
-  const { speciesData, contextualData } = props;
+  const { speciesData, contextualData, areaName } = props;
   const { species } = speciesData;
   if (!species) return null;
 
@@ -205,11 +205,19 @@ function SpeciesCardContainer(props) {
       species &&
       sortSpecies(
         selectedSpeciesFilter.slug === 'all'
-          ? [...species.filter(sp => sp.name.toLowerCase() !== 'falco peregrinus')]
+          ? [...species.filter(sp => {
+              if(areaName?.toLowerCase() === 'custom area') {
+                return sp.name.toLowerCase() !== 'falco peregrinus';
+              }
+            })]
           : [
               ...species.filter(
                 (sp) => sp.category === selectedSpeciesFilter.slug
-              ).filter(sp => sp.name.toLowerCase() !== 'falco peregrinus'),
+              ).filter(sp => {
+                if(areaName?.toLowerCase() === 'custom area') {
+                  return sp.name.toLowerCase() !== 'falco peregrinus';
+                }
+              }),
             ]
       );
       // TODO: Remove the filter above once data is fixed
