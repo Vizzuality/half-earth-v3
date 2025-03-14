@@ -14,6 +14,9 @@ import SpsChart from './sps-chart';
 import SpsLegend from './sps-legend';
 import { SpeciesModalProps } from './types';
 
+import ShareModalButton from 'components/share-button';
+import ShareModal from 'components/share-modal';
+
 // TODO: TS-TODO Fix import of components
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
@@ -31,7 +34,7 @@ function SpeciesAnalysisModal({
     min: 3,
     max: 4,
   });
-
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 1 });
   const [chartWidth, setChartWidth] = useState(759);
   const chartResponsiveRef = useRef<HTMLInputElement>();
@@ -83,6 +86,18 @@ function SpeciesAnalysisModal({
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContent}>
+        <div className={styles.buttons}>
+          <ShareModalButton
+            theme={{ shareButton: styles.shareButton }}
+            setShareModalOpen={setShareModalOpen}
+            tooltipPosition="bottom"
+          />
+          <ShareModal
+            theme={{ shareButton: styles.shareButton }}
+            isOpen={isShareModalOpen}
+            setShareModalOpen={setShareModalOpen}
+          />
+        </div>
         <div className={styles.cardContainer}>
           <SpeciesCard {...cardProps} insideModal />
         </div>
