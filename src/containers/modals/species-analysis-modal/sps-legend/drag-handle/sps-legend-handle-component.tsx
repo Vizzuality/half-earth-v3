@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 import styles from './styles.module.scss';
 
-import type { SPSHandleProps } from './types.d';
+import type { SPSHandleProps } from './types';
 
 const STEP_WIDTH = 80;
 
