@@ -8,14 +8,15 @@ import { Modal } from 'he-components';
 
 import SpeciesCard from 'containers/sidebars/aoi-sidebar/species-card/component';
 
+import ShareModalButton from 'components/share-button';
+import ShareModal from 'components/share-modal';
+
 import styles from './styles.module.scss';
 
 import SpsChart from './sps-chart';
 import SpsLegend from './sps-legend';
 import { SpeciesModalProps } from './types';
 
-import ShareModalButton from 'components/share-button';
-import ShareModal from 'components/share-modal';
 
 // TODO: TS-TODO Fix import of components
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

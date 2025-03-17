@@ -3,7 +3,7 @@ import {
   IndividualSpeciesDataType,
   Range,
   SpeciesData,
-} from '../types.d';
+} from '../types';
 
 export type SPSChartProps = {
   width: number;
