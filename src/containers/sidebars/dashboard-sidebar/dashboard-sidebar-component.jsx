@@ -91,7 +91,8 @@ function DashboardSidebar(props) {
       </button>
       {logo}
 
-      <h1>{t(countryName)}</h1>
+      {countryISO.toUpperCase() !== 'NBIS' && <h1>{t(countryName)}</h1>}
+      {countryISO.toUpperCase() === 'NBIS' && <h1>National Biodiversity</h1>}
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />
         {selectedIndex === NAVIGATION.HOME && (

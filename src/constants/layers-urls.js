@@ -468,8 +468,10 @@ export const DASHBOARD_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1_v2_1/FeatureServer',
   SPECIES_OCCURENCE_COUNTRY_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_list_COD_v2/FeatureServer',
+  // https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/species_list_COD_v2/FeatureServer
   SPECIES_OCCURENCE_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_COD_v5/FeatureServer',
+  // https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/regional_species_COD_v5/FeatureServer
   WDPA_OCCURENCE_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/cd_occ_province_join/FeatureServer',
   SPI_PROVINCE_TREND_URL:
@@ -480,6 +482,7 @@ export const DASHBOARD_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_and_national_spi_bin_count_2024/FeatureServer',
   SHI_PROVINCE_TREND_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_shs_COD_v2/FeatureServer',
+  // https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/regional_shs_COD_v2/FeatureServer
   SHI_SPECIES_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_species_shi_scores_year_2024/FeatureServer',
   SHI_HISTOGRAM_URL:
@@ -513,6 +516,7 @@ export const DASHBOARD_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/forest_title_refined_range_species/FeatureServer',
   PRIORITY_SPECIES:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/priority_species/FeatureServer',
+  // https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/priority_species/FeatureServer
   DATASET_LAYER_INFO:
     'https://dev-api.mol.org/2.x/datasets/metadata?dataset_id=',
   DATASET_LAYER_GROUP_INFO: 'https://dev-api.mol.org/2.x/datasets/type',
@@ -523,4 +527,11 @@ export const DASHBOARD_URLS = {
     'https://services3.arcgis.com/Zyt0ectKCtAdsOa2/arcgis/rest/services/occurrences_RDC/FeatureServer',
   PRIVATE_COD_OCCURENCE_METADATA_LAYER:
     'https://services3.arcgis.com/Zyt0ectKCtAdsOa2/arcgis/rest/services/occurrence_metadata/FeatureServer',
+  NBIS_URL:
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_precalculated/FeatureServer',
+};
+
+export const NBIS_URLS = {
+  // https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas/FeatureServer
+  // https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_complete/FeatureServer
 };

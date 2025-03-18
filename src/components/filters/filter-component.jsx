@@ -23,6 +23,7 @@ function FilterComponent(props) {
     filters,
     setFilters,
     isLoading,
+    countryISO,
     updateActiveFilter,
   } = props;
 
@@ -55,62 +56,66 @@ function FilterComponent(props) {
     // allTaxa.species = [];
     let isAnyActive = false;
 
-    filters.forEach((f) =>
-      f.filters.forEach((ff) => {
-        if (ff.active) isAnyActive = true;
-      })
-    );
-    // TODO: FIGURE OUT FILTERS
-    allTaxa.forEach((taxa) => {
-      // Object.values(allTaxa).forEach((taxa) => {
-      const candidateTaxa = { ...taxa };
-      const candidateSpecies = [];
-      taxa.species.forEach((species) => {
-        const speciesFilters = [];
-        const speciesOrFilters = [];
-        filters.forEach((filterGroup) => {
-          filterGroup.filters.forEach((filter) => {
-            const result = filter.test(species);
-            filter.result = result;
-            if (isAnyActive && filter.active) {
-              if (filter.type === 'and') {
-                speciesFilters.push(result);
-              } else if (filter.type === 'or') {
-                speciesOrFilters.push(result);
+    if (countryISO !== 'NBIS') {
+      filters.forEach((f) =>
+        f.filters.forEach((ff) => {
+          if (ff.active) isAnyActive = true;
+        })
+      );
+      // TODO: FIGURE OUT FILTERS
+      allTaxa.forEach((taxa) => {
+        // Object.values(allTaxa).forEach((taxa) => {
+        const candidateTaxa = { ...taxa };
+        const candidateSpecies = [];
+        taxa.species.forEach((species) => {
+          const speciesFilters = [];
+          const speciesOrFilters = [];
+          filters.forEach((filterGroup) => {
+            filterGroup.filters.forEach((filter) => {
+              const result = filter.test(species);
+              filter.result = result;
+              if (isAnyActive && filter.active) {
+                if (filter.type === 'and') {
+                  speciesFilters.push(result);
+                } else if (filter.type === 'or') {
+                  speciesOrFilters.push(result);
+                }
               }
-            }
+            });
+          });
+          const allAnd =
+            speciesFilters.every((x) => x) && speciesFilters.length > 0;
+          const anyOr = speciesOrFilters.includes(true);
+          if (!isAnyActive) {
+            candidateSpecies.push(species);
+            // only ands
+          } else if (allAnd && speciesOrFilters.length === 0) {
+            candidateSpecies.push(species);
+            // only or's
+          } else if (speciesFilters.length === 0 && anyOr) {
+            candidateSpecies.push(species);
+          } else if (allAnd && anyOr) {
+            candidateSpecies.push(species);
+          }
+
+          const onAnd = allAnd || speciesFilters.length === 0;
+
+          filters.forEach((filterGroup) => {
+            filterGroup.filters.forEach((filter) => {
+              if (onAnd && filter.result) {
+                filter.count += 1;
+              }
+            });
           });
         });
-        const allAnd =
-          speciesFilters.every((x) => x) && speciesFilters.length > 0;
-        const anyOr = speciesOrFilters.includes(true);
-        if (!isAnyActive) {
-          candidateSpecies.push(species);
-          // only ands
-        } else if (allAnd && speciesOrFilters.length === 0) {
-          candidateSpecies.push(species);
-          // only or's
-        } else if (speciesFilters.length === 0 && anyOr) {
-          candidateSpecies.push(species);
-        } else if (allAnd && anyOr) {
-          candidateSpecies.push(species);
-        }
 
-        const onAnd = allAnd || speciesFilters.length === 0;
-
-        filters.forEach((filterGroup) => {
-          filterGroup.filters.forEach((filter) => {
-            if (onAnd && filter.result) {
-              filter.count += 1;
-            }
-          });
-        });
+        candidateTaxa.species = candidateSpecies;
+        candidateTaxa.count = candidateSpecies.length;
+        filtered.push(candidateTaxa);
       });
-
-      candidateTaxa.species = candidateSpecies;
-      candidateTaxa.count = candidateSpecies.length;
-      filtered.push(candidateTaxa);
-    });
+    } else {
+      filtered.push(...allTaxa);
+    }
 
     setAnyActive(isAnyActive);
     setFilteredTaxaList(filtered);

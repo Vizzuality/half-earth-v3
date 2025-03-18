@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import countryDataActions from 'redux_modules/country-data';
@@ -419,7 +420,7 @@ function DashboardContainer(props) {
     let whereClause = `ISO3 = '${countryISO}'`;
 
     if (selectedRegion) {
-      const { GID_1, WDPA_PID } = selectedRegion;
+      const { GID_1, WDPA_PID, Int_ID } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
       }
@@ -427,6 +428,11 @@ function DashboardContainer(props) {
       if (WDPA_PID) {
         url = DASHBOARD_URLS.WDPA;
         whereClause = `wdpaid = '${WDPA_PID}'`;
+      }
+
+      if (Int_ID) {
+        url = DASHBOARD_URLS.NBIS_URL;
+        whereClause = `Int_ID = '${Int_ID}'`;
       }
     }
 
@@ -439,44 +445,45 @@ function DashboardContainer(props) {
 
       const list = [...speciesData];
 
-      const buckets = bucketByTaxa(occurenceFeatures);
+      if (countryISO !== 'NBIS') {
+        const buckets = bucketByTaxa(occurenceFeatures);
 
-      // loop through buckets to get species info
-      const occurenceData = Object.keys(buckets).map((key) => {
-        return getSpeciesDetails(buckets[key], key);
-      });
+        // loop through buckets to get species info
+        const occurenceData = Object.keys(buckets).map((key) => {
+          return getSpeciesDetails(buckets[key], key);
+        });
 
-      occurenceData?.forEach((occurrence) => {
-        const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
+        occurenceData?.forEach((occurrence) => {
+          const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
 
-        if (foundTaxa) {
-          occurrence.species.forEach((species) => {
-            const isFound = speciesToAvoid.includes(
-              species.scientific_name.toUpperCase()
-            );
-
-            if (!isFound) {
-              const foundSpecies = foundTaxa?.species.find(
-                (speciesToFind) =>
-                  speciesToFind.scientific_name === species.scientific_name
+          if (foundTaxa) {
+            occurrence.species.forEach((species) => {
+              const isFound = speciesToAvoid.includes(
+                species.scientific_name.toUpperCase()
               );
 
-              if (!foundSpecies) {
-                foundTaxa?.species.push(species);
-              } else {
-                foundSpecies.source += `,${species.source}`;
+              if (!isFound) {
+                const foundSpecies = foundTaxa?.species.find(
+                  (speciesToFind) =>
+                    speciesToFind.scientific_name === species.scientific_name
+                );
+
+                if (!foundSpecies) {
+                  foundTaxa?.species.push(species);
+                } else {
+                  foundSpecies.source += `,${species.source}`;
+                }
               }
-            }
-          });
-        } else {
-          // list.push(occurrence);
-        }
-      });
+            });
+          } else {
+            // list.push(occurrence);
+          }
+        });
 
-      list.forEach((l) => {
-        l.count = l.species.length;
-      });
-
+        list.forEach((l) => {
+          l.count = l.species.length;
+        });
+      }
       setTaxaList(list);
     } else {
       setTaxaList(speciesData);
@@ -494,7 +501,7 @@ function DashboardContainer(props) {
     }
 
     if (selectedRegion) {
-      const { GID_1, WDPA_PID, mgc } = selectedRegion;
+      const { GID_1, WDPA_PID, mgc, Int_ID } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
       }
@@ -507,6 +514,11 @@ function DashboardContainer(props) {
       if (mgc) {
         whereClause = `mgc_id = '${mgc}'`;
         url = DASHBOARD_URLS.FOREST;
+      }
+
+      if (Int_ID) {
+        whereClause = `Int_ID = '${Int_ID}'`;
+        url = DASHBOARD_URLS.NBIS_URL;
       }
     }
 
@@ -598,31 +610,63 @@ function DashboardContainer(props) {
 
         const { amphibians, birds, reptiles, mammals } = attributes;
 
-        const [amphibianData, birdsData, reptilesData, mammalsData] =
-          await Promise.all([
-            getTaxaSpecies('amphibians', amphibians),
-            getTaxaSpecies('birds', birds),
-            getTaxaSpecies('reptiles', reptiles),
-            getTaxaSpecies('mammals', mammals),
-          ]);
+        if (amphibians) {
+          const [amphibianData, birdsData, reptilesData, mammalsData] =
+            await Promise.all([
+              getTaxaSpecies('amphibians', amphibians),
+              getTaxaSpecies('birds', birds),
+              getTaxaSpecies('reptiles', reptiles),
+              getTaxaSpecies('mammals', mammals),
+            ]);
 
-        const ampSpecies = getProtectAreasSpeciesDetails(
-          amphibianData,
-          'amphibians'
-        );
-        const birdSpecies = getProtectAreasSpeciesDetails(birdsData, 'birds');
-        const repSpecies = getProtectAreasSpeciesDetails(
-          reptilesData,
-          'reptiles'
-        );
-        const mamSpecies = getProtectAreasSpeciesDetails(
-          mammalsData,
-          'mammals'
-        );
+          const ampSpecies = getProtectAreasSpeciesDetails(
+            amphibianData,
+            'amphibians'
+          );
+          const birdSpecies = getProtectAreasSpeciesDetails(birdsData, 'birds');
+          const repSpecies = getProtectAreasSpeciesDetails(
+            reptilesData,
+            'reptiles'
+          );
+          const mamSpecies = getProtectAreasSpeciesDetails(
+            mammalsData,
+            'mammals'
+          );
 
-        const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
+          const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
-        getOccurenceSpecies(speciesData);
+          getOccurenceSpecies(speciesData);
+        } else {
+          const { amph_nspecies, bird_nspecies, mamm_nspecies, rept_nspecies } =
+            attributes;
+          const species = [
+            {
+              count: amph_nspecies,
+              species: new Array(amph_nspecies),
+              taxa: 'amphibians',
+              title: 'Amphibians',
+            },
+            {
+              count: bird_nspecies,
+              species: new Array(bird_nspecies),
+              taxa: 'birds',
+              title: 'Birds',
+            },
+            {
+              count: mamm_nspecies,
+              species: new Array(mamm_nspecies),
+              taxa: 'mammals',
+              title: 'Mammals',
+            },
+            {
+              count: rept_nspecies,
+              species: new Array(rept_nspecies),
+              taxa: 'reptiles',
+              title: 'Reptiles',
+            },
+          ];
+          getOccurenceSpecies(species);
+        }
       }
     }
   };
