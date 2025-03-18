@@ -56,7 +56,7 @@ function FilterComponent(props) {
     // allTaxa.species = [];
     let isAnyActive = false;
 
-    if (countryISO !== 'NBIS') {
+    if (countryISO.toUpperCase() !== 'EEWWF') {
       filters.forEach((f) =>
         f.filters.forEach((ff) => {
           if (ff.active) isAnyActive = true;

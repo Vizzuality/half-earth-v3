@@ -261,7 +261,7 @@ function RegionsAnalysisComponent(props) {
           onChange={optionSelected}
           value={selectedRegionOption}
         >
-          {countryISO !== 'NBIS' && (
+          {countryISO.toUpperCase() !== 'EEWWF' && (
             <>
               <FormControlLabel
                 value={REGION_OPTIONS.PROTECTED_AREAS}
@@ -283,7 +283,7 @@ function RegionsAnalysisComponent(props) {
               label={t('Forest Titles')}
             />
           )}
-          {countryISO === 'NBIS' && (
+          {countryISO.toUpperCase() === 'EEWWF' && (
             <FormControlLabel
               value={REGION_OPTIONS.DISSOLVED_NBS}
               control={<Radio />}
