@@ -208,28 +208,29 @@ function SpeciesCardContainer(props) {
         ['has_image', 'per_global', 'conservationConcern'],
         ['desc', 'desc', 'desc']
       );
+      const removeFalcoPeregrinus = (s) =>
+        s.filter(sp => {
+          if (areaName?.toLowerCase() === 'custom area') {
+            return sp.name.toLowerCase() !== 'falco peregrinus';
+          }
+          return true;
+        });
+
     const speciesSorted =
       species &&
       sortSpecies(
         selectedSpeciesFilter.slug === 'all'
-          ? [...species.filter(sp => {
-              if(areaName?.toLowerCase() === 'custom area') {
-                return sp.name.toLowerCase() !== 'falco peregrinus';
-              }
-            })]
+          ? [...removeFalcoPeregrinus(species)]
           : [
-              ...species.filter(
+              ...removeFalcoPeregrinus(species.filter(
                 (sp) => sp.category === selectedSpeciesFilter.slug
-              ).filter(sp => {
-                if(areaName?.toLowerCase() === 'custom area') {
-                  return sp.name.toLowerCase() !== 'falco peregrinus';
-                }
-              }),
+              )),
             ]
       );
       // TODO: Remove the filter above once data is fixed
 
     if (speciesSorted) {
+      console.log('speciesSorted', speciesSorted)
       setSpeciesToDisplay(speciesSorted);
       setSpeciesToDisplayBackUp([...speciesSorted]);
     }
