@@ -56,6 +56,7 @@ function AreaHighlightManagerComponent(props) {
         regionLayers[LAYER_OPTIONS.ADMINISTRATIVE_LAYERS] ||
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
         regionLayers[LAYER_OPTIONS.FORESTS] ||
+        regionLayers[LAYER_OPTIONS.DISSOLVED_NBS] ||
         regionLayers[`${countryISO}-outline`]
     );
   };
@@ -67,7 +68,8 @@ function AreaHighlightManagerComponent(props) {
         (x) =>
           x.graphic.attributes.NAME_1 ||
           x.graphic.attributes.WDPA_PID ||
-          x.graphic.attributes.territoire
+          x.graphic.attributes.territoire ||
+          x.graphic.attributes.Int_ID
       );
       if (foundLayer) {
         const { graphic } = foundLayer;
@@ -75,7 +77,8 @@ function AreaHighlightManagerComponent(props) {
         if (
           Object.prototype.hasOwnProperty.call(attributes, 'NAME_1') ||
           Object.prototype.hasOwnProperty.call(attributes, 'WDPA_PID') ||
-          Object.prototype.hasOwnProperty.call(attributes, 'territoire')
+          Object.prototype.hasOwnProperty.call(attributes, 'territoire') ||
+          Object.prototype.hasOwnProperty.call(attributes, 'Int_ID')
         ) {
           return { graphic, attributes };
         }
@@ -113,6 +116,8 @@ function AreaHighlightManagerComponent(props) {
                   NAME_1,
                   region_name,
                   territoire,
+                  Int_ID,
+                  Intrvnt,
                 } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
@@ -127,8 +132,14 @@ function AreaHighlightManagerComponent(props) {
                   setSelectedRegion({ mgc });
                 }
 
+                if (selectedRegionOption === REGION_OPTIONS.DISSOLVED_NBS) {
+                  setSelectedRegion({ Int_ID });
+                }
+
                 // eslint-disable-next-line camelcase
-                setRegionName(NAME || NAME_1 || region_name || territoire);
+                setRegionName(
+                  NAME || NAME_1 || region_name || territoire || Intrvnt
+                );
               }
               break;
             case NAVIGATION.TRENDS:
@@ -169,8 +180,15 @@ function AreaHighlightManagerComponent(props) {
       if (hits) {
         let name;
         // eslint-disable-next-line camelcase
-        const { NAME, NAME_1, territoire, region_name, DESIG } =
-          hits.attributes;
+        const {
+          NAME,
+          NAME_1,
+          territoire,
+          region_name,
+          DESIG,
+          Int_ID,
+          Intrvnt,
+        } = hits.attributes;
 
         const countryMatch =
           hits.attributes.ISO3 === countryISO ||
@@ -180,7 +198,7 @@ function AreaHighlightManagerComponent(props) {
           // eslint-disable-next-line camelcase
           name = NAME || NAME_1 || region_name;
         } else {
-          name = territoire;
+          name = territoire || Intrvnt;
         }
 
         if (name) {

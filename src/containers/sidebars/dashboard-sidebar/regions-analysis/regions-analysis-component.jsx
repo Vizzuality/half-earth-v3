@@ -7,6 +7,7 @@ import { useT } from '@transifex/react';
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   DRC_REGION_FEATURE_ID,
+  NBS_OP_INTERVENTIONS_FEATURE_ID,
 } from 'utils/dashboard-utils';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -128,6 +129,17 @@ function RegionsAnalysisComponent(props) {
         [LAYER_OPTIONS.FORESTS]: featureLayer,
       }));
       map.add(featureLayer);
+    } else if (option === REGION_OPTIONS.DISSOLVED_NBS) {
+      featureLayer = await EsriFeatureService.getFeatureLayer(
+        NBS_OP_INTERVENTIONS_FEATURE_ID,
+        null,
+        LAYER_OPTIONS.DISSOLVED_NBS
+      );
+
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.DISSOLVED_NBS]: featureLayer,
+      }));
+      map.add(featureLayer);
     }
   };
 
@@ -141,10 +153,14 @@ function RegionsAnalysisComponent(props) {
     const forestLayer = map.layers.items.find(
       (layer) => layer.id === LAYER_OPTIONS.FORESTS
     );
+    const dissolvedLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.DISSOLVED_NBS
+    );
 
     map.remove(protectedAreaLayer);
     map.remove(provinceLayer);
     map.remove(forestLayer);
+    map.remove(dissolvedLayer);
     setRegionLayers({});
   };
 
@@ -245,17 +261,21 @@ function RegionsAnalysisComponent(props) {
           onChange={optionSelected}
           value={selectedRegionOption}
         >
-          <FormControlLabel
-            value={REGION_OPTIONS.PROTECTED_AREAS}
-            control={<Radio />}
-            label={t('Protected Areas')}
-          />
-          {/* <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} /> */}
-          <FormControlLabel
-            value={REGION_OPTIONS.PROVINCES}
-            control={<Radio />}
-            label={t('Provinces')}
-          />
+          {countryISO !== 'NBIS' && (
+            <>
+              <FormControlLabel
+                value={REGION_OPTIONS.PROTECTED_AREAS}
+                control={<Radio />}
+                label={t('Protected Areas')}
+              />
+
+              <FormControlLabel
+                value={REGION_OPTIONS.PROVINCES}
+                control={<Radio />}
+                label={t('Provinces')}
+              />
+            </>
+          )}
           {countryISO === 'COD' && (
             <FormControlLabel
               value={REGION_OPTIONS.FORESTS}
@@ -263,6 +283,14 @@ function RegionsAnalysisComponent(props) {
               label={t('Forest Titles')}
             />
           )}
+          {countryISO === 'NBIS' && (
+            <FormControlLabel
+              value={REGION_OPTIONS.DISSOLVED_NBS}
+              control={<Radio />}
+              label={t('NBS-OP Interventions')}
+            />
+          )}
+          {/* <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} /> */}
           {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}
           {/* <FormControlLabel value="communityForests" control={<Radio />} label={t('Community Forests')} /> */}
         </RadioGroup>

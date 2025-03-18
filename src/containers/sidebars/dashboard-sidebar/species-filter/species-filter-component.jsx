@@ -5,6 +5,7 @@ import { useT } from '@transifex/react';
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   DRC_REGION_FEATURE_ID,
+  NBS_OP_INTERVENTIONS_FEATURE_ID,
   IUCNStatusTypes,
 } from 'utils/dashboard-utils';
 
@@ -180,6 +181,7 @@ function SpeciesFilterComponent(props) {
     LAYER_OPTIONS.PROTECTED_AREAS,
     LAYER_OPTIONS.PROVINCES,
     LAYER_OPTIONS.FORESTS,
+    LAYER_OPTIONS.DISSOLVED_NBS,
   ];
 
   const handleBack = () => {
@@ -277,6 +279,17 @@ function SpeciesFilterComponent(props) {
           [LAYER_OPTIONS.FORESTS]: featureLayer,
         }));
         map.add(featureLayer);
+      } else if (option === REGION_OPTIONS.DISSOLVED_NBS) {
+        featureLayer = await EsriFeatureService.getFeatureLayer(
+          NBS_OP_INTERVENTIONS_FEATURE_ID,
+          null,
+          LAYER_OPTIONS.DISSOLVED_NBS
+        );
+
+        setRegionLayers(() => ({
+          [LAYER_OPTIONS.DISSOLVED_NBS]: featureLayer,
+        }));
+        map.add(featureLayer);
       }
     }
   };
@@ -295,6 +308,9 @@ function SpeciesFilterComponent(props) {
         break;
       case REGION_OPTIONS.FORESTS:
         setRegionLabel(t('Forest Titles'));
+        break;
+      case REGION_OPTIONS.DISSOLVED_NBS:
+        setRegionLabel(t('NBS-OP Interventions'));
         break;
       default:
         break;

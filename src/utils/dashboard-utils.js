@@ -37,8 +37,15 @@ export const PROVINCE_FEATURE_GLOBAL_OUTLINE_ID =
 
 // DRC LAYERS
 export const PROTECTED_AREA_FEATURE_URL = '6b13aac7863a44bb915d1847dfc5dfd9';
+// Yale AGOL - 36370bcf99884301bca92ea8eb91f78f
 export const SHI_LAYER_ID = '41981d576d6042aea14595de0fb924f2';
-export const DRC_REGION_FEATURE_ID = '95cac457c0244a2286d914148c24af98';
+// Yale AGOL - c0a78b5a9b4e4758b4b8f5fcee76412a
+export const DRC_REGION_FEATURE_ID = 'b0109ce737f4495aa188826ef0601816'; // '95cac457c0244a2286d914148c24af98';
+// Yale AGOL - b0109ce737f4495aa188826ef0601816
+
+export const NBS_OP_INTERVENTIONS_FEATURE_ID =
+  '139bf28240fc4a7a90389b11999b5b48';
+
 export const EXPERT_RANGE_MAP_URL =
   'https://next-api-dot-map-of-life.appspot.com/2.x/species/drc_rangemap';
 export const TREND_MAP_URL =
@@ -61,6 +68,7 @@ export const PROTECTED_AREA_GUY_FEATURE_URL =
   'd610d9ad96bc4071a31b3aacdfbf844d';
 
 export const GBIF_OCCURENCE_URL = '1ccb994557a74bc6bd773250d8eebc15';
+// Yale AGOL - cc44bf640beb4b2c989d1e901bb90852
 
 export const DASHBOARD_TABLE_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1/FeatureServer';
