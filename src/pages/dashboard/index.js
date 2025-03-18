@@ -445,7 +445,7 @@ function DashboardContainer(props) {
 
       const list = [...speciesData];
 
-      if (countryISO !== 'NBIS') {
+      if (countryISO.toUpperCase() !== 'EEWWF') {
         const buckets = bucketByTaxa(occurenceFeatures);
 
         // loop through buckets to get species info
