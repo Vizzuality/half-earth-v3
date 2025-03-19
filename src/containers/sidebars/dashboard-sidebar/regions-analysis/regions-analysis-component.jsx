@@ -217,8 +217,13 @@ function RegionsAnalysisComponent(props) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {
       removeRegionLayers();
-      displayLayer(REGION_OPTIONS.PROTECTED_AREAS);
-      setSelectedRegionOption(REGION_OPTIONS.PROTECTED_AREAS);
+      if (countryISO.toUpperCase() === 'EEWWF') {
+        setSelectedRegionOption(REGION_OPTIONS.DISSOLVED_NBS);
+        displayLayer(REGION_OPTIONS.DISSOLVED_NBS);
+      } else {
+        setSelectedRegionOption(REGION_OPTIONS.PROTECTED_AREAS);
+        displayLayer(REGION_OPTIONS.PROTECTED_AREAS);
+      }
     }
   }, []);
 

@@ -55,6 +55,7 @@ function SpeciesRichnessComponent(props) {
     countryData,
     shiActiveTrend,
     shiCountryData,
+    countryISO,
     shi,
   } = props;
 
@@ -89,7 +90,26 @@ function SpeciesRichnessComponent(props) {
   };
 
   const getScores = () => {
-    if (shi) {
+    if (countryISO.toLowerCase() === 'eewwf') {
+      setScores({
+        birds: {
+          count: 220,
+          total: 4490,
+        },
+        mammals: {
+          count: 123,
+          total: 345,
+        },
+        reptiles: {
+          count: 56,
+          total: 158,
+        },
+        amphibians: {
+          count: 49,
+          total: 420,
+        },
+      });
+    } else if (shi) {
       let filterValue = 'XXX';
       if (selectedProvince && shiActiveTrend === PROVINCE_TREND) {
         filterValue = selectedProvince.iso3_regional;
@@ -238,6 +258,12 @@ function SpeciesRichnessComponent(props) {
 
     getScores();
   };
+
+  useEffect(() => {
+    if (countryISO.toLowerCase() === 'eewwf') {
+      getScores();
+    }
+  }, []);
 
   useEffect(() => {
     if (!countryData.length || !shiCountryData.length) return;
