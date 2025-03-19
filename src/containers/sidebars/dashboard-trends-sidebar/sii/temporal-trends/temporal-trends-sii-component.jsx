@@ -17,7 +17,7 @@ import NationalChartContainer from './national-chart';
 
 function TemporalTrendsSiiComponent(props) {
   const t = useT();
-  const { countryName, countryData } = props;
+  const { countryName, countryData, countryISO } = props;
   const [nationalChartData, setNationalChartData] = useState([]);
   const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 });
   const [firstValues, setFirstValues] = useState({ year: 0, spi: 0 });
@@ -63,30 +63,33 @@ function TemporalTrendsSiiComponent(props) {
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
-        <p className={styles.description}>
-          <T
-            _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryBold} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {lowestObservationBold} and {highestObservationBold}."
-            currentYear={currentYear}
-            countryBold={<b>{t(countryName)}</b>}
-            currentObservationBold={<b>{latestValues.spi}%</b>}
-            countryName={countryName}
-            startYear={firstValues.year}
-            highestObservationBold={<b>{highestObservation}</b>}
-            lowestObservationBold={<b>{lowestObservation}</b>}
-          />
-        </p>
-        <div className={styles.options}>
-          <div className={styles.trendTypes}>
-            <Button
-              type="rectangular"
-              className={styles.saveButton}
-              label={NATIONAL_TREND}
+        {countryISO.toLowerCase() !== 'eewwf' && (
+          <p className={styles.description}>
+            <T
+              _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryBold} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {lowestObservationBold} and {highestObservationBold}."
+              currentYear={currentYear}
+              countryBold={<b>{t(countryName)}</b>}
+              currentObservationBold={<b>{latestValues.spi}%</b>}
+              countryName={countryName}
+              startYear={firstValues.year}
+              highestObservationBold={<b>{highestObservation}</b>}
+              lowestObservationBold={<b>{lowestObservation}</b>}
             />
-          </div>
-          {/* <span className={styles.helpText}>
+          </p>
+        )}
+        {countryISO.toLowerCase() !== 'eewwf' && (
+          <div className={styles.options}>
+            <div className={styles.trendTypes}>
+              <Button
+                type="rectangular"
+                className={styles.saveButton}
+                label={NATIONAL_TREND}
+              />
+            </div>
+            {/* <span className={styles.helpText}>
             {t('Toggle national SII and province-level breakdown.')}
           </span> */}
-          {/* <Button
+            {/* <Button
             type="rectangular"
             className={cx(styles.saveButton, styles.notActive)}
             label="play animation"
@@ -94,7 +97,8 @@ function TemporalTrendsSiiComponent(props) {
           <span className={styles.helpText}>
             {t('View how the percent of area protected, SPI, and score distributions have changed over time.')}
           </span> */}
-        </div>
+          </div>
+        )}
       </div>
       <NationalChartContainer
         nationalChartData={nationalChartData}

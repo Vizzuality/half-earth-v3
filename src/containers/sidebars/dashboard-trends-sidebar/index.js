@@ -128,9 +128,14 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getShiNationalData = () => {
+    let countryCode = countryISO;
+    if (countryISO.toLowerCase() === 'eewwf') {
+      countryCode = 'COD';
+    }
+
     const shiScoresDataURL = {
       url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
-      whereClause: `iso3 = '${countryISO}'`,
+      whereClause: `iso3 = '${countryCode}'`,
     };
     getShiScoresData(shiScoresDataURL);
   };
@@ -168,7 +173,13 @@ function DashboardTrendsSidebarContainer(props) {
     let habitatScore = 'HabitatScore';
     let speciesURL = 'SpeciesImage';
     let url = DASHBOARD_URLS.SHI_SPECIES_URL;
-    let whereClause = `ISO3 = '${countryISO}'`;
+
+    let countryCode = countryISO;
+    if (countryISO.toLowerCase() === 'eewwf') {
+      countryCode = 'COD';
+    }
+
+    let whereClause = `ISO3 = '${countryCode}'`;
 
     if (shiActiveTrend === PROVINCE_TREND) {
       url = DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL;
@@ -203,9 +214,14 @@ function DashboardTrendsSidebarContainer(props) {
     //   setShiActiveTrend(NATIONAL_TREND);
     // }
 
+    let countryCode = countryISO;
+    if (countryISO.toLowerCase() === 'eewwf') {
+      countryCode = 'COD';
+    }
+
     EsriFeatureService.getFeatures({
       url: COUNTRIES_DATA_SERVICE_URL,
-      whereClause: `GID_0 = '${countryISO}'`,
+      whereClause: `GID_0 = '${countryCode}'`,
       returnGeometry: true,
     }).then((features) => {
       // eslint-disable-next-line no-shadow
@@ -221,10 +237,19 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(async () => {
     if (!map && !view) return;
 
-    const layer = await EsriFeatureService.getFeatureLayer(
+    let layer = await EsriFeatureService.getFeatureLayer(
       PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
       countryISO
     );
+
+    // https://vectortileservices1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_brazil/VectorTileServer
+
+    if (countryISO.toLowerCase() === 'eewwf') {
+      layer = await EsriFeatureService.getVectorTileLayer(
+        'https://tiles.arcgis.com/tiles/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_brazil_tile/VectorTileServer'
+      );
+    }
+
     map.add(layer);
 
     // eslint-disable-next-line no-shadow
@@ -282,23 +307,28 @@ function DashboardTrendsSidebarContainer(props) {
     removeRegionLayers(map, regionLayers);
     setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
 
+    let countryCode = countryISO;
+    if (countryISO.toLowerCase() === 'eewwf') {
+      countryCode = 'COD';
+    }
+
     const countryURL = {
       url: DASHBOARD_URLS.COUNTRY_URL,
-      whereClause: `ISO3 = '${countryISO}'`,
+      whereClause: `ISO3 = '${countryCode}'`,
       orderByFields: ['year'],
     };
     getCountryData(countryURL);
 
     const shiCountryURL = {
       url: DASHBOARD_URLS.SHI_COUNTRY_DATA_URL,
-      whereClause: `ISO3 = '${countryISO}'`,
+      whereClause: `ISO3 = '${countryCode}'`,
     };
     getShiCountryData(shiCountryURL);
 
     // GET SPI Province Trend Data
     const provinceURL = {
       url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
-      whereClause: `iso3 = '${countryISO}' and Year = ${SPI_LATEST_YEAR}`,
+      whereClause: `iso3 = '${countryCode}' and Year = ${SPI_LATEST_YEAR}`,
       orderByFields: ['region_name'],
     };
     getSpiProvinceData(provinceURL);
@@ -306,25 +336,30 @@ function DashboardTrendsSidebarContainer(props) {
     // GET SHI Province Trend Data
     const shiProvinceURL = {
       url: DASHBOARD_URLS.SHI_PROVINCE_TREND_URL,
-      whereClause: `iso3 = '${countryISO}' and Year = ${SHI_LATEST_YEAR}`,
+      whereClause: `iso3 = '${countryCode}' and Year = ${SHI_LATEST_YEAR}`,
       orderByFields: ['region_name'],
     };
     getShiProvinceData(shiProvinceURL);
 
-    const whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
+    const whereClause = `ISO3 = '${countryCode}' and ISO3_regional = 'XXX'`;
     getProvinceSpiData(whereClause);
 
     getShiNationalData();
   }, []);
 
   useEffect(() => {
+    let countryCode = countryISO;
+    if (countryISO.toLowerCase() === 'eewwf') {
+      countryCode = 'COD';
+    }
+
     if (
       shiActiveTrend === NATIONAL_TREND &&
       (tabOption === TABS.SHI || tabOption === TABS.SII)
     ) {
       getShiNationalData();
     } else {
-      let whereClause = `ISO3 = '${countryISO}' and ISO3_regional = 'XXX'`;
+      let whereClause = `ISO3 = '${countryCode}' and ISO3_regional = 'XXX'`;
 
       if (selectedProvince) {
         if (activeTrend === PROVINCE_TREND) {
@@ -332,7 +367,7 @@ function DashboardTrendsSidebarContainer(props) {
             selectedProvince.iso3_regional ?? selectedProvince.GID_1
           }'`;
         }
-        const shiWhereClause = `iso3 = '${countryISO}' and iso3_regional = '${
+        const shiWhereClause = `iso3 = '${countryCode}' and iso3_regional = '${
           selectedProvince.iso3_regional ?? selectedProvince.GID_1
         }'`;
 
