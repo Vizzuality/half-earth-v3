@@ -237,10 +237,19 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(async () => {
     if (!map && !view) return;
 
-    const layer = await EsriFeatureService.getFeatureLayer(
+    let layer = await EsriFeatureService.getFeatureLayer(
       PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
       countryISO
     );
+
+    // https://vectortileservices1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_brazil/VectorTileServer
+
+    if (countryISO.toLowerCase() === 'eewwf') {
+      layer = await EsriFeatureService.getVectorTileLayer(
+        'https://tiles.arcgis.com/tiles/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_brazil_tile/VectorTileServer'
+      );
+    }
+
     map.add(layer);
 
     // eslint-disable-next-line no-shadow
