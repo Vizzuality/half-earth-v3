@@ -23,7 +23,8 @@ import TrendTableComponent from './trend-table/trend-table-component';
 function TemporalTrendsSpiComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
-  const { countryName, activeTrend, setActiveTrend, countryData } = props;
+  const { countryName, activeTrend, setActiveTrend, countryData, countryISO } =
+    props;
 
   const [showTable, setShowTable] = useState(false);
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
@@ -58,27 +59,29 @@ function TemporalTrendsSpiComponent(props) {
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
-        <p className={styles.description}>
-          <T
-            _str="Since {startYear}, the {countryName} has added {areaBold} of land into its protected area network, representing {areaProtectedPercentBold} of the total land in the country, increasing its Species Protection Index from {spiInfoBold}"
-            startYear={startYear}
-            countryName={t(countryName)}
-            areaBold={
-              <b>
-                {numberToLocaleStringWithOneDecimal(areaProtected)} km
-                <sup>2</sup>
-              </b>
-            }
-            areaProtectedPercentBold={<b>{areaProtectedPercent}%</b>}
-            spiInfoBold={
-              <b>{`${countryData[0]?.SPI.toFixed(1)} ${t('in')} ${
-                countryData[0]?.Year
-              } ${t('to')} ${last(countryData)?.SPI.toFixed(1)} ${t('in')} ${
-                last(countryData)?.Year
-              }`}</b>
-            }
-          />
-        </p>
+        {countryISO.toLowerCase() !== 'eewwf' && (
+          <p className={styles.description}>
+            <T
+              _str="Since {startYear}, the {countryName} has added {areaBold} of land into its protected area network, representing {areaProtectedPercentBold} of the total land in the country, increasing its Species Protection Index from {spiInfoBold}"
+              startYear={startYear}
+              countryName={t(countryName)}
+              areaBold={
+                <b>
+                  {numberToLocaleStringWithOneDecimal(areaProtected)} km
+                  <sup>2</sup>
+                </b>
+              }
+              areaProtectedPercentBold={<b>{areaProtectedPercent}%</b>}
+              spiInfoBold={
+                <b>{`${countryData[0]?.SPI.toFixed(1)} ${t('in')} ${
+                  countryData[0]?.Year
+                } ${t('to')} ${last(countryData)?.SPI.toFixed(1)} ${t('in')} ${
+                  last(countryData)?.Year
+                }`}</b>
+              }
+            />
+          </p>
+        )}
         <div className={styles.options}>
           <div className={styles.btnGroup}>
             <Button
@@ -107,7 +110,11 @@ function TemporalTrendsSpiComponent(props) {
                 <Button
                   type="rectangular"
                   className={cx(styles.saveButton, styles.notActive)}
-                  label={t('View Full Province table')}
+                  label={
+                    countryISO.toLowerCase() !== 'eewwf'
+                      ? t('View Full Province table')
+                      : t('View Full Species table')
+                  }
                   handleClick={() => setShowTable(true)}
                 />
               )}

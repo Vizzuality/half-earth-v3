@@ -97,7 +97,9 @@ function DashboardTrendsSidebar(props) {
             })}
             onClick={() => showHideLayers(TABS.SPI)}
           >
-            <label htmlFor="spi">{spiValue}</label>
+            {countryISO.toLowerCase() !== 'eewwf' && (
+              <label htmlFor="spi">{spiValue}</label>
+            )}
             <span>{t('Species Protection Index')}</span>
           </button>
           <button
@@ -109,7 +111,9 @@ function DashboardTrendsSidebar(props) {
             onClick={() => showHideLayers(TABS.SHI)}
             name="shi"
           >
-            <label htmlFor="shi">{shiValue}</label>
+            {countryISO.toLowerCase() !== 'eewwf' && (
+              <label htmlFor="shi">{shiValue}</label>
+            )}
             <span>{t('Species Habitat Index')}</span>
           </button>
 
@@ -122,7 +126,9 @@ function DashboardTrendsSidebar(props) {
             onClick={() => showHideLayers(TABS.SII)}
             name="sii"
           >
-            <label htmlFor="sii">{siiValue}</label>
+            {countryISO.toLowerCase() !== 'eewwf' && (
+              <label htmlFor="sii">{siiValue}</label>
+            )}
             <span>{t('Species Information Index')}</span>
           </button>
         </div>
