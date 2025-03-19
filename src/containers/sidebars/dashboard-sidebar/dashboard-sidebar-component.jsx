@@ -89,7 +89,7 @@ function DashboardSidebar(props) {
         {!lightMode && <LightModeIcon className={styles.icon} />}
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
-      {countryISO.toUpperCase() !== 'EEWWF' && { logo }}
+      {countryISO.toUpperCase() !== 'EEWWF' && logo}
 
       {countryISO.toUpperCase() !== 'EEWWF' && <h1>{t(countryName)}</h1>}
       {countryISO.toUpperCase() === 'EEWWF' && <h1>Organization</h1>}
