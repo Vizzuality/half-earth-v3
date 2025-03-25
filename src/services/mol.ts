@@ -1,7 +1,9 @@
 import { SpeciesItem } from 'types/services-types';
 
+const { VITE_APP_MOL_API } = import.meta.env;
+
 const config = {
-  url: 'https://api.mol.org/2.x/species/info',
+  url: `${VITE_APP_MOL_API}/species/info`,
   query: '?scientificname=',
   lang: '&lang=',
 };

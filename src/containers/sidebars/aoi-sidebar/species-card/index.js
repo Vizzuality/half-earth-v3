@@ -230,7 +230,6 @@ function SpeciesCardContainer(props) {
       // TODO: Remove the filter above once data is fixed
 
     if (speciesSorted) {
-      console.log('speciesSorted', speciesSorted)
       setSpeciesToDisplay(speciesSorted);
       setSpeciesToDisplayBackUp([...speciesSorted]);
     }
