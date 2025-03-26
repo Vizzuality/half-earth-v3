@@ -47,9 +47,9 @@ export const NBS_OP_INTERVENTIONS_FEATURE_ID =
   '139bf28240fc4a7a90389b11999b5b48';
 
 export const EXPERT_RANGE_MAP_URL =
-  'https://next-api-dot-map-of-life.appspot.com/2.x/species/drc_rangemap';
+  'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/drc_rangemap';
 export const TREND_MAP_URL =
-  'https://next-api-dot-map-of-life.appspot.com/2.x/species/drc_trend';
+  'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/drc_trend';
 
 // LIBERIA LAYERS
 export const PROTECTED_AREA_LIB_FEATURE_URL =

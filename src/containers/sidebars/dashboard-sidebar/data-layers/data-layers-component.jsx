@@ -235,7 +235,7 @@ function DataLayerComponent(props) {
   };
 
   const getHabitatMapData = async () => {
-    const habitatMapUrl = `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/map?scientificname=${speciesInfo.scientificname}`;
+    const habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/map?scientificname=${speciesInfo.scientificname}`;
     const response = await fetch(habitatMapUrl);
     const d = await response.json();
 
