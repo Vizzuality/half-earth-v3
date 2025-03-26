@@ -82,7 +82,7 @@ function ScoreDistributionsSiiComponent(props) {
     const taxaCallsResponses = await Promise.all(
       taxas.map(async (taxa) => {
         const response = await fetch(
-          `https://next-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`
+          `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/nrc?region_id=90b03e87-3880-4164-a310-339994e3f919&taxa=${taxa}`
         );
         const data = await response.json();
         return data;
