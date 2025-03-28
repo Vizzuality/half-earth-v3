@@ -97,7 +97,7 @@ function App(props) {
         <Suspense fallback={null}>
           <AppLayout {...props} />
         </Suspense>
-        <ThirdParty />
+        {/* <ThirdParty /> */}
       </div>
     </QueryClientProvider>
   );
