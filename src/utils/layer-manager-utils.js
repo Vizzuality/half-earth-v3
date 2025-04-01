@@ -190,7 +190,7 @@ export const bringLayerToBack = (layerTitle, map) => {
 };
 
 export const createLayer = (layerConfig) => {
-  const { url, slug, type, opacity, renderer } = layerConfig;
+  const { url, slug, type, opacity, renderer, portalId } = layerConfig;
   const getLayer = () => {
     switch (type) {
       case 'FeatureLayer':
@@ -207,14 +207,27 @@ export const createLayer = (layerConfig) => {
     }
   };
   const Layer = getLayer();
-  const newLayer = new Layer({
-    url,
-    urlTemplate: url,
-    title: slug,
-    id: slug,
-    outFields: ['*'],
-    opacity: opacity || DEFAULT_OPACITY,
-  });
+
+  let newLayer;
+  if(portalId){
+    newLayer = new FeatureLayer({
+      portalItem: {
+        id: portalId
+      },
+      title: slug,
+      id: slug,
+      outFields: ['*'],
+    })
+  }else {
+    newLayer = new Layer({
+      url,
+      urlTemplate: url,
+      title: slug,
+      id: slug,
+      outFields: ['*'],
+      opacity: opacity || DEFAULT_OPACITY,
+    });
+  }
 
   if (renderer) {
     newLayer.renderer = renderer;
