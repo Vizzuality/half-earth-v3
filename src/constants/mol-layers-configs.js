@@ -156,6 +156,7 @@ export const layersConfig = {
     url: LAYERS_URLS[ADMIN_AREAS_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
+    portalId: [ '6710f8b62392473d8e06ee9c207ed010', 'ca22a0922f934999a00e092feca4315d'],
   },
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
     title: GADM_0_ADMIN_AREAS_FEATURE_LAYER,
@@ -182,7 +183,7 @@ export const layersConfig = {
     url: LAYERS_URLS[WDPA_OECM_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: '3720b1a6f4b840ffac6516c85053637d',
+    portalId: ['3720b1a6f4b840ffac6516c85053637d', 'dd71753ec42541629b0c829f5926f901', 'c2c79fcc96214f53a520fa8874e9cc32'],
   },
   [SPECIFIC_REGIONS_TILE_LAYER]: {
     title: SPECIFIC_REGIONS_TILE_LAYER,
