@@ -65,6 +65,8 @@ import {
   TREES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
+  BUTTERFLIES_RICHNESS_GLOBAL,
+  BUTTERFLIES_RARITY_GLOBAL,
 } from 'constants/layers-slugs';
 
 export const LAYER_VARIANTS = {
@@ -94,6 +96,7 @@ export const getResolutionOptions = () => ({
   LOWEST: { label: `${t('~55km')}<sup>2</sup>`, slug: 'LOWEST' },
   LOW: { label: `${t('~27km')}<sup>2</sup>`, slug: 'LOW' },
   HIGH: { label: `${t('~1km')}<sup>2</sup>`, slug: 'HIGH' },
+  HIGHEST:  { label: `${t('~110km')}<sup>2</sup>`, slug: 'HIGHEST' },
   COUNTRY: { label: t('country'), slug: 'COUNTRY' },
 });
 
@@ -105,12 +108,12 @@ export const getLayersResolution = () => {
       [MARINE]: [resolutions.LOWEST],
     },
     [RICHNESS]: {
-      [TERRESTRIAL_GLOBAL]: [resolutions.LOW, resolutions.COUNTRY],
+      [TERRESTRIAL_GLOBAL]: [resolutions.LOW, resolutions.HIGHEST, resolutions.COUNTRY],
       [TERRESTRIAL_REGIONAL]: [resolutions.HIGH],
       [MARINE]: [resolutions.LOWEST],
     },
     [RARITY]: {
-      [TERRESTRIAL_GLOBAL]: [resolutions.LOW],
+      [TERRESTRIAL_GLOBAL]: [resolutions.LOW, resolutions.HIGHEST],
       [TERRESTRIAL_REGIONAL]: [resolutions.HIGH],
       [MARINE]: [resolutions.LOWEST],
     },
@@ -243,13 +246,6 @@ export const getLayersToggleConfig = () => ({
           group: t('plants'),
         },
         {
-          value: TREES_RICHNESS,
-          name: t('trees'),
-          title: t('trees'),
-          layer: TREES_RICHNESS,
-          group: t('plants'),
-        },
-        {
           value: MAMMALS_RICHNESS,
           name: t('mammals'),
           title: t('mammals'),
@@ -301,6 +297,22 @@ export const getLayersToggleConfig = () => ({
           group: t('plants'),
         },
       ],
+      HIGHEST: [
+        {
+          value: BUTTERFLIES_RICHNESS_GLOBAL,
+          name: t('butterflies'),
+          title: t('butterflies'),
+          layer: BUTTERFLIES_RICHNESS_GLOBAL,
+          group: t('invertebrates'),
+        },
+        {
+          value: TREES_RICHNESS,
+          name: t('trees'),
+          title: t('trees'),
+          layer: TREES_RICHNESS,
+          group: t('plants'),
+        },
+      ]
     },
     [TERRESTRIAL_REGIONAL]: {
       HIGH: [
@@ -462,13 +474,6 @@ export const getLayersToggleConfig = () => ({
           group: t('plants'),
         },
         {
-          value: TREES_RARITY,
-          name: t('trees'),
-          title: t('trees'),
-          layer: TREES_RARITY,
-          group: t('plants'),
-        },
-        {
           value: MAMMALS_RARITY,
           name: t('mammals'),
           title: t('mammals'),
@@ -490,6 +495,22 @@ export const getLayersToggleConfig = () => ({
           group: t('invertebrates'),
         },
       ],
+      HIGHEST:[
+        {
+          value: BUTTERFLIES_RARITY_GLOBAL,
+          name: t('butterflies'),
+          title: t('butterflies'),
+          layer: BUTTERFLIES_RARITY_GLOBAL,
+          group: t('invertebrates'),
+        },
+        {
+          value: TREES_RARITY,
+          name: t('trees'),
+          title: t('trees'),
+          layer: TREES_RARITY,
+          group: t('plants'),
+        },
+      ]
     },
     [TERRESTRIAL_REGIONAL]: {
       HIGH: [

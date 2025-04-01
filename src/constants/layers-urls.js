@@ -90,6 +90,8 @@ import {
   HUMMINGBIRDS_RICHNESS,
   ANTS_RICHNESS,
   BUTTERFLIES_RICHNESS,
+  BUTTERFLIES_RICHNESS_GLOBAL,
+  BUTTERFLIES_RARITY_GLOBAL,
   ODONATES_RICHNESS,
   SAPINDALES_RICHNESS,
   BUTTERFLIES_RARITY_1KM,
@@ -356,6 +358,11 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_reptiles/MapServer',
   [REPTILES_RICHNESS]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_reptiles/MapServer',
+
+  [BUTTERFLIES_RICHNESS_GLOBAL]:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/butterfly_richness_110km_202504/MapServer',
+  [BUTTERFLIES_RARITY_GLOBAL]:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/butterfly_rarity_110km_202504/MapServer',
 
   [BUTTERFLIES_RICHNESS_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Butterfly_Species/MapServer',
