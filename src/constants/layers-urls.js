@@ -429,7 +429,7 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/b252ecc71edc435cb34038dc9fb68768/rest/services/Marine_SPI_NRCs_202401_expert_withGID_20240314/FeatureServer',
   // AOIs lookup tables
   [SEARCH_LOOKUP_TABLE]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/AOI_lookup_table_20240318/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/AOI_lookup_table_202504/FeatureServer/0',
   [ELU_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   [AMPHIBIAN_LOOKUP]:
