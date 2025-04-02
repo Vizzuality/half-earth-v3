@@ -201,7 +201,7 @@ export const LAYERS_URLS = {
 
   // Protected areas WDPA
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]:
-    'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ProtectedAreas_MeriamNelson_202401/VectorTileServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/ProtectedAreas_202504/VectorTileServer',
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]:
     'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
 
