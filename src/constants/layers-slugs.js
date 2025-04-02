@@ -160,6 +160,8 @@ export const ANTS_RICHNESS_1KM = 'ants-richness-1km';
 
 export const ANTS_RARITY_GLOBAL = 'ants-rarity-global';
 export const ANTS_RICHNESS_GLOBAL = 'ants-richness-global';
+export const BUTTERFLIES_RICHNESS_GLOBAL = 'butterflies-richness-global';
+export const BUTTERFLIES_RARITY_GLOBAL = 'butterflies-rarity-global';
 
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';
