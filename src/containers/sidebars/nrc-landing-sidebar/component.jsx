@@ -51,7 +51,7 @@ function NRCLandingSidebar({
       id: MARINE_SPI_FEATURE_LAYER,
       title: MARINE_SPI_FEATURE_LAYER,
       slug: MARINE_SPI_FEATURE_LAYER, // TODO: change specific slug for metadata
-      portalId: '3f8accd89fe7482384972929fd2aae3f',
+      portalId: 'f5684ad998bf480aa1339763ff11670a',
       metadataTitle: t('Marine SPI'),
     },
   ];
