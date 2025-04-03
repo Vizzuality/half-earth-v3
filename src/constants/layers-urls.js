@@ -158,7 +158,7 @@ export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_Terrestrial_202503/FeatureServer',
   [MARINE_SPI_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_SPI_202503/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_SPI_20250403/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois_prod/FeatureServer/0',
   [AOIS_HISTORIC_DEVELOPMENT]:
