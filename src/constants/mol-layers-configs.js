@@ -527,14 +527,14 @@ export const layersConfig = {
     slug: BUTTERFLIES_RICHNESS_GLOBAL,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BUTTERFLIES_RICHNESS_GLOBAL],
-    bbox: USCenteredBbox,
+    bbox: null,
   },
   [BUTTERFLIES_RARITY_GLOBAL]: {
     title: BUTTERFLIES_RARITY_GLOBAL,
     slug: BUTTERFLIES_RARITY_GLOBAL,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BUTTERFLIES_RARITY_GLOBAL],
-    bbox: USCenteredBbox,
+    bbox: null,
   },
   [MAMMALS_RICHNESS_1KM]: {
     title: MAMMALS_RICHNESS_1KM,
