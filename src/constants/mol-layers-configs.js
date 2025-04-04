@@ -222,7 +222,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[GLOBAL_SPI_FEATURE_LAYER],
     bbox: null,
-    portalId: 'd777027d86e4487d8c2ca1c13de471dc',
+    portalId: 'c34d59ba3de244b4abd18c00986a0bb2',
   },
   [MARINE_SPI_FEATURE_LAYER]: {
     title: MARINE_SPI_FEATURE_LAYER,
