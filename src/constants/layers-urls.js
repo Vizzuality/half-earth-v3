@@ -203,7 +203,7 @@ export const LAYERS_URLS = {
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/ProtectedAreas_202504/VectorTileServer',
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]:
-    'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
+    'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/community_based_areas_20250408/VectorTileServer',
 
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/marine_and_land_grid_55km_prot_prop/FeatureServer',
