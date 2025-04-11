@@ -811,7 +811,7 @@ function DashboardContainer(props) {
 
     getPrioritySpeciesList();
 
-    if (countryISO === 'COD') {
+    if (countryISO === 'COD' || countryISO === 'GIN') {
       await tx.setCurrentLocale('fr');
     }
 
