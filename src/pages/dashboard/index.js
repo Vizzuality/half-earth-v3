@@ -150,17 +150,20 @@ function DashboardContainer(props) {
   };
 
   const getDataLayersData = async () => {
-    const privateOccurrenceDataResponse = await EsriFeatureService.getFeatures({
-      url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_LAYER,
-      whereClause: `scientificname = '${scientificName}'`,
-      returnGeometry: false,
-    });
-    if (privateOccurrenceDataResponse?.length > 0) {
-      const privateOccurrenceItems = privateOccurrenceDataResponse.map(
-        (item) => item.attributes
-      );
+    if (countryISO === 'COD') {
+      const privateOccurrenceDataResponse =
+        await EsriFeatureService.getFeatures({
+          url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_LAYER,
+          whereClause: `scientificname = '${scientificName}'`,
+          returnGeometry: false,
+        });
+      if (privateOccurrenceDataResponse?.length > 0) {
+        const privateOccurrenceItems = privateOccurrenceDataResponse.map(
+          (item) => item.attributes
+        );
 
-      setPrivateOccurrenceData(privateOccurrenceItems);
+        setPrivateOccurrenceData(privateOccurrenceItems);
+      }
     }
 
     const gbifResponse = await EsriFeatureService.getFeatures({
