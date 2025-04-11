@@ -83,6 +83,7 @@ $info-width: 300px;
 .trends{
   display: flex;
   padding: $paragraph-gutter;
+  padding-right: 0;
   gap: 10px;
 
   --font-color: #{$white};
