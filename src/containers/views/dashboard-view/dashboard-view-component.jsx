@@ -20,7 +20,10 @@ import MapView from 'components/map-view';
 
 import MinimizeIcon from 'icons/closes.svg?react';
 
-import { NATIONAL_TREND } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 const { VITE_APP_ARGISJS_API_VERSION: API_VERSION } = import.meta.env;
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -60,7 +63,7 @@ function DashboardViewComponent(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [layerInfo, setLayerInfo] = useState();
   const [showLegend, setShowLegend] = useState(false);
-  const [activeTrend, setActiveTrend] = useState(NATIONAL_TREND);
+  const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
   const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
   // const [showTopNav, setShowTopNav] = useState(true);
 
