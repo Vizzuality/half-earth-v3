@@ -156,9 +156,9 @@ const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
 
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_Terrestrial_20250411/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_Terrestrial_20250414/FeatureServer',
   [MARINE_SPI_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_marine_20250410/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_marine_20250414/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois_prod/FeatureServer/0',
   [AOIS_HISTORIC_DEVELOPMENT]:

@@ -222,7 +222,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[GLOBAL_SPI_FEATURE_LAYER],
     bbox: null,
-    portalId: '752f7f99a9024309a923e2e0b74fad75',
+    portalId: 'e8683dd4a3c9457aa1f4e9af8ce8fe49',
   },
   [MARINE_SPI_FEATURE_LAYER]: {
     title: MARINE_SPI_FEATURE_LAYER,
@@ -230,7 +230,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[MARINE_SPI_FEATURE_LAYER],
     bbox: null,
-    portalId: 'f9ddcaec73f84d3db4a2d89dd076587b',
+    portalId: '484a4ed84da5455a8a3d3f624037030d',
   },
   [COUNTRIES_LABELS_FEATURE_LAYER]: {
     title: COUNTRIES_LABELS_FEATURE_LAYER,
