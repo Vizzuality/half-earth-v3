@@ -458,7 +458,7 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_202501_Simplification99_20250414/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/768bf3c409824dda9438dab5a8a3ed5e/rest/services/wdpa_precalculated_aoi_summaries_updated_20250402/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/2f4432fe97654d908a05b0cc81a96528/rest/services/wdpa_precalculated_aoi_summaries_updated_20250414/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/c84a2dfb84c5489a8518360f67925ec0/rest/services/places_precalculated_aoi_summaries_updated_20250328/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:
