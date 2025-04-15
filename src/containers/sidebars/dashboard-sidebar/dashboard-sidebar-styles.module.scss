@@ -23,11 +23,11 @@ $tutorial-width: 60vw;
   z-index: $bring-to-front;
   overflow: auto;
 
-  &.trends{
+  &.trends {
     width: $trends-width;
   }
 
-  &.tutorial{
+  &.tutorial {
     width: $tutorial-width;
     overflow: hidden;
   }
@@ -40,7 +40,7 @@ $tutorial-width: 60vw;
   --save-button-text: #{$dark-text};
   --border-color-hover: #{$brand-color-main-hover};
 
-  &.light{
+  &.light {
     --nav-button-bg: #{$black};
     --svg-fill: #{$black};
     --svg-selected-fill: #{$white};
@@ -51,68 +51,72 @@ $tutorial-width: 60vw;
     @include lightBackdropBlur();
   }
 
-  .darkMode{
+  .darkMode {
     position: absolute;
     top: 3px;
     right: 3px;
 
-    svg{
+    svg {
       width: 20px;
       height: 20px;
       fill: var(--svg-fill);
     }
   }
 
-  .logo{
-    width: 150px;
-    padding: 10px 0 0 10px;
-  }
+  .logoContainer {
+    display: flex;
+    padding-bottom: 10px;
+    .logo {
+      width: 150px;
+      height: 100px;
+      padding: 10px 0 0 10px;
+    }
 
-  h1{
-    color: var(--font-color);
-    margin-top: 8px;
-    margin-left: 15px;
+    h1 {
+      color: var(--font-color);
+      margin-top: 8px;
+      margin-left: 15px;
+    }
   }
-
-  .sidenav{
+  .sidenav {
     display: flex;
     height: 100%;
   }
 
-  .icons{
+  .icons {
     display: flex;
     flex-direction: column;
     height: 100%;
     border-right: 1px solid;
 
-    button{
+    button {
       width: 50px;
       height: 50px;
 
-      svg{
+      svg {
         width: 30px;
         height: 30px;
         fill: var(--svg-fill);
       }
 
       &.selected,
-      &:hover{
+      &:hover {
         background: var(--nav-button-bg);
 
-        svg{
+        svg {
           fill: var(--svg-selected-fill);
         }
       }
     }
   }
 
-  .btnGroup{
+  .btnGroup {
     display: flex;
     gap: 3px;
     padding: 0 2px;
     border-bottom: 1px solid var(--border-color);
 
-    .saveButton{
+    .saveButton {
       border: none;
     }
   }
@@ -126,17 +130,17 @@ $tutorial-width: 60vw;
     }
   }
 
-  .notActive{
+  .notActive {
     background-color: transparent;
     color: var(--font-color);
     border: 1px solid var(--border-color);
   }
 
-  .regionFilter{
+  .regionFilter {
     display: flex;
     height: 100%;
 
-    .filters{
+    .filters {
       padding: 5px 10px;
       gap: 20px;
       display: flex;
@@ -146,10 +150,10 @@ $tutorial-width: 60vw;
     }
   }
 
-  .wrapper{
+  .wrapper {
     width: 100%;
 
-    .back{
+    .back {
       color: var(--font-color);
     }
   }
