@@ -53,7 +53,7 @@ function ToggleLayerInfoComponent(props) {
         const info = await EsriFeatureService.getFeatures({
           url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_METADATA_LAYER,
           whereClause: `study_name = '${item.label}'`,
-          outFields: ['description, date_range, region, taxa'],
+          outFields: ['description, region, taxa'],
           returnGeometr: false,
         });
 

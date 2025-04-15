@@ -515,8 +515,7 @@ export const DASHBOARD_URLS = {
   FOREST:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/forest_title_refined_range_species/FeatureServer',
   PRIORITY_SPECIES:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/priority_species/FeatureServer',
-  // https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/priority_species/FeatureServer
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/priority_species/FeatureServer',
   DATASET_LAYER_INFO:
     'https://dev-api.mol.org/2.x/datasets/metadata?dataset_id=',
   DATASET_LAYER_GROUP_INFO: 'https://dev-api.mol.org/2.x/datasets/type',
