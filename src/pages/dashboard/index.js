@@ -150,10 +150,14 @@ function DashboardContainer(props) {
   };
 
   const getDataLayersData = async () => {
-    if (countryISO === 'COD') {
+    if (countryISO === 'COD' || countryISO === 'GIN') {
+      const url =
+        countryISO === 'COD'
+          ? DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_LAYER
+          : DASHBOARD_URLS.PRIVATE_GIN_OCCURENCE_LAYER;
       const privateOccurrenceDataResponse =
         await EsriFeatureService.getFeatures({
-          url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_LAYER,
+          url,
           whereClause: `scientificname = '${scientificName}'`,
           returnGeometry: false,
         });
@@ -172,7 +176,9 @@ function DashboardContainer(props) {
       returnGeometry: false,
     });
 
-    const gbifResponseItems = gbifResponse?.map((item) => item.attributes);
+    const gbifResponseItems = gbifResponse
+      ?.filter((item) => item.iso === countryISO)
+      ?.map((item) => item.attributes);
     const gbifSet = new Set(); // Use a Set for efficient tracking
     const uniqueGbifObjects = [];
 
@@ -195,7 +201,9 @@ function DashboardContainer(props) {
       returnGeometry: false,
     });
 
-    const eBirdResponseItems = eBirdResponse?.map((item) => item.attributes);
+    const eBirdResponseItems = eBirdResponse
+      ?.filter((item) => item.iso === countryISO)
+      ?.map((item) => item.attributes);
     const ebirdSet = new Set(); // Use a Set for efficient tracking
     const uniqueEBirdObjects = [];
 

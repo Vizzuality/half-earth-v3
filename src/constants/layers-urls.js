@@ -526,6 +526,10 @@ export const DASHBOARD_URLS = {
     'https://services3.arcgis.com/Zyt0ectKCtAdsOa2/arcgis/rest/services/occurrences_RDC/FeatureServer',
   PRIVATE_COD_OCCURENCE_METADATA_LAYER:
     'https://services3.arcgis.com/Zyt0ectKCtAdsOa2/arcgis/rest/services/occurrence_metadata/FeatureServer',
+  PRIVATE_GIN_OCCURENCE_LAYER:
+    'https://services5.arcgis.com/0f65lZbPr3QAKkSu/arcgis/rest/services/occurrences_GIN/FeatureServer',
+  PRIVATE_GIN_OCCURENCE_METADATA_LAYER:
+    'https://services5.arcgis.com/0f65lZbPr3QAKkSu/arcgis/rest/services/occurrence_metadata/FeatureServer',
   NBIS_URL:
     'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_precalculated_species/FeatureServer',
   // 'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_precalculated/FeatureServer',

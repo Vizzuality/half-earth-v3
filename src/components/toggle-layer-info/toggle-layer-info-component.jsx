@@ -50,8 +50,14 @@ function ToggleLayerInfoComponent(props) {
       } else {
         const data = [];
 
+        const url = DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_METADATA_LAYER;
+
+        if (countryISO === 'GIN') {
+          DASHBOARD_URLS.PRIVATE_GIN_OCCURENCE_METADATA_LAYER;
+        }
+
         const info = await EsriFeatureService.getFeatures({
-          url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_METADATA_LAYER,
+          url,
           whereClause: `study_name = '${item.label}'`,
           outFields: ['description, region, taxa'],
           returnGeometr: false,
