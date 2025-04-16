@@ -92,13 +92,19 @@ async function getFeatureLayer(portalItemId, countryISO, id) {
   return featureLayer;
 }
 
-function getFeatureOccurenceLayer(portalItemId, scientificName, id, type) {
+function getFeatureOccurenceLayer(
+  portalItemId,
+  scientificName,
+  id,
+  type,
+  countryISO
+) {
   return new FeatureLayer({
     portalItem: {
       id: portalItemId,
     },
     outFields: ['*'],
-    definitionExpression: `species = '${scientificName}' and source = '${type}'`,
+    definitionExpression: `species = '${scientificName}' and source = '${type}' and iso3 = '${countryISO}'`,
     id,
   });
 }
