@@ -55,7 +55,7 @@ function RankingChart({
   const tableRef = useRef();
 
   const scrollTableVertically = (distance) => {
-    tableRef.current.scroll(0, distance);
+    tableRef.current.scrollTo({top: distance});
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ function RankingChart({
     const PADDING = 20;
     const selectedCountry = data.find((d) => d.iso === countryISO);
 
-    if (selectedCountry) {
+    if (selectedCountry && searchTerm.length === 0) {
       scrollTableVertically(ROW_HEIGHT * selectedCountryIndex - PADDING);
     }
   }, [handleSortClick, tableRef.current, selectedCountryIndex]);
