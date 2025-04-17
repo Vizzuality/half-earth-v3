@@ -167,7 +167,7 @@ function AreaHighlightManagerComponent(props) {
         }
       }
     } catch (error) {
-      throw Error(error);
+      console.log(error);
     }
   };
 
@@ -243,7 +243,7 @@ function AreaHighlightManagerComponent(props) {
         view.closePopup();
       }
     } catch (error) {
-      throw Error(error);
+      console.log(error);
     }
   };
 

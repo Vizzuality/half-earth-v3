@@ -12,7 +12,7 @@ import InfoIcon from 'icons/dashboard/info_icon.svg?react';
 import styles from './toggle-layer-info-component-styles.module.scss';
 
 function ToggleLayerInfoComponent(props) {
-  const { layer, setLayerInfo } = props;
+  const { layer, setLayerInfo, countryISO } = props;
   const t = useT();
   const parentLayers = [
     LAYER_OPTIONS.EXPERT_RANGE_MAPS,
@@ -50,10 +50,16 @@ function ToggleLayerInfoComponent(props) {
       } else {
         const data = [];
 
+        let url = DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_METADATA_LAYER;
+
+        if (countryISO === 'GIN') {
+          url = DASHBOARD_URLS.PRIVATE_GIN_OCCURENCE_METADATA_LAYER;
+        }
+
         const info = await EsriFeatureService.getFeatures({
-          url: DASHBOARD_URLS.PRIVATE_COD_OCCURENCE_METADATA_LAYER,
+          url,
           whereClause: `study_name = '${item.label}'`,
-          outFields: ['description, date_range, region, taxa'],
+          outFields: ['description, region, taxa'],
           returnGeometr: false,
         });
 

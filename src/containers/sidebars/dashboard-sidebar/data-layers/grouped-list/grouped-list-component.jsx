@@ -317,14 +317,16 @@ function GroupedListComponent(props) {
               GBIF_OCCURENCE_URL,
               speciesInfo.scientificname,
               layerName,
-              'eBird'
+              'eBird',
+              countryISO
             );
           } else if (layerName.match(/GBIF/)) {
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
               GBIF_OCCURENCE_URL,
               speciesInfo.scientificname,
               layerName,
-              'GBIF'
+              'GBIF',
+              countryISO
             );
           } else if (item.type === 'PRIVATE') {
             layer = await EsriFeatureService.getFeaturePrivateOccurenceLayer(

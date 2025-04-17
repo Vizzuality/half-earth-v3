@@ -123,10 +123,11 @@ function BioDiversityContainer(props) {
 
     Object.keys(dataByCountry).forEach((country) => {
       let stewardship = 100;
-      const habitatCountry = dataByCountry[countryName];
+      const habitatCountry = dataByCountry[country];
 
       // const countrySHS = country?.shs;
       const startYearValue = habitatCountry?.frag[0]?.gisfrag ?? 0;
+
       // eslint-disable-next-line no-unsafe-optional-chaining
       const lastCountryYearValue = habitatCountry?.shs.length - 1;
       const countryData = dataByCountry[country];
