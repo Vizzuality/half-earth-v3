@@ -329,8 +329,12 @@ function GroupedListComponent(props) {
               countryISO
             );
           } else if (item.type === 'PRIVATE') {
+            const portalId =
+              countryISO === 'COD'
+                ? '34e596f26f3b4203937e872e91c630b1'
+                : 'e2a38114c9734e888a89a699b4ba305f';
             layer = await EsriFeatureService.getFeaturePrivateOccurenceLayer(
-              '34e596f26f3b4203937e872e91c630b1',
+              portalId,
               speciesInfo.scientificname,
               layerName,
               item.dataset_title
