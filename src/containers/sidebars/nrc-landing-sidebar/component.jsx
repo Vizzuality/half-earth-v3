@@ -42,7 +42,7 @@ function NRCLandingSidebar({
       id: GLOBAL_SPI_FEATURE_LAYER,
       title: GLOBAL_SPI_FEATURE_LAYER,
       slug: GLOBAL_SPI_FEATURE_LAYER, // TODO: change specific slug for metadata
-      portalId: 'd777027d86e4487d8c2ca1c13de471dc',
+      portalId: 'e8683dd4a3c9457aa1f4e9af8ce8fe49',
       metadataTitle: t('Land SPI'),
     },
     {
@@ -51,7 +51,7 @@ function NRCLandingSidebar({
       id: MARINE_SPI_FEATURE_LAYER,
       title: MARINE_SPI_FEATURE_LAYER,
       slug: MARINE_SPI_FEATURE_LAYER, // TODO: change specific slug for metadata
-      portalId: 'f5684ad998bf480aa1339763ff11670a',
+      portalId: '484a4ed84da5455a8a3d3f624037030d',
       metadataTitle: t('Marine SPI'),
     },
   ];
