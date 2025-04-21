@@ -56,7 +56,6 @@ function AOIEntryTooltipComponent({
       <section className={styles.areaSection}>
         <p className={styles.area}>
           {format(',.3f')(AREA_KM2)} {t('km')}
-          <sup>2</sup>
         </p>
       </section>
       <button

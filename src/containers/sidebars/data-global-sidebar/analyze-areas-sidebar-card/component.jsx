@@ -199,7 +199,6 @@ function AnalyzeAreasCardComponent({
             {t('Draw shape smaller than')}{' '}
             <b>
               {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
-              <sup>2</sup>
             </b>
             {t(', approximately the size of Belgium.')}
           </p>
@@ -215,7 +214,6 @@ function AnalyzeAreasCardComponent({
             {t('Upload your own shapefile. The shape should be smaller than')}{' '}
             <b>
               {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
-              <sup>2</sup>
             </b>{' '}
             {t('approximately the size of Belgium.')}
           </p>

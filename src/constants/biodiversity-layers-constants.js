@@ -93,10 +93,10 @@ export const { TERRESTRIAL_GLOBAL, TERRESTRIAL_REGIONAL, MARINE } =
   TAXA_DISTRIBUTION;
 
 export const getResolutionOptions = () => ({
-  LOWEST: { label: `${t('~55km')}<sup>2</sup>`, slug: 'LOWEST' },
-  LOW: { label: `${t('~27km')}<sup>2</sup>`, slug: 'LOW' },
-  HIGH: { label: `${t('~1km')}<sup>2</sup>`, slug: 'HIGH' },
-  HIGHEST:  { label: `${t('~110km')}<sup>2</sup>`, slug: 'HIGHEST' },
+  LOWEST: { label: `${t('~55km')}`, slug: 'LOWEST' },
+  LOW: { label: `${t('~27km')}`, slug: 'LOW' },
+  HIGH: { label: `${t('~1km')}`, slug: 'HIGH' },
+  HIGHEST:  { label: `${t('~110km')}`, slug: 'HIGHEST' },
   COUNTRY: { label: t('country'), slug: 'COUNTRY' },
 });
 

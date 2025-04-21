@@ -230,7 +230,6 @@ function Component(props) {
                       locale,
                       t
                     )}${t(' km')}`}
-                    <sup>2</sup>
                   </div>
                 </div>
 
