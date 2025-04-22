@@ -199,7 +199,7 @@ function Challenges({
           </div>
           <div>
             <h5 className={styles.legendTitle}>
-              <T _str="Country area in km{sup}" sup={<sup>2</sup>} />
+              <T _str="Country area in km" />
             </h5>
             <CountryAreaImage className={styles.countryAreaImage} />
           </div>
