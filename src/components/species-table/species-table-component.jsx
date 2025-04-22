@@ -84,7 +84,7 @@ function SpeciesTable({
             >
               <div className={styles.tableItem}>
                 {capitalize(
-                  translatedSpeciesGroup[speciesgroup.toLowerCase()] ||
+                  translatedSpeciesGroup[speciesgroup?.toLowerCase()] ||
                     speciesgroup
                 )}
               </div>
