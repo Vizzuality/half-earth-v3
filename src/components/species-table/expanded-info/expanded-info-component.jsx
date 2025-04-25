@@ -64,7 +64,7 @@ function ExpandedInfo(props) {
           {info && info[0] && info[0].content}
         </div>
         <a
-          href={`https://mol.org/species/${scientificname}`}
+          href={`https://mapoflife.ai/species/info/${scientificname}`}
           title={`${speciesName} ${t(' MoL link')}`}
           alt={`${speciesName} ${t(' MoL link')}`}
           target="_blank"
