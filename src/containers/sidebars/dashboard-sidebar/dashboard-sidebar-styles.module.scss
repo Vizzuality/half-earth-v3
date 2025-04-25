@@ -66,10 +66,12 @@ $tutorial-width: 60vw;
   .logoContainer {
     display: flex;
     padding-bottom: 10px;
+    align-items: center;
     .logo {
       width: 150px;
       height: 100px;
       padding: 10px 0 0 10px;
+      object-fit: contain;
     }
 
     h1 {
