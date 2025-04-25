@@ -151,7 +151,7 @@ function RegionsAnalysisComponent(props) {
       );
 
       setRegionLayers(() => ({
-        [LAYER_OPTIONS.FORESTS]: featureLayer,
+        [LAYER_OPTIONS.ZONE_3]: featureLayer,
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.ZONE_5) {
@@ -162,7 +162,7 @@ function RegionsAnalysisComponent(props) {
       );
 
       setRegionLayers(() => ({
-        [LAYER_OPTIONS.FORESTS]: featureLayer,
+        [LAYER_OPTIONS.ZONE_5]: featureLayer,
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.RAPID_INVENTORY_32) {
@@ -173,7 +173,7 @@ function RegionsAnalysisComponent(props) {
       );
 
       setRegionLayers(() => ({
-        [LAYER_OPTIONS.FORESTS]: featureLayer,
+        [LAYER_OPTIONS.RAPID_INVENTORY_32]: featureLayer,
       }));
       map.add(featureLayer);
     }

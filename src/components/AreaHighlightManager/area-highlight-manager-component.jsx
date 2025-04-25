@@ -14,6 +14,7 @@ import {
 } from 'constants/dashboard-constants.js';
 
 import {
+  NATIONAL_TREND,
   PROVINCE_TREND,
   TABS,
 } from '../../containers/sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
@@ -298,12 +299,12 @@ function AreaHighlightManagerComponent(props) {
     hoverHighlight?.remove();
 
     if (selectedIndex === NAVIGATION.TRENDS) {
-      if (tabOption === TABS.SPI && activeTrend === PROVINCE_TREND) {
+      if (tabOption === TABS.SPI && activeTrend !== NATIONAL_TREND) {
         setOnClickHandler(
           view.on('click', (event) => handleRegionClicked(event))
         );
         setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
-      } else if (tabOption === TABS.SHI && shiActiveTrend === PROVINCE_TREND) {
+      } else if (tabOption === TABS.SHI && shiActiveTrend !== NATIONAL_TREND) {
         setOnClickHandler(
           view.on('click', (event) => handleRegionClicked(event))
         );
