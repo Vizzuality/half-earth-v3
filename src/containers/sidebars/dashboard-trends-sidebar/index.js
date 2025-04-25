@@ -477,13 +477,13 @@ function DashboardTrendsSidebarContainer(props) {
         foundProvinceLayer.visible = true;
       }
       getShiNationalData();
-    } else if (shiActiveTrend === ZONE_3) {
+    } else if (shiActiveTrend === ZONE_3 && tabOption === TABS.SHI) {
       if (zone5ShiLayer) {
         zone5ShiLayer.visible = false;
       }
 
       loadZone('zone3', 'shi');
-    } else if (shiActiveTrend === ZONE_5) {
+    } else if (shiActiveTrend === ZONE_5 && tabOption === TABS.SHI) {
       if (zone3ShiLayer) {
         zone3ShiLayer.visible = false;
       }
