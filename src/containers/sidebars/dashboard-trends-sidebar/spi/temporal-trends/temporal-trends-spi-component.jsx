@@ -13,12 +13,15 @@ import Button from 'components/button';
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
+  ZONE_3,
+  ZONE_5,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
 import TrendTableComponent from './trend-table/trend-table-component';
+import ZoneChartContainer from './zone-chart';
 
 function TemporalTrendsSpiComponent(props) {
   const t = useT();
@@ -87,7 +90,7 @@ function TemporalTrendsSpiComponent(props) {
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === NATIONAL_TREND,
+                [styles.notActive]: activeTrend !== PROVINCE_TREND,
               })}
               label={PROVINCE_TREND}
               handleClick={handleActionChange}
@@ -95,7 +98,7 @@ function TemporalTrendsSpiComponent(props) {
             <Button
               type="rectangular"
               className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend === PROVINCE_TREND,
+                [styles.notActive]: activeTrend !== NATIONAL_TREND,
               })}
               label={NATIONAL_TREND}
               handleClick={handleActionChange}
@@ -104,7 +107,27 @@ function TemporalTrendsSpiComponent(props) {
           <span className={styles.helpText}>
             {t('Toggle national SPI and province-level breakdown.')}
           </span>
-          {activeTrend !== NATIONAL_TREND && (
+          {countryISO.toLowerCase() === 'guy' && (
+            <div className={styles.btnGroup}>
+              <Button
+                type="rectangular"
+                className={cx(styles.saveButton, {
+                  [styles.notActive]: activeTrend !== ZONE_3,
+                })}
+                label="ZONE_3"
+                handleClick={handleActionChange}
+              />
+              <Button
+                type="rectangular"
+                className={cx(styles.saveButton, {
+                  [styles.notActive]: activeTrend !== ZONE_5,
+                })}
+                label="ZONE_5"
+                handleClick={handleActionChange}
+              />
+            </div>
+          )}
+          {activeTrend === PROVINCE_TREND && (
             <>
               {!showTable && (
                 <Button
@@ -142,6 +165,12 @@ function TemporalTrendsSpiComponent(props) {
           )}
           {activeTrend === PROVINCE_TREND && (
             <ProvinceChartContainer {...props} />
+          )}
+          {activeTrend === ZONE_3 && (
+            <ZoneChartContainer {...props} zone={ZONE_3} />
+          )}
+          {activeTrend === ZONE_5 && (
+            <ZoneChartContainer {...props} zone={ZONE_5} />
           )}
         </>
       )}

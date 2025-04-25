@@ -49,6 +49,7 @@ function ProvinceChartComponent(props) {
     handleRegionSelected,
     layerView,
     lang,
+    zoneData,
   } = props;
 
   const blankData = {

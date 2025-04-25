@@ -24,6 +24,8 @@ import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sect
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
+  ZONE_3,
+  ZONE_5,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
@@ -42,6 +44,7 @@ function ScoreDistributionsSpiComponent(props) {
     spiSelectSpeciesData,
     setFromTrends,
     lang,
+    zoneHistrogramData,
   } = props;
   const { lightMode } = useContext(LightModeContext);
   const [chartData, setChartData] = useState();
@@ -142,6 +145,12 @@ function ScoreDistributionsSpiComponent(props) {
       locationData = spiScoresData.filter(
         (loc) => loc.iso3_regional === selectedProvince.iso3_regional
       );
+    } else if (activeTrend === ZONE_3 || activeTrend === ZONE_5) {
+      const zoneName = activeTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
+      const data = zoneHistrogramData.filter((item) =>
+        item.region_key.includes(zoneName)
+      );
+      locationData = data;
     } else {
       locationData = spiScoresData;
     }
@@ -150,10 +159,10 @@ function ScoreDistributionsSpiComponent(props) {
     locationData.forEach((a) => {
       const bin = a.bin.split(',')[1].replace(/ /gi, '');
 
-      taxaSet.amphibians[bin] = a.amphibians;
-      taxaSet.birds[bin] = a.birds;
-      taxaSet.mammals[bin] = a.mammals;
-      taxaSet.reptiles[bin] = a.reptiles;
+      taxaSet.amphibians[bin] = a.amphibians_spi_count || a.amphibians;
+      taxaSet.birds[bin] = a.birds_spi_count || a.birds;
+      taxaSet.mammals[bin] = a.mammals_spi_count || a.mammals;
+      taxaSet.reptiles[bin] = a.reptiles_spi_count || a.reptiles;
     });
 
     const uniqueKeys = new Set([

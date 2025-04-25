@@ -533,6 +533,10 @@ export const DASHBOARD_URLS = {
   NBIS_URL:
     'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_precalculated_species/FeatureServer',
   // 'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_precalculated/FeatureServer',
+  GUY_EEWWF_SHI_SPI_URL:
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_shi_spi_trend_table/FeatureServer',
+  GUY_EEWWF_HISTOGRAM_URL:
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_spi_shi_binned/FeatureServer',
 };
 
 export const NBIS_URLS = {
