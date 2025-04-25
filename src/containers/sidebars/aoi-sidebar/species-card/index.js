@@ -46,7 +46,7 @@ function SpeciesCardContainer(props) {
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(
     DEFAULT_SPECIES_FILTER
   );
-  const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0);
+  const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(urlSelectedSpeciesId || 0);
   const [placeholderText, setPlaceholderText] = useState(null);
   const [speciesFilters, setFilterWithCount] = useState(speciesFiltersSource);
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
