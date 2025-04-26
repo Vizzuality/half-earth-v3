@@ -158,8 +158,6 @@ async function getXYZLayer(scientificname, id, type, taxa = null) {
   const data = await response.json();
   let urlTemplate;
 
-  console.log(data['range map'].tile_url);
-
   if (type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
     urlTemplate = data['range map'].tile_url;
   } else if (type === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
