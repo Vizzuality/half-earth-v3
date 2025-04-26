@@ -46,7 +46,7 @@ function SpeciesCardContainer(props) {
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(
     DEFAULT_SPECIES_FILTER
   );
-  const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0);
+  const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(urlSelectedSpeciesId || 0);
   const [placeholderText, setPlaceholderText] = useState(null);
   const [speciesFilters, setFilterWithCount] = useState(speciesFiltersSource);
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
@@ -240,12 +240,15 @@ function SpeciesCardContainer(props) {
     const urlSelectedSpecies = speciesToDisplay.find(
       (s) => s.id === urlSelectedSpeciesId
     );
-    setSelectedSpecies(urlSelectedSpecies || speciesToDisplay[selectedSpeciesIndex]);
+    // Don't select a species if we have one in the URL and until is loaded
+    if (!urlSelectedSpeciesId || urlSelectedSpecies) {
+      setSelectedSpecies(urlSelectedSpecies || speciesToDisplay[selectedSpeciesIndex]);
+    }
   }, [speciesToDisplay, selectedSpeciesIndex, urlSelectedSpeciesId]);
 
   useEffect(() => {
     setSelectedSpeciesIndex(0);
-  }, [selectedSpeciesFilter]);
+  }, [selectedSpeciesFilter?.slug]);
 
   // Get individual species info and image for slider
   useEffect(() => {
