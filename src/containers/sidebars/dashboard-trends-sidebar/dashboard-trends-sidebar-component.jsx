@@ -13,6 +13,8 @@ import SpiContainer from './spi';
 
 export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
+export const ZONE_3 = 'ZONE_3';
+export const ZONE_5 = 'ZONE_5';
 
 export const TABS = {
   SHI: 1,
@@ -41,6 +43,19 @@ function DashboardTrendsSidebar(props) {
       (item) => item.id === REGION_OPTIONS.PROVINCES
     );
 
+    const zone5Layer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-zone5-spi`
+    );
+    const zone5ShiLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-zone5-shi`
+    );
+    const zone3Layer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-zone3-spi`
+    );
+    const zone3ShiLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-zone3-shi`
+    );
+
     const outlineLayer = map.layers.items.find(
       (item) => item.id === `${countryISO}-outline`
     );
@@ -64,6 +79,14 @@ function DashboardTrendsSidebar(props) {
         outlineLayer.visible = true;
       }
 
+      if (zone3Layer) {
+        zone3Layer.visible = false;
+      }
+
+      if (zone5Layer) {
+        zone5Layer.visible = false;
+      }
+
       const item = { label: 'SHI', parent: '', id: `${countryISO}-outline` };
       setMapLegendLayers([item]);
     } else {
@@ -74,6 +97,14 @@ function DashboardTrendsSidebar(props) {
 
         if (outlineLayer) {
           outlineLayer.visible = false;
+        }
+
+        if (zone3ShiLayer) {
+          zone3ShiLayer.visible = false;
+        }
+
+        if (zone5ShiLayer) {
+          zone5ShiLayer.visible = false;
         }
       });
 

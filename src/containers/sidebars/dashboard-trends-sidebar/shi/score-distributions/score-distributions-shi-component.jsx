@@ -25,6 +25,8 @@ import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sect
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
+  ZONE_3,
+  ZONE_5,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 import compStyles from '../../spi/score-distibutions/score-distributions-spi-styles.module.scss';
@@ -44,6 +46,7 @@ function ScoreDistributionsShiComponent(props) {
     selectedProvince,
     setFromTrends,
     lang,
+    zoneHistrogramData,
   } = props;
 
   const SCORES = {
@@ -155,6 +158,8 @@ function ScoreDistributionsShiComponent(props) {
 
   const displayData = (selectedScore) => {
     let score = selectedScore;
+    let shiData = shiScoresData;
+
     if (shiActiveTrend === 'NATIONAL') {
       if (selectedScore === SCORES.HABITAT_SCORE) {
         score = NATIONAL_SCORES.HABITAT_SCORE;
@@ -188,7 +193,7 @@ function ScoreDistributionsShiComponent(props) {
       };
 
       // Loop through each number and place it in the appropriate bucket
-      shiScoresData.forEach((a) => {
+      shiData.forEach((a) => {
         const bin = a.binned.split(',')[0].replace(/ /gi, '');
 
         taxaSet.amphibians[score][bin] = a[`${score}_amphibians`];
@@ -253,14 +258,27 @@ function ScoreDistributionsShiComponent(props) {
         },
       };
 
-      // Loop through each number and place it in the appropriate bucket
-      shiScoresData.forEach((a) => {
-        const bin = a.binned.split(',')[0].replace(/ /gi, '');
+      if (shiActiveTrend === ZONE_3 || shiActiveTrend === ZONE_5) {
+        const zoneName = shiActiveTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
+        const data = zoneHistrogramData.filter((item) =>
+          item.region_key.includes(zoneName)
+        );
+        shiData = data;
+      }
 
-        taxaSet.amphibians[score][bin] = a[`${score}_amphibians`];
-        taxaSet.birds[score][bin] = a[`${score}_birds`];
-        taxaSet.mammals[score][bin] = a[`${score}_mammals`];
-        taxaSet.reptiles[score][bin] = a[`${score}_reptiles`];
+      // Loop through each number and place it in the appropriate bucket
+      shiData.forEach((a) => {
+        const bin =
+          a.bin?.split(',')[0].replace(/ /gi, '') ||
+          a.binned.split(',')[0].replace(/ /gi, '');
+
+        taxaSet.amphibians[score][bin] =
+          a.amphibians_shi_count || a[`${score}_amphibians`];
+        taxaSet.birds[score][bin] = a.birds_shi_count || a[`${score}_birds`];
+        taxaSet.mammals[score][bin] =
+          a.mammals_shi_count || a[`${score}_mammals`];
+        taxaSet.reptiles[score][bin] =
+          a.reptiles_shi_count || a[`${score}_reptiles`];
       });
 
       const uniqueKeys = new Set([
@@ -325,11 +343,11 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   useEffect(() => {
-    if (!shiScoresData.length) return;
+    if (!shiScoresData?.length) return;
 
     setIsLoading(true);
     getChartData();
-  }, [shiScoresData]);
+  }, [shiScoresData, shiActiveTrend]);
 
   useEffect(() => {
     if (!shiSelectSpeciesData || !shiSelectSpeciesData.length) return;

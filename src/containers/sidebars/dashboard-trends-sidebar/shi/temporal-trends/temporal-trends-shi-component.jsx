@@ -10,11 +10,14 @@ import Button from 'components/button';
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
+  ZONE_3,
+  ZONE_5,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
 import ProvinceChartContainer from './province-chart';
+import ZoneChartContainer from './zone-chart';
 
 function TemporalTrendsShiComponent(props) {
   const t = useT();
@@ -71,7 +74,7 @@ function TemporalTrendsShiComponent(props) {
               <Button
                 type="rectangular"
                 className={cx(styles.saveButton, {
-                  [styles.notActive]: shiActiveTrend === PROVINCE_TREND,
+                  [styles.notActive]: shiActiveTrend !== NATIONAL_TREND,
                 })}
                 label={NATIONAL_TREND}
                 handleClick={handleActionChange}
@@ -80,7 +83,7 @@ function TemporalTrendsShiComponent(props) {
                 <Button
                   type="rectangular"
                   className={cx(styles.saveButton, {
-                    [styles.notActive]: shiActiveTrend === NATIONAL_TREND,
+                    [styles.notActive]: shiActiveTrend !== PROVINCE_TREND,
                   })}
                   label={PROVINCE_TREND}
                   handleClick={handleActionChange}
@@ -100,12 +103,38 @@ function TemporalTrendsShiComponent(props) {
           </span> */}
           </div>
         )}
+        {countryISO.toLowerCase() === 'guy' && (
+          <div className={styles.btnGroup}>
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== ZONE_3,
+              })}
+              label="ZONE_3"
+              handleClick={handleActionChange}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== ZONE_5,
+              })}
+              label="ZONE_5"
+              handleClick={handleActionChange}
+            />
+          </div>
+        )}
       </div>
       {shiActiveTrend === NATIONAL_TREND && (
         <NationalChartContainer {...props} />
       )}
       {shiActiveTrend === PROVINCE_TREND && (
         <ProvinceChartContainer {...props} />
+      )}
+      {shiActiveTrend === ZONE_3 && (
+        <ZoneChartContainer {...props} zone={ZONE_3} />
+      )}
+      {shiActiveTrend === ZONE_5 && (
+        <ZoneChartContainer {...props} zone={ZONE_5} />
       )}
     </div>
   );

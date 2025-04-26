@@ -7,6 +7,9 @@ import { useT } from '@transifex/react';
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   DRC_REGION_FEATURE_ID,
+  RAPID_INVENTORY_32_FEATURE_ID,
+  ZONE_3_FEATURE_ID,
+  ZONE_5_FEATURE_ID,
   NBS_OP_INTERVENTIONS_FEATURE_ID,
 } from 'utils/dashboard-utils';
 
@@ -140,6 +143,39 @@ function RegionsAnalysisComponent(props) {
         [LAYER_OPTIONS.DISSOLVED_NBS]: featureLayer,
       }));
       map.add(featureLayer);
+    } else if (option === REGION_OPTIONS.ZONE_3) {
+      featureLayer = await EsriFeatureService.getFeatureLayer(
+        ZONE_3_FEATURE_ID,
+        null,
+        LAYER_OPTIONS.ZONE_3
+      );
+
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.ZONE_3]: featureLayer,
+      }));
+      map.add(featureLayer);
+    } else if (option === REGION_OPTIONS.ZONE_5) {
+      featureLayer = await EsriFeatureService.getFeatureLayer(
+        ZONE_5_FEATURE_ID,
+        null,
+        LAYER_OPTIONS.ZONE_5
+      );
+
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.ZONE_5]: featureLayer,
+      }));
+      map.add(featureLayer);
+    } else if (option === REGION_OPTIONS.RAPID_INVENTORY_32) {
+      featureLayer = await EsriFeatureService.getFeatureLayer(
+        RAPID_INVENTORY_32_FEATURE_ID,
+        null,
+        LAYER_OPTIONS.RAPID_INVENTORY_32
+      );
+
+      setRegionLayers(() => ({
+        [LAYER_OPTIONS.RAPID_INVENTORY_32]: featureLayer,
+      }));
+      map.add(featureLayer);
     }
   };
 
@@ -156,11 +192,23 @@ function RegionsAnalysisComponent(props) {
     const dissolvedLayer = map.layers.items.find(
       (layer) => layer.id === LAYER_OPTIONS.DISSOLVED_NBS
     );
+    const zone3Layer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.ZONE_3
+    );
+    const zone5Layer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.ZONE_5
+    );
+    const rapidLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.RAPID_INVENTORY_32
+    );
 
     map.remove(protectedAreaLayer);
     map.remove(provinceLayer);
     map.remove(forestLayer);
     map.remove(dissolvedLayer);
+    map.remove(zone3Layer);
+    map.remove(zone5Layer);
+    map.remove(rapidLayer);
     setRegionLayers({});
   };
 
@@ -294,6 +342,25 @@ function RegionsAnalysisComponent(props) {
               control={<Radio />}
               label={t('NBS-OP Interventions')}
             />
+          )}
+          {countryISO.toUpperCase() === 'GUY' && (
+            <>
+              <FormControlLabel
+                value={REGION_OPTIONS.ZONE_3}
+                control={<Radio />}
+                label={t('3 Zones')}
+              />
+              <FormControlLabel
+                value={REGION_OPTIONS.ZONE_5}
+                control={<Radio />}
+                label={t('5 Zones')}
+              />
+              <FormControlLabel
+                value={REGION_OPTIONS.RAPID_INVENTORY_32}
+                control={<Radio />}
+                label={t('Rapid Inventory 32')}
+              />
+            </>
           )}
           {/* <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} /> */}
           {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}

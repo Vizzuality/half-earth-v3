@@ -530,9 +530,17 @@ export const DASHBOARD_URLS = {
     'https://services5.arcgis.com/0f65lZbPr3QAKkSu/arcgis/rest/services/occurrences_GIN/FeatureServer',
   PRIVATE_GIN_OCCURENCE_METADATA_LAYER:
     'https://services5.arcgis.com/0f65lZbPr3QAKkSu/arcgis/rest/services/occurrence_metadata/FeatureServer',
+  ZONE_SPECIES:
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_expert_range_species_list/FeatureServer',
+  ZONE_OCCURRENCE:
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/species_occurences_iso3_level/FeatureServer',
   NBIS_URL:
     'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_precalculated_species/FeatureServer',
   // 'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_precalculated/FeatureServer',
+  GUY_EEWWF_SHI_SPI_URL:
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_shi_spi_trend_table/FeatureServer',
+  GUY_EEWWF_HISTOGRAM_URL:
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_spi_shi_binned/FeatureServer',
 };
 
 export const NBIS_URLS = {

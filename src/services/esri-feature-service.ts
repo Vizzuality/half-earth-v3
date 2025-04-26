@@ -79,12 +79,22 @@ function getVectorTileLayer(url, id, countryISO) {
 }
 
 async function getFeatureLayer(portalItemId, countryISO, id) {
+  let definitionExpression = countryISO ? `GID_0 = '${countryISO}'` : '';
+
+  if (
+    id === 'GUY-zone5-spi' ||
+    id === 'GUY-zone3-spi' ||
+    id === 'GUY-zone3-shi' ||
+    id === 'GUY-zone5-shi'
+  ) {
+    definitionExpression = '';
+  }
   const featureLayer = new FeatureLayer({
     portalItem: {
       id: portalItemId,
     },
     outFields: ['*'],
-    definitionExpression: countryISO ? `GID_0 = '${countryISO}'` : '',
+    definitionExpression,
     id: id ?? LAYER_OPTIONS.PROVINCES,
   });
 

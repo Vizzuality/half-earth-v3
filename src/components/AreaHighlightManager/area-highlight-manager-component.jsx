@@ -14,6 +14,7 @@ import {
 } from 'constants/dashboard-constants.js';
 
 import {
+  NATIONAL_TREND,
   PROVINCE_TREND,
   TABS,
 } from '../../containers/sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
@@ -57,7 +58,10 @@ function AreaHighlightManagerComponent(props) {
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
         regionLayers[LAYER_OPTIONS.FORESTS] ||
         regionLayers[LAYER_OPTIONS.DISSOLVED_NBS] ||
-        regionLayers[`${countryISO}-outline`]
+        regionLayers[`${countryISO}-outline`] ||
+        regionLayers[LAYER_OPTIONS.ZONE_3] ||
+        regionLayers[LAYER_OPTIONS.ZONE_5] ||
+        regionLayers[LAYER_OPTIONS.RAPID_INVENTORY_32]
     );
   };
 
@@ -66,6 +70,7 @@ function AreaHighlightManagerComponent(props) {
     if (results.length) {
       const foundLayer = results.find(
         (x) =>
+          x.graphic.attributes.name ||
           x.graphic.attributes.NAME_1 ||
           x.graphic.attributes.WDPA_PID ||
           x.graphic.attributes.territoire ||
@@ -75,6 +80,7 @@ function AreaHighlightManagerComponent(props) {
         const { graphic } = foundLayer;
         const { attributes } = graphic;
         if (
+          Object.prototype.hasOwnProperty.call(attributes, 'name') ||
           Object.prototype.hasOwnProperty.call(attributes, 'NAME_1') ||
           Object.prototype.hasOwnProperty.call(attributes, 'WDPA_PID') ||
           Object.prototype.hasOwnProperty.call(attributes, 'territoire') ||
@@ -117,6 +123,7 @@ function AreaHighlightManagerComponent(props) {
                   region_name,
                   territoire,
                   Int_ID,
+                  region_key,
                   Intrvnt,
                 } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
@@ -134,6 +141,14 @@ function AreaHighlightManagerComponent(props) {
 
                 if (selectedRegionOption === REGION_OPTIONS.DISSOLVED_NBS) {
                   setSelectedRegion({ Int_ID });
+                }
+
+                if (
+                  selectedRegionOption === REGION_OPTIONS.ZONE_3 ||
+                  selectedRegionOption === REGION_OPTIONS.ZONE_5 ||
+                  selectedRegionOption === REGION_OPTIONS.RAPID_INVENTORY_32
+                ) {
+                  setSelectedRegion({ region_key });
                 }
 
                 // eslint-disable-next-line camelcase
@@ -178,9 +193,10 @@ function AreaHighlightManagerComponent(props) {
       hits = await hitTest(event);
 
       if (hits) {
-        let name;
+        let hoverName;
         // eslint-disable-next-line camelcase
         const {
+          name,
           NAME,
           NAME_1,
           territoire,
@@ -196,14 +212,14 @@ function AreaHighlightManagerComponent(props) {
 
         if (countryMatch) {
           // eslint-disable-next-line camelcase
-          name = NAME || NAME_1 || region_name;
+          hoverName = NAME || NAME_1 || region_name;
         } else {
-          name = territoire || Intrvnt;
+          hoverName = name || territoire || Intrvnt;
         }
 
-        if (name) {
-          if (name !== prevHoverName) {
-            prevHoverName = name;
+        if (hoverName) {
+          if (hoverName !== prevHoverName) {
+            prevHoverName = hoverName;
             hoverHighlight?.remove();
             view.closePopup();
 
@@ -298,12 +314,12 @@ function AreaHighlightManagerComponent(props) {
     hoverHighlight?.remove();
 
     if (selectedIndex === NAVIGATION.TRENDS) {
-      if (tabOption === TABS.SPI && activeTrend === PROVINCE_TREND) {
+      if (tabOption === TABS.SPI && activeTrend !== NATIONAL_TREND) {
         setOnClickHandler(
           view.on('click', (event) => handleRegionClicked(event))
         );
         setOnPointerMoveHandler(view.on('pointer-move', handlePointerMove));
-      } else if (tabOption === TABS.SHI && shiActiveTrend === PROVINCE_TREND) {
+      } else if (tabOption === TABS.SHI && shiActiveTrend !== NATIONAL_TREND) {
         setOnClickHandler(
           view.on('click', (event) => handleRegionClicked(event))
         );

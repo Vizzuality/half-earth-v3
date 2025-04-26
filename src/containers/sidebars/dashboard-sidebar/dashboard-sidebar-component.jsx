@@ -8,7 +8,6 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
-import guyLogo from 'logos/Guyana_PAC.png';
 import codLogo from 'logos/iccn_logo_clean.png';
 import codWhiteLogo from 'logos/iccn_logo_clean_whiteText.png';
 import ginLogo from 'logos/ogpnrf_logo.jpeg';
@@ -60,7 +59,7 @@ function DashboardSidebar(props) {
     } else if (countryISO.toUpperCase() === 'GIN') {
       setLogo(<img className={styles.logo} src={ginLogo} alt="Logo" />);
     } else if (countryISO.toUpperCase() === 'GUY') {
-      setLogo(<img className={styles.logo} src={guyLogo} alt="Logo" />);
+      setLogo(<div />);
     } else {
       setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);
     }
