@@ -26,7 +26,7 @@ function ZoneChartComponent(props) {
   const t = useT();
   const locale = useLocale();
   const { lightMode } = useContext(LightModeContext);
-  const { zone, zoneData } = props;
+  const { zone, zoneData, setSelectedProvince, clickedRegion } = props;
   const options = {
     plugins: {
       title: {
@@ -80,6 +80,12 @@ function ZoneChartComponent(props) {
 
   const [chartInfo, setChartInfo] = useState('');
   const [data, setData] = useState();
+
+  useEffect(() => {
+    if (clickedRegion) {
+      setSelectedProvince(clickedRegion);
+    }
+  }, [clickedRegion]);
 
   useEffect(() => {
     const zoneName = zone === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
