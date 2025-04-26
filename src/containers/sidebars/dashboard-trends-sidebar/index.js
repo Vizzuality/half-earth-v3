@@ -208,6 +208,17 @@ function DashboardTrendsSidebarContainer(props) {
       }
 
       zoneLayer.visible = true;
+
+      const item = {
+        label: `${zone}-${type}`,
+        parent: '',
+        id: `${countryISO}-${zone}-${type}`,
+      };
+      setMapLegendLayers([item]);
+
+      setRegionLayers(() => ({
+        [`${countryISO}-${zone}-${type}`]: zoneLayer,
+      }));
     }
   };
 
