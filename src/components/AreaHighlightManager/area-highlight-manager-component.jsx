@@ -243,7 +243,7 @@ function AreaHighlightManagerComponent(props) {
 
             view.openPopup({
               // Set the popup's title to the coordinates of the location
-              title: `${name}`,
+              title: `${hoverName}`,
               location: view.toMap({ x: event.x, y: event.y }),
               includeDefaultActions: false,
             });
