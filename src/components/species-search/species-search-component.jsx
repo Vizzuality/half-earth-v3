@@ -26,13 +26,19 @@ function SpeciesSearchComponent(props) {
     setSelectedTaxa,
     setSelectedRegion,
     setExploreAllSpecies,
+    countryISO,
   } = props;
 
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const searchURL =
+  let searchURL =
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_species_list_for_search/FeatureServer';
+
+  if (countryISO === 'GUY') {
+    searchURL =
+      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_list_for_search/FeatureServer';
+  }
 
   let controller = null;
 

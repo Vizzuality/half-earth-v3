@@ -1,11 +1,10 @@
 import {
-  EXPERT_RANGE_MAP_URL,
+  GUY_RANGE_MAP_URL,
   PROTECTED_AREA_FEATURE_URL,
   PROTECTED_AREA_GIN_FEATURE_URL,
   PROTECTED_AREA_GUY_FEATURE_URL,
   PROTECTED_AREA_LIB_FEATURE_URL,
   PROTECTED_AREA_SLE_FEATURE_URL,
-  TREND_MAP_URL,
 } from 'utils/dashboard-utils';
 
 import CSVLayer from '@arcgis/core/layers/CSVLayer';
@@ -152,20 +151,25 @@ function getGeoJsonLayer(scientificname, id, countryISO = 'CD') {
   });
 }
 
-async function getXYZLayer(scientificname, id, type) {
-  let url;
-
-  if (type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
-    url = `${EXPERT_RANGE_MAP_URL}?scientificname=${scientificname}`;
-  } else if (type === LAYER_TITLE_TYPES.TREND) {
-    url = `${TREND_MAP_URL}?scientificname=${scientificname}`;
-  }
+async function getXYZLayer(scientificname, id, type, taxa = null) {
+  const url = `${GUY_RANGE_MAP_URL}?species=${scientificname}&taxa=${taxa}`;
 
   const response = await fetch(url);
   const data = await response.json();
+  let urlTemplate;
+
+  console.log(data['range map'].tile_url);
+
+  if (type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
+    urlTemplate = data['range map'].tile_url;
+  } else if (type === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
+    urlTemplate = data['refined map'].tile_url;
+  } else if (type === LAYER_TITLE_TYPES.TREND) {
+    urlTemplate = data.trend.tile_url;
+  }
 
   return new WebTileLayer({
-    urlTemplate: data.url,
+    urlTemplate,
     id,
   });
 }

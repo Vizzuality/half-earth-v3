@@ -220,7 +220,8 @@ function BioDiversityContainer(props) {
     const webTileLayer = await EsriFeatureService.getXYZLayer(
       speciesInfo.scientificname.replace(' ', '_'),
       layerName,
-      LAYER_TITLE_TYPES.TREND
+      LAYER_TITLE_TYPES.TREND,
+      speciesInfo.taxa
     );
 
     setRegionLayers({

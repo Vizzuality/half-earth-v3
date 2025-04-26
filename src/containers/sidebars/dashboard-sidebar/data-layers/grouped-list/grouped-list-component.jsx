@@ -167,7 +167,8 @@ function GroupedListComponent(props) {
         layer = await EsriFeatureService.getXYZLayer(
           speciesInfo.scientificname.replace(' ', '_'),
           id,
-          LAYER_TITLE_TYPES.TREND
+          LAYER_TITLE_TYPES.TREND,
+          speciesInfo.taxa
         );
 
         view.whenLayerView(layer).then((layerView) => {
@@ -248,7 +249,8 @@ function GroupedListComponent(props) {
           layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
             layerName,
-            LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS
+            LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS,
+            speciesInfo.taxa
           );
 
           item.isActive = true;

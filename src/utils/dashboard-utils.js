@@ -60,6 +60,9 @@ export const EXPERT_RANGE_MAP_URL =
 export const TREND_MAP_URL =
   'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/drc_trend';
 
+export const GUY_RANGE_MAP_URL =
+  'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/tile-urls';
+
 // LIBERIA LAYERS
 export const PROTECTED_AREA_LIB_FEATURE_URL =
   'db67d0fa645047a18d83c1c5a67e9d99';
