@@ -170,11 +170,21 @@ function DashboardContainer(props) {
       }
     }
 
-    const gbifResponse = await EsriFeatureService.getFeatures({
-      url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
-      whereClause: `species = '${scientificName}' and source = 'GBIF' and iso3 = '${countryISO}'`,
-      returnGeometry: false,
-    });
+    let gbifResponse;
+
+    if (countryISO === 'EEWWF') {
+      gbifResponse = await EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.ZONE_OCCURRENCE,
+        whereClause: `species = '${scientificName}'`,
+        returnGeometry: false,
+      });
+    } else {
+      gbifResponse = await EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+        whereClause: `species = '${scientificName}' and source = 'GBIF' and iso3 = '${countryISO}'`,
+        returnGeometry: false,
+      });
+    }
 
     const gbifResponseItems = gbifResponse?.map((item) => item.attributes);
     const gbifSet = new Set(); // Use a Set for efficient tracking
@@ -240,37 +250,28 @@ function DashboardContainer(props) {
 
     const [dataLayersData] = apiResponses;
 
-    const filteredData = dataLayersData
-      // .filter((item) => {
-      //   return (
-      //     (!item.dataset_title.toUpperCase().match(/EBIRD/) &&
-      //       uniqueEBirdObjects.length === 0) ||
-      //     (!item.dataset_title.toUpperCase().match(/GBIF/) &&
-      //       uniqueGbifObjects.length === 0)
-      //   );
-      // })
-      .map((dld) => {
-        if (dld.dataset_title.toUpperCase().match(/EBIRD/)) {
-          if (uniqueEBirdObjects.length > 0) {
-            dld.no_rows = uniqueEBirdObjects.length;
-          } else {
-            dld.no_rows = 0;
-          }
+    const filteredData = dataLayersData.map((dld) => {
+      if (dld.dataset_title.toUpperCase().match(/EBIRD/)) {
+        if (uniqueEBirdObjects.length > 0) {
+          dld.no_rows = uniqueEBirdObjects.length;
+        } else {
+          dld.no_rows = 0;
         }
+      }
 
-        if (dld.dataset_title.toUpperCase().match(/GBIF/)) {
-          if (uniqueGbifObjects.length > 0) {
-            dld.no_rows = uniqueGbifObjects.length;
-          } else {
-            dld.no_rows = 0;
-          }
+      if (dld.dataset_title.toUpperCase().match(/GBIF/)) {
+        if (uniqueGbifObjects.length > 0) {
+          dld.no_rows = uniqueGbifObjects.length;
+        } else {
+          dld.no_rows = 0;
         }
+      }
 
-        dld.parent = dld.type_title;
-        dld.label = dld.dataset_title;
+      dld.parent = dld.type_title;
+      dld.label = dld.dataset_title;
 
-        return dld;
-      });
+      return dld;
+    });
 
     setDataLayerData(filteredData);
   };
@@ -393,9 +394,10 @@ function DashboardContainer(props) {
 
   const getSpeciesDetails = (speciesData, taxa) => {
     const results = speciesData.map(({ attributes }) => {
-      const { source, species_url, threat_status, commonnames } = JSON.parse(
-        attributes.attributes.replace(/NaN/g, 'null')
-      )[0];
+      const { source, species_url, threat_status, commonnames } =
+        countryISO === 'EEWWF'
+          ? attributes
+          : JSON.parse(attributes.attributes.replace(/NaN/g, 'null'))[0];
 
       return {
         common_name: commonnames,
@@ -425,8 +427,15 @@ function DashboardContainer(props) {
     }
 
     let whereClause = `ISO3 = '${countryISO}'`;
+    if (countryISO === 'EEWWF') {
+      url = DASHBOARD_URLS.ZONE_OCCURRENCE;
+      whereClause = ``;
 
-    if (selectedRegion) {
+      const { iso3, name, region_key } = selectedRegion;
+      if (iso3) {
+        whereClause = `iso3 = '${iso3}' and region_key = '${region_key}'`;
+      }
+    } else if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
@@ -457,45 +466,45 @@ function DashboardContainer(props) {
 
       const list = [...speciesData];
 
-      if (countryISO.toUpperCase() !== 'EEWWF') {
-        const buckets = bucketByTaxa(occurenceFeatures);
+      // if (countryISO.toUpperCase() !== 'EEWWF') {
+      const buckets = bucketByTaxa(occurenceFeatures);
 
-        // loop through buckets to get species info
-        const occurenceData = Object.keys(buckets).map((key) => {
-          return getSpeciesDetails(buckets[key], key);
-        });
+      // loop through buckets to get species info
+      const occurenceData = Object.keys(buckets).map((key) => {
+        return getSpeciesDetails(buckets[key], key);
+      });
 
-        occurenceData?.forEach((occurrence) => {
-          const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
+      occurenceData?.forEach((occurrence) => {
+        const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
 
-          if (foundTaxa) {
-            occurrence.species.forEach((species) => {
-              const isFound = speciesToAvoid.includes(
-                species.scientific_name.toUpperCase()
+        if (foundTaxa) {
+          occurrence.species.forEach((species) => {
+            const isFound = speciesToAvoid.includes(
+              species.scientific_name.toUpperCase()
+            );
+
+            if (!isFound) {
+              const foundSpecies = foundTaxa?.species.find(
+                (speciesToFind) =>
+                  speciesToFind.scientific_name === species.scientific_name
               );
 
-              if (!isFound) {
-                const foundSpecies = foundTaxa?.species.find(
-                  (speciesToFind) =>
-                    speciesToFind.scientific_name === species.scientific_name
-                );
-
-                if (!foundSpecies) {
-                  foundTaxa?.species.push(species);
-                } else {
-                  foundSpecies.source += `,${species.source}`;
-                }
+              if (!foundSpecies) {
+                foundTaxa?.species.push(species);
+              } else {
+                foundSpecies.source += `,${species.source}`;
               }
-            });
-          } else {
-            // list.push(occurrence);
-          }
-        });
+            }
+          });
+        } else {
+          // list.push(occurrence);
+        }
+      });
 
-        list.forEach((l) => {
-          l.count = l.species.length;
-        });
-      }
+      list.forEach((l) => {
+        l.count = l.species.length;
+      });
+      // }
       setTaxaList(list);
     } else {
       setTaxaList(speciesData);
@@ -508,34 +517,48 @@ function DashboardContainer(props) {
     let url = DASHBOARD_URLS.PRECALC_AOI;
     let whereClause = `GID_0 = '${countryISO}'`;
 
-    if (exploreAllSpecies) {
-      url = DASHBOARD_URLS.PRECALC_AOI_COUNTRY;
-    }
+    if (countryISO === 'EEWWF') {
+      whereClause = `project = '${countryISO.toLowerCase()}'`;
+      url = DASHBOARD_URLS.REGION_SPECIES_SEARCH_URL;
 
-    if (selectedRegion) {
-      const { GID_1, WDPA_PID, mgc, Int_ID, region_key } = selectedRegion;
-      if (GID_1) {
-        whereClause = `GID_1 = '${GID_1}'`;
+      if (selectedRegion) {
+        const { region_key } = selectedRegion;
+
+        if (region_key) {
+          whereClause = `region_key = '${region_key}'`;
+          url = DASHBOARD_URLS.ZONE_SPECIES;
+        }
+      }
+    } else {
+      if (exploreAllSpecies) {
+        url = DASHBOARD_URLS.PRECALC_AOI_COUNTRY;
       }
 
-      if (WDPA_PID) {
-        whereClause = `WDPA_PID = '${WDPA_PID}'`;
-        url = DASHBOARD_URLS.WDPA_PRECALC;
-      }
+      if (selectedRegion) {
+        const { GID_1, WDPA_PID, mgc, Int_ID, region_key } = selectedRegion;
+        if (GID_1) {
+          whereClause = `GID_1 = '${GID_1}'`;
+        }
 
-      if (mgc) {
-        whereClause = `mgc_id = '${mgc}'`;
-        url = DASHBOARD_URLS.FOREST;
-      }
+        if (WDPA_PID) {
+          whereClause = `WDPA_PID = '${WDPA_PID}'`;
+          url = DASHBOARD_URLS.WDPA_PRECALC;
+        }
 
-      if (Int_ID) {
-        whereClause = `Int_ID = '${Int_ID}'`;
-        url = DASHBOARD_URLS.NBIS_URL;
-      }
+        if (mgc) {
+          whereClause = `mgc_id = '${mgc}'`;
+          url = DASHBOARD_URLS.FOREST;
+        }
 
-      if (region_key) {
-        whereClause = `region_key = '${region_key}'`;
-        url = DASHBOARD_URLS.ZONE_SPECIES;
+        if (Int_ID) {
+          whereClause = `Int_ID = '${Int_ID}'`;
+          url = DASHBOARD_URLS.NBIS_URL;
+        }
+
+        if (region_key) {
+          whereClause = `region_key = '${region_key}'`;
+          url = DASHBOARD_URLS.ZONE_SPECIES;
+        }
       }
     }
 
@@ -622,25 +645,44 @@ function DashboardContainer(props) {
         const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
         getOccurenceSpecies(groupData);
-      } else if (selectedRegion?.region_key) {
+      } else if (selectedRegion?.region_key || countryISO === 'EEWWF') {
         const speciesData = {
           species: features.map((s) => {
-            const { species, taxa, attributes } = s.attributes;
+            const {
+              species,
+              taxa,
+              attributes,
+              scientificname,
+              commonname_english,
+              commonname_french,
+            } = s.attributes;
 
             const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
 
-            const isFound = speciesToAvoid.includes(species.toUpperCase());
+            let isFound = false;
+            if (species) {
+              isFound = speciesToAvoid.includes(species.toUpperCase());
+            } else if (scientificname) {
+              isFound = speciesToAvoid.includes(scientificname.toUpperCase());
+            }
+
+            //             commonname_english: "Mussurana"
+            // commonname_french: null
+            // iso3: null
+            // project: "eewwf"
+            // scientificname: "Boiruna maculata"
+            // taxa: "reptiles"
 
             if (!isFound) {
               return {
-                common_name: species,
-                scientific_name: species,
+                common_name: species ?? commonname_english,
+                scientific_name: species ?? scientificname,
                 threat_status: json[0].threat_status,
                 source: json[0].source ?? '',
+                species_url: json[0].species_url ?? '',
                 taxa,
               };
             }
-            console.log('found: ', species);
           }),
         };
 
@@ -882,25 +924,27 @@ function DashboardContainer(props) {
     // Add event listener for popstate event
     window.addEventListener('popstate', handleBackButton);
 
-    setCountryDataLoading();
-    EsriFeatureService.getFeatures({
-      url: COUNTRIES_DATA_SERVICE_URL,
-      whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: true,
-    })
-      .then((features) => {
-        const { geometry } = features[0];
-
-        setCountryDataReady(features);
-        if (geometry) {
-          setGeometry(geometry);
-        }
+    if (countryISO !== 'EEWWF') {
+      setCountryDataLoading();
+      EsriFeatureService.getFeatures({
+        url: COUNTRIES_DATA_SERVICE_URL,
+        whereClause: `GID_0 = '${countryISO}'`,
+        returnGeometry: true,
       })
-      .catch((error) => {
-        setCountryDataError(error);
-      });
+        .then((features) => {
+          const { geometry } = features[0];
 
-    getPrioritySpeciesList();
+          setCountryDataReady(features);
+          if (geometry) {
+            setGeometry(geometry);
+          }
+        })
+        .catch((error) => {
+          setCountryDataError(error);
+        });
+
+      getPrioritySpeciesList();
+    }
 
     if (countryISO === 'COD' || countryISO === 'GIN') {
       await tx.setCurrentLocale('fr');

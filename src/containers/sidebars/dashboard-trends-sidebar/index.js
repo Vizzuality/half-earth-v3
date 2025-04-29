@@ -168,7 +168,7 @@ function DashboardTrendsSidebarContainer(props) {
     const whereClause = `project = '${project}'`;
 
     const zoneDataUrl = {
-      url: DASHBOARD_URLS.GUY_EEWWF_SHI_SPI_URL,
+      url: DASHBOARD_URLS.REGION_SHI_SPI_URL,
       whereClause: `${whereClause}`,
     };
 
@@ -184,7 +184,7 @@ function DashboardTrendsSidebarContainer(props) {
     const whereClause = `project = '${project}'`;
 
     const zoneHistogramURL = {
-      url: DASHBOARD_URLS.GUY_EEWWF_HISTOGRAM_URL,
+      url: DASHBOARD_URLS.REGION_HISTOGRAM_URL,
       whereClause: `${whereClause}`,
     };
     EsriFeatureService.getFeatures(zoneHistogramURL).then((features) => {
@@ -328,22 +328,6 @@ function DashboardTrendsSidebarContainer(props) {
       [LAYER_OPTIONS.PROVINCES]: layer,
     }));
 
-    const zone3Layer = await EsriFeatureService.getFeatureLayer(
-      ZONE_3_SPI_FEATURE_ID,
-      countryISO,
-      `${countryISO}-zone3-spi`
-    );
-    map.add(zone3Layer);
-    zone3Layer.visible = false;
-
-    const zone5Layer = await EsriFeatureService.getFeatureLayer(
-      ZONE_5_SPI_FEATURE_ID,
-      countryISO,
-      `${countryISO}-zone5-spi`
-    );
-    map.add(zone5Layer);
-    zone5Layer.visible = false;
-
     if (tabOption === TABS.SPI) {
       layer.visible = true;
       const item = { label: 'SPI', parent: '', id: REGION_OPTIONS.PROVINCES };
@@ -365,21 +349,39 @@ function DashboardTrendsSidebarContainer(props) {
       [`${countryISO}-outline`]: outlineFeatureLayer,
     }));
 
-    const zone3ShiLayer = await EsriFeatureService.getFeatureLayer(
-      ZONE_3_SHI_FEATURE_ID,
-      countryISO,
-      `${countryISO}-zone3-shi`
-    );
-    map.add(zone3ShiLayer);
-    zone3ShiLayer.visible = false;
+    if (countryISO.toLowerCase() === 'guy') {
+      const zone3Layer = await EsriFeatureService.getFeatureLayer(
+        ZONE_3_SPI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-zone3-spi`
+      );
+      map.add(zone3Layer);
+      zone3Layer.visible = false;
 
-    const zone5ShiLayer = await EsriFeatureService.getFeatureLayer(
-      ZONE_5_SHI_FEATURE_ID,
-      countryISO,
-      `${countryISO}-zone5-shi`
-    );
-    map.add(zone5ShiLayer);
-    zone5ShiLayer.visible = false;
+      const zone5Layer = await EsriFeatureService.getFeatureLayer(
+        ZONE_5_SPI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-zone5-spi`
+      );
+      map.add(zone5Layer);
+      zone5Layer.visible = false;
+
+      const zone3ShiLayer = await EsriFeatureService.getFeatureLayer(
+        ZONE_3_SHI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-zone3-shi`
+      );
+      map.add(zone3ShiLayer);
+      zone3ShiLayer.visible = false;
+
+      const zone5ShiLayer = await EsriFeatureService.getFeatureLayer(
+        ZONE_5_SHI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-zone5-shi`
+      );
+      map.add(zone5ShiLayer);
+      zone5ShiLayer.visible = false;
+    }
 
     if (tabOption === TABS.SHI) {
       outlineFeatureLayer.visible = true;

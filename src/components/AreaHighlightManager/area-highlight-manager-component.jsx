@@ -128,6 +128,8 @@ function AreaHighlightManagerComponent(props) {
                   Int_ID,
                   region_key,
                   Intrvnt,
+                  iso3,
+                  name,
                 } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
@@ -143,7 +145,7 @@ function AreaHighlightManagerComponent(props) {
                 }
 
                 if (selectedRegionOption === REGION_OPTIONS.DISSOLVED_NBS) {
-                  setSelectedRegion({ Int_ID });
+                  setSelectedRegion({ iso3, name, region_key });
                 }
 
                 if (

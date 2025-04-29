@@ -85,80 +85,138 @@ function TemporalTrendsSpiComponent(props) {
             />
           </p>
         )}
-        <div className={styles.options}>
-          <div className={styles.btnGroup}>
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend !== PROVINCE_TREND,
-              })}
-              label={PROVINCE_TREND}
-              handleClick={handleActionChange}
-            />
-            <Button
-              type="rectangular"
-              className={cx(styles.saveButton, {
-                [styles.notActive]: activeTrend !== NATIONAL_TREND,
-              })}
-              label={NATIONAL_TREND}
-              handleClick={handleActionChange}
-            />
-          </div>
-          <span className={styles.helpText}>
-            {t('Toggle national SPI and province-level breakdown.')}
-          </span>
-          {countryISO.toLowerCase() === 'guy' && (
+        {countryISO.toLowerCase() !== 'eewwf' && (
+          <div className={styles.options}>
             <div className={styles.btnGroup}>
               <Button
                 type="rectangular"
                 className={cx(styles.saveButton, {
-                  [styles.notActive]: activeTrend !== ZONE_3,
+                  [styles.notActive]: activeTrend !== PROVINCE_TREND,
                 })}
-                label="ZONE_3"
+                label={PROVINCE_TREND}
                 handleClick={handleActionChange}
               />
               <Button
                 type="rectangular"
                 className={cx(styles.saveButton, {
-                  [styles.notActive]: activeTrend !== ZONE_5,
+                  [styles.notActive]: activeTrend !== NATIONAL_TREND,
                 })}
-                label="ZONE_5"
+                label={NATIONAL_TREND}
                 handleClick={handleActionChange}
               />
             </div>
-          )}
-          {activeTrend === PROVINCE_TREND && (
-            <>
-              {!showTable && (
+            <span className={styles.helpText}>
+              {t('Toggle national SPI and province-level breakdown.')}
+            </span>
+            {countryISO.toLowerCase() === 'guy' && (
+              <div className={styles.btnGroup}>
                 <Button
                   type="rectangular"
-                  className={cx(styles.saveButton, styles.notActive)}
-                  label={
-                    countryISO.toLowerCase() !== 'eewwf'
-                      ? t('View Full Province table')
-                      : t('View Full Species table')
-                  }
-                  handleClick={() => setShowTable(true)}
+                  className={cx(styles.saveButton, {
+                    [styles.notActive]: activeTrend !== ZONE_3,
+                  })}
+                  label="ZONE_3"
+                  handleClick={handleActionChange}
                 />
-              )}
-              {showTable && (
                 <Button
                   type="rectangular"
-                  className={cx(styles.saveButton, styles.notActive)}
-                  label={t('Close full table')}
-                  handleClick={() => setShowTable(false)}
+                  className={cx(styles.saveButton, {
+                    [styles.notActive]: activeTrend !== ZONE_5,
+                  })}
+                  label="ZONE_5"
+                  handleClick={handleActionChange}
                 />
-              )}
-              {/* <span className={styles.helpText}>
+              </div>
+            )}
+            {activeTrend === PROVINCE_TREND && (
+              <>
+                {!showTable && (
+                  <Button
+                    type="rectangular"
+                    className={cx(styles.saveButton, styles.notActive)}
+                    label={
+                      countryISO.toLowerCase() !== 'eewwf'
+                        ? t('View Full Province table')
+                        : t('View Full Species table')
+                    }
+                    handleClick={() => setShowTable(true)}
+                  />
+                )}
+                {showTable && (
+                  <Button
+                    type="rectangular"
+                    className={cx(styles.saveButton, styles.notActive)}
+                    label={t('Close full table')}
+                    handleClick={() => setShowTable(false)}
+                  />
+                )}
+                {/* <span className={styles.helpText}>
                 {t(
                   'Open and download a full table of annual national and province level SPI over time.'
                 )}
               </span> */}
-            </>
-          )}
-        </div>
+              </>
+            )}
+          </div>
+        )}
+        {countryISO.toLowerCase() === 'eewwf' && (
+          <div className={styles.options}>
+            <div className={styles.btnGroup}>
+              <Button
+                type="rectangular"
+                className={cx(styles.saveButton, {
+                  [styles.notActive]: activeTrend !== PROVINCE_TREND,
+                })}
+                label="Mexico"
+                handleClick={handleActionChange}
+              />
+              <Button
+                type="rectangular"
+                className={cx(styles.saveButton, {
+                  [styles.notActive]: activeTrend !== NATIONAL_TREND,
+                })}
+                label="Peru"
+                handleClick={handleActionChange}
+              />
+              <Button
+                type="rectangular"
+                className={cx(styles.saveButton, {
+                  [styles.notActive]: activeTrend !== PROVINCE_TREND,
+                })}
+                label="Brazil"
+                handleClick={handleActionChange}
+              />
+              <Button
+                type="rectangular"
+                className={cx(styles.saveButton, {
+                  [styles.notActive]: activeTrend !== NATIONAL_TREND,
+                })}
+                label="Madagascar"
+                handleClick={handleActionChange}
+              />
+              <Button
+                type="rectangular"
+                className={cx(styles.saveButton, {
+                  [styles.notActive]: activeTrend !== NATIONAL_TREND,
+                })}
+                label="Vietnam"
+                handleClick={handleActionChange}
+              />
+            </div>
+          </div>
+        )}
       </div>
-      {!showTable && (
+      {countryISO.toLowerCase() === 'eewwf' && (
+        <>
+          {activeTrend === ZONE_3 && (
+            <ZoneChartContainer {...props} zone={ZONE_3} />
+          )}
+          {activeTrend === ZONE_5 && (
+            <ZoneChartContainer {...props} zone={ZONE_5} />
+          )}
+        </>
+      )}
+      {!showTable && countryISO.toLowerCase() !== 'eewwf' && (
         <>
           {activeTrend === NATIONAL_TREND && (
             <NationalChartContainer {...props} />
