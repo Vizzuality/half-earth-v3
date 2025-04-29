@@ -26,7 +26,14 @@ function ZoneChartComponent(props) {
   const t = useT();
   const locale = useLocale();
   const { lightMode } = useContext(LightModeContext);
-  const { zone, zoneData, setSelectedProvince, clickedRegion } = props;
+  const {
+    zone,
+    zoneData,
+    setSelectedProvince,
+    clickedRegion,
+    countryISO,
+    activeTrend,
+  } = props;
   const options = {
     plugins: {
       title: {
@@ -81,17 +88,21 @@ function ZoneChartComponent(props) {
   const [chartInfo, setChartInfo] = useState('');
   const [data, setData] = useState();
 
-  useEffect(() => {
-    if (clickedRegion) {
-      setSelectedProvince(clickedRegion);
+  const loadChartData = () => {
+    let chartData;
+    if (countryISO === 'EEWWF') {
+      if (clickedRegion) {
+        chartData = zoneData.filter(
+          (item) =>
+            item.iso3 === zone && item.region_key === clickedRegion.region_key
+        );
+      } else {
+        chartData = zoneData.filter((item) => item.iso3 === zone);
+      }
+    } else {
+      const zoneName = zone === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
+      chartData = zoneData.filter((item) => item.region_key.includes(zoneName));
     }
-  }, [clickedRegion]);
-
-  useEffect(() => {
-    const zoneName = zone === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
-    const chartData = zoneData.filter((item) =>
-      item.region_key.includes(zoneName)
-    );
 
     const datasets = [];
 
@@ -130,6 +141,20 @@ function ZoneChartComponent(props) {
       labels,
       datasets,
     });
+  };
+
+  useEffect(() => {
+    if (clickedRegion) {
+      setSelectedProvince(clickedRegion);
+    }
+  }, [clickedRegion]);
+
+  useEffect(() => {
+    loadChartData();
+  }, [activeTrend, clickedRegion]);
+
+  useEffect(() => {
+    loadChartData();
   }, []);
 
   return (

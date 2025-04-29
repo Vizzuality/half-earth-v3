@@ -73,7 +73,8 @@ async function getFeatureLayer(portalItemId, countryISO, id) {
     id === 'GUY-zone5-spi' ||
     id === 'GUY-zone3-spi' ||
     id === 'GUY-zone3-shi' ||
-    id === 'GUY-zone5-shi'
+    id === 'GUY-zone5-shi' ||
+    countryISO === 'EEWWF'
   ) {
     definitionExpression = '';
   }

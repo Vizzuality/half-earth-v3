@@ -15,6 +15,11 @@ export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 export const ZONE_3 = 'ZONE_3';
 export const ZONE_5 = 'ZONE_5';
+export const MEX = 'MEX';
+export const PER = 'PER';
+export const BRA = 'BRA';
+export const MDG = 'MDG';
+export const VNM = 'VNM';
 
 export const TABS = {
   SHI: 1,

@@ -11,6 +11,11 @@ import last from 'lodash/last';
 import Button from 'components/button';
 
 import {
+  MEX,
+  PER,
+  BRA,
+  MDG,
+  VNM,
   NATIONAL_TREND,
   PROVINCE_TREND,
   ZONE_3,
@@ -34,6 +39,8 @@ function TemporalTrendsSpiComponent(props) {
   const [areaProtected, setAreaProtected] = useState(0);
   const [startYear, setStartYear] = useState('1980');
 
+  const eewwfRegions = ['MEX', 'PER', 'BRA', 'MDG', 'VNM'];
+
   const getNationalData = async () => {
     if (countryData) {
       const firstScore = countryData[0];
@@ -48,9 +55,9 @@ function TemporalTrendsSpiComponent(props) {
     }
   };
 
-  const handleActionChange = (event) => {
+  const handleActionChange = (option) => {
     setShowTable(false);
-    setActiveTrend(event.currentTarget.innerText);
+    setActiveTrend(option);
   };
 
   useEffect(() => {
@@ -94,7 +101,7 @@ function TemporalTrendsSpiComponent(props) {
                   [styles.notActive]: activeTrend !== PROVINCE_TREND,
                 })}
                 label={PROVINCE_TREND}
-                handleClick={handleActionChange}
+                handleClick={() => handleActionChange(PROVINCE_TREND)}
               />
               <Button
                 type="rectangular"
@@ -102,7 +109,7 @@ function TemporalTrendsSpiComponent(props) {
                   [styles.notActive]: activeTrend !== NATIONAL_TREND,
                 })}
                 label={NATIONAL_TREND}
-                handleClick={handleActionChange}
+                handleClick={() => handleActionChange(NATIONAL_TREND)}
               />
             </div>
             <span className={styles.helpText}>
@@ -116,7 +123,7 @@ function TemporalTrendsSpiComponent(props) {
                     [styles.notActive]: activeTrend !== ZONE_3,
                   })}
                   label="ZONE_3"
-                  handleClick={handleActionChange}
+                  handleClick={() => handleActionChange(ZONE_3)}
                 />
                 <Button
                   type="rectangular"
@@ -124,7 +131,7 @@ function TemporalTrendsSpiComponent(props) {
                     [styles.notActive]: activeTrend !== ZONE_5,
                   })}
                   label="ZONE_5"
-                  handleClick={handleActionChange}
+                  handleClick={() => handleActionChange(ZONE_5)}
                 />
               </div>
             )}
@@ -161,61 +168,53 @@ function TemporalTrendsSpiComponent(props) {
         )}
         {countryISO.toLowerCase() === 'eewwf' && (
           <div className={styles.options}>
-            <div className={styles.btnGroup}>
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeTrend !== PROVINCE_TREND,
-                })}
-                label="Mexico"
-                handleClick={handleActionChange}
-              />
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeTrend !== NATIONAL_TREND,
-                })}
-                label="Peru"
-                handleClick={handleActionChange}
-              />
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeTrend !== PROVINCE_TREND,
-                })}
-                label="Brazil"
-                handleClick={handleActionChange}
-              />
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeTrend !== NATIONAL_TREND,
-                })}
-                label="Madagascar"
-                handleClick={handleActionChange}
-              />
-              <Button
-                type="rectangular"
-                className={cx(styles.saveButton, {
-                  [styles.notActive]: activeTrend !== NATIONAL_TREND,
-                })}
-                label="Vietnam"
-                handleClick={handleActionChange}
-              />
-            </div>
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeTrend !== MEX,
+              })}
+              label="Mexico"
+              handleClick={() => handleActionChange(MEX)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeTrend !== PER,
+              })}
+              label="Peru"
+              handleClick={() => handleActionChange(PER)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeTrend !== BRA,
+              })}
+              label="Brazil"
+              handleClick={() => handleActionChange(BRA)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeTrend !== MDG,
+              })}
+              label="Madagascar"
+              handleClick={() => handleActionChange(MDG)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: activeTrend !== VNM,
+              })}
+              label="Vietnam"
+              handleClick={() => handleActionChange(VNM)}
+            />
           </div>
         )}
       </div>
-      {countryISO.toLowerCase() === 'eewwf' && (
-        <>
-          {activeTrend === ZONE_3 && (
-            <ZoneChartContainer {...props} zone={ZONE_3} />
-          )}
-          {activeTrend === ZONE_5 && (
-            <ZoneChartContainer {...props} zone={ZONE_5} />
-          )}
-        </>
-      )}
+      {countryISO.toLowerCase() === 'eewwf' &&
+        eewwfRegions.includes(activeTrend) && (
+          <ZoneChartContainer {...props} zone={activeTrend} />
+        )}
       {!showTable && countryISO.toLowerCase() !== 'eewwf' && (
         <>
           {activeTrend === NATIONAL_TREND && (
