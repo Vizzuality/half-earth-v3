@@ -31,8 +31,14 @@ import ZoneChartContainer from './zone-chart';
 function TemporalTrendsSpiComponent(props) {
   const t = useT();
   const { lightMode } = useContext(LightModeContext);
-  const { countryName, activeTrend, setActiveTrend, countryData, countryISO } =
-    props;
+  const {
+    countryName,
+    activeTrend,
+    setActiveTrend,
+    countryData,
+    countryISO,
+    clickedRegion,
+  } = props;
 
   const [showTable, setShowTable] = useState(false);
   const [areaProtectedPercent, setAreaProtectedPercent] = useState();
@@ -59,6 +65,12 @@ function TemporalTrendsSpiComponent(props) {
     setShowTable(false);
     setActiveTrend(option);
   };
+
+  useEffect(() => {
+    if (clickedRegion) {
+      setActiveTrend(clickedRegion.iso3);
+    }
+  }, [clickedRegion]);
 
   useEffect(() => {
     if (!countryData.length) return;

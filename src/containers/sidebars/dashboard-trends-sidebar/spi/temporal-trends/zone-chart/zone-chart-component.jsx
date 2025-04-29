@@ -92,9 +92,10 @@ function ZoneChartComponent(props) {
     let chartData;
     if (countryISO === 'EEWWF') {
       if (clickedRegion) {
+        const iso3 = zone === clickedRegion.iso3 ? zone : clickedRegion.iso3;
         chartData = zoneData.filter(
           (item) =>
-            item.iso3 === zone && item.region_key === clickedRegion.region_key
+            item.iso3 === iso3 && item.region_key === clickedRegion.region_key
         );
       } else {
         chartData = zoneData.filter((item) => item.iso3 === zone);
