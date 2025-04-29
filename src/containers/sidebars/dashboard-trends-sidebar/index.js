@@ -180,9 +180,12 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getZoneHistogramData = () => {
-    const project =
-      countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'acc_eewwf';
-    const whereClause = `project = '${project}'`;
+    const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'eewwf';
+    let whereClause = `project = '${project}'`;
+
+    if (selectedProvince) {
+      whereClause += ` and region_key = ${selectedProvince.region_key}`;
+    }
 
     const zoneHistogramURL = {
       url: DASHBOARD_URLS.REGION_HISTOGRAM_URL,

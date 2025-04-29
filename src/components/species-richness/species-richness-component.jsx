@@ -92,26 +92,42 @@ function SpeciesRichnessComponent(props) {
     return [count, 100 - count];
   };
 
+  const populateScores = (formattedData) => {
+    const data = JSON.parse(formattedData.richness_taxa_spi)[0];
+    const spiData = JSON.parse(formattedData.spi_taxa)[0];
+    const { reptiles, amphibians, mammals, birds } = data;
+    setScores({
+      birds: {
+        count: +spiData.birds * 100,
+        total: +birds,
+      },
+      mammals: {
+        count: +spiData.mammals * 100,
+        total: +mammals,
+      },
+      reptiles: {
+        count: +spiData.reptiles * 100,
+        total: +reptiles,
+      },
+      amphibians: {
+        count: +spiData.amphibians * 100,
+        total: +amphibians,
+      },
+    });
+  };
+
   const getScores = () => {
     if (countryISO.toLowerCase() === 'eewwf') {
-      setScores({
-        birds: {
-          count: 220,
-          total: 4490,
-        },
-        mammals: {
-          count: 123,
-          total: 345,
-        },
-        reptiles: {
-          count: 56,
-          total: 158,
-        },
-        amphibians: {
-          count: 49,
-          total: 420,
-        },
-      });
+      let formattedData = [];
+      formattedData = zoneData.find(
+        (item) =>
+          item.iso3 === selectedProvince.iso3 &&
+          item.region_key === selectedProvince.region_key
+      );
+
+      if (formattedData) {
+        populateScores(formattedData);
+      }
     } else if (shi) {
       let values;
       let total;
@@ -188,29 +204,9 @@ function SpeciesRichnessComponent(props) {
         formattedData = zoneData.find(
           (item) => item.region_key === selectedProvince.region_key
         );
-        console.log(formattedData);
+
         if (formattedData) {
-          const data = JSON.parse(formattedData.richness_taxa_spi)[0];
-          const spiData = JSON.parse(formattedData.spi_taxa)[0];
-          const { reptiles, amphibians, mammals, birds } = data;
-          setScores({
-            birds: {
-              count: +spiData.birds * 100,
-              total: +birds,
-            },
-            mammals: {
-              count: +spiData.mammals * 100,
-              total: +mammals,
-            },
-            reptiles: {
-              count: +spiData.reptiles * 100,
-              total: +reptiles,
-            },
-            amphibians: {
-              count: +spiData.amphibians * 100,
-              total: +amphibians,
-            },
-          });
+          populateScores(formattedData);
         }
       } else {
         if (selectedProvince && activeTrend === PROVINCE_TREND) {
