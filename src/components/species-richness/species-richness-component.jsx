@@ -62,6 +62,7 @@ function SpeciesRichnessComponent(props) {
     shi,
   } = props;
 
+  const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
   const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
     birds: {
@@ -197,10 +198,7 @@ function SpeciesRichnessComponent(props) {
       }
     } else {
       let formattedData = [];
-      if (
-        selectedProvince &&
-        (activeTrend === ZONE_5 || activeTrend === ZONE_3)
-      ) {
+      if (selectedProvince && acceptedZones.includes(activeTrend)) {
         formattedData = zoneData.find(
           (item) => item.region_key === selectedProvince.region_key
         );
@@ -329,10 +327,7 @@ function SpeciesRichnessComponent(props) {
       setTitleText(
         `${selectedProvince?.region_name} SPI ${t('BY TAXONOMIC GROUP')}`
       );
-    } else if (
-      (activeTrend === ZONE_3 || activeTrend === ZONE_5) &&
-      selectedProvince
-    ) {
+    } else if (acceptedZones.includes(activeTrend) && selectedProvince) {
       setTitleText(`${selectedProvince?.name} SPI ${t('BY TAXONOMIC GROUP')}`);
     }
     getScores();

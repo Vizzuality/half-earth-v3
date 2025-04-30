@@ -21,6 +21,7 @@ import MapView from 'components/map-view';
 import MinimizeIcon from 'icons/closes.svg?react';
 
 import {
+  MEX,
   NATIONAL_TREND,
   PROVINCE_TREND,
 } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
@@ -83,6 +84,13 @@ function DashboardViewComponent(props) {
       setShowLegend(false);
     }
   }, [mapLegendLayers]);
+
+  useEffect(() => {
+    if (countryISO.toLowerCase() === 'eewwf') {
+      setActiveTrend(MEX);
+      setShiActiveTrend(MEX);
+    }
+  }, []);
 
   return (
     <MapView

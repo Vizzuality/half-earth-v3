@@ -24,10 +24,9 @@ import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sect
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
-  ZONE_3,
-  ZONE_5,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
+import ZoneChartComponent from '../temporal-trends/zone-chart/zone-chart-component';
 
 import compStyles from './score-distributions-spi-styles.module.scss';
 
@@ -159,7 +158,7 @@ function ScoreDistributionsSpiComponent(props) {
         data = zoneHistrogramData.filter(
           (item) =>
             item.project === 'eewwf' &&
-            item.region_key === selectedProvince.region_key
+            item.region_key === selectedProvince?.region_key
         );
       }
       locationData = data;
@@ -213,14 +212,40 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const loadSpecies = () => {
-    const species = [
-      spiSelectSpeciesData[0],
-      spiSelectSpeciesData[1],
-      spiSelectSpeciesData[2],
-      spiSelectSpeciesData[3],
-    ];
-    setSpsSpecies(species);
+    let species = [];
+    if (zoneHistrogramData.length) {
+      let zoneData = [];
 
+      if (selectedProvince) {
+        const filteredZoneData = zoneHistrogramData.filter(
+          (item) =>
+            item.region_key === selectedProvince.region_key &&
+            item.project === countryISO.toLowerCase()
+        );
+        zoneData = new Set(filteredZoneData);
+      }
+
+      zoneData.forEach((item) => {
+        const values = JSON.parse(item.species_sps)[0];
+        if (values.species_url) {
+          species.push({
+            species: values.species,
+            species_url: values.species_url,
+            species_protection_score_all: values.spi_score,
+          });
+        }
+      });
+
+      setSpsSpecies(species.slice(0, 4));
+    } else {
+      species = [
+        spiSelectSpeciesData[0],
+        spiSelectSpeciesData[1],
+        spiSelectSpeciesData[2],
+        spiSelectSpeciesData[3],
+      ];
+      setSpsSpecies(species);
+    }
     setIsSpeciesLoading(false);
   };
 
@@ -255,6 +280,10 @@ function ScoreDistributionsSpiComponent(props) {
 
     setIsLoading(true);
     getChartData();
+
+    if (zoneHistrogramData.length) {
+      loadSpecies();
+    }
   }, [spiScoresData, activeTrend, zoneHistrogramData]);
 
   useEffect(() => {

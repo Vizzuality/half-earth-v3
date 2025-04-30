@@ -108,10 +108,14 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getSpiSelectSpeciesData = (selectSpeciesURL) => {
-    EsriFeatureService.getFeatures(selectSpeciesURL).then((features) => {
-      const data = features.map((f) => f.attributes);
-      setSpiSelectSpeciesData(data);
-    });
+    if (countryISO.toLowerCase() === 'eewwf') {
+      setSpiSelectSpeciesData(this.zoneHistrogramData[0]);
+    } else {
+      EsriFeatureService.getFeatures(selectSpeciesURL).then((features) => {
+        const data = features.map((f) => f.attributes);
+        setSpiSelectSpeciesData(data);
+      });
+    }
   };
 
   const getShiProvinceData = (provinceURL) => {
@@ -286,12 +290,12 @@ function DashboardTrendsSidebarContainer(props) {
     //   setShiActiveTrend(NATIONAL_TREND);
     // }
 
-    let countryCode = countryISO;
-    if (countryISO.toLowerCase() === 'eewwf') {
-      countryCode = 'COD';
-    }
+    const countryCode = countryISO;
 
-    if (countryISO.toLowerCase() !== 'guy') {
+    if (
+      countryISO.toLowerCase() !== 'guy' &&
+      countryISO.toLowerCase() !== 'eewwf'
+    ) {
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
         whereClause: `GID_0 = '${countryCode}'`,
@@ -313,11 +317,6 @@ function DashboardTrendsSidebarContainer(props) {
 
     let layer;
     if (countryISO.toLowerCase() === 'eewwf') {
-      // layer = await EsriFeatureService.getVectorTileLayer(
-      //   'https://tiles.arcgis.com/tiles/7uJv7I3kgh2y7Pe0/arcgis/rest/services/nbs_op_areas_brazil_tile/VectorTileServer',
-      //   `${countryISO}`
-      // );
-
       layer = await EsriFeatureService.getFeatureLayer(
         EEWWF_SPI_FEATURE_ID,
         countryISO,

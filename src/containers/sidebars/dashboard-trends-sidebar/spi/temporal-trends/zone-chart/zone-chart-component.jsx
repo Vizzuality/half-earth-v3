@@ -152,7 +152,7 @@ function ZoneChartComponent(props) {
 
   useEffect(() => {
     loadChartData();
-  }, [activeTrend, clickedRegion]);
+  }, [activeTrend, clickedRegion, zoneData]);
 
   useEffect(() => {
     loadChartData();
