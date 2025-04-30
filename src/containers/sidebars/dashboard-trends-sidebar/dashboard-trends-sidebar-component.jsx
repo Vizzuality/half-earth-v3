@@ -15,6 +15,11 @@ export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 export const ZONE_3 = 'ZONE_3';
 export const ZONE_5 = 'ZONE_5';
+export const MEX = 'MEX';
+export const PER = 'PER';
+export const BRA = 'BRA';
+export const MDG = 'MDG';
+export const VNM = 'VNM';
 
 export const TABS = {
   SHI: 1,
@@ -147,21 +152,20 @@ function DashboardTrendsSidebar(props) {
             )}
             <span>{t('Species Habitat Index')}</span>
           </button>
-
-          <button
-            type="button"
-            aria-label={t('Species Information Index')}
-            className={cx({
-              [styles.selected]: tabOption === TABS.SII,
-            })}
-            onClick={() => showHideLayers(TABS.SII)}
-            name="sii"
-          >
-            {countryISO.toLowerCase() !== 'eewwf' && (
+          {countryISO.toLowerCase() !== 'eewwf' && (
+            <button
+              type="button"
+              aria-label={t('Species Information Index')}
+              className={cx({
+                [styles.selected]: tabOption === TABS.SII,
+              })}
+              onClick={() => showHideLayers(TABS.SII)}
+              name="sii"
+            >
               <label htmlFor="sii">{siiValue}</label>
-            )}
-            <span>{t('Species Information Index')}</span>
-          </button>
+              <span>{t('Species Information Index')}</span>
+            </button>
+          )}
         </div>
       </header>
       {tabOption === 1 && <ShiContainer trendOption={tabOption} {...props} />}

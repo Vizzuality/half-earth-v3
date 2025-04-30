@@ -62,6 +62,7 @@ function SpeciesRichnessComponent(props) {
     shi,
   } = props;
 
+  const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
   const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
     birds: {
@@ -92,26 +93,42 @@ function SpeciesRichnessComponent(props) {
     return [count, 100 - count];
   };
 
+  const populateScores = (formattedData) => {
+    const data = JSON.parse(formattedData.richness_taxa_spi)[0];
+    const spiData = JSON.parse(formattedData.spi_taxa)[0];
+    const { reptiles, amphibians, mammals, birds } = data;
+    setScores({
+      birds: {
+        count: +spiData.birds * 100,
+        total: +birds,
+      },
+      mammals: {
+        count: +spiData.mammals * 100,
+        total: +mammals,
+      },
+      reptiles: {
+        count: +spiData.reptiles * 100,
+        total: +reptiles,
+      },
+      amphibians: {
+        count: +spiData.amphibians * 100,
+        total: +amphibians,
+      },
+    });
+  };
+
   const getScores = () => {
     if (countryISO.toLowerCase() === 'eewwf') {
-      setScores({
-        birds: {
-          count: 220,
-          total: 4490,
-        },
-        mammals: {
-          count: 123,
-          total: 345,
-        },
-        reptiles: {
-          count: 56,
-          total: 158,
-        },
-        amphibians: {
-          count: 49,
-          total: 420,
-        },
-      });
+      let formattedData = [];
+      formattedData = zoneData.find(
+        (item) =>
+          item.iso3 === selectedProvince.iso3 &&
+          item.region_key === selectedProvince.region_key
+      );
+
+      if (formattedData) {
+        populateScores(formattedData);
+      }
     } else if (shi) {
       let values;
       let total;
@@ -181,36 +198,13 @@ function SpeciesRichnessComponent(props) {
       }
     } else {
       let formattedData = [];
-      if (
-        selectedProvince &&
-        (activeTrend === ZONE_5 || activeTrend === ZONE_3)
-      ) {
+      if (selectedProvince && acceptedZones.includes(activeTrend)) {
         formattedData = zoneData.find(
           (item) => item.region_key === selectedProvince.region_key
         );
-        console.log(formattedData);
+
         if (formattedData) {
-          const data = JSON.parse(formattedData.richness_taxa_spi)[0];
-          const spiData = JSON.parse(formattedData.spi_taxa)[0];
-          const { reptiles, amphibians, mammals, birds } = data;
-          setScores({
-            birds: {
-              count: +spiData.birds * 100,
-              total: +birds,
-            },
-            mammals: {
-              count: +spiData.mammals * 100,
-              total: +mammals,
-            },
-            reptiles: {
-              count: +spiData.reptiles * 100,
-              total: +reptiles,
-            },
-            amphibians: {
-              count: +spiData.amphibians * 100,
-              total: +amphibians,
-            },
-          });
+          populateScores(formattedData);
         }
       } else {
         if (selectedProvince && activeTrend === PROVINCE_TREND) {
@@ -319,10 +313,7 @@ function SpeciesRichnessComponent(props) {
         setTitleText(
           `${selectedProvince?.region_name} SHI ${t('BY TAXONOMIC GROUP')}`
         );
-      } else if (
-        (shiActiveTrend === ZONE_3 || shiActiveTrend === ZONE_5) &&
-        selectedProvince
-      ) {
+      } else if (acceptedZones.includes(activeTrend) && selectedProvince) {
         setTitleText(
           `${selectedProvince?.name} SHI ${t('BY TAXONOMIC GROUP')}`
         );
@@ -333,10 +324,7 @@ function SpeciesRichnessComponent(props) {
       setTitleText(
         `${selectedProvince?.region_name} SPI ${t('BY TAXONOMIC GROUP')}`
       );
-    } else if (
-      (activeTrend === ZONE_3 || activeTrend === ZONE_5) &&
-      selectedProvince
-    ) {
+    } else if (acceptedZones.includes(activeTrend) && selectedProvince) {
       setTitleText(`${selectedProvince?.name} SPI ${t('BY TAXONOMIC GROUP')}`);
     }
     getScores();

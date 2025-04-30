@@ -93,7 +93,7 @@ function ViewContainer(props) {
       const flatView = new MapView({
         map,
         container: `map-container-${mapName || mapId}`,
-        zoom: 6,
+        zoom: 1,
         // popup: new Popup(),
         ...viewSettings,
       });

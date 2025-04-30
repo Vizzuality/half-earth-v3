@@ -1,10 +1,10 @@
+import { LAYER_OPTIONS, LAYER_TITLE_TYPES } from 'constants/dashboard-constants.js';
+import { LAYERS_URLS } from 'constants/layers-urls';
+import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
-  GUY_RANGE_MAP_URL,
-  PROTECTED_AREA_FEATURE_URL,
-  PROTECTED_AREA_GIN_FEATURE_URL,
-  PROTECTED_AREA_GUY_FEATURE_URL,
-  PROTECTED_AREA_LIB_FEATURE_URL,
-  PROTECTED_AREA_SLE_FEATURE_URL,
+    PROTECTED_AREA_FEATURE_URL, PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_GUY_FEATURE_URL,
+    PROTECTED_AREA_LIB_FEATURE_URL, PROTECTED_AREA_SLE_FEATURE_URL, REGION_RANGE_MAP_URL
 } from 'utils/dashboard-utils';
 
 import CSVLayer from '@arcgis/core/layers/CSVLayer';
@@ -14,19 +14,8 @@ import TileLayer from '@arcgis/core/layers/TileLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import {
-  addFeatures,
-  applyEdits,
-  IQueryFeaturesResponse,
-  queryFeatures,
+    addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
 } from '@esri/arcgis-rest-feature-layer';
-import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
-
-import {
-  LAYER_OPTIONS,
-  LAYER_TITLE_TYPES,
-} from 'constants/dashboard-constants.js';
-import { LAYERS_URLS } from 'constants/layers-urls';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 function getFeatures({
   url,
@@ -84,7 +73,8 @@ async function getFeatureLayer(portalItemId, countryISO, id) {
     id === 'GUY-zone5-spi' ||
     id === 'GUY-zone3-spi' ||
     id === 'GUY-zone3-shi' ||
-    id === 'GUY-zone5-shi'
+    id === 'GUY-zone5-shi' ||
+    countryISO === 'EEWWF'
   ) {
     definitionExpression = '';
   }
@@ -152,7 +142,7 @@ function getGeoJsonLayer(scientificname, id, countryISO = 'CD') {
 }
 
 async function getXYZLayer(scientificname, id, type, taxa = null) {
-  const url = `${GUY_RANGE_MAP_URL}?species=${scientificname}&taxa=${taxa}`;
+  const url = `${REGION_RANGE_MAP_URL}?species=${scientificname}&taxa=${taxa}`;
 
   const response = await fetch(url);
   const data = await response.json();

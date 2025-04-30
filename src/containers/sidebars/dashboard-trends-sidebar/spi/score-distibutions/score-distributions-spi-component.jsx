@@ -24,8 +24,6 @@ import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sect
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
-  ZONE_3,
-  ZONE_5,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
@@ -44,6 +42,7 @@ function ScoreDistributionsSpiComponent(props) {
     spiSelectSpeciesData,
     setFromTrends,
     lang,
+    countryISO,
     zoneHistrogramData,
   } = props;
   const { lightMode } = useContext(LightModeContext);
@@ -52,6 +51,8 @@ function ScoreDistributionsSpiComponent(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
+
+  const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
 
   const toolTipTitle = (tooltipItems) => {
     const bucket = parseInt(tooltipItems[0].label, 10);
@@ -145,11 +146,20 @@ function ScoreDistributionsSpiComponent(props) {
       locationData = spiScoresData.filter(
         (loc) => loc.iso3_regional === selectedProvince.iso3_regional
       );
-    } else if (activeTrend === ZONE_3 || activeTrend === ZONE_5) {
-      const zoneName = activeTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
-      const data = zoneHistrogramData.filter((item) =>
-        item.region_key.includes(zoneName)
-      );
+    } else if (acceptedZones.includes(activeTrend)) {
+      let data;
+      if (countryISO !== 'EEWWF') {
+        const zoneName = activeTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
+        data = zoneHistrogramData.filter((item) =>
+          item.region_key.includes(zoneName)
+        );
+      } else {
+        data = zoneHistrogramData.filter(
+          (item) =>
+            item.project === 'eewwf' &&
+            item.region_key === selectedProvince?.region_key
+        );
+      }
       locationData = data;
     } else {
       locationData = spiScoresData;
@@ -201,14 +211,40 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const loadSpecies = () => {
-    const species = [
-      spiSelectSpeciesData[0],
-      spiSelectSpeciesData[1],
-      spiSelectSpeciesData[2],
-      spiSelectSpeciesData[3],
-    ];
-    setSpsSpecies(species);
+    let species = [];
+    if (zoneHistrogramData.length) {
+      let zoneData = [];
 
+      if (selectedProvince) {
+        const filteredZoneData = zoneHistrogramData.filter(
+          (item) =>
+            item.region_key === selectedProvince.region_key &&
+            item.project === countryISO.toLowerCase()
+        );
+        zoneData = new Set(filteredZoneData);
+      }
+
+      zoneData.forEach((item) => {
+        const values = JSON.parse(item.species_sps)[0];
+        if (values.species_url) {
+          species.push({
+            species: values.species,
+            species_url: values.species_url,
+            species_protection_score_all: values.spi_score,
+          });
+        }
+      });
+
+      setSpsSpecies(species.slice(0, 4));
+    } else {
+      species = [
+        spiSelectSpeciesData[0],
+        spiSelectSpeciesData[1],
+        spiSelectSpeciesData[2],
+        spiSelectSpeciesData[3],
+      ];
+      setSpsSpecies(species);
+    }
     setIsSpeciesLoading(false);
   };
 
@@ -239,11 +275,15 @@ function ScoreDistributionsSpiComponent(props) {
   }, []);
 
   useEffect(() => {
-    if (!spiScoresData.length) return;
+    // if (!spiScoresData.length) return;
 
     setIsLoading(true);
     getChartData();
-  }, [spiScoresData, activeTrend]);
+
+    if (zoneHistrogramData.length) {
+      loadSpecies();
+    }
+  }, [spiScoresData, activeTrend, zoneHistrogramData]);
 
   useEffect(() => {
     if (!spiSelectSpeciesData.length) return;

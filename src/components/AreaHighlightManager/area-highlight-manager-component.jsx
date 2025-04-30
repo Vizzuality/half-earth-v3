@@ -16,8 +16,7 @@ import {
 import {
   NATIONAL_TREND,
   TABS,
-  ZONE_3,
-  ZONE_5,
+  PROVINCE_TREND,
 } from '../../containers/sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
 let highlight;
@@ -54,7 +53,8 @@ function AreaHighlightManagerComponent(props) {
 
   const getLayerView = async () => {
     return view.whenLayerView(
-      regionLayers[`${countryISO}-zone3-spi`] ||
+      regionLayers[`${countryISO}`] ||
+        regionLayers[`${countryISO}-zone3-spi`] ||
         regionLayers[`${countryISO}-zone5-spi`] ||
         regionLayers[`${countryISO}-zone3-shi`] ||
         regionLayers[`${countryISO}-zone5-shi`] ||
@@ -128,6 +128,8 @@ function AreaHighlightManagerComponent(props) {
                   Int_ID,
                   region_key,
                   Intrvnt,
+                  iso3,
+                  name,
                 } = hits.attributes;
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
@@ -143,7 +145,7 @@ function AreaHighlightManagerComponent(props) {
                 }
 
                 if (selectedRegionOption === REGION_OPTIONS.DISSOLVED_NBS) {
-                  setSelectedRegion({ Int_ID });
+                  setSelectedRegion({ iso3, name, region_key });
                 }
 
                 if (
@@ -280,7 +282,9 @@ function AreaHighlightManagerComponent(props) {
     if (view && Object.keys(regionLayers).length) {
       if (selectedIndex === NAVIGATION.TRENDS) {
         if (tabOption === TABS.SPI) {
-          if (activeTrend === ZONE_3 || activeTrend === ZONE_5) {
+          if (countryISO.toLowerCase() === 'eewwf') {
+            layer = await getLayerView();
+          } else if (activeTrend !== PROVINCE_TREND) {
             layer = await getLayerView();
           } else {
             layer = await view.whenLayerView(
@@ -288,7 +292,9 @@ function AreaHighlightManagerComponent(props) {
             );
           }
         } else if (tabOption === TABS.SHI) {
-          if (shiActiveTrend === ZONE_3 || shiActiveTrend === ZONE_5) {
+          if (countryISO.toLowerCase() === 'eewwf') {
+            layer = await getLayerView();
+          } else if (shiActiveTrend !== PROVINCE_TREND) {
             layer = await getLayerView();
           } else {
             layer = await view.whenLayerView(

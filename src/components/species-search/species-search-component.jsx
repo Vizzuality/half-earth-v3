@@ -13,6 +13,7 @@ import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
 } from 'constants/dashboard-constants.js';
+import { DASHBOARD_URLS } from 'constants/layers-urls';
 
 import styles from './species-search-component-styles.module.scss';
 
@@ -35,9 +36,8 @@ function SpeciesSearchComponent(props) {
   let searchURL =
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_species_list_for_search/FeatureServer';
 
-  if (countryISO === 'GUY') {
-    searchURL =
-      'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_list_for_search/FeatureServer';
+  if (countryISO === 'GUY' || countryISO === 'EEWWF') {
+    searchURL = DASHBOARD_URLS.REGION_SPECIES_SEARCH_URL;
   }
 
   let controller = null;

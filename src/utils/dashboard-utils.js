@@ -52,15 +52,18 @@ export const ZONE_3_FEATURE_ID = 'b47c1a2ffb76461592fe64438197cef9';
 export const ZONE_5_FEATURE_ID = 'c4e365176fa64967b0df13237b69aa7d';
 export const RAPID_INVENTORY_32_FEATURE_ID = 'cc6b9e1c42c747a2bd220f82039cf0b0';
 
+export const EEWWF_SPI_FEATURE_ID = '571e7869c6964d8582830f2e2691990e';
+export const EEWWF_SHI_FEATURE_ID = 'c3fdbdaa2fcd48b09bc9f670a1535e3a';
+
 export const NBS_OP_INTERVENTIONS_FEATURE_ID =
-  '139bf28240fc4a7a90389b11999b5b48';
+  '41eb11d7bdd1474fb1a208e11546e413';
 
 export const EXPERT_RANGE_MAP_URL =
   'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/drc_rangemap';
 export const TREND_MAP_URL =
   'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/drc_trend';
 
-export const GUY_RANGE_MAP_URL =
+export const REGION_RANGE_MAP_URL =
   'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/tile-urls';
 
 // LIBERIA LAYERS
