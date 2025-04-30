@@ -152,21 +152,20 @@ function DashboardTrendsSidebar(props) {
             )}
             <span>{t('Species Habitat Index')}</span>
           </button>
-
-          <button
-            type="button"
-            aria-label={t('Species Information Index')}
-            className={cx({
-              [styles.selected]: tabOption === TABS.SII,
-            })}
-            onClick={() => showHideLayers(TABS.SII)}
-            name="sii"
-          >
-            {countryISO.toLowerCase() !== 'eewwf' && (
+          {countryISO.toLowerCase() !== 'eewwf' && (
+            <button
+              type="button"
+              aria-label={t('Species Information Index')}
+              className={cx({
+                [styles.selected]: tabOption === TABS.SII,
+              })}
+              onClick={() => showHideLayers(TABS.SII)}
+              name="sii"
+            >
               <label htmlFor="sii">{siiValue}</label>
-            )}
-            <span>{t('Species Information Index')}</span>
-          </button>
+              <span>{t('Species Information Index')}</span>
+            </button>
+          )}
         </div>
       </header>
       {tabOption === 1 && <ShiContainer trendOption={tabOption} {...props} />}
