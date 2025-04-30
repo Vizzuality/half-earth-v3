@@ -5,6 +5,7 @@ import { useT } from '@transifex/react';
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   GBIF_OCCURENCE_URL,
+  REGION_OCCURENCE_ID,
 } from 'utils/dashboard-utils';
 
 import Checkbox from '@mui/material/Checkbox';
@@ -314,9 +315,14 @@ function GroupedListComponent(props) {
           setIsLoading(true);
           loadingCount += 1;
 
+          let layerId = GBIF_OCCURENCE_URL;
+          if (countryISO === 'EEWWF') {
+            layerId = REGION_OCCURENCE_ID;
+          }
+
           if (layerName.match(/EBIRD/)) {
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
-              GBIF_OCCURENCE_URL,
+              layerId,
               speciesInfo.scientificname,
               layerName,
               'eBird',
@@ -324,7 +330,7 @@ function GroupedListComponent(props) {
             );
           } else if (layerName.match(/GBIF/)) {
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
-              GBIF_OCCURENCE_URL,
+              layerId,
               speciesInfo.scientificname,
               layerName,
               'GBIF',

@@ -85,6 +85,8 @@ export const PROTECTED_AREA_GUY_FEATURE_URL =
 export const GBIF_OCCURENCE_URL = '1ccb994557a74bc6bd773250d8eebc15';
 // Yale AGOL - cc44bf640beb4b2c989d1e901bb90852
 
+export const REGION_OCCURENCE_ID = '9f732963e1a7495f889577ca30e44562';
+
 export const DASHBOARD_TABLE_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1/FeatureServer';
 

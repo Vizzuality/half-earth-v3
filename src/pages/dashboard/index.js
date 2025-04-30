@@ -175,7 +175,7 @@ function DashboardContainer(props) {
     if (countryISO === 'EEWWF') {
       gbifResponse = await EsriFeatureService.getFeatures({
         url: DASHBOARD_URLS.ZONE_OCCURRENCE,
-        whereClause: `species = '${scientificName}'`,
+        whereClause: `species = '${scientificName}' and source = 'GBIF' and  ISO3 IN ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`,
         returnGeometry: false,
       });
     } else {
@@ -203,11 +203,20 @@ function DashboardContainer(props) {
       }
     });
 
-    const eBirdResponse = await EsriFeatureService.getFeatures({
-      url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
-      whereClause: `species = '${scientificName}' and source = 'eBird' and iso3 = '${countryISO}'`,
-      returnGeometry: false,
-    });
+    let eBirdResponse;
+    if (countryISO === 'EEWWF') {
+      eBirdResponse = await EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.ZONE_OCCURRENCE,
+        whereClause: `species = '${scientificName}' and source = 'eBird' and ISO3 IN ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`,
+        returnGeometry: false,
+      });
+    } else {
+      eBirdResponse = await EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+        whereClause: `species = '${scientificName}' and source = 'eBird' and iso3 = '${countryISO}'`,
+        returnGeometry: false,
+      });
+    }
 
     const eBirdResponseItems = eBirdResponse?.map((item) => item.attributes);
     const ebirdSet = new Set(); // Use a Set for efficient tracking
@@ -431,9 +440,11 @@ function DashboardContainer(props) {
       url = DASHBOARD_URLS.ZONE_OCCURRENCE;
       whereClause = ``;
 
-      const { iso3, name, region_key } = selectedRegion;
-      if (iso3) {
-        whereClause = `iso3 = '${iso3}' and region_key = '${region_key}'`;
+      if (selectedRegion) {
+        const { iso3, name, region_key } = selectedRegion;
+        if (iso3) {
+          whereClause = `iso3 = '${iso3}' and region_key = '${region_key}'`;
+        }
       }
     } else if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;

@@ -98,12 +98,16 @@ function getFeatureOccurenceLayer(
   type,
   countryISO
 ) {
+  let isoFilter = `iso3 = '${countryISO}'`;
+  if (countryISO === 'EEWWF') {
+    isoFilter = `iso3 in ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`;
+  }
   return new FeatureLayer({
     portalItem: {
       id: portalItemId,
     },
     outFields: ['*'],
-    definitionExpression: `species = '${scientificName}' and source = '${type}' and iso3 = '${countryISO}'`,
+    definitionExpression: `species = '${scientificName}' and source = '${type}' and ${isoFilter}`,
     id,
   });
 }
