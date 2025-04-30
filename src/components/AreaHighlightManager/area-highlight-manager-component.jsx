@@ -294,7 +294,9 @@ function AreaHighlightManagerComponent(props) {
             );
           }
         } else if (tabOption === TABS.SHI) {
-          if (shiActiveTrend === ZONE_3 || shiActiveTrend === ZONE_5) {
+          if (countryISO.toLowerCase() === 'eewwf') {
+            layer = await getLayerView();
+          } else if (shiActiveTrend !== PROVINCE_TREND) {
             layer = await getLayerView();
           } else {
             layer = await view.whenLayerView(

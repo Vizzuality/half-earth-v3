@@ -313,10 +313,7 @@ function SpeciesRichnessComponent(props) {
         setTitleText(
           `${selectedProvince?.region_name} SHI ${t('BY TAXONOMIC GROUP')}`
         );
-      } else if (
-        (shiActiveTrend === ZONE_3 || shiActiveTrend === ZONE_5) &&
-        selectedProvince
-      ) {
+      } else if (acceptedZones.includes(activeTrend) && selectedProvince) {
         setTitleText(
           `${selectedProvince?.name} SHI ${t('BY TAXONOMIC GROUP')}`
         );

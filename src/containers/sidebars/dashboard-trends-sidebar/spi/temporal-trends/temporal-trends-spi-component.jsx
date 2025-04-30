@@ -39,7 +39,6 @@ function TemporalTrendsSpiComponent(props) {
     countryISO,
     clickedRegion,
     setClickedRegion,
-    view,
   } = props;
 
   const [showTable, setShowTable] = useState(false);

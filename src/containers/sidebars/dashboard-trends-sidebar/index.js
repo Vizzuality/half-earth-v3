@@ -109,7 +109,7 @@ function DashboardTrendsSidebarContainer(props) {
 
   const getSpiSelectSpeciesData = (selectSpeciesURL) => {
     if (countryISO.toLowerCase() === 'eewwf') {
-      setSpiSelectSpeciesData(this.zoneHistrogramData[0]);
+      setSpiSelectSpeciesData(zoneHistrogramData[0]);
     } else {
       EsriFeatureService.getFeatures(selectSpeciesURL).then((features) => {
         const data = features.map((f) => f.attributes);

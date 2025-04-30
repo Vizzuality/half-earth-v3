@@ -26,7 +26,6 @@ import {
   PROVINCE_TREND,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
-import ZoneChartComponent from '../temporal-trends/zone-chart/zone-chart-component';
 
 import compStyles from './score-distributions-spi-styles.module.scss';
 
