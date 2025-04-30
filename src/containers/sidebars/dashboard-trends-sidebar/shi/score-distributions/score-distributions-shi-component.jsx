@@ -342,13 +342,15 @@ function ScoreDistributionsShiComponent(props) {
       }
 
       zoneData.forEach((item) => {
-        const values = JSON.parse(item.species_sps)[0];
-        if (values.species_url) {
-          species.push({
-            scientificname: values.species,
-            species_url: values.species_url,
-            habitat_score: values.spi_score,
-          });
+        if (item.species_sps) {
+          const values = JSON.parse(item.species_sps)[0];
+          if (values.species_url) {
+            species.push({
+              scientificname: values.species,
+              species_url: values.species_url,
+              habitat_score: values.spi_score,
+            });
+          }
         }
       });
 

@@ -225,13 +225,15 @@ function ScoreDistributionsSpiComponent(props) {
       }
 
       zoneData.forEach((item) => {
-        const values = JSON.parse(item.species_sps)[0];
-        if (values.species_url) {
-          species.push({
-            species: values.species,
-            species_url: values.species_url,
-            species_protection_score_all: values.spi_score,
-          });
+        if (item.species_sps) {
+          const values = JSON.parse(item.species_sps)[0];
+          if (values.species_url) {
+            species.push({
+              species: values.species,
+              species_url: values.species_url,
+              species_protection_score_all: values.spi_score,
+            });
+          }
         }
       });
 
