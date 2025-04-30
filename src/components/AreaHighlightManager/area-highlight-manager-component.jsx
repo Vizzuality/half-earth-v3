@@ -16,8 +16,6 @@ import {
 import {
   NATIONAL_TREND,
   TABS,
-  ZONE_3,
-  ZONE_5,
   PROVINCE_TREND,
 } from '../../containers/sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 

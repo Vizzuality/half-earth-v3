@@ -79,7 +79,9 @@ function TemporalTrendsSpiComponent(props) {
 
   useEffect(() => {
     if (clickedRegion) {
-      setActiveTrend(clickedRegion.iso3);
+      if (countryISO.toLowerCase() === 'eewwf') {
+        setActiveTrend(clickedRegion.iso3);
+      }
     }
   }, [clickedRegion]);
 
