@@ -323,6 +323,10 @@ function DashboardTrendsSidebarContainer(props) {
         `${countryISO}`
       );
 
+      view.goTo({
+        zoom: 1,
+      });
+
       setRegionLayers((regionLayers) => ({
         ...regionLayers,
         [`${countryISO}`]: layer,
@@ -410,7 +414,6 @@ function DashboardTrendsSidebarContainer(props) {
         outlineFeatureLayer.visible = false;
       }
 
-      // rezoom to country
       if (geometry) {
         view.goTo({
           target: geometry,
