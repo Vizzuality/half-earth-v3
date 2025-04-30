@@ -50,6 +50,7 @@ ChartJS.register(
 
 function SpeciesRichnessComponent(props) {
   const t = useT();
+  const EEWWF_YEAR = 2022;
   const {
     selectedProvince,
     activeTrend,
@@ -123,7 +124,8 @@ function SpeciesRichnessComponent(props) {
       formattedData = zoneData.find(
         (item) =>
           item.iso3 === selectedProvince.iso3 &&
-          item.region_key === selectedProvince.region_key
+          item.region_key === selectedProvince.region_key &&
+          item.year === EEWWF_YEAR
       );
 
       if (formattedData) {
