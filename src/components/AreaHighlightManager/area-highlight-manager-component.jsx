@@ -53,7 +53,12 @@ function AreaHighlightManagerComponent(props) {
 
   const getLayerView = async () => {
     return view.whenLayerView(
-      regionLayers[`${countryISO}`] ||
+      regionLayers[`${countryISO}-spi`] ||
+        regionLayers[`${countryISO}-spi-lnd`] ||
+        regionLayers[`${countryISO}-spi-int`] ||
+        regionLayers[`${countryISO}-shi`] ||
+        regionLayers[`${countryISO}-shi-lnd`] ||
+        regionLayers[`${countryISO}-shi-int`] ||
         regionLayers[`${countryISO}-zone3-spi`] ||
         regionLayers[`${countryISO}-zone5-spi`] ||
         regionLayers[`${countryISO}-zone3-shi`] ||

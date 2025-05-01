@@ -46,16 +46,28 @@ function DashboardTrendsSidebar(props) {
   const showHideLayers = (tabClicked) => {
     const layers = regionLayers;
 
-    const shiEwwfLayer = map.layers.items.find(
-      (item) => item.id === `${countryISO}-eewwf-shi`
+    const foundProvinceLayer = map.layers.items.find(
+      (item) => item.id === REGION_OPTIONS.PROVINCES
     );
 
     const spiEwwfLayer = map.layers.items.find(
-      (item) => item.id === `${countryISO}-eewwf-spi`
+      (item) => item.id === `${countryISO}-spi`
+    );
+    const eewwfSpiLnd = map.layers.items.find(
+      (item) => item.id === `${countryISO}-spi-lnd`
+    );
+    const eewwfSpiInt = map.layers.items.find(
+      (item) => item.id === `${countryISO}-spi-int`
     );
 
-    const foundProvinceLayer = map.layers.items.find(
-      (item) => item.id === REGION_OPTIONS.PROVINCES
+    const shiEwwfLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-shi`
+    );
+    const eewwfShiLnd = map.layers.items.find(
+      (item) => item.id === `${countryISO}-shi-lnd`
+    );
+    const eewwfShiInt = map.layers.items.find(
+      (item) => item.id === `${countryISO}-shi-int`
     );
 
     const zone5Layer = map.layers.items.find(
@@ -90,6 +102,18 @@ function DashboardTrendsSidebar(props) {
         foundProvinceLayer.visible = false;
       }
 
+      if (spiEwwfLayer) {
+        spiEwwfLayer.visible = false;
+      }
+
+      if (eewwfSpiLnd) {
+        eewwfSpiLnd.visible = false;
+      }
+
+      if (eewwfSpiInt) {
+        eewwfSpiInt.visible = false;
+      }
+
       if (outlineLayer) {
         outlineLayer.visible = true;
       }
@@ -108,6 +132,17 @@ function DashboardTrendsSidebar(props) {
       Object.keys(layers).forEach(() => {
         if (foundProvinceLayer) {
           foundProvinceLayer.visible = true;
+        }
+
+        if (shiEwwfLayer) {
+          shiEwwfLayer.visible = false;
+        }
+
+        if (eewwfShiLnd) {
+          eewwfShiLnd.visible = false;
+        }
+        if (eewwfShiInt) {
+          eewwfShiInt.visible = false;
         }
 
         if (outlineLayer) {

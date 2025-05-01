@@ -39,6 +39,7 @@ function TemporalTrendsShiComponent(props) {
     shiActiveTrend,
     setShiActiveTrend,
     setClickedRegion,
+    clickedRegion,
     view,
   } = props;
 
@@ -83,6 +84,14 @@ function TemporalTrendsShiComponent(props) {
       setShiActiveTrend(NATIONAL_TREND);
     }
   }, []);
+
+  useEffect(() => {
+    if (clickedRegion) {
+      if (countryISO.toLowerCase() === 'eewwf') {
+        setShiActiveTrend(clickedRegion.iso3);
+      }
+    }
+  }, [clickedRegion]);
 
   useEffect(() => {
     setLostAvg((100 - shiValue).toFixed(1));

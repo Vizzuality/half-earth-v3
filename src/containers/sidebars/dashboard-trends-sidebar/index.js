@@ -144,10 +144,7 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getShiNationalData = () => {
-    let countryCode = countryISO;
-    if (countryISO.toLowerCase() === 'eewwf') {
-      countryCode = 'COD';
-    }
+    const countryCode = countryISO;
 
     const shiScoresDataURL = {
       url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
@@ -271,10 +268,7 @@ function DashboardTrendsSidebarContainer(props) {
     let speciesURL = 'SpeciesImage';
     let url = DASHBOARD_URLS.SHI_SPECIES_URL;
 
-    let countryCode = countryISO;
-    if (countryISO.toLowerCase() === 'eewwf') {
-      countryCode = 'COD';
-    }
+    const countryCode = countryISO;
 
     let whereClause = `ISO3 = '${countryCode}'`;
 
@@ -336,37 +330,98 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(async () => {
     if (!map && !view) return;
 
-    let layer;
     if (countryISO.toLowerCase() === 'eewwf') {
-      const trend = activeTrend || shiActiveTrend;
-      const filterClass = classes.includes(trend) ? trend : null;
+      // SPI Layers
+      const eewwfSpiLayer = await EsriFeatureService.getFeatureLayer(
+        EEWWF_SPI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-spi`
+      );
+      eewwfSpiLayer.visible = false;
+      map.add(eewwfSpiLayer);
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
+        [`${countryISO}-spi`]: eewwfSpiLayer,
+      }));
+
+      const eewwfSpiLndLayer = await EsriFeatureService.getFeatureLayer(
+        EEWWF_SPI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-spi-lnd`,
+        'LND'
+      );
+      eewwfSpiLndLayer.visible = false;
+      map.add(eewwfSpiLndLayer);
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
+        [`${countryISO}-spi-lnd`]: eewwfSpiLndLayer,
+      }));
+
+      const eewwfSpiIntLayer = await EsriFeatureService.getFeatureLayer(
+        EEWWF_SPI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-spi-int`,
+        'INT'
+      );
+      eewwfSpiLndLayer.visible = false;
+      map.add(eewwfSpiIntLayer);
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
+        [`${countryISO}-spi-int`]: eewwfSpiIntLayer,
+      }));
+
+      // SHI layeres
+      const eewwfShiLayer = await EsriFeatureService.getFeatureLayer(
+        EEWWF_SHI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-shi`
+      );
+      eewwfShiLayer.visible = false;
+      map.add(eewwfShiLayer);
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
+        [`${countryISO}-shi`]: eewwfShiLayer,
+      }));
+
+      const eewwfShiLndLayer = await EsriFeatureService.getFeatureLayer(
+        EEWWF_SHI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-shi-lnd`,
+        'LND'
+      );
+      eewwfShiLndLayer.visible = false;
+      map.add(eewwfShiLndLayer);
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
+        [`${countryISO}-shi-lnd`]: eewwfShiLndLayer,
+      }));
+
+      const eewwfShiIntLayer = await EsriFeatureService.getFeatureLayer(
+        EEWWF_SHI_FEATURE_ID,
+        countryISO,
+        `${countryISO}-shi-int`,
+        'INT'
+      );
+      eewwfShiIntLayer.visible = false;
+      map.add(eewwfShiIntLayer);
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
+        [`${countryISO}-shi-int`]: eewwfShiIntLayer,
+      }));
+
       if (tabOption === TABS.SPI) {
-        layer = await EsriFeatureService.getFeatureLayer(
-          EEWWF_SPI_FEATURE_ID,
-          countryISO,
-          `${countryISO}-eewwf-shi`,
-          filterClass
-        );
+        eewwfSpiLayer.visible = true;
+        eewwfShiLayer.visible = false;
       } else if (tabOption === TABS.SHI) {
-        layer = await EsriFeatureService.getFeatureLayer(
-          EEWWF_SHI_FEATURE_ID,
-          countryISO,
-          `${countryISO}--eewwf-spi`,
-          filterClass
-        );
+        eewwfSpiLayer.visible = false;
+        eewwfShiLayer.visible = true;
       }
 
       view.goTo({
         zoom: 1,
       });
-
-      setRegionLayers((regionLayers) => ({
-        ...regionLayers,
-        [`${countryISO}`]: layer,
-      }));
-      map.add(layer);
     } else {
-      layer = await EsriFeatureService.getFeatureLayer(
+      const layer = await EsriFeatureService.getFeatureLayer(
         PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
         countryISO
       );
@@ -608,37 +663,71 @@ function DashboardTrendsSidebarContainer(props) {
         getProvinceSpiData(whereClause);
       }
     } else {
-      const shiEwwfLayer = map.layers.items.find(
-        (item) => item.id === `${countryISO}-eewwf-shi`
+      const spiEwwfLayer = map.layers.items.find(
+        (item) => item.id === `${countryISO}-spi`
+      );
+      const eewwfSpiLnd = map.layers.items.find(
+        (item) => item.id === `${countryISO}-spi-lnd`
+      );
+      const eewwfSpiInt = map.layers.items.find(
+        (item) => item.id === `${countryISO}-spi-int`
       );
 
-      const spiEwwfLayer = map.layers.items.find(
-        (item) => item.id === `${countryISO}-eewwf-spi`
+      const shiEwwfLayer = map.layers.items.find(
+        (item) => item.id === `${countryISO}-shi`
       );
+      const eewwfShiLnd = map.layers.items.find(
+        (item) => item.id === `${countryISO}-shi-lnd`
+      );
+      const eewwfShiInt = map.layers.items.find(
+        (item) => item.id === `${countryISO}-shi-int`
+      );
+      if (spiEwwfLayer) {
+        spiEwwfLayer.visible = false;
+      }
+      if (eewwfSpiInt) {
+        eewwfSpiInt.visible = false;
+      }
+      if (eewwfSpiLnd) {
+        eewwfSpiLnd.visible = false;
+      }
+      if (shiEwwfLayer) {
+        shiEwwfLayer.visible = false;
+      }
+      if (spiEwwfLayer) {
+        spiEwwfLayer.visible = false;
+      }
+      if (eewwfShiLnd) {
+        eewwfShiInt.visible = false;
+      }
+      if (eewwfShiLnd) {
+        eewwfShiLnd.visible = false;
+      }
 
       if (tabOption === TABS.SPI) {
         if (spiEwwfLayer) {
-          spiEwwfLayer.visible = false;
-        }
-
-        if (shiEwwfLayer) {
-          shiEwwfLayer.visible = true;
           if (activeTrend === 'LND' || activeTrend === 'INT') {
-            shiEwwfLayer.visible = false;
+            if (activeTrend === 'LND') {
+              eewwfSpiLnd.visible = true;
+            } else if (activeTrend === 'INT') {
+              eewwfSpiInt.visible = true;
+            }
           } else {
-            shiEwwfLayer.visible = true;
+            spiEwwfLayer.visible = true;
           }
         }
       } else if (tabOption === TABS.SHI) {
         if (shiEwwfLayer) {
-          shiEwwfLayer.visible = true;
-        }
-        if (spiEwwfLayer) {
-          spiEwwfLayer.visible = true;
-          if (activeTrend === 'LND' || activeTrend === 'INT') {
-            spiEwwfLayer.visible = false;
+          if (shiActiveTrend === 'LND' || shiActiveTrend === 'INT') {
+            shiEwwfLayer.visible = false;
+
+            if (shiActiveTrend === 'LND') {
+              eewwfShiLnd.visible = true;
+            } else if (shiActiveTrend === 'INT') {
+              eewwfShiInt.visible = true;
+            }
           } else {
-            spiEwwfLayer.visible = true;
+            shiEwwfLayer.visible = true;
           }
         }
       }

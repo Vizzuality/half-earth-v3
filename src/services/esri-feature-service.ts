@@ -66,12 +66,7 @@ function getVectorTileLayer(url, id, countryISO) {
   });
 }
 
-async function getFeatureLayer(
-  portalItemId,
-  countryISO,
-  id,
-  activeTrend = null
-) {
+async function getFeatureLayer(portalItemId, countryISO, id, classType = null) {
   let definitionExpression = countryISO ? `GID_0 = '${countryISO}'` : '';
 
   if (
@@ -84,9 +79,13 @@ async function getFeatureLayer(
     definitionExpression = '';
   }
 
-  if (activeTrend === 'LND' || activeTrend === 'INT') {
-    const className = activeTrend === 'INT' ? 'Intervention' : 'Landscape';
-    definitionExpression = `class = ${className}`;
+  if (classType === 'INT') {
+    // const className = classType === 'INT' ? 'Intervention' : 'Landscape';
+    definitionExpression = `class = 'Intervention'`;
+  }
+  if (classType === 'LND') {
+    // const className = classType === 'INT' ? 'Intervention' : 'Landscape';
+    definitionExpression = `class = 'Landscape'`;
   }
   const featureLayer = new FeatureLayer({
     portalItem: {
