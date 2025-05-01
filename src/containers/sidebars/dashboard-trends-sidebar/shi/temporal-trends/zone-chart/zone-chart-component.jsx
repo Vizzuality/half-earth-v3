@@ -97,6 +97,8 @@ function ZoneChartComponent(props) {
           (item) =>
             item.iso3 === iso3 && item.region_key === clickedRegion.region_key
         );
+      } else if (zone === 'LND' || zone === 'INT') {
+        chartData = zoneData;
       } else {
         chartData = zoneData.filter((item) => item.iso3 === zone);
       }

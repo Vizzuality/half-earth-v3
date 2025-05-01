@@ -17,6 +17,8 @@ import {
   BRA,
   MDG,
   VNM,
+  LND,
+  INT,
   NATIONAL_TREND,
   PROVINCE_TREND,
   ZONE_3,
@@ -45,28 +47,34 @@ function TemporalTrendsShiComponent(props) {
   const { lightMode } = useContext(LightModeContext);
   const [startYear] = useState(2001);
 
-  const eewwfRegions = ['MEX', 'PER', 'BRA', 'MDG', 'VNM'];
+  const eewwfRegions = ['MEX', 'PER', 'BRA', 'MDG', 'VNM', 'LND', 'INT'];
 
   const handleActionChange = (option) => {
     setClickedRegion(null);
     setShiActiveTrend(option);
 
     if (countryISO.toLowerCase() === 'eewwf') {
-      EsriFeatureService.getFeatures({
-        url: COUNTRIES_DATA_SERVICE_URL,
-        whereClause: `GID_0 = '${option}'`,
-        returnGeometry: true,
-      }).then((features) => {
-        // eslint-disable-next-line no-shadow
-        const { geometry } = features[0];
+      if (option !== LND && option !== INT) {
+        EsriFeatureService.getFeatures({
+          url: COUNTRIES_DATA_SERVICE_URL,
+          whereClause: `GID_0 = '${option}'`,
+          returnGeometry: true,
+        }).then((features) => {
+          // eslint-disable-next-line no-shadow
+          const { geometry } = features[0];
 
-        view.goTo({
-          target: geometry,
-          center: [geometry.longitude - 20, geometry.latitude],
-          zoom: 5.5,
-          extent: geometry.clone(),
+          view.goTo({
+            target: geometry,
+            center: [geometry.longitude - 20, geometry.latitude],
+            zoom: 5.5,
+            extent: geometry.clone(),
+          });
         });
-      });
+      } else {
+        view.goTo({
+          zoom: 1,
+        });
+      }
     }
   };
 
@@ -196,6 +204,22 @@ function TemporalTrendsShiComponent(props) {
               })}
               label="Vietnam"
               handleClick={() => handleActionChange(VNM)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== LND,
+              })}
+              label="Landscape"
+              handleClick={() => handleActionChange(LND)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== INT,
+              })}
+              label="Intervention"
+              handleClick={() => handleActionChange(INT)}
             />
           </div>
         )}

@@ -20,6 +20,8 @@ export const PER = 'PER';
 export const BRA = 'BRA';
 export const MDG = 'MDG';
 export const VNM = 'VNM';
+export const LND = 'LND';
+export const INT = 'INT';
 
 export const TABS = {
   SHI: 1,
@@ -43,6 +45,14 @@ function DashboardTrendsSidebar(props) {
 
   const showHideLayers = (tabClicked) => {
     const layers = regionLayers;
+
+    const shiEwwfLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-eewwf-shi`
+    );
+
+    const spiEwwfLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-eewwf-spi`
+    );
 
     const foundProvinceLayer = map.layers.items.find(
       (item) => item.id === REGION_OPTIONS.PROVINCES

@@ -52,6 +52,7 @@ function ScoreDistributionsSpiComponent(props) {
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
 
+  const threatStatuses = ['LEAST CONCERN', 'EXTINCT', 'EXTINCT IN THE WILD'];
   const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
 
   const toolTipTitle = (tooltipItems) => {
@@ -227,7 +228,10 @@ function ScoreDistributionsSpiComponent(props) {
       zoneData.forEach((item) => {
         if (item.species_sps) {
           const values = JSON.parse(item.species_sps)[0];
-          if (values.species_url) {
+          if (
+            values.species_url &&
+            !threatStatuses.includes(values.threat_status.toUpperCase())
+          ) {
             species.push({
               species: values.species,
               species_url: values.species_url,

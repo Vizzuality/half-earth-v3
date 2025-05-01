@@ -71,6 +71,8 @@ function DashboardTrendsSidebarContainer(props) {
   const [spiValue, setSpiValue] = useState(0);
   const [siiValue, setSiiValue] = useState(0);
 
+  const classes = ['INT', 'LND'];
+
   const getCountryData = (countryURL) => {
     EsriFeatureService.getFeatures(countryURL).then((features) => {
       const countries = features.map((f) => f.attributes);
@@ -170,7 +172,25 @@ function DashboardTrendsSidebarContainer(props) {
 
   const getZoneData = () => {
     const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'eewwf';
-    const whereClause = `project = '${project}'`;
+    let whereClause = `project = '${project}'`;
+
+    const landscapeRegions = `(1, 7, 9, 10, 15)`;
+
+    if (tabOption === TABS.SPI) {
+      if (activeTrend === 'LND') {
+        whereClause += ` and region_key in ${landscapeRegions}`;
+      } else if (activeTrend === 'INT') {
+        whereClause += ` and region_key not in ${landscapeRegions}`;
+      }
+    }
+
+    if (tabOption === TABS.SHI) {
+      if (shiActiveTrend === 'LND') {
+        whereClause += ` and region_key in ${landscapeRegions}`;
+      } else if (shiActiveTrend === 'INT') {
+        whereClause += ` and region_key not in ${landscapeRegions}`;
+      }
+    }
 
     const zoneDataUrl = {
       url: DASHBOARD_URLS.REGION_SHI_SPI_URL,
@@ -178,8 +198,9 @@ function DashboardTrendsSidebarContainer(props) {
     };
 
     EsriFeatureService.getFeatures(zoneDataUrl).then((features) => {
-      const data = features?.map((f) => f.attributes);
-      setZoneData(data);
+      const data = features?.map((f) => f.attributes).reverse();
+      const filteredData = data.filter((item) => item.habitat_index !== null);
+      setZoneData(filteredData);
     });
   };
 
@@ -317,11 +338,23 @@ function DashboardTrendsSidebarContainer(props) {
 
     let layer;
     if (countryISO.toLowerCase() === 'eewwf') {
-      layer = await EsriFeatureService.getFeatureLayer(
-        EEWWF_SPI_FEATURE_ID,
-        countryISO,
-        `${countryISO}`
-      );
+      const trend = activeTrend || shiActiveTrend;
+      const filterClass = classes.includes(trend) ? trend : null;
+      if (tabOption === TABS.SPI) {
+        layer = await EsriFeatureService.getFeatureLayer(
+          EEWWF_SPI_FEATURE_ID,
+          countryISO,
+          `${countryISO}-eewwf-shi`,
+          filterClass
+        );
+      } else if (tabOption === TABS.SHI) {
+        layer = await EsriFeatureService.getFeatureLayer(
+          EEWWF_SHI_FEATURE_ID,
+          countryISO,
+          `${countryISO}--eewwf-spi`,
+          filterClass
+        );
+      }
 
       view.goTo({
         zoom: 1,
@@ -575,6 +608,41 @@ function DashboardTrendsSidebarContainer(props) {
         getProvinceSpiData(whereClause);
       }
     } else {
+      const shiEwwfLayer = map.layers.items.find(
+        (item) => item.id === `${countryISO}-eewwf-shi`
+      );
+
+      const spiEwwfLayer = map.layers.items.find(
+        (item) => item.id === `${countryISO}-eewwf-spi`
+      );
+
+      if (tabOption === TABS.SPI) {
+        if (spiEwwfLayer) {
+          spiEwwfLayer.visible = false;
+        }
+
+        if (shiEwwfLayer) {
+          shiEwwfLayer.visible = true;
+          if (activeTrend === 'LND' || activeTrend === 'INT') {
+            shiEwwfLayer.visible = false;
+          } else {
+            shiEwwfLayer.visible = true;
+          }
+        }
+      } else if (tabOption === TABS.SHI) {
+        if (shiEwwfLayer) {
+          shiEwwfLayer.visible = true;
+        }
+        if (spiEwwfLayer) {
+          spiEwwfLayer.visible = true;
+          if (activeTrend === 'LND' || activeTrend === 'INT') {
+            spiEwwfLayer.visible = false;
+          } else {
+            spiEwwfLayer.visible = true;
+          }
+        }
+      }
+
       // do something when EEWWF is selected
       getZoneData();
       getZoneHistogramData();
