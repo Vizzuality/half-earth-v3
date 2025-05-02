@@ -102,6 +102,10 @@ function DashboardTrendsSidebar(props) {
         foundProvinceLayer.visible = false;
       }
 
+      if (shiEwwfLayer) {
+        shiEwwfLayer.visible = true;
+      }
+
       if (spiEwwfLayer) {
         spiEwwfLayer.visible = false;
       }
@@ -132,6 +136,10 @@ function DashboardTrendsSidebar(props) {
       Object.keys(layers).forEach(() => {
         if (foundProvinceLayer) {
           foundProvinceLayer.visible = true;
+        }
+
+        if (spiEwwfLayer) {
+          spiEwwfLayer.visible = true;
         }
 
         if (shiEwwfLayer) {
