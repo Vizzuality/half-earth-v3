@@ -343,17 +343,33 @@ function ScoreDistributionsShiComponent(props) {
       }
 
       zoneData.forEach((item) => {
-        if (item.species_sps) {
-          const values = JSON.parse(item.species_sps)[0];
-          if (
-            values.species_url &&
-            !threatStatuses.includes(values.threat_status.toUpperCase())
-          ) {
-            species.push({
-              scientificname: values.species,
-              species_url: values.species_url,
-              habitat_score: values.spi_score,
-            });
+        if (item.species_shs) {
+          const values = JSON.parse(item.species_shs);
+
+          values.forEach((value) => {
+            const val = value[''];
+            if (
+              val.species_url &&
+              !threatStatuses.includes(val.threat_status.toUpperCase())
+            ) {
+              species.push({
+                scientificname: val.species,
+                species_url: val.species_url,
+                habitat_score: val.shs_score,
+              });
+            }
+          });
+
+          if (species.length > 0) {
+            const lastItem = species[species.length - 1];
+            const low = species[0].habitat_score * 100;
+            const high = lastItem.habitat_score * 100;
+
+            setLowDist(low.toFixed(1));
+            setHighDist(high.toFixed(1));
+          } else {
+            setLowDist(0);
+            setHighDist(0);
           }
         }
       });
