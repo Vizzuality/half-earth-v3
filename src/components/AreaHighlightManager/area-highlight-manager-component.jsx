@@ -53,20 +53,24 @@ function AreaHighlightManagerComponent(props) {
 
   const getLayerView = async () => {
     if (countryISO.toLowerCase() === 'eewwf') {
-      if (tabOption === TABS.SPI) {
-        return view.whenLayerView(
-          regionLayers[`${countryISO}-spi`] ||
-            regionLayers[`${countryISO}-spi-lnd`] ||
-            regionLayers[`${countryISO}-spi-int`]
-        );
-      }
+      if (selectedIndex === NAVIGATION.TRENDS) {
+        if (tabOption === TABS.SPI) {
+          return view.whenLayerView(
+            regionLayers[`${countryISO}-spi`] ||
+              regionLayers[`${countryISO}-spi-lnd`] ||
+              regionLayers[`${countryISO}-spi-int`]
+          );
+        }
 
-      if (tabOption === TABS.SHI) {
-        return view.whenLayerView(
-          regionLayers[`${countryISO}-shi`] ||
-            regionLayers[`${countryISO}-shi-lnd`] ||
-            regionLayers[`${countryISO}-shi-int`]
-        );
+        if (tabOption === TABS.SHI) {
+          return view.whenLayerView(
+            regionLayers[`${countryISO}-shi`] ||
+              regionLayers[`${countryISO}-shi-lnd`] ||
+              regionLayers[`${countryISO}-shi-int`]
+          );
+        }
+      } else {
+        return view.whenLayerView(regionLayers[LAYER_OPTIONS.DISSOLVED_NBS]);
       }
     }
 
@@ -80,7 +84,6 @@ function AreaHighlightManagerComponent(props) {
         regionLayers[LAYER_OPTIONS.ADMINISTRATIVE_LAYERS] ||
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
         regionLayers[LAYER_OPTIONS.FORESTS] ||
-        regionLayers[LAYER_OPTIONS.DISSOLVED_NBS] ||
         regionLayers[`${countryISO}-outline`]
     );
   };
