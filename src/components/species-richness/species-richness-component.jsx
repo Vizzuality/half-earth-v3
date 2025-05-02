@@ -95,8 +95,14 @@ function SpeciesRichnessComponent(props) {
   };
 
   const populateScores = (formattedData) => {
-    const data = JSON.parse(formattedData.richness_taxa_spi)[0];
-    const spiData = JSON.parse(formattedData.spi_taxa)[0];
+    let data = JSON.parse(formattedData.richness_taxa_spi)[0];
+    let spiData = JSON.parse(formattedData.spi_taxa)[0];
+
+    if (shi) {
+      data = JSON.parse(formattedData.richness_taxa_shi)[0];
+      spiData = JSON.parse(formattedData.habitat_index_taxa)[0];
+    }
+
     const { reptiles, amphibians, mammals, birds } = data;
     setScores({
       birds: {
