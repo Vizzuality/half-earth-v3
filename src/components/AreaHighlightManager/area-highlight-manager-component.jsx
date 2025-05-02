@@ -52,14 +52,26 @@ function AreaHighlightManagerComponent(props) {
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
 
   const getLayerView = async () => {
+    if (countryISO.toLowerCase() === 'eewwf') {
+      if (tabOption === TABS.SPI) {
+        return view.whenLayerView(
+          regionLayers[`${countryISO}-spi`] ||
+            regionLayers[`${countryISO}-spi-lnd`] ||
+            regionLayers[`${countryISO}-spi-int`]
+        );
+      }
+
+      if (tabOption === TABS.SHI) {
+        return view.whenLayerView(
+          regionLayers[`${countryISO}-shi`] ||
+            regionLayers[`${countryISO}-shi-lnd`] ||
+            regionLayers[`${countryISO}-shi-int`]
+        );
+      }
+    }
+
     return view.whenLayerView(
-      regionLayers[`${countryISO}-spi`] ||
-        regionLayers[`${countryISO}-spi-lnd`] ||
-        regionLayers[`${countryISO}-spi-int`] ||
-        regionLayers[`${countryISO}-shi`] ||
-        regionLayers[`${countryISO}-shi-lnd`] ||
-        regionLayers[`${countryISO}-shi-int`] ||
-        regionLayers[`${countryISO}-zone3-spi`] ||
+      regionLayers[`${countryISO}-zone3-spi`] ||
         regionLayers[`${countryISO}-zone5-spi`] ||
         regionLayers[`${countryISO}-zone3-shi`] ||
         regionLayers[`${countryISO}-zone5-shi`] ||
