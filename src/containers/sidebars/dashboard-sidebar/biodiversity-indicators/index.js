@@ -263,6 +263,26 @@ function BioDiversityContainer(props) {
 
       getHabitatTableData();
     }
+
+    if (data) {
+      const tableData = [];
+      const { spiScoreData } = data;
+      Object.keys(spiScoreData).forEach((key) => {
+        const item = spiScoreData[key];
+        const lastItem = last(item);
+
+        setProtectionScore(parseFloat((lastItem.sps * 100).toFixed(1)));
+        tableData.push({
+          country: lastItem.name,
+          stewardship: lastItem.stewardship * 100,
+          rangeProtected: lastItem.range_protected,
+          targetProtected: lastItem.regional_target,
+          sps: lastItem.sps * 100,
+        });
+      });
+
+      setProtectionTableData(tableData);
+    }
   }, [dataByCountry, data]);
 
   // get protection score information
@@ -273,10 +293,16 @@ function BioDiversityContainer(props) {
       const globalValues = data.spiScoreData.filter(
         (country) => country.country_name.toUpperCase() === 'GLOBAL'
       );
-      const countryData = data.spiScoreData.filter(
-        (country) =>
-          country.country_name.toUpperCase() === countryName.toUpperCase()
-      );
+
+      const countryData = data.spiScoreData.filter((country) => {
+        if (countryISO.toLowerCase() === 'eewwf') {
+          return (
+            country.country_name.toUpperCase() ===
+            data.spiScoreData[0].country_name.toUpperCase()
+          );
+        }
+        return country.country_name.toUpperCase() === countryName.toUpperCase();
+      });
 
       const scores = {
         protectionScore: last(countryData).shs_score.toFixed(1),

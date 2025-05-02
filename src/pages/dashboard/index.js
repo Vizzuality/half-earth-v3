@@ -884,24 +884,49 @@ function DashboardContainer(props) {
   };
 
   const getData = async () => {
-    const habitatTrendUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
-    const spiScoreURL = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${scientificName}`;
+    if (countryISO.toLowerCase() === 'eewwf') {
+      EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.REGION_BIODIVERSITY_URL,
+        whereClause: `species = '${scientificName}'`,
+        returnGeometry: false,
+      }).then((features) => {
+        const spiScoreData = features.map((f) => {
+          console.log(f.attributes);
+          return f.attributes;
+        });
 
-    const apiCalls = [habitatTrendUrl, spiScoreURL];
+        const spiCountryData = spiScoreData.reduce((acc, obj) => {
+          const key = obj.name;
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          acc[key].push(obj);
+          return acc;
+        }, {});
 
-    const apiResponses = await Promise.all(
-      apiCalls.map(async (url) => {
-        const response = await fetch(url);
-        const d = await response.json();
-        return d;
-      })
-    );
+        console.log(spiCountryData, 'country data');
+        setSpiDataByCountry(spiCountryData);
+        setData({ habitatTrendData: [], spiScoreData: spiCountryData });
+      });
+    } else {
+      const habitatTrendUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
+      const spiScoreURL = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${scientificName}`;
 
-    const [habitatTrendData, spiScoreData] = apiResponses;
-    getDataByCountry(habitatTrendData);
-    getSpiDataByCountry(spiScoreData);
+      const apiCalls = [habitatTrendUrl, spiScoreURL];
 
-    setData({ habitatTrendData, spiScoreData });
+      const apiResponses = await Promise.all(
+        apiCalls.map(async (url) => {
+          const response = await fetch(url);
+          const d = await response.json();
+          return d;
+        })
+      );
+
+      const [habitatTrendData, spiScoreData] = apiResponses;
+      getDataByCountry(habitatTrendData);
+      getSpiDataByCountry(spiScoreData);
+      setData({ habitatTrendData, spiScoreData });
+    }
   };
 
   const handleBrowsePage = () => {

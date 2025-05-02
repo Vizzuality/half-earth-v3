@@ -38,6 +38,7 @@ function ProtectionComponent(props) {
     protectionTableData,
     countryName,
     lightMode,
+    defaultCountryName,
     selectedCountry,
     updateCountry,
     onCountryChange,
@@ -99,7 +100,7 @@ function ProtectionComponent(props) {
         </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.blue)} />
-          <span>{t(countryName)}</span>
+          <span>{t(defaultCountryName) || t(countryName)}</span>
           <div className={cx(styles.legendBox, styles.green)} />
           <span>{t(selectedCountry)}</span>
         </div>
