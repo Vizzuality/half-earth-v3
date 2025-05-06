@@ -70,7 +70,12 @@ function AreaHighlightManagerComponent(props) {
           );
         }
       } else {
-        return view.whenLayerView(regionLayers[LAYER_OPTIONS.DISSOLVED_NBS]);
+        return view.whenLayerView(
+          regionLayers[LAYER_OPTIONS.DISSOLVED_NBS] ||
+            regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
+            regionLayers[LAYER_OPTIONS.PROVINCES] ||
+            regionLayers[LAYER_OPTIONS.ADMINISTRATIVE_LAYERS]
+        );
       }
     }
 

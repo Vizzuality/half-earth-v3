@@ -436,17 +436,7 @@ function DashboardContainer(props) {
     }
 
     let whereClause = `ISO3 = '${countryISO}'`;
-    if (countryISO === 'EEWWF') {
-      url = DASHBOARD_URLS.ZONE_OCCURRENCE;
-      whereClause = ``;
-
-      if (selectedRegion) {
-        const { iso3, name, region_key } = selectedRegion;
-        if (iso3) {
-          whereClause = `iso3 = '${iso3}' and region_key = '${region_key}'`;
-        }
-      }
-    } else if (selectedRegion) {
+    if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
@@ -747,7 +737,11 @@ function DashboardContainer(props) {
         };
         const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
-        getOccurenceSpecies(groupData);
+        setTaxaList(groupData);
+
+        setSpeciesListLoading(false);
+
+        // getOccurenceSpecies(groupData);
       } else {
         const { attributes } = features[0];
 
