@@ -824,7 +824,19 @@ function DashboardContainer(props) {
       return acc;
     }, {});
 
-    setSpiDataByCountry(spiCountryData);
+    const blah = spiCountryData.sort((a, b) => {
+      const nameA = a.year;
+      const nameB = b.year;
+      if (nameA > nameB) {
+        return -1;
+      }
+      if (nameA < nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    setSpiDataByCountry(blah);
   };
 
   const getDataByCountry = (d) => {
@@ -940,6 +952,23 @@ function DashboardContainer(props) {
           acc[key].push(obj);
           return acc;
         }, {});
+
+        Object.keys(spiCountryData).forEach((key) => {
+          const countryData = spiCountryData[key];
+          const sortedData = countryData.sort((a, b) => {
+            const yearA = a.year;
+            const yearB = b.year;
+            if (yearA < yearB) {
+              return -1;
+            }
+            if (yearA > yearB) {
+              return 1;
+            }
+            return 0;
+          });
+
+          spiCountryData[key] = sortedData;
+        });
 
         setSpiDataByCountry(spiCountryData);
         setData({ ...data, spiScoreData: spiCountryData });
