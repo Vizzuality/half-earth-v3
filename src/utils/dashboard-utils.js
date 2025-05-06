@@ -55,7 +55,7 @@ export const RAPID_INVENTORY_32_FEATURE_ID = 'cc6b9e1c42c747a2bd220f82039cf0b0';
 export const EEWWF_SPI_FEATURE_ID = '942229716581474ab9233fd23d6d0178';
 export const EEWWF_SHI_FEATURE_ID = 'c3fdbdaa2fcd48b09bc9f670a1535e3a';
 export const PROTECTED_AREA_EEWWF_FEATURE_ID =
-  '382b7aa6a7d4439981d4f0522ec6899c';
+  '7593f107a991471f9bb56672557a07cc';
 export const PROTECTED_AREA_EEWWF_URL =
   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/ProtectedAreas_20250416/VectorTileServer';
 

@@ -3,7 +3,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
-    PROTECTED_AREA_EEWWF_URL, PROTECTED_AREA_FEATURE_URL, PROTECTED_AREA_GIN_FEATURE_URL,
+    PROTECTED_AREA_EEWWF_FEATURE_ID, PROTECTED_AREA_FEATURE_URL, PROTECTED_AREA_GIN_FEATURE_URL,
     PROTECTED_AREA_GUY_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL, PROTECTED_AREA_SLE_FEATURE_URL,
     REGION_RANGE_MAP_URL
 } from 'utils/dashboard-utils';
@@ -250,22 +250,20 @@ async function addProtectedAreaLayer(id, countryISO = 'COD') {
     case 'GUY':
       featurePortalId = PROTECTED_AREA_GUY_FEATURE_URL;
       break;
+    case 'EEWWF':
+      featurePortalId = PROTECTED_AREA_EEWWF_FEATURE_ID;
+      break;
     default:
       break;
   }
 
-  let featureLayer;
-  if (countryISO === 'EEWWF') {
-    featureLayer = this.getVectorTileLayer(PROTECTED_AREA_EEWWF_URL, id);
-  } else {
-    featureLayer = new FeatureLayer({
-      portalItem: {
-        id: featurePortalId,
-      },
-      outFields: ['*'],
-      id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
-    });
-  }
+  const featureLayer = new FeatureLayer({
+    portalItem: {
+      id: featurePortalId,
+    },
+    outFields: ['*'],
+    id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
+  });
 
   await featureLayer.load(); // Ensure the layer is loaded
 
