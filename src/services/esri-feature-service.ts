@@ -3,8 +3,9 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
-    PROTECTED_AREA_FEATURE_URL, PROTECTED_AREA_GIN_FEATURE_URL, PROTECTED_AREA_GUY_FEATURE_URL,
-    PROTECTED_AREA_LIB_FEATURE_URL, PROTECTED_AREA_SLE_FEATURE_URL, REGION_RANGE_MAP_URL
+    PROTECTED_AREA_EEWWF_URL, PROTECTED_AREA_FEATURE_URL, PROTECTED_AREA_GIN_FEATURE_URL,
+    PROTECTED_AREA_GUY_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL, PROTECTED_AREA_SLE_FEATURE_URL,
+    REGION_RANGE_MAP_URL
 } from 'utils/dashboard-utils';
 
 import CSVLayer from '@arcgis/core/layers/CSVLayer';
@@ -53,7 +54,7 @@ function getFeatures({
         resolve(null);
       })
       .catch((err) => {
-        console.log(err);
+        err;
         resolve(null);
       });
   });
@@ -253,13 +254,18 @@ async function addProtectedAreaLayer(id, countryISO = 'COD') {
       break;
   }
 
-  const featureLayer = new FeatureLayer({
-    portalItem: {
-      id: featurePortalId,
-    },
-    outFields: ['*'],
-    id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
-  });
+  let featureLayer;
+  if (countryISO === 'EEWWF') {
+    featureLayer = this.getVectorTileLayer(PROTECTED_AREA_EEWWF_URL, id);
+  } else {
+    featureLayer = new FeatureLayer({
+      portalItem: {
+        id: featurePortalId,
+      },
+      outFields: ['*'],
+      id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
+    });
+  }
 
   await featureLayer.load(); // Ensure the layer is loaded
 
