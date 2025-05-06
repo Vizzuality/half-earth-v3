@@ -740,8 +740,6 @@ function DashboardContainer(props) {
         setTaxaList(groupData);
 
         setSpeciesListLoading(false);
-
-        // getOccurenceSpecies(groupData);
       } else {
         const { attributes } = features[0];
 
