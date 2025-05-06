@@ -18,6 +18,7 @@ function HabitatContainer(props) {
     dataByCountry,
     countryName,
     habitatScore,
+    countryISO,
     globalHabitatScore,
   } = props;
 
@@ -28,6 +29,7 @@ function HabitatContainer(props) {
   const [countryTrend, setCountryTrend] = useState('');
   const [globalTrendIcon, setGlobalTrendIcon] = useState(<Stable />);
   const [countryTrendIcon, setCountryTrendIcon] = useState(<Stable />);
+  const [defaultCountryName, setDefaultCountryName] = useState('Global');
 
   const TRENDS = {
     UPWARD: 'arrow_upward',
@@ -80,13 +82,34 @@ function HabitatContainer(props) {
 
   const getChartData = (countrySelected) => {
     const dates = [];
-    const currentCountry = dataByCountry[countryName];
+    let currentCountry;
     // const globalCountry = dataByCountry.Global;
 
     const defaultCountryScores = { area: [], connectivity: [], total: [] };
     const selectedCountryScores = { area: [], connectivity: [], total: [] };
 
-    if (currentCountry) {
+    if (countryISO === 'EEWWF') {
+      setDefaultCountryName('Global');
+      currentCountry = dataByCountry.Global;
+
+      if (currentCountry) {
+        currentCountry.shs?.forEach((row) => {
+          defaultCountryScores.area.push(row.area_score * 100);
+          defaultCountryScores.connectivity.push(row.connectivity_score * 100);
+          defaultCountryScores.total.push(row.shs * 100);
+        });
+
+        dataByCountry[countrySelected]?.shs.forEach((row) => {
+          dates.push(row.year);
+          selectedCountryScores.area.push(row.area_score * 100);
+          selectedCountryScores.connectivity.push(row.connectivity_score * 100);
+          selectedCountryScores.total.push(row.shs * 100);
+        });
+      }
+    } else if (currentCountry) {
+      setDefaultCountryName(countryName);
+      currentCountry = dataByCountry[countryName];
+
       currentCountry.shs?.forEach((row) => {
         defaultCountryScores.area.push(row.propchange * 100);
       });
@@ -132,7 +155,7 @@ function HabitatContainer(props) {
       labels: dates,
       datasets: [
         {
-          label: `${countryName} Area`,
+          label: `${countrySelected} Area`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country'),
           borderColor: getCSSVariable('habitat-country'),
@@ -143,7 +166,7 @@ function HabitatContainer(props) {
           data: defaultCountryScores.area,
         },
         {
-          label: `${countryName} Connectivity`,
+          label: `${countrySelected} Connectivity`,
           fill: false,
           borderDash: [3, 3],
           backgroundColor: getCSSVariable('habitat-country'),
@@ -154,7 +177,7 @@ function HabitatContainer(props) {
           data: defaultCountryScores.connectivity,
         },
         {
-          label: `${countryName} Total`,
+          label: `${countrySelected} Total`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country'),
           borderColor: getCSSVariable('habitat-country'),
@@ -164,7 +187,7 @@ function HabitatContainer(props) {
           data: defaultCountryScores.total,
         },
         {
-          label: `${countrySelected} Area`,
+          label: `${defaultCountryName} Area`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country-compare'),
           borderColor: getCSSVariable('habitat-country-compare'),
@@ -175,7 +198,7 @@ function HabitatContainer(props) {
           data: selectedCountryScores.area,
         },
         {
-          label: `${countrySelected} Connectivity`,
+          label: `${defaultCountryName} Connectivity`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country-compare'),
           borderColor: getCSSVariable('habitat-country-compare'),
@@ -186,7 +209,7 @@ function HabitatContainer(props) {
           data: selectedCountryScores.connectivity,
         },
         {
-          label: `${countrySelected} Total`,
+          label: `${defaultCountryName} Total`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country-compare'),
           borderColor: getCSSVariable('habitat-country-compare'),
@@ -273,6 +296,7 @@ function HabitatContainer(props) {
       globalTrendIcon={globalTrendIcon}
       countryTrendIcon={countryTrendIcon}
       chartOptions={chartOptions}
+      defaultCountryName={defaultCountryName}
       updateCountry={updateCountry}
       onCountryChange={onCountryChange}
       {...props}

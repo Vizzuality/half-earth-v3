@@ -545,6 +545,8 @@ export const DASHBOARD_URLS = {
     'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_iso3_species_search_bar/FeatureServer',
   REGION_BIODIVERSITY_URL:
     'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/species_sps_region_global/FeatureServer',
+  REGION_BIODIVERSITY_SHS_URL:
+    ' https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/species_shs_region_global/FeatureServer',
 };
 
 export const NBIS_URLS = {

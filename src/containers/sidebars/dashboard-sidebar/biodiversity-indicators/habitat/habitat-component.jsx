@@ -37,6 +37,7 @@ function HabitatComponent(props) {
 
   const {
     countryName,
+    defaultCountryName,
     habitatTableData,
     lightMode,
     selectedCountry,
@@ -105,9 +106,9 @@ function HabitatComponent(props) {
         </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.blue)} />
-          <span>{t(countryName)}</span>
-          <div className={cx(styles.legendBox, styles.green)} />
           <span>{t(selectedCountry)}</span>
+          <div className={cx(styles.legendBox, styles.green)} />
+          <span>{t(defaultCountryName) || t(countryName)}</span>
         </div>
         {chartData && (
           <ChartInfoComponent chartInfo={chartInfo} {...props}>

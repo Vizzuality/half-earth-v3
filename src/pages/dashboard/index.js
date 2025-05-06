@@ -885,6 +885,45 @@ function DashboardContainer(props) {
   const getData = async () => {
     if (countryISO.toLowerCase() === 'eewwf') {
       EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.REGION_BIODIVERSITY_SHS_URL,
+        whereClause: `species = '${scientificName}'`,
+        returnGeometry: false,
+      }).then((features) => {
+        const shiScoreData = features.map((f) => {
+          return f.attributes;
+        });
+
+        let countryData;
+
+        // TODO: figure out what to do when no shs is returned
+        if (shiScoreData) {
+          countryData = shiScoreData.reduce((acc, obj) => {
+            const key = obj.name;
+            if (!acc[key]) {
+              acc[key] = { shs: [], frag: [] };
+            }
+            acc[key].shs.push(obj);
+            return acc;
+          }, {});
+        }
+
+        if (shiScoreData.frag) {
+          countryData = features.reduce((acc, obj) => {
+            const key = obj.country;
+            if (!acc[key]) {
+              acc[key] = { shs: [], frag: [] };
+            }
+
+            acc[key].frag.push(obj);
+            return acc;
+          }, countryData || {});
+        }
+
+        setDataByCountry(countryData);
+        setData({ ...data, habitatTrendData: countryData });
+      });
+
+      EsriFeatureService.getFeatures({
         url: DASHBOARD_URLS.REGION_BIODIVERSITY_URL,
         whereClause: `species = '${scientificName}'`,
         returnGeometry: false,
@@ -903,7 +942,7 @@ function DashboardContainer(props) {
         }, {});
 
         setSpiDataByCountry(spiCountryData);
-        setData({ habitatTrendData: [], spiScoreData: spiCountryData });
+        setData({ ...data, spiScoreData: spiCountryData });
       });
     } else {
       const habitatTrendUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
