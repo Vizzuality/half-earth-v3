@@ -63,13 +63,17 @@ function SpeciesSearchComponent(props) {
   const getSearchResults = async () => {
     controller = new AbortController();
     const { signal } = controller;
-
     const commonName =
       locale === 'fr' ? 'commonname_french' : 'commonname_english';
+    let whereClause = `scientificname like '%${searchInput}%' or ${commonName} like '%${searchInput}%'`;
+
+    if (countryISO === 'EEWWF') {
+      whereClause = `(scientificname like '%${searchInput}%' or commonname_english like '%${searchInput}%') and project = '${countryISO.toLowerCase()}'`;
+    }
 
     const searchSpecies = await EsriFeatureService.getFeatures({
       url: searchURL,
-      whereClause: `scientificname like '%${searchInput}%' or ${commonName} like '%${searchInput}%'`,
+      whereClause,
       returnGeometry: false,
       signal,
     });
