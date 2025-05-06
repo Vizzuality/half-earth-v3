@@ -30,7 +30,6 @@ function ProtectionContainer(props) {
 
     if (countryISO === 'EEWWF') {
       setDefaultCountryName('Global');
-      console.log(spiDataByCountry, 'spiDataByCountry');
       currentCountry = spiDataByCountry[countrySelected];
 
       if (currentCountry) {
@@ -73,7 +72,7 @@ function ProtectionContainer(props) {
       labels: dates,
       datasets: [
         {
-          label: `${defaultCountryName}`,
+          label: `${countrySelected}`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country'),
           borderColor: getCSSVariable('habitat-country'),
@@ -83,7 +82,7 @@ function ProtectionContainer(props) {
           data: defaultCountryScores.values,
         },
         {
-          label: `${countrySelected}`,
+          label: `${defaultCountryName}`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country-compare'),
           borderColor: getCSSVariable('habitat-country-compare'),

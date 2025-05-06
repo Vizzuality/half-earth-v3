@@ -100,9 +100,9 @@ function ProtectionComponent(props) {
         </div>
         <div className={styles.legend}>
           <div className={cx(styles.legendBox, styles.blue)} />
-          <span>{t(defaultCountryName) || t(countryName)}</span>
-          <div className={cx(styles.legendBox, styles.green)} />
           <span>{t(selectedCountry)}</span>
+          <div className={cx(styles.legendBox, styles.green)} />
+          <span>{t(defaultCountryName) || t(countryName)}</span>
         </div>
         {chartData && (
           <ChartInfoComponent chartInfo={chartInfo} {...props}>

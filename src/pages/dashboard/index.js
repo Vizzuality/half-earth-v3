@@ -600,7 +600,6 @@ function DashboardContainer(props) {
                 taxa,
               };
             }
-            console.log('found: ', scientificname);
           }),
         };
 
@@ -891,7 +890,6 @@ function DashboardContainer(props) {
         returnGeometry: false,
       }).then((features) => {
         const spiScoreData = features.map((f) => {
-          console.log(f.attributes);
           return f.attributes;
         });
 
@@ -904,7 +902,6 @@ function DashboardContainer(props) {
           return acc;
         }, {});
 
-        console.log(spiCountryData, 'country data');
         setSpiDataByCountry(spiCountryData);
         setData({ habitatTrendData: [], spiScoreData: spiCountryData });
       });
