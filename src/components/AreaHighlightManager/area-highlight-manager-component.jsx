@@ -98,6 +98,7 @@ function AreaHighlightManagerComponent(props) {
     if (results.length) {
       const foundLayer = results.find(
         (x) =>
+          x.graphic.attributes.NAME ||
           x.graphic.attributes.name ||
           x.graphic.attributes.NAME_1 ||
           x.graphic.attributes.WDPA_PID ||
@@ -245,7 +246,7 @@ function AreaHighlightManagerComponent(props) {
           // eslint-disable-next-line camelcase
           hoverName = NAME || NAME_1 || region_name;
         } else {
-          hoverName = name || territoire || Intrvnt;
+          hoverName = name || NAME || territoire || Intrvnt;
         }
 
         if (hoverName) {
