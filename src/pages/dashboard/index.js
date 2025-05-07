@@ -876,100 +876,114 @@ function DashboardContainer(props) {
 
   const getData = async () => {
     if (countryISO.toLowerCase() === 'eewwf') {
-      EsriFeatureService.getFeatures({
+      const shsCall = EsriFeatureService.getFeatures({
         url: DASHBOARD_URLS.REGION_BIODIVERSITY_SHS_URL,
         whereClause: `species = '${scientificName}'`,
         returnGeometry: false,
-      }).then((features) => {
-        const shiScoreData = features.map((f) => {
-          return f.attributes;
-        });
-
-        let countryData;
-
-        // TODO: figure out what to do when no shs is returned
-        if (shiScoreData) {
-          countryData = shiScoreData.reduce((acc, obj) => {
-            const key = obj.name;
-            if (!acc[key]) {
-              acc[key] = { shs: [], frag: [] };
-            }
-            acc[key].shs.push(obj);
-            return acc;
-          }, {});
-        }
-
-        if (shiScoreData.frag) {
-          countryData = features.reduce((acc, obj) => {
-            const key = obj.country;
-            if (!acc[key]) {
-              acc[key] = { shs: [], frag: [] };
-            }
-
-            acc[key].frag.push(obj);
-            return acc;
-          }, countryData || {});
-        }
-
-        Object.keys(countryData).forEach((key) => {
-          const cData = countryData[key];
-          const sortedData = cData.shs.sort((a, b) => {
-            const yearA = a.year;
-            const yearB = b.year;
-            if (yearA < yearB) {
-              return -1;
-            }
-            if (yearA > yearB) {
-              return 1;
-            }
-            return 0;
-          });
-
-          countryData[key].shs = sortedData;
-        });
-
-        setDataByCountry(countryData);
-        setData({ ...data, habitatTrendData: countryData });
       });
 
-      EsriFeatureService.getFeatures({
+      const spsCall = EsriFeatureService.getFeatures({
         url: DASHBOARD_URLS.REGION_BIODIVERSITY_URL,
         whereClause: `species = '${scientificName}'`,
         returnGeometry: false,
-      }).then((features) => {
-        const spiScoreData = features.map((f) => {
-          return f.attributes;
-        });
+      });
 
-        const spiCountryData = spiScoreData.reduce((acc, obj) => {
+      const apiCalls = [shsCall, spsCall];
+
+      const apiResponses = await Promise.all(
+        apiCalls.map(async (url) => {
+          const response = await url;
+          console.log(response);
+          // const d = await response.json();
+          return response;
+        })
+      );
+
+      const [habitatTrendData, spiScoreData] = apiResponses;
+
+      console.log(apiResponses);
+
+      const shiScoreData = habitatTrendData.map((f) => {
+        return f.attributes;
+      });
+
+      let countryData;
+
+      // TODO: figure out what to do when no shs is returned
+      if (shiScoreData) {
+        countryData = shiScoreData.reduce((acc, obj) => {
           const key = obj.name;
           if (!acc[key]) {
-            acc[key] = [];
+            acc[key] = { shs: [], frag: [] };
           }
-          acc[key].push(obj);
+          acc[key].shs.push(obj);
           return acc;
         }, {});
+      }
 
-        Object.keys(spiCountryData).forEach((key) => {
-          const countryData = spiCountryData[key];
-          const sortedData = countryData.sort((a, b) => {
-            const yearA = a.year;
-            const yearB = b.year;
-            if (yearA < yearB) {
-              return -1;
-            }
-            if (yearA > yearB) {
-              return 1;
-            }
-            return 0;
-          });
+      if (shiScoreData.frag) {
+        countryData = features.reduce((acc, obj) => {
+          const key = obj.country;
+          if (!acc[key]) {
+            acc[key] = { shs: [], frag: [] };
+          }
 
-          spiCountryData[key] = sortedData;
+          acc[key].frag.push(obj);
+          return acc;
+        }, countryData || {});
+      }
+
+      Object.keys(countryData).forEach((key) => {
+        const cData = countryData[key];
+        const sortedData = cData.shs.sort((a, b) => {
+          const yearA = a.year;
+          const yearB = b.year;
+          if (yearA < yearB) {
+            return -1;
+          }
+          if (yearA > yearB) {
+            return 1;
+          }
+          return 0;
         });
 
-        setSpiDataByCountry(spiCountryData);
-        setData({ ...data, spiScoreData: spiCountryData });
+        countryData[key].shs = sortedData;
       });
+
+      const spiData = spiScoreData.map((f) => {
+        return f.attributes;
+      });
+
+      const spiCountryData = spiData.reduce((acc, obj) => {
+        const key = obj.name;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+      }, {});
+
+      Object.keys(spiCountryData).forEach((key) => {
+        const countryData = spiCountryData[key];
+        const sortedData = countryData.sort((a, b) => {
+          const yearA = a.year;
+          const yearB = b.year;
+          if (yearA < yearB) {
+            return -1;
+          }
+          if (yearA > yearB) {
+            return 1;
+          }
+          return 0;
+        });
+
+        spiCountryData[key] = sortedData;
+      });
+
+      setDataByCountry(countryData);
+
+      setSpiDataByCountry(spiCountryData);
+      setData({ habitatTrendData: countryData, spiScoreData: spiCountryData });
     } else {
       const habitatTrendUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
       const spiScoreURL = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${scientificName}`;

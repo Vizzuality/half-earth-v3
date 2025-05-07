@@ -297,26 +297,29 @@ function BioDiversityContainer(props) {
       setGlobalHabitatScore(globalHabitat);
 
       getHabitatTableData();
-    }
 
-    if (data?.spiScoreData) {
-      const tableData = [];
-      const { spiScoreData } = data;
-      Object.keys(spiScoreData).forEach((key) => {
-        const item = spiScoreData[key];
-        const lastItem = last(item);
+      if (data?.spiScoreData) {
+        const tableData = [];
+        const { spiScoreData } = data;
+        Object.keys(spiScoreData).forEach((key) => {
+          const item = spiScoreData[key];
+          const lastItem = last(item);
 
-        setProtectionScore(parseFloat((lastItem.sps * 100).toFixed(1)));
-        tableData.push({
-          country: lastItem.name,
-          stewardship: lastItem.stewardship * 100,
-          rangeProtected: lastItem.range_protected,
-          targetProtected: lastItem.regional_target,
-          sps: lastItem.sps * 100,
+          tableData.push({
+            country: lastItem.name,
+            stewardship: lastItem.stewardship * 100,
+            rangeProtected: lastItem.range_protected,
+            targetProtected: lastItem.regional_target,
+            sps: lastItem.sps * 100,
+          });
         });
-      });
 
-      setProtectionTableData(tableData);
+        const globalValues = last(spiScoreData.Global).sps * 100;
+        setGlobalProtectionScore(globalValues);
+
+        setProtectionScore(parseFloat(globalValues.toFixed(1)));
+        setProtectionTableData(tableData);
+      }
     }
   }, [dataByCountry, data]);
 

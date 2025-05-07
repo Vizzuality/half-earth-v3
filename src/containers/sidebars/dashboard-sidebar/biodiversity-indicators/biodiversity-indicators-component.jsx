@@ -50,7 +50,7 @@ function BioDiversityComponent(props) {
   };
 
   useEffect(() => {
-    if (!protectionScore) return;
+    if (protectionScore === null) return;
     setIsLoading(false);
   }, [protectionScore]);
 
@@ -90,6 +90,7 @@ function BioDiversityComponent(props) {
               <span className={styles.perc}>{protectionScore}%</span>
               <span>{t('Protection Score')}</span>
             </button>
+
             {parseFloat(habitatScore) > 0 && (
               <button
                 type="button"
