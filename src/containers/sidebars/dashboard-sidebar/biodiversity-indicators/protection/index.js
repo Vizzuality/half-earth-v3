@@ -34,12 +34,12 @@ function ProtectionContainer(props) {
 
       if (currentCountry) {
         currentCountry?.forEach((row) => {
-          defaultCountryScores.values.push(row.sps);
+          defaultCountryScores.values.push(row.sps * 100);
         });
 
         globalCountry?.forEach((row) => {
           dates.push(row.year);
-          selectedCountryScores.values.push(row.sps);
+          selectedCountryScores.values.push(row.sps * 100);
         });
 
         if (globalCountry?.length) {
