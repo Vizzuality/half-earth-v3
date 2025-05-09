@@ -93,11 +93,15 @@ function HabitatContainer(props) {
       currentCountry = dataByCountry.Global;
 
       if (currentCountry) {
-        currentCountry.shs?.forEach((row) => {
-          defaultCountryScores.area.push(row.area_score * 100);
-          defaultCountryScores.connectivity.push(row.connectivity_score * 100);
-          defaultCountryScores.total.push(row.shs * 100);
-        });
+        if (countrySelected !== 'Global') {
+          currentCountry.shs?.forEach((row) => {
+            defaultCountryScores.area.push(row.area_score * 100);
+            defaultCountryScores.connectivity.push(
+              row.connectivity_score * 100
+            );
+            defaultCountryScores.total.push(row.shs * 100);
+          });
+        }
 
         dataByCountry[countrySelected]?.shs.forEach((row) => {
           dates.push(row.year);

@@ -33,9 +33,11 @@ function ProtectionContainer(props) {
       currentCountry = spiDataByCountry[countrySelected];
 
       if (currentCountry) {
-        currentCountry?.forEach((row) => {
-          defaultCountryScores.values.push(row.sps * 100);
-        });
+        if (countrySelected !== 'Global') {
+          currentCountry?.forEach((row) => {
+            defaultCountryScores.values.push(row.sps * 100);
+          });
+        }
 
         globalCountry?.forEach((row) => {
           dates.push(row.year);
