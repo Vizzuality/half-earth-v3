@@ -172,7 +172,7 @@ function DashboardContainer(props) {
 
     let gbifResponse;
 
-    if (countryISO === 'EEWWF') {
+    if (countryISO === 'EE') {
       gbifResponse = await EsriFeatureService.getFeatures({
         url: DASHBOARD_URLS.ZONE_OCCURRENCE,
         whereClause: `species = '${scientificName}' and source = 'GBIF' and  ISO3 IN ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`,
@@ -204,7 +204,7 @@ function DashboardContainer(props) {
     });
 
     let eBirdResponse;
-    if (countryISO === 'EEWWF') {
+    if (countryISO === 'EE') {
       eBirdResponse = await EsriFeatureService.getFeatures({
         url: DASHBOARD_URLS.ZONE_OCCURRENCE,
         whereClause: `species = '${scientificName}' and source = 'eBird' and ISO3 IN ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`,
@@ -404,7 +404,7 @@ function DashboardContainer(props) {
   const getSpeciesDetails = (speciesData, taxa) => {
     const results = speciesData.map(({ attributes }) => {
       const { source, species_url, threat_status, commonnames } =
-        countryISO === 'EEWWF'
+        countryISO === 'EE'
           ? attributes
           : JSON.parse(attributes.attributes.replace(/NaN/g, 'null'))[0];
 
@@ -467,7 +467,7 @@ function DashboardContainer(props) {
 
       const list = [...speciesData];
 
-      // if (countryISO.toUpperCase() !== 'EEWWF') {
+      // if (countryISO.toUpperCase() !== 'EE') {
       const buckets = bucketByTaxa(occurenceFeatures);
 
       // loop through buckets to get species info
@@ -518,8 +518,8 @@ function DashboardContainer(props) {
     let url = DASHBOARD_URLS.PRECALC_AOI;
     let whereClause = `GID_0 = '${countryISO}'`;
 
-    if (countryISO === 'EEWWF') {
-      whereClause = `project = '${countryISO.toLowerCase()}'`;
+    if (countryISO === 'EE') {
+      whereClause = `project = 'EEWWF'`; // '${countryISO.toLowerCase()}'`;
       url = DASHBOARD_URLS.REGION_SPECIES_SEARCH_URL;
 
       if (selectedRegion) {
@@ -645,7 +645,7 @@ function DashboardContainer(props) {
         const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
         getOccurenceSpecies(groupData);
-      } else if (selectedRegion?.region_key || countryISO === 'EEWWF') {
+      } else if (selectedRegion?.region_key || countryISO === 'EE') {
         const speciesData = {
           species: features.map((s) => {
             const {
@@ -875,7 +875,7 @@ function DashboardContainer(props) {
   };
 
   const getData = async () => {
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       const shsCall = EsriFeatureService.getFeatures({
         url: DASHBOARD_URLS.REGION_BIODIVERSITY_SHS_URL,
         whereClause: `species = '${scientificName}'`,
@@ -1036,7 +1036,7 @@ function DashboardContainer(props) {
     // Add event listener for popstate event
     window.addEventListener('popstate', handleBackButton);
 
-    if (countryISO !== 'EEWWF') {
+    if (countryISO !== 'EE') {
       setCountryDataLoading();
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,

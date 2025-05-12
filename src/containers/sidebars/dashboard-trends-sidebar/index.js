@@ -110,7 +110,7 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getSpiSelectSpeciesData = (selectSpeciesURL) => {
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       setSpiSelectSpeciesData(zoneHistrogramData[0]);
     } else {
       EsriFeatureService.getFeatures(selectSpeciesURL).then((features) => {
@@ -168,8 +168,8 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getZoneData = () => {
-    const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'eewwf';
-    let whereClause = `project = '${project}'`;
+    const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'ee';
+    let whereClause = `project = '${project === 'ee' ? 'eewwf' : project}'`;
 
     const landscapeRegions = `(1, 7, 9, 10, 15)`;
 
@@ -203,8 +203,8 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getZoneHistogramData = () => {
-    const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'eewwf';
-    let whereClause = `project = '${project}'`;
+    const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'ee';
+    let whereClause = `project = '${project === 'ee' ? 'eewwf' : project}'`;
 
     if (selectedProvince) {
       whereClause += ` and region_key = ${selectedProvince.region_key}`;
@@ -310,7 +310,7 @@ function DashboardTrendsSidebarContainer(props) {
 
     if (
       countryISO.toLowerCase() !== 'guy' &&
-      countryISO.toLowerCase() !== 'eewwf'
+      countryISO.toLowerCase() !== 'ee'
     ) {
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
@@ -331,7 +331,7 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(async () => {
     if (!map && !view) return;
 
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       // SPI Layers
       const eewwfSpiLayer = await EsriFeatureService.getFeatureLayer(
         EEWWF_SPI_FEATURE_ID,
@@ -518,7 +518,7 @@ function DashboardTrendsSidebarContainer(props) {
     removeRegionLayers(map, regionLayers);
     setSelectedRegionOption(REGION_OPTIONS.PROVINCES);
 
-    if (countryISO.toLowerCase() !== 'eewwf') {
+    if (countryISO.toLowerCase() !== 'ee') {
       const countryCode = countryISO;
 
       const countryURL = {
@@ -563,7 +563,7 @@ function DashboardTrendsSidebarContainer(props) {
   useEffect(() => {
     const countryCode = countryISO;
 
-    if (countryISO.toLowerCase() !== 'eewwf') {
+    if (countryISO.toLowerCase() !== 'ee') {
       const zone5Layer = map.layers.items.find(
         (item) => item.id === `${countryISO}-zone5-spi`
       );

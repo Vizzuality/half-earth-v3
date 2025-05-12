@@ -240,7 +240,7 @@ function DataLayerComponent(props) {
     // const habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/tile-urls?species=${speciesInfo.scientificname}&taxa=${speciesInfo.taxa}`;
     let habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/map?scientificname=${speciesInfo.scientificname}`;
 
-    if (countryISO === 'EEWWF') {
+    if (countryISO === 'EE') {
       habitatMapUrl = `${REGION_RANGE_MAP_URL}?species=${speciesInfo.scientificname}&taxa=${speciesInfo.taxa}`;
     }
     const response = await fetch(habitatMapUrl);

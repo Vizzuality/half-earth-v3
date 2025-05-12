@@ -86,7 +86,7 @@ function DashboardViewComponent(props) {
   }, [mapLegendLayers]);
 
   useEffect(() => {
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       setActiveTrend(MEX);
       setShiActiveTrend(MEX);
     }

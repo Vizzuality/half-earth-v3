@@ -260,7 +260,7 @@ function ScoreDistributionsShiComponent(props) {
         },
       };
 
-      if (countryISO !== 'EEWWF') {
+      if (countryISO !== 'EE') {
         if (shiActiveTrend === ZONE_3 || shiActiveTrend === ZONE_5) {
           const zoneName = shiActiveTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
           const data = zoneHistrogramData.filter((item) =>
@@ -334,10 +334,11 @@ function ScoreDistributionsShiComponent(props) {
       let zoneData = [];
 
       if (selectedProvince) {
-        const filteredZoneData = zoneHistrogramData.filter(
-          (item) =>
-            item.region_key === selectedProvince.region_key &&
-            item.project === countryISO.toLowerCase()
+        const filteredZoneData = zoneHistrogramData.filter((item) =>
+          item.region_key === selectedProvince.region_key &&
+          (item.project === countryISO.toLowerCase()) === 'ee'
+            ? 'eewwf'
+            : countryISO.toLowerCase()
         );
         zoneData = new Set(filteredZoneData);
       }

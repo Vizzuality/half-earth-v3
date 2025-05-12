@@ -186,7 +186,7 @@ function DashboardTrendsSidebar(props) {
             })}
             onClick={() => showHideLayers(TABS.SPI)}
           >
-            {countryISO.toLowerCase() !== 'eewwf' && (
+            {countryISO.toLowerCase() !== 'ee' && (
               <label htmlFor="spi">{spiValue}</label>
             )}
             <span>{t('Species Protection Index')}</span>
@@ -200,12 +200,12 @@ function DashboardTrendsSidebar(props) {
             onClick={() => showHideLayers(TABS.SHI)}
             name="shi"
           >
-            {countryISO.toLowerCase() !== 'eewwf' && (
+            {countryISO.toLowerCase() !== 'ee' && (
               <label htmlFor="shi">{shiValue}</label>
             )}
             <span>{t('Species Habitat Index')}</span>
           </button>
-          {countryISO.toLowerCase() !== 'eewwf' && (
+          {countryISO.toLowerCase() !== 'ee' && (
             <button
               type="button"
               aria-label={t('Species Information Index')}

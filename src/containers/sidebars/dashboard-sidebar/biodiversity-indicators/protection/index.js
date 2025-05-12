@@ -28,7 +28,7 @@ function ProtectionContainer(props) {
     const defaultCountryScores = { values: [] };
     const selectedCountryScores = { values: [] };
 
-    if (countryISO === 'EEWWF') {
+    if (countryISO === 'EE') {
       setDefaultCountryName('Global');
       currentCountry = spiDataByCountry[countrySelected];
 

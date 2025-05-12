@@ -149,7 +149,7 @@ function ScoreDistributionsSpiComponent(props) {
       );
     } else if (acceptedZones.includes(activeTrend)) {
       let data;
-      if (countryISO !== 'EEWWF') {
+      if (countryISO !== 'EE') {
         const zoneName = activeTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
         data = zoneHistrogramData.filter((item) =>
           item.region_key.includes(zoneName)
@@ -217,10 +217,11 @@ function ScoreDistributionsSpiComponent(props) {
       let zoneData = [];
 
       if (selectedProvince) {
-        const filteredZoneData = zoneHistrogramData.filter(
-          (item) =>
-            item.region_key === selectedProvince.region_key &&
-            item.project === countryISO.toLowerCase()
+        const filteredZoneData = zoneHistrogramData.filter((item) =>
+          item.region_key === selectedProvince.region_key &&
+          (item.project === countryISO.toLowerCase()) === 'ee'
+            ? 'eewwf'
+            : countryISO.toLowerCase()
         );
         zoneData = new Set(filteredZoneData);
       }

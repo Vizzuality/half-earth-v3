@@ -52,7 +52,7 @@ function AreaHighlightManagerComponent(props) {
   const [onPointerMoveHandler, setOnPointerMoveHandler] = useState(null);
 
   const getLayerView = async () => {
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       if (selectedIndex === NAVIGATION.TRENDS) {
         if (tabOption === TABS.SPI) {
           return view.whenLayerView(
@@ -308,7 +308,7 @@ function AreaHighlightManagerComponent(props) {
     if (view && Object.keys(regionLayers).length) {
       if (selectedIndex === NAVIGATION.TRENDS) {
         if (tabOption === TABS.SPI) {
-          if (countryISO.toLowerCase() === 'eewwf') {
+          if (countryISO.toLowerCase() === 'ee') {
             layer = await getLayerView();
           } else if (activeTrend !== PROVINCE_TREND) {
             layer = await getLayerView();
@@ -318,7 +318,7 @@ function AreaHighlightManagerComponent(props) {
             );
           }
         } else if (tabOption === TABS.SHI) {
-          if (countryISO.toLowerCase() === 'eewwf') {
+          if (countryISO.toLowerCase() === 'ee') {
             layer = await getLayerView();
           } else if (shiActiveTrend !== PROVINCE_TREND) {
             layer = await getLayerView();

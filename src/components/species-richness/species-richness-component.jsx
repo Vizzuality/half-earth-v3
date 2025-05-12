@@ -125,7 +125,7 @@ function SpeciesRichnessComponent(props) {
   };
 
   const getScores = () => {
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       let formattedData = [];
       formattedData = zoneData.find(
         (item) =>
@@ -339,7 +339,7 @@ function SpeciesRichnessComponent(props) {
   };
 
   useEffect(() => {
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       getScores();
     }
   }, []);

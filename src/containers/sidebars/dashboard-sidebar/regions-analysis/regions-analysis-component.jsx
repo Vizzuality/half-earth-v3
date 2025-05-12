@@ -265,7 +265,7 @@ function RegionsAnalysisComponent(props) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {
       removeRegionLayers();
-      if (countryISO.toUpperCase() === 'EEWWF') {
+      if (countryISO.toUpperCase() === 'EE') {
         setSelectedRegionOption(REGION_OPTIONS.DISSOLVED_NBS);
         displayLayer(REGION_OPTIONS.DISSOLVED_NBS);
       } else {
@@ -314,7 +314,7 @@ function RegionsAnalysisComponent(props) {
           onChange={optionSelected}
           value={selectedRegionOption}
         >
-          {countryISO.toUpperCase() !== 'EEWWF' && (
+          {countryISO.toUpperCase() !== 'EE' && (
             <>
               <FormControlLabel
                 value={REGION_OPTIONS.PROTECTED_AREAS}
@@ -336,7 +336,7 @@ function RegionsAnalysisComponent(props) {
               label={t('Forest Titles')}
             />
           )}
-          {countryISO.toUpperCase() === 'EEWWF' && (
+          {countryISO.toUpperCase() === 'EE' && (
             <FormControlLabel
               value={REGION_OPTIONS.DISSOLVED_NBS}
               control={<Radio />}

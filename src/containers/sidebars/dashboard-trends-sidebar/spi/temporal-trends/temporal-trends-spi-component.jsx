@@ -74,7 +74,7 @@ function TemporalTrendsSpiComponent(props) {
     setShowTable(false);
     setActiveTrend(option);
 
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       if (option !== LND && option !== INT) {
         EsriFeatureService.getFeatures({
           url: COUNTRIES_DATA_SERVICE_URL,
@@ -101,7 +101,7 @@ function TemporalTrendsSpiComponent(props) {
 
   useEffect(() => {
     if (clickedRegion) {
-      if (countryISO.toLowerCase() === 'eewwf') {
+      if (countryISO.toLowerCase() === 'ee') {
         setActiveTrend(clickedRegion.iso3);
       }
     }
@@ -116,7 +116,7 @@ function TemporalTrendsSpiComponent(props) {
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
-        {countryISO.toLowerCase() !== 'eewwf' && (
+        {countryISO.toLowerCase() !== 'ee' && (
           <p className={styles.description}>
             <T
               _str="Since {startYear}, the {countryName} has added {areaBold} of land into its protected area network, representing {areaProtectedPercentBold} of the total land in the country, increasing its Species Protection Index from {spiInfoBold}"
@@ -139,7 +139,7 @@ function TemporalTrendsSpiComponent(props) {
             />
           </p>
         )}
-        {countryISO.toLowerCase() !== 'eewwf' && (
+        {countryISO.toLowerCase() !== 'ee' && (
           <div className={styles.options}>
             <div className={styles.btnGroup}>
               <Button
@@ -189,7 +189,7 @@ function TemporalTrendsSpiComponent(props) {
                     type="rectangular"
                     className={cx(styles.saveButton, styles.notActive)}
                     label={
-                      countryISO.toLowerCase() !== 'eewwf'
+                      countryISO.toLowerCase() !== 'ee'
                         ? t('View Full Province table')
                         : t('View Full Species table')
                     }
@@ -213,7 +213,7 @@ function TemporalTrendsSpiComponent(props) {
             )}
           </div>
         )}
-        {countryISO.toLowerCase() === 'eewwf' && (
+        {countryISO.toLowerCase() === 'ee' && (
           <div className={styles.options}>
             <Button
               type="rectangular"
@@ -274,11 +274,11 @@ function TemporalTrendsSpiComponent(props) {
           </div>
         )}
       </div>
-      {countryISO.toLowerCase() === 'eewwf' &&
+      {countryISO.toLowerCase() === 'ee' &&
         eewwfRegions.includes(activeTrend) && (
           <ZoneChartContainer {...props} zone={activeTrend} />
         )}
-      {!showTable && countryISO.toLowerCase() !== 'eewwf' && (
+      {!showTable && countryISO.toLowerCase() !== 'ee' && (
         <>
           {activeTrend === NATIONAL_TREND && (
             <NationalChartContainer {...props} />

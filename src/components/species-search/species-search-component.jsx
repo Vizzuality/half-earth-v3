@@ -36,7 +36,7 @@ function SpeciesSearchComponent(props) {
   let searchURL =
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_species_list_for_search/FeatureServer';
 
-  if (countryISO === 'GUY' || countryISO === 'EEWWF') {
+  if (countryISO === 'GUY' || countryISO === 'EE') {
     searchURL = DASHBOARD_URLS.REGION_SPECIES_SEARCH_URL;
   }
 
@@ -67,8 +67,8 @@ function SpeciesSearchComponent(props) {
       locale === 'fr' ? 'commonname_french' : 'commonname_english';
     let whereClause = `scientificname like '%${searchInput}%' or ${commonName} like '%${searchInput}%'`;
 
-    if (countryISO === 'EEWWF') {
-      whereClause = `(scientificname like '%${searchInput}%' or commonname_english like '%${searchInput}%') and project = '${countryISO.toLowerCase()}'`;
+    if (countryISO === 'EE') {
+      whereClause = `(scientificname like '%${searchInput}%' or commonname_english like '%${searchInput}%') and project = 'EEWWF'`; // ${countryISO.toLowerCase()}'`;
     }
 
     const searchSpecies = await EsriFeatureService.getFeatures({

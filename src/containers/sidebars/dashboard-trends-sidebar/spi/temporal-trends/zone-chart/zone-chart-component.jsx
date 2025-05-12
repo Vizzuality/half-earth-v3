@@ -90,7 +90,7 @@ function ZoneChartComponent(props) {
 
   const loadChartData = () => {
     let chartData;
-    if (countryISO === 'EEWWF') {
+    if (countryISO === 'EE') {
       if (clickedRegion) {
         const iso3 = zone === clickedRegion.iso3 ? zone : clickedRegion.iso3;
         chartData = zoneData.filter(

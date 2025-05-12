@@ -54,7 +54,7 @@ function TemporalTrendsShiComponent(props) {
     setClickedRegion(null);
     setShiActiveTrend(option);
 
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       if (option !== LND && option !== INT) {
         EsriFeatureService.getFeatures({
           url: COUNTRIES_DATA_SERVICE_URL,
@@ -87,7 +87,7 @@ function TemporalTrendsShiComponent(props) {
 
   useEffect(() => {
     if (clickedRegion) {
-      if (countryISO.toLowerCase() === 'eewwf') {
+      if (countryISO.toLowerCase() === 'ee') {
         setShiActiveTrend(clickedRegion.iso3);
       }
     }
@@ -101,7 +101,7 @@ function TemporalTrendsShiComponent(props) {
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
-        {countryISO.toLowerCase() !== 'eewwf' && (
+        {countryISO.toLowerCase() !== 'ee' && (
           <p className={styles.description}>
             <T
               _str="Since {startYear}, the terrestrial vertebrate species of the {countryNameBold} have lost an average of {lostAvgBold} of their suitable habitat, leading to the country having a Species Habitat Index of {shiValueBold}."
@@ -117,7 +117,7 @@ function TemporalTrendsShiComponent(props) {
             'The Area component addresses changes in habitat extent while the Connectivity component addresses changes in the fragmentation of habitat.'
           )}
         </p>
-        {countryISO.toLowerCase() !== 'eewwf' && (
+        {countryISO.toLowerCase() !== 'ee' && (
           <div className={styles.options}>
             <div className={styles.btnGroup}>
               <Button
@@ -172,7 +172,7 @@ function TemporalTrendsShiComponent(props) {
             />
           </div>
         )}
-        {countryISO.toLowerCase() === 'eewwf' && (
+        {countryISO.toLowerCase() === 'ee' && (
           <div className={styles.options}>
             <Button
               type="rectangular"
@@ -233,11 +233,11 @@ function TemporalTrendsShiComponent(props) {
           </div>
         )}
       </div>
-      {countryISO.toLowerCase() === 'eewwf' &&
+      {countryISO.toLowerCase() === 'ee' &&
         eewwfRegions.includes(shiActiveTrend) && (
           <ZoneChartContainer {...props} zone={shiActiveTrend} />
         )}
-      {countryISO.toLowerCase() !== 'eewwf' && (
+      {countryISO.toLowerCase() !== 'ee' && (
         <>
           {shiActiveTrend === NATIONAL_TREND && (
             <NationalChartContainer {...props} />

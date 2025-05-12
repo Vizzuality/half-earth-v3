@@ -99,10 +99,10 @@ function DashboardSidebar(props) {
         {lightMode && <DarkModeIcon className={styles.icon} />}
       </button>
       <div className={styles.logoContainer}>
-        {countryISO.toUpperCase() !== 'EEWWF' && logo}
+        {countryISO.toUpperCase() !== 'EE' && logo}
 
-        {countryISO.toUpperCase() !== 'EEWWF' && <h1>{t(countryName)}</h1>}
-        {countryISO.toUpperCase() === 'EEWWF' && <h1>Organization</h1>}
+        {countryISO.toUpperCase() !== 'EE' && <h1>{t(countryName)}</h1>}
+        {countryISO.toUpperCase() === 'EE' && <h1>Organization</h1>}
       </div>
       <div className={styles.regionFilter}>
         <DashboardNav {...props} />

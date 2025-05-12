@@ -9,7 +9,7 @@ function ShiComponent(props) {
     React.useState(false);
 
   useEffect(() => {
-    if (countryISO.toLowerCase() === 'eewwf' && !clickedRegion) {
+    if (countryISO.toLowerCase() === 'ee' && !clickedRegion) {
       setShowScoreDistribution(false);
     } else {
       setShowScoreDistribution(true);

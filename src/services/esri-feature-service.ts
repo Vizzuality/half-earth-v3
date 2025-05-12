@@ -1,11 +1,11 @@
-import { LAYER_OPTIONS, LAYER_TITLE_TYPES } from 'constants/dashboard-constants.js';
-import { LAYERS_URLS } from 'constants/layers-urls';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
-    PROTECTED_AREA_EEWWF_FEATURE_ID, PROTECTED_AREA_FEATURE_URL, PROTECTED_AREA_GIN_FEATURE_URL,
-    PROTECTED_AREA_GUY_FEATURE_URL, PROTECTED_AREA_LIB_FEATURE_URL, PROTECTED_AREA_SLE_FEATURE_URL,
-    REGION_RANGE_MAP_URL
+  PROTECTED_AREA_EEWWF_FEATURE_ID,
+  PROTECTED_AREA_FEATURE_URL,
+  PROTECTED_AREA_GIN_FEATURE_URL,
+  PROTECTED_AREA_GUY_FEATURE_URL,
+  PROTECTED_AREA_LIB_FEATURE_URL,
+  PROTECTED_AREA_SLE_FEATURE_URL,
+  REGION_RANGE_MAP_URL,
 } from 'utils/dashboard-utils';
 
 import CSVLayer from '@arcgis/core/layers/CSVLayer';
@@ -15,8 +15,19 @@ import TileLayer from '@arcgis/core/layers/TileLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import {
-    addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
+  addFeatures,
+  applyEdits,
+  IQueryFeaturesResponse,
+  queryFeatures,
 } from '@esri/arcgis-rest-feature-layer';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
+
+import {
+  LAYER_OPTIONS,
+  LAYER_TITLE_TYPES,
+} from 'constants/dashboard-constants.js';
+import { LAYERS_URLS } from 'constants/layers-urls';
+import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 function getFeatures({
   url,
@@ -75,7 +86,7 @@ async function getFeatureLayer(portalItemId, countryISO, id, classType = null) {
     id === 'GUY-zone3-spi' ||
     id === 'GUY-zone3-shi' ||
     id === 'GUY-zone5-shi' ||
-    countryISO === 'EEWWF'
+    countryISO === 'EE'
   ) {
     definitionExpression = '';
   }
@@ -109,7 +120,7 @@ function getFeatureOccurenceLayer(
   countryISO
 ) {
   let isoFilter = `iso3 = '${countryISO}'`;
-  if (countryISO === 'EEWWF') {
+  if (countryISO === 'EE') {
     isoFilter = `iso3 in ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`;
   }
   return new FeatureLayer({
@@ -250,7 +261,7 @@ async function addProtectedAreaLayer(id, countryISO = 'COD') {
     case 'GUY':
       featurePortalId = PROTECTED_AREA_GUY_FEATURE_URL;
       break;
-    case 'EEWWF':
+    case 'EE':
       featurePortalId = PROTECTED_AREA_EEWWF_FEATURE_ID;
       break;
     default:

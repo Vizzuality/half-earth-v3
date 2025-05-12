@@ -316,7 +316,7 @@ function GroupedListComponent(props) {
           loadingCount += 1;
 
           let layerId = GBIF_OCCURENCE_URL;
-          if (countryISO === 'EEWWF') {
+          if (countryISO === 'EE') {
             layerId = REGION_OCCURENCE_ID;
           }
 

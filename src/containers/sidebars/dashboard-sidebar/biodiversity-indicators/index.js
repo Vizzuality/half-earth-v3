@@ -65,7 +65,7 @@ function BioDiversityContainer(props) {
     let countryAreaScore = 0;
     let countryConnectivityScore = 0;
 
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       countryAreaScore = country?.shs[lastCountryYearValue].area_score;
       countryConnectivityScore =
         country?.shs[lastCountryYearValue].connectivity_score;
@@ -88,7 +88,7 @@ function BioDiversityContainer(props) {
   const getHabitatScore = () => {
     let country;
 
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       country = dataByCountry.Global;
     } else {
       country = dataByCountry[countryName];
@@ -109,7 +109,7 @@ function BioDiversityContainer(props) {
     );
 
     if (dataByCountry.Global?.shs[lastCountryYearValue]) {
-      if (countryISO.toLowerCase() === 'eewwf') {
+      if (countryISO.toLowerCase() === 'ee') {
         globalAreaScore =
           dataByCountry.Global?.shs[lastCountryYearValue].area_score;
         globalConnectivityScore =
@@ -141,7 +141,7 @@ function BioDiversityContainer(props) {
   const getHabitatTableData = () => {
     const tableData = [];
 
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       Object.keys(dataByCountry).forEach((country) => {
         const item = dataByCountry[country].shs;
         const lastItem = last(item);
@@ -334,7 +334,7 @@ function BioDiversityContainer(props) {
         );
 
         const countryData = data.spiScoreData.filter((country) => {
-          if (countryISO.toLowerCase() === 'eewwf') {
+          if (countryISO.toLowerCase() === 'ee') {
             return (
               country.country_name.toUpperCase() ===
               data.spiScoreData[0].country_name.toUpperCase()

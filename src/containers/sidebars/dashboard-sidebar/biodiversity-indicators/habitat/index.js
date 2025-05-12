@@ -88,7 +88,7 @@ function HabitatContainer(props) {
     const defaultCountryScores = { area: [], connectivity: [], total: [] };
     const selectedCountryScores = { area: [], connectivity: [], total: [] };
 
-    if (countryISO === 'EEWWF') {
+    if (countryISO === 'EE') {
       setDefaultCountryName('Global');
       currentCountry = dataByCountry.Global;
 
