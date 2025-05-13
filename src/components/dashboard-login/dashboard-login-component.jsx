@@ -5,6 +5,7 @@ import { useT } from '@transifex/react';
 import IdentityManager from '@arcgis/core/identity/IdentityManager';
 import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
 import Portal from '@arcgis/core/portal/Portal';
+import { FormControl, TextField } from '@mui/material';
 
 import Button from 'components/button';
 
@@ -18,10 +19,15 @@ const info = new OAuthInfo({
 
 function DashboardLoginComponent(props) {
   const { setLoggedIn, setUser } = props;
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const t = useT();
 
   const handleLogin = () => {
-    IdentityManager.getCredential(info.portalUrl);
+    // IdentityManager.getCredential(info.portalUrl);
+    if (email === 'walter.jetz@yale.edu' && password === 'nbis') {
+      setLoggedIn(true);
+    }
   };
 
   const handleLoginSuccess = () => {
@@ -45,7 +51,8 @@ function DashboardLoginComponent(props) {
   return (
     <div className={styles.container}>
       <div className={styles.loginForm}>
-        {/* <FormControl variant="standard">
+        <h1 className={styles.title}>{t('Login')}</h1>
+        <FormControl variant="standard">
           <TextField
             label={t('Email address')}
             value={email}
@@ -57,13 +64,13 @@ function DashboardLoginComponent(props) {
         <FormControl variant="standard">
           <TextField
             label={t('Password')}
-            type='password'
+            type="password"
             value={password}
             onChange={(event) => {
               setPassword(event.target.value);
             }}
           />
-        </FormControl> */}
+        </FormControl>
         <Button
           className={styles.saveButton}
           type="rectangular"
