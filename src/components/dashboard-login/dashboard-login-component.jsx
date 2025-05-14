@@ -39,6 +39,15 @@ function DashboardLoginComponent(props) {
     });
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      // Your code to fire the event goes here
+      console.log('Enter key pressed!');
+      // For example, you might call a function:
+      handleLogin();
+    }
+  };
+
   useEffect(() => {
     IdentityManager.registerOAuthInfos([info]);
     IdentityManager.checkSignInStatus(info.portalUrl)
@@ -56,6 +65,7 @@ function DashboardLoginComponent(props) {
           <TextField
             label={t('Email address')}
             value={email}
+            onKeyDown={handleKeyPress}
             onChange={(event) => {
               setEmail(event.target.value);
             }}
@@ -66,6 +76,7 @@ function DashboardLoginComponent(props) {
             label={t('Password')}
             type="password"
             value={password}
+            onKeyDown={handleKeyPress}
             onChange={(event) => {
               setPassword(event.target.value);
             }}
