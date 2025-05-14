@@ -4,7 +4,10 @@ import { Line } from 'react-chartjs-2';
 import { useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
-import { REGION_RANGE_MAP_URL } from 'utils/dashboard-utils';
+import {
+  REGION_RANGE_MAP_URL,
+  EEWWF_COUNTRY_LINES_FEATURE_ID,
+} from 'utils/dashboard-utils';
 
 import {
   Chart as ChartJS,
@@ -317,6 +320,22 @@ function DataLayerComponent(props) {
       },
     ];
     setDataPoints(publicData);
+
+    if (countryISO.toUpperCase() === 'EE') {
+      const regions = [
+        ...regionsData,
+        {
+          label: t('NBS-OP Interventions'),
+          items: [],
+          id: LAYER_OPTIONS.EEWWF_COUNTRY_LINES,
+          total_no_rows: '',
+          isActive: false,
+          showChildren: false,
+          type: DATA_POINT_TYPE.PUBLIC,
+        },
+      ];
+      setRegionsData(regions);
+    }
   }, [dataLayerData]);
 
   useEffect(() => {
