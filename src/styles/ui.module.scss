@@ -18,7 +18,7 @@ $scrollbar-width: 4px;
 
 .uiTopLeft {
   position: absolute;
-  top:  $ui-left-top;
+  top: $ui-left-top;
   left: $site-gutter;
 }
 
@@ -30,7 +30,7 @@ $scrollbar-width: 4px;
 
 @mixin topLeft() {
   position: absolute;
-  top:  $ui-left-top;
+  top: $ui-left-top;
   left: $site-gutter;
 }
 
@@ -45,31 +45,49 @@ $scrollbar-width: 4px;
   right: 0;
 }
 
-@mixin backdropBlur($colour: rgba(9, 20, 26, 0.4), $fallback: $space-background, $fallbackOpacity: 0.7) {
+@mixin backdropBlur(
+  $colour: rgba(9, 20, 26, 0.6),
+  $fallback: $space-background,
+  $fallbackOpacity: 0.7
+) {
   background-color: rgba($fallback, $fallbackOpacity);
 
-  @supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
-      background-color: $colour;
-      -webkit-backdrop-filter: blur($blur-level);
-      backdrop-filter: blur($blur-level);
+  @supports (
+    (-webkit-backdrop-filter: blur($blur-level)) or
+      (backdrop-filter: blur($blur-level))
+  ) {
+    background-color: $colour;
+    -webkit-backdrop-filter: blur($blur-level);
+    backdrop-filter: blur($blur-level);
   }
 }
 
-@mixin lightBackdropBlur($colour: rgba(255, 255, 255, 0.7), $fallback: $space-background, $fallbackOpacity: 0.7) {
+@mixin lightBackdropBlur(
+  $colour: rgba(255, 255, 255, 0.7),
+  $fallback: $space-background,
+  $fallbackOpacity: 0.7
+) {
   background-color: rgba($fallback, $fallbackOpacity);
 
-  @supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
-      background-color: $colour;
-      -webkit-backdrop-filter: blur($blur-level);
-      backdrop-filter: blur($blur-level);
+  @supports (
+    (-webkit-backdrop-filter: blur($blur-level)) or
+      (backdrop-filter: blur($blur-level))
+  ) {
+    background-color: $colour;
+    -webkit-backdrop-filter: blur($blur-level);
+    backdrop-filter: blur($blur-level);
   }
 }
 
 %spacer {
   height: 1px;
-  background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
+  background-image: linear-gradient(
+    to right,
+    rgba($alto, $spacer-edge-opacity),
+    rgba($white, $spacer-middle-opacity),
+    rgba($alto, $spacer-edge-opacity)
+  );
 }
-
 
 %verticalScrollbar {
   overflow-y: auto;
