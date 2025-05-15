@@ -52,7 +52,7 @@ function ScoreDistributionsSpiComponent(props) {
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
 
-  const threatStatuses = ['LEAST CONCERN', 'EXTINCT', 'EXTINCT IN THE WILD'];
+  const threatStatuses = ['EXTINCT', 'EXTINCT IN THE WILD'];
   const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
 
   const toolTipTitle = (tooltipItems) => {
@@ -233,6 +233,7 @@ function ScoreDistributionsSpiComponent(props) {
             const val = value;
             if (
               val.species_url &&
+              val.stewardship > 0.1 &&
               !threatStatuses.includes(val.threat_status.toUpperCase())
             ) {
               species.push({
@@ -324,7 +325,7 @@ function ScoreDistributionsSpiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SPS between')} <b>0 - 5:</b>
+          {t('Species Highlights')}
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}
@@ -345,11 +346,10 @@ function ScoreDistributionsSpiComponent(props) {
                           {s.species}
                         </span>
                       </div>
-                      <span
-                        className={styles.spsScore}
-                      >{`SPS: ${s.species_protection_score_all?.toFixed(
-                        1
-                      )}`}</span>
+                      <span className={styles.spsScore}>{`SPS: ${Math.min(
+                        100,
+                        s.species_protection_score_all * 100
+                      )?.toFixed(1)}`}</span>
                     </button>
                   </li>
                 );

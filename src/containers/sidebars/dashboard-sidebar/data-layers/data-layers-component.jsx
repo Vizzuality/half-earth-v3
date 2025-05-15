@@ -4,10 +4,7 @@ import { Line } from 'react-chartjs-2';
 import { useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
-import {
-  REGION_RANGE_MAP_URL,
-  EEWWF_COUNTRY_LINES_FEATURE_ID,
-} from 'utils/dashboard-utils';
+import { REGION_RANGE_MAP_URL } from 'utils/dashboard-utils';
 
 import {
   Chart as ChartJS,
