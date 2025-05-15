@@ -46,6 +46,7 @@ function ProtectionComponent(props) {
     chartData,
     chartOptions,
     lang,
+    countryISO,
   } = props;
 
   const [chartInfo, setChartInfo] = useState();
@@ -119,7 +120,7 @@ function ProtectionComponent(props) {
               <thead>
                 <tr>
                   <th className={cx(styles.textLeft, styles.w20)}>
-                    {t('Country')}
+                    {countryISO === 'EE' ? t('Region') : t('Country')}
                   </th>
                   <th className={cx(styles.textCenter)}>{t('Stewardship')}</th>
                   <th className={cx(styles.textCenter, styles.w28)}>

@@ -45,6 +45,7 @@ function HabitatComponent(props) {
     chartData,
     onCountryChange,
     chartOptions,
+    countryISO,
     updateCountry,
     lang,
   } = props;
@@ -125,7 +126,7 @@ function HabitatComponent(props) {
               <thead>
                 <tr>
                   <th className={cx(styles.textLeft, styles.w28)}>
-                    {t('Country')}
+                    {countryISO === 'EE' ? t('Region') : t('Country')}
                   </th>
                   <th className={cx(styles.textCenter, styles.w14)}>
                     {t('Stewardship')}
