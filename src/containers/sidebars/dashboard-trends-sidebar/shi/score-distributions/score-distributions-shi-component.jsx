@@ -351,6 +351,7 @@ function ScoreDistributionsShiComponent(props) {
             const val = value[''];
             if (
               val.species_url &&
+              val.stewardship > 0.1 &&
               !threatStatuses.includes(val.threat_status.toUpperCase())
             ) {
               species.push({
