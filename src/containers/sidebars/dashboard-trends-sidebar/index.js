@@ -169,23 +169,27 @@ function DashboardTrendsSidebarContainer(props) {
 
   const getZoneData = () => {
     const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'ee';
-    let whereClause = `project = '${project === 'ee' ? 'eewwf' : project}'`;
+    let whereClause = `project in ('${project === 'ee' ? 'eewwf' : project}'`;
 
     const landscapeRegions = `(1, 7, 9, 10, 15)`;
 
     if (tabOption === TABS.SPI) {
       if (activeTrend === 'LND') {
-        whereClause += ` and region_key in ${landscapeRegions}`;
+        whereClause += `) and region_key in ${landscapeRegions}`;
       } else if (activeTrend === 'INT') {
-        whereClause += ` and region_key not in ${landscapeRegions}`;
+        whereClause += `) and region_key not in ${landscapeRegions}`;
+      } else {
+        whereClause += `, 'country')`;
       }
     }
 
     if (tabOption === TABS.SHI) {
       if (shiActiveTrend === 'LND') {
-        whereClause += ` and region_key in ${landscapeRegions}`;
+        whereClause += `) and region_key in ${landscapeRegions}`;
       } else if (shiActiveTrend === 'INT') {
-        whereClause += ` and region_key not in ${landscapeRegions}`;
+        whereClause += `) and region_key not in ${landscapeRegions}`;
+      } else {
+        whereClause += `, 'country') `;
       }
     }
 

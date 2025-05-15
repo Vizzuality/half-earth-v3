@@ -154,7 +154,7 @@ function ZoneChartComponent(props) {
       lineColors.find(
         (color) =>
           color.iso3 === item.iso3 && color.region_key === item.region_key
-      )?.color || getCSSVariable('oslo-gray')
+      )?.color || getCSSVariable('white')
     );
   };
 
