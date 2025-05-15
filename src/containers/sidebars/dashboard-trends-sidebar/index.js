@@ -199,7 +199,7 @@ function DashboardTrendsSidebarContainer(props) {
     };
 
     EsriFeatureService.getFeatures(zoneDataUrl).then((features) => {
-      const data = features?.map((f) => f.attributes).reverse();
+      const data = features?.map((f) => f.attributes);
       const filteredData =
         data?.filter((item) => item.habitat_index !== null) || [];
       setZoneData(filteredData);
