@@ -170,6 +170,10 @@ function DashboardTrendsSidebar(props) {
       setMapLegendLayers([item]);
     }
 
+    if (countryISO.toLowerCase() === 'ee') {
+      setMapLegendLayers([]);
+    }
+
     setTabOption(tabClicked);
   };
 
