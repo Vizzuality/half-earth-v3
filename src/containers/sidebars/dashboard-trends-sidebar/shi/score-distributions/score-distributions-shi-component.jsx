@@ -12,6 +12,7 @@ import Button from 'components/button';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
+import TaxaImageComponent from 'components/taxa-image';
 
 import {
   NAVIGATION,
@@ -350,14 +351,14 @@ function ScoreDistributionsShiComponent(props) {
           values.forEach((value) => {
             const val = value[''];
             if (
-              val.species_url &&
-              val.stewardship > 0.1 &&
-              !threatStatuses.includes(val.threat_status.toUpperCase())
+              val.stewardship >= 0.05 &&
+              !threatStatuses.includes(val.threat_status?.toUpperCase())
             ) {
               species.push({
                 scientificname: val.species,
                 species_url: val.species_url,
                 habitat_score: val.shs_score,
+                taxa: val.taxa,
               });
             }
           });
@@ -479,7 +480,13 @@ function ScoreDistributionsShiComponent(props) {
                       selectSpecies(s.scientificname ?? s.ScientificName)
                     }
                   >
-                    <img src={s.species_url ?? s.SpeciesImage} alt="species" />
+                    {s.species_url && (
+                      <img
+                        src={s.species_url ?? s.SpeciesImage}
+                        alt="species"
+                      />
+                    )}
+                    {!s.species_url && <TaxaImageComponent taxa={s?.taxa} />}
                     <div className={styles.spsInfo}>
                       <span className={styles.name}>
                         {s.scientificname ?? s.ScientificName}
