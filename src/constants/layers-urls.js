@@ -462,9 +462,9 @@ export const LAYERS_URLS = {
   [HALF_EARTH_FUTURE_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/5e59f968feaf4efe8846869931b3b49c/rest/services/places_precalculated_aoi_summaries_updated_20250415/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_with_20places_updated_202503/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_20places_20250522/FeatureServer/0',
   [SPECIFIC_REGIONS_TILE_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/5bd5e7f56500423cb0df4145c4cb4319/rest/services/regions_precalculated_aoi_summaries_updated_20240321/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/49260dded8b14da3ad3452490d171264/rest/services/regions_precalculated_aoi_summaries_updated_20250521/FeatureServer/0',
   [SPECIFIC_REGIONS_WDPA_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SpecificRegions_wdpa_202401/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SpecificRegions_wdpa_202505/FeatureServer/0',
 };
