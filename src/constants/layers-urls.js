@@ -466,5 +466,5 @@ export const LAYERS_URLS = {
   [SPECIFIC_REGIONS_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/49260dded8b14da3ad3452490d171264/rest/services/regions_precalculated_aoi_summaries_updated_20250521/FeatureServer/0',
   [SPECIFIC_REGIONS_WDPA_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SpecificRegions_wdpa_202505/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_specific_regions_20250528/FeatureServer/0',
 };
