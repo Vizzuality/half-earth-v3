@@ -213,8 +213,8 @@ function CountryEntryTooltipComponent({
           </span>
           <span className={styles.text}>
             {landTab
-              ? t('of additional land protection is needed')
-              : t('of additional marine protection is needed')}
+              ? t('of additional land protection is needed (as of 2023)')
+              : t('of additional marine protection is needed (as of 2023)')}
           </span>
         </div>
       </section>

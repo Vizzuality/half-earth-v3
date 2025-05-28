@@ -453,12 +453,12 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_with_gadm1_updated_202503/FeatureServer/0',
   // 99%, 90%, 50% WDPA simplifications
   [WDPA_OECM_FEATURE_LAYER]: [
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_202501_Simplification50_20250415/FeatureServer/0',
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_202501_Simplification90_20250414/FeatureServer/0',
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_202501_Simplification99_20250414/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/adfdb53a755a4916af057be6bb824422/rest/services/WDPA_Terrestrial_202501_Simplification50_20250527/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/cc75600a103b4e39a14c103a62a80091/rest/services/WDPA_Terrestrial_202501_Simplification90_20250527/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/4530b1d34e74497ea64938055867115d/rest/services/WDPA_Terrestrial_202501_Simplification99_20250527/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/35903af4b187464cb78ce2136950cc34/rest/services/wdpa_precalculated_aoi_summaries_updated_20250415/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/5b474f385c984b44811cdfad8ad37657/rest/services/wdpa_precalculated_aoi_summaries_updated_20250527/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/5e59f968feaf4efe8846869931b3b49c/rest/services/places_precalculated_aoi_summaries_updated_20250415/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:
