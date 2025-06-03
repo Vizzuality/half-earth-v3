@@ -239,7 +239,7 @@ function NrcContent({
 
               {!isMobile && (
                 <div className={styles.sourceText}>
-                  <p>{t('Source:')} Map of Life (2025)</p>{' '}
+                  <p>{t('Source:')}</p>{' '}
                   <ReactMarkdown
                     key={challengesSources}
                     source={challengesSources}

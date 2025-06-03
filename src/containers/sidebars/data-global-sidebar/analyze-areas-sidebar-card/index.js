@@ -251,7 +251,7 @@ function AnalyzeAreasContainer(props) {
 
       const additionalProtectedAreasLayers = [
         PROTECTED_AREAS_VECTOR_TILE_LAYER,
-        // COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+        COMMUNITY_AREAS_VECTOR_TILE_LAYER,
       ];
       if (protectedAreasSelected) {
         additionalProtectedAreasLayers.forEach((layer) => {
