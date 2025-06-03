@@ -204,7 +204,6 @@ function AOISidebar({
                       {area}{' '}
                       <span>
                         {t('km')}
-                        <sup>2</sup>
                       </span>
                     </p>
                   ) : (

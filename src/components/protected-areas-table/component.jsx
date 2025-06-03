@@ -169,7 +169,6 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
             <div className={styles.headerColumnContainer}>
               <span>
                 {t('AREA (KM')}
-                <sup>2</sup>)
               </span>
               <div className={styles.arrowsContainer}>
                 <ArrowUp
@@ -212,7 +211,6 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
                   (row.AREA_KM || row.AREA_KM2) &&
                   parseAreaKm(row.AREA_KM || row.AREA_KM2)
                 }km`}
-                <sup>2</sup>
               </td>
             </tr>
           ))}

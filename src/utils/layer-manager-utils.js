@@ -209,16 +209,16 @@ export const createLayer = (layerConfig) => {
   const Layer = getLayer();
 
   let newLayer;
-  if(portalId){
-    newLayer = new FeatureLayer({
-      portalItem: {
-        id: portalId
-      },
-      title: slug,
-      id: slug,
-      outFields: ['*'],
-    })
-  }else {
+  // if(portalId){
+  //   newLayer = new FeatureLayer({
+  //     portalItem: {
+  //       id: portalId
+  //     },
+  //     title: slug,
+  //     id: slug,
+  //     outFields: ['*'],
+  //   })
+  // }else {
     newLayer = new Layer({
       url,
       urlTemplate: url,
@@ -227,7 +227,7 @@ export const createLayer = (layerConfig) => {
       outFields: ['*'],
       opacity: opacity || DEFAULT_OPACITY,
     });
-  }
+  // }
 
   if (renderer) {
     newLayer.renderer = renderer;
@@ -247,15 +247,15 @@ const createAndAddLayer = async (layerConfig, map) => {
   const isUrlArray = Array.isArray(layerConfig.url);
   const isPortalIdArray = Array.isArray(layerConfig.portalId);
 
-  if(isPortalIdArray){
-    const promises = layerConfig.portalId.map((portalId) =>
-      createLayer({ ...layerConfig, portalId }, map)
-    );
-    const newLayers = await Promise.all(promises);
-    newLayers.forEach((newLayer) => {
-      addLayerToMap(newLayer, map);
-    });
-  } else {
+  // if(isPortalIdArray){
+  //   const promises = layerConfig.portalId.map((portalId) =>
+  //     createLayer({ ...layerConfig, portalId }, map)
+  //   );
+  //   const newLayers = await Promise.all(promises);
+  //   newLayers.forEach((newLayer) => {
+  //     addLayerToMap(newLayer, map);
+  //   });
+  // } else {
     if (isUrlArray) {
       const promises = layerConfig.url.map((url) =>
         createLayer({ ...layerConfig, url }, map)
@@ -268,7 +268,7 @@ const createAndAddLayer = async (layerConfig, map) => {
       const newLayer = await createLayer(layerConfig, map);
       addLayerToMap(newLayer, map);
     }
-  }
+  // }
 };
 
 export const activateLayersOnLoad = (map, activeLayers, config) => {
