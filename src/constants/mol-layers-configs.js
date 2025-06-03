@@ -185,7 +185,7 @@ export const layersConfig = {
     url: LAYERS_URLS[WDPA_OECM_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: ['adfdb53a755a4916af057be6bb824422', 'cc75600a103b4e39a14c103a62a80091', '4530b1d34e74497ea64938055867115d'],
+    portalId: ['e6c6d00dba834c358915ae5ad61ddcca', 'a4c8eb1e510f45b29d70bbbb560802ea', 'b29651f7fdf9451e93c2d80990ab4790'],
   },
   [SPECIFIC_REGIONS_TILE_LAYER]: {
     title: SPECIFIC_REGIONS_TILE_LAYER,
@@ -207,6 +207,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER],
     bbox: null,
+    portalId: '5e59f968feaf4efe8846869931b3b49c',
   },
   [HALF_EARTH_FUTURE_TILE_LAYER]: {
     title: HALF_EARTH_FUTURE_TILE_LAYER,
@@ -214,7 +215,6 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[HALF_EARTH_FUTURE_TILE_LAYER],
     bbox: null,
-    portalId: 'c84a2dfb84c5489a8518360f67925ec0',
   },
   [GLOBAL_SPI_FEATURE_LAYER]: {
     title: GLOBAL_SPI_FEATURE_LAYER,
@@ -230,7 +230,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[MARINE_SPI_FEATURE_LAYER],
     bbox: null,
-    portalId: '3f8accd89fe7482384972929fd2aae3f',
+    portalId: '484a4ed84da5455a8a3d3f624037030d',
   },
   [COUNTRIES_LABELS_FEATURE_LAYER]: {
     title: COUNTRIES_LABELS_FEATURE_LAYER,

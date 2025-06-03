@@ -168,7 +168,8 @@ export const getSidebarCardsConfig = (locale) => ({
     ),
     warning: (
       <T
-        _str="Species summaries are less reliable for areas under 1,000 km; only a portion of these species will be found here."
+        _str="Species summaries are less reliable for areas under 1,000 km{sup}; only a portion of these species will be found here."
+        sup={<sup>2</sup>}
       />
     ),
   },
@@ -180,7 +181,8 @@ export const getSidebarCardsConfig = (locale) => ({
       ),
     warning: (
       <T
-        _str="Biodiversity patterns not available for areas under __1,000 km__."
+        _str="Biodiversity patterns not available for areas under __1,000 km{sup}__."
+        sup={<sup>2</sup>}
       />
     ),
   },
