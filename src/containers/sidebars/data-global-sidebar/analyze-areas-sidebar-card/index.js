@@ -52,13 +52,15 @@ export const getWarningMessages = (t, locale) => ({
     description: (size) => (
       <span>
         {t(
-          'The maximum size for on the fly area analysis is {number} km.',
+          'The maximum size for on the fly area analysis is {number} km{sup}.',
           {
             number: getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale),
+            sup: <sup>2</sup>,
           }
         )}{' '}
-        {t('The area that you are trying to analyze has {number} km.', {
+        {t('The area that you are trying to analyze has {number} km{sup}.', {
           number: getLocaleNumber(size, locale),
+          sup: <sup>2</sup>,
         })}{' '}
         {t('Please select a smaller area to trigger the analysis.')}
       </span>
