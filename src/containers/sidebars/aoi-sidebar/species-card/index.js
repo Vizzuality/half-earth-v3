@@ -335,7 +335,7 @@ function SpeciesCardContainer(props) {
                 ? results[0].image.url
                 : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
-            molLink: `https://mol.org/species/${selectedSpecies.name}`,
+            molLink: `https://mol.org/dashboard/species/info/${selectedSpecies.name}`,
             SPS_global: individualSPSData.SPS_global,
             SPS_AOI,
             per_global: individualSPSData.per_global,

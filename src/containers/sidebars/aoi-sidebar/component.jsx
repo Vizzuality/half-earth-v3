@@ -414,7 +414,7 @@ function AOISidebar({
                 </p>
                 <a
                   className={styles.link}
-                  href="https://mol.org/upload"
+                  href="mailto:info@mol.org.?subject=Half-Earth Project Map Database Contribution"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
