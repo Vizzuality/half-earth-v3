@@ -95,6 +95,14 @@ function RankingChart({
     setSelectedCountryIndex(countryIndex);
   }, [handleSortClick, handleCountryClick]);
 
+  const returnToolTipValue = (value) => {
+    if(value !== null && value !== undefined) {
+      return `${Math.floor((value || 0) * 100) / 100}%`;
+    } else {
+      return t('No data');
+    }
+  }
+
   const barTooltip = (d, name, attrs) => (
     <div className={styles.tooltip} {...attrs} key={`tooltip-${name}`}>
       <div className={styles.labels}>
@@ -111,7 +119,7 @@ function RankingChart({
             }}
             key={`legend-value-${key}`}
           >
-            {Math.floor((d[name][key] || 0) * 100) / 100}%
+            {returnToolTipValue(d[name][key])}
           </div>
         ))}
       </div>

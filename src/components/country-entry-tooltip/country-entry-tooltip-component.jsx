@@ -30,6 +30,8 @@ function CountryEntryTooltipComponent({
   onboardingType,
   waitingInteraction,
   isMobile,
+  activeTab,
+  setActiveTab,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -38,7 +40,6 @@ function CountryEntryTooltipComponent({
   const countryNames = useMemo(getCountryNames, [locale]);
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
-  const [activeTab, setActiveTab] = useState('land');
 
   const {
     countryName,
@@ -213,8 +214,8 @@ function CountryEntryTooltipComponent({
           </span>
           <span className={styles.text}>
             {landTab
-              ? t('of additional land protection is needed')
-              : t('of additional marine protection is needed')}
+              ? t('of additional land protection is needed (as of 2023)')
+              : t('of additional marine protection is needed (as of 2023)')}
           </span>
         </div>
       </section>
