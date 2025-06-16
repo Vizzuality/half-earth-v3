@@ -70,7 +70,7 @@ function DashboardContainer(props) {
   const [filteredTaxaList, setFilteredTaxaList] = useState([]);
   const [scientificName, setScientificName] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState();
   const [fromTrends, setFromTrends] = useState(false);
   const [regionLayers, setRegionLayers] = useState({});
@@ -170,11 +170,21 @@ function DashboardContainer(props) {
       }
     }
 
-    const gbifResponse = await EsriFeatureService.getFeatures({
-      url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
-      whereClause: `species = '${scientificName}' and source = 'GBIF' and iso3 = '${countryISO}'`,
-      returnGeometry: false,
-    });
+    let gbifResponse;
+
+    if (countryISO === 'EE') {
+      gbifResponse = await EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.ZONE_OCCURRENCE,
+        whereClause: `species = '${scientificName}' and source = 'GBIF' and  ISO3 IN ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`,
+        returnGeometry: false,
+      });
+    } else {
+      gbifResponse = await EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+        whereClause: `species = '${scientificName}' and source = 'GBIF' and iso3 = '${countryISO}'`,
+        returnGeometry: false,
+      });
+    }
 
     const gbifResponseItems = gbifResponse?.map((item) => item.attributes);
     const gbifSet = new Set(); // Use a Set for efficient tracking
@@ -193,11 +203,20 @@ function DashboardContainer(props) {
       }
     });
 
-    const eBirdResponse = await EsriFeatureService.getFeatures({
-      url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
-      whereClause: `species = '${scientificName}' and source = 'eBird' and iso3 = '${countryISO}'`,
-      returnGeometry: false,
-    });
+    let eBirdResponse;
+    if (countryISO === 'EE') {
+      eBirdResponse = await EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.ZONE_OCCURRENCE,
+        whereClause: `species = '${scientificName}' and source = 'eBird' and ISO3 IN ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`,
+        returnGeometry: false,
+      });
+    } else {
+      eBirdResponse = await EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+        whereClause: `species = '${scientificName}' and source = 'eBird' and iso3 = '${countryISO}'`,
+        returnGeometry: false,
+      });
+    }
 
     const eBirdResponseItems = eBirdResponse?.map((item) => item.attributes);
     const ebirdSet = new Set(); // Use a Set for efficient tracking
@@ -240,37 +259,28 @@ function DashboardContainer(props) {
 
     const [dataLayersData] = apiResponses;
 
-    const filteredData = dataLayersData
-      // .filter((item) => {
-      //   return (
-      //     (!item.dataset_title.toUpperCase().match(/EBIRD/) &&
-      //       uniqueEBirdObjects.length === 0) ||
-      //     (!item.dataset_title.toUpperCase().match(/GBIF/) &&
-      //       uniqueGbifObjects.length === 0)
-      //   );
-      // })
-      .map((dld) => {
-        if (dld.dataset_title.toUpperCase().match(/EBIRD/)) {
-          if (uniqueEBirdObjects.length > 0) {
-            dld.no_rows = uniqueEBirdObjects.length;
-          } else {
-            dld.no_rows = 0;
-          }
+    const filteredData = dataLayersData.map((dld) => {
+      if (dld.dataset_title.toUpperCase().match(/EBIRD/)) {
+        if (uniqueEBirdObjects.length > 0) {
+          dld.no_rows = uniqueEBirdObjects.length;
+        } else {
+          dld.no_rows = 0;
         }
+      }
 
-        if (dld.dataset_title.toUpperCase().match(/GBIF/)) {
-          if (uniqueGbifObjects.length > 0) {
-            dld.no_rows = uniqueGbifObjects.length;
-          } else {
-            dld.no_rows = 0;
-          }
+      if (dld.dataset_title.toUpperCase().match(/GBIF/)) {
+        if (uniqueGbifObjects.length > 0) {
+          dld.no_rows = uniqueGbifObjects.length;
+        } else {
+          dld.no_rows = 0;
         }
+      }
 
-        dld.parent = dld.type_title;
-        dld.label = dld.dataset_title;
+      dld.parent = dld.type_title;
+      dld.label = dld.dataset_title;
 
-        return dld;
-      });
+      return dld;
+    });
 
     setDataLayerData(filteredData);
   };
@@ -393,9 +403,10 @@ function DashboardContainer(props) {
 
   const getSpeciesDetails = (speciesData, taxa) => {
     const results = speciesData.map(({ attributes }) => {
-      const { source, species_url, threat_status, commonnames } = JSON.parse(
-        attributes.attributes.replace(/NaN/g, 'null')
-      )[0];
+      const { source, species_url, threat_status, commonnames } =
+        countryISO === 'EE'
+          ? attributes
+          : JSON.parse(attributes.attributes.replace(/NaN/g, 'null'))[0];
 
       return {
         common_name: commonnames,
@@ -425,7 +436,6 @@ function DashboardContainer(props) {
     }
 
     let whereClause = `ISO3 = '${countryISO}'`;
-
     if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;
       if (GID_1) {
@@ -457,45 +467,45 @@ function DashboardContainer(props) {
 
       const list = [...speciesData];
 
-      if (countryISO.toUpperCase() !== 'EEWWF') {
-        const buckets = bucketByTaxa(occurenceFeatures);
+      // if (countryISO.toUpperCase() !== 'EE') {
+      const buckets = bucketByTaxa(occurenceFeatures);
 
-        // loop through buckets to get species info
-        const occurenceData = Object.keys(buckets).map((key) => {
-          return getSpeciesDetails(buckets[key], key);
-        });
+      // loop through buckets to get species info
+      const occurenceData = Object.keys(buckets).map((key) => {
+        return getSpeciesDetails(buckets[key], key);
+      });
 
-        occurenceData?.forEach((occurrence) => {
-          const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
+      occurenceData?.forEach((occurrence) => {
+        const foundTaxa = list.find((sp) => sp.taxa === occurrence.taxa);
 
-          if (foundTaxa) {
-            occurrence.species.forEach((species) => {
-              const isFound = speciesToAvoid.includes(
-                species.scientific_name.toUpperCase()
+        if (foundTaxa) {
+          occurrence.species.forEach((species) => {
+            const isFound = speciesToAvoid.includes(
+              species.scientific_name.toUpperCase()
+            );
+
+            if (!isFound) {
+              const foundSpecies = foundTaxa?.species.find(
+                (speciesToFind) =>
+                  speciesToFind.scientific_name === species.scientific_name
               );
 
-              if (!isFound) {
-                const foundSpecies = foundTaxa?.species.find(
-                  (speciesToFind) =>
-                    speciesToFind.scientific_name === species.scientific_name
-                );
-
-                if (!foundSpecies) {
-                  foundTaxa?.species.push(species);
-                } else {
-                  foundSpecies.source += `,${species.source}`;
-                }
+              if (!foundSpecies) {
+                foundTaxa?.species.push(species);
+              } else {
+                foundSpecies.source += `,${species.source}`;
               }
-            });
-          } else {
-            // list.push(occurrence);
-          }
-        });
+            }
+          });
+        } else {
+          // list.push(occurrence);
+        }
+      });
 
-        list.forEach((l) => {
-          l.count = l.species.length;
-        });
-      }
+      list.forEach((l) => {
+        l.count = l.species.length;
+      });
+      // }
       setTaxaList(list);
     } else {
       setTaxaList(speciesData);
@@ -508,34 +518,48 @@ function DashboardContainer(props) {
     let url = DASHBOARD_URLS.PRECALC_AOI;
     let whereClause = `GID_0 = '${countryISO}'`;
 
-    if (exploreAllSpecies) {
-      url = DASHBOARD_URLS.PRECALC_AOI_COUNTRY;
-    }
+    if (countryISO === 'EE') {
+      whereClause = `project = 'EEWWF'`; // '${countryISO.toLowerCase()}'`;
+      url = DASHBOARD_URLS.REGION_SPECIES_SEARCH_URL;
 
-    if (selectedRegion) {
-      const { GID_1, WDPA_PID, mgc, Int_ID, region_key } = selectedRegion;
-      if (GID_1) {
-        whereClause = `GID_1 = '${GID_1}'`;
+      if (selectedRegion) {
+        const { region_key } = selectedRegion;
+
+        if (region_key) {
+          whereClause = `region_key = '${region_key}'`;
+          url = DASHBOARD_URLS.ZONE_SPECIES;
+        }
+      }
+    } else {
+      if (exploreAllSpecies) {
+        url = DASHBOARD_URLS.PRECALC_AOI_COUNTRY;
       }
 
-      if (WDPA_PID) {
-        whereClause = `WDPA_PID = '${WDPA_PID}'`;
-        url = DASHBOARD_URLS.WDPA_PRECALC;
-      }
+      if (selectedRegion) {
+        const { GID_1, WDPA_PID, mgc, Int_ID, region_key } = selectedRegion;
+        if (GID_1) {
+          whereClause = `GID_1 = '${GID_1}'`;
+        }
 
-      if (mgc) {
-        whereClause = `mgc_id = '${mgc}'`;
-        url = DASHBOARD_URLS.FOREST;
-      }
+        if (WDPA_PID) {
+          whereClause = `WDPA_PID = '${WDPA_PID}'`;
+          url = DASHBOARD_URLS.WDPA_PRECALC;
+        }
 
-      if (Int_ID) {
-        whereClause = `Int_ID = '${Int_ID}'`;
-        url = DASHBOARD_URLS.NBIS_URL;
-      }
+        if (mgc) {
+          whereClause = `mgc_id = '${mgc}'`;
+          url = DASHBOARD_URLS.FOREST;
+        }
 
-      if (region_key) {
-        whereClause = `region_key = '${region_key}'`;
-        url = DASHBOARD_URLS.ZONE_SPECIES;
+        if (Int_ID) {
+          whereClause = `Int_ID = '${Int_ID}'`;
+          url = DASHBOARD_URLS.NBIS_URL;
+        }
+
+        if (region_key) {
+          whereClause = `region_key = '${region_key}'`;
+          url = DASHBOARD_URLS.ZONE_SPECIES;
+        }
       }
     }
 
@@ -566,7 +590,6 @@ function DashboardContainer(props) {
                 taxa,
               };
             }
-            console.log('found: ', scientificname);
           }),
         };
 
@@ -622,25 +645,44 @@ function DashboardContainer(props) {
         const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
         getOccurenceSpecies(groupData);
-      } else if (selectedRegion?.region_key) {
+      } else if (selectedRegion?.region_key || countryISO === 'EE') {
         const speciesData = {
           species: features.map((s) => {
-            const { species, taxa, attributes } = s.attributes;
+            const {
+              species,
+              taxa,
+              attributes,
+              scientificname,
+              commonname_english,
+              commonname_french,
+            } = s.attributes;
 
             const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
 
-            const isFound = speciesToAvoid.includes(species.toUpperCase());
+            let isFound = false;
+            if (species) {
+              isFound = speciesToAvoid.includes(species.toUpperCase());
+            } else if (scientificname) {
+              isFound = speciesToAvoid.includes(scientificname.toUpperCase());
+            }
+
+            //             commonname_english: "Mussurana"
+            // commonname_french: null
+            // iso3: null
+            // project: "eewwf"
+            // scientificname: "Boiruna maculata"
+            // taxa: "reptiles"
 
             if (!isFound) {
               return {
-                common_name: species,
-                scientific_name: species,
+                common_name: species ?? commonname_english,
+                scientific_name: species ?? scientificname,
                 threat_status: json[0].threat_status,
                 source: json[0].source ?? '',
+                species_url: json[0].species_url ?? '',
                 taxa,
               };
             }
-            console.log('found: ', species);
           }),
         };
 
@@ -695,7 +737,9 @@ function DashboardContainer(props) {
         };
         const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
-        getOccurenceSpecies(groupData);
+        setTaxaList(groupData);
+
+        setSpeciesListLoading(false);
       } else {
         const { attributes } = features[0];
 
@@ -831,24 +875,134 @@ function DashboardContainer(props) {
   };
 
   const getData = async () => {
-    const habitatTrendUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
-    const spiScoreURL = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${scientificName}`;
+    if (countryISO.toLowerCase() === 'ee') {
+      const shsCall = EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.REGION_BIODIVERSITY_SHS_URL,
+        whereClause: `species = '${scientificName}'`,
+        returnGeometry: false,
+      });
 
-    const apiCalls = [habitatTrendUrl, spiScoreURL];
+      const spsCall = EsriFeatureService.getFeatures({
+        url: DASHBOARD_URLS.REGION_BIODIVERSITY_URL,
+        whereClause: `species = '${scientificName}'`,
+        returnGeometry: false,
+      });
 
-    const apiResponses = await Promise.all(
-      apiCalls.map(async (url) => {
-        const response = await fetch(url);
-        const d = await response.json();
-        return d;
-      })
-    );
+      const apiCalls = [shsCall, spsCall];
 
-    const [habitatTrendData, spiScoreData] = apiResponses;
-    getDataByCountry(habitatTrendData);
-    getSpiDataByCountry(spiScoreData);
+      const apiResponses = await Promise.all(
+        apiCalls.map(async (url) => {
+          const response = await url;
+          console.log(response);
+          // const d = await response.json();
+          return response;
+        })
+      );
 
-    setData({ habitatTrendData, spiScoreData });
+      const [habitatTrendData, spiScoreData] = apiResponses;
+
+      console.log(apiResponses);
+
+      const shiScoreData = habitatTrendData.map((f) => {
+        return f.attributes;
+      });
+
+      let countryData;
+
+      // TODO: figure out what to do when no shs is returned
+      if (shiScoreData) {
+        countryData = shiScoreData.reduce((acc, obj) => {
+          const key = obj.name;
+          if (!acc[key]) {
+            acc[key] = { shs: [], frag: [] };
+          }
+          acc[key].shs.push(obj);
+          return acc;
+        }, {});
+      }
+
+      if (shiScoreData.frag) {
+        countryData = features.reduce((acc, obj) => {
+          const key = obj.country;
+          if (!acc[key]) {
+            acc[key] = { shs: [], frag: [] };
+          }
+
+          acc[key].frag.push(obj);
+          return acc;
+        }, countryData || {});
+      }
+
+      Object.keys(countryData).forEach((key) => {
+        const cData = countryData[key];
+        const sortedData = cData.shs.sort((a, b) => {
+          const yearA = a.year;
+          const yearB = b.year;
+          if (yearA < yearB) {
+            return -1;
+          }
+          if (yearA > yearB) {
+            return 1;
+          }
+          return 0;
+        });
+
+        countryData[key].shs = sortedData;
+      });
+
+      const spiData = spiScoreData.map((f) => {
+        return f.attributes;
+      });
+
+      const spiCountryData = spiData.reduce((acc, obj) => {
+        const key = obj.name;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+      }, {});
+
+      Object.keys(spiCountryData).forEach((key) => {
+        const countryData = spiCountryData[key];
+        const sortedData = countryData.sort((a, b) => {
+          const yearA = a.year;
+          const yearB = b.year;
+          if (yearA < yearB) {
+            return -1;
+          }
+          if (yearA > yearB) {
+            return 1;
+          }
+          return 0;
+        });
+
+        spiCountryData[key] = sortedData;
+      });
+
+      setDataByCountry(countryData);
+
+      setSpiDataByCountry(spiCountryData);
+      setData({ habitatTrendData: countryData, spiScoreData: spiCountryData });
+    } else {
+      const habitatTrendUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
+      const spiScoreURL = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/indicators/sps/species_bycountry?scientificname=${scientificName}`;
+
+      const apiCalls = [habitatTrendUrl, spiScoreURL];
+
+      const apiResponses = await Promise.all(
+        apiCalls.map(async (url) => {
+          const response = await fetch(url);
+          const d = await response.json();
+          return d;
+        })
+      );
+
+      const [habitatTrendData, spiScoreData] = apiResponses;
+      getDataByCountry(habitatTrendData);
+      getSpiDataByCountry(spiScoreData);
+      setData({ habitatTrendData, spiScoreData });
+    }
   };
 
   const handleBrowsePage = () => {
@@ -882,25 +1036,27 @@ function DashboardContainer(props) {
     // Add event listener for popstate event
     window.addEventListener('popstate', handleBackButton);
 
-    setCountryDataLoading();
-    EsriFeatureService.getFeatures({
-      url: COUNTRIES_DATA_SERVICE_URL,
-      whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: true,
-    })
-      .then((features) => {
-        const { geometry } = features[0];
-
-        setCountryDataReady(features);
-        if (geometry) {
-          setGeometry(geometry);
-        }
+    if (countryISO !== 'EE') {
+      setCountryDataLoading();
+      EsriFeatureService.getFeatures({
+        url: COUNTRIES_DATA_SERVICE_URL,
+        whereClause: `GID_0 = '${countryISO}'`,
+        returnGeometry: true,
       })
-      .catch((error) => {
-        setCountryDataError(error);
-      });
+        .then((features) => {
+          const { geometry } = features[0];
 
-    getPrioritySpeciesList();
+          setCountryDataReady(features);
+          if (geometry) {
+            setGeometry(geometry);
+          }
+        })
+        .catch((error) => {
+          setCountryDataError(error);
+        });
+
+      getPrioritySpeciesList();
+    }
 
     if (countryISO === 'COD' || countryISO === 'GIN') {
       await tx.setCurrentLocale('fr');

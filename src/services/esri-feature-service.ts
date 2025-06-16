@@ -1,11 +1,11 @@
 import {
-  EXPERT_RANGE_MAP_URL,
+  PROTECTED_AREA_EEWWF_FEATURE_ID,
   PROTECTED_AREA_FEATURE_URL,
   PROTECTED_AREA_GIN_FEATURE_URL,
   PROTECTED_AREA_GUY_FEATURE_URL,
   PROTECTED_AREA_LIB_FEATURE_URL,
   PROTECTED_AREA_SLE_FEATURE_URL,
-  TREND_MAP_URL,
+  REGION_RANGE_MAP_URL,
 } from 'utils/dashboard-utils';
 
 import CSVLayer from '@arcgis/core/layers/CSVLayer';
@@ -65,7 +65,7 @@ function getFeatures({
         resolve(null);
       })
       .catch((err) => {
-        console.log(err);
+        err;
         resolve(null);
       });
   });
@@ -78,16 +78,26 @@ function getVectorTileLayer(url, id, countryISO) {
   });
 }
 
-async function getFeatureLayer(portalItemId, countryISO, id) {
+async function getFeatureLayer(portalItemId, countryISO, id, classType = null) {
   let definitionExpression = countryISO ? `GID_0 = '${countryISO}'` : '';
 
   if (
     id === 'GUY-zone5-spi' ||
     id === 'GUY-zone3-spi' ||
     id === 'GUY-zone3-shi' ||
-    id === 'GUY-zone5-shi'
+    id === 'GUY-zone5-shi' ||
+    countryISO === 'EE'
   ) {
     definitionExpression = '';
+  }
+
+  if (classType === 'INT') {
+    // const className = classType === 'INT' ? 'Intervention' : 'Landscape';
+    definitionExpression = `class = 'Intervention'`;
+  }
+  if (classType === 'LND') {
+    // const className = classType === 'INT' ? 'Intervention' : 'Landscape';
+    definitionExpression = `class = 'Landscape'`;
   }
   const featureLayer = new FeatureLayer({
     portalItem: {
@@ -109,12 +119,16 @@ function getFeatureOccurenceLayer(
   type,
   countryISO
 ) {
+  let isoFilter = `iso3 = '${countryISO}'`;
+  if (countryISO === 'EE') {
+    isoFilter = `iso3 in ('BRA', 'MEX', 'PER',  'VNM', 'MDG')`;
+  }
   return new FeatureLayer({
     portalItem: {
       id: portalItemId,
     },
     outFields: ['*'],
-    definitionExpression: `species = '${scientificName}' and source = '${type}' and iso3 = '${countryISO}'`,
+    definitionExpression: `species = '${scientificName}' and source = '${type}' and ${isoFilter}`,
     id,
   });
 }
@@ -152,20 +166,23 @@ function getGeoJsonLayer(scientificname, id, countryISO = 'CD') {
   });
 }
 
-async function getXYZLayer(scientificname, id, type) {
-  let url;
-
-  if (type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
-    url = `${EXPERT_RANGE_MAP_URL}?scientificname=${scientificname}`;
-  } else if (type === LAYER_TITLE_TYPES.TREND) {
-    url = `${TREND_MAP_URL}?scientificname=${scientificname}`;
-  }
+async function getXYZLayer(scientificname, id, type, taxa = null) {
+  const url = `${REGION_RANGE_MAP_URL}?species=${scientificname}&taxa=${taxa}`;
 
   const response = await fetch(url);
   const data = await response.json();
+  let urlTemplate;
+
+  if (type === LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS) {
+    urlTemplate = data['range map'].tile_url;
+  } else if (type === LAYER_TITLE_TYPES.POINT_OBSERVATIONS) {
+    urlTemplate = data['refined map'].tile_url;
+  } else if (type === LAYER_TITLE_TYPES.TREND) {
+    urlTemplate = data.trend.tile_url;
+  }
 
   return new WebTileLayer({
-    urlTemplate: data.url,
+    urlTemplate,
     id,
   });
 }
@@ -243,6 +260,9 @@ async function addProtectedAreaLayer(id, countryISO = 'COD') {
       break;
     case 'GUY':
       featurePortalId = PROTECTED_AREA_GUY_FEATURE_URL;
+      break;
+    case 'EE':
+      featurePortalId = PROTECTED_AREA_EEWWF_FEATURE_ID;
       break;
     default:
       break;

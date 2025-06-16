@@ -52,13 +52,25 @@ export const ZONE_3_FEATURE_ID = 'b47c1a2ffb76461592fe64438197cef9';
 export const ZONE_5_FEATURE_ID = 'c4e365176fa64967b0df13237b69aa7d';
 export const RAPID_INVENTORY_32_FEATURE_ID = 'cc6b9e1c42c747a2bd220f82039cf0b0';
 
+export const EEWWF_COUNTRY_LINES_FEATURE_ID =
+  '48e26caf25de440e8deef5bc52ed975e';
+export const EEWWF_SPI_FEATURE_ID = '942229716581474ab9233fd23d6d0178';
+export const EEWWF_SHI_FEATURE_ID = 'c3fdbdaa2fcd48b09bc9f670a1535e3a';
+export const PROTECTED_AREA_EEWWF_FEATURE_ID =
+  '7593f107a991471f9bb56672557a07cc';
+export const PROTECTED_AREA_EEWWF_URL =
+  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/ProtectedAreas_20250416/VectorTileServer';
+
 export const NBS_OP_INTERVENTIONS_FEATURE_ID =
-  '139bf28240fc4a7a90389b11999b5b48';
+  '41eb11d7bdd1474fb1a208e11546e413';
 
 export const EXPERT_RANGE_MAP_URL =
   'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/drc_rangemap';
 export const TREND_MAP_URL =
   'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/drc_trend';
+
+export const REGION_RANGE_MAP_URL =
+  'https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/tile-urls';
 
 // LIBERIA LAYERS
 export const PROTECTED_AREA_LIB_FEATURE_URL =
@@ -78,6 +90,8 @@ export const PROTECTED_AREA_GUY_FEATURE_URL =
 
 export const GBIF_OCCURENCE_URL = '1ccb994557a74bc6bd773250d8eebc15';
 // Yale AGOL - cc44bf640beb4b2c989d1e901bb90852
+
+export const REGION_OCCURENCE_ID = '9f732963e1a7495f889577ca30e44562';
 
 export const DASHBOARD_TABLE_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ESRI_table1/FeatureServer';

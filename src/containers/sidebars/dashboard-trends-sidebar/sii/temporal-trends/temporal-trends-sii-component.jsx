@@ -63,7 +63,7 @@ function TemporalTrendsSiiComponent(props) {
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
-        {countryISO.toLowerCase() !== 'eewwf' && (
+        {countryISO.toLowerCase() !== 'ee' && (
           <p className={styles.description}>
             <T
               _str="In {currentYear}, {currentObservationBold} of the expected ranges of terrestrial vertebrate species in {countryBold} had a recorded observation of that species. Since {startYear}, the annual SII has fluctuated between {lowestObservationBold} and {highestObservationBold}."
@@ -77,7 +77,7 @@ function TemporalTrendsSiiComponent(props) {
             />
           </p>
         )}
-        {countryISO.toLowerCase() !== 'eewwf' && (
+        {countryISO.toLowerCase() !== 'ee' && (
           <div className={styles.options}>
             <div className={styles.trendTypes}>
               <Button

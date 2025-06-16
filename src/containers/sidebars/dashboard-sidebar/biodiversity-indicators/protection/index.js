@@ -8,35 +8,65 @@ import ProtectionComponent from './protection-component';
 
 function ProtectionContainer(props) {
   const t = useT();
-  const { protectionTableData, countryName, lightMode, spiDataByCountry } =
-    props;
+  const {
+    protectionTableData,
+    countryName,
+    lightMode,
+    spiDataByCountry,
+    countryISO,
+  } = props;
   const [selectedCountry, setSelectedCountry] = useState('Global');
   const [shiCountries, setShiCountries] = useState([]);
   const [globalScore, setGlobalScore] = useState(0);
   const [chartData, setChartData] = useState();
+  const [defaultCountryName, setDefaultCountryName] = useState('Global');
 
   const getChartData = (countrySelected) => {
-    const dates = [];
-    const currentCountry = spiDataByCountry[countryName];
+    let currentCountry;
     const globalCountry = spiDataByCountry.Global;
-
+    const dates = [];
     const defaultCountryScores = { values: [] };
     const selectedCountryScores = { values: [] };
 
-    if (currentCountry) {
-      currentCountry.shs?.forEach((row) => {
-        defaultCountryScores.values.push(row.shs_score);
-      });
+    if (countryISO === 'EE') {
+      setDefaultCountryName('Global');
+      currentCountry = spiDataByCountry[countrySelected];
 
-      spiDataByCountry[countrySelected]?.shs.forEach((row) => {
-        dates.push(row.year);
-        selectedCountryScores.values.push(row.shs_score);
-      });
+      if (currentCountry) {
+        if (countrySelected !== 'Global') {
+          currentCountry?.forEach((row) => {
+            defaultCountryScores.values.push(row.sps * 100);
+          });
+        }
 
-      if (globalCountry?.shs.length) {
-        setGlobalScore(
-          globalCountry.shs[globalCountry.shs.length - 1].val - 100
-        );
+        globalCountry?.forEach((row) => {
+          dates.push(row.year);
+          selectedCountryScores.values.push(row.sps * 100);
+        });
+
+        if (globalCountry?.length) {
+          setGlobalScore(globalCountry[globalCountry.length - 1].val - 100);
+        }
+      }
+    } else {
+      setDefaultCountryName(countryName);
+      currentCountry = spiDataByCountry[countryName];
+
+      if (currentCountry) {
+        currentCountry.shs?.forEach((row) => {
+          defaultCountryScores.values.push(row.shs_score);
+        });
+
+        spiDataByCountry[countrySelected]?.shs.forEach((row) => {
+          dates.push(row.year);
+          selectedCountryScores.values.push(row.shs_score);
+        });
+
+        if (globalCountry?.shs.length) {
+          setGlobalScore(
+            globalCountry.shs[globalCountry.shs.length - 1].val - 100
+          );
+        }
       }
     }
 
@@ -44,7 +74,7 @@ function ProtectionContainer(props) {
       labels: dates,
       datasets: [
         {
-          label: `${countryName}`,
+          label: `${countrySelected}`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country'),
           borderColor: getCSSVariable('habitat-country'),
@@ -54,7 +84,7 @@ function ProtectionContainer(props) {
           data: defaultCountryScores.values,
         },
         {
-          label: `${countrySelected}`,
+          label: `${defaultCountryName}`,
           fill: false,
           backgroundColor: getCSSVariable('habitat-country-compare'),
           borderColor: getCSSVariable('habitat-country-compare'),
@@ -170,6 +200,7 @@ function ProtectionContainer(props) {
       globalScore={globalScore}
       chartData={chartData}
       chartOptions={chartOptions}
+      defaultCountryName={defaultCountryName}
       onCountryChange={onCountryChange}
       updateCountry={updateCountry}
       {...props}

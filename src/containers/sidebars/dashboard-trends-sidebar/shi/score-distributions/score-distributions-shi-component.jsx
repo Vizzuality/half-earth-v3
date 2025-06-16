@@ -12,6 +12,7 @@ import Button from 'components/button';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
+import TaxaImageComponent from 'components/taxa-image';
 
 import {
   NAVIGATION,
@@ -46,6 +47,7 @@ function ScoreDistributionsShiComponent(props) {
     selectedProvince,
     setFromTrends,
     lang,
+    countryISO,
     zoneHistrogramData,
   } = props;
 
@@ -60,7 +62,8 @@ function ScoreDistributionsShiComponent(props) {
     AREA_SCORE: 'areascore',
     CONNECTIVITY_SCORE: 'connectivity',
   };
-
+  const threatStatuses = ['LEAST CONCERN', 'EXTINCT', 'EXTINCT IN THE WILD'];
+  const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
   const [chartData, setChartData] = useState();
   const [responseData] = useState();
   const [showTable, setShowTable] = useState(false);
@@ -258,12 +261,20 @@ function ScoreDistributionsShiComponent(props) {
         },
       };
 
-      if (shiActiveTrend === ZONE_3 || shiActiveTrend === ZONE_5) {
-        const zoneName = shiActiveTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
-        const data = zoneHistrogramData.filter((item) =>
-          item.region_key.includes(zoneName)
+      if (countryISO !== 'EE') {
+        if (shiActiveTrend === ZONE_3 || shiActiveTrend === ZONE_5) {
+          const zoneName = shiActiveTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
+          const data = zoneHistrogramData.filter((item) =>
+            item.region_key.includes(zoneName)
+          );
+          shiData = data;
+        }
+      } else {
+        shiData = zoneHistrogramData.filter(
+          (item) =>
+            item.project === 'eewwf' &&
+            item.region_key === selectedProvince?.region_key
         );
-        shiData = data;
       }
 
       // Loop through each number and place it in the appropriate bucket
@@ -319,14 +330,65 @@ function ScoreDistributionsShiComponent(props) {
 
   const loadSpecies = () => {
     const maxItems = 4;
-    const species = shiSelectSpeciesData.slice(0, maxItems);
+    let species = [];
+    if (zoneHistrogramData.length) {
+      let zoneData = [];
 
-    const lastItem = species[species.length - 1];
-    const low = (species[0].habitat_score ?? species[0].HabitatScore) * 100;
-    const high = (lastItem.habitat_score ?? lastItem.HabitatScore) * 100;
-    setLowDist(low.toFixed(1));
-    setHighDist(high.toFixed(1));
-    setSpsSpecies(species);
+      if (selectedProvince) {
+        const filteredZoneData = zoneHistrogramData.filter((item) =>
+          item.region_key === selectedProvince.region_key &&
+          (item.project === countryISO.toLowerCase()) === 'ee'
+            ? 'eewwf'
+            : countryISO.toLowerCase()
+        );
+        zoneData = new Set(filteredZoneData);
+      }
+
+      zoneData.forEach((item) => {
+        if (item.species_shs) {
+          const values = JSON.parse(item.species_shs);
+
+          values.forEach((value) => {
+            const val = value[''];
+            if (
+              val.stewardship >= 0.05 &&
+              !threatStatuses.includes(val.threat_status?.toUpperCase())
+            ) {
+              species.push({
+                scientificname: val.species,
+                species_url: val.species_url,
+                habitat_score: val.shs_score,
+                taxa: val.taxa,
+              });
+            }
+          });
+
+          if (species.length > 0) {
+            const lastItem = species[species.length - 1];
+            const low = species[0].habitat_score * 100;
+            const high = lastItem.habitat_score * 100;
+
+            setLowDist(low.toFixed(1));
+            setHighDist(high.toFixed(1));
+          } else {
+            setLowDist(0);
+            setHighDist(0);
+          }
+        }
+      });
+
+      setSpsSpecies(species.slice(0, 4));
+    } else {
+      species = shiSelectSpeciesData.slice(0, maxItems);
+
+      const lastItem = species[species.length - 1];
+      const low = (species[0].habitat_score ?? species[0].HabitatScore) * 100;
+      const high = (lastItem.habitat_score ?? lastItem.HabitatScore) * 100;
+
+      setLowDist(low.toFixed(1));
+      setHighDist(high.toFixed(1));
+      setSpsSpecies(species);
+    }
     setIsSpeciesLoading(false);
   };
 
@@ -343,11 +405,15 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   useEffect(() => {
-    if (!shiScoresData?.length) return;
+    // if (!shiScoresData?.length) return;
 
     setIsLoading(true);
     getChartData();
-  }, [shiScoresData, shiActiveTrend]);
+
+    if (zoneHistrogramData.length) {
+      loadSpecies();
+    }
+  }, [shiScoresData, shiActiveTrend, zoneHistrogramData]);
 
   useEffect(() => {
     if (!shiSelectSpeciesData || !shiSelectSpeciesData.length) return;
@@ -414,7 +480,13 @@ function ScoreDistributionsShiComponent(props) {
                       selectSpecies(s.scientificname ?? s.ScientificName)
                     }
                   >
-                    <img src={s.species_url ?? s.SpeciesImage} alt="species" />
+                    {s.species_url && (
+                      <img
+                        src={s.species_url ?? s.SpeciesImage}
+                        alt="species"
+                      />
+                    )}
+                    {!s.species_url && <TaxaImageComponent taxa={s?.taxa} />}
                     <div className={styles.spsInfo}>
                       <span className={styles.name}>
                         {s.scientificname ?? s.ScientificName}

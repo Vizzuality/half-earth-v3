@@ -7,7 +7,18 @@ import { LightModeContext } from 'context/light-mode';
 
 import Button from 'components/button';
 
+import EsriFeatureService from 'services/esri-feature-service';
+
+import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+
 import {
+  MEX,
+  PER,
+  BRA,
+  MDG,
+  VNM,
+  LND,
+  INT,
   NATIONAL_TREND,
   PROVINCE_TREND,
   ZONE_3,
@@ -27,6 +38,9 @@ function TemporalTrendsShiComponent(props) {
     countryISO,
     shiActiveTrend,
     setShiActiveTrend,
+    setClickedRegion,
+    clickedRegion,
+    view,
   } = props;
 
   // const [chartData, setChartData] = useState();
@@ -34,8 +48,35 @@ function TemporalTrendsShiComponent(props) {
   const { lightMode } = useContext(LightModeContext);
   const [startYear] = useState(2001);
 
-  const handleActionChange = (event) => {
-    setShiActiveTrend(event.currentTarget.innerText);
+  const eewwfRegions = ['MEX', 'PER', 'BRA', 'MDG', 'VNM', 'LND', 'INT'];
+
+  const handleActionChange = (option) => {
+    setClickedRegion(null);
+    setShiActiveTrend(option);
+
+    if (countryISO.toLowerCase() === 'ee') {
+      if (option !== LND && option !== INT) {
+        EsriFeatureService.getFeatures({
+          url: COUNTRIES_DATA_SERVICE_URL,
+          whereClause: `GID_0 = '${option}'`,
+          returnGeometry: true,
+        }).then((features) => {
+          // eslint-disable-next-line no-shadow
+          const { geometry } = features[0];
+
+          view.goTo({
+            target: geometry,
+            center: [geometry.longitude - 20, geometry.latitude],
+            zoom: 5.5,
+            extent: geometry.clone(),
+          });
+        });
+      } else {
+        view.goTo({
+          zoom: 1,
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -45,6 +86,14 @@ function TemporalTrendsShiComponent(props) {
   }, []);
 
   useEffect(() => {
+    if (clickedRegion) {
+      if (countryISO.toLowerCase() === 'ee') {
+        setShiActiveTrend(clickedRegion.iso3);
+      }
+    }
+  }, [clickedRegion]);
+
+  useEffect(() => {
     setLostAvg((100 - shiValue).toFixed(1));
   }, [shiValue]);
 
@@ -52,7 +101,7 @@ function TemporalTrendsShiComponent(props) {
     <div className={cx(lightMode ? styles.light : '', styles.trends)}>
       <div className={styles.info}>
         <span className={styles.title}>{t('Temporal Trends')}</span>
-        {countryISO.toLowerCase() !== 'eewwf' && (
+        {countryISO.toLowerCase() !== 'ee' && (
           <p className={styles.description}>
             <T
               _str="Since {startYear}, the terrestrial vertebrate species of the {countryNameBold} have lost an average of {lostAvgBold} of their suitable habitat, leading to the country having a Species Habitat Index of {shiValueBold}."
@@ -68,7 +117,7 @@ function TemporalTrendsShiComponent(props) {
             'The Area component addresses changes in habitat extent while the Connectivity component addresses changes in the fragmentation of habitat.'
           )}
         </p>
-        {countryISO.toLowerCase() !== 'eewwf' && (
+        {countryISO.toLowerCase() !== 'ee' && (
           <div className={styles.options}>
             <div className={styles.btnGroup}>
               <Button
@@ -77,7 +126,7 @@ function TemporalTrendsShiComponent(props) {
                   [styles.notActive]: shiActiveTrend !== NATIONAL_TREND,
                 })}
                 label={NATIONAL_TREND}
-                handleClick={handleActionChange}
+                handleClick={() => handleActionChange(NATIONAL_TREND)}
               />
               {countryISO === 'COD' && (
                 <Button
@@ -86,7 +135,7 @@ function TemporalTrendsShiComponent(props) {
                     [styles.notActive]: shiActiveTrend !== PROVINCE_TREND,
                   })}
                   label={PROVINCE_TREND}
-                  handleClick={handleActionChange}
+                  handleClick={() => handleActionChange(PROVINCE_TREND)}
                 />
               )}
             </div>
@@ -111,7 +160,7 @@ function TemporalTrendsShiComponent(props) {
                 [styles.notActive]: shiActiveTrend !== ZONE_3,
               })}
               label="ZONE_3"
-              handleClick={handleActionChange}
+              handleClick={() => handleActionChange(ZONE_3)}
             />
             <Button
               type="rectangular"
@@ -119,22 +168,90 @@ function TemporalTrendsShiComponent(props) {
                 [styles.notActive]: shiActiveTrend !== ZONE_5,
               })}
               label="ZONE_5"
-              handleClick={handleActionChange}
+              handleClick={() => handleActionChange(ZONE_5)}
+            />
+          </div>
+        )}
+        {countryISO.toLowerCase() === 'ee' && (
+          <div className={styles.options}>
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== MEX,
+              })}
+              label="Mexico"
+              handleClick={() => handleActionChange(MEX)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== PER,
+              })}
+              label="Peru"
+              handleClick={() => handleActionChange(PER)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== BRA,
+              })}
+              label="Brazil"
+              handleClick={() => handleActionChange(BRA)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== MDG,
+              })}
+              label="Madagascar"
+              handleClick={() => handleActionChange(MDG)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== VNM,
+              })}
+              label="Vietnam"
+              handleClick={() => handleActionChange(VNM)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== LND,
+              })}
+              label="Landscape"
+              handleClick={() => handleActionChange(LND)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(styles.saveButton, {
+                [styles.notActive]: shiActiveTrend !== INT,
+              })}
+              label="Intervention"
+              handleClick={() => handleActionChange(INT)}
             />
           </div>
         )}
       </div>
-      {shiActiveTrend === NATIONAL_TREND && (
-        <NationalChartContainer {...props} />
-      )}
-      {shiActiveTrend === PROVINCE_TREND && (
-        <ProvinceChartContainer {...props} />
-      )}
-      {shiActiveTrend === ZONE_3 && (
-        <ZoneChartContainer {...props} zone={ZONE_3} />
-      )}
-      {shiActiveTrend === ZONE_5 && (
-        <ZoneChartContainer {...props} zone={ZONE_5} />
+      {countryISO.toLowerCase() === 'ee' &&
+        eewwfRegions.includes(shiActiveTrend) && (
+          <ZoneChartContainer {...props} zone={shiActiveTrend} />
+        )}
+      {countryISO.toLowerCase() !== 'ee' && (
+        <>
+          {shiActiveTrend === NATIONAL_TREND && (
+            <NationalChartContainer {...props} />
+          )}
+          {shiActiveTrend === PROVINCE_TREND && (
+            <ProvinceChartContainer {...props} />
+          )}
+          {shiActiveTrend === ZONE_3 && (
+            <ZoneChartContainer {...props} zone={ZONE_3} />
+          )}
+          {shiActiveTrend === ZONE_5 && (
+            <ZoneChartContainer {...props} zone={ZONE_5} />
+          )}
+        </>
       )}
     </div>
   );

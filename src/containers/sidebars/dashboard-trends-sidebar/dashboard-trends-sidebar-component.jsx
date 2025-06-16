@@ -15,6 +15,13 @@ export const NATIONAL_TREND = 'NATIONAL';
 export const PROVINCE_TREND = 'PROVINCE';
 export const ZONE_3 = 'ZONE_3';
 export const ZONE_5 = 'ZONE_5';
+export const MEX = 'MEX';
+export const PER = 'PER';
+export const BRA = 'BRA';
+export const MDG = 'MDG';
+export const VNM = 'VNM';
+export const LND = 'LND';
+export const INT = 'INT';
 
 export const TABS = {
   SHI: 1,
@@ -41,6 +48,26 @@ function DashboardTrendsSidebar(props) {
 
     const foundProvinceLayer = map.layers.items.find(
       (item) => item.id === REGION_OPTIONS.PROVINCES
+    );
+
+    const spiEwwfLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-spi`
+    );
+    const eewwfSpiLnd = map.layers.items.find(
+      (item) => item.id === `${countryISO}-spi-lnd`
+    );
+    const eewwfSpiInt = map.layers.items.find(
+      (item) => item.id === `${countryISO}-spi-int`
+    );
+
+    const shiEwwfLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-shi`
+    );
+    const eewwfShiLnd = map.layers.items.find(
+      (item) => item.id === `${countryISO}-shi-lnd`
+    );
+    const eewwfShiInt = map.layers.items.find(
+      (item) => item.id === `${countryISO}-shi-int`
     );
 
     const zone5Layer = map.layers.items.find(
@@ -75,6 +102,22 @@ function DashboardTrendsSidebar(props) {
         foundProvinceLayer.visible = false;
       }
 
+      if (shiEwwfLayer) {
+        shiEwwfLayer.visible = true;
+      }
+
+      if (spiEwwfLayer) {
+        spiEwwfLayer.visible = false;
+      }
+
+      if (eewwfSpiLnd) {
+        eewwfSpiLnd.visible = false;
+      }
+
+      if (eewwfSpiInt) {
+        eewwfSpiInt.visible = false;
+      }
+
       if (outlineLayer) {
         outlineLayer.visible = true;
       }
@@ -95,6 +138,21 @@ function DashboardTrendsSidebar(props) {
           foundProvinceLayer.visible = true;
         }
 
+        if (spiEwwfLayer) {
+          spiEwwfLayer.visible = true;
+        }
+
+        if (shiEwwfLayer) {
+          shiEwwfLayer.visible = false;
+        }
+
+        if (eewwfShiLnd) {
+          eewwfShiLnd.visible = false;
+        }
+        if (eewwfShiInt) {
+          eewwfShiInt.visible = false;
+        }
+
         if (outlineLayer) {
           outlineLayer.visible = false;
         }
@@ -110,6 +168,10 @@ function DashboardTrendsSidebar(props) {
 
       const item = { label: 'SPI', parent: '', id: REGION_OPTIONS.PROVINCES };
       setMapLegendLayers([item]);
+    }
+
+    if (countryISO.toLowerCase() === 'ee') {
+      setMapLegendLayers([]);
     }
 
     setTabOption(tabClicked);
@@ -128,7 +190,7 @@ function DashboardTrendsSidebar(props) {
             })}
             onClick={() => showHideLayers(TABS.SPI)}
           >
-            {countryISO.toLowerCase() !== 'eewwf' && (
+            {countryISO.toLowerCase() !== 'ee' && (
               <label htmlFor="spi">{spiValue}</label>
             )}
             <span>{t('Species Protection Index')}</span>
@@ -142,26 +204,25 @@ function DashboardTrendsSidebar(props) {
             onClick={() => showHideLayers(TABS.SHI)}
             name="shi"
           >
-            {countryISO.toLowerCase() !== 'eewwf' && (
+            {countryISO.toLowerCase() !== 'ee' && (
               <label htmlFor="shi">{shiValue}</label>
             )}
             <span>{t('Species Habitat Index')}</span>
           </button>
-
-          <button
-            type="button"
-            aria-label={t('Species Information Index')}
-            className={cx({
-              [styles.selected]: tabOption === TABS.SII,
-            })}
-            onClick={() => showHideLayers(TABS.SII)}
-            name="sii"
-          >
-            {countryISO.toLowerCase() !== 'eewwf' && (
+          {countryISO.toLowerCase() !== 'ee' && (
+            <button
+              type="button"
+              aria-label={t('Species Information Index')}
+              className={cx({
+                [styles.selected]: tabOption === TABS.SII,
+              })}
+              onClick={() => showHideLayers(TABS.SII)}
+              name="sii"
+            >
               <label htmlFor="sii">{siiValue}</label>
-            )}
-            <span>{t('Species Information Index')}</span>
-          </button>
+              <span>{t('Species Information Index')}</span>
+            </button>
+          )}
         </div>
       </header>
       {tabOption === 1 && <ShiContainer trendOption={tabOption} {...props} />}

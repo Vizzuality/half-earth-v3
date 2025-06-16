@@ -29,6 +29,8 @@ import ReptilesWhite from 'images/dashboard/reptile_icon_white.png?react';
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
+  ZONE_3,
+  ZONE_5,
 } from '../../containers/sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 import compStyles from '../../containers/sidebars/dashboard-trends-sidebar/spi/score-distibutions/score-distributions-spi-styles.module.scss';
 import { LightModeContext } from '../../context/light-mode';
@@ -48,17 +50,20 @@ ChartJS.register(
 
 function SpeciesRichnessComponent(props) {
   const t = useT();
+  const EEWWF_YEAR = 2022;
   const {
     selectedProvince,
     activeTrend,
     provinces,
     countryData,
+    zoneData,
     shiActiveTrend,
     shiCountryData,
     countryISO,
     shi,
   } = props;
 
+  const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
   const { lightMode } = useContext(LightModeContext);
   const [scores, setScores] = useState({
     birds: {
@@ -89,97 +94,166 @@ function SpeciesRichnessComponent(props) {
     return [count, 100 - count];
   };
 
+  const populateScores = (formattedData) => {
+    let data = JSON.parse(formattedData.richness_taxa_spi)[0];
+    let spiData = JSON.parse(formattedData.spi_taxa)[0];
+
+    if (shi) {
+      data = JSON.parse(formattedData.richness_taxa_shi)[0];
+      spiData = JSON.parse(formattedData.habitat_index_taxa)[0];
+    }
+
+    const { reptiles, amphibians, mammals, birds } = data;
+    setScores({
+      birds: {
+        count: +spiData.birds * 100,
+        total: +birds,
+      },
+      mammals: {
+        count: +spiData.mammals * 100,
+        total: +mammals,
+      },
+      reptiles: {
+        count: +spiData.reptiles * 100,
+        total: +reptiles,
+      },
+      amphibians: {
+        count: +spiData.amphibians * 100,
+        total: +amphibians,
+      },
+    });
+  };
+
   const getScores = () => {
-    if (countryISO.toLowerCase() === 'eewwf') {
-      setScores({
-        birds: {
-          count: 220,
-          total: 4490,
-        },
-        mammals: {
-          count: 123,
-          total: 345,
-        },
-        reptiles: {
-          count: 56,
-          total: 158,
-        },
-        amphibians: {
-          count: 49,
-          total: 420,
-        },
-      });
-    } else if (shi) {
-      let filterValue = 'XXX';
-      if (selectedProvince && shiActiveTrend === PROVINCE_TREND) {
-        filterValue = selectedProvince.iso3_regional;
-      }
-      // eslint-disable-next-line camelcase
-      const { habitat_score_taxa, nspecies } = shiCountryData.find(
-        (sc) => sc.iso3_regional === filterValue
+    if (countryISO.toLowerCase() === 'ee') {
+      let formattedData = [];
+      formattedData = zoneData.find(
+        (item) =>
+          item.iso3 === selectedProvince.iso3 &&
+          item.region_key === selectedProvince.region_key &&
+          item.year === EEWWF_YEAR
       );
 
-      const values = JSON.parse(habitat_score_taxa)[0];
-      const total = JSON.parse(nspecies)[0];
+      if (formattedData) {
+        populateScores(formattedData);
+      }
+    } else if (shi) {
+      let values;
+      let total;
 
-      setScores({
-        birds: {
-          count: values.birds,
-          total: total.birds,
-        },
-        mammals: {
-          count: values.mammals,
-          total: total.mammals,
-        },
-        reptiles: {
-          count: values.reptiles,
-          total: total.reptiles,
-        },
-        amphibians: {
-          count: values.amphibians,
-          total: total.amphibians,
-        },
-      });
+      if (
+        selectedProvince &&
+        (shiActiveTrend === ZONE_5 || shiActiveTrend === ZONE_3)
+      ) {
+        const data = zoneData.find(
+          (item) => item.region_key === selectedProvince.region_key
+        );
+
+        if (data) {
+          values = JSON.parse(data.habitat_index_taxa)[0];
+          total = JSON.parse(data.richness_taxa_shi)[0];
+
+          setScores({
+            birds: {
+              count: +values.birds * 100,
+              total: +total.birds,
+            },
+            mammals: {
+              count: +values.mammals * 100,
+              total: +total.mammals,
+            },
+            reptiles: {
+              count: +values.reptiles * 100,
+              total: +total.reptiles,
+            },
+            amphibians: {
+              count: +values.amphibians * 100,
+              total: +total.amphibians,
+            },
+          });
+        }
+      } else {
+        let filterValue = 'XXX';
+        if (selectedProvince && shiActiveTrend === PROVINCE_TREND) {
+          filterValue = selectedProvince.iso3_regional;
+        }
+        // eslint-disable-next-line camelcase
+        const { habitat_score_taxa, nspecies } = shiCountryData.find(
+          (sc) => sc.iso3_regional === filterValue
+        );
+
+        values = JSON.parse(habitat_score_taxa)[0];
+        total = JSON.parse(nspecies)[0];
+
+        setScores({
+          birds: {
+            count: values.birds,
+            total: total.birds,
+          },
+          mammals: {
+            count: values.mammals,
+            total: total.mammals,
+          },
+          reptiles: {
+            count: values.reptiles,
+            total: total.reptiles,
+          },
+          amphibians: {
+            count: values.amphibians,
+            total: total.amphibians,
+          },
+        });
+      }
     } else {
       let formattedData = [];
-      if (selectedProvince && activeTrend === PROVINCE_TREND) {
-        const regionData = provinces.find(
-          (region) => region.region_name === selectedProvince.region_name
+      if (selectedProvince && acceptedZones.includes(activeTrend)) {
+        formattedData = zoneData.find(
+          (item) => item.region_key === selectedProvince.region_key
         );
-        formattedData = regionData;
+
+        if (formattedData) {
+          populateScores(formattedData);
+        }
       } else {
-        formattedData = last(countryData);
+        if (selectedProvince && activeTrend === PROVINCE_TREND) {
+          const regionData = provinces.find(
+            (region) => region.region_name === selectedProvince.region_name
+          );
+          formattedData = regionData;
+        } else {
+          formattedData = last(countryData);
+        }
+
+        const {
+          BirdSpeciesRichness,
+          BirdSPI,
+          MammalSpeciesRichness,
+          MammalSPI,
+          ReptileSpeciesRichness,
+          ReptileSPI,
+          AmphibianSpeciesRichness,
+          AmphibianSPI,
+        } = formattedData;
+
+        setScores({
+          birds: {
+            count: BirdSPI,
+            total: BirdSpeciesRichness,
+          },
+          mammals: {
+            count: MammalSPI,
+            total: MammalSpeciesRichness,
+          },
+          reptiles: {
+            count: ReptileSPI,
+            total: ReptileSpeciesRichness,
+          },
+          amphibians: {
+            count: AmphibianSPI,
+            total: AmphibianSpeciesRichness,
+          },
+        });
       }
-
-      const {
-        BirdSpeciesRichness,
-        BirdSPI,
-        MammalSpeciesRichness,
-        MammalSPI,
-        ReptileSpeciesRichness,
-        ReptileSPI,
-        AmphibianSpeciesRichness,
-        AmphibianSPI,
-      } = formattedData;
-
-      setScores({
-        birds: {
-          count: BirdSPI,
-          total: BirdSpeciesRichness,
-        },
-        mammals: {
-          count: MammalSPI,
-          total: MammalSpeciesRichness,
-        },
-        reptiles: {
-          count: ReptileSPI,
-          total: ReptileSpeciesRichness,
-        },
-        amphibians: {
-          count: AmphibianSPI,
-          total: AmphibianSpeciesRichness,
-        },
-      });
     }
   };
 
@@ -247,6 +321,10 @@ function SpeciesRichnessComponent(props) {
         setTitleText(
           `${selectedProvince?.region_name} SHI ${t('BY TAXONOMIC GROUP')}`
         );
+      } else if (acceptedZones.includes(activeTrend) && selectedProvince) {
+        setTitleText(
+          `${selectedProvince?.name} SHI ${t('BY TAXONOMIC GROUP')}`
+        );
       }
     } else if (activeTrend === NATIONAL_TREND || !selectedProvince) {
       setTitleText(`${t('NATIONAL SPI BY TAXONOMIC GROUP')}`);
@@ -254,13 +332,14 @@ function SpeciesRichnessComponent(props) {
       setTitleText(
         `${selectedProvince?.region_name} SPI ${t('BY TAXONOMIC GROUP')}`
       );
+    } else if (acceptedZones.includes(activeTrend) && selectedProvince) {
+      setTitleText(`${selectedProvince?.name} SPI ${t('BY TAXONOMIC GROUP')}`);
     }
-
     getScores();
   };
 
   useEffect(() => {
-    if (countryISO.toLowerCase() === 'eewwf') {
+    if (countryISO.toLowerCase() === 'ee') {
       getScores();
     }
   }, []);

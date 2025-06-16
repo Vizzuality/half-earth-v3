@@ -11,6 +11,7 @@ import { Loading } from 'he-components';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import DistributionsChartComponent from 'components/charts/distribution-chart/distribution-chart-component';
 import SpeciesRichnessComponent from 'components/species-richness/species-richness-component';
+import TaxaImageComponent from 'components/taxa-image';
 
 import {
   NAVIGATION,
@@ -24,8 +25,6 @@ import { SECTION_INFO } from '../../../dashboard-sidebar/tutorials/sections/sect
 import {
   NATIONAL_TREND,
   PROVINCE_TREND,
-  ZONE_3,
-  ZONE_5,
 } from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
@@ -44,6 +43,7 @@ function ScoreDistributionsSpiComponent(props) {
     spiSelectSpeciesData,
     setFromTrends,
     lang,
+    countryISO,
     zoneHistrogramData,
   } = props;
   const { lightMode } = useContext(LightModeContext);
@@ -52,6 +52,9 @@ function ScoreDistributionsSpiComponent(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSpeciesLoading, setIsSpeciesLoading] = useState(true);
   const [spsSpecies, setSpsSpecies] = useState();
+
+  const threatStatuses = ['EXTINCT', 'EXTINCT IN THE WILD'];
+  const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
 
   const toolTipTitle = (tooltipItems) => {
     const bucket = parseInt(tooltipItems[0].label, 10);
@@ -145,11 +148,20 @@ function ScoreDistributionsSpiComponent(props) {
       locationData = spiScoresData.filter(
         (loc) => loc.iso3_regional === selectedProvince.iso3_regional
       );
-    } else if (activeTrend === ZONE_3 || activeTrend === ZONE_5) {
-      const zoneName = activeTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
-      const data = zoneHistrogramData.filter((item) =>
-        item.region_key.includes(zoneName)
-      );
+    } else if (acceptedZones.includes(activeTrend)) {
+      let data;
+      if (countryISO !== 'EE') {
+        const zoneName = activeTrend === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
+        data = zoneHistrogramData.filter((item) =>
+          item.region_key.includes(zoneName)
+        );
+      } else {
+        data = zoneHistrogramData.filter(
+          (item) =>
+            item.project === 'eewwf' &&
+            item.region_key === selectedProvince?.region_key
+        );
+      }
       locationData = data;
     } else {
       locationData = spiScoresData;
@@ -201,14 +213,50 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const loadSpecies = () => {
-    const species = [
-      spiSelectSpeciesData[0],
-      spiSelectSpeciesData[1],
-      spiSelectSpeciesData[2],
-      spiSelectSpeciesData[3],
-    ];
-    setSpsSpecies(species);
+    let species = [];
+    if (zoneHistrogramData.length) {
+      let zoneData = [];
 
+      if (selectedProvince) {
+        const filteredZoneData = zoneHistrogramData.filter((item) =>
+          item.region_key === selectedProvince.region_key &&
+          (item.project === countryISO.toLowerCase()) === 'ee'
+            ? 'eewwf'
+            : countryISO.toLowerCase()
+        );
+        zoneData = new Set(filteredZoneData);
+      }
+
+      zoneData.forEach((item) => {
+        if (item.species_sps) {
+          const values = JSON.parse(item.species_sps);
+          values.forEach((value) => {
+            const val = value;
+            if (
+              val.stewardship >= 0.05 &&
+              !threatStatuses.includes(val.threat_status?.toUpperCase())
+            ) {
+              species.push({
+                species: val.species,
+                species_url: val.species_url,
+                species_protection_score_all: val.spi_score,
+                taxa: val.taxa,
+              });
+            }
+          });
+        }
+      });
+
+      setSpsSpecies(species.slice(0, 4));
+    } else {
+      species = [
+        spiSelectSpeciesData[0],
+        spiSelectSpeciesData[1],
+        spiSelectSpeciesData[2],
+        spiSelectSpeciesData[3],
+      ];
+      setSpsSpecies(species);
+    }
     setIsSpeciesLoading(false);
   };
 
@@ -239,11 +287,15 @@ function ScoreDistributionsSpiComponent(props) {
   }, []);
 
   useEffect(() => {
-    if (!spiScoresData.length) return;
+    // if (!spiScoresData.length) return;
 
     setIsLoading(true);
     getChartData();
-  }, [spiScoresData, activeTrend]);
+
+    if (zoneHistrogramData.length) {
+      loadSpecies();
+    }
+  }, [spiScoresData, activeTrend, zoneHistrogramData]);
 
   useEffect(() => {
     if (!spiSelectSpeciesData.length) return;
@@ -274,7 +326,7 @@ function ScoreDistributionsSpiComponent(props) {
         </p>
 
         <span className={styles.spsSpeciesTitle}>
-          {t('Species with SPS between')} <b>0 - 5:</b>
+          {t('Species Highlights')}
         </span>
         <hr />
         {isSpeciesLoading && <Loading height={200} />}
@@ -288,18 +340,20 @@ function ScoreDistributionsSpiComponent(props) {
                       type="button"
                       onClick={() => selectSpecies(s.species)}
                     >
-                      <img src={s.species_url} alt="species" />
+                      {s.species_url && (
+                        <img src={s.species_url} alt="species" />
+                      )}
+                      {!s.species_url && <TaxaImageComponent taxa={s?.taxa} />}
                       <div className={styles.spsInfo}>
                         <span className={styles.name}>{s.species}</span>
                         <span className={styles.scientificname}>
                           {s.species}
                         </span>
                       </div>
-                      <span
-                        className={styles.spsScore}
-                      >{`SPS: ${s.species_protection_score_all?.toFixed(
-                        1
-                      )}`}</span>
+                      <span className={styles.spsScore}>{`SPS: ${Math.min(
+                        100,
+                        s.species_protection_score_all * 100
+                      )?.toFixed(1)}`}</span>
                     </button>
                   </li>
                 );

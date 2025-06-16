@@ -3,19 +3,20 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-.title{
+.title {
   margin: 0;
   font-style: italic;
 }
 
-.chartWrapper{
-  position:relative;
+.chartWrapper {
+  position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 
-  .info{
-    position: absolute;
-    bottom: 5px;
-    right: 0;
+  .info {
     color: var(--font-color);
     fill: var(--font-color);
     width: 20px;
@@ -24,5 +25,6 @@
     border-radius: 50%;
     padding: 3px;
     background-color: rgba(9, 20, 26, 0.4);
+    align-self: end;
   }
 }

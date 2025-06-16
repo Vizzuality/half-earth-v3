@@ -13,6 +13,7 @@ import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
 } from 'constants/dashboard-constants.js';
+import { DASHBOARD_URLS } from 'constants/layers-urls';
 
 import styles from './species-search-component-styles.module.scss';
 
@@ -26,13 +27,18 @@ function SpeciesSearchComponent(props) {
     setSelectedTaxa,
     setSelectedRegion,
     setExploreAllSpecies,
+    countryISO,
   } = props;
 
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const searchURL =
+  let searchURL =
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_species_list_for_search/FeatureServer';
+
+  if (countryISO === 'GUY' || countryISO === 'EE') {
+    searchURL = DASHBOARD_URLS.REGION_SPECIES_SEARCH_URL;
+  }
 
   let controller = null;
 
@@ -57,13 +63,17 @@ function SpeciesSearchComponent(props) {
   const getSearchResults = async () => {
     controller = new AbortController();
     const { signal } = controller;
-
     const commonName =
       locale === 'fr' ? 'commonname_french' : 'commonname_english';
+    let whereClause = `scientificname like '%${searchInput}%' or ${commonName} like '%${searchInput}%'`;
+
+    if (countryISO === 'EE') {
+      whereClause = `(scientificname like '%${searchInput}%' or commonname_english like '%${searchInput}%') and project = 'EEWWF'`; // ${countryISO.toLowerCase()}'`;
+    }
 
     const searchSpecies = await EsriFeatureService.getFeatures({
       url: searchURL,
-      whereClause: `scientificname like '%${searchInput}%' or ${commonName} like '%${searchInput}%'`,
+      whereClause,
       returnGeometry: false,
       signal,
     });

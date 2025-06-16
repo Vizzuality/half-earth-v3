@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-.container{
+.container {
   --font-color: #{$white};
   --border-color: #{$brand-color-main};
   --selected-font-color: #{$white};
@@ -14,7 +14,7 @@
   flex-direction: column;
   gap: 0.75rem;
 
-  &.light{
+  &.light {
     --font-color: #{$black};
     --border-color: #{$mol-blue};
     --selected-font-color: #{$white};
@@ -22,7 +22,7 @@
     --border-color-hover: #{$mol-blue};
   }
 
-  p{
+  p {
     color: var(--font-color);
   }
 
@@ -96,7 +96,7 @@
     align-items: center;
     margin-top: 1rem;
 
-    .compareWrap{
+    .compareWrap {
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -125,20 +125,20 @@
 
     .dashed {
       border: none;
-      border-bottom: 3px dashed var(--font-color);;
+      border-bottom: 3px dashed var(--font-color);
     }
 
     .dotted {
       border: none;
-      border-bottom: 3px dotted var(--font-color);;
+      border-bottom: 3px dotted var(--font-color);
     }
 
     .solid {
       border: none;
-      border-bottom: 3px solid var(--font-color);;
+      border-bottom: 3px solid var(--font-color);
     }
 
-    .labels{
+    .labels {
       display: flex;
       justify-content: space-around;
       width: 100%;
@@ -152,7 +152,7 @@
       line-height: normal;
     }
 
-    .legend{
+    .legend {
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -175,7 +175,7 @@
 
   .dataTable {
     border-collapse: collapse;
-    width: 94%;
+    width: 100%;
 
     th,
     td {
@@ -184,19 +184,19 @@
       font-weight: 400;
       line-height: normal;
 
-      &.textLeft{
+      &.textLeft {
         text-align: left;
       }
 
-      &.w28{
+      &.w28 {
         width: 7rem;
       }
 
-      &.w14{
+      &.w14 {
         width: 3.5rem;
       }
 
-      &.textCenter{
+      &.textCenter {
         text-align: center;
       }
     }
@@ -231,7 +231,7 @@
         &.highlighted {
           background-color: rgba(0, 0, 0, 0.4);
 
-          td{
+          td {
             color: #{$white};
           }
         }

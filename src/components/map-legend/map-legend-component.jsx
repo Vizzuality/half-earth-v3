@@ -128,6 +128,19 @@ function MapLegendComponent(props) {
         </div>
       );
     }
+
+    if (layer.id === REGION_OPTIONS.PROTECTED_AREAS) {
+      return (
+        <div style={{ display: 'flex', gap: '5px', marginTop: '5px' }}>
+          <div
+            className={styles.box}
+            style={{
+              backgroundColor: 'rgb(58, 135, 19)',
+            }}
+          />
+        </div>
+      );
+    }
     return '❓'; // Default icon for unknown layer types
   };
 

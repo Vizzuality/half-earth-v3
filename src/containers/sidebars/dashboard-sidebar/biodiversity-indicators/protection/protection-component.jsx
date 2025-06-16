@@ -38,6 +38,7 @@ function ProtectionComponent(props) {
     protectionTableData,
     countryName,
     lightMode,
+    defaultCountryName,
     selectedCountry,
     updateCountry,
     onCountryChange,
@@ -45,6 +46,7 @@ function ProtectionComponent(props) {
     chartData,
     chartOptions,
     lang,
+    countryISO,
   } = props;
 
   const [chartInfo, setChartInfo] = useState();
@@ -98,10 +100,14 @@ function ProtectionComponent(props) {
           </select>
         </div>
         <div className={styles.legend}>
-          <div className={cx(styles.legendBox, styles.blue)} />
-          <span>{t(countryName)}</span>
+          {selectedCountry !== 'Global' && (
+            <>
+              <div className={cx(styles.legendBox, styles.blue)} />
+              <span>{t(selectedCountry)}</span>
+            </>
+          )}
           <div className={cx(styles.legendBox, styles.green)} />
-          <span>{t(selectedCountry)}</span>
+          <span>{t(defaultCountryName) || t(countryName)}</span>
         </div>
         {chartData && (
           <ChartInfoComponent chartInfo={chartInfo} {...props}>
@@ -114,7 +120,7 @@ function ProtectionComponent(props) {
               <thead>
                 <tr>
                   <th className={cx(styles.textLeft, styles.w20)}>
-                    {t('Country')}
+                    {countryISO === 'EE' ? t('Region') : t('Country')}
                   </th>
                   <th className={cx(styles.textCenter)}>{t('Stewardship')}</th>
                   <th className={cx(styles.textCenter, styles.w28)}>

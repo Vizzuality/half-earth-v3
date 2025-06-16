@@ -5,6 +5,8 @@ import { useT } from '@transifex/react';
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   GBIF_OCCURENCE_URL,
+  REGION_OCCURENCE_ID,
+  EEWWF_COUNTRY_LINES_FEATURE_ID,
 } from 'utils/dashboard-utils';
 
 import Checkbox from '@mui/material/Checkbox';
@@ -167,7 +169,8 @@ function GroupedListComponent(props) {
         layer = await EsriFeatureService.getXYZLayer(
           speciesInfo.scientificname.replace(' ', '_'),
           id,
-          LAYER_TITLE_TYPES.TREND
+          LAYER_TITLE_TYPES.TREND,
+          speciesInfo.taxa
         );
 
         view.whenLayerView(layer).then((layerView) => {
@@ -192,6 +195,13 @@ function GroupedListComponent(props) {
           );
         }
       }
+    } else if (id === LAYER_OPTIONS.EEWWF_COUNTRY_LINES) {
+      setIsLoading(true);
+      layer = await EsriFeatureService.getFeatureLayer(
+        EEWWF_COUNTRY_LINES_FEATURE_ID,
+        countryISO,
+        id
+      );
     }
 
     // check if item is active to add/remove from Map Legend
@@ -248,7 +258,8 @@ function GroupedListComponent(props) {
           layer = await EsriFeatureService.getXYZLayer(
             speciesInfo.scientificname.replace(' ', '_'),
             layerName,
-            LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS
+            LAYER_TITLE_TYPES.EXPERT_RANGE_MAPS,
+            speciesInfo.taxa
           );
 
           item.isActive = true;
@@ -312,9 +323,14 @@ function GroupedListComponent(props) {
           setIsLoading(true);
           loadingCount += 1;
 
+          let layerId = GBIF_OCCURENCE_URL;
+          if (countryISO === 'EE') {
+            layerId = REGION_OCCURENCE_ID;
+          }
+
           if (layerName.match(/EBIRD/)) {
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
-              GBIF_OCCURENCE_URL,
+              layerId,
               speciesInfo.scientificname,
               layerName,
               'eBird',
@@ -322,7 +338,7 @@ function GroupedListComponent(props) {
             );
           } else if (layerName.match(/GBIF/)) {
             layer = await EsriFeatureService.getFeatureOccurenceLayer(
-              GBIF_OCCURENCE_URL,
+              layerId,
               speciesInfo.scientificname,
               layerName,
               'GBIF',

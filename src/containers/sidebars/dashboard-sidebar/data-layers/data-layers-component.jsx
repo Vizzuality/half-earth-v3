@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2';
 import { useT } from '@transifex/react';
 
 import { getCSSVariable } from 'utils/css-utils';
+import { REGION_RANGE_MAP_URL } from 'utils/dashboard-utils';
 
 import {
   Chart as ChartJS,
@@ -62,6 +63,7 @@ function DataLayerComponent(props) {
     mapLegendLayers,
     regionLayers,
     fromTrends,
+    countryISO,
     map,
   } = props;
 
@@ -235,11 +237,40 @@ function DataLayerComponent(props) {
   };
 
   const getHabitatMapData = async () => {
-    const habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/map?scientificname=${speciesInfo.scientificname}`;
+    // const habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/tile-urls?species=${speciesInfo.scientificname}&taxa=${speciesInfo.taxa}`;
+    let habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/map?scientificname=${speciesInfo.scientificname}`;
+
+    if (countryISO === 'EE') {
+      habitatMapUrl = `${REGION_RANGE_MAP_URL}?species=${speciesInfo.scientificname}&taxa=${speciesInfo.taxa}`;
+    }
     const response = await fetch(habitatMapUrl);
     const d = await response.json();
 
-    if (d.data?.length) {
+    if (d.trend_data) {
+      const { trend_data } = d;
+      trend_data.shift();
+      setValuesExists(true);
+
+      setChartData({
+        labels: trend_data.map((item) => item[0]),
+        datasets: [
+          {
+            fill: false,
+            backgroundColor: 'rgba(24, 186, 180, 1)',
+            borderColor: 'rgba(24, 186, 180, 1)',
+            pointStyle: false,
+            data: trend_data.map((item) => item[2]),
+          },
+          {
+            fill: '-1',
+            backgroundColor: 'rgba(24, 186, 180, 0.7)',
+            borderColor: 'rgba(24, 186, 180, 1)',
+            pointStyle: false,
+            data: trend_data.map((item) => item[3]),
+          },
+        ],
+      });
+    } else if (d.data?.length) {
       // remove Year row
       d.data.shift();
       setValuesExists(true);
@@ -286,6 +317,22 @@ function DataLayerComponent(props) {
       },
     ];
     setDataPoints(publicData);
+
+    if (countryISO.toUpperCase() === 'EE') {
+      const regions = [
+        ...regionsData,
+        {
+          label: t('NBS-OP Interventions'),
+          items: [],
+          id: LAYER_OPTIONS.EEWWF_COUNTRY_LINES,
+          total_no_rows: '',
+          isActive: false,
+          showChildren: false,
+          type: DATA_POINT_TYPE.PUBLIC,
+        },
+      ];
+      setRegionsData(regions);
+    }
   }, [dataLayerData]);
 
   useEffect(() => {

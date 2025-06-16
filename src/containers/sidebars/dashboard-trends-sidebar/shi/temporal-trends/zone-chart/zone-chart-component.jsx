@@ -26,7 +26,14 @@ function ZoneChartComponent(props) {
   const t = useT();
   const locale = useLocale();
   const { lightMode } = useContext(LightModeContext);
-  const { zone, zoneData } = props;
+  const {
+    zone,
+    zoneData,
+    setSelectedProvince,
+    clickedRegion,
+    countryISO,
+    shiActiveTrend,
+  } = props;
   const options = {
     plugins: {
       title: {
@@ -81,25 +88,96 @@ function ZoneChartComponent(props) {
   const [chartInfo, setChartInfo] = useState('');
   const [data, setData] = useState();
 
-  useEffect(() => {
-    const zoneName = zone === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
-    const chartData = zoneData.filter((item) =>
-      item.region_key.includes(zoneName)
+  const getLineColor = (item) => {
+    const lineColors = [
+      {
+        iso3: 'MEX',
+        region_key: '9',
+        color: getCSSVariable('mexico-landscape'),
+      },
+      {
+        iso3: 'MEX',
+        region_key: '6',
+        color: getCSSVariable('mexico-connectivity'),
+      },
+      {
+        iso3: 'MEX',
+        region_key: '11',
+        color: getCSSVariable('mexico-pfp-vive'),
+      },
+      {
+        iso3: 'PER',
+        region_key: '10',
+        color: getCSSVariable('peru-landscape'),
+      },
+      { iso3: 'PER', region_key: '4', color: getCSSVariable('peru-forest') },
+      { iso3: 'PER', region_key: '2', color: getCSSVariable('peru-cattle') },
+      {
+        iso3: 'PER',
+        region_key: '12',
+        color: getCSSVariable('peru-reforestation'),
+      },
+      {
+        iso3: 'BRA',
+        region_key: '1',
+        color: getCSSVariable('brazil-landscape'),
+      },
+      { iso3: 'BRA', region_key: '13', color: getCSSVariable('brazil-serra') },
+      {
+        iso3: 'BRA',
+        region_key: '14',
+        color: getCSSVariable('brazil-upper-parana'),
+      },
+      { iso3: 'BRA', region_key: '3', color: getCSSVariable('brazil-forest') },
+      {
+        iso3: 'MDG',
+        region_key: '7',
+        color: getCSSVariable('madagascar-landscape'),
+      },
+      {
+        iso3: 'MDG',
+        region_key: '8',
+        color: getCSSVariable('madagascar-mangroves'),
+      },
+      {
+        iso3: 'MDG',
+        region_key: '5',
+        color: getCSSVariable('madagascar-forest'),
+      },
+      {
+        iso3: 'VNM',
+        region_key: '15',
+        color: getCSSVariable('vietnam-landscape'),
+      },
+    ];
+    return (
+      lineColors.find(
+        (color) =>
+          color.iso3 === item.iso3 && color.region_key === item.region_key
+      )?.color || getCSSVariable('white')
     );
+  };
+
+  const loadChartData = () => {
+    let chartData;
+    if (countryISO === 'EE') {
+      if (clickedRegion) {
+        const iso3 = zone === clickedRegion.iso3 ? zone : clickedRegion.iso3;
+        chartData = zoneData.filter(
+          (item) =>
+            item.iso3 === iso3 && item.region_key === clickedRegion.region_key
+        );
+      } else if (zone === 'LND' || zone === 'INT') {
+        chartData = zoneData;
+      } else {
+        chartData = zoneData.filter((item) => item.iso3 === zone);
+      }
+    } else {
+      const zoneName = zone === 'ZONE_3' ? 'ACC_3' : 'ACC_5';
+      chartData = zoneData.filter((item) => item.region_key.includes(zoneName));
+    }
 
     const datasets = [];
-
-    const lineColors = [
-      getCSSVariable('area-protected'),
-      getCSSVariable('bubble'),
-      getCSSVariable('birds'),
-      getCSSVariable('mammals'),
-      getCSSVariable('reptiles'),
-      getCSSVariable('amphibians'),
-      getCSSVariable('bubble-selected'),
-      getCSSVariable('firefly'),
-      getCSSVariable('medium-purple'),
-    ];
 
     chartData.forEach((item) => {
       const existingDataset = datasets.find(
@@ -113,10 +191,8 @@ function ZoneChartComponent(props) {
         datasets.push({
           label: item.name,
           data: [parseFloat((item.habitat_index * 100).toFixed(1))],
-          borderColor: lineColors[0],
+          borderColor: getLineColor(item),
         });
-
-        lineColors.shift();
       }
     });
 
@@ -126,6 +202,20 @@ function ZoneChartComponent(props) {
       labels,
       datasets,
     });
+  };
+
+  useEffect(() => {
+    if (clickedRegion) {
+      setSelectedProvince(clickedRegion);
+    }
+  }, [clickedRegion]);
+
+  useEffect(() => {
+    loadChartData();
+  }, [shiActiveTrend, clickedRegion, zoneData]);
+
+  useEffect(() => {
+    loadChartData();
   }, []);
 
   return (

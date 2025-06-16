@@ -22,17 +22,16 @@ $medium-purple: #8b62e9;
 $tango: #e87926;
 $french-rose: #eb588f;
 $neon-carrot: #ff9c32;
-$bubbles: #3265E5;
+$bubbles: #3265e5;
 $white-opacity: rgba(255, 255, 255, 0.1);
 $white-opacity-20: rgba($white, 0.2);
 
-$connectivity: #8578EB;
-$habitat: #3AA8EE;
-$area: #7DDECC;
-$area-protected: #3ABC64;
-$habitat-country: #23C9E5;
-$habitat-country-compare: #228D19;
-
+$connectivity: #8578eb;
+$habitat: #3aa8ee;
+$area: #7ddecc;
+$area-protected: #3abc64;
+$habitat-country: #23c9e5;
+$habitat-country-compare: #228d19;
 
 // Project colors
 $space-background: #09141a;
@@ -63,7 +62,7 @@ $reptiles-color: $conifer;
 
 // mol colors
 $mol-blue: #243474;
-$mol-green: #317D56;
+$mol-green: #317d56;
 
 // layers
 $carbon-layer: #ff9500;
@@ -123,12 +122,12 @@ $spi-chart-gradient: linear-gradient(
 );
 $challenges-view-background: #040e14;
 $warning: #dc2626;
-$pointObservations: #54B04A;
-$habitatSuitableRange: #E7C750;
-$localInventories: #7D4182;
-$expertRangeMap: #5A9AB5;
-$regionalChecklist: #AE305C;
-$privatePointObservations: #E93C39;
+$pointObservations: #54b04a;
+$habitatSuitableRange: #e7c750;
+$localInventories: #7d4182;
+$expertRangeMap: #5a9ab5;
+$regionalChecklist: #ae305c;
+$privatePointObservations: #e93c39;
 
 // country ranking
 $endemic-species: #f8d300;
@@ -285,7 +284,7 @@ $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
 // IUCN status colors
 $critaclly-endangered: #ce3030;
-$critaclly-endangered-text:#fecdce;
+$critaclly-endangered-text: #fecdce;
 $endangered: #ce6730;
 $endangered-text: #fece9b;
 $vulnerable: #cd9b01;
@@ -297,6 +296,22 @@ $least-concern-text: $white;
 $data-deficient: #808080;
 $data-deficient-text: $white;
 
+// EEWWF colors
+$mexico-landscape: #3a8dc2;
+$mexico-connectivity: #1bb6e1;
+$mexico-pfp-vive: #0050a0;
+$peru-landscape: #ffe562;
+$peru-forest: #f07f07;
+$peru-cattle: #ffb400;
+$peru-reforestation: #ffcb80;
+$brazil-landscape: #84d41c;
+$brazil-serra: #cee85d;
+$brazil-upper-parana: #1fa739;
+$brazil-forest: #1e7321;
+$madagascar-landscape: #d674b0;
+$madagascar-mangroves: #bd2e9f;
+$madagascar-forest: #974ea3;
+$vietnam-landscape: #db5a40;
 
 :root {
   // COLORS
@@ -323,8 +338,8 @@ $data-deficient-text: $white;
 
   // TRENDS
   --birds: #{$birds-color};
-  --mammals:#{$mammals-color};
-  --reptiles:#{$reptiles-color};
+  --mammals: #{$mammals-color};
+  --reptiles: #{$reptiles-color};
   --amphibians: #{$amphibians-color};
   --temporal-spi: #{$regionalChecklist};
   --bubble: #{$bubbles};
@@ -355,4 +370,20 @@ $data-deficient-text: $white;
   --area-protected: #{$area-protected};
   --habitat-country: #{$habitat-country};
   --habitat-country-compare: #{$habitat-country-compare};
+
+  --mexico-landscape: #{$mexico-landscape};
+  --mexico-connectivity: #{$mexico-connectivity};
+  --mexico-pfp-vive: #{$mexico-pfp-vive};
+  --peru-landscape: #{$peru-landscape};
+  --peru-forest: #{$peru-forest};
+  --peru-cattle: #{$peru-cattle};
+  --peru-reforestation: #{$peru-reforestation};
+  --brazil-landscape: #{$brazil-landscape};
+  --brazil-serra: #{$brazil-serra};
+  --brazil-upper-parana: #{$brazil-upper-parana};
+  --brazil-forest: #{$brazil-forest};
+  --madagascar-landscape: #{$madagascar-landscape};
+  --madagascar-mangroves: #{$madagascar-mangroves};
+  --madagascar-forest: #{$madagascar-forest};
+  --vietnam-landscape: #{$vietnam-landscape};
 }

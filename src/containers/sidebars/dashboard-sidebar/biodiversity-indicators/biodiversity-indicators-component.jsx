@@ -50,7 +50,7 @@ function BioDiversityComponent(props) {
   };
 
   useEffect(() => {
-    if (!protectionScore) return;
+    if (protectionScore === null) return;
     setIsLoading(false);
   }, [protectionScore]);
 
@@ -90,7 +90,8 @@ function BioDiversityComponent(props) {
               <span className={styles.perc}>{protectionScore}%</span>
               <span>{t('Protection Score')}</span>
             </button>
-            {habitatScore !== '0.0' && (
+
+            {parseFloat(habitatScore) > 0 && (
               <button
                 type="button"
                 aria-label={t('Species Habitat Index')}
