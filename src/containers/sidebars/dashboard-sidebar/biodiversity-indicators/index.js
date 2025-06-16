@@ -319,23 +319,45 @@ function BioDiversityContainer(props) {
       if (data?.spiScoreData) {
         const tableData = [];
         const { spiScoreData } = data;
-        Object.keys(spiScoreData).forEach((key) => {
-          const item = spiScoreData[key];
-          const lastItem = last(item);
 
-          tableData.push({
-            country: lastItem.name,
-            stewardship: lastItem.stewardship * 100,
-            rangeProtected: lastItem.range_protected,
-            targetProtected: lastItem.regional_target,
-            sps: lastItem.sps * 100,
+        if (countryISO.toLowerCase() === 'cod') {
+          spiScoreData.forEach((item) => {
+            const lastItem = item;
+            tableData.push({
+              country: lastItem.country_name,
+              stewardship: lastItem.stewardship * 100,
+              rangeProtected: lastItem.range_protected,
+              targetProtected: lastItem.regional_target,
+              sps: lastItem.sps * 100,
+            });
           });
-        });
 
-        const globalValues = last(spiScoreData.Global).sps * 100;
-        setGlobalProtectionScore(globalValues);
+          const global = spiScoreData.filter(
+            (country) => country.country_name.toUpperCase() === 'GLOBAL'
+          );
+          const globalValues = last(global).sps * 100;
+          setGlobalProtectionScore(globalValues);
 
-        setProtectionScore(parseFloat(globalValues.toFixed(1)));
+          setProtectionScore(parseFloat(globalValues.toFixed(1)));
+        } else {
+          Object.keys(spiScoreData).forEach((key) => {
+            const item = spiScoreData[key];
+            const lastItem = last(item);
+
+            tableData.push({
+              country: lastItem.name,
+              stewardship: lastItem.stewardship * 100,
+              rangeProtected: lastItem.range_protected,
+              targetProtected: lastItem.regional_target,
+              sps: lastItem.sps * 100,
+            });
+          });
+
+          const globalValues = last(spiScoreData.Global).sps * 100;
+          setGlobalProtectionScore(globalValues);
+
+          setProtectionScore(parseFloat(globalValues.toFixed(1)));
+        }
         setProtectionTableData(tableData);
       }
     }
