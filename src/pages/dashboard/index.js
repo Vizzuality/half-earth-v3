@@ -157,7 +157,7 @@ function DashboardContainer(props) {
           : DASHBOARD_URLS.PRIVATE_GIN_OCCURENCE_LAYER;
       const privateOccurrenceDataResponse =
         await EsriFeatureService.getFeatures({
-          url,
+          url: `${url}?token=mzFcMRqhxzPAoRJavp2MJkehKp--3dWPCgXS2G5jxFe8IeIV-Lksdg47XrBtM4q2uNGp7GjwuwOtelmaFY-FDpJK2NwTdBkIAymRh2tU7TJaOjiI5_7I1TUov7V8KjqBUiFknKoE1DOHZrzT75rXEJAjHqomdZyxvGmc2BzuWOnvOl1hkJFmjQ6pz-sQLeDJ`,
           whereClause: `scientificname = '${scientificName}'`,
           returnGeometry: false,
         });
