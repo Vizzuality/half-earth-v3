@@ -48,6 +48,32 @@ function ProtectionContainer(props) {
           setGlobalScore(globalCountry[globalCountry.length - 1].val - 100);
         }
       }
+
+      setChartData({
+        labels: dates,
+        datasets: [
+          {
+            label: `${countrySelected}`,
+            fill: false,
+            backgroundColor: getCSSVariable('habitat-country'),
+            borderColor: getCSSVariable('habitat-country'),
+            pointBackgroundColor: getCSSVariable('habitat-country'),
+            pointBorderColor: getCSSVariable('habitat-country'),
+            pointStyle: false,
+            data: defaultCountryScores.values,
+          },
+          {
+            label: `${defaultCountryName}`,
+            fill: false,
+            backgroundColor: getCSSVariable('habitat-country-compare'),
+            borderColor: getCSSVariable('habitat-country-compare'),
+            pointBackgroundColor: getCSSVariable('habitat-country-compare'),
+            pointBorderColor: getCSSVariable('habitat-country-compare'),
+            pointStyle: false,
+            data: selectedCountryScores.values,
+          },
+        ],
+      });
     } else {
       setDefaultCountryName(countryName);
       currentCountry = spiDataByCountry[countryName];
@@ -68,33 +94,33 @@ function ProtectionContainer(props) {
           );
         }
       }
-    }
 
-    setChartData({
-      labels: dates,
-      datasets: [
-        {
-          label: `${countrySelected}`,
-          fill: false,
-          backgroundColor: getCSSVariable('habitat-country'),
-          borderColor: getCSSVariable('habitat-country'),
-          pointBackgroundColor: getCSSVariable('habitat-country'),
-          pointBorderColor: getCSSVariable('habitat-country'),
-          pointStyle: false,
-          data: defaultCountryScores.values,
-        },
-        {
-          label: `${defaultCountryName}`,
-          fill: false,
-          backgroundColor: getCSSVariable('habitat-country-compare'),
-          borderColor: getCSSVariable('habitat-country-compare'),
-          pointBackgroundColor: getCSSVariable('habitat-country-compare'),
-          pointBorderColor: getCSSVariable('habitat-country-compare'),
-          pointStyle: false,
-          data: selectedCountryScores.values,
-        },
-      ],
-    });
+      setChartData({
+        labels: dates,
+        datasets: [
+          {
+            label: `${defaultCountryName}`,
+            fill: false,
+            backgroundColor: getCSSVariable('habitat-country'),
+            borderColor: getCSSVariable('habitat-country'),
+            pointBackgroundColor: getCSSVariable('habitat-country'),
+            pointBorderColor: getCSSVariable('habitat-country'),
+            pointStyle: false,
+            data: defaultCountryScores.values,
+          },
+          {
+            label: `${countrySelected}`,
+            fill: false,
+            backgroundColor: getCSSVariable('habitat-country-compare'),
+            borderColor: getCSSVariable('habitat-country-compare'),
+            pointBackgroundColor: getCSSVariable('habitat-country-compare'),
+            pointBorderColor: getCSSVariable('habitat-country-compare'),
+            pointStyle: false,
+            data: selectedCountryScores.values,
+          },
+        ],
+      });
+    }
 
     // suitableCountryProtectedArea = this.translate.instant(
     //   'suitable_protected_area_km',

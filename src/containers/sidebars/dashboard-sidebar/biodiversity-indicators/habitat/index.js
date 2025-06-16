@@ -82,7 +82,7 @@ function HabitatContainer(props) {
 
   const getChartData = (countrySelected) => {
     const dates = [];
-    let currentCountry;
+    let currentCountry = dataByCountry.Global;
     // const globalCountry = dataByCountry.Global;
 
     const defaultCountryScores = { area: [], connectivity: [], total: [] };
@@ -161,9 +161,9 @@ function HabitatContainer(props) {
         {
           label: `${countrySelected} Area`,
           fill: false,
+          borderDash: [5, 5],
           backgroundColor: getCSSVariable('habitat-country'),
           borderColor: getCSSVariable('habitat-country'),
-          borderDash: [5, 5],
           pointBackgroundColor: getCSSVariable('habitat-country'),
           pointBorderColor: getCSSVariable('habitat-country'),
           pointStyle: false,

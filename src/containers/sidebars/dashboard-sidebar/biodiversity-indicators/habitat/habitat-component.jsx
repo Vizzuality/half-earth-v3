@@ -105,15 +105,22 @@ function HabitatComponent(props) {
           <span className={styles.dotted}>{t('Connectivity')}</span>
           <span className={styles.solid}>{t('Total')}</span>
         </div>
+
         <div className={styles.legend}>
-          {selectedCountry !== 'Global' && (
+          <div className={cx(styles.legendBox, styles.blue)} />
+          <span>{t(defaultCountryName) || t(countryName)}</span>
+          {selectedCountry !== 'Global' && countryISO === 'EE' && (
             <>
-              <div className={cx(styles.legendBox, styles.blue)} />
+              <div className={cx(styles.legendBox, styles.green)} />
               <span>{t(selectedCountry)}</span>
             </>
           )}
-          <div className={cx(styles.legendBox, styles.green)} />
-          <span>{t(defaultCountryName) || t(countryName)}</span>
+          {countryISO !== 'EE' && (
+            <>
+              <div className={cx(styles.legendBox, styles.green)} />
+              <span>{t(selectedCountry)}</span>
+            </>
+          )}
         </div>
         {chartData && (
           <ChartInfoComponent chartInfo={chartInfo} {...props}>
