@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   padding: 5px 10px;
@@ -15,7 +15,7 @@
   --save-button-text: #{$dark-text};
   --border-color-hover: #{$brand-color-main-hover};
 
-  &.light{
+  &.light {
     --font-color: #{$black};
     --border-color: #{$mol-blue};
     --selected-font-color: #{$white};
@@ -26,7 +26,7 @@
   height: max-content;
   border-left: 1px solid var(--font-color);
 
-  .sectionTitle{
+  .sectionTitle {
     font-size: $font-size-tick;
     font-weight: 700;
     text-transform: uppercase;
@@ -34,11 +34,20 @@
     color: var(--font-color);
   }
 
-  .back{
+  .back {
     color: var(--font-color);
   }
 
-  .commonName{
+  .noData {
+    font-size: $font-size-tick;
+    text-transform: capitalize;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--font-color);
+    padding-top: 10px;
+  }
+
+  .commonName {
     font-size: $font-size-tick;
     text-transform: capitalize;
     font-weight: 700;
@@ -46,7 +55,7 @@
     color: var(--font-color);
   }
 
-  .speciesName{
+  .speciesName {
     font-size: $font-size-tick;
     text-transform: capitalize;
     font-style: italic;
@@ -54,7 +63,7 @@
     color: var(--font-color);
   }
 
-  .tabs{
+  .tabs {
     display: flex;
     justify-content: space-evenly;
     margin-top: 10px;
@@ -62,13 +71,13 @@
     padding-right: 5px;
     border-bottom: solid 2px var(--border-color);
 
-    button{
+    button {
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 10px;
 
-      .perc{
+      .perc {
         color: var(--font-color);
         text-align: center;
         font-family: $font-family-roboto-flex;
@@ -78,7 +87,7 @@
         line-height: normal;
       }
 
-      span{
+      span {
         color: var(--font-color);
         text-align: center;
         font-family: $font-family-roboto-condensed;
@@ -88,7 +97,7 @@
         line-height: normal;
       }
 
-      &.selected{
+      &.selected {
         background-color: var(--border-color);
         color: $white;
         border: solid 2px var(--border-color);
@@ -97,25 +106,25 @@
         border-bottom: none;
 
         label,
-        span{
+        span {
           color: var(--selected-font-color);
         }
       }
     }
   }
 
-  p{
+  p {
     font-size: $font-size-xs;
     color: var(--font-color);
   }
 
-  .choices{
+  .choices {
     display: flex;
     flex-direction: column;
     gap: 5px;
   }
 
-  .search{
+  .search {
     display: flex;
     column-gap: 8px;
     margin-top: 8px;

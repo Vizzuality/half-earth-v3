@@ -981,9 +981,8 @@ function DashboardContainer(props) {
 
           spiCountryData[key] = sortedData;
         });
-
-        setSpiDataByCountry(spiCountryData);
       }
+      setSpiDataByCountry(spiCountryData);
       setDataByCountry(countryData);
 
       setData({ habitatTrendData: countryData, spiScoreData: spiCountryData });

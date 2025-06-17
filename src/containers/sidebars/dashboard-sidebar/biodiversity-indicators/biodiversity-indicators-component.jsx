@@ -124,7 +124,12 @@ function BioDiversityComponent(props) {
               {...props}
             />
           )}
-          {selectedTab === 2 && (
+          {selectedTab === 2 && protectionScore === 0 && (
+            <span className={styles.noData}>
+              {t('No SPS data available for this species')}
+            </span>
+          )}
+          {selectedTab === 2 && protectionScore > 0 && (
             <ProtectionContainer
               protectionScore={protectionScore}
               globalProtectionScore={globalProtectionScore}
