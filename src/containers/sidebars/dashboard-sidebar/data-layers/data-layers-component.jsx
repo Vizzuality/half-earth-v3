@@ -63,6 +63,7 @@ function DataLayerComponent(props) {
     mapLegendLayers,
     regionLayers,
     fromTrends,
+    setSpeciesDataLoading,
     countryISO,
     map,
   } = props;
@@ -374,8 +375,13 @@ function DataLayerComponent(props) {
 
   useEffect(() => {
     if (!dataPoints) return;
+    setSpeciesDataLoading(false);
     setIsLoading(false);
   }, [dataPoints]);
+
+  useEffect(() => {
+    setSpeciesDataLoading(true);
+  }, []);
 
   return (
     <section className={cx(lightMode ? styles.light : '', styles.container)}>

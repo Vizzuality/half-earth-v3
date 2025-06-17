@@ -950,39 +950,42 @@ function DashboardContainer(props) {
         countryData[key].shs = sortedData;
       });
 
-      const spiData = spiScoreData.map((f) => {
-        return f.attributes;
-      });
-
-      const spiCountryData = spiData.reduce((acc, obj) => {
-        const key = obj.name;
-        if (!acc[key]) {
-          acc[key] = [];
-        }
-        acc[key].push(obj);
-        return acc;
-      }, {});
-
-      Object.keys(spiCountryData).forEach((key) => {
-        const countryData = spiCountryData[key];
-        const sortedData = countryData.sort((a, b) => {
-          const yearA = a.year;
-          const yearB = b.year;
-          if (yearA < yearB) {
-            return -1;
-          }
-          if (yearA > yearB) {
-            return 1;
-          }
-          return 0;
+      let spiCountryData = {};
+      if (spiScoreData) {
+        const spiData = spiScoreData.map((f) => {
+          return f.attributes;
         });
 
-        spiCountryData[key] = sortedData;
-      });
+        spiCountryData = spiData.reduce((acc, obj) => {
+          const key = obj.name;
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          acc[key].push(obj);
+          return acc;
+        }, {});
 
+        Object.keys(spiCountryData).forEach((key) => {
+          const cd = spiCountryData[key];
+          const sortedData = cd.sort((a, b) => {
+            const yearA = a.year;
+            const yearB = b.year;
+            if (yearA < yearB) {
+              return -1;
+            }
+            if (yearA > yearB) {
+              return 1;
+            }
+            return 0;
+          });
+
+          spiCountryData[key] = sortedData;
+        });
+
+        setSpiDataByCountry(spiCountryData);
+      }
       setDataByCountry(countryData);
 
-      setSpiDataByCountry(spiCountryData);
       setData({ habitatTrendData: countryData, spiScoreData: spiCountryData });
     } else {
       const habitatTrendUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/bycountry?scientificname=${scientificName}`;
