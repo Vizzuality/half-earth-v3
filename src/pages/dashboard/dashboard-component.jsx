@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import DashboardLogin from '../../components/dashboard-login';
 import DashboardView from '../../containers/views/dashboard-view/dashboard-view';
 
 function DashboardComponent(props) {
-  const { activeLayers, handleMapLoad, loggedIn, setLoggedIn } = props;
+  const { activeLayers, handleMapLoad, loggedIn, setLoggedIn, countryISO } =
+    props;
+
+  useEffect(() => {
+    if (countryISO !== 'EE') {
+      setLoggedIn(true);
+    }
+  }, []);
 
   return (
     <>
-      {!loggedIn && <DashboardLogin setLoggedIn={setLoggedIn} {...props} />}
+      {!loggedIn && countryISO === 'EE' && (
+        <DashboardLogin setLoggedIn={setLoggedIn} {...props} />
+      )}
       {loggedIn && (
         <DashboardView
           onMapLoad={(map) => handleMapLoad(map, activeLayers)}

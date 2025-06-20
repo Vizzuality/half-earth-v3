@@ -353,10 +353,14 @@ function BioDiversityContainer(props) {
             });
           });
 
-          const globalValues = last(spiScoreData.Global).sps * 100;
-          setGlobalProtectionScore(globalValues);
-
-          setProtectionScore(parseFloat(globalValues.toFixed(1)));
+          if (spiScoreData.Global) {
+            const globalValues = last(spiScoreData.Global).sps * 100;
+            setGlobalProtectionScore(globalValues);
+            setProtectionScore(parseFloat(globalValues.toFixed(1)));
+          } else {
+            setGlobalProtectionScore(0);
+            setProtectionScore(0);
+          }
         }
         setProtectionTableData(tableData);
       }

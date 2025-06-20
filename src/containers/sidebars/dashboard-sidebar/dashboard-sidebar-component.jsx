@@ -40,6 +40,7 @@ function DashboardSidebar(props) {
   } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
+  const [speciesDataLoading, setSpeciesDataLoading] = useState(true);
   const [logo, setLogo] = useState();
 
   useEffect(() => {
@@ -105,7 +106,7 @@ function DashboardSidebar(props) {
         {countryISO.toUpperCase() === 'EE' && <h1>Organization</h1>}
       </div>
       <div className={styles.regionFilter}>
-        <DashboardNav {...props} />
+        <DashboardNav speciesDataLoading={speciesDataLoading} {...props} />
         {selectedIndex === NAVIGATION.HOME && (
           <DashboardHomeContainer {...props} />
         )}
@@ -119,7 +120,10 @@ function DashboardSidebar(props) {
           <SpeciesHomeContainer {...props} />
         )}
         {selectedIndex === NAVIGATION.DATA_LAYER && (
-          <DataLayerContainer {...props} />
+          <DataLayerContainer
+            setSpeciesDataLoading={setSpeciesDataLoading}
+            {...props}
+          />
         )}
         {selectedIndex === NAVIGATION.BIO_IND && (
           <BioDiversityContainer {...props} />
