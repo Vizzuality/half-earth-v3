@@ -152,7 +152,7 @@ function TemporalTrendsShiComponent(props) {
           </span> */}
           </div>
         )}
-        {countryISO.toLowerCase() === 'guy' && (
+        {countryISO.toLowerCase() === 'guy-fm' && (
           <div className={styles.btnGroup}>
             <Button
               type="rectangular"

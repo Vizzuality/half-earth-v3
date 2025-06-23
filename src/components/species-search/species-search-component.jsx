@@ -36,7 +36,7 @@ function SpeciesSearchComponent(props) {
   let searchURL =
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_species_list_for_search/FeatureServer';
 
-  if (countryISO === 'GUY' || countryISO === 'EE') {
+  if (countryISO === 'GUY-FM' || countryISO === 'EE') {
     searchURL = DASHBOARD_URLS.REGION_SPECIES_SEARCH_URL;
   }
 

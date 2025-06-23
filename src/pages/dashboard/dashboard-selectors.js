@@ -34,7 +34,12 @@ const getCountryData = createSelector(
     if (!countriesData || !countryISO) {
       return null;
     }
-    return countriesData[countryISO];
+    let country = countryISO.toUpperCase();
+    if (country === 'GUY-FM') {
+      // Special case for French Guiana
+      country = 'GUY';
+    }
+    return countriesData[country];
   }
 );
 

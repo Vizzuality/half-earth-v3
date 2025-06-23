@@ -168,7 +168,7 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getZoneData = () => {
-    const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'ee';
+    const project = countryISO.toLowerCase() === 'guy-fm' ? 'acc_guyana' : 'ee';
     let whereClause = `project in ('${project === 'ee' ? 'eewwf' : project}'`;
 
     const landscapeRegions = `(1, 7, 9, 10, 15)`;
@@ -207,7 +207,7 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const getZoneHistogramData = () => {
-    const project = countryISO.toLowerCase() === 'guy' ? 'acc_guyana' : 'ee';
+    const project = countryISO.toLowerCase() === 'guy-fm' ? 'acc_guyana' : 'ee';
     let whereClause = `project = '${project === 'ee' ? 'eewwf' : project}'`;
 
     if (selectedProvince) {
@@ -225,7 +225,7 @@ function DashboardTrendsSidebarContainer(props) {
   };
 
   const loadZone = async (zone, type) => {
-    if (countryISO.toLowerCase() === 'guy') {
+    if (countryISO.toLowerCase() === 'guy-fm') {
       const foundProvinceLayer = map.layers.items.find(
         (item) => item.id === REGION_OPTIONS.PROVINCES
       );
@@ -313,7 +313,7 @@ function DashboardTrendsSidebarContainer(props) {
     const countryCode = countryISO;
 
     if (
-      countryISO.toLowerCase() !== 'guy' &&
+      countryISO.toLowerCase() !== 'guy-fm' &&
       countryISO.toLowerCase() !== 'ee'
     ) {
       EsriFeatureService.getFeatures({
@@ -460,7 +460,7 @@ function DashboardTrendsSidebarContainer(props) {
         [`${countryISO}-outline`]: outlineFeatureLayer,
       }));
 
-      if (countryISO.toLowerCase() === 'guy') {
+      if (countryISO.toLowerCase() === 'guy-fm') {
         const zone3Layer = await EsriFeatureService.getFeatureLayer(
           ZONE_3_SPI_FEATURE_ID,
           countryISO,

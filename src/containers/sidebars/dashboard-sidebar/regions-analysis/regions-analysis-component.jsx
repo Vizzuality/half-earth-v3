@@ -343,7 +343,7 @@ function RegionsAnalysisComponent(props) {
               label={t('NBS-OP Interventions')}
             />
           )}
-          {countryISO.toUpperCase() === 'GUY' && (
+          {countryISO.toUpperCase() === 'GUY-FM' && (
             <>
               <FormControlLabel
                 value={REGION_OPTIONS.ZONE_3}

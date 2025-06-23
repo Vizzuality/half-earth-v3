@@ -162,7 +162,7 @@ function TemporalTrendsSpiComponent(props) {
             <span className={styles.helpText}>
               {t('Toggle national SPI and province-level breakdown.')}
             </span>
-            {countryISO.toLowerCase() === 'guy' && (
+            {countryISO.toLowerCase() === 'guy-fm' && (
               <div className={styles.btnGroup}>
                 <Button
                   type="rectangular"

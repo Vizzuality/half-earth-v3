@@ -1040,9 +1040,14 @@ function DashboardContainer(props) {
 
     if (countryISO !== 'EE') {
       setCountryDataLoading();
+      let country = countryISO.toUpperCase();
+      if (country === 'GUY-FM') {
+        // Special case for French Guiana
+        country = 'GUY';
+      }
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
-        whereClause: `GID_0 = '${countryISO}'`,
+        whereClause: `GID_0 = '${country}'`,
         returnGeometry: true,
       })
         .then((features) => {
