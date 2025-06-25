@@ -138,14 +138,18 @@ function TemporalTrendsSpiNationalChartComponent(props) {
 
   useEffect(() => {
     if (!currentScore) return;
-    const { SPI, PercentAreaProtected } = currentScore;
+    const { spi, area_protected, area_km2 } = currentScore;
+
+    const PercentAreaProtected = area_protected
+      ? Math.round((area_protected / area_km2) * 100)
+      : 0;
 
     const globalSpi = {
       labels: [t('Global SPI'), t('Remaining')],
       datasets: [
         {
           label: '',
-          data: [SPI, 100 - SPI],
+          data: [spi, 100 - spi],
           backgroundColor: [getCSSVariable('bubble'), emptyArcColor],
           borderColor: [getCSSVariable('bubble'), emptyArcColor],
           borderWidth: 1,
@@ -167,16 +171,18 @@ function TemporalTrendsSpiNationalChartComponent(props) {
     };
 
     setData({
-      labels: countryData.map((item) => item.Year),
+      labels: countryData.map((item) => item.year),
       datasets: [
         {
           label: 'SPI',
-          data: countryData.map((item) => item.SPI),
+          data: countryData.map((item) => item.spi),
           borderColor: getCSSVariable('bubble'),
         },
         {
           label: t('Area protected'),
-          data: countryData.map((item) => item.PercentAreaProtected),
+          data: countryData.map(
+            (item) => (item.area_protected / item.area_km2) * 100
+          ),
           borderColor: getCSSVariable('area-protected'),
         },
       ],
@@ -194,7 +200,7 @@ function TemporalTrendsSpiNationalChartComponent(props) {
           {currentScore && (
             <div className={styles.arcGrid}>
               <div className={styles.values}>
-                <b>{currentScore?.Year}</b>
+                <b>{currentScore?.year}</b>
                 <span>{t('Year')}</span>
               </div>
               <SpiArcChartComponent
@@ -208,10 +214,10 @@ function TemporalTrendsSpiNationalChartComponent(props) {
                 width="125x"
                 height="75px"
                 data={spiArcData}
-                value={currentScore?.SPI}
+                value={currentScore.spi}
               />
               <div className={styles.values}>
-                <b>{currentScore.GlobalRanking}</b>
+                <b>{currentScore.spi_rank}</b>
                 <span>{t('Global Ranking')}</span>
               </div>
               <span />

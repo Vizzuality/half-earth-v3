@@ -197,19 +197,19 @@ function ScoreDistributionsShiComponent(props) {
 
       // Loop through each number and place it in the appropriate bucket
       shiData.forEach((a) => {
-        const bin = a.binned.split(',')[0].replace(/ /gi, '');
+        const bin = a.bin.split(',')[1].replace(/ /gi, '');
 
-        taxaSet.amphibians[score][bin] = a[`${score}_amphibians`];
-        taxaSet.birds[score][bin] = a[`${score}_birds`];
-        taxaSet.mammals[score][bin] = a[`${score}_mammals`];
-        taxaSet.reptiles[score][bin] = a[`${score}_reptiles`];
+        taxaSet.amphibians[bin] = a.amphibians_shi_count || a.amphibians;
+        taxaSet.birds[bin] = a.birds_shi_count || a.birds;
+        taxaSet.mammals[bin] = a.mammals_shi_count || a.mammals;
+        taxaSet.reptiles[bin] = a.reptiles_shi_count || a.reptiles;
       });
 
       const uniqueKeys = new Set([
-        ...Object.keys(taxaSet.birds[score]),
-        ...Object.keys(taxaSet.mammals[score]),
-        ...Object.keys(taxaSet.reptiles[score]),
-        ...Object.keys(taxaSet.amphibians[score]),
+        ...Object.keys(taxaSet.birds),
+        ...Object.keys(taxaSet.mammals),
+        ...Object.keys(taxaSet.reptiles),
+        ...Object.keys(taxaSet.amphibians),
       ]);
 
       setChartData({
@@ -217,22 +217,22 @@ function ScoreDistributionsShiComponent(props) {
         datasets: [
           {
             label: t('Birds'),
-            data: Object.values(taxaSet.birds[score]),
+            data: Object.values(taxaSet.birds),
             backgroundColor: getCSSVariable('birds'),
           },
           {
             label: t('Mammals'),
-            data: Object.values(taxaSet.mammals[score]),
+            data: Object.values(taxaSet.mammals),
             backgroundColor: getCSSVariable('mammals'),
           },
           {
             label: t('Reptiles'),
-            data: Object.values(taxaSet.reptiles[score]),
+            data: Object.values(taxaSet.reptiles),
             backgroundColor: getCSSVariable('reptiles'),
           },
           {
             label: t('Amphibians'),
-            data: Object.values(taxaSet.amphibians[score]),
+            data: Object.values(taxaSet.amphibians),
             backgroundColor: getCSSVariable('amphibians'),
           },
         ],
@@ -278,25 +278,34 @@ function ScoreDistributionsShiComponent(props) {
       }
 
       // Loop through each number and place it in the appropriate bucket
-      shiData.forEach((a) => {
-        const bin =
-          a.bin?.split(',')[0].replace(/ /gi, '') ||
-          a.binned.split(',')[0].replace(/ /gi, '');
+      // shiData.forEach((a) => {
+      //   const bin =
+      //     a.bin?.split(',')[0].replace(/ /gi, '') ||
+      //     a.binned.split(',')[0].replace(/ /gi, '');
 
-        taxaSet.amphibians[score][bin] =
-          a.amphibians_shi_count || a[`${score}_amphibians`];
-        taxaSet.birds[score][bin] = a.birds_shi_count || a[`${score}_birds`];
-        taxaSet.mammals[score][bin] =
-          a.mammals_shi_count || a[`${score}_mammals`];
-        taxaSet.reptiles[score][bin] =
-          a.reptiles_shi_count || a[`${score}_reptiles`];
+      //   taxaSet.amphibians[score][bin] =
+      //     a.amphibians_shi_count || a[`${score}_amphibians`];
+      //   taxaSet.birds[score][bin] = a.birds_shi_count || a[`${score}_birds`];
+      //   taxaSet.mammals[score][bin] =
+      //     a.mammals_shi_count || a[`${score}_mammals`];
+      //   taxaSet.reptiles[score][bin] =
+      //     a.reptiles_shi_count || a[`${score}_reptiles`];
+      // });
+
+      shiData?.forEach((a) => {
+        const bin = a.bin.split(',')[1].replace(/ /gi, '');
+
+        taxaSet.amphibians[bin] = a.amphibians_shi_count || a.amphibians;
+        taxaSet.birds[bin] = a.birds_shi_count || a.birds;
+        taxaSet.mammals[bin] = a.mammals_shi_count || a.mammals;
+        taxaSet.reptiles[bin] = a.reptiles_shi_count || a.reptiles;
       });
 
       const uniqueKeys = new Set([
-        ...Object.keys(taxaSet.birds[score]),
-        ...Object.keys(taxaSet.mammals[score]),
-        ...Object.keys(taxaSet.reptiles[score]),
-        ...Object.keys(taxaSet.amphibians[score]),
+        ...Object.keys(taxaSet.birds),
+        ...Object.keys(taxaSet.mammals),
+        ...Object.keys(taxaSet.reptiles),
+        ...Object.keys(taxaSet.amphibians),
       ]);
 
       setChartData({
@@ -304,22 +313,22 @@ function ScoreDistributionsShiComponent(props) {
         datasets: [
           {
             label: t('Birds'),
-            data: Object.values(taxaSet.birds[score]),
+            data: Object.values(taxaSet.birds),
             backgroundColor: getCSSVariable('birds'),
           },
           {
             label: t('Mammals'),
-            data: Object.values(taxaSet.mammals[score]),
+            data: Object.values(taxaSet.mammals),
             backgroundColor: getCSSVariable('mammals'),
           },
           {
             label: t('Reptiles'),
-            data: Object.values(taxaSet.reptiles[score]),
+            data: Object.values(taxaSet.reptiles),
             backgroundColor: getCSSVariable('reptiles'),
           },
           {
             label: t('Amphibians'),
-            data: Object.values(taxaSet.amphibians[score]),
+            data: Object.values(taxaSet.amphibians),
             backgroundColor: getCSSVariable('amphibians'),
           },
         ],

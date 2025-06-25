@@ -893,15 +893,12 @@ function DashboardContainer(props) {
       const apiResponses = await Promise.all(
         apiCalls.map(async (url) => {
           const response = await url;
-          console.log(response);
           // const d = await response.json();
           return response;
         })
       );
 
       const [habitatTrendData, spiScoreData] = apiResponses;
-
-      console.log(apiResponses);
 
       const shiScoreData = habitatTrendData.map((f) => {
         return f.attributes;
@@ -1067,6 +1064,8 @@ function DashboardContainer(props) {
 
     if (countryISO === 'COD' || countryISO === 'GIN') {
       await tx.setCurrentLocale('fr');
+    } else {
+      await tx.setCurrentLocale('en');
     }
 
     // Cleanup event listener on component unmount

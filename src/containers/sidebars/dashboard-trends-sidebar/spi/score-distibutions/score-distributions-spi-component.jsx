@@ -145,7 +145,7 @@ function ScoreDistributionsSpiComponent(props) {
 
     let locationData = [];
     if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      locationData = spiScoresData.filter(
+      locationData = spiScoresData?.filter(
         (loc) => loc.iso3_regional === selectedProvince.iso3_regional
       );
     } else if (acceptedZones.includes(activeTrend)) {
@@ -168,7 +168,7 @@ function ScoreDistributionsSpiComponent(props) {
     }
 
     // Loop through each number and place it in the appropriate bucket
-    locationData.forEach((a) => {
+    locationData?.forEach((a) => {
       const bin = a.bin.split(',')[1].replace(/ /gi, '');
 
       taxaSet.amphibians[bin] = a.amphibians_spi_count || a.amphibians;
@@ -298,7 +298,7 @@ function ScoreDistributionsSpiComponent(props) {
   }, [spiScoresData, activeTrend, zoneHistrogramData]);
 
   useEffect(() => {
-    if (!spiSelectSpeciesData.length) return;
+    if (!spiSelectSpeciesData?.length) return;
     setIsSpeciesLoading(true);
     loadSpecies();
   }, [spiSelectSpeciesData]);

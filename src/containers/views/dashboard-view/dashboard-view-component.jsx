@@ -65,7 +65,7 @@ function DashboardViewComponent(props) {
   const [layerInfo, setLayerInfo] = useState();
   const [showLegend, setShowLegend] = useState(false);
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
-  const [shiActiveTrend, setShiActiveTrend] = useState(NATIONAL_TREND);
+  const [shiActiveTrend, setShiActiveTrend] = useState(PROVINCE_TREND);
   // const [showTopNav, setShowTopNav] = useState(true);
 
   const handleRegionSelected = (foundRegion) => {

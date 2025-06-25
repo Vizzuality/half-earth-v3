@@ -29,11 +29,11 @@ function TemporalTrendsSiiComponent(props) {
   const getNationalData = async () => {
     if (countryData.length) {
       const allVertValues = countryData
-        .filter((r) => r.Year <= SII_LATEST_YEAR)
+        .filter((r) => r.year <= SII_LATEST_YEAR)
         .map((c) => ({
-          year: c.Year,
-          globalRanking: c.SII_GlobalRanking,
-          sii: c.SII,
+          year: c.year,
+          globalRanking: c.sii_rank,
+          sii: c.sii,
         }));
 
       setNationalChartData(allVertValues);
@@ -42,16 +42,16 @@ function TemporalTrendsSiiComponent(props) {
 
       setLatestValues({
         year: lastValue.year,
-        spi: (lastValue.sii * 100).toFixed(1),
+        spi: lastValue.sii.toFixed(1),
       });
       setFirstValues({
         year: allVertValues[0].year,
-        spi: (allVertValues[0].sii * 100).toFixed(1),
+        spi: allVertValues[0].sii.toFixed(1),
       });
 
       const orderBySII = [...allVertValues].sort((a, b) => a.sii - b.sii);
-      setLowestObservation(orderBySII[0].sii * 100);
-      setHighestObservation((last(orderBySII).sii * 100).toFixed(1));
+      setLowestObservation(orderBySII[0].sii);
+      setHighestObservation(last(orderBySII).sii.toFixed(1));
     }
   };
 

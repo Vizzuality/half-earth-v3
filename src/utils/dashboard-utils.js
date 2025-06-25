@@ -31,14 +31,15 @@ export const IUCNStatusTypes = {
 };
 
 export const PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID =
-  'e3dca98a5bf74c9898c30f72baf6b1ba';
+  'a2adcca9c4a4425582e29fb413df6a72'; // 'e3dca98a5bf74c9898c30f72baf6b1ba';
 export const PROVINCE_FEATURE_GLOBAL_OUTLINE_ID =
   'c6bc2248f053422da9d8d30ce591ca16';
 
 // DRC LAYERS
 export const PROTECTED_AREA_FEATURE_URL = '6b13aac7863a44bb915d1847dfc5dfd9';
 // Yale AGOL - 36370bcf99884301bca92ea8eb91f78f
-export const SHI_LAYER_ID = '41981d576d6042aea14595de0fb924f2';
+// DRC SPI LAYER = '41981d576d6042aea14595de0fb924f2';
+export const SHI_LAYER_ID = '6f02cce2565b4d089565aaed6adb6ca2';
 // Yale AGOL - c0a78b5a9b4e4758b4b8f5fcee76412a
 export const DRC_REGION_FEATURE_ID = 'b0109ce737f4495aa188826ef0601816'; // '95cac457c0244a2286d914148c24af98';
 // Yale AGOL - b0109ce737f4495aa188826ef0601816
