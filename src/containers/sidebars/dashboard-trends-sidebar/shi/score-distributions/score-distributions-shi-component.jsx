@@ -159,19 +159,10 @@ function ScoreDistributionsShiComponent(props) {
     // }
   };
 
-  const displayData = (selectedScore) => {
-    let score = selectedScore;
+  const displayData = () => {
     let shiData = shiScoresData;
 
     if (shiActiveTrend === 'NATIONAL') {
-      if (selectedScore === SCORES.HABITAT_SCORE) {
-        score = NATIONAL_SCORES.HABITAT_SCORE;
-      } else if (selectedScore === SCORES.AREA_SCORE) {
-        score = NATIONAL_SCORES.AREA_SCORE;
-      } else if (selectedScore === SCORES.CONNECTIVITY_SCORE) {
-        score = NATIONAL_SCORES.CONNECTIVITY_SCORE;
-      }
-
       const taxaSet = {
         amphibians: {
           [NATIONAL_SCORES.AREA_SCORE]: {},
@@ -196,7 +187,7 @@ function ScoreDistributionsShiComponent(props) {
       };
 
       // Loop through each number and place it in the appropriate bucket
-      shiData.forEach((a) => {
+      shiData?.forEach((a) => {
         const bin = a.bin.split(',')[1].replace(/ /gi, '');
 
         taxaSet.amphibians[bin] = a.amphibians_shi_count || a.amphibians;
@@ -277,21 +268,6 @@ function ScoreDistributionsShiComponent(props) {
         );
       }
 
-      // Loop through each number and place it in the appropriate bucket
-      // shiData.forEach((a) => {
-      //   const bin =
-      //     a.bin?.split(',')[0].replace(/ /gi, '') ||
-      //     a.binned.split(',')[0].replace(/ /gi, '');
-
-      //   taxaSet.amphibians[score][bin] =
-      //     a.amphibians_shi_count || a[`${score}_amphibians`];
-      //   taxaSet.birds[score][bin] = a.birds_shi_count || a[`${score}_birds`];
-      //   taxaSet.mammals[score][bin] =
-      //     a.mammals_shi_count || a[`${score}_mammals`];
-      //   taxaSet.reptiles[score][bin] =
-      //     a.reptiles_shi_count || a[`${score}_reptiles`];
-      // });
-
       shiData?.forEach((a) => {
         const bin = a.bin.split(',')[1].replace(/ /gi, '');
 
@@ -338,8 +314,7 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const loadSpecies = () => {
-    const maxItems = 4;
-    let species = [];
+    const species = [];
     if (zoneHistrogramData.length) {
       let zoneData = [];
 
@@ -374,8 +349,8 @@ function ScoreDistributionsShiComponent(props) {
 
           if (species.length > 0) {
             const lastItem = species[species.length - 1];
-            const low = species[0].habitat_score * 100;
-            const high = lastItem.habitat_score * 100;
+            const low = species[0].habitat_score;
+            const high = lastItem.habitat_score;
 
             setLowDist(low.toFixed(1));
             setHighDist(high.toFixed(1));
@@ -388,15 +363,40 @@ function ScoreDistributionsShiComponent(props) {
 
       setSpsSpecies(species.slice(0, 4));
     } else {
-      species = shiSelectSpeciesData.slice(0, maxItems);
+      shiSelectSpeciesData.forEach((item) => {
+        if (item.species_shs) {
+          const values = JSON.parse(item.species_shs);
 
-      const lastItem = species[species.length - 1];
-      const low = (species[0].habitat_score ?? species[0].HabitatScore) * 100;
-      const high = (lastItem.habitat_score ?? lastItem.HabitatScore) * 100;
+          values.forEach((value) => {
+            const val = value[''];
+            if (
+              val.stewardship >= 0 &&
+              !threatStatuses.includes(val.threat_status?.toUpperCase())
+            ) {
+              species.push({
+                scientificname: val.species,
+                species_url: val.species_url,
+                habitat_score: val.shs_score,
+                taxa: val.taxa,
+              });
+            }
+          });
 
-      setLowDist(low.toFixed(1));
-      setHighDist(high.toFixed(1));
-      setSpsSpecies(species);
+          if (species.length > 0) {
+            const lastItem = species[species.length - 1];
+            const low = species[0].habitat_score;
+            const high = lastItem.habitat_score;
+
+            setLowDist(low.toFixed(1));
+            setHighDist(high.toFixed(1));
+          } else {
+            setLowDist(0);
+            setHighDist(0);
+          }
+        }
+      });
+
+      setSpsSpecies(species.slice(0, 4));
     }
     setIsSpeciesLoading(false);
   };
@@ -410,12 +410,10 @@ function ScoreDistributionsShiComponent(props) {
   };
 
   const getChartData = async () => {
-    displayData(SCORES.HABITAT_SCORE);
+    displayData();
   };
 
   useEffect(() => {
-    // if (!shiScoresData?.length) return;
-
     setIsLoading(true);
     getChartData();
 
@@ -505,9 +503,7 @@ function ScoreDistributionsShiComponent(props) {
                       </span>
                     </div>
                     <span className={styles.spsScore}>
-                      SHS:{' '}
-                      {s.habitat_score && (s.habitat_score * 100).toFixed(1)}
-                      {s.HabitatScore && (s.HabitatScore * 100).toFixed(1)}
+                      SHS: {s.habitat_score.toFixed(1)}
                     </span>
                   </button>
                 </li>

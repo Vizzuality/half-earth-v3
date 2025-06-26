@@ -213,7 +213,7 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const loadSpecies = () => {
-    let species = [];
+    const species = [];
     if (zoneHistrogramData.length) {
       let zoneData = [];
 
@@ -233,7 +233,7 @@ function ScoreDistributionsSpiComponent(props) {
           values.forEach((value) => {
             const val = value;
             if (
-              val.stewardship >= 0.05 &&
+              val.stewardship >= 5 &&
               !threatStatuses.includes(val.threat_status?.toUpperCase())
             ) {
               species.push({
@@ -249,13 +249,27 @@ function ScoreDistributionsSpiComponent(props) {
 
       setSpsSpecies(species.slice(0, 4));
     } else {
-      species = [
-        spiSelectSpeciesData[0],
-        spiSelectSpeciesData[1],
-        spiSelectSpeciesData[2],
-        spiSelectSpeciesData[3],
-      ];
-      setSpsSpecies(species);
+      spiSelectSpeciesData.forEach((item) => {
+        if (item.species_sps) {
+          const values = JSON.parse(item.species_sps);
+          values.forEach((value) => {
+            const val = value;
+            if (
+              val.stewardship >= 5 &&
+              !threatStatuses.includes(val.threat_status?.toUpperCase())
+            ) {
+              species.push({
+                species: val.species,
+                species_url: val.species_url,
+                species_protection_score_all: val.spi_score,
+                taxa: val.taxa,
+              });
+            }
+          });
+        }
+      });
+
+      setSpsSpecies(species.slice(0, 4));
     }
     setIsSpeciesLoading(false);
   };
@@ -287,8 +301,6 @@ function ScoreDistributionsSpiComponent(props) {
   }, []);
 
   useEffect(() => {
-    // if (!spiScoresData.length) return;
-
     setIsLoading(true);
     getChartData();
 
@@ -350,10 +362,11 @@ function ScoreDistributionsSpiComponent(props) {
                           {s.species}
                         </span>
                       </div>
-                      <span className={styles.spsScore}>{`SPS: ${Math.min(
-                        100,
-                        s.species_protection_score_all * 100
-                      )?.toFixed(1)}`}</span>
+                      <span
+                        className={styles.spsScore}
+                      >{`SPS: ${s.species_protection_score_all?.toFixed(
+                        1
+                      )}`}</span>
                     </button>
                   </li>
                 );

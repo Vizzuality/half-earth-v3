@@ -74,6 +74,9 @@ function DashboardTrendsSidebarContainer(props) {
     EsriFeatureService.getFeatures(countryURL).then((features) => {
       const response = features.map((f) => f.attributes);
 
+      setProvinces(response);
+      setShiProvinceTrendData(response);
+
       const countries = response.filter(
         (item) => item.region_key === countryISO
       );
@@ -92,86 +95,22 @@ function DashboardTrendsSidebarContainer(props) {
     });
   };
 
-  // const getShiCountryData = (countryURL) => {
-  //   EsriFeatureService.getFeatures(countryURL).then((features) => {
-  //     const countries = features.map((f) => f.attributes);
-
-  //     setShiCountryData(countries);
-  //   });
-  // };
-
-  const getSpiProvinceData = (provinceURL) => {
-    EsriFeatureService.getFeatures(provinceURL).then((features) => {
-      const regions = features.map((f) => f.attributes);
-      setProvinces(regions);
-      setShiProvinceTrendData(regions);
-    });
-  };
-
-  const getSpiScoreData = (scoresDataURL) => {
-    EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
-      const data = features?.map((f) => f.attributes);
-      setSpiScoresData(data);
-    });
-  };
-
-  const getSpiSelectSpeciesData = (selectSpeciesURL) => {
-    if (countryISO.toLowerCase() === 'ee') {
-      setSpiSelectSpeciesData(zoneHistrogramData[0]);
-    } else {
-      EsriFeatureService.getFeatures(selectSpeciesURL).then((features) => {
-        const data = features?.map((f) => f.attributes);
-        setSpiSelectSpeciesData(data);
-      });
-    }
-  };
-
-  const getShiProvinceData = (provinceURL) => {
-    EsriFeatureService.getFeatures(provinceURL).then((features) => {
-      if (features) {
-        const data = features.map((f) => f.attributes);
-        setShiProvinceTrendData(data);
-      }
-    });
-  };
-
-  const getShiScoresData = (scoresDataURL) => {
-    EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
-      const data = features?.map((f) => f.attributes);
-      setShiScoresData(data);
-    });
-  };
-
-  const getShiSelectSpeciesData = (scoresDataURL) => {
-    EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
-      const data = features?.map((f) => f.attributes);
-      setShiSelectSpeciesData(data);
-    });
-  };
-
-  const getShiNationalData = () => {
-    const countryCode = countryISO;
-
-    const shiScoresDataURL = {
-      // url: DASHBOARD_URLS.SHI_HISTOGRAM_URL,
-      url: DASHBOARD_URLS.SPI_HISTOGRAM_URL,
-      whereClause: `iso3 = '${countryCode}' and region_key = '${countryCode}'`,
-    };
-    getShiScoresData(shiScoresDataURL);
-  };
-
-  const getProvinceSpiData = (whereClause) => {
-    const scoreDataURL = {
+  const getHistogramData = (whereClause) => {
+    const scoresDataURL = {
       url: DASHBOARD_URLS.SPI_HISTOGRAM_URL,
       whereClause: `${whereClause}`,
     };
-    getSpiScoreData(scoreDataURL);
-
-    const selectSpeciesURL = {
-      url: DASHBOARD_URLS.SPI_REGION_SPECIES_URL,
-      whereClause: `${whereClause} and species_protection_score_all >= 0 and species_protection_score_all <= 5 and species_url IS NOT NULL`,
-    };
-    getSpiSelectSpeciesData(selectSpeciesURL);
+    EsriFeatureService.getFeatures(scoresDataURL).then((features) => {
+      const data = features?.map((f) => f.attributes);
+      setSpiScoresData(data);
+      setShiScoresData(data);
+      if (countryISO.toLowerCase() === 'ee') {
+        setSpiSelectSpeciesData(zoneHistrogramData[0]);
+      } else {
+        setSpiSelectSpeciesData(data);
+        setShiSelectSpeciesData(data);
+      }
+    });
   };
 
   const getZoneData = () => {
@@ -260,72 +199,18 @@ function DashboardTrendsSidebarContainer(props) {
     }
   };
 
-  // get SHI scores data
-  useEffect(() => {
-    if (!shiScoresData?.length) return;
-
-    // find first bin with a habitat score > 0
-    const bin = shiScoresData.find((item) => {
-      return (
-        item.habitat_amphibians > 0 ||
-        item.habitat_birds > 0 ||
-        item.habitat_mammals > 0 ||
-        item.habitat_reptiles > 0
-      );
-    });
-
-    const scoreRange = ['0', '100']; // bin.binned.split(',');
-
-    let habitatScore = 'HabitatScore';
-    let speciesURL = 'SpeciesImage';
-    let url = DASHBOARD_URLS.SHI_SPECIES_URL;
-
-    const countryCode = countryISO;
-
-    let whereClause = `ISO3 = '${countryCode}'`;
-
-    if (shiActiveTrend === PROVINCE_TREND) {
-      url = DASHBOARD_URLS.SHI_PROVINCE_SPECIES_URL;
-      whereClause = `iso3_regional = '${
-        selectedProvince?.iso3_regional ?? selectedProvince?.GID_1
-      }'`;
-      habitatScore = 'habitat_score';
-      speciesURL = 'species_url';
-    }
-
-    const andClause = `and ${habitatScore} >= ${
-      parseInt(scoreRange[0], 10) / 100
-    } and ${habitatScore} <= ${
-      parseInt(scoreRange[1], 10) / 100
-    } and ${speciesURL} IS NOT NULL`;
-
-    const shiSpeciesScoresURL = {
-      url,
-      whereClause: `${whereClause} ${andClause}`,
-      orderByFields: [habitatScore],
-    };
-    if (shiActiveTrend === PROVINCE_TREND && selectedProvince) {
-      getShiSelectSpeciesData(shiSpeciesScoresURL);
-    } else if (shiActiveTrend === NATIONAL_TREND) {
-      getShiSelectSpeciesData(shiSpeciesScoresURL);
-    }
-  }, [shiScoresData]);
-
   // find and zoom to region
   useEffect(() => {
     // if (countryISO === 'COD') {
     //   setShiActiveTrend(NATIONAL_TREND);
     // }
-
-    const countryCode = countryISO;
-
     if (
       countryISO.toLowerCase() !== 'guy-fm' &&
       countryISO.toLowerCase() !== 'ee'
     ) {
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
-        whereClause: `GID_0 = '${countryCode}'`,
+        whereClause: `GID_0 = '${countryISO}'`,
         returnGeometry: true,
       }).then((features) => {
         // eslint-disable-next-line no-shadow
@@ -532,11 +417,6 @@ function DashboardTrendsSidebarContainer(props) {
     if (countryISO.toLowerCase() !== 'ee') {
       const countryCode = countryISO;
 
-      // const countryURL = {
-      //   url: DASHBOARD_URLS.COUNTRY_URL,
-      //   whereClause: `ISO3 = '${countryCode}'`,
-      //   orderByFields: ['year'],
-      // };
       const countryURL = {
         url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
         whereClause: `iso3 = '${countryCode}'`,
@@ -544,32 +424,8 @@ function DashboardTrendsSidebarContainer(props) {
       };
       getCountryData(countryURL);
 
-      // const shiCountryURL = {
-      //   url: DASHBOARD_URLS.SHI_COUNTRY_DATA_URL,
-      //   whereClause: `ISO3 = '${countryCode}'`,
-      // };
-      // getShiCountryData(shiCountryURL);
-
-      // GET SPI Province Trend Data
-      const provinceURL = {
-        url: DASHBOARD_URLS.SPI_PROVINCE_TREND_URL,
-        whereClause: `iso3 = '${countryCode}'`,
-        orderByFields: ['name', 'year'],
-      };
-      getSpiProvinceData(provinceURL);
-
-      // GET SHI Province Trend Data
-      const shiProvinceURL = {
-        url: DASHBOARD_URLS.SHI_PROVINCE_TREND_URL,
-        whereClause: `iso3 = '${countryCode}' and year = ${SHI_LATEST_YEAR}`,
-        orderByFields: ['region_name'],
-      };
-      getShiProvinceData(shiProvinceURL);
-
-      const whereClause = `iso3 = '${countryCode}' and region_key = 'XXX'`;
-      getProvinceSpiData(whereClause);
-
-      getShiNationalData();
+      const whereClause = `iso3 = '${countryCode}' and region_key = '${countryCode}'`;
+      getHistogramData(whereClause);
     } else {
       getZoneData();
       getZoneHistogramData();
@@ -580,6 +436,8 @@ function DashboardTrendsSidebarContainer(props) {
     const countryCode = countryISO;
 
     if (countryISO.toLowerCase() !== 'ee') {
+      let whereClause = `iso3 = '${countryCode}' and region_key = '${countryCode}'`;
+
       const zone5Layer = map.layers.items.find(
         (item) => item.id === `${countryISO}-zone5-spi`
       );
@@ -609,7 +467,7 @@ function DashboardTrendsSidebarContainer(props) {
         if (foundProvinceLayer) {
           foundProvinceLayer.visible = true;
         }
-        getShiNationalData();
+        getHistogramData(whereClause);
       } else if (shiActiveTrend === ZONE_3 && tabOption === TABS.SHI) {
         if (zone5ShiLayer) {
           zone5ShiLayer.visible = false;
@@ -651,28 +509,17 @@ function DashboardTrendsSidebarContainer(props) {
           foundProvinceLayer.visible = true;
         }
 
-        let whereClause = `iso3 = '${countryCode}' and region_key = '${countryCode}'`;
-
         if (selectedProvince) {
-          if (activeTrend === PROVINCE_TREND) {
+          if (
+            (tabOption === TABS.SPI && activeTrend === PROVINCE_TREND) ||
+            (tabOption === TABS.SHI && shiActiveTrend === PROVINCE_TREND)
+          ) {
             // TODO: iso3_regional does not exist in all provinces
             whereClause = `region_key = '${selectedProvince.region_key}'`;
-          } else {
-            getProvinceSpiData(whereClause);
           }
-          const shiWhereClause = `iso3 = '${countryCode}' and region_key = '${
-            selectedProvince.region_key ?? selectedProvince.GID_1
-          }'`;
 
-          const shiScoresDataURL = {
-            url: DASHBOARD_URLS.SPI_HISTOGRAM_URL,
-            whereClause: `${shiWhereClause}`,
-          };
-          getShiScoresData(shiScoresDataURL);
+          getHistogramData(whereClause);
         }
-
-        // GET SPI
-        getProvinceSpiData(whereClause);
       }
     } else {
       const spiEwwfLayer = map.layers.items.find(
