@@ -62,7 +62,7 @@ function ScoreDistributionsShiComponent(props) {
     AREA_SCORE: 'areascore',
     CONNECTIVITY_SCORE: 'connectivity',
   };
-  const threatStatuses = ['LEAST CONCERN', 'EXTINCT', 'EXTINCT IN THE WILD'];
+  const threatStatuses = ['EXTINCT', 'EXTINCT IN THE WILD'];
   const acceptedZones = ['ACC_3', 'ACC_5', 'MEX', 'PER', 'BRA', 'MDG', 'VNM'];
   const [chartData, setChartData] = useState();
   const [responseData] = useState();
