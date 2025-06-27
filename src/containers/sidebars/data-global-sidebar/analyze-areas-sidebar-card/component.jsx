@@ -221,10 +221,10 @@ function AnalyzeAreasCardComponent({
           </p>
 
           <p className={styles.sectionSubtitleLabel}>
-            {t('Learn more about shape files')}{' '}
+            {t('Learn more about shapefiles')}{' '}
             <a
               title={t('Shapefiles information')}
-              href="https://enterprise.arcgis.com/es/portal/latest/use/shapefiles.htm"
+              href="https://enterprise.arcgis.com/en/portal/latest/use/shapefiles.htm"
               target="_blank"
               rel="noreferrer noopener"
             >

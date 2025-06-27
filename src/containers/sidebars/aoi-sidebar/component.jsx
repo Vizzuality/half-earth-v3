@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { DATA } from 'router';
 
 import { useT, useLocale, T } from '@transifex/react';
-
+import { Loading } from 'he-components';
 import { writeToForageItem } from 'utils/local-forage-utils';
 
 import cx from 'classnames';
@@ -151,6 +151,8 @@ function AOISidebar({
     contextualData.areaName;
 
   return (
+    <>
+    {!population && <div style={{position: 'absolute', left: '50%', top: 0}}><Loading height={200} /></div>}
     <div className={styles.sidebarContainer}>
       <TabsSidebar
         activeLayers={activeLayers}
@@ -456,6 +458,7 @@ function AOISidebar({
         )}
       </AnimatePresence>
     </div>
+    </>
   );
 }
 
