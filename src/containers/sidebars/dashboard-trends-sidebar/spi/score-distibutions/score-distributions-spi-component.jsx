@@ -255,7 +255,7 @@ function ScoreDistributionsSpiComponent(props) {
           values.forEach((value) => {
             const val = value;
             if (
-              val.stewardship >= 0 &&
+              val.stewardship >= 1 &&
               !threatStatuses.includes(val.threat_status?.toUpperCase())
             ) {
               species.push({
