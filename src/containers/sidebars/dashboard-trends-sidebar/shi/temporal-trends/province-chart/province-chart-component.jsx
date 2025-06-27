@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Bubble } from 'react-chartjs-2';
+import { Bubble, Line } from 'react-chartjs-2';
 import Select from 'react-select';
 
 import { useLocale, useT } from '@transifex/react';
@@ -23,6 +23,8 @@ import last from 'lodash/last';
 import Button from 'components/button';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 
+import { SHI_LATEST_YEAR } from 'constants/dashboard-constants.js';
+
 import shiProvinceImg from 'images/dashboard/tutorials/tutorial_shi_provinces-en.png?react';
 import shiProvinceFRImg from 'images/dashboard/tutorials/tutorial_shi_provinces-fr.png?react';
 
@@ -40,7 +42,9 @@ const SCORES = {
 };
 
 function ProvinceChartComponent(props) {
+  const bubbleDataCountryList = ['EE', 'GUY-FM'];
   const t = useT();
+  const shiStartYear = 2001;
   const locale = useLocale();
   const chartRef = useRef(null);
   const { lightMode } = useContext(LightModeContext);
@@ -56,58 +60,111 @@ function ProvinceChartComponent(props) {
     handleRegionSelected,
     layerView,
     lang,
+    countryISO,
   } = props;
 
   const [isLoading, setIsLoading] = useState(true);
   const [foundIndex, setFoundIndex] = useState(0);
   const [bubbleData, setBubbleData] = useState();
+  const [lineData, setLineData] = useState();
+  const [provinceList, setProvinceList] = useState([]);
   const [chartInfo, setChartInfo] = useState();
   const [activeScore, setActiveScore] = useState(SCORES.HABITAT_SCORE);
   const [previousIndex, setPreviousIndex] = useState(-1);
   const [filteredProvince, setFilteredProvince] = useState();
 
-  const getProvinceScores = (province) => {
-    const { region_name } = province;
-
-    setSelectedProvince(province);
+  const getLineData = (name) => {
     const filteredData = shiProvinceTrendData.filter(
-      (prov) => prov.region_name === province.region_name
+      (item) =>
+        item.name === name &&
+        item.year >= shiStartYear &&
+        item.year <= SHI_LATEST_YEAR
     );
 
-    const currentValue = last(filteredData);
-    setFilteredProvince(currentValue);
-    setProvinceName(region_name);
-    setFoundIndex(
-      shiProvinceTrendData.findIndex(
-        (region) => region.region_name === region_name
-      )
+    setLineData({
+      labels: filteredData.map((item) => item.year),
+      datasets: [
+        {
+          label: t('Average Area Score'),
+          data: filteredData.map((item) => item.area_score),
+          borderColor: getCSSVariable('area'),
+        },
+        {
+          label: t('Average Connectivity Score'),
+          data: filteredData.map((item) => item.connectivity_score),
+          borderColor: getCSSVariable('connectivity'),
+        },
+        {
+          label: t('Average Habitat Score'),
+          data: filteredData.map(
+            (item) =>
+              (parseFloat(item.area_score) +
+                parseFloat(item.connectivity_score)) /
+              2
+          ),
+          borderColor: getCSSVariable('habitat'),
+        },
+      ],
+    });
+  };
+
+  const getProvinceScores = (province) => {
+    const shiProvinceValue = shiProvinceTrendData.find(
+      (item) => item.name === province.name && item.year === SHI_LATEST_YEAR
     );
+
+    const { name } = shiProvinceValue;
+
+    setSelectedProvince(shiProvinceValue);
+    setFilteredProvince(shiProvinceValue);
+    setProvinceName(name);
+
+    const provinceSet = new Set();
+    provinces.forEach((item) => {
+      if (item.name && item.iso3 !== item.region_key) {
+        provinceSet.add(JSON.stringify({ name: item.name }));
+      }
+    });
+    const uniqueProvinces = Array.from(provinceSet).map((item) =>
+      JSON.parse(item)
+    );
+    setProvinceList(uniqueProvinces);
+    setFoundIndex(uniqueProvinces.findIndex((region) => region.name === name));
+
+    getLineData(name);
   };
 
   const updateBubbleChartData = (score) => {
     const bData = [];
-    shiProvinceTrendData.forEach((region) => {
-      const { area_km2, habitat_index, region_name, area_score, connectivity } =
-        region;
+    if (bubbleDataCountryList.includes(countryISO)) {
+      shiProvinceTrendData.forEach((region) => {
+        const {
+          area_km2,
+          habitat_index,
+          region_name,
+          area_score,
+          connectivity,
+        } = region;
 
-      let yValue = habitat_index;
+        let yValue = habitat_index;
 
-      if (score === SCORES.AREA_SCORE) {
-        yValue = area_score;
-      } else if (score === SCORES.CONNECTIVITY_SCORE) {
-        yValue = connectivity;
-      }
+        if (score === SCORES.AREA_SCORE) {
+          yValue = area_score;
+        } else if (score === SCORES.CONNECTIVITY_SCORE) {
+          yValue = connectivity;
+        }
 
-      bData.push({
-        ...region,
-        label: region_name,
-        data: [{ x: area_km2, y: yValue * 100, r: 8 }],
-        backgroundColor: getCSSVariable('bubble'),
-        borderColor: getCSSVariable('white'),
+        bData.push({
+          ...region,
+          label: region_name,
+          data: [{ x: area_km2, y: yValue * 100, r: 8 }],
+          backgroundColor: getCSSVariable('bubble'),
+          borderColor: getCSSVariable('white'),
+        });
       });
-    });
 
-    setBubbleData({ datasets: bData });
+      setBubbleData({ datasets: bData });
+    }
   };
 
   const handleActiveChange = (score) => {
@@ -138,17 +195,25 @@ function ProvinceChartComponent(props) {
 
     const results = await layerView?.queryFeatures(searchQuery);
 
+    // const foundRegion = results?.features.filter(
+    //   (feat) => feat.attributes.region_name === province.name
+    // );
+
     const foundRegion = results?.features.filter(
-      (feat) => feat.attributes.region_name === province.region_name
+      (feat) =>
+        (feat.attributes.NAME_1 ?? feat.attributes.region_nam) === province.name
     );
+
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
     setClickedRegion(null);
 
-    const foundIdx = bubbleData?.datasets.findIndex(
-      (item) => item.region_name === province.region_name
-    );
-    highlightProvinceBubble(foundIdx);
+    if (countryISO === 'EE' || countryISO === 'GUY-FM') {
+      const foundIdx = bubbleData?.datasets.findIndex(
+        (item) => item.region_name === province.region_name
+      );
+      highlightProvinceBubble(foundIdx);
+    }
   };
 
   const selectClickedRegion = (elements, chart) => {
@@ -159,9 +224,7 @@ function ProvinceChartComponent(props) {
     highlightProvinceBubble(datasetIndex, chart);
 
     handleProvinceSelected(value);
-    setFoundIndex(
-      provinces.findIndex((prov) => prov.region_name === value.region_name)
-    );
+    setFoundIndex(provinces.findIndex((prov) => prov.name === value.name));
   };
 
   const bubbleOptions = {
@@ -222,6 +285,59 @@ function ProvinceChartComponent(props) {
     },
   };
 
+  const lineOptions = {
+    plugins: {
+      title: {
+        display: false,
+      },
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        beginAtZero: false,
+        display: true,
+        title: {
+          display: true,
+          text: t('Year'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+          maxTicksLimit: 8,
+        },
+      },
+      y: {
+        beginAtZero: false,
+        display: true,
+        title: {
+          display: true,
+          text: t('Species Habitat Index'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+          maxTicksLimit: 10,
+        },
+      },
+    },
+  };
+
   const updateChartInfo = () => {
     setChartInfo({
       title: t('Province View'),
@@ -250,8 +366,12 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (shiProvinceTrendData.length && provinces.length) {
       if (provinceName) {
+        // const region = shiProvinceTrendData.find(
+        //   (item) => item.name === provinceName
+        // );
+
         const region = shiProvinceTrendData.find(
-          (item) => item.region_name === provinceName
+          (item) => item.name === provinceName && item.year === SHI_LATEST_YEAR
         );
         handleProvinceSelected(region);
       } else if (selectedProvince) {
@@ -265,9 +385,7 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (selectedProvince && !clickedRegion) {
       setFoundIndex(
-        provinces.findIndex(
-          (prov) => prov.region_name === selectedProvince.region_name
-        )
+        provinces.findIndex((prov) => prov.name === selectedProvince.name)
       );
     }
   }, [selectedProvince]);
@@ -275,7 +393,7 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (clickedRegion && shiProvinceTrendData.length) {
       const region = provinces.find((item) => {
-        return item.region_name === clickedRegion.NAME_1;
+        return item.name === clickedRegion.NAME_1;
       });
       getProvinceScores(region);
 
@@ -307,10 +425,10 @@ function ProvinceChartComponent(props) {
               className="basic-single"
               classNamePrefix="select"
               name="provinces"
-              value={shiProvinceTrendData[foundIndex]}
-              getOptionLabel={(x) => x.region_name}
-              getOptionValue={(x) => x.region_name}
-              options={provinces}
+              value={provinceList[foundIndex]}
+              getOptionLabel={(x) => x.name}
+              getOptionValue={(x) => x.name}
+              options={provinceList}
               onChange={handleProvinceSelected}
               placeholder={t('Select Region')}
             />
@@ -322,19 +440,19 @@ function ProvinceChartComponent(props) {
                 <span>{t('Year')}</span>
               </div>
               <div className={styles.values}>
-                <b>{(filteredProvince.area_score * 100).toFixed(1)}</b>
+                <b>{filteredProvince.area_score.toFixed(1)}</b>
                 <span>{t('Area Component')}</span>
               </div>
               <div className={styles.values}>
-                <b>{(filteredProvince.habitat_index * 100).toFixed(1)}</b>
+                <b>{filteredProvince.habitat_index.toFixed(1)}</b>
                 <span>{t('SHI')}</span>
               </div>
               <div className={styles.values}>
-                <b>{(filteredProvince.connectivity * 100).toFixed(1)}</b>
+                <b>{filteredProvince.connectivity_score.toFixed(1)}</b>
                 <span>{t('Connectivity Component')}</span>
               </div>
               <div className={styles.values}>
-                <b>{filteredProvince?.habitat_index_rank}</b>
+                <b>{filteredProvince?.shi_rank}</b>
                 <span>{t('Rank')}</span>
               </div>
               {/* <span />
@@ -344,39 +462,62 @@ function ProvinceChartComponent(props) {
           )}
         </div>
       )}
-      <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
-        <Button
-          type="rectangular"
-          className={cx(compStyles.saveButton, {
-            [compStyles.notActive]: activeScore !== SCORES.HABITAT_SCORE,
-          })}
-          label={t('Habitat Index')}
-          handleClick={() => handleActiveChange(SCORES.HABITAT_SCORE)}
-        />
-        <Button
-          type="rectangular"
-          className={cx(compStyles.saveButton, {
-            [compStyles.notActive]: activeScore !== SCORES.AREA_SCORE,
-          })}
-          label={t('Area Component')}
-          handleClick={() => handleActiveChange(SCORES.AREA_SCORE)}
-        />
-        <Button
-          type="rectangular"
-          className={cx(compStyles.saveButton, {
-            [compStyles.notActive]: activeScore !== SCORES.CONNECTIVITY_SCORE,
-          })}
-          label={t('Connectivity Component')}
-          handleClick={() => handleActiveChange(SCORES.CONNECTIVITY_SCORE)}
-        />
-      </div>
-      <div className={styles.chart}>
-        {bubbleData && (
+      {bubbleDataCountryList.includes(countryISO) && bubbleData && (
+        <>
+          <div className={cx(styles.btnGroup, compStyles.btnGroup)}>
+            <Button
+              type="rectangular"
+              className={cx(compStyles.saveButton, {
+                [compStyles.notActive]: activeScore !== SCORES.HABITAT_SCORE,
+              })}
+              label={t('Habitat Index')}
+              handleClick={() => handleActiveChange(SCORES.HABITAT_SCORE)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(compStyles.saveButton, {
+                [compStyles.notActive]: activeScore !== SCORES.AREA_SCORE,
+              })}
+              label={t('Area Component')}
+              handleClick={() => handleActiveChange(SCORES.AREA_SCORE)}
+            />
+            <Button
+              type="rectangular"
+              className={cx(compStyles.saveButton, {
+                [compStyles.notActive]:
+                  activeScore !== SCORES.CONNECTIVITY_SCORE,
+              })}
+              label={t('Connectivity Component')}
+              handleClick={() => handleActiveChange(SCORES.CONNECTIVITY_SCORE)}
+            />
+          </div>
+          <div className={styles.chart}>
+            <ChartInfoComponent chartInfo={chartInfo} {...props}>
+              <Bubble
+                options={bubbleOptions}
+                data={bubbleData}
+                ref={chartRef}
+              />
+            </ChartInfoComponent>
+          </div>
+        </>
+      )}
+      {!bubbleDataCountryList.includes(countryISO) && lineData && (
+        <div className={styles.chart}>
+          <div className={styles.legend}>
+            <div className={cx(styles.legendBox, styles.habitat)} />
+            <span>{t('Habitat Score')}</span>
+            <div className={cx(styles.legendBox, styles.area)} />
+            <span>{t('Area Score')}</span>
+            <div className={cx(styles.legendBox, styles.connectivity)} />
+            <span>{t('Connectivity Score')}</span>
+          </div>
+
           <ChartInfoComponent chartInfo={chartInfo} {...props}>
-            <Bubble options={bubbleOptions} data={bubbleData} ref={chartRef} />
+            <Line options={lineOptions} data={lineData} />
           </ChartInfoComponent>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -248,6 +248,7 @@ async function addProtectedAreaLayer(id, countryISO = 'COD') {
       featurePortalId = PROTECTED_AREA_SLE_FEATURE_URL;
       break;
     case 'GUY-FM':
+    case 'GUY':
       featurePortalId = PROTECTED_AREA_GUY_FEATURE_URL;
       break;
     case 'EE':

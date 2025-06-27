@@ -51,9 +51,9 @@ export const REGION_OPTIONS = {
 };
 
 export const SPI_LATEST_YEAR = 2024;
-export const SHI_LATEST_YEAR = 2021;
+export const SHI_LATEST_YEAR = 2023;
 export const SHI_TREND_LATEST_YEAR = 2022;
-export const SII_LATEST_YEAR = 2023;
+export const SII_LATEST_YEAR = 2024;
 
 export const SPECIES_SELECTED_COOKIE = 'species_selected';
 

@@ -78,7 +78,10 @@ function SpiArcChartComponent(props) {
   };
 
   useEffect(() => {
-    if (!value) return;
+    if (!value) {
+      setScore(0);
+      return;
+    }
     setScore(value.toFixed(1));
   }, [value]);
 

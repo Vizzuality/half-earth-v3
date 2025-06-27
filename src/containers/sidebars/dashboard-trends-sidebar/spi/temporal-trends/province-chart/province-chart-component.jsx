@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
+import { last } from 'lodash';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Bubble } from 'react-chartjs-2';
+import { Bubble, Line } from 'react-chartjs-2';
 import Select from 'react-select';
 
 import { useLocale, useT } from '@transifex/react';
@@ -34,6 +35,7 @@ import styles from './province-chart-styles.module.scss';
 ChartJS.register(LinearScale, ArcElement, PointElement, Tooltip, Legend);
 
 function ProvinceChartComponent(props) {
+  const bubbleDataCountryList = ['EE', 'GUY-FM'];
   const t = useT();
   const locale = useLocale();
   const chartRef = useRef(null);
@@ -48,6 +50,7 @@ function ProvinceChartComponent(props) {
     setProvinceName,
     handleRegionSelected,
     layerView,
+    countryISO,
     lang,
   } = props;
 
@@ -71,6 +74,7 @@ function ProvinceChartComponent(props) {
   };
 
   const [bubbleData, setBubbleData] = useState();
+  const [lineData, setLineData] = useState();
   const [currentYear, setCurrentYear] = useState(SPI_LATEST_YEAR);
   const [spiArcData, setSpiArcData] = useState(blankData);
   const [countrySPI, setCountrySPI] = useState();
@@ -82,21 +86,121 @@ function ProvinceChartComponent(props) {
   const [previousIndex, setPreviousIndex] = useState(-1);
   const [percentAreaProtected, setPercentAreaProtected] = useState(0);
   const [chartInfo, setChartInfo] = useState();
+  const [provinceList, setProvinceList] = useState([]);
 
-  const getChartData = () => {
+  let lastProvinceValue;
+
+  const getLastValurForProvince = (provName) => {
+    if (!provinces || provinces.length === 0) return null;
+    return last(provinces.filter((prov) => prov.name === provName));
+  };
+
+  const getChartData = (name) => {
     const data = [];
-    provinces.forEach((region) => {
-      const { AreaProtected, SPI, region_name } = region;
-      data.push({
-        ...region,
-        label: region_name,
-        data: [{ x: AreaProtected, y: SPI, r: 8 }],
-        backgroundColor: getCSSVariable('bubble'),
-        borderColor: getCSSVariable('white'),
-      });
-    });
 
-    setBubbleData({ datasets: data });
+    if (bubbleDataCountryList.includes(countryISO)) {
+      provinces.forEach((region) => {
+        const { AreaProtected, SPI, region_name } = region;
+        data.push({
+          ...region,
+          label: region_name,
+          data: [{ x: AreaProtected, y: SPI, r: 8 }],
+          backgroundColor: getCSSVariable('bubble'),
+          borderColor: getCSSVariable('white'),
+        });
+      });
+
+      setBubbleData({ datasets: data });
+    } else {
+      const selectedProvinceName = name;
+
+      const provinceData = provinces
+        .filter((prov) => prov.name === selectedProvinceName)
+        .map((item) => ({
+          year: item.year,
+          spi: item.spi,
+          name: item.name,
+          percentAreaProtected: (item.area_protected / item.area_km2) * 100,
+        }));
+
+      setLineData({
+        labels: provinceData.map((item) => item.year),
+        datasets: [
+          {
+            label: 'SPI',
+            data: provinceData.map((item) => item.spi),
+            borderColor: getCSSVariable('bubble'),
+          },
+          {
+            label: t('Area protected'),
+            data: provinceData.map((item) => item.percentAreaProtected),
+            borderColor: getCSSVariable('area-protected'),
+          },
+        ],
+      });
+    }
+  };
+
+  const getProvinceScores = (province) => {
+    lastProvinceValue = getLastValurForProvince(province.name);
+
+    const {
+      spi,
+      area_km2,
+      // Area protected value
+      area_protected,
+      name,
+      spi_rank,
+      size_rank,
+      year,
+      richness_vert_spi_rank,
+    } = lastProvinceValue;
+
+    setSelectedProvince(lastProvinceValue);
+    setProvinceName(name);
+    setSpiRank(spi_rank);
+    setAreaRank(size_rank);
+    setSpeciesRank(richness_vert_spi_rank);
+    setPercentAreaProtected((area_protected / area_km2) * 100);
+    setCountrySPI(spi);
+    setCurrentYear(year);
+
+    const spiArc = {
+      labels: [t('Global SPI'), t('Remaining')],
+      datasets: [
+        {
+          label: '',
+          data: [spi, 100 - spi],
+          backgroundColor: [
+            getCSSVariable('bubble'),
+            getCSSVariable('white-opacity-20'),
+          ],
+          borderColor: [
+            getCSSVariable('bubble'),
+            getCSSVariable('white-opacity-20'),
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    setSpiArcData(spiArc);
+
+    const provinceSet = new Set();
+    provinces.forEach((item) => {
+      if (item.name && item.iso3 !== item.region_key) {
+        provinceSet.add(JSON.stringify({ name: item.name }));
+      }
+    });
+    const uniqueProvinces = Array.from(provinceSet).map((item) =>
+      JSON.parse(item)
+    );
+    setProvinceList(uniqueProvinces);
+
+    // EE and COD could use region name
+    setFoundIndex(uniqueProvinces.findIndex((region) => region.name === name));
+
+    getChartData(name);
   };
 
   const highlightProvinceBubble = (index) => {
@@ -114,51 +218,6 @@ function ProvinceChartComponent(props) {
     }
   };
 
-  const getProvinceScores = (province) => {
-    const {
-      SPI,
-      AreaProtected,
-      Area,
-      region_name,
-      SPIRanking,
-      SizeRanking,
-      SpeciesRichnessRanking,
-    } = province;
-
-    setSelectedProvince(province);
-    setProvinceName(region_name);
-    setSpiRank(SPIRanking);
-    setAreaRank(SizeRanking);
-    setSpeciesRank(SpeciesRichnessRanking);
-    setPercentAreaProtected((AreaProtected / Area) * 100);
-    setCountrySPI(SPI);
-    setCurrentYear(SPI_LATEST_YEAR);
-    setFoundIndex(
-      provinces.findIndex((region) => region.region_name === region_name)
-    );
-
-    const spi = {
-      labels: [t('Global SPI'), t('Remaining')],
-      datasets: [
-        {
-          label: '',
-          data: [SPI, 100 - SPI],
-          backgroundColor: [
-            getCSSVariable('bubble'),
-            getCSSVariable('white-opacity-20'),
-          ],
-          borderColor: [
-            getCSSVariable('bubble'),
-            getCSSVariable('white-opacity-20'),
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-
-    setSpiArcData(spi);
-  };
-
   const handleProvinceSelected = async (province) => {
     const searchQuery = {
       returnGeometry: true,
@@ -169,17 +228,18 @@ function ProvinceChartComponent(props) {
 
     const foundRegion = results?.features.filter(
       (feat) =>
-        (feat.attributes.NAME_1 ?? feat.attributes.region_nam) ===
-        province.region_name
+        (feat.attributes.NAME_1 ?? feat.attributes.region_nam) === province.name
     );
     handleRegionSelected({ graphic: foundRegion?.[0] });
     getProvinceScores(province);
     setClickedRegion(null);
 
-    const foundIdx = bubbleData?.datasets.findIndex(
-      (item) => item.region_name === province.region_name
-    );
-    highlightProvinceBubble(foundIdx);
+    if (countryISO === 'EE' || countryISO === 'GUY-FM') {
+      const foundIdx = bubbleData?.datasets.findIndex(
+        (item) => item.region_name === province.region_name
+      );
+      highlightProvinceBubble(foundIdx);
+    }
   };
 
   const selectClickedRegion = (elements, chart) => {
@@ -190,9 +250,7 @@ function ProvinceChartComponent(props) {
     highlightProvinceBubble(datasetIndex, chart);
 
     handleProvinceSelected(value);
-    setFoundIndex(
-      provinces.findIndex((prov) => prov.region_name === value.region_name)
-    );
+    setFoundIndex(provinces.findIndex((prov) => prov.name === value.name));
   };
 
   const updateChartInfo = () => {
@@ -269,18 +327,72 @@ function ProvinceChartComponent(props) {
     },
   };
 
+  const lineOptions = {
+    plugins: {
+      title: {
+        display: false,
+      },
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        beginAtZero: false,
+        display: true,
+        title: {
+          display: true,
+          text: t('Year'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+        },
+      },
+      y: {
+        beginAtZero: true,
+        display: true,
+        title: {
+          display: true,
+          text: t('SPI / Percent of Area Protected'),
+          color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
+          font: {
+            size: 14,
+            weight: 'bold',
+          },
+        },
+        grid: {
+          color: getCSSVariable('oslo-gray'),
+        },
+        ticks: {
+          color: getCSSVariable('oslo-gray'),
+        },
+      },
+    },
+  };
+
   useEffect(() => {
-    if (!provinces) return;
+    if (provinces.length === 0) return;
     setIsLoading(false);
-    getChartData();
+
+    if (countryISO === 'EE' || countryISO === 'GUY-FM') {
+      getChartData();
+    } else if (!selectedProvince) {
+      handleProvinceSelected(provinces[0]);
+    }
   }, [provinces]);
 
   useEffect(() => {
     if (provinces.length && bubbleData && !clickedRegion) {
       if (provinceName) {
-        const region = provinces.find(
-          (item) => item.region_name === provinceName
-        );
+        const region = provinces.find((item) => item.name === provinceName);
         handleProvinceSelected(region);
       } else if (selectedProvince) {
         handleProvinceSelected(selectedProvince);
@@ -294,9 +406,7 @@ function ProvinceChartComponent(props) {
     if (selectedProvince && !clickedRegion) {
       handleProvinceSelected(selectedProvince);
       setFoundIndex(
-        provinces.findIndex(
-          (prov) => prov.region_name === selectedProvince.region_name
-        )
+        provinces.findIndex((prov) => prov.name === selectedProvince.name)
       );
     }
   }, [selectedProvince]);
@@ -304,12 +414,12 @@ function ProvinceChartComponent(props) {
   useEffect(() => {
     if (clickedRegion && provinces.length) {
       const region = provinces.find(
-        (item) => item.region_name === clickedRegion.NAME_1
+        (item) => item.name === clickedRegion.NAME_1
       );
       getProvinceScores(region);
 
       const foundIdx = bubbleData?.datasets.findIndex(
-        (item) => item.region_name === clickedRegion.NAME_1
+        (item) => item.name === clickedRegion.NAME_1
       );
       if (foundIdx) {
         highlightProvinceBubble(foundIdx);
@@ -327,10 +437,10 @@ function ProvinceChartComponent(props) {
               className="basic-single"
               classNamePrefix="select"
               name="provinces"
-              value={provinces[foundIndex]}
-              getOptionLabel={(x) => x.region_name}
-              getOptionValue={(x) => x.region_name}
-              options={provinces}
+              value={provinceList[foundIndex]}
+              getOptionLabel={(x) => x.name}
+              getOptionValue={(x) => x.name}
+              options={provinceList}
               onChange={handleProvinceSelected}
               placeholder={t('Select Region')}
             />
@@ -365,9 +475,14 @@ function ProvinceChartComponent(props) {
         </div>
       )}
       <div className={styles.chart}>
-        {bubbleData && (
+        {bubbleDataCountryList.includes(countryISO) && bubbleData && (
           <ChartInfoComponent chartInfo={chartInfo} {...props}>
             <Bubble options={options} data={bubbleData} ref={chartRef} />
+          </ChartInfoComponent>
+        )}
+        {!bubbleDataCountryList.includes(countryISO) && lineData && (
+          <ChartInfoComponent chartInfo={chartInfo} {...props}>
+            <Line options={lineOptions} data={lineData} />
           </ChartInfoComponent>
         )}
       </div>
