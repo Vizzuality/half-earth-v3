@@ -10,17 +10,28 @@ import Button from 'components/button';
 
 import { SII_LATEST_YEAR } from 'constants/dashboard-constants.js';
 
-import { NATIONAL_TREND } from '../../dashboard-trends-sidebar-component';
+import {
+  NATIONAL_TREND,
+  PROVINCE_TREND,
+} from '../../dashboard-trends-sidebar-component';
 import styles from '../../dashboard-trends-sidebar-styles.module.scss';
 
 import NationalChartContainer from './national-chart';
+import ProvinceChartContainer from './province-chart';
 
 function TemporalTrendsSiiComponent(props) {
   const t = useT();
-  const { countryName, countryData, countryISO } = props;
+  const {
+    countryName,
+    countryData,
+    countryISO,
+    siiActiveTrend,
+    setSiiActiveTrend,
+    view,
+  } = props;
   const [nationalChartData, setNationalChartData] = useState([]);
-  const [latestValues, setLatestValues] = useState({ year: 0, spi: 0 });
-  const [firstValues, setFirstValues] = useState({ year: 0, spi: 0 });
+  const [latestValues, setLatestValues] = useState({ year: 0, sii: 0 });
+  const [firstValues, setFirstValues] = useState({ year: 0, sii: 0 });
   const [highestObservation, setHighestObservation] = useState(0);
   const [lowestObservation, setLowestObservation] = useState(0);
   const [currentYear, setCurrentYear] = useState(SII_LATEST_YEAR);
@@ -50,9 +61,38 @@ function TemporalTrendsSiiComponent(props) {
       });
 
       const orderBySII = [...allVertValues].sort((a, b) => a.sii - b.sii);
-      setLowestObservation(orderBySII[0].sii);
+      setLowestObservation(orderBySII[0].sii.toFixed(1));
       setHighestObservation(last(orderBySII).sii.toFixed(1));
     }
+  };
+
+  const handleActionChange = (option) => {
+    // setClickedRegion(null);
+    setSiiActiveTrend(option);
+
+    // if (countryISO.toLowerCase() === 'ee') {
+    //   if (option !== LND && option !== INT) {
+    //     EsriFeatureService.getFeatures({
+    //       url: COUNTRIES_DATA_SERVICE_URL,
+    //       whereClause: `GID_0 = '${option}'`,
+    //       returnGeometry: true,
+    //     }).then((features) => {
+    //       // eslint-disable-next-line no-shadow
+    //       const { geometry } = features[0];
+
+    //       view.goTo({
+    //         target: geometry,
+    //         center: [geometry.longitude - 20, geometry.latitude],
+    //         zoom: 5.5,
+    //         extent: geometry.clone(),
+    //       });
+    //     });
+    //   } else {
+    view.goTo({
+      zoom: 1,
+    });
+    // }
+    // }
   };
 
   useEffect(() => {
@@ -80,11 +120,24 @@ function TemporalTrendsSiiComponent(props) {
         {countryISO.toLowerCase() !== 'ee' && (
           <div className={styles.options}>
             <div className={styles.trendTypes}>
-              <Button
-                type="rectangular"
-                className={styles.saveButton}
-                label={NATIONAL_TREND}
-              />
+              <div className={styles.btnGroup}>
+                <Button
+                  type="rectangular"
+                  className={cx(styles.saveButton, {
+                    [styles.notActive]: siiActiveTrend !== PROVINCE_TREND,
+                  })}
+                  label={PROVINCE_TREND}
+                  handleClick={() => handleActionChange(PROVINCE_TREND)}
+                />
+                <Button
+                  type="rectangular"
+                  className={cx(styles.saveButton, {
+                    [styles.notActive]: siiActiveTrend !== NATIONAL_TREND,
+                  })}
+                  label={NATIONAL_TREND}
+                  handleClick={() => handleActionChange(NATIONAL_TREND)}
+                />
+              </div>
             </div>
             {/* <span className={styles.helpText}>
             {t('Toggle national SII and province-level breakdown.')}
@@ -100,10 +153,15 @@ function TemporalTrendsSiiComponent(props) {
           </div>
         )}
       </div>
-      <NationalChartContainer
-        nationalChartData={nationalChartData}
-        {...props}
-      />
+      {siiActiveTrend === PROVINCE_TREND && (
+        <ProvinceChartContainer {...props} />
+      )}
+      {siiActiveTrend === NATIONAL_TREND && (
+        <NationalChartContainer
+          nationalChartData={nationalChartData}
+          {...props}
+        />
+      )}
     </div>
   );
 }

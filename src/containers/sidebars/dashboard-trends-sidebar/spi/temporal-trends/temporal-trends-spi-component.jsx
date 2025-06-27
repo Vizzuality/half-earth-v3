@@ -61,7 +61,7 @@ function TemporalTrendsSpiComponent(props) {
       setStartYear(firstScore.year);
       const currentScore = last(countryData);
       const currentAreaProtectedPercent =
-        (currentScore.area_protected / currentScore.area) * 100;
+        (currentScore.area_protected / currentScore.area_km2) * 100;
       setAreaProtectedPercent(currentAreaProtectedPercent.toFixed(1));
 
       const spiChange = currentScore.spi - firstScore.spi;
