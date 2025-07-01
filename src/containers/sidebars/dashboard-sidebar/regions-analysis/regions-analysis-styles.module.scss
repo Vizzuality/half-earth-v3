@@ -3,14 +3,14 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-.container{
+.container {
   --font-color: #{$white};
   --border-color: #{$brand-color-main};
   --selected-font-color: #{$white};
   --save-button-text: #{$dark-text};
   --border-color-hover: #{$brand-color-main-hover};
 
-  &.light{
+  &.light {
     --font-color: #{$black};
     --border-color: #{$mol-blue};
     --selected-font-color: #{$white};
@@ -25,7 +25,7 @@
   height: max-content;
   border-left: 1px solid var(--font-color);
 
-  .sectionTitle{
+  .sectionTitle {
     font-size: $font-size-tick;
     font-weight: 700;
     text-transform: uppercase;
@@ -33,45 +33,45 @@
     color: var(--font-color);
   }
 
-  .sectionSubtitle{
+  .sectionSubtitle {
     font-size: $font-size-sm;
     font-style: italic;
     color: var(--font-color);
   }
 
-  p{
+  p {
     font-size: $font-size-sm;
     color: var(--font-color);
   }
 
-  .choices{
+  .choices {
     display: flex;
     flex-direction: column;
     gap: 10px;
     color: var(--font-color);
 
-    span{
+    span {
       color: var(--font-color);
     }
 
-    .disabled{
-      span{
+    .disabled {
+      span {
         color: var(--font-color);
         font-style: italic;
         opacity: 0.5;
       }
     }
 
-    .comingSoon{
+    .comingSoon {
       display: flex;
       flex-direction: column;
       gap: 8px;
 
-      span{
+      span {
         font-size: $font-size-sm;
       }
 
-      button{
+      button {
         width: 200px;
         color: var(--save-button-text);
         background-color: var(--border-color);
@@ -79,20 +79,20 @@
           background-color: var(--border-color-hover);
         }
 
-        &.disabled{
+        &.disabled {
           color: var(--font-color);
           border: 1px solid rgba(255, 255, 255, 0.5);
           background-color: transparent;
         }
 
-        span{
+        span {
           font-style: normal;
         }
       }
     }
   }
 
-  .search{
+  .search {
     display: flex;
     column-gap: 8px;
     margin-top: 8px;

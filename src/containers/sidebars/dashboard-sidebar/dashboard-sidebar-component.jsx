@@ -8,6 +8,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
+import guyLogo from 'logos/Guyana_PAC.png';
 import codLogo from 'logos/iccn_logo_clean.png';
 import codWhiteLogo from 'logos/iccn_logo_clean_whiteText.png';
 import ginLogo from 'logos/ogpnrf_logo.jpeg';
@@ -59,8 +60,10 @@ function DashboardSidebar(props) {
       setLogo(<img className={styles.logo} src={sleLogo} alt="Logo" />);
     } else if (countryISO.toUpperCase() === 'GIN') {
       setLogo(<img className={styles.logo} src={ginLogo} alt="Logo" />);
-    } else if (countryISO.toUpperCase() === 'GUY') {
+    } else if (countryISO.toUpperCase() === 'GUY-FM') {
       setLogo(<div />);
+    } else if (countryISO.toUpperCase() === 'GUY') {
+      setLogo(<img className={styles.logo} src={guyLogo} alt="Logo" />);
     } else {
       setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);
     }
@@ -70,7 +73,8 @@ function DashboardSidebar(props) {
     if (
       countryISO.toUpperCase() !== 'SLE' &&
       countryISO.toUpperCase() !== 'GIN' &&
-      countryISO.toUpperCase() !== 'GUY'
+      countryISO.toUpperCase() !== 'GUY' &&
+      countryISO.toUpperCase() !== 'GUY-FM'
     ) {
       if (lightMode) {
         setLogo(<img className={styles.logo} src={codLogo} alt="Logo" />);

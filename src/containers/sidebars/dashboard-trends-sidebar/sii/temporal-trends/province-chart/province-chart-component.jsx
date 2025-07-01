@@ -23,10 +23,10 @@ import { Loading } from 'he-components';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
 import SpiArcChartComponent from 'components/charts/spi-arc-chart/spi-arc-chart-component';
 
-import { SPI_LATEST_YEAR } from 'constants/dashboard-constants.js';
+import { SII_LATEST_YEAR } from 'constants/dashboard-constants.js';
 
-import spiProvinceImg from 'images/dashboard/tutorials/tutorial_spi_provinces-en.png?react';
-import spiProvinceFRImg from 'images/dashboard/tutorials/tutorial_spi_provinces-fr.png?react';
+import siiProvinceImg from 'images/dashboard/tutorials/tutorial_spi_provinces-en.png?react';
+import siiProvinceFRImg from 'images/dashboard/tutorials/tutorial_spi_provinces-fr.png?react';
 
 import { SECTION_INFO } from '../../../../dashboard-sidebar/tutorials/sections/sections-info';
 
@@ -55,7 +55,7 @@ function ProvinceChartComponent(props) {
   } = props;
 
   const blankData = {
-    labels: [t('Global SPI'), t('Remaining')],
+    labels: [t('Global SII'), t('Remaining')],
     datasets: [
       {
         label: '',
@@ -75,10 +75,10 @@ function ProvinceChartComponent(props) {
 
   const [bubbleData, setBubbleData] = useState();
   const [lineData, setLineData] = useState();
-  const [currentYear, setCurrentYear] = useState(SPI_LATEST_YEAR);
-  const [spiArcData, setSpiArcData] = useState(blankData);
-  const [countrySPI, setCountrySPI] = useState();
-  const [spiRank, setSpiRank] = useState(0);
+  const [currentYear, setCurrentYear] = useState(SII_LATEST_YEAR);
+  const [siiArcData, setSiiArcData] = useState(blankData);
+  const [countrySII, setCountrySII] = useState();
+  const [siiRank, setSiiRank] = useState(0);
   const [areaRank, setAreaRank] = useState(0);
   const [speciesRank, setSpeciesRank] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,11 +100,11 @@ function ProvinceChartComponent(props) {
 
     if (bubbleDataCountryList.includes(countryISO)) {
       provinces.forEach((region) => {
-        const { AreaProtected, SPI, region_name } = region;
+        const { AreaProtected, SII, region_name } = region;
         data.push({
           ...region,
           label: region_name,
-          data: [{ x: AreaProtected, y: SPI, r: 8 }],
+          data: [{ x: AreaProtected, y: SII, r: 8 }],
           backgroundColor: getCSSVariable('bubble'),
           borderColor: getCSSVariable('white'),
         });
@@ -118,7 +118,7 @@ function ProvinceChartComponent(props) {
         .filter((prov) => prov.name === selectedProvinceName)
         .map((item) => ({
           year: item.year,
-          spi: item.spi,
+          sii: item.sii,
           name: item.name,
           percentAreaProtected: (item.area_protected / item.area_km2) * 100,
         }));
@@ -127,14 +127,9 @@ function ProvinceChartComponent(props) {
         labels: provinceData.map((item) => item.year),
         datasets: [
           {
-            label: 'SPI',
-            data: provinceData.map((item) => item.spi),
+            label: 'SII',
+            data: provinceData.map((item) => item.sii),
             borderColor: getCSSVariable('bubble'),
-          },
-          {
-            label: t('Area protected'),
-            data: provinceData.map((item) => item.percentAreaProtected),
-            borderColor: getCSSVariable('area-protected'),
           },
         ],
       });
@@ -145,32 +140,32 @@ function ProvinceChartComponent(props) {
     lastProvinceValue = getLastValurForProvince(province.name);
 
     const {
-      spi,
+      sii,
       area_km2,
       // Area protected value
       area_protected,
       name,
-      spi_rank,
+      sii_rank,
       size_rank,
       year,
-      richness_vert_spi_rank,
+      richness_vert_sii_rank,
     } = lastProvinceValue;
 
     setSelectedProvince(lastProvinceValue);
     setProvinceName(name);
-    setSpiRank(spi_rank);
+    setSiiRank(sii_rank);
     setAreaRank(size_rank);
-    setSpeciesRank(richness_vert_spi_rank);
+    setSpeciesRank(richness_vert_sii_rank);
     setPercentAreaProtected((area_protected / area_km2) * 100);
-    setCountrySPI(spi);
+    setCountrySII(sii);
     setCurrentYear(year);
 
-    const spiArc = {
-      labels: [t('Global SPI'), t('Remaining')],
+    const siiArc = {
+      labels: [t('Global SII'), t('Remaining')],
       datasets: [
         {
           label: '',
-          data: [spi, 100 - spi],
+          data: [sii, 100 - sii],
           backgroundColor: [
             getCSSVariable('bubble'),
             getCSSVariable('white-opacity-20'),
@@ -184,7 +179,7 @@ function ProvinceChartComponent(props) {
       ],
     };
 
-    setSpiArcData(spiArc);
+    setSiiArcData(siiArc);
 
     const provinceSet = new Set();
     provinces.forEach((item) => {
@@ -256,9 +251,9 @@ function ProvinceChartComponent(props) {
   const updateChartInfo = () => {
     setChartInfo({
       title: t('Province View'),
-      description: t(SECTION_INFO.SPI_PROVINCE_VIEW),
+      description: t(SECTION_INFO.SII_PROVINCE_VIEW),
       imgAlt: t('Species Protection Index - Trends'),
-      image: locale === 'fr' ? spiProvinceFRImg : spiProvinceImg,
+      image: locale === 'fr' ? siiProvinceFRImg : siiProvinceImg,
     });
   };
 
@@ -361,7 +356,7 @@ function ProvinceChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: t('SPI / Percent of Area Protected'),
+          text: t('SII / Percent of Area Protected'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
           font: {
             size: 14,
@@ -445,7 +440,7 @@ function ProvinceChartComponent(props) {
               placeholder={t('Select Region')}
             />
             <span>
-              <b>#{spiRank}</b> {t('in SPI')}
+              <b>#{siiRank}</b> {t('in SII')}
             </span>
             <span>
               <b>#{speciesRank}</b> {t('in vertebrate species richness')}
@@ -462,15 +457,15 @@ function ProvinceChartComponent(props) {
             <SpiArcChartComponent
               width="125x"
               height="75px"
-              data={spiArcData}
-              value={countrySPI}
+              data={siiArcData}
+              value={countrySII}
             />
             <div className={styles.values}>
               <b>{percentAreaProtected.toFixed(1)}%</b>
               <span>{t('Area Protected')}</span>
             </div>
             <span />
-            <span style={{ alignSelf: 'baseline' }}>{t('SPI')}</span>
+            <span style={{ alignSelf: 'baseline' }}>{t('SII')}</span>
           </div>
         </div>
       )}

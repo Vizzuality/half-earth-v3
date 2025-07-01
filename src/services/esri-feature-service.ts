@@ -1,11 +1,9 @@
+import { LAYER_OPTIONS, LAYER_TITLE_TYPES } from 'constants/dashboard-constants.js';
+import { LAYERS_URLS } from 'constants/layers-urls';
+import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
-  PROTECTED_AREA_EEWWF_FEATURE_ID,
-  PROTECTED_AREA_FEATURE_URL,
-  PROTECTED_AREA_GIN_FEATURE_URL,
-  PROTECTED_AREA_GUY_FEATURE_URL,
-  PROTECTED_AREA_LIB_FEATURE_URL,
-  PROTECTED_AREA_SLE_FEATURE_URL,
-  REGION_RANGE_MAP_URL,
+    PROTECTED_AREA_EEWWF_FEATURE_ID, PROTECTED_AREA_FEATURE_URL, REGION_RANGE_MAP_URL
 } from 'utils/dashboard-utils';
 
 import CSVLayer from '@arcgis/core/layers/CSVLayer';
@@ -15,19 +13,8 @@ import TileLayer from '@arcgis/core/layers/TileLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import {
-  addFeatures,
-  applyEdits,
-  IQueryFeaturesResponse,
-  queryFeatures,
+    addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
 } from '@esri/arcgis-rest-feature-layer';
-import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
-
-import {
-  LAYER_OPTIONS,
-  LAYER_TITLE_TYPES,
-} from 'constants/dashboard-constants.js';
-import { LAYERS_URLS } from 'constants/layers-urls';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 function getFeatures({
   url,
@@ -247,22 +234,12 @@ function addFeature({ url, features }: AddFeature) {
 
 async function addProtectedAreaLayer(id, countryISO = 'COD') {
   let featurePortalId = PROTECTED_AREA_FEATURE_URL;
+  let definitionExpression = `ISO3 = '${countryISO}'`;
 
   switch (countryISO) {
-    case 'LBR':
-      featurePortalId = PROTECTED_AREA_LIB_FEATURE_URL;
-      break;
-    case 'GIN':
-      featurePortalId = PROTECTED_AREA_GIN_FEATURE_URL;
-      break;
-    case 'SLE':
-      featurePortalId = PROTECTED_AREA_SLE_FEATURE_URL;
-      break;
-    case 'GUY':
-      featurePortalId = PROTECTED_AREA_GUY_FEATURE_URL;
-      break;
     case 'EE':
       featurePortalId = PROTECTED_AREA_EEWWF_FEATURE_ID;
+      definitionExpression = '';
       break;
     default:
       break;
@@ -273,6 +250,7 @@ async function addProtectedAreaLayer(id, countryISO = 'COD') {
       id: featurePortalId,
     },
     outFields: ['*'],
+    definitionExpression,
     id: id ?? LAYER_OPTIONS.PROTECTED_AREAS,
   });
 

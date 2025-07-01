@@ -233,63 +233,65 @@ function SpeciesFilterComponent(props) {
   };
 
   const displayLayer = async (option) => {
-    const foundLayer = Object.keys(regionLayers).find((rl) =>
-      layersToFind.includes(rl)
-    );
+    if (option !== REGION_OPTIONS.DRAW) {
+      const foundLayer = Object.keys(regionLayers).find((rl) =>
+        layersToFind.includes(rl)
+      );
 
-    if (!foundLayer) {
-      let featureLayer;
-      if (option === REGION_OPTIONS.PROTECTED_AREAS) {
-        featureLayer = await EsriFeatureService.addProtectedAreaLayer(
-          null,
-          countryISO
-        );
+      if (!foundLayer) {
+        let featureLayer;
+        if (option === REGION_OPTIONS.PROTECTED_AREAS) {
+          featureLayer = await EsriFeatureService.addProtectedAreaLayer(
+            null,
+            countryISO
+          );
 
-        setRegionLayers(() => ({
-          [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
-        }));
-        map.add(featureLayer);
+          setRegionLayers(() => ({
+            [LAYER_OPTIONS.PROTECTED_AREAS]: featureLayer,
+          }));
+          map.add(featureLayer);
 
-        const protectedAreaLayer = {
-          label: t(LAYER_TITLE_TYPES.PROTECTED_AREAS),
-          id: LAYER_OPTIONS.PROTECTED_AREAS,
-          showChildren: false,
-          type: DATA_POINT_TYPE.PUBLIC,
-        };
+          const protectedAreaLayer = {
+            label: t(LAYER_TITLE_TYPES.PROTECTED_AREAS),
+            id: LAYER_OPTIONS.PROTECTED_AREAS,
+            showChildren: false,
+            type: DATA_POINT_TYPE.PUBLIC,
+          };
 
-        getLayerIcon(featureLayer, protectedAreaLayer);
-      } else if (option === REGION_OPTIONS.PROVINCES) {
-        featureLayer = await EsriFeatureService.getFeatureLayer(
-          PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
-          countryISO
-        );
+          getLayerIcon(featureLayer, protectedAreaLayer);
+        } else if (option === REGION_OPTIONS.PROVINCES) {
+          featureLayer = await EsriFeatureService.getFeatureLayer(
+            PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+            countryISO
+          );
 
-        setRegionLayers(() => ({
-          [LAYER_OPTIONS.PROVINCES]: featureLayer,
-        }));
-        map.add(featureLayer);
-      } else if (option === REGION_OPTIONS.FORESTS) {
-        featureLayer = await EsriFeatureService.getFeatureLayer(
-          DRC_REGION_FEATURE_ID,
-          null,
-          LAYER_OPTIONS.FORESTS
-        );
+          setRegionLayers(() => ({
+            [LAYER_OPTIONS.PROVINCES]: featureLayer,
+          }));
+          map.add(featureLayer);
+        } else if (option === REGION_OPTIONS.FORESTS) {
+          featureLayer = await EsriFeatureService.getFeatureLayer(
+            DRC_REGION_FEATURE_ID,
+            null,
+            LAYER_OPTIONS.FORESTS
+          );
 
-        setRegionLayers(() => ({
-          [LAYER_OPTIONS.FORESTS]: featureLayer,
-        }));
-        map.add(featureLayer);
-      } else if (option === REGION_OPTIONS.DISSOLVED_NBS) {
-        featureLayer = await EsriFeatureService.getFeatureLayer(
-          NBS_OP_INTERVENTIONS_FEATURE_ID,
-          null,
-          LAYER_OPTIONS.DISSOLVED_NBS
-        );
+          setRegionLayers(() => ({
+            [LAYER_OPTIONS.FORESTS]: featureLayer,
+          }));
+          map.add(featureLayer);
+        } else if (option === REGION_OPTIONS.DISSOLVED_NBS) {
+          featureLayer = await EsriFeatureService.getFeatureLayer(
+            NBS_OP_INTERVENTIONS_FEATURE_ID,
+            null,
+            LAYER_OPTIONS.DISSOLVED_NBS
+          );
 
-        setRegionLayers(() => ({
-          [LAYER_OPTIONS.DISSOLVED_NBS]: featureLayer,
-        }));
-        map.add(featureLayer);
+          setRegionLayers(() => ({
+            [LAYER_OPTIONS.DISSOLVED_NBS]: featureLayer,
+          }));
+          map.add(featureLayer);
+        }
       }
     }
   };
@@ -311,6 +313,9 @@ function SpeciesFilterComponent(props) {
         break;
       case REGION_OPTIONS.DISSOLVED_NBS:
         setRegionLabel(t('NBS-OP Interventions'));
+        break;
+      case REGION_OPTIONS.DRAW:
+        setRegionLabel(t('Custom Area'));
         break;
       default:
         break;

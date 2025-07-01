@@ -139,28 +139,28 @@ function NationalChartComponent(props) {
     if (!countryData.length) return;
 
     const filteredData = countryData.filter(
-      (item) => item.Year >= shiStartYear && item.Year <= SHI_LATEST_YEAR
+      (item) => item.year >= shiStartYear && item.year <= SHI_LATEST_YEAR
     );
 
     setData({
-      labels: filteredData.map((item) => item.Year),
+      labels: filteredData.map((item) => item.year),
       datasets: [
         {
           label: t('Average Area Score'),
-          data: filteredData.map((item) => item.SHI_AreaScore),
+          data: filteredData.map((item) => item.area_score),
           borderColor: getCSSVariable('area'),
         },
         {
           label: t('Average Connectivity Score'),
-          data: filteredData.map((item) => item.SHI_AvgConnectivityScore),
+          data: filteredData.map((item) => item.connectivity_score),
           borderColor: getCSSVariable('connectivity'),
         },
         {
           label: t('Average Habitat Score'),
           data: filteredData.map(
             (item) =>
-              (parseFloat(item.SHI_AreaScore) +
-                parseFloat(item.SHI_AvgConnectivityScore)) /
+              (parseFloat(item.area_score) +
+                parseFloat(item.connectivity_score)) /
               2
           ),
           borderColor: getCSSVariable('habitat'),
@@ -169,20 +169,16 @@ function NationalChartComponent(props) {
     });
 
     const headerValues = countryData.find(
-      (item) => item.Year === SHI_LATEST_YEAR
+      (item) => item.year === SHI_LATEST_YEAR
     );
-    const {
-      SHI_AreaScore,
-      SHI_AvgConnectivityScore,
-      SHI_GlobalRanking,
-      SHI_AvgHabitatScore,
-    } = headerValues;
+    const { area_score, connectivity_score, shi_rank, habitat_index } =
+      headerValues;
 
     setNationalScores({
-      areaScore: parseFloat(SHI_AreaScore).toFixed(1),
-      connecivityScore: parseFloat(SHI_AvgConnectivityScore).toFixed(1),
+      areaScore: parseFloat(area_score).toFixed(1),
+      connecivityScore: parseFloat(connectivity_score).toFixed(1),
       year: SHI_LATEST_YEAR,
-      globalRanking: SHI_GlobalRanking,
+      globalRanking: shi_rank,
     });
 
     const shi = {
@@ -190,7 +186,7 @@ function NationalChartComponent(props) {
       datasets: [
         {
           label: '',
-          data: [SHI_AvgHabitatScore * 100, 100 - SHI_AvgHabitatScore * 100],
+          data: [habitat_index, 100 - habitat_index],
           backgroundColor: [getCSSVariable('habitat'), emptyArcColor],
           borderColor: [getCSSVariable('habitat'), emptyArcColor],
           borderWidth: 1,
@@ -198,7 +194,7 @@ function NationalChartComponent(props) {
       ],
     };
 
-    setShiValue(parseFloat(SHI_AvgHabitatScore * 100));
+    setShiValue(parseFloat(habitat_index));
     setShiData(shi);
     setIsLoading(false);
   }, [countryData]);

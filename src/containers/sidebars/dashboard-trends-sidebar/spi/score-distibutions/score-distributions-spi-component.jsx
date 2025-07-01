@@ -145,7 +145,7 @@ function ScoreDistributionsSpiComponent(props) {
 
     let locationData = [];
     if (activeTrend === PROVINCE_TREND && selectedProvince) {
-      locationData = spiScoresData.filter(
+      locationData = spiScoresData?.filter(
         (loc) => loc.iso3_regional === selectedProvince.iso3_regional
       );
     } else if (acceptedZones.includes(activeTrend)) {
@@ -168,7 +168,7 @@ function ScoreDistributionsSpiComponent(props) {
     }
 
     // Loop through each number and place it in the appropriate bucket
-    locationData.forEach((a) => {
+    locationData?.forEach((a) => {
       const bin = a.bin.split(',')[1].replace(/ /gi, '');
 
       taxaSet.amphibians[bin] = a.amphibians_spi_count || a.amphibians;
@@ -213,7 +213,7 @@ function ScoreDistributionsSpiComponent(props) {
   };
 
   const loadSpecies = () => {
-    let species = [];
+    const species = [];
     if (zoneHistrogramData.length) {
       let zoneData = [];
 
@@ -249,13 +249,29 @@ function ScoreDistributionsSpiComponent(props) {
 
       setSpsSpecies(species.slice(0, 4));
     } else {
-      species = [
-        spiSelectSpeciesData[0],
-        spiSelectSpeciesData[1],
-        spiSelectSpeciesData[2],
-        spiSelectSpeciesData[3],
-      ];
-      setSpsSpecies(species);
+      spiSelectSpeciesData.forEach((item) => {
+        if (item.species_sps) {
+          const values = JSON.parse(item.species_sps);
+
+          values.forEach((value) => {
+            const val = value;
+            if (!threatStatuses.includes(val.threat_status?.toUpperCase())) {
+              species.push({
+                species: val.species,
+                species_url: val.species_url,
+                species_protection_score_all: val.spi_score,
+                taxa: val.taxa,
+              });
+            }
+          });
+        }
+      });
+
+      const bird = species.find((item) => item.taxa === 'birds');
+      const mammal = species.find((item) => item.taxa === 'mammals');
+      const reptile = species.find((item) => item.taxa === 'reptiles');
+      const amphibian = species.find((item) => item.taxa === 'amphibians');
+      setSpsSpecies([bird, mammal, reptile, amphibian]);
     }
     setIsSpeciesLoading(false);
   };
@@ -287,8 +303,6 @@ function ScoreDistributionsSpiComponent(props) {
   }, []);
 
   useEffect(() => {
-    // if (!spiScoresData.length) return;
-
     setIsLoading(true);
     getChartData();
 
@@ -298,7 +312,7 @@ function ScoreDistributionsSpiComponent(props) {
   }, [spiScoresData, activeTrend, zoneHistrogramData]);
 
   useEffect(() => {
-    if (!spiSelectSpeciesData.length) return;
+    if (!spiSelectSpeciesData?.length) return;
     setIsSpeciesLoading(true);
     loadSpecies();
   }, [spiSelectSpeciesData]);
@@ -350,10 +364,11 @@ function ScoreDistributionsSpiComponent(props) {
                           {s.species}
                         </span>
                       </div>
-                      <span className={styles.spsScore}>{`SPS: ${Math.min(
-                        100,
-                        s.species_protection_score_all * 100
-                      )?.toFixed(1)}`}</span>
+                      <span
+                        className={styles.spsScore}
+                      >{`SPS: ${s.species_protection_score_all?.toFixed(
+                        1
+                      )}`}</span>
                     </button>
                   </li>
                 );

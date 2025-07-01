@@ -58,12 +58,14 @@ function TemporalTrendsSpiComponent(props) {
   const getNationalData = async () => {
     if (countryData) {
       const firstScore = countryData[0];
-      setStartYear(firstScore.Year);
+      setStartYear(firstScore.year);
       const currentScore = last(countryData);
-      setAreaProtectedPercent(currentScore.PercentAreaProtected.toFixed(1));
+      const currentAreaProtectedPercent =
+        (currentScore.area_protected / currentScore.area_km2) * 100;
+      setAreaProtectedPercent(currentAreaProtectedPercent.toFixed(1));
 
-      const spiChange = currentScore.SPI - firstScore.SPI;
-      const totalRegionAreas = currentScore.AreaProtected;
+      const spiChange = currentScore.spi - firstScore.spi;
+      const totalRegionAreas = currentScore.area_protected;
       const areaProtectedChange = totalRegionAreas / spiChange;
       setAreaProtected(areaProtectedChange);
     }
@@ -130,10 +132,10 @@ function TemporalTrendsSpiComponent(props) {
               }
               areaProtectedPercentBold={<b>{areaProtectedPercent}%</b>}
               spiInfoBold={
-                <b>{`${countryData[0]?.SPI.toFixed(1)} ${t('in')} ${
-                  countryData[0]?.Year
-                } ${t('to')} ${last(countryData)?.SPI.toFixed(1)} ${t('in')} ${
-                  last(countryData)?.Year
+                <b>{`${countryData[0]?.spi.toFixed(1)} ${t('in')} ${
+                  countryData[0]?.year
+                } ${t('to')} ${last(countryData)?.spi.toFixed(1)} ${t('in')} ${
+                  last(countryData)?.year
                 }`}</b>
               }
             />
@@ -162,7 +164,7 @@ function TemporalTrendsSpiComponent(props) {
             <span className={styles.helpText}>
               {t('Toggle national SPI and province-level breakdown.')}
             </span>
-            {countryISO.toLowerCase() === 'guy' && (
+            {countryISO.toLowerCase() === 'guy-fm' && (
               <div className={styles.btnGroup}>
                 <Button
                   type="rectangular"

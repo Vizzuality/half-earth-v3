@@ -13,7 +13,7 @@
   --border-color-hover: #{$brand-color-main-hover};
   color: var(--font-color);
 
-  &.light{
+  &.light {
     --font-color: #{$black};
     --border-color: #{$mol-blue};
     --selected-font-color: #{$white};
@@ -32,11 +32,11 @@
     align-items: center;
   }
 
-  .comingSoon{
+  .comingSoon {
     font-style: italic;
   }
 
-  .close{
+  .close {
     color: var(--font-color);
   }
 
@@ -75,7 +75,7 @@
   flex-direction: column;
   gap: 5px;
 
-  svg{
+  svg {
     fill: var(--font-color);
     width: 30px;
     height: 30px;
@@ -133,17 +133,17 @@
 
 .speciesList {
   padding-top: 5px;
-  height: calc(100vh - 280px);
+  height: calc(100vh - 380px);
   overflow-y: hidden;
   width: 250px;
 
   .filterResults {
     margin-top: 8px;
     overflow-y: auto;
-    max-height: calc(100vh - 315px);
+    max-height: calc(100vh - 460px);
   }
 
-  .search{
+  .search {
     border: 1px solid var(--border-color);
     padding: 5px;
     border-radius: 8px;
@@ -152,26 +152,26 @@
     width: 225px;
     margin: 5px 0;
 
-    input[type="text"]{
+    input[type='text'] {
       color: var(--border-color);
       width: 100%;
     }
 
-    ::placeholder{
+    ::placeholder {
       color: var(--border-color);
     }
 
-    svg{
+    svg {
       fill: var(--border-color);
       color: var(--border-color);
 
-      path{
+      path {
         fill: var(--border-color);
         color: var(--border-color);
       }
     }
 
-    &.showResults{
+    &.showResults {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
@@ -192,4 +192,3 @@
     margin: 10px 15px 10px 10px;
   }
 }
-

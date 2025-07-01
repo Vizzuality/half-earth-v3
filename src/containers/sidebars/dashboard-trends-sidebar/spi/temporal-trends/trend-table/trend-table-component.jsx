@@ -1,4 +1,5 @@
-import React from 'react';
+import { last } from 'lodash';
+import React, { useEffect, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -13,6 +14,28 @@ import styles from './trend-table-styles.module.scss';
 function TrendTableComponent(props) {
   const t = useT();
   const { provinces } = props;
+
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    if (provinces && provinces.length > 0) {
+      const latestYear = last(provinces.map((province) => province.year));
+      console.log('Latest Year:', latestYear);
+      const formattedData = provinces.filter((province) => {
+        if (province.year === latestYear) {
+          return {
+            name: province.NAME,
+            spi: province.SPI,
+            area_km2: province.area_km2,
+            area_protected: province.area_protected,
+            richness_vert_spi: province.richness_vert_spi,
+          };
+        }
+        return false;
+      });
+      setTableData(formattedData);
+    }
+  }, [provinces]);
 
   return (
     <div className={styles.container}>
@@ -52,23 +75,26 @@ function TrendTableComponent(props) {
             </tr>
           </thead>
           <tbody>
-            {provinces &&
-              provinces.map((row, index) => (
+            {tableData &&
+              tableData.map((row, index) => (
                 // eslint-disable-next-line react/no-array-index-key
-                <tr key={`wdpa-row-${row.NAME}-${index}`}>
+                <tr key={`wdpa-row-${row.name}-${index}`}>
                   <td
                     className={cx(tableStyles.firstColumn, styles.firstColumn)}
                   >
-                    {row.region_name}
+                    {row.name}
                   </td>
-                  <td>{row.SPI.toFixed(1)}</td>
-                  <td>{numberToLocaleStringWithOneDecimal(row.Area) ?? 0}</td>
+                  <td>{row.spi.toFixed(1)}</td>
                   <td>
-                    {numberToLocaleStringWithOneDecimal(row.AreaProtected) ?? 0}
+                    {numberToLocaleStringWithOneDecimal(row.area_km2) ?? 0}
+                  </td>
+                  <td>
+                    {numberToLocaleStringWithOneDecimal(row.area_protected) ??
+                      0}
                   </td>
                   <td>
                     {numberToLocaleStringWithOneDecimal(
-                      row.VertebrateRichness,
+                      row.richness_vert_spi,
                       0
                     )}
                   </td>

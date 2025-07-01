@@ -136,7 +136,7 @@ function NationalChartComponent(props) {
         datasets: [
           {
             label: t('SII'),
-            data: nationalChartData.map((item) => item.sii * 100),
+            data: nationalChartData.map((item) => item.sii),
             borderColor: getCSSVariable('bubble'),
           },
         ],
@@ -144,7 +144,7 @@ function NationalChartComponent(props) {
 
       const lastValue = last(nationalChartData);
 
-      const siiVal = lastValue.sii * 100;
+      const siiVal = lastValue.sii;
       const sii = {
         labels: [t('Global SPI'), t('Remaining')],
         datasets: [
