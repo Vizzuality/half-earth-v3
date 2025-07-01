@@ -184,7 +184,7 @@ function AreaHighlightManagerComponent(props) {
 
                 // eslint-disable-next-line camelcase
                 setRegionName(
-                  NAME || NAME_1 || region_name || territoire || Intrvnt
+                  NAME || NAME_1 || region_name || territoire || Intrvnt || name
                 );
               }
               break;

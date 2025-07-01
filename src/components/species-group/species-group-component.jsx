@@ -68,10 +68,10 @@ function SpeciesGroupComponent(props) {
             src={`${species_url}`}
           />
         )}
-        {!species_url ||
-          (species_url === 'NA' && (
-            <TaxaImageComponent taxa={selectedTaxaObj.taxa} />
-          ))}
+        {species_url && species_url === 'NA' && (
+          <TaxaImageComponent taxa={selectedTaxaObj.taxa} />
+        )}
+        {!species_url && <TaxaImageComponent taxa={selectedTaxaObj.taxa} />}
       </div>
       <div className={cx(styles.speciesText, styles.name)}>
         <div className={styles.common}>

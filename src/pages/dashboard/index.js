@@ -787,6 +787,12 @@ function DashboardContainer(props) {
             }
             return false;
           });
+          const plants = speciesData.species.filter((item) => {
+            if (item) {
+              return item.taxa === 'plants';
+            }
+            return false;
+          });
 
           const ampSpecies = {
             count: amphibians.length,
@@ -812,7 +818,21 @@ function DashboardContainer(props) {
             taxa: 'mammals',
             title: t('mammals'),
           };
-          const groupData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
+
+          const plantSpecies = {
+            count: plants.length,
+            species: plants,
+            taxa: 'plants',
+            title: t('plants'),
+          };
+
+          const groupData = [
+            ampSpecies,
+            birdSpecies,
+            repSpecies,
+            mamSpecies,
+            plantSpecies,
+          ];
 
           setTaxaList(groupData);
 
