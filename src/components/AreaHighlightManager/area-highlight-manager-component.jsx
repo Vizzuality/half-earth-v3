@@ -98,18 +98,19 @@ function AreaHighlightManagerComponent(props) {
     if (results.length) {
       const foundLayer = results.find(
         (x) =>
-          x.graphic.attributes.NAME ||
-          x.graphic.attributes.name ||
-          x.graphic.attributes.NAME_1 ||
-          x.graphic.attributes.WDPA_PID ||
-          x.graphic.attributes.territoire ||
-          x.graphic.attributes.Int_ID
+          x.graphic.attributes?.NAME ||
+          x.graphic.attributes?.name ||
+          x.graphic.attributes?.NAME_1 ||
+          x.graphic.attributes?.WDPA_PID ||
+          x.graphic.attributes?.territoire ||
+          x.graphic.attributes?.Int_ID
       );
       if (foundLayer) {
         const { graphic } = foundLayer;
         const { attributes } = graphic;
         if (
           Object.prototype.hasOwnProperty.call(attributes, 'name') ||
+          Object.prototype.hasOwnProperty.call(attributes, 'NAME') ||
           Object.prototype.hasOwnProperty.call(attributes, 'NAME_1') ||
           Object.prototype.hasOwnProperty.call(attributes, 'WDPA_PID') ||
           Object.prototype.hasOwnProperty.call(attributes, 'territoire') ||
