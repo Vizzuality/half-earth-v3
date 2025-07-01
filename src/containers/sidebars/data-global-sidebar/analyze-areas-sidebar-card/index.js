@@ -115,7 +115,7 @@ function AnalyzeAreasContainer(props) {
     changeUI,
     selectedAnalysisLayer,
     selectedAnalysisTab,
-    resetOption
+    resetOption,
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(
@@ -143,13 +143,13 @@ function AnalyzeAreasContainer(props) {
   }, [selectedAnalysisLayer, precalculatedAOIOptions]);
 
   useEffect(() => {
-    if(resetOption){
-      if(selectedAnalysisLayer !== precalculatedAOIOptions[0].title){
+    if (resetOption) {
+      if (selectedAnalysisLayer !== precalculatedAOIOptions[0].title) {
         handleOptionSelection(precalculatedAOIOptions[0]);
       }
       setSelectedOption(precalculatedAOIOptions[0]);
     }
-  }, [resetOption])
+  }, [resetOption]);
 
   const postDrawCallback = (geometry) => {
     const hash = createHashFromGeometry(geometry);
@@ -223,7 +223,8 @@ function AnalyzeAreasContainer(props) {
   const handleLayerToggle = (newSelectedOption) => {
     const protectedAreasSelected =
       newSelectedOption === WDPA_OECM_FEATURE_LAYER;
-    const protectedAreasFormerSelected = selectedOption?.slug === WDPA_OECM_FEATURE_LAYER;
+    const protectedAreasFormerSelected =
+      selectedOption?.slug === WDPA_OECM_FEATURE_LAYER;
 
     const getLayersToToggle = () => {
       const formerSelectedSlug = selectedOption?.slug;
@@ -232,7 +233,7 @@ function AnalyzeAreasContainer(props) {
           ? LAYERS_CATEGORIES.PROTECTION
           : undefined;
 
-      let layersToToggle = [];
+      const layersToToggle = [];
       layersToToggle.push({ layerId: formerSelectedSlug });
       if (
         newSelectedOption !== CLEAR_SELECTIONS &&
@@ -266,9 +267,13 @@ function AnalyzeAreasContainer(props) {
         });
       }
 
-      if(protectedAreasFormerSelected){
+      if (protectedAreasFormerSelected) {
         additionalProtectedAreasLayers.forEach((layer) => {
-          if (activeLayers.some((l) => l.title === PROTECTED_AREAS_VECTOR_TILE_LAYER)) {
+          if (
+            activeLayers.some(
+              (l) => l.title === PROTECTED_AREAS_VECTOR_TILE_LAYER
+            )
+          ) {
             layersToToggle.push({
               layerId: layer,
               category: LAYERS_CATEGORIES.PROTECTION,

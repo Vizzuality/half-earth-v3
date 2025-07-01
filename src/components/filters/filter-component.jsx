@@ -23,7 +23,6 @@ function FilterComponent(props) {
     filters,
     setFilters,
     isLoading,
-    countryISO,
     updateActiveFilter,
   } = props;
 

@@ -1,17 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import { DASHBOARD } from 'router';
 
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
 
+import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   DRC_REGION_FEATURE_ID,
+  GUY_FM_RAPID_INVENTORY_32_FEATURE_ID,
   RAPID_INVENTORY_32_FEATURE_ID,
   ZONE_3_FEATURE_ID,
   ZONE_5_FEATURE_ID,
   NBS_OP_INTERVENTIONS_FEATURE_ID,
 } from 'utils/dashboard-utils';
+import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { postAoiToDataBase } from 'utils/geo-processing-services';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
@@ -19,11 +23,15 @@ import RadioGroup from '@mui/material/RadioGroup';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
+import { useSketchWidget } from 'hooks/esri';
+
+import PromptModal from 'containers/modals/prompt-modal';
+
 import Button from 'components/button';
-// import SearchInput from 'components/search-input';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
+import { HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
 import {
   LAYER_OPTIONS,
   NAVIGATION,
@@ -34,15 +42,62 @@ import {
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
-import styles from './regions-analysis-styles.module.scss';
+import SketchTooltip from '../../data-global-sidebar/analyze-areas-sidebar-card/sketch-tooltip/sketch-tooltip';
+import SketchWidget from '../../data-global-sidebar/analyze-areas-sidebar-card/sketch-widget/sketch-widget-component';
 
+import styles from './regions-analysis-styles.module.scss';
+// import SearchInput from 'components/search-input';
+
+export const getWarningMessages = (t, locale) => ({
+  area: {
+    title: t('Area size too big'),
+    // eslint-disable-next-line react/no-unstable-nested-components
+    description: (size) => (
+      <span>
+        {t(
+          'The maximum size for on the fly area analysis is {number} km{sup}.',
+          {
+            number: getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale),
+            sup: <sup>2</sup>,
+          }
+        )}{' '}
+        {t('The area that you are trying to analyze has {number} km{sup}.', {
+          number: getLocaleNumber(size, locale),
+          sup: <sup>2</sup>,
+        })}{' '}
+        {t('Please select a smaller area to trigger the analysis.')}
+      </span>
+    ),
+  },
+  file: {
+    title: t('Something went wrong with your upload'),
+    description: () =>
+      t(
+        'Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.'
+      ),
+  },
+  400: {
+    title: t('File too big'),
+    description: () =>
+      t(
+        'File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.'
+      ),
+  },
+  500: {
+    title: t('Server error'),
+    description: () =>
+      t('An error ocurred during the file upload. Please try again'),
+  },
+});
 function RegionsAnalysisComponent(props) {
   const t = useT();
-  // const locale = useLocale();
+  const locale = useLocale();
   const {
     map,
     regionLayers,
     browsePage,
+    setAoiGeometry,
+    shapeDrawTooBigAnalytics,
     setRegionLayers,
     view,
     setSelectedIndex,
@@ -52,11 +107,52 @@ function RegionsAnalysisComponent(props) {
     selectedRegionOption,
     setMapLegendLayers,
     setSelectedRegionOption,
+    setRegionName,
     countryISO,
+    setHash,
   } = props;
   const { lightMode } = useContext(LightModeContext);
-  // const [searchInput, setSearchInput] = useState('');
-  // const [searchResults, setSearchResults] = useState([]);
+  const [sketchWidgetMode, setSketchWidgetMode] = useState('create');
+  const [isPromptModalOpen, setPromptModalOpen] = useState(false);
+  const [promptModalContent, setPromptModalContent] = useState({
+    title: '',
+    description: '',
+  });
+
+  const postDrawCallback = (geometry) => {
+    const hash = createHashFromGeometry(geometry);
+    setAoiGeometry({ hash, geometry });
+    postAoiToDataBase(geometry, { aoiId: hash });
+
+    setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
+    setRegionName(t('Custom Area'));
+    setHash(hash);
+    setSelectedRegion({ name: t('Custom Area'), iso: countryISO });
+  };
+
+  const warningMessages = useMemo(
+    () => getWarningMessages(t, locale),
+    [locale]
+  );
+
+  const {
+    sketchTool,
+    handleSketchToolDestroy,
+    handleSketchToolActivation,
+    updatedGeometry,
+    setUpdatedGeometry,
+    sketchTooltipType,
+    setSketchTooltipType,
+  } = useSketchWidget({
+    view,
+    sketchWidgetMode,
+    setSketchWidgetMode,
+    setPromptModalOpen,
+    setPromptModalContent,
+    warningMessages,
+    shapeDrawTooBigAnalytics,
+    sketchWidgetConfig: { postDrawCallback },
+  });
 
   const getLayerIcon = (layer, item) => {
     view.whenLayerView(layer).then(() => {
@@ -90,6 +186,10 @@ function RegionsAnalysisComponent(props) {
       const filtered = ml.filter((l) => l.id !== LAYER_OPTIONS.PROTECTED_AREAS);
       return filtered;
     });
+
+    if (sketchTool) {
+      handleSketchToolDestroy();
+    }
 
     if (option === REGION_OPTIONS.PROTECTED_AREAS) {
       featureLayer = await EsriFeatureService.addProtectedAreaLayer(
@@ -166,16 +266,28 @@ function RegionsAnalysisComponent(props) {
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.RAPID_INVENTORY_32) {
-      featureLayer = await EsriFeatureService.getFeatureLayer(
-        RAPID_INVENTORY_32_FEATURE_ID,
-        null,
-        LAYER_OPTIONS.RAPID_INVENTORY_32
-      );
+      if (countryISO.toUpperCase() === 'GUY-FM') {
+        featureLayer = await EsriFeatureService.getFeatureLayer(
+          GUY_FM_RAPID_INVENTORY_32_FEATURE_ID,
+          null,
+          LAYER_OPTIONS.RAPID_INVENTORY_32
+        );
+      } else {
+        featureLayer = await EsriFeatureService.getFeatureLayer(
+          RAPID_INVENTORY_32_FEATURE_ID,
+          null,
+          LAYER_OPTIONS.RAPID_INVENTORY_32
+        );
+      }
 
       setRegionLayers(() => ({
         [LAYER_OPTIONS.RAPID_INVENTORY_32]: featureLayer,
       }));
       map.add(featureLayer);
+    } else if (option === REGION_OPTIONS.DRAW) {
+      if (!sketchTool) {
+        handleSketchToolActivation();
+      }
     }
   };
 
@@ -221,32 +333,7 @@ function RegionsAnalysisComponent(props) {
     setSelectedRegionOption(option);
   };
 
-  // const handleSearch = (searchText) => {
-  //   setSearchInput(searchText.currentTarget.value);
-  // };
-
-  // const handleSearchSelect = (searchItem) => {
-  //   // setScientificName(searchItem.scientificname);
-  //   // localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
-  //   // setSelectedIndex(NAVIGATION.DATA_LAYER);
-  // };
-
-  // const getSearchResults = async () => {
-  //   const searchURL = `https://dev-api.mol.org/2.x/spatial/regions/search?lang=en&search_term=${searchInput}&region_dataset_id=&limit=100`;
-
-  //   const searchSpecies = await fetch(searchURL);
-  //   const results = await searchSpecies.json();
-  //   setSearchResults(results);
-  // };
-
-  // useEffect(() => {
-  //   if (!searchInput) return;
-  //   const handler = setTimeout(() => {
-  //     getSearchResults();
-  //   }, 300);
-
-  //   return () => clearTimeout(handler);
-  // }, [searchInput]);
+  const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
 
   useEffect(() => {
     browsePage({
@@ -284,28 +371,6 @@ function RegionsAnalysisComponent(props) {
         )}
       </span>
       <hr className={hrTheme.dark} />
-      {/* <div className={styles.explore}>
-        <SearchInput
-          className={cx(
-            styles.search,
-            searchInput && searchResults.length > 0 ? styles.showResults : ''
-          )}
-          placeholder={t('Search for a species by name')}
-          onChange={handleSearch}
-          value={searchInput}
-        />
-        {searchInput && searchResults.length > 0 && (
-          <ul className={styles.searchResults}>
-            {searchResults.map((item, index) => (
-              <li key={index}>
-                <button type="button" onClick={() => handleSearchSelect(item)}>
-                  <b>{item.scientificname}</b> - <span>{item.vernacular}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div> */}
       <p>{t('Select a region type below to display on the map')}</p>
       <div className={styles.choices}>
         <RadioGroup
@@ -355,11 +420,49 @@ function RegionsAnalysisComponent(props) {
                 control={<Radio />}
                 label={t('5 Zones')}
               />
+            </>
+          )}
+          {(countryISO.toUpperCase() === 'GUY-FM' ||
+            countryISO.toUpperCase() === 'GUY') && (
+            <FormControlLabel
+              value={REGION_OPTIONS.RAPID_INVENTORY_32}
+              control={<Radio />}
+              label={t('Rapid Inventory 32')}
+            />
+          )}
+          {countryISO.toUpperCase() === 'GUY' && (
+            <>
               <FormControlLabel
-                value={REGION_OPTIONS.RAPID_INVENTORY_32}
+                value={REGION_OPTIONS.DRAW}
                 control={<Radio />}
-                label={t('Rapid Inventory 32')}
+                label={t('Draw a custom area')}
               />
+              {selectedRegionOption === REGION_OPTIONS.DRAW && (
+                <div>
+                  <SketchWidget
+                    sketchTool={sketchTool}
+                    sketchWidgetMode={sketchWidgetMode}
+                    setSketchWidgetMode={setSketchWidgetMode}
+                    setSketchTooltipType={setSketchTooltipType}
+                    setUpdatedGeometry={setUpdatedGeometry}
+                    updatedGeometry={updatedGeometry}
+                    view={view}
+                  />
+                  <SketchTooltip sketchTooltipType={sketchTooltipType} />
+                  <p className={styles.sectionLabel}>
+                    {t('Draw shape smaller than')}{' '}
+                    <b>
+                      {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
+                      <sup>2</sup>
+                    </b>
+                    {t(', approximately the size of Belgium.')}
+                  </p>
+
+                  <p className={styles.sectionLabel}>
+                    {t('Use the different drawing tools to draw the area.')}
+                  </p>
+                </div>
+              )}
             </>
           )}
           {/* <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} /> */}
@@ -368,35 +471,20 @@ function RegionsAnalysisComponent(props) {
         </RadioGroup>
         <div className={styles.comingSoon}>
           <span>{t('Coming Soon')}</span>
-          <span>{t('Upload or draw a custom area on the map')}</span>
+          <span>{t('Upload a custom area on the map')}</span>
           <Button
             className={styles.disabled}
             type="rectangular"
             label={t('Upload a shapefile')}
           />
-          <Button
-            className={styles.disabled}
-            type="rectangular"
-            label={t('Draw an area')}
-          />
         </div>
       </div>
-      {/* <div className={styles.search}>
-        <SearchLocation
-          stacked
-          searchType={SEARCH_TYPES.full}
-          view={view}
-          theme="dark"
-          width="full"
-          parentWidth="380px"
-          searchSourceLayerSlug={selectedOption?.slug}
-        />
-        <Button
-          type="rectangular"
-          className={styles.saveButton}
-          label={t('Download Data')}
-        />
-      </div> */}
+      <PromptModal
+        isOpen={isPromptModalOpen}
+        handleClose={handlePromptModalToggle}
+        title={promptModalContent.title}
+        description={promptModalContent.description}
+      />
     </section>
   );
 }

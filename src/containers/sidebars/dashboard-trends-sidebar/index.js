@@ -62,9 +62,11 @@ function DashboardTrendsSidebarContainer(props) {
 
   const [spiScoresData, setSpiScoresData] = useState([]);
   const [shiScoresData, setShiScoresData] = useState([]);
+  const [siiScoresData, setSiiScoresData] = useState([]);
   const [spiSelectSpeciesData, setSpiSelectSpeciesData] = useState([]);
   const [shiSelectSpeciesData, setShiSelectSpeciesData] = useState([]);
   const [shiProvinceTrendData, setShiProvinceTrendData] = useState([]);
+  const [siiSelectSpeciesData, setSiiSelectSpeciesData] = useState([]);
 
   const [shiValue, setShiValue] = useState(0);
   const [spiValue, setSpiValue] = useState(0);
@@ -104,11 +106,13 @@ function DashboardTrendsSidebarContainer(props) {
       const data = features?.map((f) => f.attributes);
       setSpiScoresData(data);
       setShiScoresData(data);
+      setSiiScoresData(data);
       if (countryISO.toLowerCase() === 'ee') {
         setSpiSelectSpeciesData(zoneHistrogramData[0]);
       } else {
         setSpiSelectSpeciesData(data);
         setShiSelectSpeciesData(data);
+        setSiiSelectSpeciesData(data);
       }
     });
   };
@@ -608,8 +612,10 @@ function DashboardTrendsSidebarContainer(props) {
       shiCountryData={shiCountryData}
       spiScoresData={spiScoresData}
       shiScoresData={shiScoresData}
+      siiScoresData={siiScoresData}
       spiSelectSpeciesData={spiSelectSpeciesData}
       shiSelectSpeciesData={shiSelectSpeciesData}
+      siiSelectSpeciesData={siiSelectSpeciesData}
       geo={geo}
       zoneData={zoneData}
       zoneHistrogramData={zoneHistrogramData}

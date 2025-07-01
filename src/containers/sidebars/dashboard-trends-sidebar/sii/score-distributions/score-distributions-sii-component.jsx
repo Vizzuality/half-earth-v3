@@ -16,7 +16,7 @@ import compStyles from './score-distributions-sii-styles.module.scss';
 
 function ScoreDistributionsSiiComponent(props) {
   const t = useT();
-  const { siiData } = props;
+  const { siiScoresData, siiSelectSpeciesData } = props;
   const { lightMode } = useContext(LightModeContext);
   const taxas = ['birds', 'mammals', 'reptiles', 'amphibians'];
   const lowAvg = 'Amphibians';
@@ -47,7 +47,7 @@ function ScoreDistributionsSiiComponent(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   const getChartData = async () => {
-    const data = siiData.scoresData;
+    const data = siiScoresData;
     const taxaSet = {};
 
     // Loop through each number and place it in the appropriate bucket
@@ -95,11 +95,11 @@ function ScoreDistributionsSiiComponent(props) {
   };
 
   useEffect(() => {
-    if (!siiData.scoresData.length) return;
+    if (!siiScoresData.length) return;
     getChartData();
     getTaxaData();
     setIsLoading(false);
-  }, [siiData.scoresData]);
+  }, [siiScoresData]);
 
   const options = {
     plugins: {
