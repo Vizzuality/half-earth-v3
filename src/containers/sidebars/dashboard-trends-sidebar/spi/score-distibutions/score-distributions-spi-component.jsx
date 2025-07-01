@@ -252,12 +252,10 @@ function ScoreDistributionsSpiComponent(props) {
       spiSelectSpeciesData.forEach((item) => {
         if (item.species_sps) {
           const values = JSON.parse(item.species_sps);
+
           values.forEach((value) => {
             const val = value;
-            if (
-              val.stewardship >= 1 &&
-              !threatStatuses.includes(val.threat_status?.toUpperCase())
-            ) {
+            if (!threatStatuses.includes(val.threat_status?.toUpperCase())) {
               species.push({
                 species: val.species,
                 species_url: val.species_url,
@@ -269,7 +267,11 @@ function ScoreDistributionsSpiComponent(props) {
         }
       });
 
-      setSpsSpecies(species.slice(0, 4));
+      const bird = species.find((item) => item.taxa === 'birds');
+      const mammal = species.find((item) => item.taxa === 'mammals');
+      const reptile = species.find((item) => item.taxa === 'reptiles');
+      const amphibian = species.find((item) => item.taxa === 'amphibians');
+      setSpsSpecies([bird, mammal, reptile, amphibian]);
     }
     setIsSpeciesLoading(false);
   };

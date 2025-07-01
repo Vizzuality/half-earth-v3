@@ -368,11 +368,8 @@ function ScoreDistributionsShiComponent(props) {
           const values = JSON.parse(item.species_shs);
 
           values.forEach((value) => {
-            const val = value[''];
-            if (
-              val.stewardship >= 0 &&
-              !threatStatuses.includes(val.threat_status?.toUpperCase())
-            ) {
+            const val = value;
+            if (!threatStatuses.includes(val.threat_status?.toUpperCase())) {
               species.push({
                 scientificname: val.species,
                 species_url: val.species_url,
@@ -396,7 +393,11 @@ function ScoreDistributionsShiComponent(props) {
         }
       });
 
-      setSpsSpecies(species.slice(0, 4));
+      const bird = species.find((item) => item.taxa === 'birds');
+      const mammal = species.find((item) => item.taxa === 'mammals');
+      const reptile = species.find((item) => item.taxa === 'reptiles');
+      const amphibian = species.find((item) => item.taxa === 'amphibians');
+      setSpsSpecies([bird, mammal, reptile, amphibian]);
     }
     setIsSpeciesLoading(false);
   };
