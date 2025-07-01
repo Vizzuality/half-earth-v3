@@ -793,6 +793,12 @@ function DashboardContainer(props) {
             }
             return false;
           });
+          const fishes = speciesData.species.filter((item) => {
+            if (item) {
+              return item.taxa === 'fishes';
+            }
+            return false;
+          });
 
           const ampSpecies = {
             count: amphibians.length,
@@ -826,12 +832,20 @@ function DashboardContainer(props) {
             title: t('plants'),
           };
 
+          const fishSpecies = {
+            count: fishes.length,
+            species: fishes,
+            taxa: 'fishes',
+            title: t('fishes'),
+          };
+
           const groupData = [
             ampSpecies,
             birdSpecies,
             repSpecies,
             mamSpecies,
             plantSpecies,
+            fishSpecies,
           ];
 
           setTaxaList(groupData);
