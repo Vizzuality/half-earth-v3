@@ -320,7 +320,10 @@ function BioDiversityContainer(props) {
         const tableData = [];
         const { spiScoreData } = data;
 
-        if (countryISO.toLowerCase() === 'cod') {
+        if (
+          countryISO.toLowerCase() === 'cod' ||
+          countryISO.toLowerCase() === 'guy'
+        ) {
           spiScoreData.forEach((item) => {
             const lastItem = item;
             tableData.push({
