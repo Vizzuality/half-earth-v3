@@ -92,7 +92,7 @@ export const PROTECTED_AREA_GUY_FEATURE_URL =
   'd610d9ad96bc4071a31b3aacdfbf844d';
 
 export const GBIF_OCCURENCE_URL = '1ccb994557a74bc6bd773250d8eebc15';
-// Yale AGOL - cc44bf640beb4b2c989d1e901bb90852
+export const GUY_RIVER_ID = 'e7557c32f8a2475e95aab9471fc9b4c5';
 
 export const REGION_OCCURENCE_ID = '9f732963e1a7495f889577ca30e44562';
 

@@ -103,6 +103,7 @@ function DashboardViewComponent(props) {
       view={view}
       setView={setView}
       geometry={geometry}
+      countryISO={countryISO}
       loaderOptions={{
         url: `https://js.arcgis.com/${API_VERSION}`,
       }}

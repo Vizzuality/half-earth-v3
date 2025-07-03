@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { createDefaultDashboardLayers } from 'utils/dashboard-utils';
+import {
+  createDefaultDashboardLayers,
+  GUY_RIVER_ID,
+} from 'utils/dashboard-utils';
 
 import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
+
+import EsriFeatureService from 'services/esri-feature-service';
 
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 
@@ -22,6 +27,7 @@ function ViewContainer(props) {
     view,
     setView,
     geometry,
+    countryISO,
   } = props;
 
   const [loadState, setLoadState] = useState('loading');
@@ -65,6 +71,16 @@ function ViewContainer(props) {
       groupLayer.effect = 'brightness(1.5) drop-shadow(0, 0px, 12px)';
       groupLayer.opacity = 1;
     }
+  };
+
+  const loadGuyRiverLayer = async () => {
+    const layer = await EsriFeatureService.getFeatureLayer(
+      GUY_RIVER_ID,
+      countryISO,
+      'GUY-RIVER'
+    );
+
+    map.add(layer);
   };
 
   useEffect(() => {
@@ -116,6 +132,10 @@ function ViewContainer(props) {
         outFields: ['*'],
       };
       highlightCountry(query, query.geometry, view);
+
+      if (countryISO === 'GUY' || countryISO === 'GUY-FM') {
+        loadGuyRiverLayer();
+      }
     }
   }, [view, geometry]);
 

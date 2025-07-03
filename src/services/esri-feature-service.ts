@@ -87,6 +87,7 @@ async function getFeatureLayer(portalItemId, countryISO, id, classType = null) {
     id === 'GUY-zone3-spi' ||
     id === 'GUY-zone3-shi' ||
     id === 'GUY-zone5-shi' ||
+    id === 'GUY-RIVER' ||
     countryISO === 'EE'
   ) {
     definitionExpression = '';
