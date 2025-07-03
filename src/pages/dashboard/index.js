@@ -198,7 +198,7 @@ function DashboardContainer(props) {
       });
     } else {
       gbifResponse = await EsriFeatureService.getFeatures({
-        url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+        url: DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL,
         whereClause: `species = '${scientificName}' and source = 'GBIF' and iso3 = '${countryISO}'`,
         returnGeometry: false,
       });
@@ -230,7 +230,7 @@ function DashboardContainer(props) {
       });
     } else {
       eBirdResponse = await EsriFeatureService.getFeatures({
-        url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+        url: DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL,
         whereClause: `species = '${scientificName}' and source = 'eBird' and iso3 = '${countryISO}'`,
         returnGeometry: false,
       });
@@ -451,7 +451,7 @@ function DashboardContainer(props) {
   const getSpeciesDetails = (speciesData, taxa) => {
     const results = speciesData.map(({ attributes }) => {
       const { source, species_url, threat_status, commonnames } =
-        countryISO === 'EE'
+        countryISO === 'EE' || countryISO === 'GUY'
           ? attributes
           : JSON.parse(attributes.attributes.replace(/NaN/g, 'null'))[0];
 
@@ -482,6 +482,10 @@ function DashboardContainer(props) {
       url = DASHBOARD_URLS.SPECIES_OCCURENCE_COUNTRY_URL;
     }
 
+    if (countryISO === 'GUY') {
+      url = DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL;
+    }
+
     let whereClause = `ISO3 = '${countryISO}'`;
     if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;
@@ -500,7 +504,9 @@ function DashboardContainer(props) {
       }
 
       if (region_key) {
-        url = DASHBOARD_URLS.ZONE_OCCURRENCE;
+        if (countryISO === 'GUY-FM') {
+          url = DASHBOARD_URLS.ZONE_OCCURRENCE;
+        }
         whereClause = `region_key = '${region_key}'`;
       }
     }
@@ -509,7 +515,9 @@ function DashboardContainer(props) {
       const occurenceFeatures = await EsriFeatureService.getFeatures({
         url,
         whereClause,
+        returnDistinctValues: true,
         returnGeometry: false,
+        outFields: ['species', 'taxa', 'source'],
       });
 
       const list = [...speciesData];

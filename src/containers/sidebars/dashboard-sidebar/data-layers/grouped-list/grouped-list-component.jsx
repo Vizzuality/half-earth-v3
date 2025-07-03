@@ -326,6 +326,8 @@ function GroupedListComponent(props) {
           let layerId = GBIF_OCCURENCE_URL;
           if (countryISO === 'EE') {
             layerId = REGION_OCCURENCE_ID;
+          } else if (countryISO === 'GUY') {
+            layerId = '5239b39a253c4ab69bb931044406b431';
           }
 
           if (layerName.match(/EBIRD/)) {

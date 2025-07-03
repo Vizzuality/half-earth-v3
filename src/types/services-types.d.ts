@@ -129,6 +129,7 @@ export interface GetFeatures {
   whereClause?: string;
   orderByFields?: string[];
   signal?: AbortSignal;
+  returnDistinctValues?: boolean;
 }
 
 export interface GetLayer {

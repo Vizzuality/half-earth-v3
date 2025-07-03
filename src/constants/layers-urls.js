@@ -472,6 +472,8 @@ export const DASHBOARD_URLS = {
   SPECIES_OCCURENCE_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/regional_species_COD_v5/FeatureServer',
   // https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/regional_species_COD_v5/FeatureServer
+  GUY_SPECIES_OCCURENCE_URL:
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/country_species_occ_guy/FeatureServer',
   WDPA_OCCURENCE_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/cd_occ_province_join/FeatureServer',
   SPI_PROVINCE_TREND_URL:
