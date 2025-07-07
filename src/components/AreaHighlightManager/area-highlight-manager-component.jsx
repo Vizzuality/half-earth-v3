@@ -84,6 +84,8 @@ function AreaHighlightManagerComponent(props) {
         regionLayers[`${countryISO}-zone5-spi`] ||
         regionLayers[`${countryISO}-zone3-shi`] ||
         regionLayers[`${countryISO}-zone5-shi`] ||
+        regionLayers[LAYER_OPTIONS.ZONE_3] ||
+        regionLayers[LAYER_OPTIONS.ZONE_5] ||
         regionLayers[LAYER_OPTIONS.RAPID_INVENTORY_32] ||
         regionLayers[LAYER_OPTIONS.PROVINCES] ||
         regionLayers[LAYER_OPTIONS.ADMINISTRATIVE_LAYERS] ||

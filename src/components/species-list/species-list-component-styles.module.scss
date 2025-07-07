@@ -133,14 +133,14 @@
 
 .speciesList {
   padding-top: 5px;
-  height: calc(100vh - 380px);
+  height: calc(100vh - 300px);
   overflow-y: hidden;
   width: 250px;
 
   .filterResults {
     margin-top: 8px;
     overflow-y: auto;
-    max-height: calc(100vh - 460px);
+    max-height: calc(100vh - 375px);
   }
 
   .search {

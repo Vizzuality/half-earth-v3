@@ -329,8 +329,8 @@ function RegionsAnalysisComponent(props) {
     removeRegionLayers();
 
     const option = event.currentTarget.value;
-    displayLayer(option);
     setSelectedRegionOption(option);
+    displayLayer(option);
   };
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
@@ -408,7 +408,8 @@ function RegionsAnalysisComponent(props) {
               label={t('NBS-OP Interventions')}
             />
           )}
-          {countryISO.toUpperCase() === 'GUY-FM' && (
+          {(countryISO.toUpperCase() === 'GUY-FM' ||
+            countryISO.toUpperCase() === 'GUY') && (
             <>
               <FormControlLabel
                 value={REGION_OPTIONS.ZONE_3}

@@ -74,6 +74,7 @@ function DashboardContainer(props) {
   const [dataLayerData, setDataLayerData] = useState(null);
   const [privateOccurrenceData, setPrivateOccurrenceData] = useState([]);
   const [taxaList, setTaxaList] = useState([]);
+  const [allTaxa, setAllTaxa] = useState([]);
   const [dataByCountry, setDataByCountry] = useState(null);
   const [spiDataByCountry, setSpiDataByCountry] = useState(null);
   const [selectedTaxa, setSelectedTaxa] = useState('');
@@ -86,7 +87,7 @@ function DashboardContainer(props) {
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState(null);
   const [selectedProvince, setSelectedProvince] = useState();
-  const [exploreAllSpecies, setExploreAllSpecies] = useState();
+  const [exploreAllSpecies, setExploreAllSpecies] = useState(true);
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
   const [regionName, setRegionName] = useState();
@@ -561,6 +562,11 @@ function DashboardContainer(props) {
         l.count = l.species.length;
       });
       // }
+
+      if (exploreAllSpecies) {
+        setAllTaxa(list);
+        console.log('alltaxa', list);
+      }
       setTaxaList(list);
     } else {
       setTaxaList(speciesData);
@@ -1291,6 +1297,7 @@ function DashboardContainer(props) {
       exploreAllSpecies={exploreAllSpecies}
       regionName={regionName}
       setRegionName={setRegionName}
+      allTaxa={allTaxa}
       {...props}
     />
   );
