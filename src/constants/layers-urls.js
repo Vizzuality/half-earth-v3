@@ -60,6 +60,8 @@ import {
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
+  AMPHIB_RICHNESS_NATIONAL,
+  AMPHIB_RARITY_NATIONAL,
   FISHES_PRIORITY,
   FISHES_RARITY,
   FISHES_RICHNESS,
@@ -302,6 +304,7 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Resident_Bird_Richness_tif/MapServer',
   [ANTS_RICHNESS_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/ants_richness_linear_80km_tile_package/MapServer',
+
   // US, South Africa, South East Asia
   [MAMMALS_RARITY_1KM]: [
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mamm_rar_sa_tif/MapServer',
@@ -467,4 +470,10 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/49260dded8b14da3ad3452490d171264/rest/services/regions_precalculated_aoi_summaries_updated_20250521/FeatureServer/0',
   [SPECIFIC_REGIONS_WDPA_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_specific_regions_20250602/FeatureServer/0',
+
+  // Regional richness and rarity layers
+  [AMPHIB_RICHNESS_NATIONAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amphibians_national_standardized_richness/MapServer',
+  [AMPHIB_RARITY_NATIONAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amphibians_national_normalized_log_mean_rarity/MapServer',
 };
