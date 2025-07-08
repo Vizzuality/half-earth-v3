@@ -13,8 +13,10 @@ $firefly: #0a212e;
 $saffron-mango: #fcc44a;
 $wild-sand: #f5f5f5;
 $shamrock: #34bd92;
+$light-grey: #49454f;
 $conifer: #92eb57;
 $screamin-green: #93ff5f;
+$lime-green: #d8ff9a;
 $priority-blue: #0664f6;
 $picton-blue: #3aa8ee;
 $gold: #f8d300;
@@ -335,6 +337,7 @@ $vietnam-landscape: #db5a40;
   --white-opacity-20: #{$white-opacity-20};
   --athens-gray: #{$athens-gray};
   --oslo-gray: #{$oslo-gray};
+  --lime-green: #{$lime-green};
 
   // TRENDS
   --birds: #{$birds-color};
@@ -363,7 +366,7 @@ $vietnam-landscape: #db5a40;
   --mol-blue: #{$mol-blue};
   --mol-green: #{$mol-green};
   --dark-opacity: #{$dark-opacity};
-
+  --light-grey: #{$light-grey};
   --connectivity: #{$connectivity};
   --habitat: #{$habitat};
   --area: #{$area};

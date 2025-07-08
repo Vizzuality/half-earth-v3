@@ -335,6 +335,26 @@ function RegionsAnalysisComponent(props) {
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
 
+  const regionOption = (value, label) => {
+    return (
+      <FormControlLabel
+        value={value}
+        className={cx({
+          [styles.selected]: selectedRegionOption === value,
+        })}
+        control={<Radio />}
+        label={
+          <div className={styles.regionLabel}>
+            <span className={styles.regionTitle}>{label}</span>
+            <p className={styles.regionDescription}>
+              {t('Description for')} {label}
+            </p>
+          </div>
+        }
+      />
+    );
+  };
+
   useEffect(() => {
     browsePage({
       type: DASHBOARD,
@@ -371,114 +391,111 @@ function RegionsAnalysisComponent(props) {
         )}
       </span>
       <hr className={hrTheme.dark} />
-      <p>{t('Select a region type below to display on the map')}</p>
+      <span className={styles.selectionTitle}>
+        {t('Pre-defined Region Type')}
+      </span>
+      <span className={styles.selectionSubTitle}>
+        {t('Select a region type below to explore species list')}
+      </span>
       <div className={styles.choices}>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
           name="radio-buttons-group"
           onChange={optionSelected}
           value={selectedRegionOption}
+          className={styles.radioGroup}
         >
           {countryISO.toUpperCase() !== 'EE' && (
             <>
-              <FormControlLabel
-                value={REGION_OPTIONS.PROTECTED_AREAS}
-                control={<Radio />}
-                label={t('Protected Areas')}
-              />
+              {regionOption(
+                REGION_OPTIONS.PROTECTED_AREAS,
+                t('Protected Areas')
+              )}
 
-              <FormControlLabel
-                value={REGION_OPTIONS.PROVINCES}
-                control={<Radio />}
-                label={t('Provinces')}
-              />
+              {regionOption(REGION_OPTIONS.PROVINCES, t('Provinces'))}
             </>
           )}
           {countryISO === 'COD' && (
-            <FormControlLabel
-              value={REGION_OPTIONS.FORESTS}
-              control={<Radio />}
-              label={t('Forest Titles')}
-            />
+            <>{regionOption(REGION_OPTIONS.FORESTS, t('Forest Titles'))}</>
           )}
           {countryISO.toUpperCase() === 'EE' && (
-            <FormControlLabel
-              value={REGION_OPTIONS.DISSOLVED_NBS}
-              control={<Radio />}
-              label={t('NBS-OP Interventions')}
-            />
-          )}
-          {(countryISO.toUpperCase() === 'GUY-FM' ||
-            countryISO.toUpperCase() === 'GUY') && (
             <>
-              <FormControlLabel
-                value={REGION_OPTIONS.ZONE_3}
-                control={<Radio />}
-                label={t('3 Zones')}
-              />
-              <FormControlLabel
-                value={REGION_OPTIONS.ZONE_5}
-                control={<Radio />}
-                label={t('5 Zones')}
-              />
-            </>
-          )}
-          {(countryISO.toUpperCase() === 'GUY-FM' ||
-            countryISO.toUpperCase() === 'GUY') && (
-            <FormControlLabel
-              value={REGION_OPTIONS.RAPID_INVENTORY_32}
-              control={<Radio />}
-              label={t('Rapid Inventory 32')}
-            />
-          )}
-          {countryISO.toUpperCase() === 'GUY' && (
-            <>
-              <FormControlLabel
-                value={REGION_OPTIONS.DRAW}
-                control={<Radio />}
-                label={t('Draw a custom area')}
-              />
-              {selectedRegionOption === REGION_OPTIONS.DRAW && (
-                <div>
-                  <SketchWidget
-                    sketchTool={sketchTool}
-                    sketchWidgetMode={sketchWidgetMode}
-                    setSketchWidgetMode={setSketchWidgetMode}
-                    setSketchTooltipType={setSketchTooltipType}
-                    setUpdatedGeometry={setUpdatedGeometry}
-                    updatedGeometry={updatedGeometry}
-                    view={view}
-                  />
-                  <SketchTooltip sketchTooltipType={sketchTooltipType} />
-                  <p className={styles.sectionLabel}>
-                    {t('Draw shape smaller than')}{' '}
-                    <b>
-                      {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
-                      <sup>2</sup>
-                    </b>
-                    {t(', approximately the size of Belgium.')}
-                  </p>
-
-                  <p className={styles.sectionLabel}>
-                    {t('Use the different drawing tools to draw the area.')}
-                  </p>
-                </div>
+              {regionOption(
+                REGION_OPTIONS.DISSOLVED_NBS,
+                t('NBS-OP Interventions')
               )}
             </>
           )}
-          {/* <FormControlLabel value="proposedProtectedAreas" control={<Radio />} label={t('Proposed Protected Areas')} /> */}
-          {/* <FormControlLabel value="priorityAreas" control={<Radio />} label={t('Priority Areas')} /> */}
-          {/* <FormControlLabel value="communityForests" control={<Radio />} label={t('Community Forests')} /> */}
+          {(countryISO.toUpperCase() === 'GUY-FM' ||
+            countryISO.toUpperCase() === 'GUY') && (
+            <>
+              {regionOption(REGION_OPTIONS.ZONE_3, t('3 Zones'))}
+              {regionOption(REGION_OPTIONS.ZONE_5, t('5 Zones'))}
+            </>
+          )}
+          {(countryISO.toUpperCase() === 'GUY-FM' ||
+            countryISO.toUpperCase() === 'GUY') && (
+            <>
+              {regionOption(
+                REGION_OPTIONS.RAPID_INVENTORY_32,
+                t('Rapid Inventory 32')
+              )}
+            </>
+          )}
         </RadioGroup>
-        <div className={styles.comingSoon}>
-          <span>{t('Coming Soon')}</span>
-          <span>{t('Upload a custom area on the map')}</span>
-          <Button
-            className={styles.disabled}
-            type="rectangular"
-            label={t('Upload a shapefile')}
-          />
+        <hr className={hrTheme.dark} />
+        <span className={styles.selectionTitle}>{t('Custom Area')}</span>
+        <span className={styles.selectionSubTitle}>
+          {t('Create your own region')}
+        </span>
+        <div className={styles.customAreaContainer}>
+          {countryISO.toUpperCase() === 'GUY' && (
+            <Button
+              type="rectangular"
+              className={styles.customArea}
+              label={t('Draw a custom area')}
+              handleClick={() =>
+                optionSelected({
+                  currentTarget: { value: REGION_OPTIONS.DRAW },
+                })
+              }
+            />
+          )}
+          <div className={styles.comingSoon}>
+            <Button
+              className={styles.disabled}
+              type="rectangular"
+              label={t('Upload a shapefile')}
+            />
+            <span className="text-size-2">{t('Coming soon')}</span>
+          </div>
         </div>
+        {selectedRegionOption === REGION_OPTIONS.DRAW && (
+          <div>
+            <SketchWidget
+              sketchTool={sketchTool}
+              sketchWidgetMode={sketchWidgetMode}
+              setSketchWidgetMode={setSketchWidgetMode}
+              setSketchTooltipType={setSketchTooltipType}
+              setUpdatedGeometry={setUpdatedGeometry}
+              updatedGeometry={updatedGeometry}
+              view={view}
+            />
+            <SketchTooltip sketchTooltipType={sketchTooltipType} />
+            <p className={styles.sectionLabel}>
+              {t('Draw shape smaller than')}{' '}
+              <b>
+                {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
+                <sup>2</sup>
+              </b>
+              {t(', approximately the size of Belgium.')}
+            </p>
+
+            <p className={styles.sectionLabel}>
+              {t('Use the different drawing tools to draw the area.')}
+            </p>
+          </div>
+        )}
       </div>
       <PromptModal
         isOpen={isPromptModalOpen}
