@@ -324,16 +324,18 @@ function RegionsAnalysisComponent(props) {
     setRegionLayers({});
   };
 
-  const optionSelected = (event) => {
-    setSelectedRegion(null);
-    removeRegionLayers();
-
-    const option = event.currentTarget.value;
-    setSelectedRegionOption(option);
-    displayLayer(option);
-  };
-
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
+
+  const optionSelected = (event) => {
+    const option = event.currentTarget.value;
+    if (selectedRegionOption !== option) {
+      setSelectedRegion(null);
+      removeRegionLayers();
+
+      setSelectedRegionOption(option);
+      displayLayer(option);
+    }
+  };
 
   const regionOption = (value, label) => {
     return (
