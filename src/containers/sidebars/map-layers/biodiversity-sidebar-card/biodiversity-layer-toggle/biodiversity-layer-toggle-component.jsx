@@ -36,6 +36,7 @@ function BiodiversityLayerToggle({
   handleResolutionSelection,
   category,
   isChecked,
+  aoiId,
 }) {
   return (
     <div
@@ -79,8 +80,13 @@ function BiodiversityLayerToggle({
       {selectedLayerOption && resolutionOptions.length > 1 && (
         <div className={styles.resolutionOptions}>
           <span className={styles.resolutionIntro}>
-            <T _str="Resolution:" />
+            {category === TERRESTRIAL_GLOBAL && <T _str="Resolution:" />}
+            {(category === TERRESTRIAL_REGIONAL && aoiId) && (
+              <T _str="Color scale:" />
+            )}
           </span>
+          {((category === TERRESTRIAL_REGIONAL && aoiId) ||
+          category === TERRESTRIAL_GLOBAL) && (
           <span className={styles.checkboxes}>
             {resolutionOptions.map((option) => (
               <div key={option.slug}>
@@ -93,7 +99,7 @@ function BiodiversityLayerToggle({
                 />
               </div>
             ))}
-          </span>
+          </span>)}
         </div>
       )}
     </div>

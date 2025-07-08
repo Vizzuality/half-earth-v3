@@ -32,7 +32,7 @@ function BiodiversitySidebarCard(props) {
   const locale = useLocale();
   const layersResolution = useMemo(() => getLayersResolution(), [locale]);
 
-  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant } =
+  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, selectUi } =
     props;
   const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
   const [cardMetadata, setCardMetadata] = useState({
@@ -124,6 +124,7 @@ function BiodiversitySidebarCard(props) {
       showCard={showCard}
       handleCloseCard={handleCloseCard}
       layersResolutionsOptions={layersResolution[biodiversityLayerVariant]}
+      selectUi={selectUi}
       {...props}
     />
   );
