@@ -868,7 +868,6 @@ function DashboardContainer(props) {
             fishSpecies,
           ];
 
-          // setTaxaList(groupData);
           getOccurenceSpecies(groupData);
 
           setSpeciesListLoading(false);
