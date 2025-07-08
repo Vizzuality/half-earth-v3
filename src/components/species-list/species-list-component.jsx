@@ -220,6 +220,7 @@ function SpeciesListComponent(props) {
         {!isLoading &&
           !selectedTaxa &&
           filteredTaxaList?.map((taxa) => {
+            if (taxa.count === 0) return null;
             return (
               <button
                 type="button"

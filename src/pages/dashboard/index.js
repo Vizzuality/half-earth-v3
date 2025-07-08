@@ -83,6 +83,7 @@ function DashboardContainer(props) {
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
   const [loggedIn, setLoggedIn] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState();
+  const [selectedGeometryRings, setSelectedGeometryRings] = useState();
   const [fromTrends, setFromTrends] = useState(false);
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState(null);
@@ -483,12 +484,10 @@ function DashboardContainer(props) {
       url = DASHBOARD_URLS.SPECIES_OCCURENCE_COUNTRY_URL;
     }
 
+    let whereClause = `ISO3 = '${countryISO}'`;
     if (countryISO === 'GUY') {
       url = DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL;
-    }
-
-    let whereClause = `ISO3 = '${countryISO}'`;
-    if (selectedRegion) {
+    } else if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
@@ -513,10 +512,18 @@ function DashboardContainer(props) {
     }
 
     if (!selectedRegion?.mgc) {
+      let geoRings = null;
+      if (selectedGeometryRings) {
+        geoRings = {
+          rings: selectedGeometryRings,
+        };
+      }
+
       const occurenceFeatures = await EsriFeatureService.getFeatures({
         url,
         whereClause,
         returnDistinctValues: true,
+        geometry: geoRings,
         returnGeometry: false,
         outFields: ['species', 'taxa', 'source'],
       });
@@ -565,7 +572,6 @@ function DashboardContainer(props) {
 
       if (exploreAllSpecies) {
         setAllTaxa(list);
-        console.log('alltaxa', list);
       }
       setTaxaList(list);
     } else {
@@ -862,7 +868,8 @@ function DashboardContainer(props) {
             fishSpecies,
           ];
 
-          setTaxaList(groupData);
+          // setTaxaList(groupData);
+          getOccurenceSpecies(groupData);
 
           setSpeciesListLoading(false);
         } else {
@@ -1298,6 +1305,8 @@ function DashboardContainer(props) {
       regionName={regionName}
       setRegionName={setRegionName}
       allTaxa={allTaxa}
+      setSelectedGeometryRings={setSelectedGeometryRings}
+      selectedGeometryRings={selectedGeometryRings}
       {...props}
     />
   );

@@ -25,6 +25,7 @@ function AreaHighlightManagerComponent(props) {
   const {
     setSelectedIndex,
     setSelectedRegion,
+    setSelectedGeometryRings,
     setExploreAllSpecies,
     selectedRegionOption,
     setTaxaList,
@@ -160,6 +161,15 @@ function AreaHighlightManagerComponent(props) {
                   iso3,
                   name,
                 } = hits.attributes;
+
+                if (
+                  hits.graphic &&
+                  hits.graphic.geometry &&
+                  hits.graphic.geometry.rings
+                ) {
+                  setSelectedGeometryRings(hits.graphic.geometry.rings);
+                }
+
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
                   setSelectedRegion({ WDPA_PID });

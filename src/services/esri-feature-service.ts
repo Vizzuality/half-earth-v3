@@ -1,9 +1,12 @@
+import { LAYER_OPTIONS, LAYER_TITLE_TYPES } from 'constants/dashboard-constants.js';
+import { LAYERS_URLS } from 'constants/layers-urls';
+import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
 import {
-  PROTECTED_AREA_EEWWF_FEATURE_ID,
-  PROTECTED_AREA_FEATURE_URL,
-  REGION_RANGE_MAP_URL,
+    PROTECTED_AREA_EEWWF_FEATURE_ID, PROTECTED_AREA_FEATURE_URL, REGION_RANGE_MAP_URL
 } from 'utils/dashboard-utils';
 
+import Polygon from '@arcgis/core/geometry/Polygon.js';
 import CSVLayer from '@arcgis/core/layers/CSVLayer';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
@@ -11,19 +14,8 @@ import TileLayer from '@arcgis/core/layers/TileLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import {
-  addFeatures,
-  applyEdits,
-  IQueryFeaturesResponse,
-  queryFeatures,
+    addFeatures, applyEdits, IQueryFeaturesResponse, queryFeatures
 } from '@esri/arcgis-rest-feature-layer';
-import { AddFeature, GetFeatures, GetLayer } from 'types/services-types';
-
-import {
-  LAYER_OPTIONS,
-  LAYER_TITLE_TYPES,
-} from 'constants/dashboard-constants.js';
-import { LAYERS_URLS } from 'constants/layers-urls';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 function getFeatures({
   url,
@@ -51,9 +43,14 @@ function getFeatures({
     if (returnDistinctValues) {
       featureQuery.returnDistinctValues = true;
     }
-    // if (geometry) {
-    //   featureQuery.geometry = geometry;
-    // }
+    if (geometry) {
+      const polygon = new Polygon({
+        rings: geometry.rings,
+        spatialReference: { wkid: 3857 },
+      });
+
+      featureQuery.geometry = polygon;
+    }
     featureQuery.returnGeometry = returnGeometry;
     featureQuery.outSpatialReference = outSpatialReference;
     layer
