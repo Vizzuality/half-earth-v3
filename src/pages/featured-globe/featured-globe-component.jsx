@@ -100,33 +100,35 @@ function FeaturedGlobe({
           <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
         )}
 
-        {selectedFeaturedMap && (
+        <div className={cx(uiStyles.uiTopLeft, uiStyles.featuresContainer)}>
+          {selectedFeaturedMap && (
+              <SelectedFeaturedMapCard
+                className={cx({
+                  [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
+                })}
+                selectedFeaturedMap={selectedFeaturedMap}
+                selectedSidebar={selectedSidebar}
+                isFullscreenActive={isFullscreenActive}
+                selectedFeaturedPlace={selectedFeaturedPlace}
+                spinGlobe={spinGlobe}
+                handle={spinGlobeHandle}
+              />
+          )}
+
+          {selectedDiscoveryMap && (
             <SelectedFeaturedMapCard
-              className={cx(uiStyles.uiTopLeft, {
+              className={cx( {
                 [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
               })}
-              selectedFeaturedMap={selectedFeaturedMap}
+              selectedFeaturedMap={selectedDiscoveryMap}
               selectedSidebar={selectedSidebar}
               isFullscreenActive={isFullscreenActive}
               selectedFeaturedPlace={selectedFeaturedPlace}
               spinGlobe={spinGlobe}
               handle={spinGlobeHandle}
             />
-        )}
-
-        {selectedDiscoveryMap && (
-          <SelectedFeaturedMapCard
-            className={cx(uiStyles.uiBottomLeft, {
-              [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
-            })}
-            selectedFeaturedMap={selectedDiscoveryMap}
-            selectedSidebar={selectedSidebar}
-            isFullscreenActive={isFullscreenActive}
-            selectedFeaturedPlace={selectedFeaturedPlace}
-            spinGlobe={spinGlobe}
-            handle={spinGlobeHandle}
-          />
-        )}
+          )}
+        </div>
 
         <FeaturedPlacesLayer
           selectedFeaturedMap={selectedFeaturedMap}

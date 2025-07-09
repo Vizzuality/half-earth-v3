@@ -136,7 +136,7 @@ function FeaturedMapCardComponent({
               >
                 <T _str="Explore" />
               </button>
-              </section>
+            </section>
           </>
         )}
       </div>

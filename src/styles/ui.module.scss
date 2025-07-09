@@ -108,3 +108,9 @@ $scrollbar-width: 4px;
     filter: blur($bottom-menu-blur);
   }
 }
+
+.featuresContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
