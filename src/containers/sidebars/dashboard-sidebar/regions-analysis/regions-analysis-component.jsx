@@ -445,7 +445,11 @@ function RegionsAnalysisComponent(props) {
             </>
           )}
         </RadioGroup>
-        <hr className={hrTheme.dark} />
+        <div className={styles.divider}>
+          <hr className={hrTheme.dark} />
+          <span>or</span>
+          <hr className={hrTheme.dark} />
+        </div>
         <span className={styles.selectionTitle}>{t('Custom Area')}</span>
         <span className={styles.selectionSubTitle}>
           {t('Create your own region')}

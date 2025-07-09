@@ -117,6 +117,16 @@
       }
     }
 
+    .divider {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      hr {
+        flex-grow: 1;
+      }
+    }
+
     .customAreaContainer {
       display: flex;
       gap: 8px;
