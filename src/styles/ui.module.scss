@@ -22,6 +22,11 @@ $scrollbar-width: 4px;
   left: $site-gutter;
 }
 
+.uiBottomLeft {
+  position: absolute;
+  bottom: $menuFooterHeight;
+  left: $site-gutter;
+}
 .uiBottom {
   position: absolute;
   bottom: $menuFooterHeight;

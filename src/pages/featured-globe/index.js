@@ -24,6 +24,7 @@ import * as scheduling from '@arcgis/core/core/scheduling';
 
 import {
   FEATURED_PLACES_LAYER,
+  DISCOVERY_GLOBE_LAYER,
   VIBRANT_BASEMAP_LAYER,
 } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';

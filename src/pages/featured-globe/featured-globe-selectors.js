@@ -50,6 +50,10 @@ const getSelectedFeaturedMap = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.selectedFeaturedMap
 );
+const getSelectedDiscoveryMap = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.selectedDiscoveryMap
+);
 const getSelectedFeaturedPlace = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.selectedFeaturedPlace
@@ -83,6 +87,7 @@ export default createStructuredSelector({
   hasMetadata: selectMetadataData,
   isFullscreenActive: getFullscreenActive,
   selectedFeaturedMap: getSelectedFeaturedMap,
+  selectedDiscoveryMap: getSelectedDiscoveryMap,
   selectedTaxa: getSelectedTaxa,
   selectedSidebar: getSelectedSidebar,
   selectedFeaturedPlace: getSelectedFeaturedPlace,

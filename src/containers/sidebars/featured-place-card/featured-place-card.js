@@ -8,7 +8,7 @@ import { findLayerInMap } from 'utils/layer-manager-utils';
 
 import initialState from 'pages/featured-globe/featured-globe-initial-state';
 
-import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
+import { FEATURED_PLACES_LAYER, DISCOVERY_GLOBE_LAYER } from 'constants/layers-slugs';
 
 import Component from './featured-place-card-component';
 import mapStateToProps from './featured-place-card-selectors';
@@ -38,7 +38,12 @@ function FeaturedPlaceCardContainer(props) {
     view.goTo({ zoom: initialState.globe.zoom });
   };
   useEffect(() => {
-    const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    let layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    if (!layer) {
+      // If the layer is not found, we create it from the config
+      layer = findLayerInMap(DISCOVERY_GLOBE_LAYER, map);
+    }
+    // const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
   }, [handleClose]);
 

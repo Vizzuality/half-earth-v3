@@ -31,6 +31,7 @@ function FeaturedGlobe({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
+  selectedDiscoveryMap,
   selectedFeaturedPlace,
   selectedSidebar,
   isGlobeUpdating,
@@ -100,11 +101,25 @@ function FeaturedGlobe({
         )}
 
         {selectedFeaturedMap && (
+            <SelectedFeaturedMapCard
+              className={cx(uiStyles.uiTopLeft, {
+                [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
+              })}
+              selectedFeaturedMap={selectedFeaturedMap}
+              selectedSidebar={selectedSidebar}
+              isFullscreenActive={isFullscreenActive}
+              selectedFeaturedPlace={selectedFeaturedPlace}
+              spinGlobe={spinGlobe}
+              handle={spinGlobeHandle}
+            />
+        )}
+
+        {selectedDiscoveryMap && (
           <SelectedFeaturedMapCard
-            className={cx(uiStyles.uiTopLeft, {
+            className={cx(uiStyles.uiBottomLeft, {
               [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
             })}
-            selectedFeaturedMap={selectedFeaturedMap}
+            selectedFeaturedMap={selectedDiscoveryMap}
             selectedSidebar={selectedSidebar}
             isFullscreenActive={isFullscreenActive}
             selectedFeaturedPlace={selectedFeaturedPlace}
@@ -112,6 +127,7 @@ function FeaturedGlobe({
             handle={spinGlobeHandle}
           />
         )}
+
         <FeaturedPlacesLayer
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
