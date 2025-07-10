@@ -426,13 +426,13 @@ export const LAYERS_URLS = {
   [ELU_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   [AMPHIBIAN_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/04d64805adcb460aa0ff6face308703a/rest/services/amphibians_with_SPS_updated/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/364481070b8448aa8df07e5324fcecc9/rest/services/amphibians_with_SPS_updated_202503/FeatureServer/0',
   [BIRDS_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/af760c4cbcfb4402bb5ee63b5c09151f/rest/services/birds_with_SPS_updated/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/4c4c7b9a327f48d3955f80a2402198f0/rest/services/birds_with_SPS_updated_202503/FeatureServer/0',
   [MAMMALS_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/a0a1d30a1fe54e2e926ef7b723dee75b/rest/services/mammals_with_SPS_updated/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/94268703d9b345c6a8c1e5ccd1be0acf/rest/services/mammals_with_SPS_updated_202503/FeatureServer/0',
   [REPTILES_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/ad816c55e2634f32848389d0ebec6d69/rest/services/reptiles_with_SPS_updated/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/502f1d5023014390b9d415fecab92810/rest/services/reptiles_with_SPS_updated_202503/FeatureServer/0',
   // AOIs precalculated layers
   [ADMIN_AREAS_FEATURE_LAYER]: [
     GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL,
@@ -506,7 +506,8 @@ export const DASHBOARD_URLS = {
   REPTILES_LOOKUP:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_reptiles_final/FeatureServer',
   PRECALC_AOI_COUNTRY:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm0_aoi_summaries_updated_20240326/FeatureServer',
+    // 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm0_aoi_summaries_updated_20240326/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/ca22a0922f934999a00e092feca4315d/rest/services/main_gadm0_precalculated_aoi_summaries_updated_20250521/FeatureServer',
   PRECALC_AOI:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm1_precalculated_aoi_summaries_updated_20240321/FeatureServer',
   WDPA: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_occ_species_COD/FeatureServer',
