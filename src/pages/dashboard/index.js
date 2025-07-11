@@ -52,22 +52,6 @@ function DashboardContainer(props) {
     lang,
   } = props;
 
-  const speciesToAvoid = [
-    'CEPHALOPHUS FOSTERI',
-    'CEPHALOPHUS ARRHENII',
-    'CEPHALOPHUS CASTANEUS',
-    'CEPHALOPHUS CURTICEPS',
-    'CEPHALOPHUS JOHNSTONI',
-    'CEPHALOPHUS NATALENSIS',
-    'KOBUS DEFASSA',
-    'OUREBIA HASTATA',
-    'REDUNCA BOHOR',
-    'ACINONYX JUBATUS',
-    'PILIOCOLOBUS PENNANTII',
-    'DICEROS BICORNIS',
-    'MECISTOPS CATAPHRACTUS',
-  ];
-
   const [geometry, setGeometry] = useState(null);
   const [speciesInfo, setSpeciesInfo] = useState(null);
   const [data, setData] = useState(null);
@@ -95,6 +79,7 @@ function DashboardContainer(props) {
   const [speciesListLoading, setSpeciesListLoading] = useState(true);
   const [prioritySpeciesList, setPrioritySpeciesList] = useState([]);
   const [mapLegendLayers, setMapLegendLayers] = useState([]);
+  const [speciesToAvoid, setSpeciesToAvoid] = useState([]);
   const [user, setUser] = useState();
   const [hash, setHash] = useState();
 
@@ -396,7 +381,9 @@ function DashboardContainer(props) {
           attributes.replace(/NaN/g, 'null')
         )[0];
 
-        const isFound = speciesToAvoid.includes(scientific_name.toUpperCase());
+        const isFound = speciesToAvoid
+          .map((item) => item.toUpperCase())
+          .includes(scientific_name.toUpperCase());
 
         if (!isFound) {
           return {
@@ -423,7 +410,9 @@ function DashboardContainer(props) {
 
   const getCustomAreasSpeciesDetails = (speciesData, taxa) => {
     const results = speciesData.map(({ name, commonName }) => {
-      const isFound = speciesToAvoid.includes(name.toUpperCase());
+      const isFound = speciesToAvoid
+        .map((item) => item.toUpperCase())
+        .includes(name.toUpperCase());
       let common_name = commonName || name;
       if (Array.isArray(commonName)) {
         [common_name] = commonName;
@@ -543,9 +532,9 @@ function DashboardContainer(props) {
 
         if (foundTaxa) {
           occurrence.species.forEach((species) => {
-            const isFound = speciesToAvoid.includes(
-              species.scientific_name.toUpperCase()
-            );
+            const isFound = speciesToAvoid
+              .map((item) => item.toUpperCase())
+              .includes(species.scientific_name.toUpperCase());
 
             if (!isFound) {
               const foundSpecies = foundTaxa?.species.find(
@@ -674,9 +663,9 @@ function DashboardContainer(props) {
 
               const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
 
-              const isFound = speciesToAvoid.includes(
-                scientificname.toUpperCase()
-              );
+              const isFound = speciesToAvoid
+                .map((item) => item.toUpperCase())
+                .includes(scientificname.toUpperCase());
 
               if (!isFound) {
                 return {
@@ -758,9 +747,13 @@ function DashboardContainer(props) {
 
               let isFound = false;
               if (species) {
-                isFound = speciesToAvoid.includes(species.toUpperCase());
+                isFound = speciesToAvoid
+                  .map((item) => item.toUpperCase())
+                  .includes(species.toUpperCase());
               } else if (scientificname) {
-                isFound = speciesToAvoid.includes(scientificname.toUpperCase());
+                isFound = speciesToAvoid
+                  .map((item) => item.toUpperCase())
+                  .includes(scientificname.toUpperCase());
               }
 
               //             commonname_english: "Mussurana"
@@ -876,7 +869,7 @@ function DashboardContainer(props) {
 
           const { amphibians, birds, reptiles, mammals } = attributes;
 
-          if (amphibians) {
+          if (amphibians || birds || reptiles || mammals) {
             const [amphibianData, birdsData, reptilesData, mammalsData] =
               await Promise.all([
                 getTaxaSpecies('amphibians', amphibians),
@@ -1007,6 +1000,23 @@ function DashboardContainer(props) {
       const species = features.map(({ attributes }) => attributes);
 
       setPrioritySpeciesList(species);
+    }
+  };
+
+  const getIgnoredSpeciesList = async () => {
+    const url = DASHBOARD_URLS.IGNORE_SPECIES_LIST;
+    const whereClause = `country_code = '${countryISO}'`;
+
+    const features = await EsriFeatureService.getFeatures({
+      url,
+      whereClause,
+      returnGeometry: false,
+    });
+
+    if (features) {
+      const species = features.map(({ attributes }) => attributes.species_name);
+
+      setSpeciesToAvoid(species);
     }
   };
 
@@ -1205,6 +1215,7 @@ function DashboardContainer(props) {
         });
 
       getPrioritySpeciesList();
+      getIgnoredSpeciesList();
     }
 
     if (countryISO === 'COD' || countryISO === 'GIN') {
@@ -1220,9 +1231,10 @@ function DashboardContainer(props) {
   }, []);
 
   useEffect(() => {
-    if (!selectedRegion && !exploreAllSpecies) return;
+    if ((!selectedRegion && !exploreAllSpecies) || speciesToAvoid.length === 0)
+      return;
     getSpeciesList();
-  }, [selectedRegion, exploreAllSpecies]);
+  }, [selectedRegion, exploreAllSpecies, speciesToAvoid]);
 
   useEffect(() => {
     if (!scientificName) return;
