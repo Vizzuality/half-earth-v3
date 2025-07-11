@@ -92,13 +92,23 @@ function FeaturedPlaceCardComponent({
                     alt={featuredPlace.title}
                   />
                 )}
+                {featuredPlace.link && (
+                  <a
+                    href={featuredPlace.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                  >
+                    {t('Learn more')}
+                  </a>
+                )}
               </div>
               <div className={styles.contentContainer} ref={contentWrapper}>
                 <h2 className={styles.title}>
                   {hotspotsNumbers && `${hotspotsNumbers.position}. `}
                   {featuredPlace.title}
                 </h2>
-                <div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <p
                     className={styles.text}
                     // eslint-disable-next-line react/no-danger
@@ -111,7 +121,12 @@ function FeaturedPlaceCardComponent({
                       ({t('Source:')} <i>{featuredMap.sourceText}</i>)
                     </span>
                   )}
-                </div>
+                  {featuredPlace.dateTime && (
+                    <span className={styles.sourceText}>
+                      {t('Published:')} {featuredPlace.dateTime}
+                    </span>
+                  )}
+                  </div>
               </div>
             </>
           )}
