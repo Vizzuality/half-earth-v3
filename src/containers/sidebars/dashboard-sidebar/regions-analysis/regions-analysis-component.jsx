@@ -128,8 +128,7 @@ function RegionsAnalysisComponent(props) {
       value: REGION_OPTIONS.PROTECTED_AREAS,
     },
     {
-      title: t('Provinces'),
-      description: t('The regions of the country.'),
+      title: t('Regions'),
       value: REGION_OPTIONS.PROVINCES,
     },
     {

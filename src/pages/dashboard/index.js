@@ -125,8 +125,6 @@ function DashboardContainer(props) {
 
       if (exploreAll) {
         setExploreAllSpecies(true);
-      } else {
-        setExploreAllSpecies(null);
       }
 
       if (regionLayers) {
@@ -1231,10 +1229,9 @@ function DashboardContainer(props) {
   }, []);
 
   useEffect(() => {
-    if ((!selectedRegion && !exploreAllSpecies) || speciesToAvoid.length === 0)
-      return;
+    if (!selectedRegion && speciesToAvoid.length === 0) return;
     getSpeciesList();
-  }, [selectedRegion, exploreAllSpecies, speciesToAvoid]);
+  }, [selectedRegion, speciesToAvoid]);
 
   useEffect(() => {
     if (!scientificName) return;

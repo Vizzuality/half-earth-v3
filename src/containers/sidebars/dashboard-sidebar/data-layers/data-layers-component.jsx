@@ -63,8 +63,11 @@ function DataLayerComponent(props) {
     mapLegendLayers,
     regionLayers,
     fromTrends,
+    data,
+    dataByCountry,
     setSpeciesDataLoading,
     countryISO,
+    countryName,
     map,
   } = props;
 
@@ -375,10 +378,12 @@ function DataLayerComponent(props) {
   }, [privateOccurrenceData]);
 
   useEffect(() => {
-    if (!dataPoints) return;
-    setSpeciesDataLoading(false);
+    if (!dataPoints || !data || !dataByCountry) return;
+    if (dataByCountry[countryName]?.shs) {
+      setSpeciesDataLoading(false);
+    }
     setIsLoading(false);
-  }, [dataPoints]);
+  }, [dataPoints, dataByCountry, data]);
 
   useEffect(() => {
     setSpeciesDataLoading(true);
