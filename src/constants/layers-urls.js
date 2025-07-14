@@ -540,7 +540,8 @@ export const DASHBOARD_URLS = {
   PRIVATE_GIN_OCCURENCE_METADATA_LAYER:
     'https://services5.arcgis.com/0f65lZbPr3QAKkSu/arcgis/rest/services/occurrence_metadata/FeatureServer',
   ZONE_SPECIES:
-    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_expert_range_species_list/FeatureServer',
+    // 'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_expert_range_species_list/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/4c45c96032c94450a5c7608725eea788/rest/services/RI_32_guyana_occurrences/FeatureServer',
   ZONE_OCCURRENCE:
     'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/species_occurences_iso3_level/FeatureServer',
   NBIS_URL:

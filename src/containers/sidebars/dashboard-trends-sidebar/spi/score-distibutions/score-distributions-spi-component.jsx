@@ -267,11 +267,47 @@ function ScoreDistributionsSpiComponent(props) {
         }
       });
 
-      const bird = species.find((item) => item.taxa === 'birds');
-      const mammal = species.find((item) => item.taxa === 'mammals');
-      const reptile = species.find((item) => item.taxa === 'reptiles');
-      const amphibian = species.find((item) => item.taxa === 'amphibians');
-      setSpsSpecies([bird, mammal, reptile, amphibian]);
+      if (
+        countryISO.toLowerCase() === 'guy' &&
+        activeTrend === NATIONAL_TREND
+      ) {
+        setSpsSpecies([
+          {
+            species: 'Pyrrhura egregia',
+            species_url:
+              'https://storage.googleapis.com/mol-assets2/mid/e585b18f9fa2414e9f21d89565aed3f8.jpg',
+            species_protection_score_all: 1.2,
+            taxa: 'birds',
+          },
+          {
+            species: 'Atractus tamessari',
+            species_url:
+              'https://storage.googleapis.com/mol-assets2/mid/4a935fc0-c90c-4072-9aec-6a13230d822b.jpg',
+            species_protection_score_all: 3.0,
+            taxa: 'reptiles',
+          },
+          {
+            species: 'Cavia aperea',
+            species_url:
+              'https://storage.googleapis.com/mol-assets2/mid/a446804666354990afe0bfcca05203b3.jpg',
+            species_protection_score_all: 9.6,
+            taxa: 'mammals',
+          },
+          {
+            species: 'Pleurodema brachyops',
+            species_url:
+              'https://storage.googleapis.com/mol-assets2/mid/b96100653b474533920c3ba368fbaf7d.jpg',
+            species_protection_score_all: 10.5,
+            taxa: 'amphibians',
+          },
+        ]);
+      } else {
+        const bird = species.find((item) => item.taxa === 'birds');
+        const mammal = species.find((item) => item.taxa === 'mammals');
+        const reptile = species.find((item) => item.taxa === 'reptiles');
+        const amphibian = species.find((item) => item.taxa === 'amphibians');
+        setSpsSpecies([bird, mammal, reptile, amphibian]);
+      }
     }
     setIsSpeciesLoading(false);
   };

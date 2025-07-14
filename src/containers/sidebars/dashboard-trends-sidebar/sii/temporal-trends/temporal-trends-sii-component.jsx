@@ -121,14 +121,14 @@ function TemporalTrendsSiiComponent(props) {
           <div className={styles.options}>
             <div className={styles.trendTypes}>
               <div className={styles.btnGroup}>
-                <Button
+                {/* <Button
                   type="rectangular"
                   className={cx(styles.saveButton, {
                     [styles.notActive]: siiActiveTrend !== PROVINCE_TREND,
                   })}
                   label={PROVINCE_TREND}
                   handleClick={() => handleActionChange(PROVINCE_TREND)}
-                />
+                /> */}
                 <Button
                   type="rectangular"
                   className={cx(styles.saveButton, {
