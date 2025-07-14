@@ -378,12 +378,12 @@ function DataLayerComponent(props) {
   }, [privateOccurrenceData]);
 
   useEffect(() => {
-    if (!dataPoints || !data || !dataByCountry) return;
-    if (dataByCountry[countryName]?.shs) {
+    if (!dataPoints || !dataByCountry) return;
+    if (dataByCountry[countryName]) {
       setSpeciesDataLoading(false);
     }
     setIsLoading(false);
-  }, [dataPoints, dataByCountry, data]);
+  }, [dataPoints, dataByCountry]);
 
   useEffect(() => {
     setSpeciesDataLoading(true);
