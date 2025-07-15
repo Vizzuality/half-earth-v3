@@ -18,6 +18,8 @@ import {
 import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { setBasemap } from 'utils/layer-manager-utils.js';
 
+import { common } from '@mui/material/colors';
+
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION, REGION_OPTIONS } from 'constants/dashboard-constants.js';
@@ -730,6 +732,8 @@ function DashboardContainer(props) {
 
           getOccurenceSpecies(groupData);
         } else if (selectedRegion?.region_key || countryISO === 'EE') {
+          let commonName = '';
+
           const speciesData = {
             species: features.map((s) => {
               const {
@@ -739,6 +743,7 @@ function DashboardContainer(props) {
                 scientificname,
                 commonname_english,
                 commonname_french,
+                translations,
               } = s.attributes;
 
               const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
@@ -754,16 +759,16 @@ function DashboardContainer(props) {
                   .includes(scientificname.toUpperCase());
               }
 
-              //             commonname_english: "Mussurana"
-              // commonname_french: null
-              // iso3: null
-              // project: "eewwf"
-              // scientificname: "Boiruna maculata"
-              // taxa: "reptiles"
+              if (translations) {
+                const attr = JSON.parse(translations.replace(/NaN/g, 'null'));
+                commonName = attr.find((a) => a.lang === 'en')?.cmname;
+              } else {
+                commonName = commonname_english || commonname_french || species;
+              }
 
               if (!isFound) {
                 return {
-                  common_name: species ?? commonname_english,
+                  common_name: species ?? commonName,
                   scientific_name: species ?? scientificname,
                   threat_status: json[0].threat_status,
                   source: json[0].source ?? '',
