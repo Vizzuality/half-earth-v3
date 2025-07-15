@@ -763,12 +763,16 @@ function DashboardContainer(props) {
                 const attr = JSON.parse(translations.replace(/NaN/g, 'null'));
                 commonName = attr.find((a) => a.lang === 'en')?.cmname;
               } else {
-                commonName = commonname_english || commonname_french || species;
+                commonName =
+                  commonname_english ||
+                  commonname_french ||
+                  species ||
+                  scientificname;
               }
 
               if (!isFound) {
                 return {
-                  common_name: species ?? commonName,
+                  common_name: commonName,
                   scientific_name: species ?? scientificname,
                   threat_status: json[0].threat_status,
                   source: json[0].source ?? '',
