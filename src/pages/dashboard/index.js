@@ -18,8 +18,6 @@ import {
 import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { setBasemap } from 'utils/layer-manager-utils.js';
 
-import { common } from '@mui/material/colors';
-
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { NAVIGATION, REGION_OPTIONS } from 'constants/dashboard-constants.js';
@@ -644,7 +642,11 @@ function DashboardContainer(props) {
 
           if (region_key) {
             whereClause = `region_key = '${region_key}'`;
-            url = DASHBOARD_URLS.ZONE_SPECIES;
+            if (selectedRegionOption === REGION_OPTIONS.RAPID_INVENTORY_32) {
+              url = DASHBOARD_URLS.RAPID_INVENTORY_SPECIES;
+            } else {
+              url = DASHBOARD_URLS.ZONE_SPECIES;
+            }
           }
         }
       }
