@@ -744,6 +744,7 @@ function DashboardContainer(props) {
                 commonname_english,
                 commonname_french,
                 translations,
+                source,
               } = s.attributes;
 
               const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
@@ -775,7 +776,7 @@ function DashboardContainer(props) {
                   common_name: commonName,
                   scientific_name: species ?? scientificname,
                   threat_status: json[0].threat_status,
-                  source: json[0].source ?? '',
+                  source: source ?? json[0].source ?? '',
                   species_url: json[0].species_url ?? '',
                   taxa,
                 };
