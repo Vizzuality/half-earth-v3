@@ -134,6 +134,28 @@
   .header {
     padding-left: 7px;
   }
+
+  svg {
+    fill: $white;
+    color: $white;
+
+    path {
+      fill: $white;
+      color: $white;
+    }
+  }
+
+  &.expected {
+    svg {
+      fill: var(--lime-green);
+      color: var(--lime-green);
+
+      path {
+        fill: var(--lime-green);
+        color: var(--lime-green);
+      }
+    }
+  }
 }
 
 .filterCount {

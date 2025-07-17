@@ -45,11 +45,10 @@ function SpeciesSearchComponent(props) {
     setSelectedRegionOption(null);
     setSelectedTaxa(null);
 
-    if (!allTaxa.length) {
-      setExploreAllSpecies(true);
-    } else {
-      setTaxaList(allTaxa);
-    }
+    setExploreAllSpecies(true);
+
+    setTaxaList(allTaxa);
+
     setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
   };
 

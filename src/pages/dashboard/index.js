@@ -87,18 +87,21 @@ function DashboardContainer(props) {
       id: 1,
       label: 'Rarity',
       details: 'This layer shows the rarity of species in the selected region.',
+      showDetails: false,
     },
     {
       id: 2,
       label: 'Endemism',
       details:
         'This layer shows the endemism of species in the selected region.',
+      showDetails: false,
     },
     {
       id: 3,
       label: 'Threat Status',
       details:
         'This layer shows the threat status of species in the selected region.',
+      showDetails: false,
     },
   ]);
 
@@ -1354,6 +1357,7 @@ function DashboardContainer(props) {
       setSelectedGeometryRings={setSelectedGeometryRings}
       selectedGeometryRings={selectedGeometryRings}
       dataLayers={dataLayers}
+      setDataLayers={setDataLayers}
       {...props}
     />
   );

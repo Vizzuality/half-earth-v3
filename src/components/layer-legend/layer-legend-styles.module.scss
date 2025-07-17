@@ -8,7 +8,7 @@
   right: 25px;
   bottom: 25px;
   background-color: $app-background;
-  padding: 10px 0 10px 16px;
+  padding: 16px 0 16px 16px;
   border-radius: 15px;
   box-shadow: 2px 2px 4px 0px $black;
   color: $white;
@@ -22,7 +22,7 @@
   transition: max-height 0.3s ease-out;
 
   &.collapse {
-    max-height: 40px;
+    max-height: 50px;
   }
 
   .titleWrapper {
@@ -30,30 +30,28 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-bottom: 10px;
     padding-right: 16px;
+    padding-left: 0;
+    cursor: pointer;
 
     .title {
-      font-weight: 700;
+      font-weight: 500;
+      font-size: $font-size-sm;
+      color: $white;
     }
 
-    button {
-      color: $white;
-      height: 12px;
+    .arrowIcon {
+      fill: $white;
+      transform: rotate(-90deg);
 
-      .arrowIcon {
-        fill: $white;
-        transform: rotate(-90deg);
+      &.isOpened {
+        transform: rotate(90deg);
+      }
 
-        &.isOpened {
-          transform: rotate(90deg);
-        }
+      transition: transform 0.2s ease;
 
-        transition: transform 0.2s ease;
-
-        > path {
-          fill: inherit;
-        }
+      > path {
+        fill: inherit;
       }
     }
   }
@@ -140,6 +138,11 @@
 
             .label {
               font-weight: 700;
+              font-size: $font-size-base;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 24px; /* 150% */
+              letter-spacing: 0.024px;
             }
           }
         }
@@ -148,10 +151,36 @@
           display: flex;
           flex-direction: column;
           gap: 5px;
+          align-items: flex-start;
 
-          span {
-            color: green;
-            font-weight: 700;
+          .view {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            span {
+              color: var(--lime-green);
+              font-weight: 600;
+
+              font-size: $font-size-base;
+              font-style: normal;
+              line-height: 24px; /* 150% */
+              letter-spacing: 0.016px;
+            }
+
+            .arrowIcon {
+              fill: var(--lime-green);
+              transform: rotate(-90deg);
+
+              &.isOpened {
+                transform: rotate(90deg);
+              }
+
+              transition: transform 0.2s ease;
+
+              > path {
+                fill: inherit;
+              }
+            }
           }
 
           p {

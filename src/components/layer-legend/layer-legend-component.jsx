@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
+import Switch from '@mui/material/Switch';
 import cx from 'classnames';
 
 import ToggleOpacityContainer from 'components/toggle-opacity';
@@ -11,7 +12,7 @@ import ArrowIcon from 'icons/arrow_right.svg?react';
 import styles from './layer-legend-styles.module.scss';
 
 function LayerLegendComponent(props) {
-  const { dataLayers } = props;
+  const { dataLayers, setDataLayers } = props;
   // const [leftPosition, setLeftPosition] = useState(0);
   const [collapse, setCollapse] = useState(false);
   const t = useT();
@@ -26,26 +27,33 @@ function LayerLegendComponent(props) {
   //   setLeftPosition(`${rect.width + parseInt(left, 10) + 10}px`);
   // }, [dataLayers]);
 
+  const showDetails = (layer) => {
+    setDataLayers((prevLayers) =>
+      prevLayers.map((l) =>
+        l.id === layer.id ? { ...l, showDetails: !l.showDetails } : l
+      )
+    );
+  };
+
   return (
     <div
       className={cx(styles.container, {
         [styles.collapse]: collapse,
       })}
     >
-      <div className={styles.titleWrapper}>
+      <button
+        type="button"
+        className={styles.titleWrapper}
+        aria-label={collapse ? t('Expand legend') : t('Collapse legend')}
+        onClick={() => setCollapse(!collapse)}
+      >
         <span className={styles.title}>{t('Data Layers')}</span>
-        <button
-          type="button"
-          onClick={() => setCollapse(!collapse)}
-          aria-label="Collapse legend"
-        >
-          <ArrowIcon
-            className={cx(styles.arrowIcon, {
-              [styles.isOpened]: collapse,
-            })}
-          />
-        </button>
-      </div>
+        <ArrowIcon
+          className={cx(styles.arrowIcon, {
+            [styles.isOpened]: collapse,
+          })}
+        />
+      </button>
       <ul className={styles.layers}>
         {dataLayers &&
           Object.values(dataLayers).map((layer, index) => (
@@ -56,12 +64,24 @@ function LayerLegendComponent(props) {
                     <span className={styles.label}>{layer.label}</span>
                     <ArrowIcon className={styles.arrowIcon} />
                   </div>
-                  <span>On/off</span>
+                  <Switch />
                 </div>
                 <img src="https://placehold.co/360x7" alt="" />
                 <div className={styles.details}>
-                  <span>View details</span>
-                  <p>{layer.details}</p>
+                  <button
+                    className={styles.view}
+                    type="button"
+                    onClick={() => showDetails(layer)}
+                    aria-label="Collapse details"
+                  >
+                    <span>{t('View details')}</span>
+                    <ArrowIcon
+                      className={cx(styles.arrowIcon, {
+                        [styles.isOpened]: layer.showDetails,
+                      })}
+                    />
+                  </button>
+                  {layer.showDetails && <p>{layer.details}</p>}
                 </div>
               </div>
             </li>
