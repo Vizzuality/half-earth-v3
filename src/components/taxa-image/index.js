@@ -64,6 +64,7 @@ function TaxaImageComponent(props) {
           icon = <ReptilesIcon />;
           break;
         case 'PLANTS':
+        case 'OTHER PLANTS':
         case TAXA_NAMES.TREES:
           icon = <TreeIcon />;
           break;

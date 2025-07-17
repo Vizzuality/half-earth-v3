@@ -167,7 +167,7 @@ function DashboardViewComponent(props) {
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
         {showLegend && <MapLegendContainer map={map} {...props} />}
-        <LayerLegendContainer map={map} {...props} />
+        {/* <LayerLegendContainer map={map} {...props} /> */}
         <DashboardSidebarContainer
           map={map}
           view={view}

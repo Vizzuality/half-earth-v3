@@ -33,7 +33,13 @@
   }
 
   .comingSoon {
+    font-size: $font-size-xs;
     font-style: italic;
+  }
+
+  .expectedLabel {
+    color: var(--lime-green);
+    font-size: $font-size-xs;
   }
 
   .close {
@@ -89,6 +95,12 @@
 .title {
   cursor: pointer;
   padding: 0 5px;
+
+  &.expected {
+    svg {
+      fill: var(--lime-green);
+    }
+  }
 }
 
 .spinner {

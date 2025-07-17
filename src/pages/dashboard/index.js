@@ -352,11 +352,18 @@ function DashboardContainer(props) {
         const { taxa } = obj.attributes;
 
         if (taxa) {
-          // Check if taxa property exists and has a value
-          if (!buckets[taxa]) {
-            buckets[taxa] = []; // Create a new bucket if it doesn't exist
+          let bucket = taxa;
+          if (
+            taxa.toLowerCase() === 'vascular_plants' ||
+            taxa.toLowerCase() === 'non_vascular_plants'
+          ) {
+            bucket = 'other plants';
           }
-          buckets[taxa].push(obj); // Add the object to the corresponding bucket
+          // Check if taxa property exists and has a value
+          if (!buckets[bucket]) {
+            buckets[bucket] = []; // Create a new bucket if it doesn't exist
+          }
+          buckets[bucket].push(obj); // Add the object to the corresponding bucket
         } else {
           // Handle cases where the taxa property is missing or undefined.
           // You might want to create a special bucket for these, or log a warning, or skip them.
@@ -567,7 +574,7 @@ function DashboardContainer(props) {
             }
           });
         } else {
-          // list.push(occurrence);
+          list.push(occurrence);
         }
       });
 
