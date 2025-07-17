@@ -10,8 +10,7 @@ import {
   DRC_REGION_FEATURE_ID,
   GUY_FM_RAPID_INVENTORY_32_FEATURE_ID,
   RAPID_INVENTORY_32_FEATURE_ID,
-  ZONE_3_FEATURE_ID,
-  ZONE_5_FEATURE_ID,
+  ACC_REGION_FEATURE_ID,
   NBS_OP_INTERVENTIONS_FEATURE_ID,
 } from 'utils/dashboard-utils';
 import { getLocaleNumber } from 'utils/data-formatting-utils';
@@ -109,6 +108,7 @@ function RegionsAnalysisComponent(props) {
     setSelectedRegionOption,
     setRegionName,
     countryISO,
+    countryName,
     setHash,
   } = props;
   const { lightMode } = useContext(LightModeContext);
@@ -129,6 +129,10 @@ function RegionsAnalysisComponent(props) {
     },
     {
       title: t('Regions'),
+      description:
+        countryISO.toUpperCase() === 'GUY'
+          ? t(`The regional administrative divisions of ${countryName}.`)
+          : '',
       value: REGION_OPTIONS.PROVINCES,
     },
     {
@@ -140,18 +144,11 @@ function RegionsAnalysisComponent(props) {
       value: REGION_OPTIONS.DISSOLVED_NBS,
     },
     {
-      title: t('3 Zones'),
+      title: t('Acarai-Corentyne Corridor'),
       description: t(
         'A south-central-north zoning proposal for the formal protection of the Guyana’s Acarai-Corentyne Corridor.'
       ),
-      value: REGION_OPTIONS.ZONE_3,
-    },
-    {
-      title: t('5 Zones'),
-      description: t(
-        'A watershed-based zoning proposal for the formal protection of the Guyana’s Acarai-Corentyne Corridor.'
-      ),
-      value: REGION_OPTIONS.ZONE_5,
+      value: REGION_OPTIONS.ACC_REGION,
     },
     {
       title: t('Rapid Inventory 32'),
@@ -286,26 +283,15 @@ function RegionsAnalysisComponent(props) {
         [LAYER_OPTIONS.DISSOLVED_NBS]: featureLayer,
       }));
       map.add(featureLayer);
-    } else if (option === REGION_OPTIONS.ZONE_3) {
+    } else if (option === REGION_OPTIONS.ACC_REGION) {
       featureLayer = await EsriFeatureService.getFeatureLayer(
-        ZONE_3_FEATURE_ID,
+        ACC_REGION_FEATURE_ID,
         null,
-        LAYER_OPTIONS.ZONE_3
+        LAYER_OPTIONS.ACC_REGION
       );
 
       setRegionLayers(() => ({
-        [LAYER_OPTIONS.ZONE_3]: featureLayer,
-      }));
-      map.add(featureLayer);
-    } else if (option === REGION_OPTIONS.ZONE_5) {
-      featureLayer = await EsriFeatureService.getFeatureLayer(
-        ZONE_5_FEATURE_ID,
-        null,
-        LAYER_OPTIONS.ZONE_5
-      );
-
-      setRegionLayers(() => ({
-        [LAYER_OPTIONS.ZONE_5]: featureLayer,
+        [LAYER_OPTIONS.ACC_REGION]: featureLayer,
       }));
       map.add(featureLayer);
     } else if (option === REGION_OPTIONS.RAPID_INVENTORY_32) {
@@ -347,12 +333,10 @@ function RegionsAnalysisComponent(props) {
     const dissolvedLayer = map.layers.items.find(
       (layer) => layer.id === LAYER_OPTIONS.DISSOLVED_NBS
     );
-    const zone3Layer = map.layers.items.find(
-      (layer) => layer.id === LAYER_OPTIONS.ZONE_3
+    const accRegionLayer = map.layers.items.find(
+      (layer) => layer.id === LAYER_OPTIONS.ACC_REGION
     );
-    const zone5Layer = map.layers.items.find(
-      (layer) => layer.id === LAYER_OPTIONS.ZONE_5
-    );
+
     const rapidLayer = map.layers.items.find(
       (layer) => layer.id === LAYER_OPTIONS.RAPID_INVENTORY_32
     );
@@ -361,8 +345,7 @@ function RegionsAnalysisComponent(props) {
     map.remove(provinceLayer);
     map.remove(forestLayer);
     map.remove(dissolvedLayer);
-    map.remove(zone3Layer);
-    map.remove(zone5Layer);
+    map.remove(accRegionLayer);
     map.remove(rapidLayer);
     setRegionLayers({});
   };
@@ -467,10 +450,7 @@ function RegionsAnalysisComponent(props) {
           )}
           {(countryISO.toUpperCase() === 'GUY-FM' ||
             countryISO.toUpperCase() === 'GUY') && (
-            <>
-              {regionOption(REGION_OPTIONS.ZONE_3)}
-              {regionOption(REGION_OPTIONS.ZONE_5)}
-            </>
+            <>{regionOption(REGION_OPTIONS.ACC_REGION)}</>
           )}
           {(countryISO.toUpperCase() === 'GUY-FM' ||
             countryISO.toUpperCase() === 'GUY') && (

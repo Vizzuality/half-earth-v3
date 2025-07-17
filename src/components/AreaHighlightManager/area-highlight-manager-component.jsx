@@ -85,6 +85,7 @@ function AreaHighlightManagerComponent(props) {
         regionLayers[`${countryISO}-zone5-spi`] ||
         regionLayers[`${countryISO}-zone3-shi`] ||
         regionLayers[`${countryISO}-zone5-shi`] ||
+        regionLayers[LAYER_OPTIONS.ACC_REGION] ||
         regionLayers[LAYER_OPTIONS.ZONE_3] ||
         regionLayers[LAYER_OPTIONS.ZONE_5] ||
         regionLayers[LAYER_OPTIONS.RAPID_INVENTORY_32] ||
@@ -190,6 +191,7 @@ function AreaHighlightManagerComponent(props) {
                 if (
                   selectedRegionOption === REGION_OPTIONS.ZONE_3 ||
                   selectedRegionOption === REGION_OPTIONS.ZONE_5 ||
+                  selectedRegionOption === REGION_OPTIONS.ACC_REGION ||
                   selectedRegionOption === REGION_OPTIONS.RAPID_INVENTORY_32
                 ) {
                   setSelectedRegion({ region_key });

@@ -499,13 +499,13 @@ export const DASHBOARD_URLS = {
   SHI_COUNTRY_DATA_URL:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/national_and_province_shs_by_taxa/FeatureServer',
   AMPHIBIAN_LOOKUP:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_amphibians_final/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/a17e5af9ca354a69870f3726294e4754/rest/services/amphibians_202507_attributes/FeatureServer',
   BIRDS_LOOKUP:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_birds_final/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/3ff5a9d0c0c64502a5926b15db01cd68/rest/services/birds_202507_attributes/FeatureServer',
   MAMMALS_LOOKUP:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_mammals_final/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/00080f7438514fbfac713aa1ab60bf9f/rest/services/mammals_202507_attributes/FeatureServer',
   REPTILES_LOOKUP:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/taxa_reptiles_final/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/c7816b6cbb684ccb8bc69045505315f3/rest/services/reptiles_202507_attributes/FeatureServer?f=pjson',
   PRECALC_AOI_COUNTRY:
     // 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm0_aoi_summaries_updated_20240326/FeatureServer',
     'https://utility.arcgis.com/usrsvcs/servers/ca22a0922f934999a00e092feca4315d/rest/services/main_gadm0_precalculated_aoi_summaries_updated_20250521/FeatureServer',
@@ -540,7 +540,7 @@ export const DASHBOARD_URLS = {
   PRIVATE_GIN_OCCURENCE_METADATA_LAYER:
     'https://services5.arcgis.com/0f65lZbPr3QAKkSu/arcgis/rest/services/occurrence_metadata/FeatureServer',
   ZONE_SPECIES:
-    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/region_expert_range_species_list/FeatureServer',
+    'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/custom_region_species_list_w_attributes/FeatureServer',
   ZONE_OCCURRENCE:
     'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/species_occurences_iso3_level/FeatureServer',
   RAPID_INVENTORY_SPECIES:
