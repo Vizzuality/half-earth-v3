@@ -77,7 +77,7 @@ function ScoreDistributionsShiComponent(props) {
 
   const toolTipTitle = (tooltipItems) => {
     const bucket = parseInt(tooltipItems[0].label, 10);
-    return `${bucket} - ${bucket + 7}`;
+    return `${bucket} - ${bucket + 5}`;
   };
 
   const options = {
@@ -393,11 +393,47 @@ function ScoreDistributionsShiComponent(props) {
         }
       });
 
-      const bird = species.find((item) => item.taxa === 'birds');
-      const mammal = species.find((item) => item.taxa === 'mammals');
-      const reptile = species.find((item) => item.taxa === 'reptiles');
-      const amphibian = species.find((item) => item.taxa === 'amphibians');
-      setSpsSpecies([bird, mammal, reptile, amphibian]);
+      if (
+        countryISO.toLowerCase() === 'guy' &&
+        shiActiveTrend === NATIONAL_TREND
+      ) {
+        setSpsSpecies([
+          {
+            scientificname: 'Pipra aureola',
+            species_url:
+              'https://storage.googleapis.com/mol-assets2/mid/712f124b5e3a4259890d2ed58bf49059.jpg',
+            habitat_score: 84.6,
+            taxa: 'birds',
+          },
+          {
+            scientificname: 'Glossophaga commissarisi',
+            species_url:
+              'https://storage.googleapis.com/mol-assets2/mid/46f5bcb2fce4455aae6964ea69c10342.jpg',
+            habitat_score: 85,
+            taxa: 'reptiles',
+          },
+          {
+            scientificname: 'Boana sibleszi',
+            species_url:
+              'https://storage.googleapis.com/mol-assets2/mid/3cad5f2a725c41d19a9fa306edde5b7e.jpg',
+            habitat_score: 90.6,
+            taxa: 'amphibians',
+          },
+          {
+            scientificname: 'Gonatodes annularis',
+            species_url:
+              'https://storage.googleapis.com/mol-assets2/mid/7663ecebf87f45349d07dd8fc5eac210.jpg',
+            habitat_score: 91.2,
+            taxa: 'reptiles',
+          },
+        ]);
+      } else {
+        const bird = species.find((item) => item.taxa === 'birds');
+        const mammal = species.find((item) => item.taxa === 'mammals');
+        const reptile = species.find((item) => item.taxa === 'reptiles');
+        const amphibian = species.find((item) => item.taxa === 'amphibians');
+        setSpsSpecies([bird, mammal, reptile, amphibian]);
+      }
     }
     setIsSpeciesLoading(false);
   };

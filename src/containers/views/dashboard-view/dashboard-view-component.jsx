@@ -20,6 +20,7 @@ import MapView from 'components/map-view';
 
 import MinimizeIcon from 'icons/closes.svg?react';
 
+import LayerLegendContainer from '../../../components/layer-legend';
 import {
   MEX,
   NATIONAL_TREND,
@@ -66,7 +67,7 @@ function DashboardViewComponent(props) {
   const [showLegend, setShowLegend] = useState(false);
   const [activeTrend, setActiveTrend] = useState(PROVINCE_TREND);
   const [shiActiveTrend, setShiActiveTrend] = useState(PROVINCE_TREND);
-  const [siiActiveTrend, setSiiActiveTrend] = useState(PROVINCE_TREND);
+  const [siiActiveTrend, setSiiActiveTrend] = useState(NATIONAL_TREND);
   // const [showTopNav, setShowTopNav] = useState(true);
 
   const handleRegionSelected = (foundRegion) => {
@@ -166,6 +167,7 @@ function DashboardViewComponent(props) {
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
         {showLegend && <MapLegendContainer map={map} {...props} />}
+        <LayerLegendContainer map={map} {...props} />
         <DashboardSidebarContainer
           map={map}
           view={view}

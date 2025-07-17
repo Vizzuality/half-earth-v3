@@ -5,10 +5,10 @@
 
 .container {
   position: absolute;
-  top: 25px;
-  left: 630px;
+  right: 25px;
+  bottom: 25px;
   background-color: $app-background;
-  padding: 10px;
+  padding: 10px 0 10px 16px;
   border-radius: 15px;
   box-shadow: 2px 2px 4px 0px $black;
   color: $white;
@@ -31,6 +31,7 @@
     align-items: center;
     width: 100%;
     padding-bottom: 10px;
+    padding-right: 16px;
 
     .title {
       font-weight: 700;
@@ -62,8 +63,10 @@
     flex-direction: column;
     gap: 15px;
     margin: 0;
-    padding: 0;
+    padding: 0 16px 0 0;
     color: $white;
+    max-height: 300px;
+    overflow-y: auto;
 
     li {
       display: flex;
@@ -116,6 +119,46 @@
           height: 10px;
           border-radius: 50%;
           border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+      }
+
+      .dataLayer {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .layer {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          justify-content: space-between;
+
+          .title {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            .label {
+              font-weight: 700;
+            }
+          }
+        }
+
+        .details {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          span {
+            color: green;
+            font-weight: 700;
+          }
+
+          p {
+            font-style: italic;
+            margin: 0;
+            max-width: 360px;
+          }
         }
       }
     }

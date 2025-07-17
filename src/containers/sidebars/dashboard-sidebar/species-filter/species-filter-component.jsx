@@ -314,6 +314,9 @@ function SpeciesFilterComponent(props) {
       case REGION_OPTIONS.DISSOLVED_NBS:
         setRegionLabel(t('NBS-OP Interventions'));
         break;
+      case REGION_OPTIONS.ACC_REGION:
+        setRegionLabel(t('Acarai-Corentyne Corridor'));
+        break;
       case REGION_OPTIONS.DRAW:
         setRegionLabel(t('Custom Area'));
         break;
