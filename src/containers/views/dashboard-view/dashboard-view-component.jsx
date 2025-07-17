@@ -20,6 +20,7 @@ import MapView from 'components/map-view';
 
 import MinimizeIcon from 'icons/closes.svg?react';
 
+import LayerLegendContainer from '../../../components/layer-legend';
 import {
   MEX,
   NATIONAL_TREND,
@@ -166,6 +167,7 @@ function DashboardViewComponent(props) {
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
         {showLegend && <MapLegendContainer map={map} {...props} />}
+        <LayerLegendContainer map={map} {...props} />
         <DashboardSidebarContainer
           map={map}
           view={view}

@@ -82,6 +82,25 @@ function DashboardContainer(props) {
   const [speciesToAvoid, setSpeciesToAvoid] = useState([]);
   const [user, setUser] = useState();
   const [hash, setHash] = useState();
+  const [dataLayers, setDataLayers] = useState([
+    {
+      id: 1,
+      label: 'Rarity',
+      details: 'This layer shows the rarity of species in the selected region.',
+    },
+    {
+      id: 2,
+      label: 'Endemism',
+      details:
+        'This layer shows the endemism of species in the selected region.',
+    },
+    {
+      id: 3,
+      label: 'Threat Status',
+      details:
+        'This layer shows the threat status of species in the selected region.',
+    },
+  ]);
 
   const getQueryParams = () => {
     if (queryParams) {
@@ -388,7 +407,7 @@ function DashboardContainer(props) {
             common_name,
             scientific_name,
             threat_status,
-            source,
+            source: source ?? 'range',
             species_url,
             taxa,
           };
@@ -1327,6 +1346,7 @@ function DashboardContainer(props) {
       allTaxa={allTaxa}
       setSelectedGeometryRings={setSelectedGeometryRings}
       selectedGeometryRings={selectedGeometryRings}
+      dataLayers={dataLayers}
       {...props}
     />
   );
