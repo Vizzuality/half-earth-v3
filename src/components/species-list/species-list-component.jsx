@@ -45,7 +45,7 @@ function SpeciesListComponent(props) {
         return `Old World ${label}*`;
       }
       if (!taxaToCheck.includes(taxa.toUpperCase())) {
-        return `${t(label)}*`;
+        return `${t(label)}`;
       }
     }
 
