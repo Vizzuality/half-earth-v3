@@ -93,6 +93,7 @@ function AreaHighlightManagerComponent(props) {
         regionLayers[LAYER_OPTIONS.ADMINISTRATIVE_LAYERS] ||
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
         regionLayers[LAYER_OPTIONS.FORESTS] ||
+        regionLayers[LAYER_OPTIONS.INDIGENOUS_LANDS] ||
         regionLayers[`${countryISO}-outline`]
     );
   };

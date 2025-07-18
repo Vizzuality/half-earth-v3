@@ -6,6 +6,7 @@ import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   DRC_REGION_FEATURE_ID,
   NBS_OP_INTERVENTIONS_FEATURE_ID,
+  INDIGENOUS_LANDS_FEATURE_ID,
   IUCNStatusTypes,
 } from 'utils/dashboard-utils';
 
@@ -267,6 +268,16 @@ function SpeciesFilterComponent(props) {
 
           setRegionLayers(() => ({
             [LAYER_OPTIONS.PROVINCES]: featureLayer,
+          }));
+          map.add(featureLayer);
+
+          featureLayer = await EsriFeatureService.getFeatureLayer(
+            INDIGENOUS_LANDS_FEATURE_ID,
+            countryISO
+          );
+
+          setRegionLayers(() => ({
+            [LAYER_OPTIONS.INDIGENOUS_LANDS]: featureLayer,
           }));
           map.add(featureLayer);
         } else if (option === REGION_OPTIONS.FORESTS) {

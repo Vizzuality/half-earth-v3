@@ -88,6 +88,8 @@ async function getFeatureLayer(portalItemId, countryISO, id, classType = null) {
     countryISO === 'EE'
   ) {
     definitionExpression = '';
+  } else if (id === LAYER_OPTIONS.INDIGENOUS_LANDS) {
+    definitionExpression = `pais = 'Guyana'`;
   }
 
   if (classType === 'INT') {

@@ -16,6 +16,8 @@ import LayerInfoModalContainer from 'components/layer-info-modal';
 import MapLegendContainer from 'components/map-legend';
 import MapView from 'components/map-view';
 
+import { NAVIGATION } from 'constants/dashboard-constants.js';
+
 // import TopMenuContainer from 'components/top-menu';
 
 import MinimizeIcon from 'icons/closes.svg?react';
@@ -44,6 +46,7 @@ function DashboardViewComponent(props) {
     openedModal,
     geometry,
     setSelectedIndex,
+    selectedIndex,
     setSelectedRegion,
     selectedRegion,
     browsePage,
@@ -167,7 +170,9 @@ function DashboardViewComponent(props) {
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
         {showLegend && <MapLegendContainer map={map} {...props} />}
-        {/* <LayerLegendContainer map={map} {...props} /> */}
+        {selectedIndex === NAVIGATION.REGION && (
+          <LayerLegendContainer map={map} {...props} />
+        )}
         <DashboardSidebarContainer
           map={map}
           view={view}
