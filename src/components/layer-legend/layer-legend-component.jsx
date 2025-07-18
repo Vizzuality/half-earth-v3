@@ -8,8 +8,11 @@ import TileLayer from '@arcgis/core/layers/TileLayer';
 import Switch from '@mui/material/Switch';
 import cx from 'classnames';
 
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
+
 import EsriFeatureService from 'services/esri-feature-service';
 
+import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
 import { LAYER_OPTIONS } from 'constants/dashboard-constants.js';
 import {
   BIRDS_RICHNESS_1KM,
@@ -263,7 +266,12 @@ function LayerLegendComponent(props) {
                   </div>
                   <Switch onChange={() => displayLayer(layer)} />
                 </div>
-                {layer.heatMapImage && <img src={layer.heatMapImage} alt="" />}
+                {layer.id !== LAYER_OPTIONS.INDIGENOUS_LANDS && (
+                  <SidebarLegend
+                    legendItem={BIODIVERSITY_SLUG}
+                    className={styles.legendContainer}
+                  />
+                )}
                 {layer.details && (
                   <div className={styles.details}>
                     <button
