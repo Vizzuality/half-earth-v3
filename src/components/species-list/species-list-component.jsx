@@ -251,7 +251,7 @@ function SpeciesListComponent(props) {
             })}
             <p className={styles.comingSoon}>
               {t(
-                'Taxonomic groups in white represent species lists that are based only only on recorded data sources within the region. These lists are therefore incomplete, as many species that do occur here may not be included.'
+                'Taxonomic groups in white represent species lists that are based only on recorded data sources within the region. These lists are therefore incomplete, as many species that do occur here may not be included.'
               )}
             </p>
           </>

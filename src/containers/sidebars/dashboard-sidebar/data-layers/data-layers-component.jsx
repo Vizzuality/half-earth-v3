@@ -63,7 +63,6 @@ function DataLayerComponent(props) {
     mapLegendLayers,
     regionLayers,
     fromTrends,
-    data,
     dataByCountry,
     setSpeciesDataLoading,
     countryISO,
@@ -114,6 +113,7 @@ function DataLayerComponent(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState();
   const [showHabitatChart, setShowHabitatChart] = useState(false);
+  const [showHabitatLayer, setShowHabitatLayer] = useState(false);
   const [isHabitatChartLoading, setIsHabitatChartLoading] = useState(false);
 
   const expertRangeMapIds = [
@@ -241,6 +241,10 @@ function DataLayerComponent(props) {
     }
   };
 
+  const displayHabitatLayer = async () => {
+    setShowHabitatLayer(true);
+  };
+
   const getHabitatMapData = async () => {
     // const habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/tile-urls?species=${speciesInfo.scientificname}&taxa=${speciesInfo.taxa}`;
     let habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/map?scientificname=${speciesInfo.scientificname}`;
@@ -250,6 +254,21 @@ function DataLayerComponent(props) {
     }
     const response = await fetch(habitatMapUrl);
     const d = await response.json();
+
+    if (d.points) {
+      setDataPoints((prevDataPoints) => {
+        const updatedDataPoints = [...prevDataPoints];
+        const habitatLayer = updatedDataPoints.find(
+          (dp) => dp.id === LAYER_OPTIONS.HABITAT
+        );
+
+        if (habitatLayer) {
+          displayHabitatLayer();
+        }
+
+        return updatedDataPoints;
+      });
+    }
 
     if (d.trend_data) {
       const { trend_data } = d;
@@ -275,7 +294,7 @@ function DataLayerComponent(props) {
           },
         ],
       });
-    } else if (d.data?.length) {
+    } else if (d.data?.length > 1) {
       // remove Year row
       d.data.shift();
       setValuesExists(true);
@@ -424,6 +443,7 @@ function DataLayerComponent(props) {
                 dataPoints={dataPoints}
                 setDataPoints={setDataPoints}
                 setShowHabitatChart={setShowHabitatChart}
+                showHabitatLayer={showHabitatLayer}
                 setIsHabitatChartLoading={setIsHabitatChartLoading}
                 {...props}
               />

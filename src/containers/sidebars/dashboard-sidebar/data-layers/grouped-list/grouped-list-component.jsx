@@ -21,6 +21,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import {
   LAYER_TITLE_TYPES,
   LAYER_OPTIONS,
+  DATA_POINT_TYPE,
 } from 'constants/dashboard-constants.js';
 
 import ArrowIcon from 'icons/arrow_right.svg?react';
@@ -41,6 +42,7 @@ function GroupedListComponent(props) {
     setIsHabitatChartLoading,
     isPrivate,
     setMapLegendLayers,
+    showHabitatLayer,
     setIsLoading,
   } = props;
   const t = useT();
@@ -521,6 +523,19 @@ function GroupedListComponent(props) {
       }
     });
   };
+
+  useEffect(() => {
+    if (!showHabitatLayer) return;
+    displaySingleLayer({
+      label: t('Habitat Loss/Gain'),
+      items: [],
+      id: LAYER_OPTIONS.HABITAT,
+      total_no_rows: '',
+      isActive: false,
+      showChildren: false,
+      type: DATA_POINT_TYPE.PUBLIC,
+    });
+  }, [showHabitatLayer]);
 
   useEffect(() => {
     activateDefault();
