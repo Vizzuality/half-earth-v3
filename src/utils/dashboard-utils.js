@@ -152,9 +152,11 @@ export function numberToLocaleStringWithOneDecimal(number, fractionDigits = 1) {
 
 export const removeRegionLayers = (map, regionLayers) => {
   Object.keys(regionLayers).forEach((region) => {
-    const foundLayer = map.layers.items.find((item) => item.id === region);
-    if (foundLayer) {
-      map.remove(foundLayer);
+    const foundLayers = map.layers.items.filter((item) => item.id === region);
+    if (foundLayers) {
+      foundLayers.forEach((remove) => {
+        map.remove(remove);
+      });
     }
   });
 };

@@ -4,12 +4,28 @@ import { useT } from '@transifex/react';
 
 import { INDIGENOUS_LANDS_FEATURE_ID } from 'utils/dashboard-utils';
 
+import TileLayer from '@arcgis/core/layers/TileLayer';
 import Switch from '@mui/material/Switch';
 import cx from 'classnames';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { LAYER_OPTIONS } from 'constants/dashboard-constants.js';
+import {
+  BIRDS_RICHNESS_1KM,
+  BIRDS_RARITY_1KM,
+  AMPHIB_RARITY_1KM,
+  AMPHIB_RICHNESS_1KM,
+  HUMMINGBIRDS_RARITY,
+  HUMMINGBIRDS_RICHNESS,
+  MAMMALS_RICHNESS_1KM,
+  MAMMALS_RARITY_1KM,
+  ANTS_RICHNESS_1KM,
+  ANTS_RARITY_1KM,
+  REPTILES_RARITY_1KM,
+  REPTILES_RICHNESS_1KM,
+} from 'constants/layers-slugs';
+import { LAYERS_URLS } from 'constants/layers-urls';
 
 import ArrowIcon from 'icons/arrow_right.svg?react';
 
@@ -20,7 +36,7 @@ function LayerLegendComponent(props) {
   const t = useT();
 
   // const [leftPosition, setLeftPosition] = useState(0);
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(true);
   const [dataLayers, setDataLayers] = useState([
     {
       id: LAYER_OPTIONS.INDIGENOUS_LANDS,
@@ -31,23 +47,163 @@ function LayerLegendComponent(props) {
       showLayer: false,
       portalId: INDIGENOUS_LANDS_FEATURE_ID,
     },
+    {
+      id: BIRDS_RICHNESS_1KM,
+      label: t('Birds Richness'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: BIRDS_RICHNESS_1KM,
+    },
+    {
+      id: BIRDS_RARITY_1KM,
+      label: t('Birds Rarity'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: BIRDS_RARITY_1KM,
+    },
+    {
+      id: AMPHIB_RARITY_1KM,
+      label: t('Amphibians Rarity'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: AMPHIB_RARITY_1KM,
+    },
+    {
+      id: AMPHIB_RICHNESS_1KM,
+      label: t('Amphibians Richness'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: AMPHIB_RICHNESS_1KM,
+    },
+    {
+      id: HUMMINGBIRDS_RARITY,
+      label: t('Hummingbirds Rarity'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: HUMMINGBIRDS_RARITY,
+    },
+    {
+      id: HUMMINGBIRDS_RICHNESS,
+      label: t('Hummingbirds Richness'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: HUMMINGBIRDS_RICHNESS,
+    },
+    {
+      id: MAMMALS_RICHNESS_1KM,
+      label: t('Mammals Richness'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: MAMMALS_RICHNESS_1KM,
+    },
+    {
+      id: MAMMALS_RARITY_1KM,
+      label: t('Mammals Rarity'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: MAMMALS_RARITY_1KM,
+    },
+    {
+      id: ANTS_RICHNESS_1KM,
+      label: t('Ants Richness'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: ANTS_RICHNESS_1KM,
+    },
+    {
+      id: ANTS_RARITY_1KM,
+      label: t('Ants Rarity'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: ANTS_RARITY_1KM,
+    },
+    {
+      id: REPTILES_RARITY_1KM,
+      label: t('Reptiles Rarity'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: REPTILES_RARITY_1KM,
+    },
+    {
+      id: REPTILES_RICHNESS_1KM,
+      label: t('Reptiles Richness'),
+      heatMapImage: '',
+      details: ``,
+      showDetails: false,
+      showLayer: false,
+      url: REPTILES_RICHNESS_1KM,
+    },
   ]);
 
   const displayLayer = async (layer) => {
     if (!layer.showLayer) {
-      const featureLayer = await EsriFeatureService.getFeatureLayer(
-        layer.portalId,
-        countryISO,
-        layer.id
-      );
+      if (layer.portalId) {
+        const featureLayer = await EsriFeatureService.getFeatureLayer(
+          layer.portalId,
+          countryISO,
+          layer.id
+        );
+        setRegionLayers((rl) => ({
+          ...rl,
+          [layer.id]: featureLayer,
+        }));
+        map.add(featureLayer, map.layers.length - 1);
+      } else if (layer.url) {
+        const mapLayers = LAYERS_URLS[layer.url];
+        let promises;
+        if (Array.isArray(mapLayers)) {
+          promises = mapLayers.map(
+            async (mapLayer) =>
+              new TileLayer({
+                url: mapLayer,
+                id: layer.id,
+                outFields: ['*'],
+              })
+          );
+        } else {
+          promises = [
+            new TileLayer({
+              url: mapLayers,
+              id: layer.id,
+              outFields: ['*'],
+            }),
+          ];
+        }
 
-      setRegionLayers((rl) => ({
-        ...rl,
-        [layer.id]: featureLayer,
-      }));
-      map.add(featureLayer);
+        const newLayers = await Promise.all(promises);
+
+        newLayers.forEach((newLayer) => {
+          setRegionLayers((rl) => ({
+            ...rl,
+            [layer.id]: newLayer,
+          }));
+          map.add(newLayer, map.layers.length - 1);
+        });
+      }
     } else {
-      const layerToRemove = map.layers.items.find(
+      const layerToRemove = map.layers.items.filter(
         (mapLayer) => mapLayer.id === layer.id
       );
 
@@ -56,7 +212,9 @@ function LayerLegendComponent(props) {
         return rest;
       });
 
-      map.remove(layerToRemove);
+      layerToRemove.forEach((remove) => {
+        map.remove(remove);
+      });
     }
 
     setDataLayers((prevLayers) =>
@@ -106,24 +264,26 @@ function LayerLegendComponent(props) {
                   <Switch onChange={() => displayLayer(layer)} />
                 </div>
                 {layer.heatMapImage && <img src={layer.heatMapImage} alt="" />}
-                <div className={styles.details}>
-                  <button
-                    className={styles.view}
-                    type="button"
-                    onClick={() => showDetails(layer)}
-                    aria-label="Collapse details"
-                  >
-                    <span>{t('View details')}</span>
-                    <ArrowIcon
-                      className={cx(styles.arrowIcon, {
-                        [styles.isOpened]: !layer.showDetails,
-                      })}
-                    />
-                  </button>
-                  {layer.showDetails && (
-                    <p dangerouslySetInnerHTML={{ __html: layer.details }} />
-                  )}
-                </div>
+                {layer.details && (
+                  <div className={styles.details}>
+                    <button
+                      className={styles.view}
+                      type="button"
+                      onClick={() => showDetails(layer)}
+                      aria-label="Collapse details"
+                    >
+                      <span>{t('View details')}</span>
+                      <ArrowIcon
+                        className={cx(styles.arrowIcon, {
+                          [styles.isOpened]: !layer.showDetails,
+                        })}
+                      />
+                    </button>
+                    {layer.showDetails && (
+                      <p dangerouslySetInnerHTML={{ __html: layer.details }} />
+                    )}
+                  </div>
+                )}
               </div>
             </li>
           ))}
