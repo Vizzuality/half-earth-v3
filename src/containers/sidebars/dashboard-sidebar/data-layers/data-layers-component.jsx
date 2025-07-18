@@ -378,8 +378,8 @@ function DataLayerComponent(props) {
   }, [privateOccurrenceData]);
 
   useEffect(() => {
-    if (!dataPoints || !dataByCountry) return;
-    if (dataByCountry[countryName]) {
+    if (!dataPoints && !dataByCountry) return;
+    if (dataByCountry && dataByCountry[countryName]) {
       setSpeciesDataLoading(false);
     }
     setIsLoading(false);
