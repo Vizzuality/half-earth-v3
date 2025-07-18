@@ -56,15 +56,30 @@ function ViewContainer(props) {
       // add the country to the graphics layer
       graphicsLayer.graphics.add(feature);
       // zoom to the highlighted country
-      flatView.goTo(
-        {
-          target: zoomGeometry,
-          center: [zoomGeometry.longitude - 15, zoomGeometry.latitude],
-          zoom: 5.5,
-          extent: feature.geometry.clone(),
-        },
-        { duration: 1000 }
-      );
+      if (
+        countryISO.toLowerCase() === 'guy-fm' ||
+        countryISO.toLowerCase() === 'guy'
+      ) {
+        flatView.goTo(
+          {
+            target: zoomGeometry,
+            center: [zoomGeometry.longitude - 5, zoomGeometry.latitude],
+            zoom: 7,
+            extent: feature.geometry.clone(),
+          },
+          { duration: 1000 }
+        );
+      } else {
+        flatView.goTo(
+          {
+            target: zoomGeometry,
+            center: [zoomGeometry.longitude - 20, zoomGeometry.latitude],
+            zoom: 5.5,
+            extent: feature.geometry.clone(),
+          },
+          { duration: 1000 }
+        );
+      }
 
       // set the group layer opacity to 1
       // also increase the layer brightness and add drop-shadow to make the clicked country stand out.

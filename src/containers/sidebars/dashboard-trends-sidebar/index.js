@@ -404,12 +404,24 @@ function DashboardTrendsSidebarContainer(props) {
       }
 
       if (geometry) {
-        view.goTo({
-          target: geometry,
-          center: [geometry.longitude - 20, geometry.latitude],
-          zoom: 5.5,
-          extent: geometry.clone(),
-        });
+        if (
+          countryISO.toLowerCase() === 'guy-fm' ||
+          countryISO.toLowerCase() === 'guy'
+        ) {
+          view.goTo({
+            target: geometry,
+            center: [geometry.longitude - 6, geometry.latitude],
+            zoom: 7,
+            extent: geometry.clone(),
+          });
+        } else {
+          view.goTo({
+            target: geometry,
+            center: [geometry.longitude - 20, geometry.latitude],
+            zoom: 5.5,
+            extent: geometry.clone(),
+          });
+        }
       }
     }
   }, [map, view]);
