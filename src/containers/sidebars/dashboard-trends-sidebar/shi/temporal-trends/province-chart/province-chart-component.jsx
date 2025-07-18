@@ -18,7 +18,6 @@ import {
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 import { Loading } from 'he-components';
-import last from 'lodash/last';
 
 import Button from 'components/button';
 import ChartInfoComponent from 'components/chart-info-popup/chart-info-component';
