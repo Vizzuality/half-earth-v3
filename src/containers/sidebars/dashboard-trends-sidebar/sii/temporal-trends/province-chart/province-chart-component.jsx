@@ -90,9 +90,11 @@ function ProvinceChartComponent(props) {
 
   let lastProvinceValue;
 
-  const getLastValurForProvince = (provName) => {
+  const getLastValueForProvince = (provName) => {
     if (!provinces || provinces.length === 0) return null;
-    return last(provinces.filter((prov) => prov.name === provName));
+    return provinces.find(
+      (prov) => prov.name === provName && prov.year === SII_LATEST_YEAR
+    );
   };
 
   const getChartData = (name) => {
@@ -137,7 +139,7 @@ function ProvinceChartComponent(props) {
   };
 
   const getProvinceScores = (province) => {
-    lastProvinceValue = getLastValurForProvince(province.name);
+    lastProvinceValue = getLastValueForProvince(province.name);
 
     const {
       sii,
