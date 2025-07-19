@@ -6,6 +6,7 @@ import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   DRC_REGION_FEATURE_ID,
   NBS_OP_INTERVENTIONS_FEATURE_ID,
+  INDIGENOUS_LANDS_FEATURE_ID,
   IUCNStatusTypes,
 } from 'utils/dashboard-utils';
 
@@ -269,6 +270,16 @@ function SpeciesFilterComponent(props) {
             [LAYER_OPTIONS.PROVINCES]: featureLayer,
           }));
           map.add(featureLayer);
+
+          featureLayer = await EsriFeatureService.getFeatureLayer(
+            INDIGENOUS_LANDS_FEATURE_ID,
+            countryISO
+          );
+
+          setRegionLayers(() => ({
+            [LAYER_OPTIONS.INDIGENOUS_LANDS]: featureLayer,
+          }));
+          map.add(featureLayer);
         } else if (option === REGION_OPTIONS.FORESTS) {
           featureLayer = await EsriFeatureService.getFeatureLayer(
             DRC_REGION_FEATURE_ID,
@@ -313,6 +324,9 @@ function SpeciesFilterComponent(props) {
         break;
       case REGION_OPTIONS.DISSOLVED_NBS:
         setRegionLabel(t('NBS-OP Interventions'));
+        break;
+      case REGION_OPTIONS.ACC_REGION:
+        setRegionLabel(t('Acarai-Corentyne Corridor'));
         break;
       case REGION_OPTIONS.DRAW:
         setRegionLabel(t('Custom Area'));

@@ -63,8 +63,10 @@ function DataLayerComponent(props) {
     mapLegendLayers,
     regionLayers,
     fromTrends,
+    dataByCountry,
     setSpeciesDataLoading,
     countryISO,
+    countryName,
     map,
   } = props;
 
@@ -111,6 +113,7 @@ function DataLayerComponent(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState();
   const [showHabitatChart, setShowHabitatChart] = useState(false);
+  const [showHabitatLayer, setShowHabitatLayer] = useState(false);
   const [isHabitatChartLoading, setIsHabitatChartLoading] = useState(false);
 
   const expertRangeMapIds = [
@@ -118,6 +121,7 @@ function DataLayerComponent(props) {
     '0ed89f4f-3ed2-41c2-9792-7c7314a55455',
     '98f229de-6131-41ef-aff1-7a52212b5a15',
     'd542e050-2ae5-457e-8476-027741538965',
+    '83cfa8fb-dd6e-4031-8215-1079abddb8a7',
   ];
 
   const pointObservationIds = [
@@ -204,9 +208,9 @@ function DataLayerComponent(props) {
           (id) => id === obj.dataset_id
         );
 
-        if (foundExpertRange || foundPointOb) {
-          grouped[groupKey].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
-        }
+        // if (foundExpertRange || foundPointOb) {
+        grouped[groupKey].total_no_rows += obj.no_rows || 0; // Summing the no_rows property
+        // }
       }
     });
 
@@ -237,6 +241,10 @@ function DataLayerComponent(props) {
     }
   };
 
+  const displayHabitatLayer = async () => {
+    setShowHabitatLayer(true);
+  };
+
   const getHabitatMapData = async () => {
     // const habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/tile-urls?species=${speciesInfo.scientificname}&taxa=${speciesInfo.taxa}`;
     let habitatMapUrl = `https://dev-api-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/indicators/habitat-trends/map?scientificname=${speciesInfo.scientificname}`;
@@ -246,6 +254,21 @@ function DataLayerComponent(props) {
     }
     const response = await fetch(habitatMapUrl);
     const d = await response.json();
+
+    if (d.points) {
+      setDataPoints((prevDataPoints) => {
+        const updatedDataPoints = [...prevDataPoints];
+        const habitatLayer = updatedDataPoints.find(
+          (dp) => dp.id === LAYER_OPTIONS.HABITAT
+        );
+
+        if (habitatLayer) {
+          displayHabitatLayer();
+        }
+
+        return updatedDataPoints;
+      });
+    }
 
     if (d.trend_data) {
       const { trend_data } = d;
@@ -271,7 +294,7 @@ function DataLayerComponent(props) {
           },
         ],
       });
-    } else if (d.data?.length) {
+    } else if (d.data?.length > 1) {
       // remove Year row
       d.data.shift();
       setValuesExists(true);
@@ -374,10 +397,12 @@ function DataLayerComponent(props) {
   }, [privateOccurrenceData]);
 
   useEffect(() => {
-    if (!dataPoints) return;
-    setSpeciesDataLoading(false);
+    if (!dataPoints && !dataByCountry) return;
+    if (dataByCountry && dataByCountry[countryName]) {
+      setSpeciesDataLoading(false);
+    }
     setIsLoading(false);
-  }, [dataPoints]);
+  }, [dataPoints, dataByCountry]);
 
   useEffect(() => {
     setSpeciesDataLoading(true);
@@ -418,6 +443,7 @@ function DataLayerComponent(props) {
                 dataPoints={dataPoints}
                 setDataPoints={setDataPoints}
                 setShowHabitatChart={setShowHabitatChart}
+                showHabitatLayer={showHabitatLayer}
                 setIsHabitatChartLoading={setIsHabitatChartLoading}
                 {...props}
               />

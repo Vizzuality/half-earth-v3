@@ -135,7 +135,6 @@ function DashboardSidebar(props) {
         {selectedIndex === NAVIGATION.TRENDS && (
           <DashboardTrendsSidebarContainer {...props} />
         )}
-        ``
         {selectedIndex === NAVIGATION.INFO && <TutorialsContainer {...props} />}
       </div>
     </div>

@@ -8,14 +8,14 @@ function DashboardComponent(props) {
     props;
 
   useEffect(() => {
-    if (countryISO !== 'EE') {
+    if (countryISO !== 'EE' && countryISO !== 'GUY') {
       setLoggedIn(true);
     }
   }, []);
 
   return (
     <>
-      {!loggedIn && countryISO === 'EE' && (
+      {!loggedIn && (countryISO === 'EE' || countryISO === 'GUY') && (
         <DashboardLogin setLoggedIn={setLoggedIn} {...props} />
       )}
       {loggedIn && (

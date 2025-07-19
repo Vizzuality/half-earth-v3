@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-.container{
+.container {
   position: absolute;
   top: 25px;
   left: 630px;
@@ -21,30 +21,31 @@
   height: auto;
   transition: max-height 0.3s ease-out;
 
-  &.collapse{
+  &.collapse {
     max-height: 40px;
   }
 
-  .titleWrapper{
+  .titleWrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     padding-bottom: 10px;
 
-    .title{
+    .title {
       font-weight: 700;
     }
 
-    button{
+    button {
       color: $white;
+      height: 12px;
 
       .arrowIcon {
         fill: $white;
         transform: rotate(-90deg);
 
         &.isOpened {
-          transform:rotate(90deg);
+          transform: rotate(90deg);
         }
 
         transition: transform 0.2s ease;
@@ -56,7 +57,7 @@
     }
   }
 
-  .layers{
+  .layers {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -64,53 +65,53 @@
     padding: 0;
     color: $white;
 
-    li{
+    li {
       display: flex;
       align-items: center;
 
-      .arrows{
+      .arrows {
         width: 40px;
         color: $white;
         fill: $white;
 
-        &.down{
+        &.down {
           transform: rotate(180deg);
         }
 
-        &.disabled{
+        &.disabled {
           fill: $white-opacity-20;
           color: $white-opacity-20;
           cursor: default;
         }
       }
 
-      .info{
+      .info {
         display: flex;
         flex-direction: column;
         font-size: $font-size-xs;
         width: 100%;
 
-        span{
+        span {
           font-style: italic;
         }
 
-        .wrapper{
+        .wrapper {
           display: flex;
           gap: 5px;
           margin-top: 5px;
         }
 
-        .column{
+        .column {
           flex-direction: column;
         }
 
-        .box{
+        .box {
           width: 50px;
           height: 15px;
           border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
-        .circle{
+        .circle {
           width: 10px;
           height: 10px;
           border-radius: 50%;
@@ -120,17 +121,17 @@
     }
   }
 
-  .mapLegend{
+  .mapLegend {
     display: flex;
     flex-direction: column;
     margin-top: 3px;
 
-    img{
+    img {
       width: 100%;
       height: 15px;
     }
 
-    .legendValues{
+    .legendValues {
       color: white;
       display: flex;
       justify-content: space-between;

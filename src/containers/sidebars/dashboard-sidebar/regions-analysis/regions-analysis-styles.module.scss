@@ -9,6 +9,7 @@
   --selected-font-color: #{$white};
   --save-button-text: #{$dark-text};
   --border-color-hover: #{$brand-color-main-hover};
+  --selected-green: #{$lime-green};
 
   &.light {
     --font-color: #{$black};
@@ -39,6 +40,19 @@
     color: var(--font-color);
   }
 
+  .selectionTitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--font-color);
+  }
+
+  .selectionSubTitle {
+    ont-size: 14px;
+    font-weight: 400;
+    color: var(--font-color);
+    padding: 4px 0 8px;
+  }
+
   p {
     font-size: $font-size-sm;
     color: var(--font-color);
@@ -50,43 +64,106 @@
     gap: 10px;
     color: var(--font-color);
 
-    span {
-      color: var(--font-color);
-    }
-
-    .disabled {
-      span {
-        color: var(--font-color);
-        font-style: italic;
-        opacity: 0.5;
-      }
-    }
-
-    .comingSoon {
+    .radioGroup {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      padding: 12px;
 
-      span {
-        font-size: $font-size-sm;
-      }
-
-      button {
-        width: 200px;
-        color: var(--save-button-text);
-        background-color: var(--border-color);
-        &:hover {
-          background-color: var(--border-color-hover);
-        }
-
-        &.disabled {
-          color: var(--font-color);
-          border: 1px solid rgba(255, 255, 255, 0.5);
-          background-color: transparent;
-        }
+      label {
+        padding: 12px 8px;
+        border-radius: 8px;
 
         span {
-          font-style: normal;
+          svg {
+            fill: var(--light-grey);
+          }
+        }
+        &.selected {
+          background-color: #0d4a5a;
+
+          span {
+            svg {
+              fill: var(--lime-green);
+            }
+          }
+        }
+      }
+      .disabled {
+        span {
+          color: var(--font-color);
+          font-style: italic;
+          opacity: 0.5;
+        }
+      }
+
+      .regionLabel {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        color: var(--font-color);
+        font-size: $font-size-sm;
+
+        .regionTitle {
+          font-weight: 500;
+          color: var(--font-color);
+        }
+
+        .regionDescription {
+          font-weight: 400;
+          font-size: $font-size-xs;
+          color: var(--font-color);
+          margin: 0;
+        }
+      }
+    }
+
+    .divider {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      hr {
+        flex-grow: 1;
+      }
+    }
+
+    .customAreaContainer {
+      display: flex;
+      gap: 8px;
+
+      .customArea {
+        background-color: transparent;
+        border: 1px solid var(--lime-green);
+        color: var(--lime-green);
+        padding: 10px 24px;
+        width: max-content;
+      }
+
+      .comingSoon {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        span {
+          font-size: $font-size-sm;
+        }
+
+        button {
+          color: var(--save-button-text);
+          background-color: var(--border-color);
+          padding: 10px 24px;
+          &:hover {
+            background-color: var(--border-color-hover);
+          }
+
+          &.disabled {
+            color: #aababc;
+            background-color: #5a5a5a;
+          }
+
+          span {
+            font-style: normal;
+          }
         }
       }
     }

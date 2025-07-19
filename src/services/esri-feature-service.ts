@@ -6,6 +6,7 @@ import {
     PROTECTED_AREA_EEWWF_FEATURE_ID, PROTECTED_AREA_FEATURE_URL, REGION_RANGE_MAP_URL
 } from 'utils/dashboard-utils';
 
+import Polygon from '@arcgis/core/geometry/Polygon.js';
 import CSVLayer from '@arcgis/core/layers/CSVLayer';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
@@ -27,6 +28,7 @@ function getFeatures({
   geometry = null,
   orderByFields = [],
   signal = null,
+  returnDistinctValues = false,
 }: GetFeatures) {
   return new Promise((resolve) => {
     const layer = new FeatureLayer({
@@ -37,10 +39,19 @@ function getFeatures({
     featureQuery.outFields = outFields;
     featureQuery.where = whereClause;
     featureQuery.orderByFields = orderByFields;
-    // if (geometry) {
-    //   featureQuery.geometry = geometry;
-    // }
-    // featureQuery.returnGeometry = returnGeometry;
+
+    if (returnDistinctValues) {
+      featureQuery.returnDistinctValues = true;
+    }
+    if (geometry) {
+      const polygon = new Polygon({
+        rings: geometry.rings,
+        spatialReference: { wkid: 3857 },
+      });
+
+      featureQuery.geometry = polygon;
+    }
+    featureQuery.returnGeometry = returnGeometry;
     featureQuery.outSpatialReference = outSpatialReference;
     layer
       .queryFeatures(featureQuery, { signal })
@@ -73,9 +84,12 @@ async function getFeatureLayer(portalItemId, countryISO, id, classType = null) {
     id === 'GUY-zone3-spi' ||
     id === 'GUY-zone3-shi' ||
     id === 'GUY-zone5-shi' ||
+    id === 'GUY-RIVER' ||
     countryISO === 'EE'
   ) {
     definitionExpression = '';
+  } else if (id === LAYER_OPTIONS.INDIGENOUS_LANDS) {
+    definitionExpression = `pais = 'Guyana'`;
   }
 
   if (classType === 'INT') {

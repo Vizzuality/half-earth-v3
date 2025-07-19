@@ -52,28 +52,13 @@ function DashboardContainer(props) {
     lang,
   } = props;
 
-  const speciesToAvoid = [
-    'CEPHALOPHUS FOSTERI',
-    'CEPHALOPHUS ARRHENII',
-    'CEPHALOPHUS CASTANEUS',
-    'CEPHALOPHUS CURTICEPS',
-    'CEPHALOPHUS JOHNSTONI',
-    'CEPHALOPHUS NATALENSIS',
-    'KOBUS DEFASSA',
-    'OUREBIA HASTATA',
-    'REDUNCA BOHOR',
-    'ACINONYX JUBATUS',
-    'PILIOCOLOBUS PENNANTII',
-    'DICEROS BICORNIS',
-    'MECISTOPS CATAPHRACTUS',
-  ];
-
   const [geometry, setGeometry] = useState(null);
   const [speciesInfo, setSpeciesInfo] = useState(null);
   const [data, setData] = useState(null);
   const [dataLayerData, setDataLayerData] = useState(null);
   const [privateOccurrenceData, setPrivateOccurrenceData] = useState([]);
   const [taxaList, setTaxaList] = useState([]);
+  const [allTaxa, setAllTaxa] = useState([]);
   const [dataByCountry, setDataByCountry] = useState(null);
   const [spiDataByCountry, setSpiDataByCountry] = useState(null);
   const [selectedTaxa, setSelectedTaxa] = useState('');
@@ -82,17 +67,19 @@ function DashboardContainer(props) {
   const [selectedIndex, setSelectedIndex] = useState(NAVIGATION.HOME);
   const [loggedIn, setLoggedIn] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState();
+  const [selectedGeometryRings, setSelectedGeometryRings] = useState();
   const [fromTrends, setFromTrends] = useState(false);
   const [regionLayers, setRegionLayers] = useState({});
   const [selectedRegionOption, setSelectedRegionOption] = useState(null);
   const [selectedProvince, setSelectedProvince] = useState();
-  const [exploreAllSpecies, setExploreAllSpecies] = useState();
+  const [exploreAllSpecies, setExploreAllSpecies] = useState(true);
   const [tabOption, setTabOption] = useState(2);
   const [provinceName, setProvinceName] = useState();
   const [regionName, setRegionName] = useState();
   const [speciesListLoading, setSpeciesListLoading] = useState(true);
   const [prioritySpeciesList, setPrioritySpeciesList] = useState([]);
   const [mapLegendLayers, setMapLegendLayers] = useState([]);
+  const [speciesToAvoid, setSpeciesToAvoid] = useState([]);
   const [user, setUser] = useState();
   const [hash, setHash] = useState();
 
@@ -138,8 +125,6 @@ function DashboardContainer(props) {
 
       if (exploreAll) {
         setExploreAllSpecies(true);
-      } else {
-        setExploreAllSpecies(null);
       }
 
       if (regionLayers) {
@@ -198,7 +183,7 @@ function DashboardContainer(props) {
       });
     } else {
       gbifResponse = await EsriFeatureService.getFeatures({
-        url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+        url: DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL,
         whereClause: `species = '${scientificName}' and source = 'GBIF' and iso3 = '${countryISO}'`,
         returnGeometry: false,
       });
@@ -230,7 +215,7 @@ function DashboardContainer(props) {
       });
     } else {
       eBirdResponse = await EsriFeatureService.getFeatures({
-        url: DASHBOARD_URLS.COD_OCCURRENCE_LAYER,
+        url: DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL,
         whereClause: `species = '${scientificName}' and source = 'eBird' and iso3 = '${countryISO}'`,
         returnGeometry: false,
       });
@@ -348,11 +333,18 @@ function DashboardContainer(props) {
         const { taxa } = obj.attributes;
 
         if (taxa) {
-          // Check if taxa property exists and has a value
-          if (!buckets[taxa]) {
-            buckets[taxa] = []; // Create a new bucket if it doesn't exist
+          let bucket = taxa;
+          if (
+            taxa.toLowerCase() === 'vascular_plants' ||
+            taxa.toLowerCase() === 'non_vascular_plants'
+          ) {
+            bucket = 'other plants';
           }
-          buckets[taxa].push(obj); // Add the object to the corresponding bucket
+          // Check if taxa property exists and has a value
+          if (!buckets[bucket]) {
+            buckets[bucket] = []; // Create a new bucket if it doesn't exist
+          }
+          buckets[bucket].push(obj); // Add the object to the corresponding bucket
         } else {
           // Handle cases where the taxa property is missing or undefined.
           // You might want to create a special bucket for these, or log a warning, or skip them.
@@ -394,14 +386,16 @@ function DashboardContainer(props) {
           attributes.replace(/NaN/g, 'null')
         )[0];
 
-        const isFound = speciesToAvoid.includes(scientific_name.toUpperCase());
+        const isFound = speciesToAvoid
+          .map((item) => item.toUpperCase())
+          .includes(scientific_name.toUpperCase());
 
         if (!isFound) {
           return {
             common_name,
             scientific_name,
             threat_status,
-            source,
+            source: source ?? 'range',
             species_url,
             taxa,
           };
@@ -421,7 +415,9 @@ function DashboardContainer(props) {
 
   const getCustomAreasSpeciesDetails = (speciesData, taxa) => {
     const results = speciesData.map(({ name, commonName }) => {
-      const isFound = speciesToAvoid.includes(name.toUpperCase());
+      const isFound = speciesToAvoid
+        .map((item) => item.toUpperCase())
+        .includes(name.toUpperCase());
       let common_name = commonName || name;
       if (Array.isArray(commonName)) {
         [common_name] = commonName;
@@ -451,7 +447,7 @@ function DashboardContainer(props) {
   const getSpeciesDetails = (speciesData, taxa) => {
     const results = speciesData.map(({ attributes }) => {
       const { source, species_url, threat_status, commonnames } =
-        countryISO === 'EE'
+        countryISO === 'EE' || countryISO === 'GUY'
           ? attributes
           : JSON.parse(attributes.attributes.replace(/NaN/g, 'null'))[0];
 
@@ -483,7 +479,9 @@ function DashboardContainer(props) {
     }
 
     let whereClause = `ISO3 = '${countryISO}'`;
-    if (selectedRegion) {
+    if (countryISO === 'GUY') {
+      url = DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL;
+    } else if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
@@ -500,16 +498,28 @@ function DashboardContainer(props) {
       }
 
       if (region_key) {
-        url = DASHBOARD_URLS.ZONE_OCCURRENCE;
+        if (countryISO === 'GUY-FM') {
+          url = DASHBOARD_URLS.ZONE_OCCURRENCE;
+        }
         whereClause = `region_key = '${region_key}'`;
       }
     }
 
     if (!selectedRegion?.mgc) {
+      let geoRings = null;
+      if (selectedGeometryRings) {
+        geoRings = {
+          rings: selectedGeometryRings,
+        };
+      }
+
       const occurenceFeatures = await EsriFeatureService.getFeatures({
         url,
         whereClause,
+        returnDistinctValues: true,
+        geometry: geoRings,
         returnGeometry: false,
+        outFields: ['species', 'taxa', 'source'],
       });
 
       const list = [...speciesData];
@@ -527,9 +537,9 @@ function DashboardContainer(props) {
 
         if (foundTaxa) {
           occurrence.species.forEach((species) => {
-            const isFound = speciesToAvoid.includes(
-              species.scientific_name.toUpperCase()
-            );
+            const isFound = speciesToAvoid
+              .map((item) => item.toUpperCase())
+              .includes(species.scientific_name.toUpperCase());
 
             if (!isFound) {
               const foundSpecies = foundTaxa?.species.find(
@@ -545,7 +555,7 @@ function DashboardContainer(props) {
             }
           });
         } else {
-          // list.push(occurrence);
+          list.push(occurrence);
         }
       });
 
@@ -553,6 +563,10 @@ function DashboardContainer(props) {
         l.count = l.species.length;
       });
       // }
+
+      if (exploreAllSpecies) {
+        setAllTaxa(list);
+      }
       setTaxaList(list);
     } else {
       setTaxaList(speciesData);
@@ -635,7 +649,11 @@ function DashboardContainer(props) {
 
           if (region_key) {
             whereClause = `region_key = '${region_key}'`;
-            url = DASHBOARD_URLS.ZONE_SPECIES;
+            if (selectedRegionOption === REGION_OPTIONS.RAPID_INVENTORY_32) {
+              url = DASHBOARD_URLS.RAPID_INVENTORY_SPECIES;
+            } else {
+              url = DASHBOARD_URLS.ZONE_SPECIES;
+            }
           }
         }
       }
@@ -654,9 +672,9 @@ function DashboardContainer(props) {
 
               const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
 
-              const isFound = speciesToAvoid.includes(
-                scientificname.toUpperCase()
-              );
+              const isFound = speciesToAvoid
+                .map((item) => item.toUpperCase())
+                .includes(scientificname.toUpperCase());
 
               if (!isFound) {
                 return {
@@ -723,6 +741,8 @@ function DashboardContainer(props) {
 
           getOccurenceSpecies(groupData);
         } else if (selectedRegion?.region_key || countryISO === 'EE') {
+          let commonName = '';
+
           const speciesData = {
             species: features.map((s) => {
               const {
@@ -732,30 +752,40 @@ function DashboardContainer(props) {
                 scientificname,
                 commonname_english,
                 commonname_french,
+                translations,
+                source,
               } = s.attributes;
 
               const json = JSON.parse(attributes.replace(/NaN/g, 'null'));
 
               let isFound = false;
               if (species) {
-                isFound = speciesToAvoid.includes(species.toUpperCase());
+                isFound = speciesToAvoid
+                  .map((item) => item.toUpperCase())
+                  .includes(species.toUpperCase());
               } else if (scientificname) {
-                isFound = speciesToAvoid.includes(scientificname.toUpperCase());
+                isFound = speciesToAvoid
+                  .map((item) => item.toUpperCase())
+                  .includes(scientificname.toUpperCase());
               }
 
-              //             commonname_english: "Mussurana"
-              // commonname_french: null
-              // iso3: null
-              // project: "eewwf"
-              // scientificname: "Boiruna maculata"
-              // taxa: "reptiles"
+              if (translations) {
+                const attr = JSON.parse(translations.replace(/NaN/g, 'null'));
+                commonName = attr.find((a) => a.lang === 'en')?.cmname;
+              } else {
+                commonName =
+                  commonname_english ||
+                  commonname_french ||
+                  species ||
+                  scientificname;
+              }
 
               if (!isFound) {
                 return {
-                  common_name: species ?? commonname_english,
+                  common_name: commonName,
                   scientific_name: species ?? scientificname,
                   threat_status: json[0].threat_status,
-                  source: json[0].source ?? '',
+                  source: source ?? json[0].source ?? '',
                   species_url: json[0].species_url ?? '',
                   taxa,
                 };
@@ -848,7 +878,7 @@ function DashboardContainer(props) {
             fishSpecies,
           ];
 
-          setTaxaList(groupData);
+          getOccurenceSpecies(groupData);
 
           setSpeciesListLoading(false);
         } else {
@@ -856,7 +886,7 @@ function DashboardContainer(props) {
 
           const { amphibians, birds, reptiles, mammals } = attributes;
 
-          if (amphibians) {
+          if (amphibians || birds || reptiles || mammals) {
             const [amphibianData, birdsData, reptilesData, mammalsData] =
               await Promise.all([
                 getTaxaSpecies('amphibians', amphibians),
@@ -987,6 +1017,23 @@ function DashboardContainer(props) {
       const species = features.map(({ attributes }) => attributes);
 
       setPrioritySpeciesList(species);
+    }
+  };
+
+  const getIgnoredSpeciesList = async () => {
+    const url = DASHBOARD_URLS.IGNORE_SPECIES_LIST;
+    const whereClause = `country_code = '${countryISO}'`;
+
+    const features = await EsriFeatureService.getFeatures({
+      url,
+      whereClause,
+      returnGeometry: false,
+    });
+
+    if (features) {
+      const species = features.map(({ attributes }) => attributes.species_name);
+
+      setSpeciesToAvoid(species);
     }
   };
 
@@ -1185,6 +1232,7 @@ function DashboardContainer(props) {
         });
 
       getPrioritySpeciesList();
+      getIgnoredSpeciesList();
     }
 
     if (countryISO === 'COD' || countryISO === 'GIN') {
@@ -1200,9 +1248,9 @@ function DashboardContainer(props) {
   }, []);
 
   useEffect(() => {
-    if (!selectedRegion && !exploreAllSpecies) return;
+    if (!selectedRegion && speciesToAvoid.length === 0) return;
     getSpeciesList();
-  }, [selectedRegion, exploreAllSpecies]);
+  }, [selectedRegion, speciesToAvoid]);
 
   useEffect(() => {
     if (!scientificName) return;
@@ -1283,6 +1331,9 @@ function DashboardContainer(props) {
       exploreAllSpecies={exploreAllSpecies}
       regionName={regionName}
       setRegionName={setRegionName}
+      allTaxa={allTaxa}
+      setSelectedGeometryRings={setSelectedGeometryRings}
+      selectedGeometryRings={selectedGeometryRings}
       {...props}
     />
   );

@@ -5,6 +5,7 @@ import { TAXA_NAMES } from 'constants/dashboard-constants';
 import AmphibiansIcon from 'icons/dashboard/amphibian_icon.svg?react';
 import AntIcon from 'icons/dashboard/ant_icon.svg?react';
 import BirdsIcon from 'icons/dashboard/bird_icon.svg?react';
+import BumbleBeeIcon from 'icons/dashboard/bumblebee_icon.svg?react';
 import ButterFlyIcon from 'icons/dashboard/butterfly_icon.svg?react';
 import CactusIcon from 'icons/dashboard/cactus_icon.svg?react';
 import ConiferIcon from 'icons/dashboard/conifer_icon.svg?react';
@@ -32,6 +33,9 @@ function TaxaImageComponent(props) {
           break;
         case TAXA_NAMES.BIRDS:
           icon = <BirdsIcon />;
+          break;
+        case TAXA_NAMES.BUMBLEBEES:
+          icon = <BumbleBeeIcon />;
           break;
         case TAXA_NAMES.BUTTERFLIES:
           icon = <ButterFlyIcon />;
@@ -64,6 +68,7 @@ function TaxaImageComponent(props) {
           icon = <ReptilesIcon />;
           break;
         case 'PLANTS':
+        case 'OTHER PLANTS':
         case TAXA_NAMES.TREES:
           icon = <TreeIcon />;
           break;

@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-.sidenav{
+.sidenav {
   --nav-button-bg: #{$white};
   --svg-fill: #{$white};
   --svg-selected-fill: #{$black};
@@ -12,7 +12,7 @@
   --save-button-text: #{$dark-text};
   --border-color-hover: #{$brand-color-main-hover};
 
-  &.light{
+  &.light {
     --nav-button-bg: #{$black};
     --svg-fill: #{$black};
     --svg-selected-fill: #{$white};
@@ -27,45 +27,68 @@
   display: flex;
   height: 100%;
 
-  .icons{
+  .icons {
     display: flex;
     flex-direction: column;
     height: 100%;
 
-    .subNav{
+    .subNav {
       display: flex;
       flex-direction: column;
       background-color: rgba(255, 255, 255, 0.5);
     }
 
-    button{
+    button {
       width: 50px;
       height: 50px;
 
-      svg{
+      svg {
         width: 30px;
         height: 30px;
         fill: var(--svg-fill);
+        color: var(--svg-fill);
 
-        rect{
+        path {
+          fill: var(--svg-fill);
+          color: var(--svg-fill);
+        }
+
+        rect {
           width: 50px;
         }
       }
 
       &.selected,
-      &:hover{
+      &:hover {
         background: var(--nav-button-bg);
 
-        svg{
+        svg {
           fill: var(--svg-selected-fill);
+          color: var(--svg-selected-fill);
+
+          path {
+            fill: var(--svg-selected-fill);
+            color: var(--svg-selected-fill);
+          }
         }
       }
 
-      &.disabled{
+      &[disabled] {
+        &:hover {
+          background: transparent;
+          cursor: not-allowed;
+
+          svg {
+            fill: var(--nav-button-bg);
+          }
+        }
+      }
+
+      &.disabled {
         cursor: not-allowed;
         background: transparent;
 
-        svg{
+        svg {
           fill: var(--svg-fill);
         }
       }

@@ -21,6 +21,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import {
   LAYER_TITLE_TYPES,
   LAYER_OPTIONS,
+  DATA_POINT_TYPE,
 } from 'constants/dashboard-constants.js';
 
 import ArrowIcon from 'icons/arrow_right.svg?react';
@@ -41,6 +42,7 @@ function GroupedListComponent(props) {
     setIsHabitatChartLoading,
     isPrivate,
     setMapLegendLayers,
+    showHabitatLayer,
     setIsLoading,
   } = props;
   const t = useT();
@@ -326,6 +328,8 @@ function GroupedListComponent(props) {
           let layerId = GBIF_OCCURENCE_URL;
           if (countryISO === 'EE') {
             layerId = REGION_OCCURENCE_ID;
+          } else if (countryISO === 'GUY') {
+            layerId = '5239b39a253c4ab69bb931044406b431';
           }
 
           if (layerName.match(/EBIRD/)) {
@@ -519,6 +523,19 @@ function GroupedListComponent(props) {
       }
     });
   };
+
+  useEffect(() => {
+    if (!showHabitatLayer) return;
+    displaySingleLayer({
+      label: t('Habitat Loss/Gain'),
+      items: [],
+      id: LAYER_OPTIONS.HABITAT,
+      total_no_rows: '',
+      isActive: false,
+      showChildren: false,
+      type: DATA_POINT_TYPE.PUBLIC,
+    });
+  }, [showHabitatLayer]);
 
   useEffect(() => {
     activateDefault();

@@ -33,7 +33,13 @@
   }
 
   .comingSoon {
+    font-size: $font-size-xs;
     font-style: italic;
+  }
+
+  .expectedLabel {
+    color: var(--lime-green);
+    font-size: $font-size-xs;
   }
 
   .close {
@@ -89,6 +95,12 @@
 .title {
   cursor: pointer;
   padding: 0 5px;
+
+  &.expected {
+    svg {
+      fill: var(--lime-green);
+    }
+  }
 }
 
 .spinner {
@@ -122,6 +134,28 @@
   .header {
     padding-left: 7px;
   }
+
+  svg {
+    fill: $white;
+    color: $white;
+
+    path {
+      fill: $white;
+      color: $white;
+    }
+  }
+
+  &.expected {
+    svg {
+      fill: var(--lime-green);
+      color: var(--lime-green);
+
+      path {
+        fill: var(--lime-green);
+        color: var(--lime-green);
+      }
+    }
+  }
 }
 
 .filterCount {
@@ -133,14 +167,14 @@
 
 .speciesList {
   padding-top: 5px;
-  height: calc(100vh - 380px);
+  height: calc(100vh - 300px);
   overflow-y: hidden;
   width: 250px;
 
   .filterResults {
     margin-top: 8px;
     overflow-y: auto;
-    max-height: calc(100vh - 460px);
+    max-height: calc(100vh - 375px);
   }
 
   .search {

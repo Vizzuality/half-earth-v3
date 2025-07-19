@@ -16,10 +16,13 @@ import LayerInfoModalContainer from 'components/layer-info-modal';
 import MapLegendContainer from 'components/map-legend';
 import MapView from 'components/map-view';
 
+import { NAVIGATION } from 'constants/dashboard-constants.js';
+
 // import TopMenuContainer from 'components/top-menu';
 
 import MinimizeIcon from 'icons/closes.svg?react';
 
+import LayerLegendContainer from '../../../components/layer-legend';
 import {
   MEX,
   NATIONAL_TREND,
@@ -43,6 +46,7 @@ function DashboardViewComponent(props) {
     openedModal,
     geometry,
     setSelectedIndex,
+    selectedIndex,
     setSelectedRegion,
     selectedRegion,
     browsePage,
@@ -103,6 +107,7 @@ function DashboardViewComponent(props) {
       view={view}
       setView={setView}
       geometry={geometry}
+      countryISO={countryISO}
       loaderOptions={{
         url: `https://js.arcgis.com/${API_VERSION}`,
       }}
@@ -165,6 +170,9 @@ function DashboardViewComponent(props) {
       <LightModeProvider>
         {/* <TopMenuContainer {...props} /> */}
         {showLegend && <MapLegendContainer map={map} {...props} />}
+        {selectedIndex === NAVIGATION.REGION && (
+          <LayerLegendContainer map={map} {...props} />
+        )}
         <DashboardSidebarContainer
           map={map}
           view={view}

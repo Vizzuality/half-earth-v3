@@ -99,6 +99,12 @@ $tutorial-width: 60vw;
         width: 30px;
         height: 30px;
         fill: var(--svg-fill);
+        color: var(--svg-fill);
+
+        path {
+          fill: var(--svg-fill);
+          color: var(--svg-fill);
+        }
       }
 
       &.selected,

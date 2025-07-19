@@ -25,6 +25,7 @@ function AreaHighlightManagerComponent(props) {
   const {
     setSelectedIndex,
     setSelectedRegion,
+    setSelectedGeometryRings,
     setExploreAllSpecies,
     selectedRegionOption,
     setTaxaList,
@@ -39,6 +40,7 @@ function AreaHighlightManagerComponent(props) {
     countryISO,
     activeTrend,
     shiActiveTrend,
+    siiActiveTrend,
     layerView,
     setLayerView,
     setRegionName,
@@ -84,11 +86,15 @@ function AreaHighlightManagerComponent(props) {
         regionLayers[`${countryISO}-zone5-spi`] ||
         regionLayers[`${countryISO}-zone3-shi`] ||
         regionLayers[`${countryISO}-zone5-shi`] ||
+        regionLayers[LAYER_OPTIONS.ACC_REGION] ||
+        regionLayers[LAYER_OPTIONS.ZONE_3] ||
+        regionLayers[LAYER_OPTIONS.ZONE_5] ||
         regionLayers[LAYER_OPTIONS.RAPID_INVENTORY_32] ||
         regionLayers[LAYER_OPTIONS.PROVINCES] ||
         regionLayers[LAYER_OPTIONS.ADMINISTRATIVE_LAYERS] ||
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
         regionLayers[LAYER_OPTIONS.FORESTS] ||
+        regionLayers[LAYER_OPTIONS.INDIGENOUS_LANDS] ||
         regionLayers[`${countryISO}-outline`]
     );
   };
@@ -158,6 +164,15 @@ function AreaHighlightManagerComponent(props) {
                   iso3,
                   name,
                 } = hits.attributes;
+
+                if (
+                  hits.graphic &&
+                  hits.graphic.geometry &&
+                  hits.graphic.geometry.rings
+                ) {
+                  setSelectedGeometryRings(hits.graphic.geometry.rings);
+                }
+
                 setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
                 if (selectedRegionOption === REGION_OPTIONS.PROTECTED_AREAS) {
                   setSelectedRegion({ WDPA_PID });
@@ -178,6 +193,7 @@ function AreaHighlightManagerComponent(props) {
                 if (
                   selectedRegionOption === REGION_OPTIONS.ZONE_3 ||
                   selectedRegionOption === REGION_OPTIONS.ZONE_5 ||
+                  selectedRegionOption === REGION_OPTIONS.ACC_REGION ||
                   selectedRegionOption === REGION_OPTIONS.RAPID_INVENTORY_32
                 ) {
                   setSelectedRegion({ region_key });
@@ -318,6 +334,8 @@ function AreaHighlightManagerComponent(props) {
               regionLayers[LAYER_OPTIONS.PROVINCES]
             );
           }
+
+          layer.visible = true;
         } else if (tabOption === TABS.SHI) {
           if (countryISO.toLowerCase() === 'ee') {
             layer = await getLayerView();
@@ -328,6 +346,9 @@ function AreaHighlightManagerComponent(props) {
               regionLayers[`${countryISO}-outline`]
             );
           }
+        } else if (tabOption === TABS.SII) {
+          layer = await getLayerView();
+          layer.visible = false;
         }
       } else if (selectedIndex === NAVIGATION.DATA_LAYER) {
         const topLayer = mapLegendLayers[0];

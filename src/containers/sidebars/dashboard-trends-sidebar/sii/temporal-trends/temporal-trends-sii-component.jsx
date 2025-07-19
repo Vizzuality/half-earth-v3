@@ -88,9 +88,6 @@ function TemporalTrendsSiiComponent(props) {
     //       });
     //     });
     //   } else {
-    view.goTo({
-      zoom: 1,
-    });
     // }
     // }
   };

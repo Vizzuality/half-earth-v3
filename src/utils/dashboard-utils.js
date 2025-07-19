@@ -49,11 +49,11 @@ export const ZONE_5_SHI_FEATURE_ID = 'c3a05367565e43feba045d5034152139';
 export const ZONE_3_SPI_FEATURE_ID = 'b4fd87a7d9c04143b10018c4224f2999';
 export const ZONE_3_SHI_FEATURE_ID = 'b818d0fe7caf4151af74835aa43c7aea';
 
-export const ZONE_3_FEATURE_ID = 'b47c1a2ffb76461592fe64438197cef9';
-export const ZONE_5_FEATURE_ID = 'c4e365176fa64967b0df13237b69aa7d';
+export const ACC_REGION_FEATURE_ID = 'e5df85e300ca4604b893744fb8a29221';
 export const GUY_FM_RAPID_INVENTORY_32_FEATURE_ID =
   'cc6b9e1c42c747a2bd220f82039cf0b0';
 export const RAPID_INVENTORY_32_FEATURE_ID = 'e5a8033abb494173af8896d6ba6d0415';
+export const INDIGENOUS_LANDS_FEATURE_ID = 'f02ae30f5a784e9e920729a5afef92c0';
 
 export const EEWWF_COUNTRY_LINES_FEATURE_ID =
   '48e26caf25de440e8deef5bc52ed975e';
@@ -92,7 +92,7 @@ export const PROTECTED_AREA_GUY_FEATURE_URL =
   'd610d9ad96bc4071a31b3aacdfbf844d';
 
 export const GBIF_OCCURENCE_URL = '1ccb994557a74bc6bd773250d8eebc15';
-// Yale AGOL - cc44bf640beb4b2c989d1e901bb90852
+export const GUY_RIVER_ID = 'e7557c32f8a2475e95aab9471fc9b4c5';
 
 export const REGION_OCCURENCE_ID = '9f732963e1a7495f889577ca30e44562';
 
@@ -152,9 +152,11 @@ export function numberToLocaleStringWithOneDecimal(number, fractionDigits = 1) {
 
 export const removeRegionLayers = (map, regionLayers) => {
   Object.keys(regionLayers).forEach((region) => {
-    const foundLayer = map.layers.items.find((item) => item.id === region);
-    if (foundLayer) {
-      map.remove(foundLayer);
+    const foundLayers = map.layers.items.filter((item) => item.id === region);
+    if (foundLayers) {
+      foundLayers.forEach((remove) => {
+        map.remove(remove);
+      });
     }
   });
 };

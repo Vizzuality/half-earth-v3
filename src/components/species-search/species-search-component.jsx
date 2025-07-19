@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-import { useLocale, useT } from '@transifex/react';
+import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 
 import Button from 'components/button';
 import SearchInput from 'components/search-input';
 
-import EsriFeatureService from 'services/esri-feature-service';
-
 import {
   NAVIGATION,
   SPECIES_SELECTED_COOKIE,
 } from 'constants/dashboard-constants.js';
-import { DASHBOARD_URLS } from 'constants/layers-urls';
 
 import styles from './species-search-component-styles.module.scss';
 
 function SpeciesSearchComponent(props) {
   const t = useT();
-  const locale = useLocale();
   const {
     setSelectedIndex,
     setScientificName,
@@ -27,28 +23,20 @@ function SpeciesSearchComponent(props) {
     setSelectedTaxa,
     setSelectedRegion,
     setExploreAllSpecies,
-    countryISO,
+    allTaxa,
+    setTaxaList,
   } = props;
 
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-
-  let searchURL =
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/COD_species_list_for_search/FeatureServer';
-
-  if (countryISO === 'GUY-FM' || countryISO === 'EE') {
-    searchURL = DASHBOARD_URLS.REGION_SPECIES_SEARCH_URL;
-  }
-
-  let controller = null;
 
   const handleSearch = (searchText) => {
     setSearchInput(searchText.currentTarget.value);
   };
 
   const handleSearchSelect = (searchItem) => {
-    setScientificName(searchItem.scientificname);
-    localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientificname);
+    setScientificName(searchItem.scientific_name);
+    localStorage.setItem(SPECIES_SELECTED_COOKIE, searchItem.scientific_name);
     setSelectedIndex(NAVIGATION.DATA_LAYER);
   };
 
@@ -56,46 +44,36 @@ function SpeciesSearchComponent(props) {
     setSelectedRegion(null);
     setSelectedRegionOption(null);
     setSelectedTaxa(null);
+
     setExploreAllSpecies(true);
+
+    setTaxaList(allTaxa);
+
     setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
   };
 
   const getSearchResults = async () => {
-    controller = new AbortController();
-    const { signal } = controller;
-    const commonName =
-      locale === 'fr' ? 'commonname_french' : 'commonname_english';
-    let whereClause = `scientificname like '%${searchInput}%' or ${commonName} like '%${searchInput}%'`;
-
-    if (countryISO === 'EE') {
-      whereClause = `(scientificname like '%${searchInput}%' or commonname_english like '%${searchInput}%') and project = 'EEWWF'`; // ${countryISO.toLowerCase()}'`;
-    }
-
-    const searchSpecies = await EsriFeatureService.getFeatures({
-      url: searchURL,
-      whereClause,
-      returnGeometry: false,
-      signal,
+    const results = [];
+    allTaxa.forEach((taxa) => {
+      const match = taxa.species.filter((item) => {
+        return (
+          item.scientific_name
+            .toLowerCase()
+            .includes(searchInput.toLowerCase()) ||
+          (item.common_name &&
+            item.common_name.toLowerCase().includes(searchInput.toLowerCase()))
+        );
+      });
+      results.push(...match);
     });
 
-    // const searchSpecies = await fetch(`${searchURL}?${params}`, { signal });
-    const results = searchSpecies.map((feature) => feature.attributes);
     setSearchResults(results);
   };
 
   useEffect(() => {
     if (!searchInput) return;
 
-    if (controller) {
-      controller.abort();
-    }
     getSearchResults();
-
-    return () => {
-      if (controller) {
-        controller.abort();
-      }
-    };
   }, [searchInput]);
 
   return (
@@ -113,18 +91,14 @@ function SpeciesSearchComponent(props) {
         <ul className={styles.searchResults}>
           {searchResults.map(
             (item) =>
-              item.scientificname && (
-                <li key={item.scientificname}>
+              item.scientific_name && (
+                <li key={`${item.scientific_name} - ${item.common_name}`}>
                   <button
                     type="button"
                     onClick={() => handleSearchSelect(item)}
                   >
-                    <b>{item.scientificname}</b> -{' '}
-                    <span>
-                      {locale === 'fr'
-                        ? item.commonname_french
-                        : item.commonname_english}
-                    </span>
+                    <b>{item.scientific_name}</b> -{' '}
+                    <span>{item.common_name}</span>
                   </button>
                 </li>
               )

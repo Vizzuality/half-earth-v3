@@ -22,6 +22,13 @@ function SpeciesListComponent(props) {
   const t = useT();
   const { selectedTaxa, setSelectedTaxa, filteredTaxaList, isLoading } = props;
 
+  const exceptedSources = [
+    TAXA_NAMES.AMPHIBIANS,
+    TAXA_NAMES.BIRDS,
+    TAXA_NAMES.MAMMALS,
+    TAXA_NAMES.REPTILES,
+  ];
+
   const { lightMode } = useContext(LightModeContext);
   const SPHINGID_MOTHS = /Sphingid moths/gi;
 
@@ -38,7 +45,7 @@ function SpeciesListComponent(props) {
         return `Old World ${label}*`;
       }
       if (!taxaToCheck.includes(taxa.toUpperCase())) {
-        return `${t(label)}*`;
+        return `${t(label)}`;
       }
     }
 
@@ -210,38 +217,45 @@ function SpeciesListComponent(props) {
         )}
       </div>
       <hr className={hrTheme.dark} />
-      <p className={styles.comingSoon}>
-        {t(
-          'Fish, tree, and select invertebrate and other plant taxa coming soon'
-        )}
-      </p>
       {isLoading && <Loading height={200} />}
       <div className={styles.taxaList}>
-        {!isLoading &&
-          !selectedTaxa &&
-          filteredTaxaList?.map((taxa) => {
-            return (
-              <button
-                type="button"
-                className={styles.title}
-                key={taxa.taxa}
-                onClick={() => updateSelectedTaxa(taxa.taxa)}
-              >
-                <TaxaImageComponent taxa={taxa.taxa} />
-                <div className={styles.header}>
-                  <span style={{ marginRight: '5px' }}>{taxa.count}</span>
-                  <span
-                    style={{
-                      textTransform: 'capitalize',
-                      display: 'inline-block',
-                    }}
-                  >
-                    {getTaxaTitle(taxa?.title, taxa?.taxa)}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
+        {!isLoading && !selectedTaxa && (
+          <>
+            {filteredTaxaList?.map((taxa) => {
+              if (taxa.count === 0) return null;
+              return (
+                <button
+                  type="button"
+                  className={cx(styles.title, {
+                    [styles.expected]: exceptedSources.includes(
+                      taxa.taxa.toUpperCase()
+                    ),
+                  })}
+                  key={taxa.taxa}
+                  onClick={() => updateSelectedTaxa(taxa.taxa)}
+                >
+                  <TaxaImageComponent taxa={taxa.taxa} />
+                  <div className={styles.header}>
+                    <span style={{ marginRight: '5px' }}>{taxa.count}</span>
+                    <span
+                      style={{
+                        textTransform: 'capitalize',
+                        display: 'inline-block',
+                      }}
+                    >
+                      {getTaxaTitle(taxa?.title, taxa?.taxa)}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+            <p className={styles.comingSoon}>
+              {t(
+                'Taxonomic groups in white represent species lists that are based only on recorded data sources within the region. These lists are therefore incomplete, as many species that do occur here may not be included.'
+              )}
+            </p>
+          </>
+        )}
       </div>
       {!isLoading && selectedTaxa && selectedTaxaObj && (
         <div className={styles.speciesList}>

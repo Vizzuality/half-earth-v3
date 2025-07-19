@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { createDefaultDashboardLayers } from 'utils/dashboard-utils';
+import {
+  createDefaultDashboardLayers,
+  GUY_RIVER_ID,
+} from 'utils/dashboard-utils';
 
 import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
+
+import EsriFeatureService from 'services/esri-feature-service';
 
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 
@@ -22,6 +27,7 @@ function ViewContainer(props) {
     view,
     setView,
     geometry,
+    countryISO,
   } = props;
 
   const [loadState, setLoadState] = useState('loading');
@@ -50,21 +56,46 @@ function ViewContainer(props) {
       // add the country to the graphics layer
       graphicsLayer.graphics.add(feature);
       // zoom to the highlighted country
-      flatView.goTo(
-        {
-          target: zoomGeometry,
-          center: [zoomGeometry.longitude - 15, zoomGeometry.latitude],
-          zoom: 5.5,
-          extent: feature.geometry.clone(),
-        },
-        { duration: 1000 }
-      );
+      if (
+        countryISO.toLowerCase() === 'guy-fm' ||
+        countryISO.toLowerCase() === 'guy'
+      ) {
+        flatView.goTo(
+          {
+            target: zoomGeometry,
+            center: [zoomGeometry.longitude - 5, zoomGeometry.latitude],
+            zoom: 7,
+            extent: feature.geometry.clone(),
+          },
+          { duration: 1000 }
+        );
+      } else {
+        flatView.goTo(
+          {
+            target: zoomGeometry,
+            center: [zoomGeometry.longitude - 20, zoomGeometry.latitude],
+            zoom: 5.5,
+            extent: feature.geometry.clone(),
+          },
+          { duration: 1000 }
+        );
+      }
 
       // set the group layer opacity to 1
       // also increase the layer brightness and add drop-shadow to make the clicked country stand out.
       groupLayer.effect = 'brightness(1.5) drop-shadow(0, 0px, 12px)';
       groupLayer.opacity = 1;
     }
+  };
+
+  const loadGuyRiverLayer = async () => {
+    const layer = await EsriFeatureService.getFeatureLayer(
+      GUY_RIVER_ID,
+      countryISO,
+      'GUY-RIVER'
+    );
+
+    map.add(layer);
   };
 
   useEffect(() => {
@@ -116,6 +147,10 @@ function ViewContainer(props) {
         outFields: ['*'],
       };
       highlightCountry(query, query.geometry, view);
+
+      if (countryISO === 'GUY' || countryISO === 'GUY-FM') {
+        loadGuyRiverLayer();
+      }
     }
   }, [view, geometry]);
 
