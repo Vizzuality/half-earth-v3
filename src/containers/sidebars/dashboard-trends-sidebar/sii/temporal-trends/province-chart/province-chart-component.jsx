@@ -302,7 +302,7 @@ function ProvinceChartComponent(props) {
         display: true,
         title: {
           display: true,
-          text: t('Species Protection Index'),
+          text: t('Species Information Index'),
           color: lightMode ? getCSSVariable('black') : getCSSVariable('white'),
           font: {
             size: 14,

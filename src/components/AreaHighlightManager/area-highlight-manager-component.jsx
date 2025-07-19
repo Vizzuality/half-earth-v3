@@ -40,6 +40,7 @@ function AreaHighlightManagerComponent(props) {
     countryISO,
     activeTrend,
     shiActiveTrend,
+    siiActiveTrend,
     layerView,
     setLayerView,
     setRegionName,
@@ -333,6 +334,8 @@ function AreaHighlightManagerComponent(props) {
               regionLayers[LAYER_OPTIONS.PROVINCES]
             );
           }
+
+          layer.visible = true;
         } else if (tabOption === TABS.SHI) {
           if (countryISO.toLowerCase() === 'ee') {
             layer = await getLayerView();
@@ -343,6 +346,9 @@ function AreaHighlightManagerComponent(props) {
               regionLayers[`${countryISO}-outline`]
             );
           }
+        } else if (tabOption === TABS.SII) {
+          layer = await getLayerView();
+          layer.visible = false;
         }
       } else if (selectedIndex === NAVIGATION.DATA_LAYER) {
         const topLayer = mapLegendLayers[0];
