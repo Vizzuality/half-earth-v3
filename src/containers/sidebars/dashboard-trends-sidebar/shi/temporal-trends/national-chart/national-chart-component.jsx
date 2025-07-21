@@ -207,7 +207,7 @@ function NationalChartComponent(props) {
           <div className={styles.info}>
             <div className={styles.arcGrid}>
               <div className={styles.values}>
-                <b>{nationalScores.year}</b>
+                <b>{nationalScores.year + 1}</b>
                 <span>{t('Year')}</span>
               </div>
               <div className={styles.values}>

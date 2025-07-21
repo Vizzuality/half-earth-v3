@@ -435,7 +435,7 @@ function ProvinceChartComponent(props) {
           {filteredProvince && (
             <div className={styles.arcGrid}>
               <div className={styles.values}>
-                <b>{filteredProvince?.year}</b>
+                <b>{filteredProvince?.year + 1}</b>
                 <span>{t('Year')}</span>
               </div>
               <div className={styles.values}>
