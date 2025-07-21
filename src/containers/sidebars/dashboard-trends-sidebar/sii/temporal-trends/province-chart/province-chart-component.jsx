@@ -153,11 +153,15 @@ function ProvinceChartComponent(props) {
       richness_vert_sii_rank,
     } = lastProvinceValue;
 
+    const spiValue = last(
+      provinces.filter((prov) => prov.name === province.name)
+    );
+
     setSelectedProvince(lastProvinceValue);
     setProvinceName(name);
     setSiiRank(sii_rank);
     setAreaRank(size_rank);
-    setSpeciesRank(richness_vert_sii_rank);
+    setSpeciesRank(richness_vert_sii_rank || spiValue.richness_vert_spi_rank);
     setPercentAreaProtected((area_protected / area_km2) * 100);
     setCountrySII(sii);
     setCurrentYear(year);
