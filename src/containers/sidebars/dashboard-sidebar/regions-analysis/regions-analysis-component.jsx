@@ -146,7 +146,7 @@ function RegionsAnalysisComponent(props) {
     {
       title: t('Acarai-Corentyne Corridor'),
       description: t(
-        'A south-central-north zoning proposal for the formal protection of the Guyana’s Acarai-Corentyne Corridor.'
+        'An area of research and conservation interest for Guyana.'
       ),
       value: REGION_OPTIONS.ACC_REGION,
     },
