@@ -95,7 +95,8 @@ function AreaHighlightManagerComponent(props) {
         regionLayers[LAYER_OPTIONS.PROTECTED_AREAS] ||
         regionLayers[LAYER_OPTIONS.FORESTS] ||
         regionLayers[LAYER_OPTIONS.INDIGENOUS_LANDS] ||
-        regionLayers[`${countryISO}-outline`]
+        regionLayers[`${countryISO}-outline`] ||
+        regionLayers[`${countryISO}-sii`]
     );
   };
 
@@ -347,8 +348,11 @@ function AreaHighlightManagerComponent(props) {
             );
           }
         } else if (tabOption === TABS.SII) {
-          layer = await getLayerView();
-          layer.visible = false;
+          if (siiActiveTrend !== PROVINCE_TREND) {
+            layer = await getLayerView();
+          } else {
+            layer = await view.whenLayerView(regionLayers[`${countryISO}-sii`]);
+          }
         }
       } else if (selectedIndex === NAVIGATION.DATA_LAYER) {
         const topLayer = mapLegendLayers[0];
