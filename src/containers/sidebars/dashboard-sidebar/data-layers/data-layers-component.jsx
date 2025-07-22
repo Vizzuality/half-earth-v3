@@ -257,16 +257,19 @@ function DataLayerComponent(props) {
 
     if (d.points) {
       setDataPoints((prevDataPoints) => {
-        const updatedDataPoints = [...prevDataPoints];
-        const habitatLayer = updatedDataPoints.find(
-          (dp) => dp.id === LAYER_OPTIONS.HABITAT
-        );
+        if (Array.isArray(prevDataPoints)) {
+          const updatedDataPoints = [...prevDataPoints];
+          const habitatLayer = updatedDataPoints.find(
+            (dp) => dp.id === LAYER_OPTIONS.HABITAT
+          );
 
-        if (habitatLayer) {
-          displayHabitatLayer();
+          if (habitatLayer) {
+            displayHabitatLayer();
+          }
+
+          return updatedDataPoints;
         }
-
-        return updatedDataPoints;
+        return [];
       });
     }
 
@@ -328,18 +331,30 @@ function DataLayerComponent(props) {
 
   useEffect(() => {
     if (!dataLayerData) return;
-    const publicData = [
-      ...groupByTypeTitle(dataLayerData),
-      {
-        label: t('Habitat Loss/Gain'),
+    const publicData = [...groupByTypeTitle(dataLayerData)];
+
+    if (speciesInfo.scientificname.toUpperCase() === 'ATELES PANISCUS') {
+      publicData.push({
+        label: t('Species Distribution Model'),
         items: [],
-        id: LAYER_OPTIONS.HABITAT,
+        id: LAYER_OPTIONS.SDM,
         total_no_rows: '',
         isActive: false,
         showChildren: false,
         type: DATA_POINT_TYPE.PUBLIC,
-      },
-    ];
+      });
+    }
+
+    publicData.push({
+      label: t('Habitat Loss/Gain'),
+      items: [],
+      id: LAYER_OPTIONS.HABITAT,
+      total_no_rows: '',
+      isActive: false,
+      showChildren: false,
+      type: DATA_POINT_TYPE.PUBLIC,
+    });
+
     setDataPoints(publicData);
 
     if (countryISO.toUpperCase() === 'EE') {

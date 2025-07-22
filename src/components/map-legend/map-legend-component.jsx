@@ -14,6 +14,7 @@ import {
 import ArrowIcon from 'icons/arrow_right.svg?react';
 import ArrowUpIcon from 'icons/dashboard/arrow_icon.svg?react';
 
+import SDMColorRamp from 'images/dashboard/colorramp.png';
 import SHILegendImage from 'images/dashboard/shi_legend.png';
 import SIILegendImage from 'images/dashboard/sii_legend.png';
 import SPILegendImage from 'images/dashboard/spi_legend.png';
@@ -109,6 +110,11 @@ function MapLegendComponent(props) {
         <img src={HabitatLegendImage} width="100%" height={20} alt="Habitat" />
       );
     }
+
+    if (layer.id === LAYER_OPTIONS.SDM) {
+      return <img src={SDMColorRamp} width="100%" height={20} alt="SDM" />;
+    }
+
     if (layer.id === REGION_OPTIONS.PROVINCES) {
       return (
         <div className={styles.mapLegend}>
