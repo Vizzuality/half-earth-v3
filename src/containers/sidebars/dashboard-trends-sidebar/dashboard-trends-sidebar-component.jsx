@@ -87,6 +87,10 @@ function DashboardTrendsSidebar(props) {
       (item) => item.id === `${countryISO}-outline`
     );
 
+    const siiLayer = map.layers.items.find(
+      (item) => item.id === `${countryISO}-sii`
+    );
+
     if (tabClicked === TABS.SII) {
       if (foundProvinceLayer) {
         foundProvinceLayer.visible = false;
@@ -96,7 +100,12 @@ function DashboardTrendsSidebar(props) {
         outlineLayer.visible = false;
       }
 
-      setMapLegendLayers([]);
+      if (siiLayer) {
+        siiLayer.visible = true;
+      }
+
+      const item = { label: 'SII', parent: '', id: `${countryISO}-sii` };
+      setMapLegendLayers([item]);
     } else if (tabClicked === TABS.SHI) {
       if (foundProvinceLayer) {
         foundProvinceLayer.visible = false;
@@ -128,6 +137,10 @@ function DashboardTrendsSidebar(props) {
 
       if (zone5Layer) {
         zone5Layer.visible = false;
+      }
+
+      if (siiLayer) {
+        siiLayer.visible = false;
       }
 
       const item = { label: 'SHI', parent: '', id: `${countryISO}-outline` };
@@ -163,6 +176,10 @@ function DashboardTrendsSidebar(props) {
 
         if (zone5ShiLayer) {
           zone5ShiLayer.visible = false;
+        }
+
+        if (siiLayer) {
+          siiLayer.visible = false;
         }
       });
 

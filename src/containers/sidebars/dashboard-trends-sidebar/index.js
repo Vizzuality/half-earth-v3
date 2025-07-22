@@ -5,6 +5,7 @@ import { removeRegionLayers } from 'utils/dashboard-utils';
 import {
   PROVINCE_FEATURE_GLOBAL_SPI_LAYER_ID,
   SHI_LAYER_ID,
+  SII_LAYER_ID,
   ZONE_3_SPI_FEATURE_ID,
   ZONE_3_SHI_FEATURE_ID,
   ZONE_5_SPI_FEATURE_ID,
@@ -398,9 +399,25 @@ function DashboardTrendsSidebarContainer(props) {
         outlineFeatureLayer.visible = false;
       }
 
+      const siiLayer = await EsriFeatureService.getFeatureLayer(
+        SII_LAYER_ID,
+        countryISO,
+        `${countryISO}-sii`
+      );
+      map.add(siiLayer);
+
+      // eslint-disable-next-line no-shadow
+      setRegionLayers((regionLayers) => ({
+        ...regionLayers,
+        [`${countryISO}-sii`]: siiLayer,
+      }));
+
       if (tabOption === TABS.SII) {
+        siiLayer.visible = true;
         layer.visible = false;
         outlineFeatureLayer.visible = false;
+      } else {
+        siiLayer.visible = false;
       }
 
       if (geometry) {

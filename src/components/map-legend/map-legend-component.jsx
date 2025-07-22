@@ -15,6 +15,7 @@ import ArrowIcon from 'icons/arrow_right.svg?react';
 import ArrowUpIcon from 'icons/dashboard/arrow_icon.svg?react';
 
 import SHILegendImage from 'images/dashboard/shi_legend.png';
+import SIILegendImage from 'images/dashboard/sii_legend.png';
 import SPILegendImage from 'images/dashboard/spi_legend.png';
 import HabitatLegendImage from 'images/hab_change_colorRamp.png';
 
@@ -29,6 +30,8 @@ function MapLegendComponent(props) {
   const spiHigh = 100;
   const shiLow = 95;
   const shiHigh = 100;
+  const siiLow = 0;
+  const siiHigh = 100;
 
   const getLayerIcon = (layer) => {
     if (layer.parentId === LAYER_OPTIONS.EXPERT_RANGE_MAPS) {
@@ -124,6 +127,18 @@ function MapLegendComponent(props) {
           <div className={styles.legendValues}>
             <span>{shiLow}</span>
             <span>{shiHigh}</span>
+          </div>
+        </div>
+      );
+    }
+
+    if (layer.id === `${countryISO}-sii`) {
+      return (
+        <div className={styles.mapLegend}>
+          <img src={SIILegendImage} width="100%" height={20} alt="SII" />
+          <div className={styles.legendValues}>
+            <span>{siiLow}</span>
+            <span>{siiHigh}</span>
           </div>
         </div>
       );
