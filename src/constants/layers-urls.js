@@ -558,6 +558,8 @@ export const DASHBOARD_URLS = {
     'https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/species_sps_region_global/FeatureServer',
   REGION_BIODIVERSITY_SHS_URL:
     ' https://services1.arcgis.com/7uJv7I3kgh2y7Pe0/arcgis/rest/services/species_shs_region_global/FeatureServer',
+  SDM_FEATURE_LAYER_URL:
+    'https://tiles.arcgis.com/tiles/7uJv7I3kgh2y7Pe0/arcgis/rest/services/Ateles_paniscus/MapServer',
 };
 
 export const NBIS_URLS = {

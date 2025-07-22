@@ -23,6 +23,7 @@ import {
   LAYER_OPTIONS,
   DATA_POINT_TYPE,
 } from 'constants/dashboard-constants.js';
+import { DASHBOARD_URLS } from 'constants/layers-urls.js';
 
 import ArrowIcon from 'icons/arrow_right.svg?react';
 
@@ -202,6 +203,11 @@ function GroupedListComponent(props) {
       layer = await EsriFeatureService.getFeatureLayer(
         EEWWF_COUNTRY_LINES_FEATURE_ID,
         countryISO,
+        id
+      );
+    } else if (id === LAYER_OPTIONS.SDM) {
+      layer = await EsriFeatureService.getTileLayer(
+        DASHBOARD_URLS.SDM_FEATURE_LAYER_URL,
         id
       );
     }
