@@ -481,9 +481,7 @@ function DashboardContainer(props) {
     let whereClause = `ISO3 = '${countryISO}'`;
     if (countryISO === 'GUY') {
       url = DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL;
-    }
-
-    if (selectedRegion) {
+    } else if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
@@ -509,6 +507,16 @@ function DashboardContainer(props) {
         }
         whereClause = `region_key = '${region_key}'`;
       }
+    }
+
+    if (
+      selectedRegion &&
+      selectedRegionOption === REGION_OPTIONS.RAPID_INVENTORY_32
+    ) {
+      const { region_key } = selectedRegion;
+      url = DASHBOARD_URLS.RAPID_INVENTORY_SPECIES;
+
+      whereClause = `region_key = '${region_key}'`;
     }
 
     if (!selectedRegion?.mgc) {
