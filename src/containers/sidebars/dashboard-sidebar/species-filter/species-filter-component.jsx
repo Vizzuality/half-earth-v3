@@ -76,9 +76,15 @@ function SpeciesFilterComponent(props) {
         {
           name: t('Occurrence'),
           active: false,
-          test: (species) =>
-            species.source.indexOf('GBIF') > -1 ||
-            species.source.indexOf('eBird') > -1,
+          test: (species) => {
+            if (selectedRegionOption === REGION_OPTIONS.RAPID_INVENTORY_32) {
+              return species.source.indexOf('Rapid') > -1;
+            }
+            return (
+              species.source.indexOf('GBIF') > -1 ||
+              species.source.indexOf('eBird') > -1
+            );
+          },
           count: 0,
           result: false,
           type: 'and',
