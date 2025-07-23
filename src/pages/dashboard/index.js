@@ -544,7 +544,8 @@ function DashboardContainer(props) {
             if (!isFound) {
               const foundSpecies = foundTaxa?.species.find(
                 (speciesToFind) =>
-                  speciesToFind.scientific_name === species.scientific_name
+                  speciesToFind.scientific_name.toUpperCase() ===
+                  species.scientific_name.toUpperCase()
               );
 
               if (!foundSpecies) {
