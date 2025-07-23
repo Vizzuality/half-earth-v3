@@ -481,7 +481,9 @@ function DashboardContainer(props) {
     let whereClause = `ISO3 = '${countryISO}'`;
     if (countryISO === 'GUY') {
       url = DASHBOARD_URLS.GUY_SPECIES_OCCURENCE_URL;
-    } else if (selectedRegion) {
+    }
+
+    if (selectedRegion) {
       const { GID_1, WDPA_PID, Int_ID, region_key } = selectedRegion;
       if (GID_1) {
         whereClause = `GID_1 = '${GID_1}'`;
@@ -500,6 +502,10 @@ function DashboardContainer(props) {
       if (region_key) {
         if (countryISO === 'GUY-FM') {
           url = DASHBOARD_URLS.ZONE_OCCURRENCE;
+        }
+
+        if (selectedRegionOption === REGION_OPTIONS.RAPID_INVENTORY_32) {
+          url = DASHBOARD_URLS.RAPID_INVENTORY_SPECIES;
         }
         whereClause = `region_key = '${region_key}'`;
       }
