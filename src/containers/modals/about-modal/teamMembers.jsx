@@ -29,8 +29,8 @@ const teams = [
       { name: 'Elise Boos', title: 'Biodiversity Data Coordinator' },
       { name: 'Tamara Rudic', title: 'Science Communication Specialist – StoryMaps and UI/UX' },
       { name: 'Jeremy Cohen', title: 'Associate Research Scientist, Biodiversity and Climate change' },
-      { name: 'Frank La Sorte', title: 'Consultant, Spatial biodiversity and Global Change' },
       { name: 'Meredith Palmer', title: 'Biodiversity data integration and change analytics ' },
+      { name: 'Frank La Sorte', title: 'Consultant, Spatial biodiversity and Global Change' },
     ],
   },
   {
