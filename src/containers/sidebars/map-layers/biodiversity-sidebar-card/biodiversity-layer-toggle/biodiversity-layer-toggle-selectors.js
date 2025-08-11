@@ -16,6 +16,9 @@ const getSelectedResolutions = (state, { selectedResolutions }) =>
 const getBiodiversityLayerVariant = (state, { biodiversityLayerVariant }) =>
   biodiversityLayerVariant;
 
+const selectAoiId = ({ location }) =>
+  location.query && location.query.ui?.aoiId;
+
 const parsedGroupOptions = (layerOptions) => {
   const groupedOptions = GROUPED_OPTIONS(layerOptions).filter(
     (go) => go.options.length > 0
@@ -97,4 +100,5 @@ export default createStructuredSelector({
   layerOptions: getGroupedLayerOptions,
   selectedLayerOption: getSelectedLayerOption,
   allActiveLayerTitles: getAllBiodiversityActiveLayers,
+  aoiId: selectAoiId,
 });
