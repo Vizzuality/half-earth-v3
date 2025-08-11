@@ -22,7 +22,6 @@ const teams = [
       { name: 'Claire Hoffmann', title: 'Science and User Partner Engagement' },
       { name: 'John Wilshire', title: 'Software Engineer - Software engineering' },
       { name: 'Kalkidan Chefira', title: 'Software Engineer - Software engineering' },
-      { name: 'Glen Woelfl', title: 'Data Engineer - Software engineering' },
       { name: 'Beth Gerstner', title: 'Research Associate - Spatial analytics' },
       { name: 'Melissa Slater', title: 'Data Associate – Data management' },
       { name: 'Kevin Winner', title: 'Spatial Modelling Lead - Spatial analytics' },

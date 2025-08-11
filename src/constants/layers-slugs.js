@@ -159,6 +159,12 @@ export const ANTS_RARITY_1KM = 'ants-rarity-1km';
 export const ANTS_RICHNESS_1KM = 'ants-richness-1km';
 export const AMPHIB_RICHNESS_NATIONAL = 'amphib-richness-national';
 export const AMPHIB_RARITY_NATIONAL = 'amphib-rarity-national';
+export const BIRD_RICHNESS_NATIONAL = 'bird-richness-national';
+export const BIRD_RARITY_NATIONAL = 'bird-rarity-national';
+export const MAMMAL_RICHNESS_NATIONAL = 'mammal-richness-national';
+export const MAMMAL_RARITY_NATIONAL = 'mammal-rarity-national';
+export const REPTILE_RICHNESS_NATIONAL = 'reptile-richness-national';
+export const REPTILE_RARITY_NATIONAL = 'reptile-rarity-national';
 
 export const ANTS_RARITY_GLOBAL = 'ants-rarity-global';
 export const ANTS_RICHNESS_GLOBAL = 'ants-richness-global';

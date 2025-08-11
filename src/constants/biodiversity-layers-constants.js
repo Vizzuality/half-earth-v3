@@ -69,6 +69,12 @@ import {
   BUTTERFLIES_RARITY_GLOBAL,
   AMPHIB_RICHNESS_NATIONAL,
   AMPHIB_RARITY_NATIONAL,
+  BIRD_RICHNESS_NATIONAL,
+  MAMMAL_RICHNESS_NATIONAL,
+  REPTILE_RICHNESS_NATIONAL,
+  BIRD_RARITY_NATIONAL,
+  MAMMAL_RARITY_NATIONAL,
+  REPTILE_RARITY_NATIONAL,
 } from 'constants/layers-slugs';
 
 export const LAYER_VARIANTS = {
@@ -420,6 +426,27 @@ export const getLayersToggleConfig = () => ({
           layer: AMPHIB_RICHNESS_NATIONAL,
           group: t('amphibians'),
         },
+        {
+          value: BIRD_RICHNESS_NATIONAL,
+          name: t('birds'),
+          title: t('birds'),
+          layer: BIRD_RICHNESS_NATIONAL,
+          group: t('birds'),
+        },
+        {
+          value: MAMMAL_RICHNESS_NATIONAL,
+          name: t('mammals'),
+          title: t('mammals'),
+          layer: MAMMAL_RICHNESS_NATIONAL,
+          group: t('mammals'),
+        },
+        {
+          value: REPTILE_RICHNESS_NATIONAL,
+          name: t('reptiles'),
+          title: t('reptiles'),
+          layer: REPTILE_RICHNESS_NATIONAL,
+          group: t('reptiles'),
+        },
       ],
     },
     [MARINE]: {
@@ -626,6 +653,27 @@ export const getLayersToggleConfig = () => ({
           title: t('amphibians'),
           layer: AMPHIB_RARITY_NATIONAL,
           group: t('amphibians'),
+        },
+        {
+          value: BIRD_RARITY_NATIONAL,
+          name: t('birds'),
+          title: t('birds'),
+          layer: BIRD_RARITY_NATIONAL,
+          group: t('birds'),
+        },
+        {
+          value: MAMMAL_RARITY_NATIONAL,
+          name: t('mammals'),
+          title: t('mammals'),
+          layer: MAMMAL_RARITY_NATIONAL,
+          group: t('mammals'),
+        },
+        {
+          value: REPTILE_RARITY_NATIONAL,
+          name: t('reptiles'),
+          title: t('reptiles'),
+          layer: REPTILE_RARITY_NATIONAL,
+          group: t('reptiles'),
         },
       ],
     },

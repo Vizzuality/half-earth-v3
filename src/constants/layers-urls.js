@@ -62,6 +62,12 @@ import {
   AMPHIB_RICHNESS,
   AMPHIB_RICHNESS_NATIONAL,
   AMPHIB_RARITY_NATIONAL,
+  BIRD_RICHNESS_NATIONAL,
+  MAMMAL_RICHNESS_NATIONAL,
+  REPTILE_RICHNESS_NATIONAL,
+  BIRD_RARITY_NATIONAL,
+  MAMMAL_RARITY_NATIONAL,
+  REPTILE_RARITY_NATIONAL,
   FISHES_PRIORITY,
   FISHES_RARITY,
   FISHES_RICHNESS,
@@ -473,7 +479,19 @@ export const LAYERS_URLS = {
 
   // Regional richness and rarity layers
   [AMPHIB_RICHNESS_NATIONAL]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amphibians_national_standardized_richness/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amphibians_richness_nationally_scaled_SEA_NA_SACA/MapServer',
   [AMPHIB_RARITY_NATIONAL]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amphibians_national_normalized_log_mean_rarity/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amphibians_mean_rarity_nationally_scaled_SEA_NA_SACA/MapServer',
+  [BIRD_RICHNESS_NATIONAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/birds_richness_nationally_scaled_SEA_NA_SACA/MapServer',
+  [BIRD_RARITY_NATIONAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/birds_mean_rarity_nationally_scaled_SEA_NA_SACA/MapServer',
+  [MAMMAL_RICHNESS_NATIONAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mammals_richness_nationally_scaled_SEA_NA_SACA/MapServer',
+  [MAMMAL_RARITY_NATIONAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mammals_mean_rarity_nationally_scaled_SEA_NA_SACA/MapServer',
+  [REPTILE_RICHNESS_NATIONAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/reptiles_richness_nationally_scaled_SEA_NA_SACA/MapServer',
+  [REPTILE_RARITY_NATIONAL]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/reptiles_mean_rarity_nationally_scaled_SEA_NA_SACA/MapServer',
 };
