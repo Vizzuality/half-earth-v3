@@ -1,6 +1,7 @@
 import path from 'path';
 
 import react from '@vitejs/plugin-react';
+import viteRadar from 'vite-plugin-radar';
 import { defineConfig, transformWithEsbuild } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
@@ -60,7 +61,6 @@ export default defineConfig({
       name: 'treat-js-files-as-jsx',
       async transform(code, id) {
         if (!id.match(/src\/.*\.(js|ts)$/)) return null;
-
         // Use the exposed transform from vite, instead of directly
         // transforming with esbuild
         return transformWithEsbuild(code, id, {
@@ -74,6 +74,13 @@ export default defineConfig({
     directoryNamedResolver(),
     moduleScssResolver(),
     svgr(),
+    viteRadar({
+      analytics: {
+        googleAnalytics: {
+          id: process.env.VITE_APP_GA_4_ID,
+        },
+      },
+    }),
   ],
   optimizeDeps: {
     force: true,
@@ -97,7 +104,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: undefined,
-     },
+      },
     },
   },
   resolve: {
