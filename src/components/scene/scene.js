@@ -9,6 +9,7 @@ import useIsSafari from 'utils/user-agent-utils';
 
 import ArcGISMap from '@arcgis/core/Map';
 import SceneView from '@arcgis/core/views/SceneView';
+import ViewshedAnalysis from "@arcgis/core/analysis/ViewshedAnalysis.js";
 
 import { useWatchUtils } from 'hooks/esri';
 
@@ -75,6 +76,7 @@ function SceneContainer(props) {
   const [hasSetRotationActive, setHasSetRotationActive] = useState(false);
   const [animationRotatedDegrees, setAnimationRotatedDegrees] = useState(0);
   const [loadState, setLoadState] = useState('loading');
+  const [viewshedAnalysisView, setViewshedAnalysisView] = useState();
   const isMobile = useMobile();
   const isSafari = useIsSafari();
 
@@ -176,10 +178,38 @@ function SceneContainer(props) {
       if (onViewLoad) {
         onViewLoad(map, view);
       }
-      setSceneMap(map);
-      setSceneView(view);
+
+      const getViewShed = async (view) => {
+          // create new analysis and add it to the view
+          const viewShedAnalysis = new ViewshedAnalysis();
+          view.analyses.add(viewShedAnalysis);
+          console.log('view', view);
+          console.log('analyses', view.analyses);
+
+          console.log(viewShedAnalysis);
+          await view.whenAnalysisView(viewShedAnalysis);
+          // retrieve analysis view
+          const vav = await view.whenAnalysisView(viewShedAnalysis);
+          setViewshedAnalysisView(vav);
+      }
+      getViewShed(view);
+
+      // setSceneMap(map);
+      // setSceneView(view);
     }
   }, [map, view]);
+
+  useEffect(() => {
+    if(map && view && viewshedAnalysisView) {
+
+      if(viewshedAnalysisView){
+        viewshedAnalysisView.interactive = true;
+        setSceneMap(map);
+        setSceneView(view);
+      }
+    }
+
+  }, [map, view, viewshedAnalysisView])
 
   const watchUtils = useWatchUtils();
 
