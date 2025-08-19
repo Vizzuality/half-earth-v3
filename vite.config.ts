@@ -1,7 +1,7 @@
 import path from 'path';
 
 import react from '@vitejs/plugin-react';
-import viteRadar from 'vite-plugin-radar';
+import { VitePluginRadar } from 'vite-plugin-radar';
 import { defineConfig, transformWithEsbuild } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
@@ -74,11 +74,9 @@ export default defineConfig({
     directoryNamedResolver(),
     moduleScssResolver(),
     svgr(),
-    viteRadar({
+    VitePluginRadar({
       analytics: {
-        googleAnalytics: {
-          id: process.env.VITE_APP_GA_4_ID,
-        },
+        id: process.env.VITE_APP_GA_4_ID,
       },
     }),
   ],

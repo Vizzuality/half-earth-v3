@@ -1,6 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
-
-import loadable from '@loadable/component';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 
 import { T } from '@transifex/react';
 
@@ -8,7 +6,7 @@ import { Modal } from 'he-components';
 
 import SpeciesCard from 'containers/sidebars/aoi-sidebar/species-card/component';
 
-import ShareModalButton from 'components/share-button';
+import ShareButtonComponent from 'components/share-button/share-button-component';
 import ShareModal from 'components/share-modal';
 
 import styles from './styles.module.scss';
@@ -18,10 +16,7 @@ import SpsLegend from './sps-legend';
 import { SpeciesModalProps } from './types';
 
 
-// TODO: TS-TODO Fix import of components
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-const Spinner = loadable(() => import('components/spinner'));
+import Spinner from 'components/spinner';
 
 function SpeciesAnalysisModal({
   isOpen,
@@ -88,7 +83,7 @@ function SpeciesAnalysisModal({
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContent}>
         <div className={styles.buttons}>
-          <ShareModalButton
+          <ShareButtonComponent
             theme={{ shareButton: styles.shareButton }}
             setShareModalOpen={setShareModalOpen}
             tooltipPosition="bottom"
@@ -104,7 +99,7 @@ function SpeciesAnalysisModal({
         </div>
         <div className={styles.chartContainer}>
           {loading ? (
-            <Spinner floating />
+            <Spinner />
           ) : (
             <>
               <h1 className={styles.title}>
