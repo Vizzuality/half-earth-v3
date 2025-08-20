@@ -8,11 +8,16 @@ import {
   selectUiUrlState,
 } from 'selectors/location-selectors';
 
+import featuredMapActions from '../../store/redux-modules/featured-map/featured-map';
+
 import initialState from './featured-globe-initial-state';
 
 const selectMetadataData = ({ metadata }) =>
   metadata && (!isEmpty(metadata.data) || null);
 const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces;
+const selectedFeaturedMapLayer = ({ featuredMap }) => featuredMap['slug'];
+const selectedBestMapLayer = ({ featuredMap }) => 'bestPlaces';
+const selectedDiscoveryMapLayer = ({ featuredMap }) => featuredMap['slug'];
 
 const getGlobeSettings = createSelector(
   selectGlobeUrlState,
@@ -46,14 +51,22 @@ const getMapsListActive = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.selectedSidebar === 'featuredMapsList'
 );
-const getSelectedFeaturedMap = createSelector(
+// const getSelectedFeaturedMap = createSelector(
+//   getUiSettings,
+//   featuredMapActions.setFeaturedMap
+//   // (uiSettings) => uiSettings.selectedFeaturedMap
+// );
+
+const getSelectedBestMap = createSelector(
   getUiSettings,
-  (uiSettings) => uiSettings.selectedFeaturedMap
+  (uiSettings) => uiSettings.selectedBestMap
 );
+
 const getSelectedDiscoveryMap = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.selectedDiscoveryMap
 );
+
 const getSelectedFeaturedPlace = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.selectedFeaturedPlace
@@ -86,7 +99,9 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   hasMetadata: selectMetadataData,
   isFullscreenActive: getFullscreenActive,
-  selectedFeaturedMap: getSelectedFeaturedMap,
+  // selectedFeaturedMap: getSelectedFeaturedMap,
+  selectedFeaturedMap: selectedFeaturedMapLayer,
+  selectedBestMap: getSelectedBestMap,
   selectedDiscoveryMap: getSelectedDiscoveryMap,
   selectedTaxa: getSelectedTaxa,
   selectedSidebar: getSelectedSidebar,

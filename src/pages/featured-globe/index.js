@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
+import featuredMapActions from 'redux_modules/featured-map';
 
 import { useLocale } from '@transifex/react';
 
@@ -24,7 +25,7 @@ import * as scheduling from '@arcgis/core/core/scheduling';
 
 import {
   FEATURED_PLACES_LAYER,
-  DISCOVERY_GLOBE_LAYER,
+  DISCOVER_PLACES_LAYER,
   VIBRANT_BASEMAP_LAYER,
 } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
@@ -32,7 +33,7 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import Component from './featured-globe-component';
 import mapStateToProps from './featured-globe-selectors';
 
-const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics };
+const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics, ...featuredMapActions };
 
 const featuredGlobeContainer = (props) => {
   const [handle, setHandle] = useState(null);
@@ -50,15 +51,19 @@ const featuredGlobeContainer = (props) => {
   } = props;
 
   const handleMarkerClick = (viewPoint) => {
+    console.log(selectedFeaturedMap);
+    const featuredPlace = selectedFeaturedMap === 'discoverPlaces' ? DISCOVER_PLACES_LAYER : FEATURED_PLACES_LAYER;
     if (!isFullscreenActive) {
-      setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI);
+      setSelectedFeaturedPlace(viewPoint, featuredPlace, changeUI);
       props.readStoryAnalytics();
       removeAvatarImage();
     }
   };
 
   const handleMarkerHover = (viewPoint, view) => {
-    const layerFeatures = hitResults(viewPoint, FEATURED_PLACES_LAYER);
+    const featuredPlace = selectedFeaturedMap === 'discoverPlaces' ? DISCOVER_PLACES_LAYER : FEATURED_PLACES_LAYER;
+
+    const layerFeatures = hitResults(viewPoint, featuredPlace);
     setCursor(layerFeatures);
     if (!isFeaturedPlaceCard) {
       setAvatarImage(

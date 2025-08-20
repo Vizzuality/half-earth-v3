@@ -31,6 +31,7 @@ function FeaturedGlobe({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
+  selectedBestMap,
   selectedDiscoveryMap,
   selectedFeaturedPlace,
   selectedSidebar,
@@ -48,6 +49,7 @@ function FeaturedGlobe({
   mouseMoveCallbacksArray,
   openedModal,
   browsePage,
+  setFeaturedMap,
 }) {
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
@@ -101,17 +103,18 @@ function FeaturedGlobe({
         )}
 
         <div className={cx(uiStyles.uiTopLeft, uiStyles.featuresContainer)}>
-          {selectedFeaturedMap && (
+          {selectedBestMap && (
               <SelectedFeaturedMapCard
                 className={cx({
                   [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
                 })}
-                selectedFeaturedMap={selectedFeaturedMap}
+                selectedFeaturedMap={selectedBestMap}
                 selectedSidebar={selectedSidebar}
                 isFullscreenActive={isFullscreenActive}
                 selectedFeaturedPlace={selectedFeaturedPlace}
                 spinGlobe={spinGlobe}
                 handle={spinGlobeHandle}
+                setFeaturedMap={setFeaturedMap}
               />
           )}
 
@@ -126,6 +129,7 @@ function FeaturedGlobe({
               selectedFeaturedPlace={selectedFeaturedPlace}
               spinGlobe={spinGlobe}
               handle={spinGlobeHandle}
+              setFeaturedMap={setFeaturedMap}
             />
           )}
         </div>

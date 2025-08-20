@@ -1,7 +1,6 @@
 import {
   CITIES_LABELS_LAYER,
   FEATURED_PLACES_LAYER,
-  DISCOVERY_GLOBE_LAYER,
   GRAPHIC_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   PRIORITY_POLYGONS_GRAPHIC_LAYER,
@@ -49,7 +48,8 @@ export default {
     onboardingStep: 0,
     selectedSidebar: 'featuredMapCard',
     selectedFeaturedMap: 'bestPlaces',
-    selectedDiscoveryMap: 'discoveryGlobe',
+    selectedDiscoveryMap: 'discoverPlaces',
+    selectedBestMap: 'bestPlaces',
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
     isFullscreenActive: false,

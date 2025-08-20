@@ -63,7 +63,7 @@ export const FIREFLY_BASEMAP_LAYER = 'firefly_basemap';
 // Featured places layer
 export const FEATURED_PLACES_LAYER = 'featured_places';
 // Discovery globe layer
-export const DISCOVERY_GLOBE_LAYER = 'discovery_globe';
+export const DISCOVER_PLACES_LAYER = 'discover_places';
 // Basemap (featured mode)
 export const VIBRANT_BASEMAP_LAYER = 'Vibrant';
 // Basemap (featured mode)
