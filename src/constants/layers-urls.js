@@ -128,6 +128,7 @@ import {
   TREES_PRIORITY,
   TREES_RICHNESS,
   TREES_RARITY,
+  DISCOVER_PLACES_LAYER,
 } from 'constants/layers-slugs';
 
 const { VITE_APP_VERCEL_ENV } = import.meta.env;
@@ -200,6 +201,8 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/685d69cda038469f93dcfd96355abefc/rest/services/PriorPolygons/FeatureServer',
   [FEATURED_PLACES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Bioplaces/FeatureServer',
+  [DISCOVER_PLACES_LAYER]:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/featured_places_discover_added/FeatureServer',
 
   // Carbon layer
   [CARBON_LAYER]:

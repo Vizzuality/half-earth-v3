@@ -31,6 +31,8 @@ function FeaturedGlobe({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
+  selectedBestMap,
+  selectedDiscoveryMap,
   selectedFeaturedPlace,
   selectedSidebar,
   isGlobeUpdating,
@@ -47,6 +49,7 @@ function FeaturedGlobe({
   mouseMoveCallbacksArray,
   openedModal,
   browsePage,
+  setFeaturedMap,
 }) {
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
@@ -81,6 +84,7 @@ function FeaturedGlobe({
           mouseMoveCallbacksArray={mouseMoveCallbacksArray}
         />
         <FeaturedPlaceViewManager
+          selectedFeaturedMap={selectedFeaturedMap}
           selectedFeaturedPlace={selectedFeaturedPlace}
         />
 
@@ -99,19 +103,38 @@ function FeaturedGlobe({
           <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
         )}
 
-        {selectedFeaturedMap && (
-          <SelectedFeaturedMapCard
-            className={cx(uiStyles.uiTopLeft, {
-              [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
-            })}
-            selectedFeaturedMap={selectedFeaturedMap}
-            selectedSidebar={selectedSidebar}
-            isFullscreenActive={isFullscreenActive}
-            selectedFeaturedPlace={selectedFeaturedPlace}
-            spinGlobe={spinGlobe}
-            handle={spinGlobeHandle}
-          />
-        )}
+        <div className={cx(uiStyles.uiTopLeft, uiStyles.featuresContainer)}>
+          {selectedBestMap && (
+              <SelectedFeaturedMapCard
+                className={cx({
+                  [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
+                })}
+                selectedFeaturedMap={selectedBestMap}
+                selectedSidebar={selectedSidebar}
+                isFullscreenActive={isFullscreenActive}
+                selectedFeaturedPlace={selectedFeaturedPlace}
+                spinGlobe={spinGlobe}
+                handle={spinGlobeHandle}
+                setFeaturedMap={setFeaturedMap}
+              />
+          )}
+
+          {selectedDiscoveryMap && (
+            <SelectedFeaturedMapCard
+              className={cx( {
+                [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
+              })}
+              selectedFeaturedMap={selectedDiscoveryMap}
+              selectedSidebar={selectedSidebar}
+              isFullscreenActive={isFullscreenActive}
+              selectedFeaturedPlace={selectedFeaturedPlace}
+              spinGlobe={spinGlobe}
+              handle={spinGlobeHandle}
+              setFeaturedMap={setFeaturedMap}
+            />
+          )}
+        </div>
+
         <FeaturedPlacesLayer
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}

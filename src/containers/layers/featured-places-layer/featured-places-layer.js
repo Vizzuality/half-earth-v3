@@ -4,7 +4,7 @@ import { findLayerInMap } from 'utils/layer-manager-utils';
 
 import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter.js';
 
-import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
+import { FEATURED_PLACES_LAYER, DISCOVER_PLACES_LAYER } from 'constants/layers-slugs';
 
 function FeaturedMapLayer({
   map,
@@ -17,7 +17,14 @@ function FeaturedMapLayer({
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
   useEffect(() => {
-    const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    // const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    // setFeaturedPlacesLayer(layer);
+    let layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    if (!layer) {
+      // If the layer is not found, we create it from the config
+      layer = findLayerInMap(DISCOVER_PLACES_LAYER, map);
+    }
+    // const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
   }, []);
 
