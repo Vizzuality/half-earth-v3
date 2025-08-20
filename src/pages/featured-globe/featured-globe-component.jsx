@@ -84,6 +84,7 @@ function FeaturedGlobe({
           mouseMoveCallbacksArray={mouseMoveCallbacksArray}
         />
         <FeaturedPlaceViewManager
+          selectedFeaturedMap={selectedFeaturedMap}
           selectedFeaturedPlace={selectedFeaturedPlace}
         />
 

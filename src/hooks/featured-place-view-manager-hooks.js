@@ -8,7 +8,8 @@ import { FEATURED_PLACES_LAYER, DISCOVER_PLACES_LAYER } from 'constants/layers-s
 export function useFeaturedPlaceViewCameraChange(
   map,
   view,
-  selectedFeaturedPlace
+  selectedFeaturedPlace,
+  selectedFeaturedMap
 ) {
   const [coords, setCoords] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
@@ -24,6 +25,15 @@ export function useFeaturedPlaceViewCameraChange(
     // const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
   }, []);
+
+  useEffect(() => {
+    let layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    if(selectedFeaturedMap === 'discoverPlaces'){
+      layer = findLayerInMap(DISCOVER_PLACES_LAYER, map);
+    }
+    // const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    setFeaturedPlacesLayer(layer);
+  }, [selectedFeaturedMap])
 
   useEffect(() => {
     if (selectedFeaturedPlace && featuredPlacesLayer) {
