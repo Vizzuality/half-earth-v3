@@ -49,9 +49,13 @@ function FeaturedPlaceCardContainer(props) {
 
   useEffect(() => {
     if (featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace) {
-      setFeaturedPlace({
-        ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace],
-      });
+      if(featuredMapPlaces[selectedFeaturedMap]?.[selectedFeaturedPlace]){
+        setFeaturedPlace({
+          ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace],
+        });
+      } else {
+        handleClose();
+      }
     }
   }, [selectedFeaturedPlace, selectedFeaturedMap, featuredMapPlaces]);
 
