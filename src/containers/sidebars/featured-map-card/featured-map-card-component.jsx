@@ -52,7 +52,10 @@ function FeaturedMapCardComponent({
     const slug = getSlugLayer(layerSlug);
     if((layerSlug === FEATURE_TYPES.FEATURED_PLACES && !featurePlacesLayer) ||
       (layerSlug === FEATURE_TYPES.DISCOVER_PLACES && !discoveryGlobeLayer)) {
-      const layer = createLayer({url: LAYERS_URLS[slug], slug: slug, type: 'FeatureLayer'});
+        let layer = createLayer({url: LAYERS_URLS[slug], slug: slug, type: 'FeatureLayer'});
+        if(layerSlug === FEATURE_TYPES.DISCOVER_PLACES){
+          layer = createLayer({url: LAYERS_URLS[slug], slug: slug, type: 'FeatureLayer', portalId: '51f5377402444b04b0a48b223d7431a3'});
+        }
       addLayerToMap(layer, map);
 
       // If the layer is FEATURED_PLACES_LAYER, we need to filter it by the selected featured map
