@@ -59,7 +59,7 @@ $card-content-max-height: 410px;
   @media #{$tablet-portrait} {
     grid-column-gap: 40px;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 390px 1fr;
+    grid-template-rows: 1fr 380px 1fr;
     grid-template-areas:
       "breadcrumb navigation"
       "picture text"
