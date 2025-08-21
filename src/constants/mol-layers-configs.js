@@ -333,6 +333,7 @@ export const layersConfig = {
     slug: FEATURED_PLACES_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[FEATURED_PLACES_LAYER],
+    portalId: '51f5377402444b04b0a48b223d7431a3',
     bbox: null,
   },
   [DISCOVER_PLACES_LAYER]: {
