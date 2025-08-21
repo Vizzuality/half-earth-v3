@@ -19,11 +19,16 @@ export const setFeaturedMapPlaces = createThunkAction(
         featuredMapPlaces: { data },
       } = state();
       try {
-        const places = await CONTENTFUL.getFeaturedPlacesData(
+        let places = await CONTENTFUL.getFeaturedPlacesData(
           slug,
           CONFIG,
           locale
         );
+
+        if (places[0].hasOwnProperty('dateTime') && places[0].hasOwnProperty('hepmLink')) {
+          places = places.slice().sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+        }
+
         const dataObject = places.reduce((acc, place) => {
           const description = [];
           if (place.description) {
@@ -48,6 +53,9 @@ export const setFeaturedMapPlaces = createThunkAction(
               title: place.title,
               imageUrl: place.image,
               description: description.join('\n'),
+              link: place.link,
+              hepmLink: place.hepmLink,
+              dateTime: place.dateTime,
             },
           };
         }, {});

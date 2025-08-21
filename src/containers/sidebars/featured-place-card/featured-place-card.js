@@ -31,6 +31,9 @@ function FeaturedPlaceCardContainer(props) {
     imageUrl: '',
     title: '',
     description: '',
+    link: '',
+    hepmLink: '',
+    dateTime: '',
   });
 
   const handleClose = () => {
@@ -78,10 +81,18 @@ function FeaturedPlaceCardContainer(props) {
           : `ftr_slg = '${selectedFeaturedMap}'`;
       featuredPlacesLayer.queryFeatures(queryParams).then((results) => {
         const { features } = results;
-        const list = orderBy(features, (place) => place.geometry.longitude).map(
-          (place) => place.attributes.nam_slg
-        );
-        setFeaturedPlacesList(list);
+
+        if(selectedFeaturedMap === 'discoverPlaces'){
+          const list = orderBy(features, (place) => place.attributes.story_date, ['desc']).map(
+            (place) => place.attributes.nam_slg
+          );
+          setFeaturedPlacesList(list);
+        } else {
+          const list = orderBy(features, (place) => place.geometry.longitude).map(
+            (place) => place.attributes.nam_slg
+          );
+          setFeaturedPlacesList(list);
+        }
       });
     }
   }, [

@@ -17,6 +17,7 @@ import styles from './featured-place-card-styles.module';
 
 function FeaturedPlaceCardComponent({
   selectedFeaturedPlace,
+  selectedFeaturedMap,
   isFullscreenActive,
   featuredMap,
   featuredPlace,
@@ -46,10 +47,11 @@ function FeaturedPlaceCardComponent({
       >
         <section className={styles.cardGrid}>
           <div className={styles.breadcrumb}>
-            {hotspotsNumbers &&
+            {hotspotsNumbers && selectedFeaturedMap !== 'discoverPlaces' &&
               `${hotspotsNumbers.position} / ${hotspotsNumbers.size} ${t(
                 'Hotspots'
               )}`}
+              {selectedFeaturedMap === 'discoverPlaces' && t('Places for a Half-Earth Future')}
           </div>
           <nav className={styles.navigation}>
             <div className={styles.placesNavigator}>
@@ -99,7 +101,17 @@ function FeaturedPlaceCardComponent({
                     rel="noopener noreferrer"
                     className={styles.link}
                   >
-                    {t('Learn more')}
+                    {t('Read article')}
+                  </a>
+                )}
+                {featuredPlace.hepmLink && (
+                  <a
+                    href={featuredPlace.hepmLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                  >
+                    {t('View on HEPM')}
                   </a>
                 )}
               </div>

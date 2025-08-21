@@ -3,7 +3,7 @@
 @import 'styles/ui.module';
 @import 'styles/common-animations.module';
 
-$card-content-max-height: 220px;
+$card-content-max-height: 410px;
 
 .container {
   position: fixed;
@@ -59,7 +59,7 @@ $card-content-max-height: 220px;
   @media #{$tablet-portrait} {
     grid-column-gap: 40px;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 190px 1fr;
+    grid-template-rows: 1fr 390px 1fr;
     grid-template-areas:
       "breadcrumb navigation"
       "picture text"
