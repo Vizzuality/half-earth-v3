@@ -32,7 +32,7 @@ function FeaturedPlaceCardContainer(props) {
     title: '',
     description: '',
     link: '',
-    hepmLink: '',
+    hepmLink: [],
     dateTime: '',
   });
 

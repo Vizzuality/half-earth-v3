@@ -5,6 +5,11 @@ import { Config, FeaturePlaceItem, GenericItem } from 'types/services-types';
 const { VITE_APP_CONTENTFUL_SPACE_ID } = import.meta.env;
 const { VITE_APP_CONTENTFUL_TOKEN } = import.meta.env;
 
+interface IHepmLink {
+  id: string;
+  link: string;
+}
+
 const contentfulClient = createClient({
   space: VITE_APP_CONTENTFUL_SPACE_ID,
   accessToken: VITE_APP_CONTENTFUL_TOKEN,
@@ -122,7 +127,7 @@ function parseFeaturedPlaces(data, config, locale) {
       description: Record<string, unknown>;
       image?: string;
       link?: string;
-      hepmLink?: string;
+      hepmLink?: IHepmLink[];
       dateTime?: string;
     } = {
       slug: removeLanguageFromSlug(data.fields.nameSlug),

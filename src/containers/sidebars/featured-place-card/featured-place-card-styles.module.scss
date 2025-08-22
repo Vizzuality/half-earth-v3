@@ -198,6 +198,12 @@ $card-content-max-height: 410px;
   }
 }
 
+.hepmLinks{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 // mobile only
 
 .spacer {

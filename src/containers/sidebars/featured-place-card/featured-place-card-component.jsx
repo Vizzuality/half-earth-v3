@@ -111,15 +111,17 @@ function FeaturedPlaceCardComponent({
                   {featuredPlace.title}
                 </h2>
 
-                {featuredPlace.hepmLink && (
-                  <a
-                    href={featuredPlace.hepmLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.link}
-                  >
-                    {t('Priority Place ')}
-                  </a>
+                {featuredPlace.hepmLink?.links?.length > 0 && (
+                  <div className={styles.hepmLinks}>
+                    {featuredPlace.hepmLink.links.map((link) => (<a
+                      href={link.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.link}
+                    >
+                      {t(`Priority Place #${link.id}`)}
+                    </a>))}
+                  </div>
                 )}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <p
