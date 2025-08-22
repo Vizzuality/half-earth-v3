@@ -112,7 +112,9 @@ function FeaturedMapCardComponent({
         className={cx(className, styles.cardContainer, {
           [animationStyles.leftHidden]: !isFeatureMapCardVisible,
           [styles.delayOnOut]: isFeatureMapCardVisible,
-          })}
+          [styles.discoverPlaces]: selectedSlug === FEATURE_TYPES.DISCOVER_PLACES && selectedFeaturedMap === FEATURE_TYPES.DISCOVER_PLACES,
+          [styles.bestPlaces]: selectedSlug === FEATURE_TYPES.FEATURED_PLACES && selectedFeaturedMap === FEATURE_TYPES.FEATURED_PLACES,
+        })}
         style={{cursor: 'pointer'}}
         onClick={() => toggleLayers(view.map, featuredMap.slug)}
       >

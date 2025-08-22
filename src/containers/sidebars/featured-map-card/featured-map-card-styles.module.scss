@@ -12,7 +12,7 @@ $section-padding: 0 24px;
   flex-direction: column;
   width: $sidebar-width;
   height: auto;
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: $brand-color-secondary;
   overflow: hidden;
   @include animationFunction();
@@ -25,7 +25,7 @@ $section-padding: 0 24px;
     box-shadow: 0px 1px 8px #14ff3b;
   }
   &.discoverPlaces {
-    box-shadow: 0px 1px 8px #FF9B31;
+    box-shadow: 0px 1px 8px #F6962F;
   }
 }
 
@@ -97,18 +97,18 @@ $section-padding: 0 24px;
     text-transform: uppercase;
 
     &.bestPlaces {
-      background-color: rgba(20, 255, 59, 1);
+      background-color: #14F63A;
 
       &:hover {
-        background-color: rgba(20, 255, 59, 0.8);
+        background-color: #14ff3b;
       }
     }
 
     &.discoverPlaces {
-      background-color: rgba(255, 155, 49, 1);
+      background-color: #F6962F;
 
       &:hover {
-        background-color: rgba(255, 155, 49, 0.8);
+        background-color: #FF9B30;
       }
     }
   }
