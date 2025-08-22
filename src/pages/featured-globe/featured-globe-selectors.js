@@ -15,7 +15,7 @@ import initialState from './featured-globe-initial-state';
 const selectMetadataData = ({ metadata }) =>
   metadata && (!isEmpty(metadata.data) || null);
 const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces;
-const selectedFeaturedMapLayer = ({ featuredMap }) => featuredMap['slug'];
+// const selectedFeaturedMapLayer = ({ featuredMap }) => featuredMap['slug'];
 const selectedBestMapLayer = ({ featuredMap }) => 'bestPlaces';
 const selectedDiscoveryMapLayer = ({ featuredMap }) => featuredMap['slug'];
 
@@ -51,11 +51,11 @@ const getMapsListActive = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.selectedSidebar === 'featuredMapsList'
 );
-// const getSelectedFeaturedMap = createSelector(
-//   getUiSettings,
-//   featuredMapActions.setFeaturedMap
-//   // (uiSettings) => uiSettings.selectedFeaturedMap
-// );
+const getSelectedFeaturedMap = createSelector(
+  getUiSettings,
+  // featuredMapActions.setFeaturedMap
+  (uiSettings) => uiSettings.selectedFeaturedMap
+);
 
 const getSelectedBestMap = createSelector(
   getUiSettings,
@@ -99,8 +99,8 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   hasMetadata: selectMetadataData,
   isFullscreenActive: getFullscreenActive,
-  // selectedFeaturedMap: getSelectedFeaturedMap,
-  selectedFeaturedMap: selectedFeaturedMapLayer,
+  selectedFeaturedMap: getSelectedFeaturedMap,
+  // selectedFeaturedMap: selectedFeaturedMapLayer,
   selectedBestMap: getSelectedBestMap,
   selectedDiscoveryMap: getSelectedDiscoveryMap,
   selectedTaxa: getSelectedTaxa,

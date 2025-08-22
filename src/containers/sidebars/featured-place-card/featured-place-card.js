@@ -37,7 +37,7 @@ function FeaturedPlaceCardContainer(props) {
   });
 
   const handleClose = () => {
-    changeUI({ selectedFeaturedPlace: undefined });
+    changeUI({ selectedFeaturedPlace: undefined, selectedFeaturedMap: undefined });
     view.goTo({ zoom: initialState.globe.zoom });
   };
   useEffect(() => {

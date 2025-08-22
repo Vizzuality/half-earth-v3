@@ -189,7 +189,7 @@ $card-content-max-height: 410px;
   }
 
   @media #{$tablet-portrait} {
-    /* height: unset; */
+    height: unset;
 
     .picture {
       margin-right: 40px;
@@ -201,6 +201,7 @@ $card-content-max-height: 410px;
 .link{
   color: $brand-color-main;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     color: $brand-color-main-hover;
@@ -209,7 +210,6 @@ $card-content-max-height: 410px;
 
 .hepmLinks{
   display: flex;
-  flex-direction: column;
   gap: 4px;
 }
 

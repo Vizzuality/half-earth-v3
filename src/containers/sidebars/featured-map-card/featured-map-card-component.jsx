@@ -31,6 +31,7 @@ function FeaturedMapCardComponent({
   setFeaturedMapPlaces,
   spinGlobe,
   handle,
+  changeUI,
   selectedSlug,
   setFeaturedMap,
 }) {
@@ -79,6 +80,7 @@ function FeaturedMapCardComponent({
     const discoveryGlobeLayer = findLayerInMap(DISCOVER_PLACES_LAYER, map);
 
     setFeaturedMapPlaces({ slug: layerSlug });
+    changeUI({ selectedFeaturedMap: layerSlug });
 
     // If the layer is already in the map, we remove it
     if (layerSlug === FEATURE_TYPES.FEATURED_PLACES && discoveryGlobeLayer) {
@@ -149,7 +151,7 @@ function FeaturedMapCardComponent({
               })}
                 onClick={() => toggleLayers(view.map, featuredMap.slug)}
               >
-                <T _str="Explore places" />
+                <T _str="Explore" />
               </button>
             </section>
           </>
