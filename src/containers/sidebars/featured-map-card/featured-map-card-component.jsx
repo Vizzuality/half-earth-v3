@@ -112,9 +112,7 @@ function FeaturedMapCardComponent({
         className={cx(className, styles.cardContainer, {
           [animationStyles.leftHidden]: !isFeatureMapCardVisible,
           [styles.delayOnOut]: isFeatureMapCardVisible,
-          [styles.discoverPlaces]: selectedSlug === FEATURE_TYPES.DISCOVER_PLACES && selectedFeaturedMap === FEATURE_TYPES.DISCOVER_PLACES,
-          [styles.bestPlaces]: selectedSlug === FEATURE_TYPES.FEATURED_PLACES && selectedFeaturedMap === FEATURE_TYPES.FEATURED_PLACES,
-        })}
+          })}
         style={{cursor: 'pointer'}}
         onClick={() => toggleLayers(view.map, featuredMap.slug)}
       >
@@ -141,15 +139,17 @@ function FeaturedMapCardComponent({
                 <T _str={featuredMap.description} />
               </p>
             </section>
-            {/* <section className={styles.buttonSection}>
+            <section className={styles.buttonSection}>
               <button
-              style={{color: 'white'}}
-                className={cx(styles.button, styles.exploreButton)}
+                className={cx(styles.button, {
+                [styles.discoverPlaces]:  selectedFeaturedMap === FEATURE_TYPES.DISCOVER_PLACES,
+                [styles.bestPlaces]: selectedFeaturedMap === FEATURE_TYPES.FEATURED_PLACES,
+              })}
                 onClick={() => toggleLayers(view.map, featuredMap.slug)}
               >
-                <T _str="Explore" />
+                <T _str="Explore places" />
               </button>
-            </section> */}
+            </section>
           </>
         )}
       </div>

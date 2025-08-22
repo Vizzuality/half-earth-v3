@@ -198,6 +198,15 @@ $card-content-max-height: 410px;
   }
 }
 
+.link{
+  color: $brand-color-main;
+  text-decoration: none;
+
+  &:hover {
+    color: $brand-color-main-hover;
+  }
+}
+
 .hepmLinks{
   display: flex;
   flex-direction: column;
