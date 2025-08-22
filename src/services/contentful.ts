@@ -130,7 +130,7 @@ function parseFeaturedPlaces(data, config, locale) {
       description: data.fields.description,
       link: data.fields.link,
       hepmLink: data.fields.hepmLink,
-      dateTime: data.fields.dateTime,
+      dateTime: data.fields.dateTime
     };
     if (data.fields.image) {
       await getContentfulImage(data.fields.image.sys.id, config).then(

@@ -12,12 +12,20 @@ $section-padding: 0 24px;
   flex-direction: column;
   width: $sidebar-width;
   height: auto;
-  border-radius: 2px;
+  border-radius: 8px;
   background-color: $brand-color-secondary;
+  overflow: hidden;
   @include animationFunction();
 
   @media #{$tablet-portrait} {
     display: flex;
+  }
+
+  &.bestPlaces{
+    box-shadow: 0px 1px 8px #14ff3b;
+  }
+  &.discoverPlaces {
+    box-shadow: 0px 1px 8px #FF9B31;
   }
 }
 

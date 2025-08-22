@@ -115,6 +115,7 @@ function FeaturedGlobe({
                 selectedFeaturedPlace={selectedFeaturedPlace}
                 spinGlobe={spinGlobe}
                 handle={spinGlobeHandle}
+                selectedSlug={selectedFeaturedMap}
                 setFeaturedMap={setFeaturedMap}
               />
           )}
@@ -130,6 +131,7 @@ function FeaturedGlobe({
               selectedFeaturedPlace={selectedFeaturedPlace}
               spinGlobe={spinGlobe}
               handle={spinGlobeHandle}
+              selectedSlug={selectedFeaturedMap}
               setFeaturedMap={setFeaturedMap}
             />
           )}

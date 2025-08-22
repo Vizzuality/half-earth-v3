@@ -101,17 +101,7 @@ function FeaturedPlaceCardComponent({
                     rel="noopener noreferrer"
                     className={styles.link}
                   >
-                    {t('Read article')}
-                  </a>
-                )}
-                {featuredPlace.hepmLink && (
-                  <a
-                    href={featuredPlace.hepmLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.link}
-                  >
-                    {t('View on HEPM')}
+                    {t('Read the full story')}
                   </a>
                 )}
               </div>
@@ -120,6 +110,17 @@ function FeaturedPlaceCardComponent({
                   {hotspotsNumbers && `${hotspotsNumbers.position}. `}
                   {featuredPlace.title}
                 </h2>
+
+                {featuredPlace.hepmLink && (
+                  <a
+                    href={featuredPlace.hepmLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                  >
+                    {t('Priority Place ')}
+                  </a>
+                )}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <p
                     className={styles.text}
@@ -135,7 +136,7 @@ function FeaturedPlaceCardComponent({
                   )}
                   {featuredPlace.dateTime && (
                     <span className={styles.sourceText}>
-                      {t('Published:')} {featuredPlace.dateTime}
+                      {featuredPlace.dateTime}
                     </span>
                   )}
                   </div>
