@@ -114,6 +114,7 @@ function FeaturedPlaceCardComponent({
                 {featuredPlace.hepmLink?.links?.length > 0 && (
                   <div className={styles.hepmLinks}>
                     {featuredPlace.hepmLink.links.map((link) => (<a
+                      key={link.id}
                       href={link.link}
                       target="_blank"
                       rel="noopener noreferrer"
