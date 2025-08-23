@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'redux-tools';
 
 import CONTENTFUL from 'services/contentful';
 
-const CONFIG = { imageWidth: 300, imageHeight: 190 };
+const CONFIG = { imageWidth: 1000, imageHeight: 1000 };
 
 export const fetchFeaturedMapPlacesFail = createAction(
   'fetchFeaturedMapPlacesFail'
