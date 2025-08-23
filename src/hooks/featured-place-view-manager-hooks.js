@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { findLayerInMap } from 'utils/layer-manager-utils';
 
-import { FEATURED_PLACES_LAYER, DISCOVER_PLACES_LAYER } from 'constants/layers-slugs';
+import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
 export function useFeaturedPlaceViewCameraChange(
   map,
@@ -14,26 +14,14 @@ export function useFeaturedPlaceViewCameraChange(
   const [coords, setCoords] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
   useEffect(() => {
-    // const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
-    // setFeaturedPlacesLayer(layer);
-
-    let layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
-    if (!layer) {
-      // If the layer is not found, we create it from the config
-      layer = findLayerInMap(DISCOVER_PLACES_LAYER, map);
-    }
-    // const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
   }, []);
 
   useEffect(() => {
-    let layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
-    if(selectedFeaturedMap === 'discoverPlaces'){
-      layer = findLayerInMap(DISCOVER_PLACES_LAYER, map);
-    }
-    // const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
-  }, [selectedFeaturedMap])
+  }, [selectedFeaturedMap]);
 
   useEffect(() => {
     if (selectedFeaturedPlace && featuredPlacesLayer) {

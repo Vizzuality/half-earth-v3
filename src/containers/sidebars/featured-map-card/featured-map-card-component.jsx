@@ -11,7 +11,7 @@ import animationStyles from 'styles/common-animations.module.scss';
 import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter.js';
 import { findLayerInMap, createLayer, addLayerToMap } from 'utils/layer-manager-utils';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { FEATURED_PLACES_LAYER, DISCOVER_PLACES_LAYER } from 'constants/layers-slugs';
+import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
 import styles from './featured-map-card-styles.module.scss';
 
@@ -44,7 +44,7 @@ function FeaturedMapCardComponent({
       case FEATURE_TYPES.FEATURED_PLACES:
         return FEATURED_PLACES_LAYER;
       case FEATURE_TYPES.DISCOVER_PLACES:
-        return DISCOVER_PLACES_LAYER;
+        return FEATURED_PLACES_LAYER;
       default:
         return null;
     }
@@ -70,29 +70,14 @@ function FeaturedMapCardComponent({
       }
     }
 
-    // setFeaturedMapPlaces({ slug: layerSlug });
     setFeaturedMap({ slug: layerSlug });
   };
 
   const toggleLayers = (map, layerSlug) => {
-    // check if layers are already in the map
     const featurePlacesLayer = findLayerInMap(FEATURED_PLACES_LAYER, map);
-    const discoveryGlobeLayer = findLayerInMap(DISCOVER_PLACES_LAYER, map);
 
     setFeaturedMapPlaces({ slug: layerSlug });
     changeUI({ selectedFeaturedMap: layerSlug });
-
-    // If the layer is already in the map, we remove it
-    if (layerSlug === FEATURE_TYPES.FEATURED_PLACES && discoveryGlobeLayer) {
-      map.remove(discoveryGlobeLayer);
-    }
-
-    if (layerSlug === FEATURE_TYPES.DISCOVER_PLACES && featurePlacesLayer) {
-      map.remove(featurePlacesLayer);
-    }
-
-    // add the layer to the map
-    addLayer(layerSlug, featurePlacesLayer, discoveryGlobeLayer, map);
   };
 
   useEffect(() => {

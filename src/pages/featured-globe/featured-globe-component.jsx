@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -17,8 +17,8 @@ import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import Logo from 'components/half-earth-logo';
 import Scene from 'components/scene';
 import Spinner from 'components/spinner';
-
 import uiStyles from 'styles/ui.module';
+import { useLocale } from '@transifex/react'
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() =>
@@ -52,7 +52,6 @@ function FeaturedGlobe({
   setFeaturedMap,
 }) {
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
-
   const isFeaturedPlaceCard = selectedFeaturedPlace;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
 

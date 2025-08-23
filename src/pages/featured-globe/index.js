@@ -25,7 +25,6 @@ import * as scheduling from '@arcgis/core/core/scheduling';
 
 import {
   FEATURED_PLACES_LAYER,
-  DISCOVER_PLACES_LAYER,
   VIBRANT_BASEMAP_LAYER,
 } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
@@ -33,7 +32,9 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import Component from './featured-globe-component';
 import mapStateToProps from './featured-globe-selectors';
 
-const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics, ...featuredMapActions };
+import featuredMapPlacesActions from 'redux_modules/featured-map-places';
+
+const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics, ...featuredMapActions, ...featuredMapPlacesActions };
 
 const featuredGlobeContainer = (props) => {
   const [handle, setHandle] = useState(null);
@@ -47,23 +48,20 @@ const featuredGlobeContainer = (props) => {
     selectedFeaturedMap,
     isFeaturedPlaceCard,
     isFullscreenActive,
+    setFeaturedMapPlaces,
     sceneSettings,
   } = props;
 
   const handleMarkerClick = (viewPoint) => {
-    console.log(selectedFeaturedMap);
-    const featuredPlace = selectedFeaturedMap === 'discoverPlaces' ? DISCOVER_PLACES_LAYER : FEATURED_PLACES_LAYER;
     if (!isFullscreenActive) {
-      setSelectedFeaturedPlace(viewPoint, featuredPlace, changeUI);
+      setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI);
       props.readStoryAnalytics();
       removeAvatarImage();
     }
   };
 
   const handleMarkerHover = (viewPoint, view) => {
-    const featuredPlace = selectedFeaturedMap === 'discoverPlaces' ? DISCOVER_PLACES_LAYER : FEATURED_PLACES_LAYER;
-
-    const layerFeatures = hitResults(viewPoint, featuredPlace);
+    const layerFeatures = hitResults(viewPoint, FEATURED_PLACES_LAYER);
     setCursor(layerFeatures);
     if (!isFeaturedPlaceCard) {
       setAvatarImage(
@@ -79,6 +77,10 @@ const featuredGlobeContainer = (props) => {
     const { setFeaturedMapsList } = props;
     setFeaturedMapsList(locale);
   }, [locale]);
+
+  useEffect(() => {
+    setFeaturedMapPlaces({ slug: selectedFeaturedMap, locale });
+  }, [selectedFeaturedMap, locale]);
 
   const handleMapLoad = (map, _activeLayers) => {
     setBasemap({
