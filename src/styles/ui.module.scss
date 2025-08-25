@@ -22,6 +22,11 @@ $scrollbar-width: 4px;
   left: $site-gutter;
 }
 
+.uiBottomLeft {
+  position: absolute;
+  bottom: $menuFooterHeight;
+  left: $site-gutter;
+}
 .uiBottom {
   position: absolute;
   bottom: $menuFooterHeight;
@@ -102,4 +107,10 @@ $scrollbar-width: 4px;
   canvas {
     filter: blur($bottom-menu-blur);
   }
+}
+
+.featuresContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }

@@ -48,6 +48,8 @@ export default {
     onboardingStep: 0,
     selectedSidebar: 'featuredMapCard',
     selectedFeaturedMap: 'bestPlaces',
+    selectedDiscoveryMap: 'discoverPlaces',
+    selectedBestMap: 'bestPlaces',
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
     isFullscreenActive: false,

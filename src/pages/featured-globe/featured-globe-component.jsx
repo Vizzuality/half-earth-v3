@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -17,8 +17,8 @@ import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import Logo from 'components/half-earth-logo';
 import Scene from 'components/scene';
 import Spinner from 'components/spinner';
-
 import uiStyles from 'styles/ui.module';
+import { useLocale } from '@transifex/react'
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() =>
@@ -31,6 +31,8 @@ function FeaturedGlobe({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
+  selectedBestMap,
+  selectedDiscoveryMap,
   selectedFeaturedPlace,
   selectedSidebar,
   isGlobeUpdating,
@@ -47,9 +49,9 @@ function FeaturedGlobe({
   mouseMoveCallbacksArray,
   openedModal,
   browsePage,
+  setFeaturedMap,
 }) {
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
-
   const isFeaturedPlaceCard = selectedFeaturedPlace;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
 
@@ -81,6 +83,7 @@ function FeaturedGlobe({
           mouseMoveCallbacksArray={mouseMoveCallbacksArray}
         />
         <FeaturedPlaceViewManager
+          selectedFeaturedMap={selectedFeaturedMap}
           selectedFeaturedPlace={selectedFeaturedPlace}
         />
 
@@ -99,19 +102,40 @@ function FeaturedGlobe({
           <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
         )}
 
-        {selectedFeaturedMap && (
-          <SelectedFeaturedMapCard
-            className={cx(uiStyles.uiTopLeft, {
-              [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
-            })}
-            selectedFeaturedMap={selectedFeaturedMap}
-            selectedSidebar={selectedSidebar}
-            isFullscreenActive={isFullscreenActive}
-            selectedFeaturedPlace={selectedFeaturedPlace}
-            spinGlobe={spinGlobe}
-            handle={spinGlobeHandle}
-          />
-        )}
+        <div className={cx(uiStyles.uiTopLeft, uiStyles.featuresContainer)}>
+          {selectedBestMap && (
+              <SelectedFeaturedMapCard
+                className={cx({
+                  [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
+                })}
+                selectedFeaturedMap={selectedBestMap}
+                selectedSidebar={selectedSidebar}
+                isFullscreenActive={isFullscreenActive}
+                selectedFeaturedPlace={selectedFeaturedPlace}
+                spinGlobe={spinGlobe}
+                handle={spinGlobeHandle}
+                selectedSlug={selectedFeaturedMap}
+                setFeaturedMap={setFeaturedMap}
+              />
+          )}
+
+          {selectedDiscoveryMap && (
+            <SelectedFeaturedMapCard
+              className={cx( {
+                [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
+              })}
+              selectedFeaturedMap={selectedDiscoveryMap}
+              selectedSidebar={selectedSidebar}
+              isFullscreenActive={isFullscreenActive}
+              selectedFeaturedPlace={selectedFeaturedPlace}
+              spinGlobe={spinGlobe}
+              handle={spinGlobeHandle}
+              selectedSlug={selectedFeaturedMap}
+              setFeaturedMap={setFeaturedMap}
+            />
+          )}
+        </div>
+
         <FeaturedPlacesLayer
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
+import featuredMapActions from 'redux_modules/featured-map';
 
 import { useLocale } from '@transifex/react';
 
@@ -31,7 +32,9 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import Component from './featured-globe-component';
 import mapStateToProps from './featured-globe-selectors';
 
-const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics };
+import featuredMapPlacesActions from 'redux_modules/featured-map-places';
+
+const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics, ...featuredMapActions, ...featuredMapPlacesActions };
 
 const featuredGlobeContainer = (props) => {
   const [handle, setHandle] = useState(null);
@@ -45,6 +48,7 @@ const featuredGlobeContainer = (props) => {
     selectedFeaturedMap,
     isFeaturedPlaceCard,
     isFullscreenActive,
+    setFeaturedMapPlaces,
     sceneSettings,
   } = props;
 
@@ -73,6 +77,10 @@ const featuredGlobeContainer = (props) => {
     const { setFeaturedMapsList } = props;
     setFeaturedMapsList(locale);
   }, [locale]);
+
+  useEffect(() => {
+    setFeaturedMapPlaces({ slug: selectedFeaturedMap, locale });
+  }, [selectedFeaturedMap, locale]);
 
   const handleMapLoad = (map, _activeLayers) => {
     setBasemap({

@@ -1,23 +1,28 @@
 import {
-  legacy_createStore as createStore,
-  applyMiddleware,
-  compose,
-  combineReducers,
+    applyMiddleware, combineReducers, compose, legacy_createStore as createStore
 } from 'redux';
-import type { Location } from 'redux-first-router';
 import thunk from 'redux-thunk';
-import  { reduxConfig as countryDataReduxConfig } from 'store/redux-modules/country-data/country-data'
-import  { reduxConfig as uiReduxConfig } from 'store/redux-modules/ui'
-import  { reduxConfig as featureMapsListReduxConfig } from 'store/redux-modules/featured-maps-list/featured-maps-list'
-import  { reduxConfig as featuredMapPlacesReduxConfig } from 'store/redux-modules/featured-map-places/featured-map-places'
 import { reduxConfig as AOIsGeometriesReduxConfig } from 'store/redux-modules/aois-geometries';
+import {
+    reduxConfig as countryDataReduxConfig
+} from 'store/redux-modules/country-data/country-data';
+import {
+    reduxConfig as featuredMapPlacesReduxConfig
+} from 'store/redux-modules/featured-map-places/featured-map-places';
+import {
+    reduxConfig as featureMapReduxConfig
+} from 'store/redux-modules/featured-map/featured-map';
+import {
+    reduxConfig as featureMapsListReduxConfig
+} from 'store/redux-modules/featured-maps-list/featured-maps-list';
 import { reduxConfig as metadataReduxConfig } from 'store/redux-modules/metadata/metadata';
+import { reduxConfig as uiReduxConfig } from 'store/redux-modules/ui';
 
 import router from '../router';
-
 import reducerRegistry from './reducerRegistry';
 import { middleware as analyticsMiddleware } from './store-middleware/analytics/analytics';
 
+import type { Location } from 'redux-first-router';
 const middlewares = [thunk, router.middleware, analyticsMiddleware.trackEvents];
 
 reducerRegistry.register('location', router.reducer);
@@ -28,6 +33,7 @@ reducerRegistry.register('location', router.reducer);
 reducerRegistry.registerModule('countryData', countryDataReduxConfig);
 reducerRegistry.registerModule('ui', uiReduxConfig);
 reducerRegistry.registerModule('featuredMapsList', featureMapsListReduxConfig);
+reducerRegistry.registerModule('featuredMap', featureMapReduxConfig);
 reducerRegistry.registerModule('featuredMapPlaces', featuredMapPlacesReduxConfig);
 reducerRegistry.registerModule('aoisGeometries', AOIsGeometriesReduxConfig);
 reducerRegistry.registerModule('metadata', metadataReduxConfig);
