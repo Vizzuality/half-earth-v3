@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import loadable from '@loadable/component';
 
 import cx from 'classnames';
-
+import animationStyles from 'styles/common-animations.module.scss';
 import FeaturedPlacesLayer from 'containers/layers/featured-places-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import FeaturedPlaceViewManager from 'containers/managers/featured-place-view-manager';
@@ -103,7 +103,8 @@ function FeaturedGlobe({
         )}
 
         <div className={cx(uiStyles.uiTopLeft, uiStyles.featuresContainer, uiStyles.featuresMapContainer)}>
-          <div className={uiStyles.featuredMapCardContainer}>
+          <div className={cx(uiStyles.featuredMapCardContainer,
+            { [animationStyles.leftHidden]: selectedFeaturedPlace })}>
             {selectedBestMap && (
                 <SelectedFeaturedMapCard
                   className={cx({
