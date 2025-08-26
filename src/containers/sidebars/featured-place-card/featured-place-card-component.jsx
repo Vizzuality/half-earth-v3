@@ -124,7 +124,7 @@ function FeaturedPlaceCardComponent({
                     </a>))}
                   </div>
                 )}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div className={styles.description}>
                   <p
                     className={styles.text}
                     // eslint-disable-next-line react/no-danger

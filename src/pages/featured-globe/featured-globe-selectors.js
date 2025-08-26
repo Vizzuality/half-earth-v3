@@ -8,7 +8,7 @@ import {
   selectUiUrlState,
 } from 'selectors/location-selectors';
 
-import featuredMapActions from '../../store/redux-modules/featured-map/featured-map';
+import featuredMapActions from 'store/redux-modules/featured-map/featured-map';
 
 import initialState from './featured-globe-initial-state';
 
@@ -100,7 +100,6 @@ export default createStructuredSelector({
   hasMetadata: selectMetadataData,
   isFullscreenActive: getFullscreenActive,
   selectedFeaturedMap: getSelectedFeaturedMap,
-  // selectedFeaturedMap: selectedFeaturedMapLayer,
   selectedBestMap: getSelectedBestMap,
   selectedDiscoveryMap: getSelectedDiscoveryMap,
   selectedTaxa: getSelectedTaxa,

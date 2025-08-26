@@ -2,7 +2,8 @@ import { createAction, createThunkAction } from 'redux-tools';
 
 import CONTENTFUL from 'services/contentful';
 
-const CONFIG = { imageWidth: 1000, imageHeight: 1000 };
+// set to 0 to disable image resizing
+const CONFIG = { imageWidth: 0, imageHeight: 0 };
 
 export const fetchFeaturedMapPlacesFail = createAction(
   'fetchFeaturedMapPlacesFail'

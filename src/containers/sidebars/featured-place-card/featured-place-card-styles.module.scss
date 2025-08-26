@@ -140,6 +140,12 @@ $card-content-max-height: 410px;
       max-height: $card-content-max-height;
       overflow-y: auto;
     }
+
+    .description{
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
   }
 
   .title {
@@ -200,8 +206,10 @@ $card-content-max-height: 410px;
 
 .link{
   color: $brand-color-main;
-  text-decoration: none;
   cursor: pointer;
+  font-family: $font-family-1;
+  text-transform: uppercase;
+  text-underline-position: from-font;
 
   &:hover {
     color: $brand-color-main-hover;
@@ -266,7 +274,6 @@ $card-content-max-height: 410px;
   top: -20px;
   height: 42px;
   width: 42px;
-  /* left: calc(50% - #{$rounded-button-size} / 2); */
   right: 10px;
   box-shadow: $box-shadow-soft;
   z-index: $bring-to-front;

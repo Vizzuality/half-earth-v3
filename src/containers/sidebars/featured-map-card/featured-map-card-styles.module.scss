@@ -22,10 +22,10 @@ $section-padding: 0 24px;
   }
 
   &.bestPlaces{
-    box-shadow: 0px 1px 8px #6FBE46;
+    box-shadow: $box-shadow-half-earth-green;
   }
   &.discoverPlaces {
-    box-shadow: 0px 1px 8px #F7991F;
+    box-shadow: $box-shadow-tangerine;
   }
 }
 
@@ -97,18 +97,18 @@ $section-padding: 0 24px;
     text-transform: uppercase;
 
     &.bestPlaces {
-      background-color: #6FBE46;
+      background-color: var(--half-earth-green);
 
       &:hover {
-        background-color: #14ff3b;
+        background-color: var(--half-earth-green-hover);
       }
     }
 
     &.discoverPlaces {
-      background-color: #F7991F;
+      background-color: var(--tangerine);
 
       &:hover {
-        background-color: #FF9B30;
+        background-color: var(--tangerine-hover);
       }
     }
   }

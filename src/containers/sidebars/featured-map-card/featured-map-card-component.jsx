@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { T } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
-
+import Button from 'components/button';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 
@@ -36,6 +36,7 @@ function FeaturedMapCardComponent({
   setFeaturedMap,
 }) {
   const isOpen = selectedSidebar === 'featuredMapCard';
+  const t = useT();
 
   const isOnScreen = isOpen && !isFullscreenActive && !selectedFeaturedPlace;
 
@@ -129,15 +130,16 @@ function FeaturedMapCardComponent({
               </p>
             </section>
             <section className={styles.buttonSection}>
-              <button
-                className={cx(styles.button, {
-                [styles.discoverPlaces]:  selectedFeaturedMap === FEATURE_TYPES.DISCOVER_PLACES,
-                [styles.bestPlaces]: selectedFeaturedMap === FEATURE_TYPES.FEATURED_PLACES,
-              })}
-                onClick={() => toggleLayers(view.map, featuredMap.slug)}
-              >
-                <T _str="Explore" />
-              </button>
+              <Button
+                  type='rectangular'
+                  className={cx(styles.button, {
+                    [styles.discoverPlaces]:  selectedFeaturedMap === FEATURE_TYPES.DISCOVER_PLACES,
+                    [styles.bestPlaces]: selectedFeaturedMap === FEATURE_TYPES.FEATURED_PLACES,
+                  })}
+
+                  handleClick={() => toggleLayers(view.map, featuredMap.slug)}
+                  label={t('Explore')}
+                />
             </section>
           </>
         )}
