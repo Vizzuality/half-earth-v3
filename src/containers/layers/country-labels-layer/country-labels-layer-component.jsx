@@ -37,21 +37,28 @@ function CountryLabelsLayerComponent(props) {
   }, [countryISO]);
 
   useEffect(() => {
-    const styleLayer = (layer) => {
-      layer.opacity = 0.9;
-      layer.labelsVisible = true;
-      layer.minScale = 36060039.65489027;
-      layer.labelingInfo = [labelingInfo];
-      if (countryISO) {
-        layer.definitionExpression = `NOT GID_0 = '${countryISO}'`;
+    let cancelled = false;
+    const styleLayer = async (layer) => {
+      try {
+        await layer.when();
+        if (cancelled || layer.destroyed) return;
+        layer.opacity = 0.9;
+        layer.labelsVisible = true;
+        layer.minScale = 36060039.65489027;
+        layer.labelingInfo = [labelingInfo];
+        if (countryISO) {
+          layer.definitionExpression = `NOT GID_0 = '${countryISO}'`;
+        }
+        layer.renderer = {
+          type: 'simple',
+          symbol: {
+            type: 'simple-marker',
+            size: 0,
+          },
+        };
+      } catch (e) {
+        // ignore if layer is gone
       }
-      layer.renderer = {
-        type: 'simple',
-        symbol: {
-          type: 'simple-marker',
-          size: 0,
-        },
-      };
     };
 
     if (labelingInfo) {
@@ -70,7 +77,11 @@ function CountryLabelsLayerComponent(props) {
         }
       }
     }
-  }, [labelingInfo, activeLayers, countryLabelsLayer]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [labelingInfo, activeLayers, countryLabelsLayer, countryISO, map, changeGlobe]);
 
   return null;
 }

@@ -12,12 +12,20 @@ $section-padding: 0 24px;
   flex-direction: column;
   width: $sidebar-width;
   height: auto;
-  border-radius: 2px;
+  border-radius: 12px;
   background-color: $brand-color-secondary;
+  overflow: hidden;
   @include animationFunction();
 
   @media #{$tablet-portrait} {
     display: flex;
+  }
+
+  &.bestPlaces{
+    box-shadow: $box-shadow-half-earth-green;
+  }
+  &.discoverPlaces {
+    box-shadow: $box-shadow-tangerine;
   }
 }
 
@@ -72,5 +80,36 @@ $section-padding: 0 24px;
     position: relative;
     top: 3px;
     left: 10px;
+  }
+}
+
+.buttonSection{
+  display: flex;
+  justify-content: flex-start;
+  padding: $section-padding;
+  padding-bottom: 16px;
+
+  button {
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 16px;
+    color: $dark-text;
+    text-transform: uppercase;
+
+    &.bestPlaces {
+      background-color: var(--half-earth-green);
+
+      &:hover {
+        background-color: var(--half-earth-green-hover);
+      }
+    }
+
+    &.discoverPlaces {
+      background-color: var(--tangerine);
+
+      &:hover {
+        background-color: var(--tangerine-hover);
+      }
+    }
   }
 }

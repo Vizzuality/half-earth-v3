@@ -83,7 +83,8 @@ export const setSelectedFeaturedPlace = (
     featuredPoint && featuredPoint.length
       ? get(featuredPoint, '[0].graphic.attributes.nam_slg')
       : null;
-  if (selectedFeaturedPlace) changeUI({ selectedFeaturedPlace });
+  const selectedFeaturedMap = get(featuredPoint, '[0].graphic.attributes.ftr_slg');
+  if (selectedFeaturedPlace) changeUI({ selectedFeaturedPlace, selectedFeaturedMap });
 };
 
 export const drawGeometry = (layerFeatures, graphic) => {

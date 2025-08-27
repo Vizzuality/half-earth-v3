@@ -1,15 +1,24 @@
 import { useEffect, useState } from 'react';
 
-import { T } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
-
+import Button from 'components/button';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 
 import animationStyles from 'styles/common-animations.module.scss';
+import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter.js';
+import { findLayerInMap, createLayer, addLayerToMap } from 'utils/layer-manager-utils';
+import { LAYERS_URLS } from 'constants/layers-urls';
+import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
 import styles from './featured-map-card-styles.module.scss';
+
+const FEATURE_TYPES = {
+  FEATURED_PLACES: 'bestPlaces',
+  DISCOVER_PLACES: 'discoverPlaces',
+}
 
 function FeaturedMapCardComponent({
   view,
@@ -18,14 +27,62 @@ function FeaturedMapCardComponent({
   isFullscreenActive,
   featuredMap,
   selectedFeaturedPlace,
+  selectedFeaturedMap,
+  setFeaturedMapPlaces,
   spinGlobe,
   handle,
+  changeUI,
+  selectedSlug,
+  setFeaturedMap,
 }) {
   const isOpen = selectedSidebar === 'featuredMapCard';
+  const t = useT();
 
   const isOnScreen = isOpen && !isFullscreenActive && !selectedFeaturedPlace;
 
+  const getSlugLayer = (slug) => {
+    switch (slug) {
+      case FEATURE_TYPES.FEATURED_PLACES:
+        return FEATURED_PLACES_LAYER;
+      case FEATURE_TYPES.DISCOVER_PLACES:
+        return FEATURED_PLACES_LAYER;
+      default:
+        return null;
+    }
+  };
+
+  const addLayer = (layerSlug, featurePlacesLayer, discoveryGlobeLayer, map) => {
+    const slug = getSlugLayer(layerSlug);
+    if((layerSlug === FEATURE_TYPES.FEATURED_PLACES && !featurePlacesLayer) ||
+      (layerSlug === FEATURE_TYPES.DISCOVER_PLACES && !discoveryGlobeLayer)) {
+      const layer = createLayer({url: LAYERS_URLS[slug], slug: slug, type: 'FeatureLayer', portalId: '51f5377402444b04b0a48b223d7431a3'});
+      addLayerToMap(layer, map);
+
+      // If the layer is FEATURED_PLACES_LAYER, we need to filter it by the selected featured map
+      if ((layerSlug === FEATURE_TYPES.FEATURED_PLACES ||
+        layerSlug === FEATURE_TYPES.DISCOVER_PLACES) && selectedFeaturedMap) {
+        view.whenLayerView(layer).then((layerView) => {
+          const whereClause = `ftr_slg = '${selectedFeaturedMap}'`;
+
+          layerView.filter = new FeatureFilter({
+            where: whereClause,
+          });
+        });
+      }
+    }
+
+    setFeaturedMap({ slug: layerSlug });
+  };
+
+  const toggleLayers = (map, layerSlug) => {
+    const featurePlacesLayer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+
+    setFeaturedMapPlaces({ slug: layerSlug });
+    changeUI({ selectedFeaturedMap: layerSlug });
+  };
+
   useEffect(() => {
+    if(!view) return;
     view.when(() => {
       if (!handle && !isOpen) {
         spinGlobe(view);
@@ -43,7 +100,11 @@ function FeaturedMapCardComponent({
         className={cx(className, styles.cardContainer, {
           [animationStyles.leftHidden]: !isFeatureMapCardVisible,
           [styles.delayOnOut]: isFeatureMapCardVisible,
+          [styles.discoverPlaces]: selectedSlug === FEATURE_TYPES.DISCOVER_PLACES && selectedFeaturedMap === FEATURE_TYPES.DISCOVER_PLACES,
+          [styles.bestPlaces]: selectedSlug === FEATURE_TYPES.FEATURED_PLACES && selectedFeaturedMap === FEATURE_TYPES.FEATURED_PLACES,
         })}
+        style={{cursor: 'pointer'}}
+        onClick={() => toggleLayers(view.map, featuredMap.slug)}
       >
         {featuredMap && (
           <>
@@ -67,6 +128,18 @@ function FeaturedMapCardComponent({
               <p className={styles.description}>
                 <T _str={featuredMap.description} />
               </p>
+            </section>
+            <section className={styles.buttonSection}>
+              <Button
+                  type='rectangular'
+                  className={cx(styles.button, {
+                    [styles.discoverPlaces]:  selectedFeaturedMap === FEATURE_TYPES.DISCOVER_PLACES,
+                    [styles.bestPlaces]: selectedFeaturedMap === FEATURE_TYPES.FEATURED_PLACES,
+                  })}
+
+                  handleClick={() => toggleLayers(view.map, featuredMap.slug)}
+                  label={t('Explore')}
+                />
             </section>
           </>
         )}
