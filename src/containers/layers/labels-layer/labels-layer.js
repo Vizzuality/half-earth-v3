@@ -55,16 +55,15 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
 function LabelsLayer(props) {
   const { map, activeLayers } = props;
   useEffect(() => {
-    const styleLayers = (layers) => {
-      const labelingInfo = labelsStylesSlugs.map((slug) =>
-        labelClassFactory(LabelClass, slug)
-      );
-      layers.forEach((layer) => {
+    let cancelled = false;
+    const applyStyleSafely = async (layer, labelingInfo) => {
+      try {
+        await layer.when();
+        if (cancelled || layer.destroyed) return;
         layer.opacity = 1;
         layer.labelsVisible = true;
         layer.labelingInfo = labelingInfo;
         if (layer.title === LANDSCAPE_FEATURES_LABELS_LAYER) {
-          // Hides the dots but keeps the landscape feature layers
           layer.renderer = {
             type: 'simple',
             symbol: {
@@ -73,6 +72,17 @@ function LabelsLayer(props) {
             },
           };
         }
+      } catch (e) {
+        // Silently ignore if layer was removed during init
+      }
+    };
+
+    const styleLayers = (layers) => {
+      const labelingInfo = labelsStylesSlugs.map((slug) =>
+        labelClassFactory(LabelClass, slug)
+      );
+      layers.forEach((layer) => {
+        applyStyleSafely(layer, labelingInfo);
       });
     };
 
@@ -82,7 +92,11 @@ function LabelsLayer(props) {
     if (layers.length) {
       styleLayers(layers);
     }
-  }, [activeLayers]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeLayers, map]);
 
   return null;
 }
