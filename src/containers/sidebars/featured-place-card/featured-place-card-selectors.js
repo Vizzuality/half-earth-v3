@@ -12,7 +12,7 @@ const getFeaturedMapsList = createSelector(
     featuredMaps.forEach((map) => {
       map.sourceText =
         map.slug === 'bestPlaces'
-          ? 'Half-Earth: Our Planet’s Fight for Life'
+          ? 'Half-Earth: Our Planet\'s Fight for Life'
           : null;
     });
     return featuredMaps;

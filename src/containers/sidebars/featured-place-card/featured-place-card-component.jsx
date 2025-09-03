@@ -107,7 +107,6 @@ function FeaturedPlaceCardComponent({
               </div>
               <div className={styles.contentContainer} ref={contentWrapper}>
                 <h2 className={styles.title}>
-                  {hotspotsNumbers && `${hotspotsNumbers.position}. `}
                   {featuredPlace.title}
                 </h2>
 

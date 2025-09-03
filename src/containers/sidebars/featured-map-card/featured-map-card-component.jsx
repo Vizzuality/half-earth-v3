@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import { orderBy } from 'lodash';
 import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
@@ -55,7 +55,7 @@ function FeaturedMapCardComponent({
     const slug = getSlugLayer(layerSlug);
     if((layerSlug === FEATURE_TYPES.FEATURED_PLACES && !featurePlacesLayer) ||
       (layerSlug === FEATURE_TYPES.DISCOVER_PLACES && !discoveryGlobeLayer)) {
-      const layer = createLayer({url: LAYERS_URLS[slug], slug: slug, type: 'FeatureLayer', portalId: '51f5377402444b04b0a48b223d7431a3'});
+      const layer = createLayer({url: LAYERS_URLS[slug], slug: slug, type: 'FeatureLayer', portalId: LAYERS_URLS[FEATURED_PLACES_PORTAL_ID]});
       addLayerToMap(layer, map);
 
       // If the layer is FEATURED_PLACES_LAYER, we need to filter it by the selected featured map
@@ -67,19 +67,44 @@ function FeaturedMapCardComponent({
           layerView.filter = new FeatureFilter({
             where: whereClause,
           });
+
+          navigateToFirstPoint(map, layerSlug);
         });
       }
     }
 
     setFeaturedMap({ slug: layerSlug });
+
   };
 
   const toggleLayers = (map, layerSlug) => {
-    const featurePlacesLayer = findLayerInMap(FEATURED_PLACES_LAYER, map);
-
     setFeaturedMapPlaces({ slug: layerSlug });
-    changeUI({ selectedFeaturedMap: layerSlug });
+    navigateToFirstPoint(map, layerSlug);
   };
+
+  const navigateToFirstPoint = (map, layerSlug) => {
+    const featuredPlacesLayer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    const queryParams = featuredPlacesLayer.createQuery();
+      queryParams.where = `ftr_slg = '${selectedFeaturedMap}'`;
+
+      featuredPlacesLayer.queryFeatures(queryParams).then((results) => {
+        const { features } = results;
+        let list;
+
+        if(selectedFeaturedMap === 'discoverPlaces'){
+          list = orderBy(features, (place) => place.attributes.story_date, ['desc']).map(
+            (place) => place.attributes.nam_slg
+          );
+          changeUI({ selectedFeaturedMap: layerSlug, selectedFeaturedPlace: list[0] });
+        }
+        else {
+          list = orderBy(features, (place) => place.geometry.longitude).map(
+            (place) => place.attributes.nam_slg
+          );
+          changeUI({ selectedFeaturedMap: layerSlug, selectedFeaturedPlace: list[0] });
+        }
+      });
+  }
 
   useEffect(() => {
     if(!view) return;

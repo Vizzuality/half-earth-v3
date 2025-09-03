@@ -209,7 +209,8 @@ $card-content-max-height: 410px;
   cursor: pointer;
   font-family: $font-family-1;
   text-transform: uppercase;
-  text-underline-position: from-font;
+  text-decoration: none;
+  font-weight: bold;
 
   &:hover {
     color: $brand-color-main-hover;
