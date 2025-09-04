@@ -37,11 +37,18 @@ function RegionsLabelsLayerComponent(props) {
   }, []);
 
   useEffect(() => {
-    const styleLayer = (layer) => {
-      layer.opacity = 0;
-      layer.labelsVisible = true;
-      layer.minScale = 10000000; // When the regions are clickable
-      layer.labelingInfo = [labelingInfo];
+    let cancelled = false;
+    const styleLayer = async (layer) => {
+      try {
+        await layer.when();
+        if (cancelled || layer.destroyed) return;
+        layer.opacity = 0;
+        layer.labelsVisible = true;
+        layer.minScale = 10000000; // When the regions are clickable
+        layer.labelingInfo = [labelingInfo];
+      } catch (e) {
+        // ignore if layer is gone
+      }
     };
     if (labelingInfo) {
       if (regionsLabelsLayer) {
@@ -60,7 +67,10 @@ function RegionsLabelsLayerComponent(props) {
         }
       }
     }
-  }, [labelingInfo, activeLayers, regionsLabelsLayer]);
+    return () => {
+      cancelled = true;
+    };
+  }, [labelingInfo, activeLayers, regionsLabelsLayer, map, changeGlobe]);
 
   return null;
 }

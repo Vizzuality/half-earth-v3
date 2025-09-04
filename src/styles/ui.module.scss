@@ -7,6 +7,7 @@ $share-button-margin: 12px;
 $menuFooterHeight: 65px;
 $landscapeSidebarCollapsedHeight: 175px;
 $scrollbar-width: 4px;
+$featureMapsHeight: 750px;
 
 .halfEarthLogoTopLeft {
   position: absolute;
@@ -22,6 +23,11 @@ $scrollbar-width: 4px;
   left: $site-gutter;
 }
 
+.uiBottomLeft {
+  position: absolute;
+  bottom: $menuFooterHeight;
+  left: $site-gutter;
+}
 .uiBottom {
   position: absolute;
   bottom: $menuFooterHeight;
@@ -101,5 +107,25 @@ $scrollbar-width: 4px;
 .blurScene {
   canvas {
     filter: blur($bottom-menu-blur);
+  }
+}
+
+.featuresMapContainer {
+  height: calc(100% - 100px);
+}
+
+.featuresContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.featuredMapCardContainer{
+  height: $featureMapsHeight;
+  overflow-y: auto;
+  padding: 0 10px;
+
+  > div {
+    margin-bottom: 32px;
   }
 }

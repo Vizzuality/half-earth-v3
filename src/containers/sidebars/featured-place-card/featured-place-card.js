@@ -31,10 +31,13 @@ function FeaturedPlaceCardContainer(props) {
     imageUrl: '',
     title: '',
     description: '',
+    link: '',
+    hepmLink: [],
+    dateTime: '',
   });
 
   const handleClose = () => {
-    changeUI({ selectedFeaturedPlace: undefined });
+    changeUI({ selectedFeaturedPlace: undefined});
     view.goTo({ zoom: initialState.globe.zoom });
   };
   useEffect(() => {
@@ -44,9 +47,13 @@ function FeaturedPlaceCardContainer(props) {
 
   useEffect(() => {
     if (featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace) {
-      setFeaturedPlace({
-        ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace],
-      });
+      if(featuredMapPlaces[selectedFeaturedMap]?.[selectedFeaturedPlace]){
+        setFeaturedPlace({
+          ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace],
+        });
+      } else {
+        handleClose();
+      }
     }
   }, [selectedFeaturedPlace, selectedFeaturedMap, featuredMapPlaces]);
 
@@ -69,10 +76,18 @@ function FeaturedPlaceCardContainer(props) {
           : `ftr_slg = '${selectedFeaturedMap}'`;
       featuredPlacesLayer.queryFeatures(queryParams).then((results) => {
         const { features } = results;
-        const list = orderBy(features, (place) => place.geometry.longitude).map(
-          (place) => place.attributes.nam_slg
-        );
-        setFeaturedPlacesList(list);
+
+        if(selectedFeaturedMap === 'discoverPlaces'){
+          const list = orderBy(features, (place) => place.attributes.story_date, ['desc']).map(
+            (place) => place.attributes.nam_slg
+          );
+          setFeaturedPlacesList(list);
+        } else {
+          const list = orderBy(features, (place) => place.geometry.longitude).map(
+            (place) => place.attributes.nam_slg
+          );
+          setFeaturedPlacesList(list);
+        }
       });
     }
   }, [
