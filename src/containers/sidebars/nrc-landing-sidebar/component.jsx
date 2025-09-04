@@ -126,8 +126,8 @@ function NRCLandingSidebar({
             const { name, slug } = layer;
             const nameUpdated =
               name && slug === GLOBAL_SPI_FEATURE_LAYER
-                ? `${t('Land SPI (Global average:')} ${landAverage})`
-                : `${t('Marine SPI (Global average:')} ${marineAverage})`;
+                ? `${t('Land SPI (Global Country Average:')} ${landAverage})`
+                : `${t('Marine SPI (Global Country Average:')} ${marineAverage})`;
             const layerUpdated = { ...layer, name: nameUpdated };
             return (
               <LayerToggle
