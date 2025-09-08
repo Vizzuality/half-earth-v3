@@ -3,7 +3,7 @@
 @import 'styles/ui.module';
 @import 'styles/common-animations.module';
 
-$card-content-max-height: 220px;
+$card-content-max-height: 410px;
 
 .container {
   position: fixed;
@@ -59,7 +59,7 @@ $card-content-max-height: 220px;
   @media #{$tablet-portrait} {
     grid-column-gap: 40px;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 190px 1fr;
+    grid-template-rows: 1fr 380px 1fr;
     grid-template-areas:
       "breadcrumb navigation"
       "picture text"
@@ -140,6 +140,12 @@ $card-content-max-height: 220px;
       max-height: $card-content-max-height;
       overflow-y: auto;
     }
+
+    .description{
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
   }
 
   .title {
@@ -171,7 +177,6 @@ $card-content-max-height: 220px;
   .sourceText {
     @extend %bodyText;
     color: $dark-text;
-    padding-bottom: 24px;
   }
 }
 
@@ -197,6 +202,24 @@ $card-content-max-height: 220px;
       margin-bottom: 0;
     }
   }
+}
+
+.link{
+  color: $brand-color-main;
+  cursor: pointer;
+  font-family: $font-family-1;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+
+  &:hover {
+    color: $brand-color-main-hover;
+  }
+}
+
+.hepmLinks{
+  display: flex;
+  flex-wrap: wrap;
 }
 
 // mobile only
@@ -251,7 +274,7 @@ $card-content-max-height: 220px;
   top: -20px;
   height: 42px;
   width: 42px;
-  left: calc(50% - #{$rounded-button-size} / 2);
+  right: 10px;
   box-shadow: $box-shadow-soft;
   z-index: $bring-to-front;
 }

@@ -126,7 +126,7 @@ function Container(props) {
     ) {
       // --------------- SPECIFIC REGIONS SPECIAL CASE --------------
       const region =
-        contextualData.aoiId && contextualData.aoiId.replace('region-', '');
+        contextualData.aoiId && contextualData.aoiId;
       EsriFeatureService.getFeatures({
         url,
         whereClause: `region = '${region}'`,

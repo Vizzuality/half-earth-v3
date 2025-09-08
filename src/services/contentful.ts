@@ -1,10 +1,14 @@
 import { Asset, createClient } from 'contentful';
-import { Config, FeaturePlaceItem, GenericItem } from 'types/services-types';
-
 import fetchWithCache from 'services/fetch';
+import { Config, FeaturePlaceItem, GenericItem } from 'types/services-types';
 
 const { VITE_APP_CONTENTFUL_SPACE_ID } = import.meta.env;
 const { VITE_APP_CONTENTFUL_TOKEN } = import.meta.env;
+
+interface IHepmLink {
+  id: string;
+  link: string;
+}
 
 const contentfulClient = createClient({
   space: VITE_APP_CONTENTFUL_SPACE_ID,
@@ -122,10 +126,16 @@ function parseFeaturedPlaces(data, config, locale) {
       title: string;
       description: Record<string, unknown>;
       image?: string;
+      link?: string;
+      hepmLink?: IHepmLink[];
+      dateTime?: string;
     } = {
       slug: removeLanguageFromSlug(data.fields.nameSlug),
       title: data.fields.title,
       description: data.fields.description,
+      link: data.fields.link,
+      hepmLink: data.fields.hepmLink,
+      dateTime: data.fields.dateTime
     };
     if (data.fields.image) {
       await getContentfulImage(data.fields.image.sys.id, config).then(

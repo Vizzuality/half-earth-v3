@@ -19,7 +19,7 @@ export const setSpecificRegion = ({
   setSpeciesData,
 }) => {
   setSpeciesData({ species: [] }); // First reset species data
-  const region = aoiId.replace('region-', '');
+  const region = aoiId;
 
   EsriFeatureService.getFeatures({
     url: LAYERS_URLS[SPECIFIC_REGIONS_TILE_LAYER],

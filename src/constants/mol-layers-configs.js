@@ -120,6 +120,7 @@ import {
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   EEZ_MARINE_AND_LAND_BORDERS,
+  FEATURED_PLACES_PORTAL_ID,
 } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
@@ -332,6 +333,7 @@ export const layersConfig = {
     slug: FEATURED_PLACES_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[FEATURED_PLACES_LAYER],
+    portalId: LAYERS_URLS[FEATURED_PLACES_PORTAL_ID],
     bbox: null,
   },
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
