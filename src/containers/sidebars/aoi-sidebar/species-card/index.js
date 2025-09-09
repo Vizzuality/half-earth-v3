@@ -68,6 +68,8 @@ function SpeciesCardContainer(props) {
   const handleCloseSearch = () => {
     setSearchOptions([]);
     setSelectedSearchOption(null);
+    setSelectedSpeciesIndex(0);
+    setSelectedSpecies(speciesToDisplayBackUp[0]);
     setSpeciesToDisplay([...speciesToDisplayBackUp]);
   };
 
@@ -77,11 +79,14 @@ function SpeciesCardContainer(props) {
         (elem) => searchOptions.findIndex((so) => so.slug === elem.name) >= 0
       );
       setSpeciesToDisplay([...searchSpecies]);
+
+      setSelectedSpecies(searchSpecies[0]);
     } else {
       const index = speciesToDisplayBackUp.findIndex(
         (elem) => elem.name === option.slug
       );
       setSpeciesToDisplay([speciesToDisplayBackUp[index]]);
+      setSelectedSpecies(speciesToDisplayBackUp[index]);
     }
     setSelectedSpeciesIndex(0);
     setSelectedSearchOption(option);
@@ -128,11 +133,13 @@ function SpeciesCardContainer(props) {
   const handleNextSpeciesSelection = () => {
     if (selectedSpeciesIndex === speciesToDisplay.length - 1) {
       setSelectedSpeciesIndex(0);
+      setSelectedSpecies(speciesToDisplay[0]);
       changeUI({
         selectedSpecies:  speciesToDisplay[0]?.id
       })
     } else {
       setSelectedSpeciesIndex(selectedSpeciesIndex + 1);
+      setSelectedSpecies(speciesToDisplay[selectedSpeciesIndex + 1]);
       changeUI({ selectedSpecies: speciesToDisplay[selectedSpeciesIndex + 1]?.id });
     }
   };
@@ -140,6 +147,7 @@ function SpeciesCardContainer(props) {
   const handlePreviousSpeciesSelection = () => {
     const newSelectedIndex = selectedSpeciesIndex === 0 ? speciesToDisplay.length - 1 : selectedSpeciesIndex - 1;
     setSelectedSpeciesIndex(newSelectedIndex);
+    setSelectedSpecies(speciesToDisplay[newSelectedIndex]);
     changeUI({ selectedSpecies: speciesToDisplay[newSelectedIndex].id });
   };
 
