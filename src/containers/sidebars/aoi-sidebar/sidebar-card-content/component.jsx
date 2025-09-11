@@ -155,7 +155,7 @@ function SidebarCard({
             {cardDescription}
           </ReactMarkdown>
         )}
-        {cardCategory === PROTECTION_SLUG && (
+        {cardCategory === PROTECTION_SLUG && contextualData.region_type !== 'preserve' && (
           <div>
             <Button
               type="rectangular"
