@@ -237,11 +237,13 @@ function SidebarCard({
             data={humanPressuresData}
           />
         )}
-        <SourceAnnotation
-          theme="dark"
-          metaDataSources={metadata && metadata.source}
-          className={styles.sourceContainer}
-        />
+        {contextualData.region_type !== 'preserve' && (
+          <SourceAnnotation
+            theme="dark"
+            metaDataSources={metadata && metadata.source}
+            className={styles.sourceContainer}
+          />
+        )}
       </div>
       {displayWarning && (
         <div className={styles.warningWrapper}>
