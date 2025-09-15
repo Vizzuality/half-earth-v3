@@ -332,7 +332,7 @@ function SpeciesCardContainer(props) {
       MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (SPSData && results.length > 0) {
           const individualSPSData = SPSData.find(
-            (d) => d.SliceNumber === selectedSpecies.sliceNumber
+            (d) => d.id === selectedSpecies.id
           );
           const SPS_AOI =
             individualSPSData.SPS_aoi ||
