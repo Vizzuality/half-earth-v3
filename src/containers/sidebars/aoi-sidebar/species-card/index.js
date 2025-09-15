@@ -213,8 +213,8 @@ function SpeciesCardContainer(props) {
     const sortSpecies = (s) =>
       orderBy(
         s,
-        ['has_image', 'per_global', 'conservationConcern'],
-        ['desc', 'desc', 'desc']
+        ['per_global', 'SPS_global', 'has_image'],
+        ['desc', 'asc', 'desc']
       );
       const removeFalcoPeregrinus = (s) =>
         s.filter(sp => {
@@ -241,6 +241,9 @@ function SpeciesCardContainer(props) {
       setSpeciesToDisplay(speciesSorted);
       setSpeciesToDisplayBackUp([...speciesSorted]);
     }
+
+    setSelectedSpeciesIndex(0);
+    setSelectedSpecies(speciesSorted[0]);
   }, [species, selectedSpeciesFilter]);
 
   useEffect(() => {
@@ -329,7 +332,7 @@ function SpeciesCardContainer(props) {
       MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (SPSData && results.length > 0) {
           const individualSPSData = SPSData.find(
-            (d) => d.SliceNumber === selectedSpecies.sliceNumber
+            (d) => d.id === selectedSpecies.id
           );
           const SPS_AOI =
             individualSPSData.SPS_aoi ||

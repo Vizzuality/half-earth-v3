@@ -155,7 +155,7 @@ function SidebarCard({
             {cardDescription}
           </ReactMarkdown>
         )}
-        {cardCategory === PROTECTION_SLUG && (
+        {cardCategory === PROTECTION_SLUG && contextualData.region_type !== 'preserve' && (
           <div>
             <Button
               type="rectangular"
@@ -237,11 +237,13 @@ function SidebarCard({
             data={humanPressuresData}
           />
         )}
-        <SourceAnnotation
-          theme="dark"
-          metaDataSources={metadata && metadata.source}
-          className={styles.sourceContainer}
-        />
+        {contextualData.region_type !== 'preserve' && (
+          <SourceAnnotation
+            theme="dark"
+            metaDataSources={metadata && metadata.source}
+            className={styles.sourceContainer}
+          />
+        )}
       </div>
       {displayWarning && (
         <div className={styles.warningWrapper}>
