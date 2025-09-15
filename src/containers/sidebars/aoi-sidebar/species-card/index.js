@@ -210,19 +210,22 @@ function SpeciesCardContainer(props) {
   }, [species, locale, contextualData.speciesNumbers]);
 
   useEffect(() => {
+    if(species.length === 0) return;
+
     const sortSpecies = (s) =>
       orderBy(
         s,
         ['per_global', 'SPS_global', 'has_image'],
         ['desc', 'asc', 'desc']
       );
-      const removeFalcoPeregrinus = (s) =>
-        s.filter(sp => {
-          if (areaName?.toLowerCase() === 'custom area') {
-            return sp.name.toLowerCase() !== 'falco peregrinus';
-          }
-          return true;
-        });
+
+    const removeFalcoPeregrinus = (s) =>
+      s.filter(sp => {
+        if (areaName?.toLowerCase() === 'custom area') {
+          return sp.name.toLowerCase() !== 'falco peregrinus';
+        }
+        return true;
+    });
 
     const speciesSorted =
       species &&
@@ -240,10 +243,9 @@ function SpeciesCardContainer(props) {
     if (speciesSorted) {
       setSpeciesToDisplay(speciesSorted);
       setSpeciesToDisplayBackUp([...speciesSorted]);
+      setSelectedSpeciesIndex(0);
+      setSelectedSpecies(speciesSorted[0]);
     }
-
-    setSelectedSpeciesIndex(0);
-    setSelectedSpecies(speciesSorted[0]);
   }, [species, selectedSpeciesFilter]);
 
   useEffect(() => {

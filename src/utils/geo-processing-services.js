@@ -214,7 +214,7 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
         ...acc,
         [f.SliceNumber]: {
           sliceNumber: f.SliceNumber,
-          per_global: f.per_global,
+          per_global: +f.per_global.toFixed(1),
           SPS_AOI: f.SPS_aoi,
         },
       }),
