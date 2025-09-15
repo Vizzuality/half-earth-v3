@@ -213,8 +213,8 @@ function SpeciesCardContainer(props) {
     const sortSpecies = (s) =>
       orderBy(
         s,
-        ['SPS_global', 'per_global', 'has_image'],
-        ['asc', 'desc', 'desc']
+        ['per_global', 'SPS_global', 'has_image'],
+        ['desc', 'asc', 'desc']
       );
       const removeFalcoPeregrinus = (s) =>
         s.filter(sp => {
