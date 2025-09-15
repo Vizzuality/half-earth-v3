@@ -213,8 +213,8 @@ function SpeciesCardContainer(props) {
     const sortSpecies = (s) =>
       orderBy(
         s,
-        ['has_image', 'per_global', 'SPS_global'],
-        ['desc', 'desc', 'desc']
+        ['SPS_global', 'per_global', 'has_image'],
+        ['asc', 'desc', 'desc']
       );
       const removeFalcoPeregrinus = (s) =>
         s.filter(sp => {
@@ -241,6 +241,9 @@ function SpeciesCardContainer(props) {
       setSpeciesToDisplay(speciesSorted);
       setSpeciesToDisplayBackUp([...speciesSorted]);
     }
+
+    setSelectedSpeciesIndex(0);
+    setSelectedSpecies(speciesSorted[0]);
   }, [species, selectedSpeciesFilter]);
 
   useEffect(() => {
