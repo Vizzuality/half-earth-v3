@@ -272,7 +272,13 @@ export const setPrecalculatedSpeciesData = (
     reptilePreCalc,
     amphibianPreCalc,
   ]).then(data => {
-    setTaxaData([...data[0], ...data[1], ...data[2], ...data[3]]);
+    const [birdData, mammalData, reptileData, amphibianData] = data;
+    setTaxaData([
+      ...birdData,
+      ...mammalData.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955),
+      ...reptileData,
+      ...amphibianData
+    ]);
     handleLoadedTaxaData('birds');
     handleLoadedTaxaData('mammals');
     handleLoadedTaxaData('reptiles');
