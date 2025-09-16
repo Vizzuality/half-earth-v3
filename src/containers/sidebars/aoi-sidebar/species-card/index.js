@@ -259,6 +259,7 @@ function SpeciesCardContainer(props) {
 
   useEffect(() => {
     setSelectedSpeciesIndex(0);
+    setSelectedSpecies(species[0]);
   }, [selectedSpeciesFilter?.slug]);
 
   // Get individual species info and image for slider
