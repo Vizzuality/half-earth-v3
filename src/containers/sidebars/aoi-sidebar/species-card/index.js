@@ -214,8 +214,11 @@ function SpeciesCardContainer(props) {
 
     const sortSpecies = (s) =>
       orderBy(
-        s,
-        ['per_global', 'SPS_global', 'has_image'],
+        s.map(item => ({
+          ...item,
+          rounded_global: Math.round(item.per_global / 5) * 5
+        })),
+        ['rounded_global', 'SPS_global', 'has_image'],
         ['desc', 'asc', 'desc']
       );
 
@@ -241,6 +244,7 @@ function SpeciesCardContainer(props) {
       // TODO: Remove the filter above once data is fixed
 
     if (speciesSorted) {
+      console.log('sorted species', speciesSorted);
         setSpeciesToDisplay(speciesSorted);
         setSpeciesToDisplayBackUp([...speciesSorted]);
     }
