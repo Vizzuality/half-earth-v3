@@ -46,7 +46,7 @@ function SpeciesBar({
               </div>
             </>
           ) : (
-            <>{Math.round(percentage)}%</>
+            <>{percentage >= 1 ? Math.round(percentage) : '< 1%'}</>
           )}
         </div>
       }
