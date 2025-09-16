@@ -260,27 +260,24 @@ export const setPrecalculatedSpeciesData = (
   setTaxaData,
   handleLoadedTaxaData
 ) => {
-  getPrecalculatedSpeciesData(BIRDS, attributes.birds).then((data) => {
-    setTaxaData(data);
+
+  const birdPreCalc = getPrecalculatedSpeciesData(BIRDS, attributes.birds);
+  const mammalPreCalc = getPrecalculatedSpeciesData(MAMMALS, attributes.mammals);
+  const reptilePreCalc = getPrecalculatedSpeciesData(REPTILES, attributes.reptiles);
+  const amphibianPreCalc = getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians);
+
+  Promise.all([
+    birdPreCalc,
+    mammalPreCalc,
+    reptilePreCalc,
+    amphibianPreCalc,
+  ]).then(data => {
+    setTaxaData([...data[0], ...data[1], ...data[2], ...data[3]]);
     handleLoadedTaxaData('birds');
-  });
-  getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
-    // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
-    setTaxaData(
-      data?.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955)
-    );
     handleLoadedTaxaData('mammals');
-  });
-  getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then((data) => {
-    setTaxaData(data);
     handleLoadedTaxaData('reptiles');
-  });
-  getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(
-    (data) => {
-      setTaxaData(data);
-      handleLoadedTaxaData('amphibians', AMPHIBIANS);
-    }
-  );
+    handleLoadedTaxaData('amphibians');
+  }).catch((error) => console.error('Error setting precalculated data', error));
 };
 
 const getAreaName = (data) => {

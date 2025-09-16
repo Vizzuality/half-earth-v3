@@ -241,12 +241,8 @@ function SpeciesCardContainer(props) {
       // TODO: Remove the filter above once data is fixed
 
     if (speciesSorted) {
-      setTimeout(() => {
         setSpeciesToDisplay(speciesSorted);
         setSpeciesToDisplayBackUp([...speciesSorted]);
-        setSelectedSpeciesIndex(0);
-        setSelectedSpecies(speciesSorted[0]);
-      }, 500);
     }
   }, [species, selectedSpeciesFilter]);
 
