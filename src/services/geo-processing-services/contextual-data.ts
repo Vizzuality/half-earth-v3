@@ -14,7 +14,7 @@ export function getCrfData(aoiFeatureGeometry: GetCrfData) {
       ...inputRasterKeyPairs,
       [inputTestGeometryKey]: setSpeciesJSONGeometryRings(
         // addZcoordToRings(JSONGeometry.rings)
-        JSONGeometry.rings
+        JSONGeometry.rings[0]
       ),
     })
       .then((jobInfo) => {
