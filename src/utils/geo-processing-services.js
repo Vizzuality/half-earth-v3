@@ -1,11 +1,11 @@
-import * as geoprocessor from '@arcgis/core/rest/geoprocessor.js';
+import * as geoprocessor from '@arcgis/core/rest/geoprocessor.js'
 
-import EsriFeatureService from 'services/esri-feature-service';
-import { getCrfData } from 'services/geo-processing-services/biodiversity';
-import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data';
+import EsriFeatureService from 'services/esri-feature-service'
+import { getCrfData } from 'services/geo-processing-services/biodiversity'
+import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data'
 
-import { AOIS_HISTORIC } from 'constants/analyze-areas-constants';
-import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+import { AOIS_HISTORIC } from 'constants/analyze-areas-constants'
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants'
 import {
   WDPA_LIST,
   WDPA_PERCENTAGE,
@@ -23,48 +23,48 @@ import {
   TRANSPORTATION,
   INTRUSION,
   BUILTUP,
-} from 'constants/geo-processing-services';
-import { ELU_LOOKUP_TABLE } from 'constants/layers-slugs';
-import { LAYERS_URLS } from 'constants/layers-urls';
+} from 'constants/geo-processing-services'
+import { ELU_LOOKUP_TABLE } from 'constants/layers-slugs'
+import { LAYERS_URLS } from 'constants/layers-urls'
 
 export function getJobInfo(url, params) {
   return new Promise((resolve) => {
-    const jobInfo = geoprocessor.submitJob(url, params);
-    resolve(jobInfo);
-  });
+    const jobInfo = geoprocessor.submitJob(url, params)
+    resolve(jobInfo)
+  })
 }
 
 export function jobTimeProfiling(jobStart) {
-  const jobStatusTime = Date.now();
-  const miliseconds = Math.abs(jobStart - jobStatusTime);
-  console.info('TIME ELLAPSED ', miliseconds / 1000, ' SECONDS');
+  const jobStatusTime = Date.now()
+  const miliseconds = Math.abs(jobStart - jobStatusTime)
+  console.info('TIME ELLAPSED ', miliseconds / 1000, ' SECONDS')
 }
 
 export function getEluData(data) {
   // eslint-disable-next-line max-len
   const eluCode =
     data[CONTEXTUAL_DATA_TABLES[ECOLOGICAL_LAND_UNITS]].value.features[0]
-      .attributes.MAJORITY;
+      .attributes.MAJORITY
   return new Promise((resolve, reject) => {
     EsriFeatureService.getFeatures({
       url: LAYERS_URLS[ELU_LOOKUP_TABLE],
       whereClause: `elu_code = '${eluCode}'`,
     })
       .then((features) => {
-        const eluData = features[0].attributes;
-        const { lc_type: landCover, cr_type: climateRegime } = eluData;
-        resolve({ landCover, climateRegime });
+        const eluData = features[0].attributes
+        const { lc_type: landCover, cr_type: climateRegime } = eluData
+        resolve({ landCover, climateRegime })
       })
       .catch((getFeaturesError) => {
-        reject(getFeaturesError);
-      });
-  });
+        reject(getFeaturesError)
+      })
+  })
 }
 
 function getAreaPressures(data) {
   const getData = (key) => {
     if (!data[CONTEXTUAL_DATA_TABLES[key]]?.value?.features.length) {
-      return null;
+      return null
     }
     return data[CONTEXTUAL_DATA_TABLES[key]].value.features.map(
       (f) =>
@@ -72,21 +72,21 @@ function getAreaPressures(data) {
           year: f.attributes.Year,
           value: f.attributes.percentage_land_encroachment,
         }
-    );
-  };
+    )
+  }
   return {
     extraction: getData(EXTRACTION),
     agriculture: getData(AGRICULTURE),
     transportation: getData(TRANSPORTATION),
     intrusion: getData(INTRUSION),
     builtup: getData(BUILTUP),
-  };
+  }
 }
 
 const getAreaPopulation = (data) =>
   data[CONTEXTUAL_DATA_TABLES[POPULATION]].value.features[0].attributes[
-    COUNTRY_ATTRIBUTES.populationSum
-  ];
+  COUNTRY_ATTRIBUTES.populationSum
+  ]
 
 const getProtectedAreasList = (data) =>
   data[CONTEXTUAL_DATA_TABLES[WDPA_LIST]].value.features.map((f) => ({
@@ -98,42 +98,42 @@ const getProtectedAreasList = (data) =>
     IUCN_CAT: f.attributes.IUCN_CAT,
     DESIG_TYPE: f.attributes.DESIG_TYPE,
     MOL_ID: f.attributes.MOL_ID,
-  }));
+  }))
 
 const getPercentage = (data) =>
   data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0] &&
   data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0].attributes
-    .percentage_protected;
+    .percentage_protected
 
 export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
     getContextualData(geometry)
       .then(async (data) => {
-        const pressures = getAreaPressures(data);
-        const population = getAreaPopulation(data);
-        const elu = await getEluData(data);
-        const protectedAreasList = getProtectedAreasList(data);
-        const percentage = getPercentage(data);
+        const pressures = getAreaPressures(data)
+        const population = getAreaPopulation(data)
+        const elu = await getEluData(data)
+        const protectedAreasList = getProtectedAreasList(data)
+        const percentage = getPercentage(data)
         resolve({
           elu,
           pressures,
           population,
           protectedAreasList,
           percentage,
-        });
+        })
       })
       .catch((error) => {
-        reject(error);
-      });
-  });
+        reject(error)
+      })
+  })
 }
 
 const parseCommonName = (f) => {
-  return f.attributes.common_name && f.attributes.common_name.split(',');
-};
+  return f.attributes.common_name && f.attributes.common_name.split(',')
+}
 
 const getId = (crfName, sliceNumber) =>
-  `${crfName.split('_')[0]}-${sliceNumber}`;
+  `${crfName.split('_')[0]}-${sliceNumber}`
 
 export function getCustomAOISpeciesData(crfName, geometry) {
   return new Promise((resolve, reject) => {
@@ -141,7 +141,7 @@ export function getCustomAOISpeciesData(crfName, geometry) {
       dataset: crfName,
       aoiFeatureGeometry: geometry,
     }).then((response) => {
-      const { data } = response;
+      const { data } = response
       const crfSlices = data.value.features.reduce(
         (acc, f) => ({
           ...acc,
@@ -155,8 +155,8 @@ export function getCustomAOISpeciesData(crfName, geometry) {
           },
         }),
         {}
-      );
-      const ids = data.value.features.map((f) => f.attributes.SliceNumber);
+      )
+      const ids = data.value.features.map((f) => f.attributes.SliceNumber)
       if (ids && ids.length > 0) {
         EsriFeatureService.getFeatures({
           url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
@@ -165,8 +165,8 @@ export function getCustomAOISpeciesData(crfName, geometry) {
           .then((features) => {
             const result = features
               .map((f) => {
-                const { attributes } = f;
-                const crfInfo = crfSlices[attributes.SliceNumber];
+                const { attributes } = f
+                const crfInfo = crfSlices[attributes.SliceNumber]
                 return {
                   category: crfName,
                   has_image: attributes.has_image,
@@ -185,29 +185,29 @@ export function getCustomAOISpeciesData(crfName, geometry) {
                   meet_target: crfInfo.meet_target,
                   SPS_increase: crfInfo.SPS_increase,
                   id: getId(crfName, attributes.SliceNumber),
-                };
+                }
               })
-              .filter((f) => f.name !== null);
-            resolve(result);
+              .filter((f) => f.name !== null)
+            resolve(result)
           })
           .catch((error) => {
-            reject(error);
-          });
+            reject(error)
+          })
       }
-    });
-  });
+    })
+  })
 }
 
 const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
-  let data;
+  let data
   try {
-    data = JSON.parse(jsonTaxaData);
+    data = JSON.parse(jsonTaxaData)
   } catch (error) {
-    console.error('Error parsing JSON data', error);
+    console.error('Error parsing JSON data', error)
   }
   return new Promise((resolve, reject) => {
     if (!data) {
-      resolve(null);
+      resolve(null)
     }
     const crfSlices = data.reduce(
       (acc, f) => ({
@@ -219,8 +219,8 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
         },
       }),
       {}
-    );
-    const ids = data.map((f) => f.SliceNumber);
+    )
+    const ids = data.map((f) => f.SliceNumber)
     EsriFeatureService.getFeatures({
       url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
       whereClause: `SliceNumber IN (${ids.toString()})`,
@@ -228,7 +228,7 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
       .then((features) => {
         const result = features
           .map((f) => {
-            const crfInfo = crfSlices[f.attributes.SliceNumber];
+            const crfInfo = crfSlices[f.attributes.SliceNumber]
             return {
               category: crfName,
               isFlagship: f.attributes.is_flagship,
@@ -244,16 +244,16 @@ const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
               SPS_global: f.attributes.SPS,
               id: getId(crfName, f.attributes.SliceNumber),
               ...crfInfo,
-            };
+            }
           })
-          .filter((f) => f.name !== null);
-        resolve(result);
+          .filter((f) => f.name !== null)
+        resolve(result)
       })
       .catch((error) => {
-        reject(error);
-      });
-  });
-};
+        reject(error)
+      })
+  })
+}
 
 export const setPrecalculatedSpeciesData = (
   attributes,
@@ -261,10 +261,10 @@ export const setPrecalculatedSpeciesData = (
   handleLoadedTaxaData
 ) => {
 
-  const birdPreCalc = getPrecalculatedSpeciesData(BIRDS, attributes.birds);
-  const mammalPreCalc = getPrecalculatedSpeciesData(MAMMALS, attributes.mammals);
-  const reptilePreCalc = getPrecalculatedSpeciesData(REPTILES, attributes.reptiles);
-  const amphibianPreCalc = getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians);
+  const birdPreCalc = getPrecalculatedSpeciesData(BIRDS, attributes.birds)
+  const mammalPreCalc = getPrecalculatedSpeciesData(MAMMALS, attributes.mammals)
+  const reptilePreCalc = getPrecalculatedSpeciesData(REPTILES, attributes.reptiles)
+  const amphibianPreCalc = getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians)
 
   Promise.all([
     birdPreCalc,
@@ -272,26 +272,26 @@ export const setPrecalculatedSpeciesData = (
     reptilePreCalc,
     amphibianPreCalc,
   ]).then(data => {
-    const [birdData, mammalData, reptileData, amphibianData] = data;
+    const [birdData, mammalData, reptileData, amphibianData] = data
     setTaxaData([
       ...birdData,
       ...mammalData.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955),
       ...reptileData,
       ...amphibianData
-    ]);
-    handleLoadedTaxaData('birds');
-    handleLoadedTaxaData('mammals');
-    handleLoadedTaxaData('reptiles');
-    handleLoadedTaxaData('amphibians');
-  }).catch((error) => console.error('Error setting precalculated data', error));
-};
+    ])
+    handleLoadedTaxaData('birds')
+    handleLoadedTaxaData('mammals')
+    handleLoadedTaxaData('reptiles')
+    handleLoadedTaxaData('amphibians')
+  }).catch((error) => console.error('Error setting precalculated data', error))
+}
 
 const getAreaName = (data) => {
-  if (data.NAME) return `${data.NAME}`;
-  if (data.NAME_1) return `${data.NAME_1}, (${data.GID_0})`;
-  if (!data.NAME_1) return `${data.NAME_0}`;
-  return undefined;
-};
+  if (data.NAME) return `${data.NAME}`
+  if (data.NAME_1) return `${data.NAME_1}, (${data.GID_0})`
+  if (!data.NAME_1) return `${data.NAME_0}`
+  return undefined
+}
 
 export const getPrecalculatedContextualData = ({
   data,
@@ -299,19 +299,19 @@ export const getPrecalculatedContextualData = ({
   includeProtectedAreasList = false,
   includeAllData = false,
 }) => {
-  const pressures = {};
+  const pressures = {}
 
   Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
-    const pressureData = data[LAND_PRESSURES_LABELS_SLUGS[key]];
-    const parsedData = pressureData && JSON.parse(pressureData);
+    const pressureData = data[LAND_PRESSURES_LABELS_SLUGS[key]]
+    const parsedData = pressureData && JSON.parse(pressureData)
     pressures[key] =
       parsedData &&
       parsedData.length > 0 &&
       parsedData.map((d) => ({
         year: d.Year,
         value: d.percentage_land_encroachment,
-      }));
-  });
+      }))
+  })
 
   return {
     elu: {
@@ -334,8 +334,8 @@ export const getPrecalculatedContextualData = ({
     protectionPercentage: data.percentage_protected,
     SPI: data.SPI,
     ...(includeAllData && { ...data }),
-  };
-};
+  }
+}
 
 export const getAoiFromDataBase = (id) => {
   return new Promise((resolve, reject) => {
@@ -345,11 +345,11 @@ export const getAoiFromDataBase = (id) => {
       whereClause: `aoiId = '${id}'`,
     })
       .then((features) => {
-        resolve(features);
+        resolve(features)
       })
-      .catch((error) => reject(error));
-  });
-};
+      .catch((error) => reject(error))
+  })
+}
 
 export const postAoiToDataBase = (geometry, attributes) => {
   return new Promise((resolve, reject) => {
@@ -361,91 +361,108 @@ export const postAoiToDataBase = (geometry, attributes) => {
       },
     })
       .then((features) => {
-        resolve(features);
+        resolve(features)
       })
-      .catch((error) => reject(error));
-  });
-};
+      .catch((error) => reject(error))
+  })
+}
 
-export const addZcoordToRings = (rings) => rings[0].map((r) => [...r, 0]);
+export const addZcoordToRings = (rings) => rings[0].map((r) => [...r, 0])
 
-export const setSpeciesJSONGeometryRings = (rings) => ({
-  displayFieldName: '',
-  hasZ: true,
-  fieldAliases: {
-    OBJECTID: 'OBJECTID',
-    Name: 'Name',
-    Text: 'Text',
-    IntegerValue: 'Integer Value',
-    DoubleValue: 'Double Value',
-    DateTime: 'Date Time',
-    Shape_Length: 'Shape_Length',
-    Shape_Area: 'Shape_Area',
-  },
-  geometryType: 'esriGeometryPolygon',
-  spatialReference: {
-    wkid: 102100,
-    latestWkid: 3857,
-  },
-  fields: [
-    {
-      name: 'OBJECTID',
-      type: 'esriFieldTypeOID',
-      alias: 'OBJECTID',
+export const setSpeciesJSONGeometryRings = (rings) => {
+  console.log(rings)
+  console.log([rings])
+  const blah = {
+    "displayFieldName": '',
+    // hasZ: true,
+    "fieldAliases": {
+      "OBJECTID": 'OBJECTID',
+      "Name": 'Name',
+      "Text": 'Text',
+      "IntegerValue": 'Integer Value',
+      "DoubleValue": 'Double Value',
+      "DateTime": 'Date Time',
+      "Shape__Length": 'Shape__Length',
+      "Shape__Area": 'Shape__Area',
     },
-    {
-      name: 'Name',
-      type: 'esriFieldTypeString',
-      alias: 'Name',
-      length: 255,
+    "inSR": 3857,
+    "outSR": 4326,
+    "geometryProperties": {
+      "shapeAreaFieldName": 'Shape__Area',
+      "shapeLengthFieldName": 'Shape__Length',
+      "units": 'esriDecimalDegrees'
     },
-    {
-      name: 'Text',
-      type: 'esriFieldTypeString',
-      alias: 'Text',
-      length: 255,
-    },
-    {
-      name: 'IntegerValue',
-      type: 'esriFieldTypeInteger',
-      alias: 'Integer Value',
-    },
-    {
-      name: 'DoubleValue',
-      type: 'esriFieldTypeDouble',
-      alias: 'Double Value',
-    },
-    {
-      name: 'DateTime',
-      type: 'esriFieldTypeDate',
-      alias: 'Date Time',
-      length: 8,
-    },
-    {
-      name: 'Shape_Length',
-      type: 'esriFieldTypeDouble',
-      alias: 'Shape_Length',
-    },
-    {
-      name: 'Shape_Area',
-      type: 'esriFieldTypeDouble',
-      alias: 'Shape_Area',
-    },
-  ],
-  features: [
-    {
-      attributes: {
-        OBJECTID: 1,
-        Name: null,
-        Text: null,
-        IntegerValue: null,
-        DoubleValue: null,
-        DateTime: null,
+    "geometryType": 'esriGeometryPolygon',
+    // "spatialReference": {
+    //   "wkid": 102100,
+    //   "latestWkid": 3857,
+    // },
+    "fields": [
+      {
+        "name": 'OBJECTID',
+        "type": 'esriFieldTypeOID',
+        "alias": 'OBJECTID',
       },
-      geometry: {
-        hasZ: true,
-        rings: [rings],
+      {
+        "name": 'Name',
+        "type": 'esriFieldTypeString',
+        "alias": 'Name',
+        "length": 255,
       },
-    },
-  ],
-});
+      {
+        "name": 'Text',
+        "type": 'esriFieldTypeString',
+        "alias": 'Text',
+        "length": 255,
+      },
+      {
+        "name": 'IntegerValue',
+        "type": 'esriFieldTypeInteger',
+        "alias": 'Integer Value',
+      },
+      {
+        "name": 'DoubleValue',
+        "type": 'esriFieldTypeDouble',
+        "alias": 'Double Value',
+      },
+      {
+        "name": 'DateTime',
+        "type": 'esriFieldTypeDate',
+        "alias": 'Date Time',
+        "length": 8,
+      },
+      {
+        "name": 'Shape__Length',
+        "type": 'esriFieldTypeDouble',
+        "alias": 'Shape_Length',
+      },
+      {
+        "name": 'Shape__Area',
+        "type": 'esriFieldTypeDouble',
+        "alias": 'Shape_Area',
+      },
+    ],
+    "features": [
+      {
+        "attributes": {
+          "OBJECTID": 1,
+          "Name": null,
+          "Text": null,
+          "IntegerValue": null,
+          "DoubleValue": null,
+          "DateTime": null,
+        },
+        "geometry": {
+          // hasZ: true,
+          "rings": [rings],
+          "spatialReference": {
+            "wkid": 3857,
+          },
+        },
+      },
+    ],
+  }
+
+  console.log(blah)
+  return blah
+}

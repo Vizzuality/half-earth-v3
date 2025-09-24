@@ -1,18 +1,10 @@
 import {
-  getJobInfo,
-  setSpeciesJSONGeometryRings,
-  addZcoordToRings,
-} from 'utils/geo-processing-services';
-
-import { GetCrfData } from 'types/services-types';
-
-import {
-  CONTEXTUAL_DATA,
-  GEOPROCESSING_SERVICES_URLS,
-  CONTEXTUAL_DATA_SERVICE_CONFIG,
+    CONTEXTUAL_DATA, CONTEXTUAL_DATA_SERVICE_CONFIG, GEOPROCESSING_SERVICES_URLS
 } from 'constants/geo-processing-services';
+import { GetCrfData } from 'types/services-types';
+import { getJobInfo, setSpeciesJSONGeometryRings } from 'utils/geo-processing-services';
 
-const { inputGeometryKey, outputTablesKeys, inputRasterKeyPairs } =
+const { inputGeometryKey, outputTablesKeys, inputRasterKeyPairs, inputTestGeometryKey } =
   CONTEXTUAL_DATA_SERVICE_CONFIG;
 
 export function getCrfData(aoiFeatureGeometry: GetCrfData) {
@@ -20,8 +12,9 @@ export function getCrfData(aoiFeatureGeometry: GetCrfData) {
     const JSONGeometry = aoiFeatureGeometry.toJSON();
     getJobInfo(GEOPROCESSING_SERVICES_URLS[CONTEXTUAL_DATA], {
       ...inputRasterKeyPairs,
-      [inputGeometryKey]: setSpeciesJSONGeometryRings(
-        addZcoordToRings(JSONGeometry.rings)
+      [inputTestGeometryKey]: setSpeciesJSONGeometryRings(
+        // addZcoordToRings(JSONGeometry.rings)
+        JSONGeometry.rings
       ),
     })
       .then((jobInfo) => {

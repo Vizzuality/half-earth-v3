@@ -102,6 +102,7 @@ export const LAND_PRESSURES_LOOKUP = [
 export const CRFS_CONFIG = {
   inputRasterKey: 'crf_name',
   inputGeometryKey: 'geometry',
+  inputTestGeometryKey: 'test_geom',
   inputFeatureServiceNameKey: 'esri_out_feature_service_name',
   outputParamKey: 'output_table',
   basePath: '/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft',
@@ -109,6 +110,7 @@ export const CRFS_CONFIG = {
 
 export const CONTEXTUAL_DATA_SERVICE_CONFIG = {
   inputGeometryKey: 'geometry',
+  inputTestGeometryKey: 'Input_geom',
   inputRasterKeyPairs: {
     crf_name_population: `${CRFS_CONFIG.basePath}/${POPULATION}.crf`,
     crf_name_elu: `${CRFS_CONFIG.basePath}/${ECOLOGICAL_LAND_UNITS}.crf`,
@@ -139,13 +141,18 @@ export const BIODIVERSITY_CRFS_CONFIG = {
 
 export const GEOPROCESSING_SERVICES_URLS = {
   [BIRDS]:
-    'https://heportal.esri.com/server/rest/services/BirdsProd_SPS_20240327/GPServer/BirdsProd_SPS',
+  'https://heportal2.esri.com/server/rest/services/birds_test2_9_23/GPServer/birds',
+    // 'https://heportal.esri.com/server/rest/services/BirdsProd_SPS_20240327/GPServer/BirdsProd_SPS',
   [REPTILES]:
-    'https://heportal.esri.com/server/rest/services/ReptilesProd_SPS_20240313/GPServer/ReptilesProd_SPS',
+  'https://heportal2.esri.com/server/rest/services/reptiles_test_elise_9_10_2025/GPServer/reptiles',
+    // 'https://heportal.esri.com/server/rest/services/ReptilesProd_SPS_20240313/GPServer/ReptilesProd_SPS',
   [MAMMALS]:
-    'https://heportal.esri.com/server/rest/services/MammalsProd_SPS_20240327/GPServer/MammalsProd_SPS',
+  'https://heportal2.esri.com/server/rest/services/mammals/GPServer/mammals',
+    // 'https://heportal.esri.com/server/rest/services/MammalsProd_SPS_20240327/GPServer/MammalsProd_SPS',
   [AMPHIBIANS]:
-    'https://heportal.esri.com/server/rest/services/AmphibiansProd_SPS_20240327/GPServer/AmphibiansProd_SPS',
+  'https://heportal2.esri.com/server/rest/services/amphibians_elise_test_9_10_2025/GPServer/amphibians',
+    // 'https://heportal.esri.com/server/rest/services/AmphibiansProd_SPS_20240327/GPServer/AmphibiansProd_SPS',
   [CONTEXTUAL_DATA]:
-    'https://heportal.esri.com/server/rest/services/Contextual_Prod3_20240313/GPServer/Contextual_Prod3',
+  'https://heportal2.esri.com/server/rest/services/contextual_test_elise_9_18/GPServer/contextual_info',
+    // 'https://heportal.esri.com/server/rest/services/Contextual_Prod3_20240313/GPServer/Contextual_Prod3',
 };
