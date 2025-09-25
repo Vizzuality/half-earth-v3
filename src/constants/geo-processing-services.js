@@ -3,6 +3,10 @@ import {
   MAMMALS_LOOKUP,
   REPTILES_LOOKUP,
   AMPHIBIAN_LOOKUP,
+  TEMP_BIRDS_LOOKUP,
+  TEMP_MAMMALS_LOOKUP,
+  TEMP_REPTILES_LOOKUP,
+  TEMP_AMPHIBIAN_LOOKUP,
 } from 'constants/layers-slugs';
 
 export const CRF_NAMES = {
@@ -68,6 +72,13 @@ export const LOOKUP_TABLES = {
   [AMPHIBIANS]: AMPHIBIAN_LOOKUP,
 };
 
+export const TEMP_LOOKUP_TABLES = {
+  [BIRDS]: TEMP_BIRDS_LOOKUP,
+  [MAMMALS]: TEMP_MAMMALS_LOOKUP,
+  [REPTILES]: TEMP_REPTILES_LOOKUP,
+  [AMPHIBIANS]: TEMP_AMPHIBIAN_LOOKUP,
+}
+
 const LAND_PRESSURES_LABELS = {
   extraction: 'extraction',
   transportation: 'transportation',
@@ -102,7 +113,6 @@ export const LAND_PRESSURES_LOOKUP = [
 export const CRFS_CONFIG = {
   inputRasterKey: 'crf_name',
   inputGeometryKey: 'geometry',
-  inputTestGeometryKey: 'test_geom',
   inputFeatureServiceNameKey: 'esri_out_feature_service_name',
   outputParamKey: 'output_table',
   basePath: '/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft',
@@ -110,7 +120,6 @@ export const CRFS_CONFIG = {
 
 export const CONTEXTUAL_DATA_SERVICE_CONFIG = {
   inputGeometryKey: 'geometry',
-  inputTestGeometryKey: 'Input_geom',
   inputRasterKeyPairs: {
     crf_name_population: `${CRFS_CONFIG.basePath}/${POPULATION}.crf`,
     crf_name_elu: `${CRFS_CONFIG.basePath}/${ECOLOGICAL_LAND_UNITS}.crf`,

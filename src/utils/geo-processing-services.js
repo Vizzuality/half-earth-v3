@@ -11,6 +11,7 @@ import {
   WDPA_PERCENTAGE,
   POPULATION,
   LOOKUP_TABLES,
+  TEMP_LOOKUP_TABLES,
   ECOLOGICAL_LAND_UNITS,
   CONTEXTUAL_DATA_TABLES,
   LAND_PRESSURES_LABELS_SLUGS,
@@ -98,6 +99,8 @@ const getProtectedAreasList = (data) =>
     IUCN_CAT: f.attributes.IUCN_CAT,
     DESIG_TYPE: f.attributes.DESIG_TYPE,
     MOL_ID: f.attributes.MOL_ID,
+    STATUS: f.attributes.STATUS,
+    STATUS_YR: f.attributes.STATUS_YR,
   }))
 
 const getPercentage = (data) =>
@@ -158,8 +161,11 @@ export function getCustomAOISpeciesData(crfName, geometry) {
       )
       const ids = data.value.features.map((f) => f.attributes.SliceNumber)
       if (ids && ids.length > 0) {
+        // TODO: use new service per Elise
+        // old value: url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
+        // new value: url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
         EsriFeatureService.getFeatures({
-          url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
+          url: LAYERS_URLS[TEMP_LOOKUP_TABLES[crfName]],
           whereClause: `SliceNumber IN (${ids.toString()})`,
         })
           .then((features) => {
@@ -370,11 +376,9 @@ export const postAoiToDataBase = (geometry, attributes) => {
 export const addZcoordToRings = (rings) => rings[0].map((r) => [...r, 0])
 
 export const setSpeciesJSONGeometryRings = (rings) => {
-  console.log(rings)
-  console.log([rings])
-  const blah = {
+  return {
     "displayFieldName": '',
-    // hasZ: true,
+    "hasZ": true,
     "fieldAliases": {
       "OBJECTID": 'OBJECTID',
       "Name": 'Name',
@@ -453,7 +457,7 @@ export const setSpeciesJSONGeometryRings = (rings) => {
           "DateTime": null,
         },
         "geometry": {
-          // hasZ: true,
+          "hasZ": true,
           "rings": [rings],
           "spatialReference": {
             "wkid": 3857,
@@ -461,8 +465,5 @@ export const setSpeciesJSONGeometryRings = (rings) => {
         },
       },
     ],
-  }
-
-  console.log(blah)
-  return blah
+  };
 }

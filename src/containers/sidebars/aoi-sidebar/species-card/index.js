@@ -244,7 +244,6 @@ function SpeciesCardContainer(props) {
       // TODO: Remove the filter above once data is fixed
 
     if (speciesSorted) {
-      console.log('sorted species', speciesSorted);
         setSpeciesToDisplay(speciesSorted);
         setSpeciesToDisplayBackUp([...speciesSorted]);
     }
@@ -341,7 +340,7 @@ function SpeciesCardContainer(props) {
           );
           const SPS_AOI =
             individualSPSData.SPS_aoi ||
-            (individualSPSData.SPS_aoi === 0 ? 0 : individualSPSData.SPS_AOI);
+            ((individualSPSData.SPS_aoi === 0 || individualSPSData.SPS_AOI === undefined) ? 0 : individualSPSData.SPS_AOI);
 
           setIndividualSpeciesData({
             ...selectedSpecies,
