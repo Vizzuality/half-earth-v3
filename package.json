@@ -46,7 +46,7 @@
     "redux": "^4.0.1",
     "redux-first-router": "0.0.9-rudy",
     "redux-thunk": "^2.3.0",
-    "redux-tools": "github:vizzuality/redux-tools#3.4.1",
+  "redux-tools": "github:vizzuality/redux-tools#v3.4.1",
     "reselect": "^4.0.0",
     "sha1": "^1.1.1",
     "vite": "^5.3.1",
