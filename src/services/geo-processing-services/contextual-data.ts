@@ -6,14 +6,13 @@ import {
     addZcoordToRings, getJobInfo, setSpeciesJSONGeometryRings
 } from 'utils/geo-processing-services';
 
-const { inputGeometryKey, outputTablesKeys, inputRasterKeyPairs } =
+const { inputGeometryKey, outputTablesKeys } =
   CONTEXTUAL_DATA_SERVICE_CONFIG;
 
 export function getCrfData(aoiFeatureGeometry: GetCrfData) {
   return new Promise((resolve, reject) => {
     const JSONGeometry = aoiFeatureGeometry.toJSON();
     getJobInfo(GEOPROCESSING_SERVICES_URLS[CONTEXTUAL_DATA], {
-      // ...inputRasterKeyPairs,
       [inputGeometryKey]: setSpeciesJSONGeometryRings(
         addZcoordToRings(JSONGeometry.rings)
       ),

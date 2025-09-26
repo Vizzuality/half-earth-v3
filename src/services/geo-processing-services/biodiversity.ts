@@ -4,7 +4,7 @@ import {
     addZcoordToRings, getJobInfo, jobTimeProfiling, setSpeciesJSONGeometryRings
 } from 'utils/geo-processing-services';
 
-const { basePath, inputRasterKey, inputGeometryKey, outputParamKey } =
+const { inputGeometryKey, outputParamKey } =
   CRFS_CONFIG;
 
 export function getCrfData({ dataset, aoiFeatureGeometry }: GetCrfData) {
@@ -12,7 +12,6 @@ export function getCrfData({ dataset, aoiFeatureGeometry }: GetCrfData) {
     const JSONGeometry: JsonGeometry = aoiFeatureGeometry.toJSON();
 
     getJobInfo(GEOPROCESSING_SERVICES_URLS[dataset], {
-      // [inputRasterKey]: `${basePath}/${dataset}.crf`,
       [inputGeometryKey]: setSpeciesJSONGeometryRings(
         addZcoordToRings(JSONGeometry.rings)
       ),
