@@ -223,3 +223,9 @@ export const REPTILES_LOOKUP = 'reptiles-lookup-table';
 // NRC Landing Layers
 export const NRC_LANDING_LAYERS_SLUG = 'nrc-landing-layers';
 export const EEZ_MARINE_AND_LAND_BORDERS = 'eez-marine-borders';
+
+// Temporary lookup tables while new services are prepared
+export const TEMP_BIRDS_LOOKUP = 'temp-birds-lookup-table';
+export const TEMP_MAMMALS_LOOKUP = 'temp-mammals-lookup-table';
+export const TEMP_REPTILES_LOOKUP = 'temp-reptiles-lookup-table';
+export const TEMP_AMPHIBIAN_LOOKUP = 'temp-amphibians-lookup-table';

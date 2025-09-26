@@ -3,6 +3,10 @@ import {
   MAMMALS_LOOKUP,
   REPTILES_LOOKUP,
   AMPHIBIAN_LOOKUP,
+  TEMP_BIRDS_LOOKUP,
+  TEMP_MAMMALS_LOOKUP,
+  TEMP_REPTILES_LOOKUP,
+  TEMP_AMPHIBIAN_LOOKUP,
 } from 'constants/layers-slugs';
 
 export const CRF_NAMES = {
@@ -67,6 +71,13 @@ export const LOOKUP_TABLES = {
   [REPTILES]: REPTILES_LOOKUP,
   [AMPHIBIANS]: AMPHIBIAN_LOOKUP,
 };
+
+export const TEMP_LOOKUP_TABLES = {
+  [BIRDS]: TEMP_BIRDS_LOOKUP,
+  [MAMMALS]: TEMP_MAMMALS_LOOKUP,
+  [REPTILES]: TEMP_REPTILES_LOOKUP,
+  [AMPHIBIANS]: TEMP_AMPHIBIAN_LOOKUP,
+}
 
 const LAND_PRESSURES_LABELS = {
   extraction: 'extraction',
@@ -139,13 +150,13 @@ export const BIODIVERSITY_CRFS_CONFIG = {
 
 export const GEOPROCESSING_SERVICES_URLS = {
   [BIRDS]:
-    'https://heportal.esri.com/server/rest/services/BirdsProd_SPS_20240327/GPServer/BirdsProd_SPS',
+  'https://heportal2.esri.com/server/rest/services/birds_prod_09_26_2025/GPServer/birds',
   [REPTILES]:
-    'https://heportal.esri.com/server/rest/services/ReptilesProd_SPS_20240313/GPServer/ReptilesProd_SPS',
+  'https://heportal2.esri.com/server/rest/services/reptiles_prod_09_26_2025/GPServer/reptiles',
   [MAMMALS]:
-    'https://heportal.esri.com/server/rest/services/MammalsProd_SPS_20240327/GPServer/MammalsProd_SPS',
+  'https://heportal2.esri.com/server/rest/services/mammals_prod_09_26_2025/GPServer/mammals',
   [AMPHIBIANS]:
-    'https://heportal.esri.com/server/rest/services/AmphibiansProd_SPS_20240327/GPServer/AmphibiansProd_SPS',
+  'https://heportal2.esri.com/server/rest/services/amphibians_prod_09_26_2025/GPServer/amphibians',
   [CONTEXTUAL_DATA]:
-    'https://heportal.esri.com/server/rest/services/Contextual_Prod3_20240313/GPServer/Contextual_Prod3',
+  'https://heportal2.esri.com/server/rest/services/contextual_info_prod_09_26_2025/GPServer/contextual_info',
 };
