@@ -10,10 +10,11 @@ const { inputGeometryKey, outputParamKey } =
 export function getCrfData({ dataset, aoiFeatureGeometry }: GetCrfData) {
   return new Promise((resolve, reject) => {
     const JSONGeometry: JsonGeometry = aoiFeatureGeometry.toJSON();
+    const rings = addZcoordToRings(JSONGeometry.rings);
 
     getJobInfo(GEOPROCESSING_SERVICES_URLS[dataset], {
       [inputGeometryKey]: setSpeciesJSONGeometryRings(
-        addZcoordToRings(JSONGeometry.rings)
+        rings
       ),
     })
       .then((jobInfo: JobInfo) => {

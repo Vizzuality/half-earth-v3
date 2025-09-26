@@ -373,7 +373,7 @@ export const postAoiToDataBase = (geometry, attributes) => {
   })
 }
 
-export const addZcoordToRings = (rings) => rings[0].map((r) => [...r, 0])
+export const addZcoordToRings = (rings) => rings.map((ring) => ring.map((r) => [...r, 0]))
 
 export const setSpeciesJSONGeometryRings = (rings) => {
   return {
@@ -458,7 +458,7 @@ export const setSpeciesJSONGeometryRings = (rings) => {
         },
         "geometry": {
           "hasZ": true,
-          "rings": [rings],
+          "rings": [...rings],
           "spatialReference": {
             "wkid": 3857,
           },
