@@ -251,12 +251,16 @@ function SpeciesCardContainer(props) {
 
   useEffect(() => {
 
-    const urlSelectedSpecies = speciesToDisplay.find(
-      (s) => s.id === urlSelectedSpeciesId
-    );
+    const index = speciesToDisplay.findIndex((s) => s.id === urlSelectedSpeciesId);
+    const urlSelectedSpeciesIndex = (index === -1) ? 0 : index;
+    const urlSelectedSpecies = speciesToDisplay[urlSelectedSpeciesIndex];
     // Don't select a species if we have one in the URL and until is loaded
     if (!urlSelectedSpeciesId || urlSelectedSpecies) {
+      setSelectedSpeciesIndex(urlSelectedSpeciesIndex);
       setSelectedSpecies(urlSelectedSpecies || speciesToDisplay[selectedSpeciesIndex]);
+    } else {
+      setSelectedSpeciesIndex(0);
+      setSelectedSpecies(speciesToDisplay[0]);
     }
   }, [speciesToDisplay, selectedSpeciesIndex, urlSelectedSpeciesId]);
 
