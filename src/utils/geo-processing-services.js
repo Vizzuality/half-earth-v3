@@ -199,6 +199,8 @@ export function getCustomAOISpeciesData(crfName, geometry) {
           .catch((error) => {
             reject(error)
           })
+      } else {
+        resolve([]);
       }
     })
   })

@@ -191,12 +191,12 @@ function SpeciesCardContainer(props) {
         case 'all':
           return {
             slug: filter.slug,
-            label: `${filter.label} (${allSpeciesCount})`,
+            label: `${filter.label} (${allSpeciesCount ?? 0})`,
           };
         default: {
           return {
             slug: filter.slug,
-            label: `${filter.label} (${taxaSpeciesCount})`,
+            label: `${filter.label} (${taxaSpeciesCount ?? 0})`,
           };
         }
       }
