@@ -218,8 +218,8 @@ function SpeciesCardContainer(props) {
           ...item,
           rounded_global: Math.round(item.per_global / 5) * 5
         })),
-        ['rounded_global', 'SPS_global', 'has_image'],
-        ['desc', 'asc', 'desc']
+        ['rounded_global', 'has_image', 'SPS_global'],
+        ['desc', 'desc', 'asc']
       );
 
     const removeFalcoPeregrinus = (s) =>
@@ -266,7 +266,6 @@ function SpeciesCardContainer(props) {
 
   useEffect(() => {
     setSelectedSpeciesIndex(0);
-    setSelectedSpecies(species[0]);
   }, [selectedSpeciesFilter?.slug]);
 
   // Get individual species info and image for slider

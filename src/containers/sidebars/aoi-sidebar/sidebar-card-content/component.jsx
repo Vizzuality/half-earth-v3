@@ -209,7 +209,7 @@ function SidebarCard({
         {cardCategory === PROTECTED_ATTRIBUTES_SLUG && contextualData.DESIG && (
           <div className={styles.attributtesContainer}>
             {protectedAttributesConfig.map((a) => (
-              <div className={styles.attributtesItem}>
+              <div className={styles.attributtesItem} key={a.title}>
                 <div className={styles.titleWrapper}>
                   <h6 className={styles.title}>{a.title}</h6>
                   <span className={styles.iconWrapper}>
