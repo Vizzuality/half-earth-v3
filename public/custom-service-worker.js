@@ -13,7 +13,7 @@
  *
  * Removal policy
  * - Keep for a limited window to catch long-tail users (recommended 6–12 weeks).
- * - Target removal date: UPDATE_BEFORE_MERGE (YYYY-MM-DD).
+ * - Target removal date: UPDATE_BEFORE_MERGE (2025-11-01).
  * - After removal, ensure normal HTTP cache headers are set (e.g., no-store for index.html).
  *
  * Notes for contributors
