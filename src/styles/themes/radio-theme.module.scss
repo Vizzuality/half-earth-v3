@@ -1,11 +1,11 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .radioLabel {
-  color: $white;
+  color: settings.$white;
 }
 
 .checked {
   &:before {
-    background-color: $brand-color-main;
+    background-color: settings.$brand-color-main;
   }
 }

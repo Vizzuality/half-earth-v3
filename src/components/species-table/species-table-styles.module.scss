@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .scrolleableArea {
   box-sizing: content-box;
@@ -22,26 +22,27 @@
 
   .title {
     margin: 0;
-    font-family: $font-family-serif;
-    color: $white;
+    font-family: settings.$font-family-serif;
+    color: settings.$white;
     font-weight: 100;
   }
 
   .closeButton {
     position: absolute;
-    top: $site-gutter;
-    right: $site-gutter;
-    fill: $white;
+    top: settings.$site-gutter;
+    right: settings.$site-gutter;
+    fill: settings.$white;
+
     svg g {
-      fill: $brand-color-secondary;
-      stroke: $brand-color-secondary;
+      fill: settings.$brand-color-secondary;
+      stroke: settings.$brand-color-secondary;
       height: 22px;
       width: 22px;
     }
 
     &:hover svg g {
-      fill: $brand-color-secondary-hover;
-      stroke: $brand-color-secondary-hover;
+      fill: settings.$brand-color-secondary-hover;
+      stroke: settings.$brand-color-secondary-hover;
     }
   }
 
@@ -53,26 +54,31 @@
 
   .tabs {
     display: flex;
+
     .tab {
-      color: $white;
+      color: settings.$white;
       text-transform: uppercase;
       border-bottom: 1px solid transparent;
       padding-bottom: 3px;
+
       &:hover {
         border-bottom: 1px solid transparent;
-        color: $grey-text;
+        color: settings.$grey-text;
       }
+
       &:last-of-type {
         margin-left: 10px;
       }
     }
+
     .selectedTab {
-      color: $brand-color-main;
-      border-bottom: 1px solid $brand-color-main;
+      color: settings.$brand-color-main;
+      border-bottom: 1px solid settings.$brand-color-main;
       padding-bottom: 3px;
+
       &:hover {
         border-bottom: 1px solid transparent;
-        color: $brand-color-main;
+        color: settings.$brand-color-main;
       }
     }
   }
@@ -84,11 +90,11 @@
   .speciesTabTitle {
     display: inline-block;
     margin-top: 15px;
-    font-family: $font-family-1;
-    font-size: $font-size-xxs;
-    font-weight: $font-weight-bold;
+    font-family: settings.$font-family-1;
+    font-size: settings.$font-size-xxs;
+    font-weight: settings.$font-weight-bold;
     text-transform: uppercase;
-    color: $white;
+    color: settings.$white;
   }
 
   .tableContainer {
@@ -99,15 +105,17 @@
 
   .tableHeaderContainer {
     padding: 10px 74px 10px 10px;
-    background-color: $elephant;
+    background-color: settings.$elephant;
     border-radius: 5px 5px 0 0;
     margin-bottom: 2px;
   }
 
   .tableHeader {
     display: flex;
+
     button {
       padding: 0 25px 0 28px;
+
       &:first-child {
         padding: 0 25px 0 0;
       }
@@ -119,7 +127,7 @@
     display: flex;
     position: relative;
     width: 100%;
-    border: 1px solid $firefly;
+    border: 1px solid settings.$firefly;
   }
 
   .tableRow {
@@ -128,22 +136,22 @@
     width: 100%;
     background-color: transparent;
 
-    > button {
+    >button {
       padding: 0;
     }
   }
 
   .arrowIcon {
-    fill: $white;
+    fill: settings.$white;
     transform: rotate(90deg);
 
     &.isOpened {
-      transform:rotate(-90deg);
+      transform: rotate(-90deg);
     }
 
     transition: transform 0.2s ease;
 
-    > path {
+    >path {
       fill: inherit;
     }
   }
@@ -154,11 +162,14 @@
     align-items: center;
 
     @extend %bodyText;
-    color: $_temporary-dark-text;
+    // Replaced private $_temporary-dark-text with public token
+    color: settings.$dark-text;
 
-    &.isOpened, &:hover {
-      background-color: $firefly;
+    &.isOpened,
+    &:hover {
+      background-color: settings.$firefly;
     }
+
     &:first-of-type {
       padding: 8px 40px 8px 10px;
     }
@@ -179,14 +190,15 @@
   .tableItem {
     flex: 1 1 0;
     text-align: left;
-    color: $white;
+    color: settings.$white;
     padding: 0 25px 0 0;
     font-size: 14px;
 
     &.bold {
-      font-family: $font-family-1;
-      font-weight: $font-weight-bold;
+      font-family: settings.$font-family-1;
+      font-weight: settings.$font-weight-bold;
     }
+
     &.italic {
       font-style: italic;
     }
@@ -202,20 +214,21 @@
     min-width: 300px;
     border: none;
     margin-left: 1em;
-    color: $white;
+    color: settings.$white;
+
     &::placeholder {
-      color: $grey-text;
+      color: settings.$grey-text;
       text-transform: uppercase;
     }
   }
 
   .searchIcon {
-    fill: $white;
+    fill: settings.$white;
     height: 15px;
     width: 15px;
 
     g {
-      stroke: $white;
+      stroke: settings.$white;
     }
   }
 
@@ -227,27 +240,27 @@
     height: 100%;
 
     &.mammals {
-      background-color: $mammals-color;
+      background-color: settings.$mammals-color;
     }
 
     &.mar-mammals {
-      background-color: $mar-mammals-color;
+      background-color: settings.$mar-mammals-color;
     }
 
     &.amphibians {
-      background-color: $amphibians-color;
+      background-color: settings.$amphibians-color;
     }
 
     &.reptiles {
-      background-color: $reptiles-color;
+      background-color: settings.$reptiles-color;
     }
 
     &.birds {
-      background-color: $birds-color;
+      background-color: settings.$birds-color;
     }
 
     &.fishes {
-      background-color: $fishes-color;
+      background-color: settings.$fishes-color;
     }
   }
 }
@@ -263,5 +276,5 @@
 
 .message {
   @extend %bodyText;
-  color: $white;
+  color: settings.$white;
 }

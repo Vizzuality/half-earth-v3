@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .iconWrapper {
   background-color: transparent;
@@ -12,26 +12,28 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
   &.open {
-    background-color: $brand-color-secondary;
+    background-color: settings.$brand-color-secondary;
   }
 }
 
 
 .icon {
   @extend %icon;
-  fill: $white;
+  fill: settings.$white;
+
   &.open {
-    fill: $brand-color-main;
+    fill: settings.$brand-color-main;
   }
 }
 
 .sliderContainer {
   @extend %annotation;
-  color: $white;
+  color: settings.$white;
   display: flex;
   flex-direction: column;
-  background-color: $brand-color-secondary;
+  background-color: settings.$brand-color-secondary;
   height: 50px;
   width: 210px;
   padding-left: 10px;
@@ -59,11 +61,11 @@
   .track {
     position: absolute;
     height: 3px;
-    background-color: $brand-color-main;
+    background-color: settings.$brand-color-main;
     z-index: 1;
     border-radius: 4px;
     transform: translate(0, -1px);
-    box-shadow: 0 0 3px 0 $brand-color-main;
+    box-shadow: 0 0 3px 0 settings.$brand-color-main;
   }
 }
 

@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .disclaimerContainer {
   position: absolute;
@@ -10,14 +10,14 @@
 
 .disclaimer {
   position: relative;
-  background-color: rgba($navy-he, 0.8);
-  border: 1px solid $navy-he;
+  background-color: rgba(settings.$navy-he, 0.8);
+  border: 1px solid settings.$navy-he;
   padding: 0px 6px;
-  z-index: $bring-to-front;
+  z-index: settings.$bring-to-front;
   @extend %annotation;
-  font-size: $font-size-xxs;
+  font-size: settings.$font-size-xxs;
   border-radius: 2px;
-  color: $white;
+  color: settings.$white;
 
   .text {
     vertical-align: top;
@@ -25,7 +25,7 @@
 }
 
 .icon {
-  stroke: $white;
+  stroke: settings.$white;
   width: 14px;
   transform: translateY(2px);
   margin: 0 8px;

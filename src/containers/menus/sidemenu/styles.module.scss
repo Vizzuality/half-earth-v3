@@ -1,11 +1,11 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
 
 .menuContainer {
   position: absolute;
   top: 32px;
   right: 15px;
-  z-index: $default-z-index;
+  z-index: settings.$default-z-index;
 
   .searchBtn {
     height: 32px;
@@ -19,7 +19,7 @@
     right: 0;
     width: 380px;
     height: 32px;
-    background: $space-background;
+    background: settings.$space-background;
     border: none;
     border-radius: 6px;
 
@@ -40,7 +40,7 @@
 }
 
 .blur {
-  filter: blur($bottom-menu-blur);
+  filter: blur(settings.$bottom-menu-blur);
 }
 
 @media print {

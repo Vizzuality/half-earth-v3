@@ -1,6 +1,6 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .soundContainer {
   align-items: flex-end;
@@ -21,7 +21,7 @@
     @extend %bodyText;
 
     align-items: flex-sstart;
-    background-color: $white;
+    background-color: settings.$white;
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -31,7 +31,7 @@
     height: 110px;
     width: 310px;
     padding: 10px 16px 16px;
-    z-index: $default-z-index;
+    z-index: settings.$default-z-index;
 
     &.waiting {
       align-items: center;
@@ -43,7 +43,7 @@
 
   .closeButton {
     align-items: center;
-    background-color: $white;
+    background-color: settings.$white;
     border-radius: 50px;
     display: flex;
     height: 20px;
@@ -51,7 +51,7 @@
     margin-bottom: 8px;
     transition-duration: 0.4s;
     width: 20px;
-    z-index: $default-z-index;
+    z-index: settings.$default-z-index;
 
     &:hover {
       width: 50px;
@@ -64,7 +64,7 @@
     }
 
     p {
-      color: $black;
+      color: settings.$black;
       display: none;
     }
   }
@@ -86,10 +86,10 @@
     justify-content: space-between;
     padding: 0 11px;
     width: 100%;
-    z-index: $default-z-index;
+    z-index: settings.$default-z-index;
 
     .audioBar {
-      background-color: $brand-color-main;
+      background-color: settings.$brand-color-main;
       border-radius: 2.5px;
       height: 8px;
       width: 8px;
@@ -99,11 +99,11 @@
   .pauseButton {
     display: block;
     cursor: pointer;
-    z-index: $default-z-index;
+    z-index: settings.$default-z-index;
   }
 
   .playButton {
-    z-index: $default-z-index;
+    z-index: settings.$default-z-index;
   }
 
   .pauseIcon {
@@ -117,10 +117,10 @@
   .textContainer {
     position: relative;
     padding-right: 23px;
-    z-index: $default-z-index;
+    z-index: settings.$default-z-index;
 
     .muteButton {
-      z-index: $default-z-index;
+      z-index: settings.$default-z-index;
       position: absolute;
       right: -10px;
     }

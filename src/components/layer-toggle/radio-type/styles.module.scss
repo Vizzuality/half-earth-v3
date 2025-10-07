@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/ui.module';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/ui.module' as *;
 
 .radioOption {
   @extend %subtitle;
@@ -19,8 +19,9 @@
   padding: 0 20px;
   position: relative;
   justify-content: space-between;
+
   &:hover,
   &.checked {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
 }

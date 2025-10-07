@@ -1,9 +1,9 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .areaChartContainer {
-  background: $dark;
-  border: 1px solid $elephant;
+  background: settings.$dark;
+  border: 1px solid settings.$elephant;
   border-radius: 6px;
   margin: 8px 16px 8px 0;
   position: relative;
@@ -24,14 +24,14 @@
 
   .chartTitle {
     @extend %bodyText;
-    color: $white;
+    color: settings.$white;
     margin: 0 10px 0 0;
     white-space: nowrap;
   }
 
   .areaChartLegend {
     @extend %annotation;
-    color: $white;
+    color: settings.$white;
     display: flex;
     position: absolute;
     top: 36px;
@@ -43,7 +43,7 @@
     }
 
     .area1ChartLegendLine {
-      border: 1px solid $white;
+      border: 1px solid settings.$white;
       height: 1px;
       margin-right: 6px;
       width: 20px;
@@ -52,7 +52,7 @@
     .area2ChartLegendLine {
       background-color: transparent;
       border: none;
-      border-top: 2px dashed $white;
+      border-top: 2px dashed settings.$white;
       margin-left: 16px;
       margin-right: 6px;
       width: 20px;
@@ -62,10 +62,10 @@
 
 .titleTooltip {
   @extend %annotation;
-  border-radius: $border-radius-desktop;
-  background: $white;
-  box-shadow: $box-shadow-light;
-  color: $dark-text;
+  border-radius: settings.$border-radius-desktop;
+  background: settings.$white;
+  box-shadow: settings.$box-shadow-light;
+  color: settings.$dark-text;
   margin-bottom: 5px;
   padding: 2px 6px;
   width: 350px;

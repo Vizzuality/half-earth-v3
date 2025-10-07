@@ -1,7 +1,7 @@
-@import 'styles/settings';
-@import 'styles/common-animations.module';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/common-animations.module' as *;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .container {
   position: absolute;
@@ -17,8 +17,8 @@
   flex: 1;
   min-width: 300px;
   margin: 56px 40px 0 0;
-  background-color: rgba($navy-he, 0.8);
-  border: 1px solid $navy-he;
+  background-color: rgba(settings.$navy-he, 0.8);
+  border: 1px solid settings.$navy-he;
   height: 88vh;
   border-radius: 6px;
 }
@@ -30,9 +30,9 @@
 
 .switchDataButton {
   @extend %subtitle;
-  border: 1px solid $white;
-  color: $white;
-  font-size: $font-size-xs;
+  border: 1px solid settings.$white;
+  color: settings.$white;
+  font-size: settings.$font-size-xs;
   text-transform: capitalize;
   width: calc(50% - 8px);
   height: 40px;
@@ -55,6 +55,7 @@
 
 .switchDataActiveButton {
   @extend %subtitle;
-  background-color: $white;
-  color: $_temporary-dark-text;
+  background-color: settings.$white;
+  // Replaced private $_temporary-dark-text with public token
+  color: settings.$dark-text;
 }

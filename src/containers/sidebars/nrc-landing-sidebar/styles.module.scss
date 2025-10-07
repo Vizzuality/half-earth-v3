@@ -1,30 +1,30 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/common-animations.module';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/common-animations.module' as *;
 
-$top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
+$top: settings.$ui-left-top;
 
 .container {
   @include backdropBlur();
   position: absolute;
   top: $top;
-  left: $site-gutter;
-  padding-bottom: $site-gutter;
+  left: settings.$site-gutter;
+  padding-bottom: settings.$site-gutter;
   display: flex;
   flex-direction: column;
-  border: $sidebar-border;
-  border-radius: $sidebar-border-radius;
+  border: settings.$sidebar-border;
+  border-radius: settings.$sidebar-border-radius;
   width: 420px;
-  padding: $site-gutter;
+  padding: settings.$site-gutter;
 }
 
 .legendTitle,
 .legend,
 .title,
 .body {
-  color: $white;
-  margin: 0 0 calc($site-gutter / 2) 0;
+  color: settings.$white;
+  margin: 0 0 calc(settings.$site-gutter / 2) 0;
 }
 
 .title {
@@ -40,14 +40,14 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
 }
 
 .bold {
-  font-weight: $font-weight-bold;
+  font-weight: settings.$font-weight-bold;
 }
 
 .togglesContainer {
   padding-bottom: 20px;
   // this way we expand the toggles to the edge of the sidebar
   position: relative;
-  left: -$sidebar-paddings;
-  width: calc(100% + (2 * #{$sidebar-paddings}));
+  left: calc(-1 * #{settings.$sidebar-paddings});
+  width: calc(100% + (2 * #{settings.$sidebar-paddings}));
 
 }

@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends';
 
 $max-width: 520px;
 $area-title-width: 230px;
@@ -11,7 +11,7 @@ $area-title-width: 230px;
   height: auto !important;
   max-height: 100vh !important;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     max-width: $max-width !important;
     width: $max-width !important;
     max-height: 400px !important;
@@ -28,10 +28,11 @@ $area-title-width: 230px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: $site-gutter;
-  background-color: $brand-color-secondary;
+  padding: settings.$site-gutter;
+  background-color: settings.$brand-color-secondary;
   overflow-y: scroll;
-  @media #{$tablet-landscape} {
+
+  @media #{settings.$tablet-landscape} {
     max-width: $max-width;
     width: $max-width;
   }
@@ -48,13 +49,13 @@ $area-title-width: 230px;
 
 .description {
   @extend %bodyText;
-  color: $grey-text;
+  color: settings.$grey-text;
   margin: 0;
 }
 
 .timestamp {
   @extend %subtitle;
-  color: $grey-text;
+  color: settings.$grey-text;
   margin: 0 10px;
 }
 
@@ -64,19 +65,20 @@ $area-title-width: 230px;
 
 .aoiListContainer {
   padding: 0;
-  margin-top: $site-gutter;
+  margin-top: settings.$site-gutter;
 }
 
 .aoiItemContainer {
   display: flex;
   flex-direction: column;
   position: relative;
-  left: -$site-gutter;
-  padding: 10px $site-gutter;
-  width: calc(100% + (2 * #{$site-gutter}));
+  left: -#{settings.$site-gutter};
+  padding: 10px settings.$site-gutter;
+  width: calc(100% + (2 * #{settings.$site-gutter}));
+
   &:hover,
   &.active {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
 
   .dataContainer {
@@ -94,12 +96,12 @@ $area-title-width: 230px;
     .nameInput {
       @extend %title;
       padding: 0 10px;
-      background-color: $modal-light-background;
+      background-color: settings.$modal-light-background;
       border: none;
-      color: $_temporary-dark-text;
+      color: settings.$dark-text;
       text-transform: none;
       width: 345px;
-      border-radius: $card-border-radius;
+      border-radius: settings.$card-border-radius;
       height: 40px;
     }
 
@@ -107,7 +109,7 @@ $area-title-width: 230px;
       cursor: pointer;
       border: none;
       width: $area-title-width;
-      overflow:hidden;
+      overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
@@ -119,18 +121,22 @@ $area-title-width: 230px;
     align-items: center;
     justify-content: space-between;
     min-width: 95px;
+
     .item {
-      color: $white;
+      color: settings.$white;
       background-color: transparent;
+
       &:hover {
-        background-color: $dark-opacity;
+        background-color: settings.$dark-opacity;
       }
     }
+
     .saveButton {
-      color: $dark-text;
-      background-color: $brand-color-main;
+      color: settings.$dark-text;
+      background-color: settings.$brand-color-main;
+
       &:hover {
-        background-color: $brand-color-main-hover;
+        background-color: settings.$brand-color-main-hover;
       }
     }
   }
@@ -138,20 +144,22 @@ $area-title-width: 230px;
 
 .deleteAllButton {
   background-color: transparent;
-  border-radius: $border-radius-desktop;
-  margin-top: $sidebar-paddings;
+  border-radius: settings.$border-radius-desktop;
+  margin-top: settings.$sidebar-paddings;
   align-items: center;
   width: 140px;
+
   span {
     @extend %bodyText;
     text-transform: none !important;
   }
+
   &:hover {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
 }
 
 
 .shareInputLayout {
-  margin-top: $site-gutter;
+  margin-top: settings.$site-gutter;
 }

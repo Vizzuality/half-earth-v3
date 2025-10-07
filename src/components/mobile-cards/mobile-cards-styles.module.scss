@@ -1,7 +1,6 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/ui.module';
-
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/ui.module' as *;
 
 .hint {
   @extend %annotation;
@@ -9,9 +8,9 @@
   top: -8px;
   width: 100%;
   text-align: center;
-  color: $white;
+  color: settings.$white;
 
-  @media #{$mobile-landscape} {
+  @media #{settings.$mobile-landscape} {
     top: -16px;
   }
 }
@@ -19,20 +18,21 @@
 .container {
   bottom: 2svh;
   display: flex;
-  justify-content: center;;
+  justify-content: center;
+  ;
   height: 40svh;
   left: 3%;
   position: absolute;
   width: 94vw;
   z-index: 10;
 
-   @media #{$mobile-landscape} {
-      bottom: 5svh;
-      height: 68svh;
-      right: 4%;
-      left: auto;
-      width: 45vw;
-    }
+  @media #{settings.$mobile-landscape} {
+    bottom: 5svh;
+    height: 68svh;
+    right: 4%;
+    left: auto;
+    width: 45vw;
+  }
 
   .cardDraggable {
     position: absolute;
@@ -47,22 +47,23 @@
     .card {
       position: relative;
       overflow: visible;
-      border: 1px solid $elephant;
-      color: $white;
+      border: 1px solid settings.$elephant;
+      color: settings.$white;
       min-width: 94vw;
       padding: 24px 16px;
-      background: rgba($navy-he, 0.5);
+      background: rgba(settings.$navy-he, 0.5);
       display: flex;
       flex-direction: column;
       height: 100%;
       justify-content: space-between;
       @include backdropBlur();
 
-      @media #{$mobile-landscape} {
+      @media #{settings.$mobile-landscape} {
         min-width: 45vw;
 
         p {
           font-size: 12px;
+
           div {
             font-size: 12px;
           }
@@ -79,7 +80,7 @@
       p {
         @extend %bodyText;
 
-        @media #{$mobile-landscape} {
+        @media #{settings.$mobile-landscape} {
           margin-top: 4px;
         }
       }
@@ -91,7 +92,7 @@
       .title {
         margin-bottom: 8px;
 
-        @media #{$mobile-landscape} {
+        @media #{settings.$mobile-landscape} {
           margin-bottom: 0;
         }
       }
@@ -100,7 +101,7 @@
         @extend %bodyText;
         margin: 2px 0;
 
-        @media #{$mobile-landscape} {
+        @media #{settings.$mobile-landscape} {
           margin: 0;
         }
       }
@@ -112,7 +113,7 @@
 
         .legendTitle,
         .legend {
-          color: $white;
+          color: settings.$white;
           margin: 0;
         }
 
@@ -128,14 +129,14 @@
           width: 14px;
           height: 14px;
           margin: 3.5px 8px 0 0;
-          border: 1px solid $white;
+          border: 1px solid settings.$white;
           border-radius: 2px;
         }
 
         .source {
           @extend %annotation;
-          color: $grey-text;
-          font-size: $font-size-xxs;
+          color: settings.$grey-text;
+          font-size: settings.$font-size-xxs;
           max-width: 90vw;
           margin: 2px 0 0 0;
           line-height: 6px;
@@ -146,13 +147,13 @@
           }
 
           a {
-            color: $grey-text;
+            color: settings.$grey-text;
           }
 
           p {
             display: inline;
             margin-bottom: 0;
-            font-size: $font-size-xxs;
+            font-size: settings.$font-size-xxs;
             line-height: 1rem;
           }
         }
@@ -165,7 +166,7 @@
         position: absolute;
         height: 3.5svh;
         width: 38px;
-        z-index: $bring-to-front;
+        z-index: settings.$bring-to-front;
         top: -2svh;
       }
     }
@@ -173,9 +174,9 @@
     .progress {
       @extend %bodyText;
       align-items: center;
-      border: 1px solid $elephant;
+      border: 1px solid settings.$elephant;
       border-radius: 2px;
-      color: $white;
+      color: settings.$white;
       display: flex;
       height: 3.5svh;
       justify-content: center;

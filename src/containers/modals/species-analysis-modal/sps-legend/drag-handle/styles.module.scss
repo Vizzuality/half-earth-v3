@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .handle {
   position: absolute;
@@ -18,13 +18,13 @@
     height: 8px;
     width: 8px;
     border-radius: 50%;
-    border: 1px solid $white;
+    border: 1px solid settings.$white;
   }
 
   .line {
     display: block;
     width: 1px;
     height: 40px;
-    border-left: 1px dashed $white;
+    border-left: 1px dashed settings.$white;
   }
 }

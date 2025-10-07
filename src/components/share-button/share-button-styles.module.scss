@@ -1,11 +1,11 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .button {
-  border: 1px solid $alto !important;
+  border: 1px solid settings.$alto !important;
   height: 40px !important;
-  color: $white !important;
+  color: settings.$white !important;
   font-weight: bold !important;
   text-transform: uppercase !important;
 }
@@ -15,7 +15,7 @@
 }
 
 .shareText {
-  color: $white;
+  color: settings.$white;
   @extend %subtitle;
 }
 

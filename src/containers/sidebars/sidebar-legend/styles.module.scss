@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
   margin-bottom: 5px;
@@ -8,14 +8,14 @@
 .gradientWrapper {
   height: 8px;
   border-radius: 5px;
-  background-color: $brand-color-secondary;
+  background-color: settings.$brand-color-secondary;
 }
 
 .valuesWrapper {
-  color: $white;
+  color: settings.$white;
 
   &.light {
-    color: $space-background;
+    color: settings.$space-background;
   }
 }
 
@@ -23,7 +23,7 @@
   display: flex;
   height: 8px;
   border-radius: 5px;
-  border: 1px solid $brand-color-secondary;
+  border: 1px solid settings.$brand-color-secondary;
 }
 
 .gradientItem {
@@ -31,27 +31,27 @@
 }
 
 .land-human-pressures {
-  background: $human-pressures-gradient;
+  background: settings.$human-pressures-gradient;
 }
 
 .marine-human-pressures {
-  background: $marine-pressures-gradient;
+  background: settings.$marine-pressures-gradient;
 }
 
 .biodiversity {
-  background: $biodiversity-gradient-rotated;
+  background: settings.$biodiversity-gradient-rotated;
 }
 
 .carbon-layer-land {
-  background: $carbon-layer-gradient;
+  background: settings.$carbon-layer-gradient;
 }
 
 .spi {
-  background: $spi-gradient;
+  background: settings.$spi-gradient;
 }
 
 .country_priority_layer {
-  background: $biodiversity-gradient-rotated;
+  background: settings.$biodiversity-gradient-rotated;
 }
 
 .valuesWrapper {
@@ -61,15 +61,17 @@
   margin-top: 5px;
   padding: 0;
   list-style: none;
+
   &:last-child {
     text-align: right;
   }
+
   span {
     @extend %subtitle;
     color: inherit;
 
-    @media #{$mobile-only} {
-      font-size: $font-size-xxs;
+    @media #{settings.$mobile-only} {
+      font-size: settings.$font-size-xxs;
     }
   }
 }

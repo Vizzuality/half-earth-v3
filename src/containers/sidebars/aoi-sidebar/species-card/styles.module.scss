@@ -1,13 +1,26 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 @keyframes loading {
-  0% { width: 0%; }
-  10% { width: 7%; }
-  30% { width: 40%; }
-  72% { width: 65%; }
-  100% { width: 96%; }
+  0% {
+    width: 0%;
+  }
+
+  10% {
+    width: 7%;
+  }
+
+  30% {
+    width: 40%;
+  }
+
+  72% {
+    width: 65%;
+  }
+
+  100% {
+    width: 96%;
+  }
 }
 
 .loaderCard {
@@ -15,24 +28,24 @@
   flex-direction: column;
   width: 100%;
   height: 260px;
-  margin-top: $site-gutter;
-  padding: $sidebar-cards-padding;
-  background-color: $white-opacity;
-  border-radius: $card-border-radius;
+  margin-top: settings.$site-gutter;
+  padding: settings.$sidebar-cards-padding;
+  background-color: settings.$white-opacity;
+  border-radius: settings.$card-border-radius;
 
   .loaderBarContainer {
     position: relative;
     width: 100%;
     height: 8px;
-    background-color: $white-opacity;
-    border-radius: $sidebar-border-radius;
+    background-color: settings.$white-opacity;
+    border-radius: settings.$sidebar-border-radius;
 
     .loaderBarPercentage {
       position: absolute;
       height: 100%;
       width: 100%;
-      background-color: $brand-color-main;
-      border-radius: $sidebar-border-radius;
+      background-color: settings.$brand-color-main;
+      border-radius: settings.$sidebar-border-radius;
       animation-duration: 35s;
       animation-name: loading;
     }
@@ -40,8 +53,8 @@
 
   .loaderTextContainer {
     @extend %bodyText;
-    color: $white;
-    margin-top: $site-gutter;
+    color: settings.$white;
+    margin-top: settings.$site-gutter;
 
     p {
       margin: 0;
@@ -52,7 +65,7 @@
 
 
 .cardWrapper {
-  margin-top: $site-gutter;
+  margin-top: settings.$site-gutter;
 
   &.insideModal {
     section {
@@ -61,47 +74,47 @@
 
     .dropdown {
       background-color: transparent;
-      color: $white;
+      color: settings.$white;
     }
 
     .speciesNames,
     .commonName,
     .speciesDataContainer {
-      color: $white;
+      color: settings.$white;
     }
 
     .sectionContainer,
     .speciesBarContainer {
       &:not(:last-child) {
-        border-bottom-color: $white-opacity;
+        border-bottom-color: settings.$white-opacity;
       }
     }
 
 
     .speciesBarContainer {
-      color: $grey-text;
+      color: settings.$grey-text;
     }
 
     .speciesDataContainer {
       .sectionTitleWrapper {
-        color: $grey-text;
+        color: settings.$grey-text;
       }
     }
 
     .commonName {
-      color: $white !important;
+      color: settings.$white !important;
     }
 
     .sliderControls svg {
-      fill: $white;
+      fill: settings.$white;
     }
   }
 }
 
 .togglesContainer {
-  fill: $dark-text;
-  width: calc(100% + (2*#{$sidebar-cards-padding}));
-  left: -$sidebar-cards-padding;
+  fill: settings.$dark-text;
+  width: calc(100% + (2*#{settings.$sidebar-cards-padding}));
+  left: calc(-1 * #{settings.$sidebar-cards-padding});
   position: relative;
 }
 
@@ -109,7 +122,7 @@
   @extend %display2;
   text-align: center;
   margin: 0;
-  padding-bottom: $site-gutter;
+  padding-bottom: settings.$site-gutter;
 }
 
 .description {
@@ -119,7 +132,7 @@
 .infoClue {
   text-decoration-line: underline;
   text-decoration-style: dotted;
-  text-decoration-color: $dark-opacity;
+  text-decoration-color: settings.$dark-opacity;
 }
 
 .globalRangeArea {
@@ -146,7 +159,7 @@
     top: 0px;
     left: -45px;
     height: 170px;
-    margin-top: $site-gutter * 2;
+    margin-top: settings.$site-gutter * 2;
     cursor: pointer;
   }
 
@@ -155,16 +168,16 @@
     top: 0px;
     right: -45px;
     height: 170px;
-    margin-top: $site-gutter * 2;
+    margin-top: settings.$site-gutter * 2;
     cursor: pointer;
   }
 
   .selectedSpeciesImageWrapper {
     position: absolute;
-    margin-top: $site-gutter;
+    margin-top: settings.$site-gutter;
     height: 210px;
     z-index: 1;
-    background-size:auto 90%;
+    background-size: auto 90%;
   }
 
   .speciesImageWrapper {
@@ -202,15 +215,16 @@
 
     .commonName {
       @extend %annotation;
-      color: $dark-text;
+      color: settings.$dark-text;
       text-align: center;
       font-style: italic;
       text-transform: inherit;
       text-decoration: underline;
       text-underline-offset: 2px;
       margin-top: 4px;
+
       &:hover {
-        color: $dark-text-hover;
+        color: settings.$dark-text-hover;
         text-decoration: none;
       }
     }
@@ -233,11 +247,11 @@
 
     &:hover {
       cursor: pointer;
-      background-color: $grey-text-hover;
+      background-color: settings.$grey-text-hover;
     }
 
     .arrow_icon {
-      fill: $dark-text;
+      fill: settings.$dark-text;
       cursor: pointer;
       height: 10px;
     }
@@ -253,8 +267,8 @@
 .icon {
   min-width: 40px;
   height: 25px;
-  stroke:none;
-  fill: $warning;
+  stroke: none;
+  fill: settings.$warning;
   margin-right: 10px;
 }
 
@@ -270,14 +284,14 @@
     padding: 8px 0;
 
     &:not(:last-child) {
-      border-bottom: 1px dashed $grey-text-hover;
+      border-bottom: 1px dashed settings.$grey-text-hover;
     }
 
     .sectionTitleWrapper {
       align-items: center;
       display: flex;
       position: relative;
-      color: $dark-text;
+      color: settings.$dark-text;
 
 
       p {
@@ -287,8 +301,8 @@
   }
 
   .speciesBarContainer {
-    border-bottom: 1px dashed $grey-text-hover;
-    color: $dark-text;
+    border-bottom: 1px dashed settings.$grey-text-hover;
+    color: settings.$dark-text;
   }
 
   .iconWrapper {
@@ -298,8 +312,8 @@
     margin-left: 5px;
 
     .icon {
-      color: $white-opacity;
-      stroke: $white-opacity;
+      color: settings.$white-opacity;
+      stroke: settings.$white-opacity;
       stroke-width: 0.6px;
       height: 16px;
       min-width: 16px;
@@ -310,10 +324,10 @@
 
 .tooltip {
   @extend %annotation;
-  background-color: $white;
-  border-radius: $border-radius-desktop;
-  box-shadow: $box-shadow-light-bottom-large;
-  color: $dark-text;
+  background-color: settings.$white;
+  border-radius: settings.$border-radius-desktop;
+  box-shadow: settings.$box-shadow-light-bottom-large;
+  color: settings.$dark-text;
   padding: 2px 6px;
   margin-bottom: 5px;
 }

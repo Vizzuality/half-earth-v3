@@ -1,19 +1,19 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
 
 .container {
-  background-color: $white;
+  background-color: settings.$white;
   position: absolute;
   width: 100vw;
   height: 100dvb;
   top: 0;
   left: 0;
-  z-index: $over-front;
+  z-index: settings.$over-front;
 
   .searcherContainer {
     position: fixed;
     top: 16px;
-    z-index: $over-front;
+    z-index: settings.$over-front;
     left: 5vw;
     width: 90vw;
   }
@@ -23,9 +23,10 @@
     position: fixed;
     top: 17px;
     left: calc(17px + 4vw);
-    z-index: $over-front;
+    z-index: settings.$over-front;
+
     .arrowIcon {
-      fill: $black;
+      fill: settings.$black;
       height: 36px;
       width: 34px;
     }
@@ -37,7 +38,7 @@
 }
 
 .initialSearcher {
-  background-color: $white;
+  background-color: settings.$white;
   border-radius: 4px;
   height: 32px;
   left: 4vw;
@@ -46,7 +47,7 @@
   width: 92vw;
 
   .placeholderIcon {
-    fill: $grey-text;
+    fill: settings.$grey-text;
     pointer-events: none;
     position: absolute;
     height: 15px;
@@ -56,7 +57,7 @@
   }
 
   .placeholderText {
-    color: $grey-text;
+    color: settings.$grey-text;
     opacity: 1;
     position: absolute;
     left: 36px;

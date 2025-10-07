@@ -1,9 +1,9 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
 
 .content {
   height: 85vh;
-  padding-bottom: $site-gutter;
+  padding-bottom: settings.$site-gutter;
 }
 
 .mapLayersContainer {
@@ -14,6 +14,6 @@
 .togglesContainer {
   // this way we expand the toggles to the edge of the sidebar
   position: relative;
-  left: -$sidebar-paddings;
-  width: calc(100% + (2 * #{$sidebar-paddings}));
+  left: calc(-1 * #{settings.$sidebar-paddings});
+  width: calc(100% + (2 * #{settings.$sidebar-paddings}));
 }
