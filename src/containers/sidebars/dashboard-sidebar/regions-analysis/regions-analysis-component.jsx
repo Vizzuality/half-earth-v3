@@ -6,6 +6,7 @@ import { useLocale, useT } from '@transifex/react';
 
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 import {
+  GLOBAL_COUNTRY_OUTLINE_ID,
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   DRC_REGION_FEATURE_ID,
   GUY_FM_RAPID_INVENTORY_32_FEATURE_ID,
@@ -220,6 +221,19 @@ function RegionsAnalysisComponent(props) {
     });
   };
 
+  const addRegionLayersToMap = async () => {
+    const featureLayer = await EsriFeatureService.getFeatureLayer(
+      GLOBAL_COUNTRY_OUTLINE_ID,
+      countryISO,
+      `map-${countryISO}`
+    );
+
+    setRegionLayers(() => ({
+      [`map-${countryISO}`]: featureLayer,
+    }));
+    map.add(featureLayer);
+  };
+
   const displayLayer = async (option) => {
     let featureLayer;
     setMapLegendLayers((ml) => {
@@ -404,6 +418,7 @@ function RegionsAnalysisComponent(props) {
       setSelectedIndex(NAVIGATION.EXPLORE_SPECIES);
     } else {
       removeRegionLayers();
+      addRegionLayersToMap();
       if (countryISO.toUpperCase() === 'EE') {
         setSelectedRegionOption(REGION_OPTIONS.DISSOLVED_NBS);
         displayLayer(REGION_OPTIONS.DISSOLVED_NBS);

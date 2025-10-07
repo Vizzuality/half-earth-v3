@@ -37,6 +37,7 @@ import styles from './layer-legend-styles.module.scss';
 function LayerLegendComponent(props) {
   const { map, countryISO, setRegionLayers } = props;
   const t = useT();
+  const layerIndex = 2;
 
   // const [leftPosition, setLeftPosition] = useState(0);
   const [collapse, setCollapse] = useState(true);
@@ -172,7 +173,7 @@ function LayerLegendComponent(props) {
           ...rl,
           [layer.id]: featureLayer,
         }));
-        map.add(featureLayer, map.layers.length - 1);
+        map.add(featureLayer, map.layers.length - layerIndex);
       } else if (layer.url) {
         const mapLayers = LAYERS_URLS[layer.url];
         let promises;
@@ -202,7 +203,7 @@ function LayerLegendComponent(props) {
             ...rl,
             [layer.id]: newLayer,
           }));
-          map.add(newLayer, map.layers.length - 1);
+          map.add(newLayer, map.layers.length - layerIndex);
         });
       }
     } else {

@@ -112,7 +112,7 @@ function AreaHighlightManagerComponent(props) {
           x.graphic.attributes?.territoire ||
           x.graphic.attributes?.Int_ID
       );
-      if (foundLayer) {
+      if (foundLayer && foundLayer.layer.id !== `map-${countryISO}`) {
         const { graphic } = foundLayer;
         const { attributes } = graphic;
         if (

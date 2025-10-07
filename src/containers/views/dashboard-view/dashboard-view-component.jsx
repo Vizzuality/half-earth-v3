@@ -25,7 +25,6 @@ import MinimizeIcon from 'icons/closes.svg?react';
 import LayerLegendContainer from '../../../components/layer-legend';
 import {
   MEX,
-  NATIONAL_TREND,
   PROVINCE_TREND,
 } from '../../sidebars/dashboard-trends-sidebar/dashboard-trends-sidebar-component';
 
