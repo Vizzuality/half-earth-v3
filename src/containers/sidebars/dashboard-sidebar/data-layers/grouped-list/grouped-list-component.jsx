@@ -5,6 +5,7 @@ import { useT } from '@transifex/react';
 import {
   PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
   GBIF_OCCURENCE_URL,
+  INDIGENOUS_LANDS_FEATURE_ID,
   REGION_OCCURENCE_ID,
   EEWWF_COUNTRY_LINES_FEATURE_ID,
 } from 'utils/dashboard-utils';
@@ -160,6 +161,15 @@ function GroupedListComponent(props) {
         setIsLoading(true);
         layer = await EsriFeatureService.getFeatureLayer(
           PROVINCE_FEATURE_GLOBAL_OUTLINE_ID,
+          countryISO,
+          id
+        );
+      }
+    } else if (id === LAYER_OPTIONS.INDIGENOUS_LANDS) {
+      if (!item.isActive) {
+        setIsLoading(true);
+        layer = await EsriFeatureService.getFeatureLayer(
+          INDIGENOUS_LANDS_FEATURE_ID,
           countryISO,
           id
         );
