@@ -7,6 +7,7 @@ import { IUCNStatusTypes } from 'utils/dashboard-utils.js';
 import cx from 'classnames';
 import { LightModeContext } from 'context/light-mode';
 
+import Button from 'components/button';
 import TaxaImageComponent from 'components/taxa-image';
 
 import styles from './species-info-styles.module.scss';
@@ -17,6 +18,8 @@ function SpeciesInfoComponent(props) {
   const { speciesInfo } = props;
   const [speciesImage, setSpeciesImage] = useState();
   const [wikiLink, setWikiLink] = useState();
+  const [expanded, setExpanded] = useState(false);
+  const [showMoreOption, setShowMoreOption] = useState(false);
 
   const { lightMode } = useContext(LightModeContext);
 
@@ -63,6 +66,15 @@ function SpeciesInfoComponent(props) {
           '_'
         )}`
       );
+
+      if (
+        speciesInfo?.info &&
+        getLanguageContent(speciesInfo?.info).length > 600
+      ) {
+        setShowMoreOption(true);
+      } else {
+        setShowMoreOption(false);
+      }
     }
   }, [speciesInfo]);
 
@@ -81,14 +93,24 @@ function SpeciesInfoComponent(props) {
           )}
         </div>
       </div>
-      <p className={styles.description}>
+      <p className={cx(styles.description, expanded ? styles.expanded : '')}>
         {speciesInfo?.info && getLanguageContent(speciesInfo?.info)}
       </p>
-      <div className={styles.source}>
-        <span>{t('Source')}:</span>
-        <a href={wikiLink} target="_blank" rel="noreferrer">
-          {t('Wikipedia')}
-        </a>
+      <div className={styles.actions}>
+        {showMoreOption && (
+          <Button
+            type="rectangular"
+            className={styles.showMore}
+            label={expanded ? t('Show less') : t('Show more')}
+            handleClick={() => setExpanded(!expanded)}
+          />
+        )}
+        <div className={styles.source}>
+          <span>{t('Source')}:</span>
+          <a href={wikiLink} target="_blank" rel="noreferrer">
+            {t('Wikipedia')}
+          </a>
+        </div>
       </div>
     </div>
   );

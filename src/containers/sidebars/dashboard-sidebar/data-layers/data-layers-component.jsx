@@ -491,7 +491,7 @@ function DataLayerComponent(props) {
                 type="button"
                 onClick={() => {}}
               >
-                <span>{t('Regions Data')}</span>
+                <span>{t('Other Data')}</span>
               </button>
               <DataLayersGroupedList
                 dataPoints={regionsData}
