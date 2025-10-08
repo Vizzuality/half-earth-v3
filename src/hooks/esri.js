@@ -113,7 +113,7 @@ const createSymbol = (outlineColor) => {
 };
 
 const INVALID_SYMBOL = createSymbol([255, 0, 0, 255]);
-const VALID_SYMBOL = createSymbol([255, 255, 255, 0]);
+const VALID_SYMBOL = createSymbol([255, 255, 255, 0.5]);
 
 export const useSketchWidget = ({
   view,

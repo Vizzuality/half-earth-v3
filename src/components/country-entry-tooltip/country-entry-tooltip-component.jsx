@@ -40,7 +40,6 @@ function CountryEntryTooltipComponent({
   const countryNames = useMemo(getCountryNames, [locale]);
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
-  const [activeTab, setActiveTab] = useState('land');
 
   const {
     countryName,
