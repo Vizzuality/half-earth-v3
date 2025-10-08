@@ -36,6 +36,7 @@ function Component(props) {
     speciesData,
     speciesFilters,
     placeholderText,
+    speciesToDisplay,
     setSpeciesFilter,
     selectedSpeciesFilter,
     individualSpeciesData,
@@ -52,10 +53,11 @@ function Component(props) {
     searchOptions,
     contextualData,
     insideModal,
+    setSpeciesModalOpen,
+    isSpeciesModalOpen,
   } = props;
+
   const { speciesNumbers } = contextualData;
-  const [isDetailedAnalysisModalOpen, handleDetailedAnalysisModalToggle] =
-    useState(false);
   const t = useT();
   const locale = useLocale();
   const sidebarCardsConfig = useMemo(
@@ -116,7 +118,7 @@ function Component(props) {
             handleCloseSearch={handleCloseSearch}
             theme={insideModal && 'dark'}
           />
-          {individualSpeciesData && (
+          {individualSpeciesData && speciesToDisplay?.length > 0 && (
             <section>
               <div className={styles.speciesDataContainer}>
                 <div className={styles.speciesCarousel}>
@@ -308,13 +310,13 @@ function Component(props) {
                 <div>
                   <Button
                     type="rectangular-secondary"
-                    handleClick={() => handleDetailedAnalysisModalToggle(true)}
+                    handleClick={() => setSpeciesModalOpen(true)}
                     label={t('DETAILED ANALYSIS')}
                   />
                   <SpeciesAnalysisModal
-                    isOpen={isDetailedAnalysisModalOpen}
+                    isOpen={isSpeciesModalOpen}
                     handleModalClose={() =>
-                      handleDetailedAnalysisModalToggle(false)
+                      setSpeciesModalOpen(false)
                     }
                     contextualData={contextualData}
                     cardProps={props}

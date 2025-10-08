@@ -35,7 +35,7 @@ function LayerToggle(props) {
   };
 
   useEffect(() => {
-    const _isChecked = activeLayers?.some(
+    const _isChecked = activeLayers.some(
       (layer) => layer.title === option.value
     );
     setIsChecked(_isChecked);

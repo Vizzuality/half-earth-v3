@@ -14,7 +14,7 @@ import * as urlActions from 'actions/url-actions';
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import initialState from 'containers/scenes/mobile/nrc-landing-scene-mobile/scene-config';
-
+import { LAND_MARINE } from 'constants/country-mode-constants';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
@@ -38,6 +38,8 @@ function CountryEntryTooltipContainer(props) {
   const isMobile = useMobile();
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const [tooltipContent, setContent] = useState({});
+
+  const [activeTab, setActiveTab] = useState('land');
 
   // Set country tooltip position
   useEffect(() => {
@@ -125,7 +127,15 @@ function CountryEntryTooltipContainer(props) {
       setTooltipIsVisible(false);
       setTooltipContent({});
       _enterNrcAnalytics(countryName);
-      browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: _countryISO } });
+      if(activeTab === LAND_MARINE.land) {
+        browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: _countryISO } });
+      } else {
+        browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: _countryISO }, query: {
+                    ui: {
+                      landMarineSelection: LAND_MARINE.marine,
+                    }
+                  }});
+      }
     }
   };
 
@@ -137,6 +147,8 @@ function CountryEntryTooltipContainer(props) {
       handleTooltipClose={handleTooltipClose}
       onExploreCountryClick={handleExploreCountryClick}
       isMobile={isMobile}
+      activeTab={activeTab}
+      setActiveTab={setActiveTab}
       {...props}
     />
   );

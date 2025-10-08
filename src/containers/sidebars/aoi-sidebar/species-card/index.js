@@ -18,6 +18,11 @@ import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
 import Component from './component';
 
+import { connect } from 'react-redux';
+import * as urlActions from 'actions/url-actions';
+import mapStateToProps from 'selectors/ui-selectors';
+
+
 const SEARCH_RESULTS_SLUG = 'search-results';
 
 function SpeciesCardContainer(props) {
@@ -26,7 +31,7 @@ function SpeciesCardContainer(props) {
   const speciesFiltersSource = useMemo(() => getSpeciesFilters(), [locale]);
   const iucnList = useMemo(() => getIUCNList(), [locale]);
 
-  const { speciesData, contextualData } = props;
+  const { speciesData, contextualData, areaName, changeUI, selectedSpecies: urlSelectedSpeciesId } = props;
   const { species } = speciesData;
   if (!species) return null;
 
@@ -41,7 +46,7 @@ function SpeciesCardContainer(props) {
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(
     DEFAULT_SPECIES_FILTER
   );
-  const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0);
+  const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(urlSelectedSpeciesId || 0);
   const [placeholderText, setPlaceholderText] = useState(null);
   const [speciesFilters, setFilterWithCount] = useState(speciesFiltersSource);
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
@@ -63,6 +68,8 @@ function SpeciesCardContainer(props) {
   const handleCloseSearch = () => {
     setSearchOptions([]);
     setSelectedSearchOption(null);
+    setSelectedSpeciesIndex(0);
+    setSelectedSpecies(speciesToDisplayBackUp[0]);
     setSpeciesToDisplay([...speciesToDisplayBackUp]);
   };
 
@@ -72,11 +79,14 @@ function SpeciesCardContainer(props) {
         (elem) => searchOptions.findIndex((so) => so.slug === elem.name) >= 0
       );
       setSpeciesToDisplay([...searchSpecies]);
+
+      setSelectedSpecies(searchSpecies[0]);
     } else {
       const index = speciesToDisplayBackUp.findIndex(
         (elem) => elem.name === option.slug
       );
       setSpeciesToDisplay([speciesToDisplayBackUp[index]]);
+      setSelectedSpecies(speciesToDisplayBackUp[index]);
     }
     setSelectedSpeciesIndex(0);
     setSelectedSearchOption(option);
@@ -123,17 +133,22 @@ function SpeciesCardContainer(props) {
   const handleNextSpeciesSelection = () => {
     if (selectedSpeciesIndex === speciesToDisplay.length - 1) {
       setSelectedSpeciesIndex(0);
+      setSelectedSpecies(speciesToDisplay[0]);
+      changeUI({
+        selectedSpecies:  speciesToDisplay[0]?.id
+      })
     } else {
       setSelectedSpeciesIndex(selectedSpeciesIndex + 1);
+      setSelectedSpecies(speciesToDisplay[selectedSpeciesIndex + 1]);
+      changeUI({ selectedSpecies: speciesToDisplay[selectedSpeciesIndex + 1]?.id });
     }
   };
 
   const handlePreviousSpeciesSelection = () => {
-    setSelectedSpeciesIndex(
-      selectedSpeciesIndex === 0
-        ? speciesToDisplay.length - 1
-        : selectedSpeciesIndex - 1
-    );
+    const newSelectedIndex = selectedSpeciesIndex === 0 ? speciesToDisplay.length - 1 : selectedSpeciesIndex - 1;
+    setSelectedSpeciesIndex(newSelectedIndex);
+    setSelectedSpecies(speciesToDisplay[newSelectedIndex]);
+    changeUI({ selectedSpecies: speciesToDisplay[newSelectedIndex].id });
   };
 
   useEffect(() => {
@@ -176,12 +191,12 @@ function SpeciesCardContainer(props) {
         case 'all':
           return {
             slug: filter.slug,
-            label: `${filter.label} (${allSpeciesCount})`,
+            label: `${filter.label} (${allSpeciesCount ?? 0})`,
           };
         default: {
           return {
             slug: filter.slug,
-            label: `${filter.label} (${taxaSpeciesCount})`,
+            label: `${filter.label} (${taxaSpeciesCount ?? 0})`,
           };
         }
       }
@@ -195,37 +210,63 @@ function SpeciesCardContainer(props) {
   }, [species, locale, contextualData.speciesNumbers]);
 
   useEffect(() => {
+    if(species.length === 0) return;
+
     const sortSpecies = (s) =>
       orderBy(
-        s,
-        ['has_image', 'per_global', 'conservationConcern'],
-        ['desc', 'desc', 'desc']
+        s.map(item => ({
+          ...item,
+          rounded_global: Math.round(item.per_global / 5) * 5
+        })),
+        ['rounded_global', 'has_image', 'SPS_global'],
+        ['desc', 'desc', 'asc']
       );
+
+    const removeFalcoPeregrinus = (s) =>
+      s.filter(sp => {
+        if (areaName?.toLowerCase() === 'custom area') {
+          return sp.name.toLowerCase() !== 'falco peregrinus';
+        }
+        return true;
+    });
+
     const speciesSorted =
       species &&
       sortSpecies(
         selectedSpeciesFilter.slug === 'all'
-          ? [...species]
+          ? [...removeFalcoPeregrinus(species)]
           : [
-              ...species.filter(
+              ...removeFalcoPeregrinus(species.filter(
                 (sp) => sp.category === selectedSpeciesFilter.slug
-              ),
+              )),
             ]
       );
+      // TODO: Remove the filter above once data is fixed
 
     if (speciesSorted) {
-      setSpeciesToDisplay(speciesSorted);
-      setSpeciesToDisplayBackUp([...speciesSorted]);
+        setSpeciesToDisplay(speciesSorted);
+        setSpeciesToDisplayBackUp([...speciesSorted]);
     }
   }, [species, selectedSpeciesFilter]);
 
   useEffect(() => {
-    setSelectedSpecies(speciesToDisplay[selectedSpeciesIndex]);
-  }, [speciesToDisplay, selectedSpeciesIndex]);
+
+    const index = speciesToDisplay.findIndex((s) => s.id === urlSelectedSpeciesId);
+    const urlSelectedSpeciesIndex = (index === -1) ? 0 : index;
+    const urlSelectedSpecies = speciesToDisplay[urlSelectedSpeciesIndex];
+    // Don't select a species if we have one in the URL and until is loaded
+    if (!urlSelectedSpeciesId || urlSelectedSpecies) {
+      setSelectedSpeciesIndex(urlSelectedSpeciesIndex);
+      setSelectedSpecies(urlSelectedSpecies || speciesToDisplay[selectedSpeciesIndex]);
+    } else {
+      setSelectedSpeciesIndex(0);
+      setSelectedSpecies(speciesToDisplay[0]);
+    }
+  }, [speciesToDisplay, selectedSpeciesIndex, urlSelectedSpeciesId]);
 
   useEffect(() => {
     setSelectedSpeciesIndex(0);
-  }, [selectedSpeciesFilter]);
+  }, [selectedSpeciesFilter?.slug]);
 
   // Get individual species info and image for slider
   useEffect(() => {
@@ -298,11 +339,11 @@ function SpeciesCardContainer(props) {
       MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (SPSData && results.length > 0) {
           const individualSPSData = SPSData.find(
-            (d) => d.SliceNumber === selectedSpecies.sliceNumber
+            (d) => d.id === selectedSpecies.id
           );
           const SPS_AOI =
             individualSPSData.SPS_aoi ||
-            (individualSPSData.SPS_aoi === 0 ? 0 : individualSPSData.SPS_AOI);
+            ((individualSPSData.SPS_aoi === 0 || individualSPSData.SPS_AOI === undefined) ? 0 : individualSPSData.SPS_AOI);
 
           setIndividualSpeciesData({
             ...selectedSpecies,
@@ -312,7 +353,7 @@ function SpeciesCardContainer(props) {
                 ? results[0].image.url
                 : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
-            molLink: `https://mol.org/species/${selectedSpecies.name}`,
+            molLink: `https://mol.org/dashboard/species/info/${selectedSpecies.name}`,
             SPS_global: individualSPSData.SPS_global,
             SPS_AOI,
             per_global: individualSPSData.per_global,
@@ -323,16 +364,24 @@ function SpeciesCardContainer(props) {
           } else {
             setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa));
           }
-        } else {
-          handleNextSpeciesSelection();
         }
       });
     }
   }, [selectedSpecies, locale, SPSData]);
 
   const setSpecieById = (id) => {
-    setSelectedSpecies(speciesToDisplay.find((s) => s.id === id));
+    const species = speciesToDisplay.find((s) => s.id === id)
+    setSelectedSpecies(species);
+    changeUI({ selectedSpecies: species.id });
   };
+
+  const setSpeciesModalOpen = (isOpen) => {
+    // Set selected species to undefined when closing modal to avoid registering unnecesary URL params
+    changeUI({
+      isSpeciesModalOpen: isOpen ? true : undefined,
+    });
+  }
+
   return (
     <Component
       speciesFilters={speciesFilters}
@@ -341,6 +390,7 @@ function SpeciesCardContainer(props) {
       setSpecieById={setSpecieById}
       speciesToDisplay={speciesToDisplay}
       setSpeciesFilter={setSpeciesFilter}
+      setSpeciesModalOpen={setSpeciesModalOpen}
       selectedSpeciesFilter={selectedSpeciesFilter}
       previousImage={previousImage}
       nextImage={nextImage}
@@ -359,4 +409,4 @@ function SpeciesCardContainer(props) {
   );
 }
 
-export default SpeciesCardContainer;
+export default connect(mapStateToProps, urlActions)(SpeciesCardContainer);

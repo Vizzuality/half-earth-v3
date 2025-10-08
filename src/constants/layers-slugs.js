@@ -62,6 +62,7 @@ export const LANDSCAPE_LABELS_LAYER = 'landscape_labels_layer';
 export const FIREFLY_BASEMAP_LAYER = 'firefly_basemap';
 // Featured places layer
 export const FEATURED_PLACES_LAYER = 'featured_places';
+export const FEATURED_PLACES_PORTAL_ID = 'featured_places_portal_id';
 // Basemap (featured mode)
 export const VIBRANT_BASEMAP_LAYER = 'Vibrant';
 // Basemap (featured mode)
@@ -157,9 +158,19 @@ export const MAMMALS_SACA_RICHNESS_TOTAL = 'mammals-saca-richness-total';
 export const MAMMALS_SACA_RARITY_TOTAL = 'mammals-saca-rarity-total';
 export const ANTS_RARITY_1KM = 'ants-rarity-1km';
 export const ANTS_RICHNESS_1KM = 'ants-richness-1km';
+export const AMPHIB_RICHNESS_NATIONAL = 'amphib-richness-national';
+export const AMPHIB_RARITY_NATIONAL = 'amphib-rarity-national';
+export const BIRD_RICHNESS_NATIONAL = 'bird-richness-national';
+export const BIRD_RARITY_NATIONAL = 'bird-rarity-national';
+export const MAMMAL_RICHNESS_NATIONAL = 'mammal-richness-national';
+export const MAMMAL_RARITY_NATIONAL = 'mammal-rarity-national';
+export const REPTILE_RICHNESS_NATIONAL = 'reptile-richness-national';
+export const REPTILE_RARITY_NATIONAL = 'reptile-rarity-national';
 
 export const ANTS_RARITY_GLOBAL = 'ants-rarity-global';
 export const ANTS_RICHNESS_GLOBAL = 'ants-richness-global';
+export const BUTTERFLIES_RICHNESS_GLOBAL = 'butterflies-richness-global';
+export const BUTTERFLIES_RARITY_GLOBAL = 'butterflies-rarity-global';
 
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';
@@ -212,3 +223,9 @@ export const REPTILES_LOOKUP = 'reptiles-lookup-table';
 // NRC Landing Layers
 export const NRC_LANDING_LAYERS_SLUG = 'nrc-landing-layers';
 export const EEZ_MARINE_AND_LAND_BORDERS = 'eez-marine-borders';
+
+// Temporary lookup tables while new services are prepared
+export const TEMP_BIRDS_LOOKUP = 'temp-birds-lookup-table';
+export const TEMP_MAMMALS_LOOKUP = 'temp-mammals-lookup-table';
+export const TEMP_REPTILES_LOOKUP = 'temp-reptiles-lookup-table';
+export const TEMP_AMPHIBIAN_LOOKUP = 'temp-amphibians-lookup-table';

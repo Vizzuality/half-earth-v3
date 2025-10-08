@@ -19,7 +19,7 @@ const parseData = (data) => {
     return {
       year: i.year.toString(),
       spi: i.SPI_high,
-      protected: parseInt(i.percentprotected_high, 10),
+      protected: i.percentprotected_high,
     };
   });
   return sortBy(parsedData, ['year']);

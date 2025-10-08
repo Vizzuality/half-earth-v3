@@ -41,7 +41,8 @@ function BiodiversityLayerToggle(props) {
     allActiveLayerTitles,
     category,
     setSelectedCategory,
-    selectedCategory
+    selectedCategory,
+    aoiId,
   } = props;
   const locale = useLocale();
   const layersToggleConfig = useMemo(() => getLayersToggleConfig(), [locale]);
@@ -66,7 +67,7 @@ function BiodiversityLayerToggle(props) {
     const layer = layersConfig[option.layer];
     if (!allActiveLayerTitles) {
       // Add layer to empty selection
-      if (layer.bbox) flyToLayerExtent(layer.bbox, view);
+      if (layer.bbox && !aoiId) flyToLayerExtent(layer.bbox, view);
       layerManagerToggle(
         option.layer,
         activeLayers,
@@ -92,7 +93,7 @@ function BiodiversityLayerToggle(props) {
     }
 
     // Add selected layer and toggle the rest
-    if (layer.bbox) {
+    if (layer.bbox && !aoiId) {
       flyToLayerExtent(layer.bbox, view);
     }
 

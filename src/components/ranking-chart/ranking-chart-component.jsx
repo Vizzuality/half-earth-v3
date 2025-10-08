@@ -55,7 +55,7 @@ function RankingChart({
   const tableRef = useRef();
 
   const scrollTableVertically = (distance) => {
-    tableRef.current.scroll(0, distance);
+    tableRef.current.scrollTo({top: distance});
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ function RankingChart({
     const PADDING = 20;
     const selectedCountry = data.find((d) => d.iso === countryISO);
 
-    if (selectedCountry) {
+    if (selectedCountry && (!searchTerm || searchTerm?.length === 0)) {
       scrollTableVertically(ROW_HEIGHT * selectedCountryIndex - PADDING);
     }
   }, [handleSortClick, tableRef.current, selectedCountryIndex]);
@@ -94,6 +94,14 @@ function RankingChart({
     const countryIndex = data.indexOf(selectedCountry);
     setSelectedCountryIndex(countryIndex);
   }, [handleSortClick, handleCountryClick]);
+
+  const returnToolTipValue = (value) => {
+    if(value !== null && value !== undefined) {
+      return `${Math.floor((value || 0) * 100) / 100}%`;
+    } else {
+      return t('No data');
+    }
+  }
 
   const barTooltip = (d, name, attrs) => (
     <div className={styles.tooltip} {...attrs} key={`tooltip-${name}`}>
@@ -111,7 +119,7 @@ function RankingChart({
             }}
             key={`legend-value-${key}`}
           >
-            {Math.floor((d[name][key] || 0) * 100) / 100}%
+            {returnToolTipValue(d[name][key])}
           </div>
         ))}
       </div>

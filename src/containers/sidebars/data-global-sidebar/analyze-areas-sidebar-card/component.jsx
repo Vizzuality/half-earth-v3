@@ -217,14 +217,14 @@ function AnalyzeAreasCardComponent({
               {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
               <sup>2</sup>
             </b>{' '}
-            {t('approximately the size of Belgium.')}
+            {t('approximately the size of Belgium.')} {t('If there are multiple geometries with different IDs, then the first will be used.')}
           </p>
 
           <p className={styles.sectionSubtitleLabel}>
-            {t('Learn more about shape files')}{' '}
+            {t('Learn more about shapefiles')}{' '}
             <a
               title={t('Shapefiles information')}
-              href="https://enterprise.arcgis.com/es/portal/latest/use/shapefiles.htm"
+              href="https://enterprise.arcgis.com/en/portal/latest/use/shapefiles.htm"
               target="_blank"
               rel="noreferrer noopener"
             >

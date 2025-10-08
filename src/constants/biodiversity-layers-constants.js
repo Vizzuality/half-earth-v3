@@ -65,6 +65,16 @@ import {
   TREES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
+  BUTTERFLIES_RICHNESS_GLOBAL,
+  BUTTERFLIES_RARITY_GLOBAL,
+  AMPHIB_RICHNESS_NATIONAL,
+  AMPHIB_RARITY_NATIONAL,
+  BIRD_RICHNESS_NATIONAL,
+  MAMMAL_RICHNESS_NATIONAL,
+  REPTILE_RICHNESS_NATIONAL,
+  BIRD_RARITY_NATIONAL,
+  MAMMAL_RARITY_NATIONAL,
+  REPTILE_RARITY_NATIONAL,
 } from 'constants/layers-slugs';
 
 export const LAYER_VARIANTS = {
@@ -94,7 +104,10 @@ export const getResolutionOptions = () => ({
   LOWEST: { label: `${t('~55km')}<sup>2</sup>`, slug: 'LOWEST' },
   LOW: { label: `${t('~27km')}<sup>2</sup>`, slug: 'LOW' },
   HIGH: { label: `${t('~1km')}<sup>2</sup>`, slug: 'HIGH' },
+  HIGHEST:  { label: `${t('~110km')}<sup>2</sup>`, slug: 'HIGHEST' },
   COUNTRY: { label: t('country'), slug: 'COUNTRY' },
+  GLOBAL: { label: t('global'), slug: 'GLOBAL' },
+  NATIONAL: { label: t('national'), slug: 'NATIONAL' },
 });
 
 export const getLayersResolution = () => {
@@ -105,13 +118,13 @@ export const getLayersResolution = () => {
       [MARINE]: [resolutions.LOWEST],
     },
     [RICHNESS]: {
-      [TERRESTRIAL_GLOBAL]: [resolutions.LOW, resolutions.COUNTRY],
-      [TERRESTRIAL_REGIONAL]: [resolutions.HIGH],
+      [TERRESTRIAL_GLOBAL]: [resolutions.LOW, resolutions.HIGHEST, resolutions.COUNTRY],
+      [TERRESTRIAL_REGIONAL]: [resolutions.GLOBAL, resolutions.NATIONAL],
       [MARINE]: [resolutions.LOWEST],
     },
     [RARITY]: {
-      [TERRESTRIAL_GLOBAL]: [resolutions.LOW],
-      [TERRESTRIAL_REGIONAL]: [resolutions.HIGH],
+      [TERRESTRIAL_GLOBAL]: [resolutions.LOW, resolutions.HIGHEST],
+      [TERRESTRIAL_REGIONAL]: [resolutions.GLOBAL, resolutions.NATIONAL],
       [MARINE]: [resolutions.LOWEST],
     },
   };
@@ -119,7 +132,7 @@ export const getLayersResolution = () => {
 
 export const DEFAULT_RESOLUTIONS = {
   [TERRESTRIAL_GLOBAL]: 'LOW',
-  [TERRESTRIAL_REGIONAL]: 'HIGH',
+  [TERRESTRIAL_REGIONAL]: 'GLOBAL',
   [MARINE]: 'LOWEST',
 };
 
@@ -301,9 +314,25 @@ export const getLayersToggleConfig = () => ({
           group: t('plants'),
         },
       ],
+      HIGHEST: [
+        {
+          value: BUTTERFLIES_RICHNESS_GLOBAL,
+          name: t('butterflies'),
+          title: t('butterflies'),
+          layer: BUTTERFLIES_RICHNESS_GLOBAL,
+          group: t('invertebrates'),
+        },
+        {
+          value: TREES_RICHNESS,
+          name: t('trees'),
+          title: t('trees'),
+          layer: TREES_RICHNESS,
+          group: t('plants'),
+        },
+      ]
     },
     [TERRESTRIAL_REGIONAL]: {
-      HIGH: [
+      GLOBAL: [
         {
           value: ANTS_RICHNESS_1KM,
           name: t('ants'),
@@ -394,6 +423,36 @@ export const getLayersToggleConfig = () => ({
           title: t('winter birds'),
           layer: WINTER_BIRDS_RICHNESS_1KM,
           group: t('birds'),
+        },
+      ],
+      NATIONAL:[
+        {
+          value: AMPHIB_RICHNESS_NATIONAL,
+          name: t('amphibians'),
+          title: t('amphibians'),
+          layer: AMPHIB_RICHNESS_NATIONAL,
+          group: t('amphibians'),
+        },
+        {
+          value: BIRD_RICHNESS_NATIONAL,
+          name: t('birds'),
+          title: t('birds'),
+          layer: BIRD_RICHNESS_NATIONAL,
+          group: t('birds'),
+        },
+        {
+          value: MAMMAL_RICHNESS_NATIONAL,
+          name: t('mammals'),
+          title: t('mammals'),
+          layer: MAMMAL_RICHNESS_NATIONAL,
+          group: t('mammals'),
+        },
+        {
+          value: REPTILE_RICHNESS_NATIONAL,
+          name: t('reptiles'),
+          title: t('reptiles'),
+          layer: REPTILE_RICHNESS_NATIONAL,
+          group: t('reptiles'),
         },
       ],
     },
@@ -490,9 +549,25 @@ export const getLayersToggleConfig = () => ({
           group: t('invertebrates'),
         },
       ],
+      HIGHEST:[
+        {
+          value: BUTTERFLIES_RARITY_GLOBAL,
+          name: t('butterflies'),
+          title: t('butterflies'),
+          layer: BUTTERFLIES_RARITY_GLOBAL,
+          group: t('invertebrates'),
+        },
+        {
+          value: TREES_RARITY,
+          name: t('trees'),
+          title: t('trees'),
+          layer: TREES_RARITY,
+          group: t('plants'),
+        },
+      ]
     },
     [TERRESTRIAL_REGIONAL]: {
-      HIGH: [
+      GLOBAL: [
         {
           value: ANTS_RARITY_1KM,
           name: t('ants'),
@@ -583,6 +658,36 @@ export const getLayersToggleConfig = () => ({
           title: t('winter birds'),
           layer: WINTER_BIRDS_RARITY_1KM,
           group: t('birds'),
+        },
+      ],
+      NATIONAL:[
+        {
+          value: AMPHIB_RARITY_NATIONAL,
+          name: t('amphibians'),
+          title: t('amphibians'),
+          layer: AMPHIB_RARITY_NATIONAL,
+          group: t('amphibians'),
+        },
+        {
+          value: BIRD_RARITY_NATIONAL,
+          name: t('birds'),
+          title: t('birds'),
+          layer: BIRD_RARITY_NATIONAL,
+          group: t('birds'),
+        },
+        {
+          value: MAMMAL_RARITY_NATIONAL,
+          name: t('mammals'),
+          title: t('mammals'),
+          layer: MAMMAL_RARITY_NATIONAL,
+          group: t('mammals'),
+        },
+        {
+          value: REPTILE_RARITY_NATIONAL,
+          name: t('reptiles'),
+          title: t('reptiles'),
+          layer: REPTILE_RARITY_NATIONAL,
+          group: t('reptiles'),
         },
       ],
     },

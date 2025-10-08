@@ -17,6 +17,7 @@ import styles from './featured-place-card-styles.module';
 
 function FeaturedPlaceCardComponent({
   selectedFeaturedPlace,
+  selectedFeaturedMap,
   isFullscreenActive,
   featuredMap,
   featuredPlace,
@@ -46,10 +47,11 @@ function FeaturedPlaceCardComponent({
       >
         <section className={styles.cardGrid}>
           <div className={styles.breadcrumb}>
-            {hotspotsNumbers &&
+            {hotspotsNumbers && selectedFeaturedMap !== 'discoverPlaces' &&
               `${hotspotsNumbers.position} / ${hotspotsNumbers.size} ${t(
                 'Hotspots'
               )}`}
+              {selectedFeaturedMap === 'discoverPlaces' && t('Places for a Half-Earth Future')}
           </div>
           <nav className={styles.navigation}>
             <div className={styles.placesNavigator}>
@@ -92,13 +94,37 @@ function FeaturedPlaceCardComponent({
                     alt={featuredPlace.title}
                   />
                 )}
+                {featuredPlace.link && (
+                  <a
+                    href={featuredPlace.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                  >
+                    {t('Read the full story')}
+                  </a>
+                )}
               </div>
               <div className={styles.contentContainer} ref={contentWrapper}>
                 <h2 className={styles.title}>
-                  {hotspotsNumbers && `${hotspotsNumbers.position}. `}
                   {featuredPlace.title}
                 </h2>
-                <div>
+
+                {featuredPlace.hepmLink?.links?.length > 0 && (
+                  <div className={styles.hepmLinks}>
+                    {featuredPlace.hepmLink.links.map((link, index) => (<a
+                      key={link.id}
+                      href={link.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.link}
+                    >
+                      {index === 0 && t(`Priority Place #${link.id}`)}
+                      {index > 0 && t(`, #${link.id}`)}
+                    </a>))}
+                  </div>
+                )}
+                <div className={styles.description}>
                   <p
                     className={styles.text}
                     // eslint-disable-next-line react/no-danger
@@ -111,7 +137,12 @@ function FeaturedPlaceCardComponent({
                       ({t('Source:')} <i>{featuredMap.sourceText}</i>)
                     </span>
                   )}
-                </div>
+                  {featuredPlace.dateTime && (
+                    <span className={styles.sourceText}>
+                      {featuredPlace.dateTime}
+                    </span>
+                  )}
+                  </div>
               </div>
             </>
           )}

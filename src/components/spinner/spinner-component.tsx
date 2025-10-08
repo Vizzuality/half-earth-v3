@@ -2,12 +2,19 @@ import cx from 'classnames';
 
 import styles from './spinner-styles.module';
 
+export interface SpinnerProps {
+  floating?: boolean;
+  spinnerWithOverlay?: boolean;
+  initialLoading?: boolean;
+  display?: boolean;
+}
+
 function Spinner({
   floating = false,
   spinnerWithOverlay = false,
   initialLoading = false,
   display = true,
-}) {
+}: SpinnerProps) {
   if (!display) return <div />;
   return spinnerWithOverlay ? (
     <div className={styles.spinnerWithOverlay}>

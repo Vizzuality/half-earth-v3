@@ -45,6 +45,7 @@ function SideMenu({
         className={styles.searchBtn}
         handleClick={() => setSearcherOpen(true)}
       />
+
       {isSearcherOpen && (
         <div className={styles.searcherContainer}>
           <SearchLocation
@@ -64,6 +65,7 @@ function SideMenu({
           />
         </div>
       )}
+
       <ZoomControls
         map={map}
         view={view}
@@ -71,12 +73,12 @@ function SideMenu({
         hidden={hiddenWidget}
       />
 
-      {/* <Button
+      <Button
         Icon={HelpIcon}
         type="icon-square"
         className={styles.menuBtn}
         handleClick={() => setHelpModalOpen(true)}
-      /> */}
+      />
       <Button
         Icon={ShareIcon}
         type="icon-square"

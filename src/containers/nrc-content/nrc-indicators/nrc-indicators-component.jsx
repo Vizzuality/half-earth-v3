@@ -97,7 +97,7 @@ function Indicators({ countryData, landMarineSelection }) {
         <p>
           {isNumberOr0(protection_needed) && (
             <T
-              _str="of {bold} and {needsProtectionNumber}% needs protection"
+              _str="of {bold} and {needsProtectionNumber}% needs protection (as of 2024)"
               _comment="10% (of) land is protected (and) 2% (needs protection)"
               bold={
                 <b>

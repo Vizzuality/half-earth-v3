@@ -155,7 +155,7 @@ function SidebarCard({
             {cardDescription}
           </ReactMarkdown>
         )}
-        {cardCategory === PROTECTION_SLUG && (
+        {cardCategory === PROTECTION_SLUG && contextualData.region_type !== 'preserve' && (
           <div>
             <Button
               type="rectangular"
@@ -209,7 +209,7 @@ function SidebarCard({
         {cardCategory === PROTECTED_ATTRIBUTES_SLUG && contextualData.DESIG && (
           <div className={styles.attributtesContainer}>
             {protectedAttributesConfig.map((a) => (
-              <div className={styles.attributtesItem}>
+              <div className={styles.attributtesItem} key={a.title}>
                 <div className={styles.titleWrapper}>
                   <h6 className={styles.title}>{a.title}</h6>
                   <span className={styles.iconWrapper}>
@@ -237,11 +237,13 @@ function SidebarCard({
             data={humanPressuresData}
           />
         )}
-        <SourceAnnotation
-          theme="dark"
-          metaDataSources={metadata && metadata.source}
-          className={styles.sourceContainer}
-        />
+        {contextualData.region_type !== 'preserve' && (
+          <SourceAnnotation
+            theme="dark"
+            metaDataSources={metadata && metadata.source}
+            className={styles.sourceContainer}
+          />
+        )}
       </div>
       {displayWarning && (
         <div className={styles.warningWrapper}>

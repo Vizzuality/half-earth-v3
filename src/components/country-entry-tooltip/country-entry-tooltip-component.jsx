@@ -30,6 +30,8 @@ function CountryEntryTooltipComponent({
   onboardingType,
   waitingInteraction,
   isMobile,
+  activeTab,
+  setActiveTab,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -213,8 +215,8 @@ function CountryEntryTooltipComponent({
           </span>
           <span className={styles.text}>
             {landTab
-              ? t('of additional land protection is needed')
-              : t('of additional marine protection is needed')}
+              ? t('of additional land protection is needed (as of 2024)')
+              : t('of additional marine protection is needed (as of 2024)')}
           </span>
         </div>
       </section>

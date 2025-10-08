@@ -213,8 +213,8 @@ function BiodiversitySidebarCardComponent({
                 <span className={styles.subtitle}>{t('Regional layers')}</span>
                 <span className={styles.description}>
                   {parse(
-                    t('Regional layers available at {resolution}.', {
-                      resolution: resolutionSentence(TERRESTRIAL_REGIONAL),
+                    t('Regional layers available at {resolution} resolution.', {
+                      resolution: `${t('~1km')}<sup>2</sup>`,
                     })
                   )}
                 </span>

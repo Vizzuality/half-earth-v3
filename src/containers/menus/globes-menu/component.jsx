@@ -75,7 +75,7 @@ GlobesMenu.propTypes = {
 GlobesMenu.defaultProps = {
   className: '',
   landing: false,
-  onMouseLeave: () => { },
+  onMouseLeave: () => {},
 };
 
 export default GlobesMenu;

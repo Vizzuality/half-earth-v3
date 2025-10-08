@@ -17,13 +17,15 @@ NODE_ENV=
 VITE_APP_DATA_GLOBE_SCENE_ID= Esri Scene Id for the data globe
 VITE_APP_FEATURED_GLOBE_SCENE_ID= Esri Scene Id for the featured globe
 VITE_APP_ARGISJS_API_VERSION= ArcGis js version
+VITE_APP_MOL_API= API for MOL data
 VITE_APP_CONTENTFUL_SPACE_ID= Contentful space id for featured globe and metadata
 VITE_APP_TRANSIFEX_TOKEN= Transifex token for translation
 TRANSIFEX_TOKEN= Transifex token for translation (Same as the react app one)
 TRANSIFEX_SECRET= Transifex secret for translation (Same as the react app one)
 VITE_APP_TRANSIFEX_SECRET= Transifex secret for translation (Same as the react app one)
 VITE_APP_CONTENTFUL_TOKEN= Contentful token
-VITE_APP_GA_MEASUREMENT_ID= Google analytics code
+VITE_APP_GA_MEASUREMENT_ID= Google tag analytics code
+VITE_APP_GA_4_ID= Google analytics 4 code
 
 GENERATE_SOURCEMAP=false keep false. This is a fix for a problem with react-scripts 5 not handling the sourcemaps correctly and having some warnings
 

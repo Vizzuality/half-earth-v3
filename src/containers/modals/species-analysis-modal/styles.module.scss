@@ -15,6 +15,12 @@
   border: none;
 }
 
+.shareButton {
+  position: absolute;
+  right: 80px;
+  top: 43px;
+}
+
 .modalContent {
   display: flex;
   flex-wrap: wrap;

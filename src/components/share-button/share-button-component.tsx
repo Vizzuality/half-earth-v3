@@ -2,22 +2,31 @@ import ReactTooltip from 'react-tooltip';
 
 import { useT } from '@transifex/react';
 
-import PropTypes from 'prop-types';
-
 import cx from 'classnames';
 
 import ShareIcon from 'icons/share.svg?react';
 
 import styles from './share-button-styles.module';
 
-function ShareButtonComponent(props) {
+export interface ShareButtonProps {
+  variant?: string;
+  setShareModalOpen: (open: boolean) => void;
+  theme?: {
+    shareButton?: string;
+  };
+  tooltipPosition?: 'top' | 'right' | 'bottom' | 'left';
+  openShareModalAnalyticsEvent?: (viewMode: any) => void;
+  viewMode?: any;
+}
+
+function ShareButtonComponent(props: ShareButtonProps) {
   const t = useT();
-  const { theme, variant, setShareModalOpen } = props;
+  const { theme = {}, variant = 'icon', setShareModalOpen, tooltipPosition } = props;
 
   const tooltipId = {
     'data-tip': 'data-tip',
     'data-for': 'shareButtonId',
-    'data-place': 'right',
+    'data-place': tooltipPosition || 'right',
     'data-effect': 'solid',
     'data-delay-show': 0,
   };
@@ -44,18 +53,5 @@ function ShareButtonComponent(props) {
     </>
   );
 }
-
-ShareButtonComponent.propTypes = {
-  variant: PropTypes.string,
-  setShareModalOpen: PropTypes.func.isRequired,
-  theme: PropTypes.shape({
-    shareButton: PropTypes.string,
-  }),
-};
-
-ShareButtonComponent.defaultProps = {
-  theme: {},
-  variant: 'icon',
-};
 
 export default ShareButtonComponent;
