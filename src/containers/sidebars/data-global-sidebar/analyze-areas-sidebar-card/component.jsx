@@ -217,7 +217,7 @@ function AnalyzeAreasCardComponent({
               {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
               <sup>2</sup>
             </b>{' '}
-            {t('approximately the size of Belgium.')}
+            {t('approximately the size of Belgium.')} {t('If there are multiple geometries with different IDs, then the first will be used.')}
           </p>
 
           <p className={styles.sectionSubtitleLabel}>

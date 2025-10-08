@@ -36,6 +36,7 @@ function Component(props) {
     speciesData,
     speciesFilters,
     placeholderText,
+    speciesToDisplay,
     setSpeciesFilter,
     selectedSpeciesFilter,
     individualSpeciesData,
@@ -117,7 +118,7 @@ function Component(props) {
             handleCloseSearch={handleCloseSearch}
             theme={insideModal && 'dark'}
           />
-          {individualSpeciesData && (
+          {individualSpeciesData && speciesToDisplay?.length > 0 && (
             <section>
               <div className={styles.speciesDataContainer}>
                 <div className={styles.speciesCarousel}>

@@ -57,6 +57,18 @@ function ArcChartComponent({
             )}
           </text>
         )}
+        {!value && (
+          <text
+            x={parentWidth / 2 + (isPercentage ? 6 : 0)}
+            y={parentHeight / 2 + 40}
+            className={styles.label}
+          >
+            0
+            {isPercentage && (
+              <tspan className={styles.labelPercentage}>%</tspan>
+            )}
+          </text>
+        )}
       </RadialBarChart>
     </ResponsiveContainer>
   );
