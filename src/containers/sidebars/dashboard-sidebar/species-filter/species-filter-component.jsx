@@ -30,6 +30,8 @@ import {
 import styles from '../dashboard-sidebar-styles.module.scss';
 
 import filterStyles from './species-filter-styles.module.scss';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer'
+import Graphic from '@arcgis/core/Graphic'
 
 function SpeciesFilterComponent(props) {
   const t = useT();
@@ -49,6 +51,7 @@ function SpeciesFilterComponent(props) {
     setMapLegendLayers,
     setRegionLayers,
     regionLayers,
+    geometry,
     view,
     map,
     countryISO,
@@ -341,6 +344,34 @@ function SpeciesFilterComponent(props) {
         break;
     }
   }, [selectedRegionOption, selectedRegion]);
+
+  useEffect(() => {
+    if(geometry && selectedRegionOption === REGION_OPTIONS.DRAW) {
+      const graphic = new Graphic({
+        geometry: geometry,
+        symbol: {
+          type: "simple-fill",
+          color: [0, 255, 255, 0.5],
+          style: "solid",
+          outline: {
+            color: [0, 255, 255, 0.5],
+            width: 2,
+          },
+        },
+      });
+
+      const graphicsLayer = new GraphicsLayer({
+        id: 'custom-area'
+      });
+      graphicsLayer.add(graphic);
+      setRegionLayers((rl) => ({
+          ...rl,
+          'custom-area': graphicsLayer,
+        }));
+      map.add(graphicsLayer);
+    }
+  }, [geometry]);
+
 
   useEffect(() => {
     displayLayer(selectedRegionOption);

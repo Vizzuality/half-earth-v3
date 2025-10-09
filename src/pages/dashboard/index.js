@@ -617,6 +617,7 @@ function DashboardContainer(props) {
 
         const speciesData = [ampSpecies, birdSpecies, repSpecies, mamSpecies];
 
+        setGeometry(geometry);
         setTaxaList(speciesData);
         setSpeciesListLoading(false);
       }
@@ -1349,6 +1350,7 @@ function DashboardContainer(props) {
       allTaxa={allTaxa}
       setSelectedGeometryRings={setSelectedGeometryRings}
       selectedGeometryRings={selectedGeometryRings}
+      setGeometry={setGeometry}
       {...props}
     />
   );

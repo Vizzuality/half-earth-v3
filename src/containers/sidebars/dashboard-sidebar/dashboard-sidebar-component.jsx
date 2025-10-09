@@ -38,6 +38,9 @@ function DashboardSidebar(props) {
     map,
     regionLayers,
     setRegionLayers,
+    setRegionName,
+    setHash,
+    setSelectedRegionOption
   } = props;
 
   const { lightMode, toggleLightMode } = useContext(LightModeContext);
@@ -51,6 +54,9 @@ function DashboardSidebar(props) {
     ) {
       removeRegionLayers(map, regionLayers);
 
+      setSelectedRegionOption(null);
+      setHash(null);
+      setRegionName(null);
       setRegionLayers({});
     }
   }, [selectedIndex]);
