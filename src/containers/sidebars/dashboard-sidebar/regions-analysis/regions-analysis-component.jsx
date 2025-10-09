@@ -407,11 +407,11 @@ function RegionsAnalysisComponent(props) {
       payload: { iso: countryISO.toLowerCase() },
       query: {
         selectedIndex,
-        regionLayers,
         selectedRegionOption,
+        regionLayers,
       },
     });
-  }, [regionLayers]);
+  }, [regionLayers, selectedRegionOption, selectedIndex]);
 
   useEffect(() => {
     if (selectedRegionOption && selectedRegion) {

@@ -54,7 +54,6 @@ function DashboardSidebar(props) {
     ) {
       removeRegionLayers(map, regionLayers);
 
-      setSelectedRegionOption(null);
       setHash(null);
       setRegionName(null);
       setRegionLayers({});
