@@ -122,9 +122,19 @@ function AoiSidebarContainer(props) {
     }
   }, [speciesData]);
   const handleClose = () => {
+    let fromAnalyze = false;
+    const noAllTaxaPriorityLayer = !activeLayers.find((l) =>
+      l.title === 'all-taxa-priority'
+    );
+
+    if(noAllTaxaPriorityLayer){
+      fromAnalyze = true;
+    }
+
     browsePage({
       type: DATA,
       query: {
+        fromAnalyze: fromAnalyze || undefined,
         centerOn: {
           coords: [
             geometry && view.center.longitude,

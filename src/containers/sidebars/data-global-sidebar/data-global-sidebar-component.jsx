@@ -32,6 +32,7 @@ function DataGlobalSidebarComponent({
   sidebarTabActive,
   changeGlobe,
   aoiId,
+  queryParams,
   changeUI,
 }) {
   const [mapLayersTab, analyzeAreasTab] = getSidebarTabs();
@@ -49,6 +50,13 @@ function DataGlobalSidebarComponent({
 
     activeLayers.forEach(layer => {
       if(!initialLayers.some(l => l.title === layer.title)){
+        layersToToggle.push({
+          layerId: layer.title,
+        })
+      }
+
+      const fromAnalyze = queryParams?.fromAnalyze === 'true' || queryParams?.fromAnalyze === true;
+      if(fromAnalyze){
         layersToToggle.push({
           layerId: layer.title,
         })

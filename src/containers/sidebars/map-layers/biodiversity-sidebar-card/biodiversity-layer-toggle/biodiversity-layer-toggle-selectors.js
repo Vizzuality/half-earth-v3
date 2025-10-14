@@ -16,6 +16,8 @@ const getSelectedResolutions = (state, { selectedResolutions }) =>
 const getBiodiversityLayerVariant = (state, { biodiversityLayerVariant }) =>
   biodiversityLayerVariant;
 
+const selectQueryParams = ({ location }) => location.query;
+
 const selectAoiId = ({ location }) =>
   location.query && location.query.ui?.aoiId;
 
@@ -96,9 +98,15 @@ const getSelectedLayerOption = createSelector(
   }
 );
 
+const getQueryParams = createSelector(
+  selectQueryParams,
+  (queryParams) => queryParams
+);
+
 export default createStructuredSelector({
   layerOptions: getGroupedLayerOptions,
   selectedLayerOption: getSelectedLayerOption,
   allActiveLayerTitles: getAllBiodiversityActiveLayers,
   aoiId: selectAoiId,
+  queryParams: getQueryParams,
 });
