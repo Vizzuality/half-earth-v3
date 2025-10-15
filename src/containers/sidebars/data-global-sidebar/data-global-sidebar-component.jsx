@@ -56,7 +56,7 @@ function DataGlobalSidebarComponent({
       }
 
       const fromAnalyze = queryParams?.fromAnalyze === 'true' || queryParams?.fromAnalyze === true;
-      if(fromAnalyze){
+      if(fromAnalyze && layer.title === 'all-taxa-priority'){
         layersToToggle.push({
           layerId: layer.title,
         })
