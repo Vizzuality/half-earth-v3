@@ -152,7 +152,7 @@ function AOISidebar({
 
   return (
     <>
-    {!population && <div style={{position: 'absolute', left: '50%', top: 0}}><Loading height={200} /></div>}
+    {!population && !landCover && <div style={{position: 'absolute', left: '50%', top: 0}}><Loading height={200} /></div>}
     <div className={styles.sidebarContainer}>
       <TabsSidebar
         activeLayers={activeLayers}
