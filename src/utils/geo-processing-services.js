@@ -269,10 +269,10 @@ export const setPrecalculatedSpeciesData = (
   handleLoadedTaxaData
 ) => {
 
-  const birdPreCalc = getPrecalculatedSpeciesData(BIRDS, attributes.birds)
-  const mammalPreCalc = getPrecalculatedSpeciesData(MAMMALS, attributes.mammals)
-  const reptilePreCalc = getPrecalculatedSpeciesData(REPTILES, attributes.reptiles)
-  const amphibianPreCalc = getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians)
+  const birdPreCalc = JSON.parse(attributes.birds).length > 0 ? getPrecalculatedSpeciesData(BIRDS, attributes.birds) : []
+  const mammalPreCalc = JSON.parse(attributes.mammals).length > 0 ? getPrecalculatedSpeciesData(MAMMALS, attributes.mammals) : []
+  const reptilePreCalc = JSON.parse(attributes.reptiles).length > 0 ? getPrecalculatedSpeciesData(REPTILES, attributes.reptiles) : []
+  const amphibianPreCalc = JSON.parse(attributes.amphibians).length > 0 ? getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians) : []
 
   Promise.all([
     birdPreCalc,
@@ -283,7 +283,7 @@ export const setPrecalculatedSpeciesData = (
     const [birdData, mammalData, reptileData, amphibianData] = data
     setTaxaData([
       ...birdData,
-      ...mammalData.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955),
+      ...mammalData,
       ...reptileData,
       ...amphibianData
     ])
