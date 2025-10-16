@@ -121,6 +121,7 @@ function AoiSidebarContainer(props) {
       setSentenceData(data);
     }
   }, [speciesData]);
+
   const handleClose = () => {
     let fromAnalyze = false;
     const noAllTaxaPriorityLayer = !activeLayers.find((l) =>
@@ -165,6 +166,7 @@ function AoiSidebarContainer(props) {
       isShareModalOpen={isShareModalOpen}
       setShareModalOpen={setShareModalOpen}
       sentenceData={sentenceData}
+      values={values}
       {...props}
     />
   );
