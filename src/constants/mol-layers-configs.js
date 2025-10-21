@@ -176,7 +176,7 @@ export const layersConfig = {
     url: LAYERS_URLS[GADM_0_ADMIN_AREAS_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: 'ca22a0922f934999a00e092feca4315d'
+    portalId: 'a5e0c4b6c24048948a7095823d277c56'
   },
   [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: {
     title: GADM_1_ADMIN_AREAS_FEATURE_LAYER,
@@ -185,7 +185,7 @@ export const layersConfig = {
     url: LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: '6710f8b62392473d8e06ee9c207ed010'
+    portalId: 'dcd82cc752bf45eea09e454a2aac2763'
   },
   [WDPA_OECM_FEATURE_LAYER]: {
     title: WDPA_OECM_FEATURE_LAYER,
@@ -231,7 +231,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[GLOBAL_SPI_FEATURE_LAYER],
     bbox: null,
-    portalId: 'e8683dd4a3c9457aa1f4e9af8ce8fe49',
+    portalId: '7c71497f02f34a6b9fc52f1c600a684e',
   },
   [MARINE_SPI_FEATURE_LAYER]: {
     title: MARINE_SPI_FEATURE_LAYER,
