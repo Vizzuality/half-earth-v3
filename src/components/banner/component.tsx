@@ -4,9 +4,8 @@ import { useT } from '@transifex/react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Button from 'components/button';
-
 import styles from './styles.module.scss';
+import buttonStyles from 'components/button/styles.module.scss';
 import cx from 'classnames';
 
 import MegaphoneIcon from 'icons/megaphone.svg?react';
@@ -16,7 +15,6 @@ import {  FEATURED } from 'router';
 
 const DISMISS_HE_BANNER = 'HE_VIEW_STORY_BANNER';
 const DISMISS_TTL_DAYS = 30;
-
 
 function setDismissed(value: string, days: number) {
   const expiresAt = Date.now() + days * 24 * 60 * 60 * 1000;
@@ -40,7 +38,7 @@ function getDismissed(): string | null {
   }
 }
 
-function Banner({ browsePage }: { browsePage: (arg: { type: string }) => void }) {
+function Banner() {
   const [isOpen, setOpen] = useState(false);
   const t = useT();
 
@@ -55,10 +53,6 @@ const handleClose = () => {
   setOpen(false);
 };
 
-const handleClickStoryView = () => {
-  browsePage({ type: FEATURED });
-};
-  
   return (
     isOpen && <AnimatePresence>
       <div>
@@ -84,23 +78,17 @@ const handleClickStoryView = () => {
           className={styles.banner}
         >
           <div className={styles.bannerContainer}>
-            <Button
-              type="icon"
-              handleClick={() => console.log("openNRCInNewTab")}
-              label={t('')}
-              Icon={MegaphoneIcon}
+            <MegaphoneIcon
             />
             <span className={styles.bannerHeading}>{t('HALF-EARTH NEWS:')}</span>
             <span className={styles.bannerText}>{t('Dive into the latest Species Protection Index 2025 Report with our in-depth analysis.')}</span>
           </div>
           <div className={styles.actions}>
-            <Button
-              type="rectangular-primary"
-              Icon={ExternalLinkIcon}
-              handleClick={handleClickStoryView}
-              label={t('View story')}
-              className={cx(styles.button, styles.buttonItems)}
-            />
+
+            <a href="https://storymaps.arcgis.com/stories/d6e25f364b07465aa11ce4fce296ab71" target="_blank" rel="noopener noreferrer"     className={cx(styles.button, styles.buttonItems, buttonStyles["rectangular-primary"])}>
+                View story
+              <ExternalLinkIcon className={styles.externalLinkIcon} />
+            </a>
           <motion.div
             onClick={handleClose}
             className={styles.closeIcon}        

@@ -8,7 +8,7 @@ import { tx, PseudoTranslationPolicy } from '@transifex/native';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import Banner from 'containers/banner';
+import Banner from 'components/banner';
 import ThirdParty from 'containers/third-party';
 
 import { useMobile } from 'constants/responsive';

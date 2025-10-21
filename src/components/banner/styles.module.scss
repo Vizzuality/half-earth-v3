@@ -24,10 +24,10 @@
 }
 
 .buttonItems {
-  flex-direction: row-reverse;
   color: $dark-text;
   gap: 10px;
   font-family: $font-family-inter ;
+  text-decoration: none;
 
   svg {
     width: 14px;
