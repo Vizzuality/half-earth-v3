@@ -141,7 +141,7 @@ const isNotProduction =
   VITE_APP_VERCEL_ENV === 'development' || VITE_APP_VERCEL_ENV === 'preview';
 
 const COUNTRIES_DATA_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20250403/FeatureServer';
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_points_country_attributes_Oct_2025/FeatureServer';
 
 const EEZ_MARINE_BORDERS_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Country_boundaries_with_EEZ/FeatureServer';
@@ -163,13 +163,13 @@ export const NRC_MARINE_SPI_DATA_LAYER =
   'https://utility.arcgis.com/usrsvcs/servers/026649c877694cea96cbc1a9f06950f5/rest/services/marine_spi_per_year_20250328/FeatureServer/0';
 
 const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/ca22a0922f934999a00e092feca4315d/rest/services/main_gadm0_precalculated_aoi_summaries_updated_20250521/FeatureServer';
+  'https://utility.arcgis.com/usrsvcs/servers/a5e0c4b6c24048948a7095823d277c56/rest/services/gadm0_v4_1_country_precalculated_aoi_summaries_Oct_2025/FeatureServer';
 const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/6710f8b62392473d8e06ee9c207ed010/rest/services/gadm1_precalculated_aoi_summaries_updated_20250327/FeatureServer';
+  'https://utility.arcgis.com/usrsvcs/servers/dcd82cc752bf45eea09e454a2aac2763/rest/services/gadm1_v4_1_province_precalculated_aoi_summaries_Oct_2025/FeatureServer';
 
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_Terrestrial_20250414/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_SPI_Terrestrial_Oct_2025/FeatureServer',
   [MARINE_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SPI_marine_20250414/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]:
@@ -440,12 +440,12 @@ export const LAYERS_URLS = {
 
   // Vertebrate species modal
   [SPECIES_LIST]:
-    'https://utility.arcgis.com/usrsvcs/servers/06887b77aad943db9dcc25dc05f99ab5/rest/services/Terrestrial_SPI_NRCs_2025_refine_allcountries_withGID_202504015/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/c759f3dcdf2a4dfab4efbfa22af173bb/rest/services/NRC_country_terrestrial_species_list_Oct_2025/FeatureServer',
   [MARINE_SPECIES_LIST]:
-    'https://utility.arcgis.com/usrsvcs/servers/f656c91cf3c14a86820297c719164992/rest/services/Marine_SPI_NRCs_2025_expert_withGID_202504015/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/aa916663f833485aa1ca74cb02461856/rest/services/NRC_country_marine_species_list_Oct_2025/FeatureServer',
   // AOIs lookup tables
   [SEARCH_LOOKUP_TABLE]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/AOI_lookup_table_202504/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/analyze_areas_aoi_lookup_searchbar_Oct_2025/FeatureServer/0',
   [ELU_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   [AMPHIBIAN_LOOKUP]:
@@ -477,7 +477,7 @@ export const LAYERS_URLS = {
   [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm0_20250602/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1_20250602/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_in_provinces_gadm1_v4_1_Oct_2025/FeatureServer/0',
   // 99%, 90%, 50% WDPA simplifications
   [WDPA_OECM_FEATURE_LAYER]: [
     'https://utility.arcgis.com/usrsvcs/servers/adfdb53a755a4916af057be6bb824422/rest/services/WDPA_Terrestrial_202501_Simplification50_20250527/FeatureServer/0',
@@ -485,13 +485,13 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/4530b1d34e74497ea64938055867115d/rest/services/WDPA_Terrestrial_202501_Simplification99_20250527/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/5b474f385c984b44811cdfad8ad37657/rest/services/wdpa_precalculated_aoi_summaries_updated_20250527/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/374b07c2046b4bd084bd74837c08fb38/rest/services/wdpa_v0125_parks_precalculated_aoi_summaries_Oct_2025/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/5e59f968feaf4efe8846869931b3b49c/rest/services/places_precalculated_aoi_summaries_updated_20250415/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/64b3ce120cfc4b0e984324ffe1fc75e3/rest/services/places_halfearth_future_precalculated_aoi_summaries_Oct_2025/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_20places_20250602/FeatureServer/0',
   [SPECIFIC_REGIONS_TILE_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/49260dded8b14da3ad3452490d171264/rest/services/regions_precalculated_aoi_summaries_updated_20250521/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/e34b098b0bc047439e2139c8651673ef/rest/services/specific_regions_precalculated_aoi_summaries_Oct_2025/FeatureServer/0',
   [SPECIFIC_REGIONS_WDPA_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_specific_regions_20250602/FeatureServer/0',
 
