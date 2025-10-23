@@ -440,9 +440,9 @@ export const LAYERS_URLS = {
 
   // Vertebrate species modal
   [SPECIES_LIST]:
-    'https://utility.arcgis.com/usrsvcs/servers/06887b77aad943db9dcc25dc05f99ab5/rest/services/Terrestrial_SPI_NRCs_2025_refine_allcountries_withGID_202504015/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/c759f3dcdf2a4dfab4efbfa22af173bb/rest/services/NRC_country_terrestrial_species_list_Oct_2025/FeatureServer',
   [MARINE_SPECIES_LIST]:
-    'https://utility.arcgis.com/usrsvcs/servers/f656c91cf3c14a86820297c719164992/rest/services/Marine_SPI_NRCs_2025_expert_withGID_202504015/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/aa916663f833485aa1ca74cb02461856/rest/services/NRC_country_marine_species_list_Oct_2025/FeatureServer',
   // AOIs lookup tables
   [SEARCH_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/analyze_areas_aoi_lookup_searchbar_Oct_2025/FeatureServer/0',
@@ -485,7 +485,7 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/4530b1d34e74497ea64938055867115d/rest/services/WDPA_Terrestrial_202501_Simplification99_20250527/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
-    'https://utility.arcgis.com/usrsvcs/servers/5b474f385c984b44811cdfad8ad37657/rest/services/wdpa_precalculated_aoi_summaries_updated_20250527/FeatureServer/0',
+    'https://utility.arcgis.com/usrsvcs/servers/374b07c2046b4bd084bd74837c08fb38/rest/services/wdpa_v0125_parks_precalculated_aoi_summaries_Oct_2025/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/5e59f968feaf4efe8846869931b3b49c/rest/services/places_precalculated_aoi_summaries_updated_20250415/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:
