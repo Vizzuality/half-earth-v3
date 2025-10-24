@@ -137,7 +137,7 @@ const isNotProduction =
   VITE_APP_VERCEL_ENV === 'development' || VITE_APP_VERCEL_ENV === 'preview';
 
 const COUNTRIES_DATA_URL =
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_points_country_attributes_Oct_2025/FeatureServer';
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_points_country_attributes_Oct_2025_2/FeatureServer';
 
 const EEZ_MARINE_BORDERS_URL =
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Country_boundaries_with_EEZ/FeatureServer';
