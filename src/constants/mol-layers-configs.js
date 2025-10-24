@@ -216,7 +216,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER],
     bbox: null,
-    portalId: '5e59f968feaf4efe8846869931b3b49c',
+    portalId: '64b3ce120cfc4b0e984324ffe1fc75e3',
   },
   [HALF_EARTH_FUTURE_TILE_LAYER]: {
     title: HALF_EARTH_FUTURE_TILE_LAYER,
@@ -224,7 +224,6 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[HALF_EARTH_FUTURE_TILE_LAYER],
     bbox: null,
-    portalId: '64b3ce120cfc4b0e984324ffe1fc75e3',
   },
   [GLOBAL_SPI_FEATURE_LAYER]: {
     title: GLOBAL_SPI_FEATURE_LAYER,
