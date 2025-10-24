@@ -485,7 +485,7 @@ export const LAYERS_URLS = {
   [HALF_EARTH_FUTURE_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/64b3ce120cfc4b0e984324ffe1fc75e3/rest/services/places_halfearth_future_precalculated_aoi_summaries_Oct_2025/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_20places_20250602/FeatureServer/0',
+    ' https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_in_places_for_he_future_Oct_2025/FeatureServer/0',
   [SPECIFIC_REGIONS_TILE_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/e34b098b0bc047439e2139c8651673ef/rest/services/specific_regions_precalculated_aoi_summaries_Oct_2025/FeatureServer/0',
   [SPECIFIC_REGIONS_WDPA_LAYER]:
