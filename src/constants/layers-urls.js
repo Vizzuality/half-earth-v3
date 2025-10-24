@@ -129,10 +129,6 @@ import {
   TREES_RICHNESS,
   TREES_RARITY,
   FEATURED_PLACES_PORTAL_ID,
-  TEMP_BIRDS_LOOKUP,
-  TEMP_MAMMALS_LOOKUP,
-  TEMP_REPTILES_LOOKUP,
-  TEMP_AMPHIBIAN_LOOKUP,
 } from 'constants/layers-slugs';
 
 const { VITE_APP_VERCEL_ENV } = import.meta.env;
@@ -448,23 +444,23 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/analyze_areas_aoi_lookup_searchbar_Oct_2025/FeatureServer/0',
   [ELU_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
-  [AMPHIBIAN_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/364481070b8448aa8df07e5324fcecc9/rest/services/amphibians_with_SPS_updated_202503/FeatureServer/0',
-  [BIRDS_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/4c4c7b9a327f48d3955f80a2402198f0/rest/services/birds_with_SPS_updated_202503/FeatureServer/0',
-  [MAMMALS_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/94268703d9b345c6a8c1e5ccd1be0acf/rest/services/mammals_with_SPS_updated_202503/FeatureServer/0',
-  [REPTILES_LOOKUP]:
-    'https://utility.arcgis.com/usrsvcs/servers/502f1d5023014390b9d415fecab92810/rest/services/reptiles_with_SPS_updated_202503/FeatureServer/0',
+  // [AMPHIBIAN_LOOKUP]:
+  //   'https://utility.arcgis.com/usrsvcs/servers/364481070b8448aa8df07e5324fcecc9/rest/services/amphibians_with_SPS_updated_202503/FeatureServer/0',
+  // [BIRDS_LOOKUP]:
+  //   'https://utility.arcgis.com/usrsvcs/servers/4c4c7b9a327f48d3955f80a2402198f0/rest/services/birds_with_SPS_updated_202503/FeatureServer/0',
+  // [MAMMALS_LOOKUP]:
+  //   'https://utility.arcgis.com/usrsvcs/servers/94268703d9b345c6a8c1e5ccd1be0acf/rest/services/mammals_with_SPS_updated_202503/FeatureServer/0',
+  // [REPTILES_LOOKUP]:
+  //   'https://utility.arcgis.com/usrsvcs/servers/502f1d5023014390b9d415fecab92810/rest/services/reptiles_with_SPS_updated_202503/FeatureServer/0',
 
    // Temp AOI lookup table while we migrate to new service
-  [TEMP_AMPHIBIAN_LOOKUP]:
+  [AMPHIBIAN_LOOKUP]:
     'https://utility.arcgis.com/usrsvcs/servers/dc3f05cadc524d4fb9d94d194a7be1bd/rest/services/amphibians_lookup_wattributes_09022025/FeatureServer/0',
-  [TEMP_BIRDS_LOOKUP]:
+  [BIRDS_LOOKUP]:
     'https://utility.arcgis.com/usrsvcs/servers/5fca1afc62ed44c29d7d794de648ab35/rest/services/birds_lookup_wattributes_09022025/FeatureServer/0',
-  [TEMP_MAMMALS_LOOKUP]:
+  [MAMMALS_LOOKUP]:
     'https://utility.arcgis.com/usrsvcs/servers/164e650be5e34ba39eac1401390f149b/rest/services/mammals_lookup_wattributes_09022025/FeatureServer/0',
-  [TEMP_REPTILES_LOOKUP]:
+  [REPTILES_LOOKUP]:
     'https://utility.arcgis.com/usrsvcs/servers/a3214e7f846d45e2a24e343bd1d1e275/rest/services/reptiles_lookup_wattributes_09022025/FeatureServer/0',
 
   // AOIs precalculated layers

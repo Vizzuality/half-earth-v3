@@ -11,7 +11,6 @@ import {
   WDPA_PERCENTAGE,
   POPULATION,
   LOOKUP_TABLES,
-  TEMP_LOOKUP_TABLES,
   ECOLOGICAL_LAND_UNITS,
   CONTEXTUAL_DATA_TABLES,
   LAND_PRESSURES_LABELS_SLUGS,
@@ -165,7 +164,7 @@ export function getCustomAOISpeciesData(crfName, geometry) {
         // old value: url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
         // new value: url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
         EsriFeatureService.getFeatures({
-          url: LAYERS_URLS[TEMP_LOOKUP_TABLES[crfName]],
+          url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
           whereClause: `SliceNumber IN (${ids.toString()})`,
         })
           .then((features) => {
