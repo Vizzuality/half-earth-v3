@@ -194,7 +194,7 @@ export const layersConfig = {
     url: LAYERS_URLS[WDPA_OECM_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: ['adfdb53a755a4916af057be6bb824422', 'cc75600a103b4e39a14c103a62a80091', '4530b1d34e74497ea64938055867115d'],
+    portalId: ['145696cd80634e8fb120e85e344b936a', '52f4499eba6944c7881550ef35a93c67', '903406acc1fb49918b74abdedd804b8f'],
   },
   [SPECIFIC_REGIONS_TILE_LAYER]: {
     title: SPECIFIC_REGIONS_TILE_LAYER,

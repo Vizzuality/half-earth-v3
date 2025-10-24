@@ -476,9 +476,9 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_in_provinces_gadm1_v4_1_Oct_2025/FeatureServer/0',
   // 99%, 90%, 50% WDPA simplifications
   [WDPA_OECM_FEATURE_LAYER]: [
-    'https://utility.arcgis.com/usrsvcs/servers/adfdb53a755a4916af057be6bb824422/rest/services/WDPA_Terrestrial_202501_Simplification50_20250527/FeatureServer/0',
-    'https://utility.arcgis.com/usrsvcs/servers/cc75600a103b4e39a14c103a62a80091/rest/services/WDPA_Terrestrial_202501_Simplification90_20250527/FeatureServer/0',
-    'https://utility.arcgis.com/usrsvcs/servers/4530b1d34e74497ea64938055867115d/rest/services/WDPA_Terrestrial_202501_Simplification99_20250527/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_v0125_terrestrial_simplification50_Oct_2025/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_v0125_terrestrial_simplification90_Oct_2025/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_v0125_terrestrial_simplification99_Oct_2025/FeatureServer/0',
   ],
   [WDPA_OECM_FEATURE_DATA_LAYER]:
     'https://utility.arcgis.com/usrsvcs/servers/374b07c2046b4bd084bd74837c08fb38/rest/services/wdpa_v0125_parks_precalculated_aoi_summaries_Oct_2025/FeatureServer/0',
