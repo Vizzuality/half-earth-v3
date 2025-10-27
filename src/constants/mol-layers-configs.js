@@ -167,7 +167,7 @@ export const layersConfig = {
     url: LAYERS_URLS[ADMIN_AREAS_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: [ '6710f8b62392473d8e06ee9c207ed010', 'ca22a0922f934999a00e092feca4315d'],
+    portalId: [ 'dcd82cc752bf45eea09e454a2aac2763', 'a5e0c4b6c24048948a7095823d277c56'],
   },
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
     title: GADM_0_ADMIN_AREAS_FEATURE_LAYER,
@@ -176,7 +176,7 @@ export const layersConfig = {
     url: LAYERS_URLS[GADM_0_ADMIN_AREAS_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: 'ca22a0922f934999a00e092feca4315d'
+    portalId: 'a5e0c4b6c24048948a7095823d277c56'
   },
   [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: {
     title: GADM_1_ADMIN_AREAS_FEATURE_LAYER,
@@ -185,7 +185,7 @@ export const layersConfig = {
     url: LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: '6710f8b62392473d8e06ee9c207ed010'
+    portalId: 'dcd82cc752bf45eea09e454a2aac2763'
   },
   [WDPA_OECM_FEATURE_LAYER]: {
     title: WDPA_OECM_FEATURE_LAYER,
@@ -194,7 +194,7 @@ export const layersConfig = {
     url: LAYERS_URLS[WDPA_OECM_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: ['adfdb53a755a4916af057be6bb824422', 'cc75600a103b4e39a14c103a62a80091', '4530b1d34e74497ea64938055867115d'],
+    portalId: ['145696cd80634e8fb120e85e344b936a', '52f4499eba6944c7881550ef35a93c67', '903406acc1fb49918b74abdedd804b8f'],
   },
   [SPECIFIC_REGIONS_TILE_LAYER]: {
     title: SPECIFIC_REGIONS_TILE_LAYER,
@@ -216,7 +216,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER],
     bbox: null,
-    portalId: '5e59f968feaf4efe8846869931b3b49c',
+    portalId: '64b3ce120cfc4b0e984324ffe1fc75e3',
   },
   [HALF_EARTH_FUTURE_TILE_LAYER]: {
     title: HALF_EARTH_FUTURE_TILE_LAYER,
@@ -231,7 +231,7 @@ export const layersConfig = {
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[GLOBAL_SPI_FEATURE_LAYER],
     bbox: null,
-    portalId: 'e8683dd4a3c9457aa1f4e9af8ce8fe49',
+    portalId: '7c71497f02f34a6b9fc52f1c600a684e',
   },
   [MARINE_SPI_FEATURE_LAYER]: {
     title: MARINE_SPI_FEATURE_LAYER,

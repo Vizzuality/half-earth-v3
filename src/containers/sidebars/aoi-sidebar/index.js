@@ -121,10 +121,21 @@ function AoiSidebarContainer(props) {
       setSentenceData(data);
     }
   }, [speciesData]);
+
   const handleClose = () => {
+    let fromAnalyze = false;
+    const noAllTaxaPriorityLayer = !activeLayers.find((l) =>
+      l.title === 'all-taxa-priority'
+    );
+
+    if(noAllTaxaPriorityLayer){
+      fromAnalyze = true;
+    }
+
     browsePage({
       type: DATA,
       query: {
+        fromAnalyze: fromAnalyze || undefined,
         centerOn: {
           coords: [
             geometry && view.center.longitude,
@@ -155,6 +166,7 @@ function AoiSidebarContainer(props) {
       isShareModalOpen={isShareModalOpen}
       setShareModalOpen={setShareModalOpen}
       sentenceData={sentenceData}
+      values={values}
       {...props}
     />
   );

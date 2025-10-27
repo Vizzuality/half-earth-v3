@@ -191,12 +191,12 @@ function SpeciesCardContainer(props) {
         case 'all':
           return {
             slug: filter.slug,
-            label: `${filter.label} (${allSpeciesCount})`,
+            label: `${filter.label} (${allSpeciesCount ?? 0})`,
           };
         default: {
           return {
             slug: filter.slug,
-            label: `${filter.label} (${taxaSpeciesCount})`,
+            label: `${filter.label} (${taxaSpeciesCount ?? 0})`,
           };
         }
       }
@@ -218,8 +218,8 @@ function SpeciesCardContainer(props) {
           ...item,
           rounded_global: Math.round(item.per_global / 5) * 5
         })),
-        ['rounded_global', 'SPS_global', 'has_image'],
-        ['desc', 'asc', 'desc']
+        ['rounded_global', 'has_image', 'SPS_global'],
+        ['desc', 'desc', 'asc']
       );
 
     const removeFalcoPeregrinus = (s) =>
@@ -244,7 +244,6 @@ function SpeciesCardContainer(props) {
       // TODO: Remove the filter above once data is fixed
 
     if (speciesSorted) {
-      console.log('sorted species', speciesSorted);
         setSpeciesToDisplay(speciesSorted);
         setSpeciesToDisplayBackUp([...speciesSorted]);
     }
@@ -252,18 +251,21 @@ function SpeciesCardContainer(props) {
 
   useEffect(() => {
 
-    const urlSelectedSpecies = speciesToDisplay.find(
-      (s) => s.id === urlSelectedSpeciesId
-    );
+    const index = speciesToDisplay.findIndex((s) => s.id === urlSelectedSpeciesId);
+    const urlSelectedSpeciesIndex = (index === -1) ? 0 : index;
+    const urlSelectedSpecies = speciesToDisplay[urlSelectedSpeciesIndex];
     // Don't select a species if we have one in the URL and until is loaded
     if (!urlSelectedSpeciesId || urlSelectedSpecies) {
+      setSelectedSpeciesIndex(urlSelectedSpeciesIndex);
       setSelectedSpecies(urlSelectedSpecies || speciesToDisplay[selectedSpeciesIndex]);
+    } else {
+      setSelectedSpeciesIndex(0);
+      setSelectedSpecies(speciesToDisplay[0]);
     }
   }, [speciesToDisplay, selectedSpeciesIndex, urlSelectedSpeciesId]);
 
   useEffect(() => {
     setSelectedSpeciesIndex(0);
-    setSelectedSpecies(species[0]);
   }, [selectedSpeciesFilter?.slug]);
 
   // Get individual species info and image for slider
@@ -341,7 +343,7 @@ function SpeciesCardContainer(props) {
           );
           const SPS_AOI =
             individualSPSData.SPS_aoi ||
-            (individualSPSData.SPS_aoi === 0 ? 0 : individualSPSData.SPS_AOI);
+            ((individualSPSData.SPS_aoi === 0 || individualSPSData.SPS_AOI === undefined) ? 0 : individualSPSData.SPS_AOI);
 
           setIndividualSpeciesData({
             ...selectedSpecies,

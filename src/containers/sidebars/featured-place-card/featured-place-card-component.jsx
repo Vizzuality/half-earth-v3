@@ -15,6 +15,34 @@ import ChevronIcon from 'icons/arrow_right.svg?react';
 
 import styles from './featured-place-card-styles.module';
 
+function FeaturePlaceLinks({ slug, hepmLinks, t }) {
+  if(slug === 'eoWilson'){
+    return (
+        <a
+          key={hepmLinks[0].id}
+          href={hepmLinks[0].link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.link}
+        >
+          {t(`Preserve`)}
+      </a>
+    );
+  }
+  return hepmLinks.map((link, index) => (
+    <a
+      key={link.id}
+      href={link.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.link}
+    >
+      {index === 0 && t(`Priority Place #${link.id}`)}
+      {index > 0 && t(`, #${link.id}`)}
+    </a>
+  ));
+}
+
 function FeaturedPlaceCardComponent({
   selectedFeaturedPlace,
   selectedFeaturedMap,
@@ -112,7 +140,8 @@ function FeaturedPlaceCardComponent({
 
                 {featuredPlace.hepmLink?.links?.length > 0 && (
                   <div className={styles.hepmLinks}>
-                    {featuredPlace.hepmLink.links.map((link, index) => (<a
+                    <FeaturePlaceLinks slug={featuredPlace.slug} hepmLinks={featuredPlace.hepmLink.links} t={t} />
+                    {/* {featuredPlace.hepmLink.links.map((link, index) => (<a
                       key={link.id}
                       href={link.link}
                       target="_blank"
@@ -121,7 +150,7 @@ function FeaturedPlaceCardComponent({
                     >
                       {index === 0 && t(`Priority Place #${link.id}`)}
                       {index > 0 && t(`, #${link.id}`)}
-                    </a>))}
+                    </a>))} */}
                   </div>
                 )}
                 <div className={styles.description}>

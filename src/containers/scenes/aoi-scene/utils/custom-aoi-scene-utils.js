@@ -65,13 +65,13 @@ const createNewCustomAOI = ({
   promises.forEach((promise, i) => {
     promise.then((data) => {
       const taxaName = taxas[i].split('_')[0];
-      setTaxaData(
+      setTaxaData(data
         // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
-        taxaName === MAMMALS
-          ? data.filter(
-              (sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955
-            )
-          : data
+        // taxaName === MAMMALS
+        //   ? data.filter(
+        //       (sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955
+        //     )
+        //   : data
       );
 
       handleLoadedTaxaData(taxaName);

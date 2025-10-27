@@ -57,6 +57,7 @@ export const setFeaturedMapPlaces = createThunkAction(
               link: place.link,
               hepmLink: place.hepmLink,
               dateTime: place.dateTime,
+              slug: place.slug,
             },
           };
         }, {});

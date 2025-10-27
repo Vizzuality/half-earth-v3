@@ -63,7 +63,7 @@ function SpeciesModalContainer(props) {
         setLoaded(false);
         setSpeciesList([]);
         const query = await layer.createQuery();
-        query.where = `iso3 = '${state.location.payload.iso}'`;
+        query.where = `GID_0 = '${state.location.payload.iso}'`;
         query.maxRecordCountFactor = '10000';
         const results = await layer.queryFeatures(query);
         const { features } = results;

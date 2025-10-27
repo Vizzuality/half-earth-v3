@@ -73,6 +73,7 @@ function AOISidebar({
   contextualData,
   shareAoiAnalytics,
   handleClose,
+  values,
   sidebarTabActive,
   setSidebarTabActive,
   isShareModalOpen,
@@ -114,6 +115,7 @@ function AOISidebar({
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const isCustomArea = contextualData?.isCustom;
 
@@ -150,9 +152,16 @@ function AOISidebar({
     countryNamesTranslations[contextualData.areaName] ||
     contextualData.areaName;
 
+    useEffect(() => {
+      if(values){
+        setLoading(false);
+      }
+    }, [values])
+
+
   return (
     <>
-    {!population && <div style={{position: 'absolute', left: '50%', top: 0}}><Loading height={200} /></div>}
+    {loading && <div style={{position: 'absolute', left: '50%', top: 0}}><Loading height={200} /></div>}
     <div className={styles.sidebarContainer}>
       <TabsSidebar
         activeLayers={activeLayers}

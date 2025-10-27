@@ -159,8 +159,8 @@ function AOIScene(props) {
       taxaData &&
       orderBy(
         [...speciesData.species, ...taxaData],
-        ['per_global', 'SPS_global', 'has_image'],
-        ['desc', 'asc', 'desc']
+        ['per_global', 'has_image', 'SPS_global'],
+        ['desc', 'desc', 'asc' ]
       );
     setSpeciesData({ species: orderedSpecies });
   }, [taxaData]);
