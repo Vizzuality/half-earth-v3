@@ -1,6 +1,6 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .box {
   @include backdropBlur();
@@ -13,16 +13,17 @@
   transition: none;
   cursor: pointer;
 
-  @media #{$tablet-portrait} {
-    width: $sidebar-width;
+  @media #{settings.$tablet-portrait} {
+    width: settings.$sidebar-width;
     transition: all 0.2s ease-out;
 
     &:hover {
       .icon {
         opacity: 1;
       }
+
       .category {
-        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
       }
     }
   }
@@ -35,17 +36,18 @@
 .counter {
   @extend %subtitle;
   position: absolute;
-  top: calc(50% - #{calc($counter-size/2)});
-  right: calc(-#{calc($counter-size/2)});
+  top: calc(50% - #{calc(settings.$counter-size/2)});
+  right: calc(-#{calc(settings.$counter-size/2)});
   display: flex;
   justify-content: center;
   align-items: center;
-  height: $counter-size;
-  width: $counter-size;
-  color: $dark-text;
-  background-color: $brand-color-main;
-  font-weight: $font-weight-bold;
-  border-radius: $counter-size;
+  height: settings.$counter-size;
+  width: settings.$counter-size;
+  color: settings.$dark-text;
+  background-color: settings.$brand-color-main;
+  font-weight: settings.$font-weight-bold;
+  border-radius: settings.$counter-size;
+
   &.openBox {
     display: none;
   }
@@ -56,18 +58,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $sidebar-paddings;
+  padding: settings.$sidebar-paddings;
 }
 
 .category {
   @extend %display2;
   margin: 0;
-  color: $white;
+  color: settings.$white;
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     font-size: 32px;
     overflow: visible;
   }
@@ -87,5 +89,5 @@
 .categoryThumbnail {
   height: 90px;
   width: 90px;
-  margin-right: $sidebar-paddings;
+  margin-right: settings.$sidebar-paddings;
 }

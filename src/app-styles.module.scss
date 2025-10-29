@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 @media print {
   .app {
@@ -9,9 +9,9 @@
 .app {
   width: 100vw;
   height: 100vh;
-  background-color: $app-background;
+  background-color: settings.$app-background;
 
-  @media #{$mobile-only} {
+  @media #{settings.$mobile-only} {
     height: 100svh;
   }
 }

@@ -1,26 +1,32 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
   @extend %bodyText;
-  font-size: $font-size-xxs;
+  font-size: settings.$font-size-xxs;
 
   .SPIcontainer {
-    background: $white;
-    color: $dark-text;
+    background: settings.$white;
+    color: settings.$dark-text;
     display: inline-block;
     height: 22px;
     margin: 0;
     padding: 0 5px;
-    p { margin: 0; }
+
+    p {
+      margin: 0;
+    }
   }
 
   .protectedAreasContainer {
-    background: $dark-text;
-    color: $white;
+    background: settings.$dark-text;
+    color: settings.$white;
     height: 22px;
     margin: 0;
     padding: 0 5px;
-    p { margin: 0; }
+
+    p {
+      margin: 0;
+    }
   }
 }

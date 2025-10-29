@@ -56,6 +56,14 @@ function moduleScssResolver() {
 
 export default defineConfig({
   base: '/',
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Use the modern embedded compiler API to avoid legacy-js-api warnings
+        api: 'modern-compiler',
+      },
+    },
+  },
   plugins: [
     {
       name: 'treat-js-files-as-jsx',

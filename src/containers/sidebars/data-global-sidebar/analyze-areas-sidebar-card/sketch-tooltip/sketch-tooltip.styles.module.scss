@@ -1,16 +1,16 @@
-@import 'styles/settings';
-@import 'styles/typography-extends.scss';
-@import 'styles/shared-sidebar.module';
-@import 'styles/mixins';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/shared-sidebar.module' as *;
+@use 'styles/mixins' as mixins;
 
 .sketchTooltip {
   @extend %bodyText;
-  font-size: $font-size-xs;
+  font-size: settings.$font-size-xs;
   position: absolute;
-  background-color: $white;
+  background-color: settings.$white;
   line-height: normal;
   border-radius: 2px;
-  z-index: $send-to-back;
+  z-index: settings.$send-to-back;
   padding: 2px 10px;
   text-align: center;
   pointer-events: none;
@@ -19,6 +19,6 @@
     position: absolute;
     bottom: -20px;
     left: 35px;
-    @include caret($white, 'up');
+    @include mixins.caret(settings.$white, 'up');
   }
 }

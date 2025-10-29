@@ -1,13 +1,13 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/ui.module';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/ui.module' as *;
 
 $circle-size: 15px;
 
 .radioInput {
   @extend %bodyText;
   position: relative;
-  padding-left: calc(#{$circle-size} + 10px );
+  padding-left: calc(#{$circle-size} + 10px);
   display: flex;
   align-items: center;
   text-transform: capitalize;
@@ -21,7 +21,7 @@ $circle-size: 15px;
     width: $circle-size;
     position: absolute;
     left: 0;
-    border: 1px solid $white;
+    border: 1px solid settings.$white;
     border-radius: 50%;
   }
 

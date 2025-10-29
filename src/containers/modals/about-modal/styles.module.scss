@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .modal {
   width: 95% !important;
@@ -21,6 +21,7 @@
 .closeBtn {
   background-color: transparent;
   border: none;
+
   svg {
     height: 20px;
     width: 20px;
@@ -32,7 +33,7 @@
 }
 
 .modalContainer {
-  background-color: $brand-color-secondary;
+  background-color: settings.$brand-color-secondary;
   display: flex;
   padding: 24px;
   width: 100%;
@@ -53,21 +54,21 @@
       margin-bottom: 50px;
       width: 100%;
 
-      @media #{$tablet-portrait} {
+      @media #{settings.$tablet-portrait} {
         width: 760px;
       }
     }
 
     .title {
       @extend %display2;
-      color: $white;
+      color: settings.$white;
       margin: 0;
       margin-bottom: 34px;
       text-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
       padding: 0 20px;
       text-align: center;
 
-      @media #{$tablet-portrait} {
+      @media #{settings.$tablet-portrait} {
         font-size: 24px;
         padding: 0;
         text-align: left;
@@ -81,35 +82,35 @@
       flex-wrap: wrap;
       width: 100%;
 
-      & > * {
+      &>* {
         @extend %title;
-        color: $logos-text;
+        color: settings.$logos-text;
         align-items: center;
-        font-size: $font-size-sm;
+        font-size: settings.$font-size-sm;
         justify-content: center;
         display: flex;
         margin-bottom: 20px;
         width: 25%;
       }
 
-      @media #{$tablet-portrait} {
+      @media #{settings.$tablet-portrait} {
         flex-direction: row;
       }
     }
 
     .description {
       @extend %bodyText;
-      color: $white;
+      color: settings.$white;
       text-align: center;
       padding: 20px;
       margin: 14px 0;
 
       a {
-        color: $brand-color-main;
+        color: settings.$brand-color-main;
         text-decoration: none;
       }
 
-      @media #{$tablet-portrait} {
+      @media #{settings.$tablet-portrait} {
         padding: 0;
       }
     }
@@ -118,10 +119,11 @@
       .description {
         width: auto;
 
-        @media #{$tablet-portrait} {
+        @media #{settings.$tablet-portrait} {
           width: 500px;
         }
       }
+
       .logosWrapper {
         justify-content: space-between;
         width: 65%;

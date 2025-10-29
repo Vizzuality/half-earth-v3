@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .iconBackground {
   display: flex;
@@ -8,7 +8,7 @@
   width: 30px;
   padding: 0;
   margin-right: 15px;
-  background-color: $white-opacity;
+  background-color: settings.$white-opacity;
   border-radius: 50%;
 }
 

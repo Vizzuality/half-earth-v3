@@ -1,8 +1,11 @@
-.esri-ui {
-  z-index: $default-z-index;
+@use 'styles/settings' as settings;
 
-  @media #{$mobile-landscape} {
+.esri-ui {
+  // Ensure ArcGIS UI (including popups) renders above app chrome
+  z-index: settings.$over-front;
+
+  @media #{settings.$mobile-landscape} {
     top: 0 !important;
-    z-index: $over-front;
+    z-index: settings.$over-front;
   }
 }

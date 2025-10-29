@@ -1,22 +1,24 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: $sidebar-paddings;
+  padding: settings.$sidebar-paddings;
+
   > :not(:last-child)::after {
     content: '';
     position: relative;
-    bottom: -$sidebar-paddings;
+    bottom: calc(-1 * #{settings.$sidebar-paddings});
     display: block;
     margin: 0 auto;
-    border-bottom: 1px dotted $_temporary-dark-text;
+    // Replaced private $_temporary-dark-text with public token
+    border-bottom: 1px dotted settings.$grey-text;
   }
 }
 
 .section {
-  background-color: $white;
-  border-radius: $card-border-radius;
-  padding: $sidebar-paddings;
+  background-color: settings.$white;
+  border-radius: settings.$card-border-radius;
+  padding: settings.$sidebar-paddings;
 }

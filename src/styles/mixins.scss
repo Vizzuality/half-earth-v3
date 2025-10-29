@@ -1,3 +1,7 @@
+@use 'styles/settings' as settings;
+
+// Generic caret mixin. Example: @include caret(settings.$white, 'up', 6px);
+// Parameters are plain values; pass settings tokens at call site.
 @mixin caret($color, $direction, $size: 5px) {
   &::after {
     content: '';
@@ -7,15 +11,17 @@
     border-left: $size solid transparent;
     border-right: $size solid transparent;
 
-    @if ($direction == 'up') {
+    @if ($direction =='up') {
       border-top: $size solid $color;
       border-bottom: none;
     }
-    @if ($direction == 'down') {
+
+    @if ($direction =='down') {
       border-bottom: $size solid $color;
       border-top: none;
     }
-    @if ($direction == 'right') {
+
+    @if ($direction =='right') {
       border-right: none;
       border-left: $size solid $color;
       border-top: $size solid transparent;

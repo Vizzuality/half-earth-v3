@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/ui.module';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/ui.module' as *;
 
 .radioOption {
   @extend %subtitle;
@@ -15,9 +15,10 @@
 }
 
 .container {
+
   &:hover,
   &.checked {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
 }
 
@@ -47,7 +48,7 @@
 }
 
 .resolutionIntro {
-  color: $grey-text;
+  color: settings.$grey-text;
 }
 
 .checkboxes {

@@ -57,6 +57,7 @@ function CountryEntryTooltipComponent({
   } = tooltipContent;
 
   useEffect(() => {
+    if (!view) return;
     if (tooltipPosition && mapTooltipIsVisible) {
       view.openPopup({
         location: tooltipPosition,
@@ -81,7 +82,7 @@ function CountryEntryTooltipComponent({
     } else {
       view.closePopup();
     }
-  }, [tooltipPosition, mapTooltipIsVisible]);
+  }, [tooltipPosition, mapTooltipIsVisible, view]);
 
   const { overlay: onboardingOverlay } = getOnboardingProps({
     section: 'exploreNRC',

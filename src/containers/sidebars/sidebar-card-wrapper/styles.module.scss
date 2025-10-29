@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .wrapper {
   position: relative;
@@ -8,8 +8,8 @@
     right: 10px;
     top: 10px;
     padding: 0;
-    fill: $dark-text;
-    z-index: $bring-to-front;
+    fill: settings.$dark-text;
+    z-index: settings.$bring-to-front;
   }
 
   &.closed {
@@ -23,29 +23,29 @@
   flex-direction: column;
   width: 100%;
   min-height: inherit;
-  border-radius: $card-border-radius;
-  color: $dark-text;
+  border-radius: settings.$card-border-radius;
+  color: settings.$dark-text;
 
   > :not(:last-child)::after {
     content: '';
     position: relative;
-    bottom: -$sidebar-cards-padding;
+    bottom: calc(-1 * #{settings.$sidebar-cards-padding});
     display: block;
     margin: 0 auto;
-    border-bottom: 1px dotted $dark-text;
+    border-bottom: 1px dotted settings.$dark-text;
   }
 
   .section {
-    padding: $sidebar-cards-padding;
-    border-radius: $card-border-radius;
-    background-color: $white;
+    padding: settings.$sidebar-cards-padding;
+    border-radius: settings.$card-border-radius;
+    background-color: settings.$white;
   }
 }
 
 .dark {
-  color: $dark-text;
+  color: settings.$dark-text;
 
   .section {
-    background-color: $grey-text;
+    background-color: settings.$grey-text;
   }
 }

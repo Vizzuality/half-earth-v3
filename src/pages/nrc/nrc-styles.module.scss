@@ -1,7 +1,7 @@
-@import 'styles/settings';
-@import 'styles/common-animations.module';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/common-animations.module' as *;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .background {
   width: 100%;
@@ -17,8 +17,8 @@
 .sidebarContainer {
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
-  top: $ui-left-top;
-  left: $site-gutter;
+  top: settings.$ui-left-top;
+  left: settings.$site-gutter;
 }
 
 .modeSwitch {
@@ -45,8 +45,8 @@
   flex: 1;
   min-width: 300px;
   margin: 56px 40px 0 0;
-  background-color: rgba($navy-he, 0.8);
-  border: 1px solid $navy-he;
+  background-color: rgba(settings.$navy-he, 0.8);
+  border: 1px solid settings.$navy-he;
   height: 88vh;
   border-radius: 6px;
 }
@@ -59,8 +59,8 @@
 
 .switchDataButton {
   @extend %subtitle;
-  border: 1px solid $white;
-  color: $white;
+  border: 1px solid settings.$white;
+  color: settings.$white;
   padding: 4px 8px;
   text-transform: capitalize;
   width: auto;
@@ -81,8 +81,9 @@
 
 .switchDataActiveButton {
   @extend %subtitle;
-  background-color: $white;
-  color: $_temporary-dark-text;
+  background-color: settings.$white;
+  // Replaced private $_temporary-dark-text with public token
+  color: settings.$dark-text;
 }
 
 .fullRankingButtonContainer {
@@ -95,21 +96,21 @@
     height: fit-content;
     display: flex;
     flex-direction: column;
-    background-color: $black;
-    color: $brand-color-main;
+    background-color: settings.$black;
+    color: settings.$brand-color-main;
     padding-bottom: 8px;
     border-radius: 0 6px 6px 0;
 
     span {
       letter-spacing: 0.2em;
       writing-mode: vertical-rl;
-      font-size: $font-size-xxs;
+      font-size: settings.$font-size-xxs;
     }
   }
 
   &.fullRanking {
     .fullRankingButton {
-      background-color: rgba($navy-he, 0.8);
+      background-color: rgba(settings.$navy-he, 0.8);
       transform: rotate(180deg);
       padding-bottom: 0;
     }
@@ -121,8 +122,8 @@
   width: 300px;
   margin-top: 92px;
   margin-bottom: 36px;
-  margin-left: $site-gutter;
-  border: 1px solid $navy-he;
+  margin-left: settings.$site-gutter;
+  border: 1px solid settings.$navy-he;
   height: calc(100vh - 92px - 36px);
   overflow: hidden;
 }

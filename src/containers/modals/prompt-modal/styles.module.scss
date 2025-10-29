@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 $max-width: 520px;
 $area-title-width: 230px;
@@ -11,7 +11,7 @@ $area-title-width: 230px;
   height: auto !important;
   max-height: 100vh !important;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     max-width: $max-width !important;
     width: $max-width !important;
     max-height: 400px !important;
@@ -26,9 +26,10 @@ $area-title-width: 230px;
   @extend %verticalScrollbar;
   display: flex;
   flex-direction: row;
-  padding: $site-gutter;
-  background-color: $brand-color-secondary;
-  @media #{$tablet-landscape} {
+  padding: settings.$site-gutter;
+  background-color: settings.$brand-color-secondary;
+
+  @media #{settings.$tablet-landscape} {
     max-width: $max-width;
     width: $max-width;
   }
@@ -46,7 +47,7 @@ $area-title-width: 230px;
 
 .description {
   @extend %bodyText;
-  color: $grey-text;
+  color: settings.$grey-text;
   margin: 0;
 }
 
@@ -56,12 +57,12 @@ $area-title-width: 230px;
   align-items: center;
   min-width: 40px;
   height: 40px;
-  margin-right: $site-gutter;
+  margin-right: settings.$site-gutter;
   border-radius: 100%;
-  background-color: $white;
+  background-color: settings.$white;
 
   .icon {
-    stroke: $warning;
-    fill: $warning;
+    stroke: settings.$warning;
+    fill: settings.$warning;
   }
 }

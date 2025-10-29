@@ -1,21 +1,21 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .vertebratesContainer {
-  background: $dark;
-  border: 1px solid $elephant;
+  background: settings.$dark;
+  border: 1px solid settings.$elephant;
   border-radius: 8px;
-  color: $white;
+  color: settings.$white;
   display: flex;
   justify-content: space-between;
   margin: 8px 16px 8px 0;
   padding: 10px 16px;
 
-  @media #{$tablet-only} {
+  @media #{settings.$tablet-only} {
     flex-direction: column;
   }
 
-  @media #{$mobile-landscape} {
+  @media #{settings.$mobile-landscape} {
     flex-direction: row;
   }
 
@@ -27,7 +27,7 @@
     width: 100%;
 
 
-    @media #{$tablet-only} {
+    @media #{settings.$tablet-only} {
       grid-template-columns: 1fr 1fr;
       row-gap: 10px;
     }
@@ -39,24 +39,25 @@
     }
 
     .endemicIcon {
-      background-color: $white;
+      background-color: settings.$white;
       border-radius: 50%;
       padding: 1px;
       width: 32px;
       margin-right: 8px;
     }
   }
+
   p {
     margin: 0;
   }
 
   button {
-    border-radius: $border-radius-desktop;
+    border-radius: settings.$border-radius-desktop;
     margin-left: 20px;
     padding: 10px 32px;
     white-space: nowrap;
 
-    @media #{$tablet-only} {
+    @media #{settings.$tablet-only} {
       margin: 10px 0 0 0;
       align-self: center;
     }
@@ -75,7 +76,7 @@
         margin-right: 5px;
       }
 
-      @media #{$tablet-only} {
+      @media #{settings.$tablet-only} {
         grid-template-columns: 1fr;
         grid-gap: 10px;
         margin-bottom: 0;
@@ -97,7 +98,7 @@
       grid-template-columns: 1fr;
       grid-gap: 10px;
 
-      @media #{$mobile-landscape} {
+      @media #{settings.$mobile-landscape} {
         flex-direction: row;
       }
     }
@@ -110,10 +111,10 @@
 
 .titleTooltip {
   @extend %annotation;
-  border-radius: $border-radius-desktop;
-  background: $white;
-  box-shadow: $box-shadow-light;
-  color: $dark-text;
+  border-radius: settings.$border-radius-desktop;
+  background: settings.$white;
+  box-shadow: settings.$box-shadow-light;
+  color: settings.$dark-text;
   margin-bottom: 5px;
   padding: 2px 6px;
   width: 200px;
@@ -126,7 +127,7 @@
   width: 100%;
   height: 50px;
   z-index: 9;
-  background-image: linear-gradient(to top, $app-background 0%, rgba(9, 12, 20, 0) 100%);
+  background-image: linear-gradient(to top, settings.$app-background 0%, rgba(9, 12, 20, 0) 100%);
 }
 
 .vertebratesButton {

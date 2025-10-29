@@ -1,14 +1,14 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .cardWrapper {
-  margin-top: $site-gutter;
+  margin-top: settings.$site-gutter;
 }
 
 .togglesContainer {
-  fill: $dark-text;
-  width: calc(100% + (2*#{$sidebar-cards-padding}));
-  left: -$sidebar-cards-padding;
+  fill: settings.$dark-text;
+  width: calc(100% + (2*#{settings.$sidebar-cards-padding}));
+  left: calc(-1 * #{settings.$sidebar-cards-padding});
   position: relative;
 }
 
@@ -16,7 +16,7 @@
   @extend %display2;
   text-align: center;
   margin: 0;
-  padding-bottom: $site-gutter;
+  padding-bottom: settings.$site-gutter;
   letter-spacing: 0.8px;
 }
 
@@ -32,13 +32,13 @@
 
 .fullwidthButton {
   width: 100%;
-  color: $light-text;
-  background-color: $brand-color-secondary;
+  color: settings.$light-text;
+  background-color: settings.$brand-color-secondary;
   padding: 10px;
   margin-top: 10px;
 
   &:hover {
-    background-color: $firefly;
+    background-color: settings.$firefly;
   }
 }
 
@@ -53,22 +53,24 @@
 
 .warningWrapper {
   display: flex;
+
   .warning {
-    min-width: $site-gutter;
-    margin-right: $paragraph-gutter;
-    fill: $warning;
+    min-width: settings.$site-gutter;
+    margin-right: settings.$paragraph-gutter;
+    fill: settings.$warning;
   }
 }
 
 .hpLegendTitle {
   @extend %bodyText;
-  color: $dark-text;
+  color: settings.$dark-text;
   text-transform: uppercase;
   margin: 0px 0 8px 0;
 }
 
 .protectedAreaChartContainer {
   margin-top: 4px;
+
   .protectedAreaChartLegend {
     @extend %bodyText;
     text-align: center;
@@ -91,9 +93,9 @@
 
       .title {
         @extend %bodyText;
-        color: $oslo-gray;
+        color: settings.$oslo-gray;
         font-size: 12px;
-        font-weight: $font-weight;
+        font-weight: settings.$font-weight;
         margin: 0 9px 0 0;
         padding: 0;
       }
@@ -111,10 +113,10 @@
 
 .tooltip {
   @extend %annotation;
-  background-color: $white;
-  border-radius: $border-radius-desktop;
-  box-shadow: $box-shadow-light-bottom-large;
-  color: $dark-text;
+  background-color: settings.$white;
+  border-radius: settings.$border-radius-desktop;
+  box-shadow: settings.$box-shadow-light-bottom-large;
+  color: settings.$dark-text;
   padding: 2px 6px;
   margin-bottom: 5px;
 }

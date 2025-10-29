@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 $spacer-edge-opacity: 0;
 $spacer-middle-opacity: 0.6;
@@ -11,22 +11,22 @@ $featureMapsHeight: 750px;
 
 .halfEarthLogoTopLeft {
   position: absolute;
-  height: $he-project-logo-size;
-  top: $layout-top-margin;
-  left: calc($site-gutter + 8px);
-  z-index: $bring-to-front;
+  height: settings.$he-project-logo-size;
+  top: settings.$layout-top-margin;
+  left: calc(settings.$site-gutter + 8px);
+  z-index: settings.$bring-to-front;
 }
 
 .uiTopLeft {
   position: absolute;
-  top:  $ui-left-top;
-  left: $site-gutter;
+  top:  settings.$ui-left-top;
+  left: settings.$site-gutter;
 }
 
 .uiBottomLeft {
   position: absolute;
-  bottom: $menuFooterHeight;
-  left: $site-gutter;
+  bottom: $menuFooterHeight; // local variable
+  left: settings.$site-gutter;
 }
 .uiBottom {
   position: absolute;
@@ -36,8 +36,8 @@ $featureMapsHeight: 750px;
 
 @mixin topLeft() {
   position: absolute;
-  top:  $ui-left-top;
-  left: $site-gutter;
+  top:  settings.$ui-left-top;
+  left: settings.$site-gutter;
 }
 
 @mixin bottom() {
@@ -51,19 +51,19 @@ $featureMapsHeight: 750px;
   right: 0;
 }
 
-@mixin backdropBlur($colour: rgba(9, 20, 26, 0.4), $fallback: $space-background, $fallbackOpacity: 0.7) {
+@mixin backdropBlur($colour: rgba(9, 20, 26, 0.4), $fallback: settings.$space-background, $fallbackOpacity: 0.7) {
   background-color: rgba($fallback, $fallbackOpacity);
 
-  @supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
+  @supports ((-webkit-backdrop-filter: blur(settings.$blur-level)) or (backdrop-filter: blur(settings.$blur-level))) {
       background-color: $colour;
-      -webkit-backdrop-filter: blur($blur-level);
-      backdrop-filter: blur($blur-level);
+      -webkit-backdrop-filter: blur(settings.$blur-level);
+      backdrop-filter: blur(settings.$blur-level);
   }
 }
 
 %spacer {
   height: 1px;
-  background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
+  background-image: linear-gradient(to right, rgba(settings.$alto, $spacer-edge-opacity), rgba(settings.$white, $spacer-middle-opacity), rgba(settings.$alto, $spacer-edge-opacity))
 }
 
 
@@ -73,12 +73,12 @@ $featureMapsHeight: 750px;
 
   &::-webkit-scrollbar {
     width: $scrollbar-width;
-    background-color: rgba($wild-sand, 0.2);
+    background-color: rgba(settings.$wild-sand, 0.2);
   }
 
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
-    background-color: $alto;
+    background-color: settings.$alto;
   }
 }
 
@@ -101,12 +101,12 @@ $featureMapsHeight: 750px;
 }
 
 .blur {
-  filter: blur($bottom-menu-blur);
+  filter: blur(settings.$bottom-menu-blur);
 }
 
 .blurScene {
   canvas {
-    filter: blur($bottom-menu-blur);
+    filter: blur(settings.$bottom-menu-blur);
   }
 }
 

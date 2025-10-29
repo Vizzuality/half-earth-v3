@@ -1,65 +1,65 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .land-human-pressures {
   input:checked+label::after {
-    background: $human-pressures-gradient;
+    background: settings.$human-pressures-gradient;
   }
 
   input:checked+label::before {
-    background: $brand-color-secondary;
+    background: settings.$brand-color-secondary;
   }
 }
 
 .marine-human-pressures {
   input:checked+label::after {
-    background: $marine-pressures-gradient;
+    background: settings.$marine-pressures-gradient;
   }
 
   input:checked+label::before {
-    background: $brand-color-secondary;
+    background: settings.$brand-color-secondary;
   }
 }
 
 .protected-areas {
   input:checked+label::after {
-    background: $protected-areas;
+    background: settings.$protected-areas;
   }
 }
 
 .biodiversity {
   input:checked+label::after {
-    background: $biodiversity-gradient-rotated;
+    background: settings.$biodiversity-gradient-rotated;
   }
 
   input:checked+label::before {
-    background: $brand-color-secondary;
+    background: settings.$brand-color-secondary;
   }
 }
 
 .additional-protection {
   input:checked+label::after {
-    background: $biodiversity-gradient-rotated;
+    background: settings.$biodiversity-gradient-rotated;
   }
 
   input:checked+label::before {
-    background: $brand-color-secondary;
+    background: settings.$brand-color-secondary;
   }
 }
 
 
 .future-places {
   input:checked+label::after {
-    background: $future-places;
+    background: settings.$future-places;
   }
 }
 
 .carbon-layer-land {
   input:checked+label::after {
-    background: $carbon-layer-gradient;
+    background: settings.$carbon-layer-gradient;
   }
 
   input:checked+label::before {
-    background: $carbon-layer;
+    background: settings.$carbon-layer;
   }
 
 }
@@ -67,11 +67,11 @@
 
 .nrc-landing-layers {
   input:checked+label::after {
-    background: $spi-gradient;
+    background: settings.$spi-gradient;
   }
 
   input:checked+label::before {
-    background: $brand-color-secondary;
+    background: settings.$brand-color-secondary;
   }
 
 }

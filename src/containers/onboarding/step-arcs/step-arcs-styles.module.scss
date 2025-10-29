@@ -1,23 +1,23 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .stepsCircle {
   position: absolute;
   top: -4px;
   left: -4px;
-  z-index: $default-z-index;
+  z-index: settings.$default-z-index;
 
   .stepsArc {
     cursor: pointer;
-    stroke: $dark-text;
+    stroke: settings.$dark-text;
 
     &:hover {
       stroke-width: 6px;
     }
 
     &.active {
-      stroke: $brand-color-main;
+      stroke: settings.$brand-color-main;
     }
   }
 }

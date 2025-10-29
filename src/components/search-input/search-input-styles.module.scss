@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .searchInputContainer {
   display: flex;
@@ -12,11 +12,11 @@
     border: none;
     margin-left: 25px;
     background-color: transparent;
-    color: $white;
+    color: settings.$white;
   }
 
   .searchIcon {
-    color: $white;
+    color: settings.$white;
     fill: currentColor;
     height: 14px;
     min-width: 14px;

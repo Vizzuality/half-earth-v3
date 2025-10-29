@@ -12,7 +12,7 @@
     "@tippyjs/react": "^4.2.5",
     "@transifex/native": "^4.1.0",
     "@transifex/react": "^4.1.0",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@vitejs/plugin-react": "^4.7.0",
     "assert": "^2.0.0",
     "classnames": "^2.2.6",
     "contentful": "^7.6.0",
@@ -49,7 +49,7 @@
     "redux-tools": "github:vizzuality/redux-tools#v3.4.1",
     "reselect": "^4.0.0",
     "sha1": "^1.1.1",
-    "vite": "^5.3.1",
+    "vite": "^5.4.20",
     "vite-plugin-radar": "^0.10.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.2",
@@ -58,6 +58,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && npm run build-service-worker && npm run transifex:push",
+    "build:quiet-sass": "SASS_SILENCE_DEPRECATIONS=legacy-js-api tsc && vite build && npm run build-service-worker && npm run transifex:push",
     "start": "vite preview",
     "clean-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
     "build-service-worker": "node ./src/service-worker-build.cjs",
@@ -102,7 +103,8 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "process": "^0.11.10",
-    "sass": "^1.77.6",
+    "sass": "^1.93.2",
+    "sass-embedded": "^1.93.2",
     "typescript": "^5.9.2"
   },
   "node": {

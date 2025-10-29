@@ -1,16 +1,17 @@
-@import 'styles/settings';
-@import 'styles/shared-sidebar.module';
-@import 'styles/typography-extends.scss';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as ui;
+@use 'styles/shared-sidebar.module' as *;
+@use 'styles/typography-extends' as *;
 
 .sidebarCardContainer {
-  @include backdropBlur();
+  @include ui.backdropBlur();
   @extend .sharedSidebarCardContainer;
   padding: 0 16px 16px 16px;
 }
 
 .subtitle {
   @extend %bodyText;
-  color: $grey-text;
+  color: settings.$grey-text;
   font-weight: 400;
 }
 
@@ -21,43 +22,44 @@
 .buttonsContainer {
   display: flex;
   justify-content: space-between;
-  padding-top: $sidebar-paddings;
+  padding-top: settings.$sidebar-paddings;
 }
 
 .sectionContainer {
-  padding-top: $sidebar-paddings;
+  padding-top: settings.$sidebar-paddings;
 }
 
 .sizeWarningContainer {
   display: flex;
   align-items: center;
-  padding: $paragraph-gutter;
-  margin-bottom: $site-gutter;
-  background-color: $white-opacity;
-  border-radius: $border-radius-desktop;
+  padding: settings.$paragraph-gutter;
+  margin-bottom: settings.$site-gutter;
+  background-color: settings.$white-opacity;
+  border-radius: settings.$border-radius-desktop;
+
   &.active {
-    background-color: $warning;
+    background-color: settings.$warning;
   }
 
   .info {
     position: relative;
     top: 3px;
-    fill: $white;
-    margin-right: $paragraph-gutter;
+    fill: settings.$white;
+    margin-right: settings.$paragraph-gutter;
   }
 
   .warning {
     @extend %bodyText;
-    color: $white;
+    color: settings.$white;
   }
 }
 
 .separatorLabel,
 .label {
   @extend %bodyText;
-  color: $white;
+  color: settings.$white;
   display: block;
-  padding-bottom: $paragraph-gutter;
+  padding-bottom: settings.$paragraph-gutter;
 }
 
 .shapeUploader {
@@ -66,11 +68,13 @@
   padding: 40px;
   width: 100%;
   height: 100px;
-  border: 1px dashed $white;
-  border-radius: $border-radius-desktop;
+  border: 1px dashed settings.$white;
+  border-radius: settings.$border-radius-desktop;
+
   .uploadShapeButton {
-    margin-right: $paragraph-gutter;
+    margin-right: settings.$paragraph-gutter;
   }
+
   .label {
     padding-bottom: 0;
   }
@@ -78,19 +82,21 @@
 
 .separatorLabel {
   text-align: center;
-  padding: $sidebar-paddings 0;
+  padding: settings.$sidebar-paddings 0;
 }
 
 .areasHistoryButton {
   background-color: transparent;
-  border-radius: $border-radius-desktop;
-  margin-top: $sidebar-paddings;
+  border-radius: settings.$border-radius-desktop;
+  margin-top: settings.$sidebar-paddings;
+
   span {
     @extend %bodyText;
     text-transform: none !important;
   }
+
   &:hover {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
 }
 
@@ -101,12 +107,12 @@
 
   .analyzeMenuTitle {
     @extend %bodyText;
-    color: $white;
+    color: settings.$white;
     text-transform: uppercase;
   }
 
   .analyzeMenuTabsContainer {
-    border: 1px solid $brand-color-main;
+    border: 1px solid settings.$brand-color-main;
     border-radius: 4px;
     display: flex;
     margin: 6px 0;
@@ -118,6 +124,7 @@
       height: 68px;
       padding: 12px;
       width: 95px;
+
       &:last-of-type {
         width: 101px;
       }
@@ -125,47 +132,47 @@
       .tabIcon {
         display: flex;
         height: 24px;
-        fill: $white;
+        fill: settings.$white;
         margin-bottom: 3px;
         width: 24px;
       }
 
       .tabIconActive {
-        fill: $dark-text;
+        fill: settings.$dark-text;
       }
 
       .tabButtonCaption {
         @extend %bodyText;
-        color: $white;
+        color: settings.$white;
         text-transform: capitalize;
       }
 
       .tabButtonCaptionActive {
-        color: $black;
+        color: settings.$black;
       }
     }
 
     .tabButtonActive {
-      background-color: $brand-color-main;
+      background-color: settings.$brand-color-main;
     }
   }
 }
 
 .sectionLabel {
   @extend %bodyText;
-  color: $white;
+  color: settings.$white;
   display: block;
   margin-bottom: 6px;
 }
 
 .sectionSubtitleLabel {
   @extend %annotation;
-  color: $grey-text;
+  color: settings.$grey-text;
   margin: 0 0 6px 0;
 
   a {
     @extend %annotation;
-    color: $grey-text;
+    color: settings.$grey-text;
   }
 }
 
@@ -184,17 +191,17 @@
     width: 0;
   }
 
-  input:checked ~ .checkbox:after {
+  input:checked~.checkbox:after {
     display: block;
   }
 
-  input:checked ~ .checkbox {
-    background-color: $picton-blue;
+  input:checked~.checkbox {
+    background-color: settings.$picton-blue;
   }
 
   .checkbox {
     border-radius: 50%;
-    border: 1px solid $white;
+    border: 1px solid settings.$white;
     height: 16px;
     width: 16px;
     position: absolute;
@@ -210,12 +217,12 @@
   }
 
   .checkboxSelected {
-    background-color: $brand-color-main;
+    background-color: settings.$brand-color-main;
   }
 
   .label {
     @extend %bodyText;
-    color: $white;
+    color: settings.$white;
     margin: 0;
     padding: 0 0 0 10px;
   }
@@ -223,7 +230,7 @@
 
 .clearFilters {
   @extend %title;
-  background-color: $brand-color-main;
+  background-color: settings.$brand-color-main;
   width: 100%;
   height: 30px;
   padding: 0px 20px;
@@ -231,11 +238,11 @@
   margin-top: 10px;
 
   &:hover {
-    background-color: $white;
+    background-color: settings.$white;
   }
 }
 
-.radioContainer{
+.radioContainer {
   display: flex;
 }
 
@@ -249,8 +256,8 @@
   height: 100%;
   right: 0px;
   position: absolute;
-  border: solid 5px  $alto;
-  border-top-color:  $robins-egg-blue;
+  border: solid 5px settings.$alto;
+  border-top-color: settings.$robins-egg-blue;
   border-radius: 50%;
 }
 
@@ -265,6 +272,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

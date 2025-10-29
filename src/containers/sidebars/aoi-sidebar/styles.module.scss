@@ -1,18 +1,18 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/common-animations.module';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/common-animations.module' as *;
 
 $sidebar-content-top: 180px;
 
 .sidebarContainer {
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
-  height: calc(100vh - #{$nav-bar-height});
-  width: calc(#{$sidebar-width} + 30px);
-  top: $nav-bar-height;
-  left: $site-gutter;
-  padding-bottom: $site-gutter;
+  height: calc(100vh - #{settings.$nav-bar-height});
+  width: calc(#{settings.$sidebar-width} + 30px);
+  top: settings.$nav-bar-height;
+  left: settings.$site-gutter;
+  padding-bottom: settings.$site-gutter;
   padding-left: 5px;
 }
 
@@ -21,26 +21,26 @@ $sidebar-content-top: 180px;
   @include backdropBlur();
   position: absolute;
   top: $sidebar-content-top;
-  left: $site-gutter;
+  left: settings.$site-gutter;
   display: flex;
   flex-direction: column;
-  border: $sidebar-border;
-  border-radius: $sidebar-border-radius;
+  border: settings.$sidebar-border;
+  border-radius: settings.$sidebar-border-radius;
   height: calc(100vh - #{$sidebar-content-top});
-  width: $sidebar-width;
-  padding: $site-gutter;
-  z-index: $bring-to-front;
+  width: settings.$sidebar-width;
+  padding: settings.$site-gutter;
+  z-index: settings.$bring-to-front;
 }
 
 
 .headerCard {
   @include backdropBlur();
-  z-index: $bring-to-front;
-  top: $ui-left-top;
-  left: $site-gutter;
-  width: $sidebar-width;
-  padding: $sidebar-paddings;
-  border: $sidebar-border;
+  z-index: settings.$bring-to-front;
+  top: settings.$ui-left-top;
+  left: settings.$site-gutter;
+  width: settings.$sidebar-width;
+  padding: settings.$sidebar-paddings;
+  border: settings.$sidebar-border;
 }
 
 .content {
@@ -50,37 +50,37 @@ $sidebar-content-top: 180px;
   left: 40;
   display: flex;
   flex-direction: column;
-  border: $sidebar-border;
-  border-radius: $sidebar-border-radius;
+  border: settings.$sidebar-border;
+  border-radius: settings.$sidebar-border-radius;
   height: 72vh;
-  width: $sidebar-width;
-  padding: $site-gutter;
-  z-index: $bring-to-front;
+  width: settings.$sidebar-width;
+  padding: settings.$site-gutter;
+  z-index: settings.$bring-to-front;
 }
 
 .backButton {
   height: 32px;
-  left: calc(#{$local-sidebar-width} - #{$rounded-button-size}/2);
+  left: calc(#{settings.$local-sidebar-width} - #{settings.$rounded-button-size}/2);
   position: absolute;
-  top: $local-sidebar-top-margin;
+  top: settings.$local-sidebar-top-margin;
   width: 32px;
 }
 
 .loading {
-  padding: $mobile-sidebar-side-paddings;
+  padding: settings.$mobile-sidebar-side-paddings;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media #{$tablet-portrait} {
-    padding: $sidebar-paddings;
+  @media #{settings.$tablet-portrait} {
+    padding: settings.$sidebar-paddings;
   }
 }
 
 .loadingText {
   @extend %bodyText;
-  margin-bottom: $site-gutter;
-  color: $white;
+  margin-bottom: settings.$site-gutter;
+  color: settings.$white;
 }
 
 .topRow {
@@ -98,7 +98,7 @@ $sidebar-content-top: 180px;
 
 .areaName {
   @extend %display2;
-  color: $white;
+  color: settings.$white;
   margin: 0;
   text-overflow: ellipsis;
   max-width: 300px;
@@ -107,11 +107,11 @@ $sidebar-content-top: 180px;
 .saveButton {
   height: 30px;
   width: 60px;
-  color: $dark-text;
-  background-color: $brand-color-main;
+  color: settings.$dark-text;
+  background-color: settings.$brand-color-main;
 
   &:hover {
-    background-color: $brand-color-main-hover;
+    background-color: settings.$brand-color-main-hover;
   }
 }
 
@@ -119,19 +119,20 @@ $sidebar-content-top: 180px;
   @extend %display2;
   background-color: transparent;
   border-width: 0 0 2px 0;
-  color: $white;
+  color: settings.$white;
   margin: 0;
   max-width: 300px;
 }
 
 .area {
   @extend %annotation;
-  color: $grey-text;
+  color: settings.$grey-text;
   margin: 0;
 }
 
 .actionButtons {
   display: flex;
+
   button {
     margin-left: 5px;
   }
@@ -151,7 +152,7 @@ $sidebar-content-top: 180px;
     @extend %subtitle;
     position: relative;
     top: 2px;
-    color: $white;
+    color: settings.$white;
     margin: 0 5px;
     max-width: 105px;
     text-overflow: ellipsis;
@@ -177,31 +178,32 @@ $sidebar-content-top: 180px;
 }
 
 .actionButton {
-  margin-left: $site-gutter;
-  margin-bottom: $site-gutter;
+  margin-left: settings.$site-gutter;
+  margin-bottom: settings.$site-gutter;
 }
 
 .completeDatabaseWrapper {
   @extend %bodyText;
-  color: $white;
-  margin-top: $site-gutter;
-  border-top: 2px solid $white-opacity;
-  padding-bottom: $site-gutter;
+  color: settings.$white;
+  margin-top: settings.$site-gutter;
+  border-top: 2px solid settings.$white-opacity;
+  padding-bottom: settings.$site-gutter;
 
   .link {
     @extend %title;
     width: 100%;
-    background-color: $white;
-    color: $dark-text;
+    background-color: settings.$white;
+    color: settings.$dark-text;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: $border-radius-desktop;
+    border-radius: settings.$border-radius-desktop;
     text-decoration: none;
     text-align: center;
     padding: 10px 25px;
+
     &:hover {
-      background-color: $brand-color-main;
+      background-color: settings.$brand-color-main;
     }
   }
 }
@@ -212,45 +214,48 @@ $sidebar-content-top: 180px;
 }
 
 .goalSection {
-  background-color: $elephant;
-  border: 1px solid $white-opacity;
-  border-radius: $card-border-radius;
-  color: $white;
+  background-color: settings.$elephant;
+  border: 1px solid settings.$white-opacity;
+  border-radius: settings.$card-border-radius;
+  color: settings.$white;
   margin-top: 20px;
   padding: 16px 20px;
   width: 100%;
+
   .goalHeader {
     align-items: center;
     display: flex;
 
     .goalTitle {
       @extend %bodyText;
-      color: $brand-color-main;
+      color: settings.$brand-color-main;
       margin-left: 16px;
-      font-weight: $font-weight;
+      font-weight: settings.$font-weight;
     }
   }
+
   .goalSentence {
     @extend %display2;
     font-size: 24px;
     font-style: italic;
     letter-spacing: 2px;
     margin: 15px 0 0 0;
+
     span {
-      color: $brand-color-main;
+      color: settings.$brand-color-main;
     }
   }
 }
 
 .loadingAreaName {
-  background-color: $white;
+  background-color: settings.$white;
   height: 1px;
   margin: 18px 0;
   width: 200px;
 }
 
 .loadingArea {
-  background-color: $white;
+  background-color: settings.$white;
   opacity: 0.8;
   height: 1px;
   width: 100px;
@@ -258,7 +263,7 @@ $sidebar-content-top: 180px;
 }
 
 .loadingIndicator {
-  background-color: $white;
+  background-color: settings.$white;
   height: 1px;
   width: 50px;
   margin: 2px 8px;

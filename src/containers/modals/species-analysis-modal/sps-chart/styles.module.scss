@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/mixins';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/mixins' as mixins;
 
 .chart {
   width: 100%;
@@ -9,13 +9,13 @@
 .angleLabels {
   @extend %subtitle;
   fill: currentColor;
-  font-size: $font-size-xxs;
+  font-size: settings.$font-size-xxs;
 }
 
 .radialLabels {
   @extend %subtitle;
   fill: currentColor;
-  font-size: $font-size-xs;
+  font-size: settings.$font-size-xs;
   stroke: transparent;
   text-anchor: middle;
 }
@@ -33,9 +33,9 @@
   min-width: 100px;
 
   .tooltipText {
-    background-color: $white;
+    background-color: settings.$white;
     @extend %annotation;
-    color: $black;
+    color: settings.$black;
     padding: 5px;
   }
 
@@ -46,7 +46,7 @@
     transform: none;
 
     border-left: none;
-    border-right: 5px solid $white;
+    border-right: 5px solid settings.$white;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
   }
@@ -65,7 +65,7 @@
       transform: none;
 
       border-right: none;
-      border-left: 5px solid $white;
+      border-left: 5px solid settings.$white;
       border-top: 5px solid transparent;
       border-bottom: 5px solid transparent;
     }

@@ -1,8 +1,8 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/common-animations.module';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/common-animations.module' as *;
 
 .onboardingTooltip {
   position: absolute;
-  z-index: $over-all;
+  z-index: settings.$over-all;
 }

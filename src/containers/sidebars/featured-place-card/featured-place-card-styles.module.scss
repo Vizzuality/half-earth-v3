@@ -1,12 +1,14 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/ui.module';
-@import 'styles/common-animations.module';
+// Converted from @import to @use (legacy imports removed)
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/ui.module' as *;
+@use 'styles/common-animations.module' as *;
 
 $card-content-max-height: 410px;
 
 .container {
   position: fixed;
+  // Align with bottom menu footer height variable from ui.module.scss
   bottom: $menuFooterHeight;
   display: flex;
   width: 100%;
@@ -15,7 +17,7 @@ $card-content-max-height: 410px;
   overflow: hidden;
   pointer-events: all;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     position: absolute;
     bottom: 0;
     pointer-events: none;
@@ -31,7 +33,7 @@ $card-content-max-height: 410px;
   height: 400px;
   margin-top: 40px;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     height: unset;
     margin-bottom: 0;
   }
@@ -48,15 +50,15 @@ $card-content-max-height: 410px;
     "picture"
     "text";
 
-  background-color: $white;
+  background-color: settings.$white;
   pointer-events: all;
   position: relative;
-  max-width: $card-max-width;
-  padding: $mobile-sidebar-side-paddings 42px 40px;
+  max-width: settings.$card-max-width;
+  padding: settings.$mobile-sidebar-side-paddings 42px 40px;
   overflow-y: scroll;
   width: 100%;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     grid-column-gap: 40px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 380px 1fr;
@@ -64,7 +66,8 @@ $card-content-max-height: 410px;
       "breadcrumb navigation"
       "picture text"
       "exploreButton text";
-
+    max-width: settings.$card-max-width;
+    padding: settings.$mobile-sidebar-side-paddings 42px 40px;
     overflow-y: unset;
   }
 
@@ -96,23 +99,22 @@ $card-content-max-height: 410px;
 
       .leftArrow {
         transform: rotate(180deg);
-        fill: $dark-text;
-        stroke: $dark-text;
+        fill: settings.$dark-text;
+        stroke: settings.$dark-text;
       }
 
       .separator {
         height: 20px;
         width: 1px;
-        background-color: $grey-text;
+        background-color: settings.$grey-text;
       }
 
       .rightArrow {
-        fill: $dark-text;
-        stroke: $dark-text;
+        fill: settings.$dark-text;
+        stroke: settings.$dark-text;
       }
     }
   }
-
 
   .landscapeTriggerButton {
     align-self: end;
@@ -125,7 +127,7 @@ $card-content-max-height: 410px;
 
   .landscapeTriggerText {
     @extend %subtitle;
-    color: $dark-text;
+    color: settings.$dark-text;
     margin-left: 12px;
     margin-top: 4px;
   }
@@ -136,12 +138,12 @@ $card-content-max-height: 410px;
     padding-bottom: 20px;
     overflow-y: unset;
 
-    @media #{$tablet-portrait} {
+    @media #{settings.$tablet-portrait} {
       max-height: $card-content-max-height;
       overflow-y: auto;
     }
 
-    .description{
+    .description {
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -150,38 +152,37 @@ $card-content-max-height: 410px;
 
   .title {
     @extend %display2;
-    font-size: $font-size-xl;
+    font-size: settings.$font-size-xl;
     line-height: 30px;
-    color: $dark-text;
-    margin: 0;
-    margin-bottom: 12px;
+    color: settings.$dark-text;
+    margin: 0 0 12px 0;
     grid-area: title;
 
-    @media #{$tablet-portrait} {
+    @media #{settings.$tablet-portrait} {
       margin-bottom: 0;
-      font-size: $font-size-xxl;
+      font-size: settings.$font-size-xxl;
       line-height: 50px;
     }
   }
 
   .text {
     @extend %bodyText;
-    color: $dark-text;
+    color: settings.$dark-text;
     padding-bottom: 22px;
 
-    @media #{$tablet-portrait} {
+    @media #{settings.$tablet-portrait} {
       padding-bottom: 0;
     }
   }
 
   .sourceText {
     @extend %bodyText;
-    color: $dark-text;
+    color: settings.$dark-text;
   }
 }
 
 .pictureContainer {
-  background-color: $alto;
+  background-color: settings.$alto;
   height: 170px;
   position: relative;
   grid-area: picture;
@@ -194,7 +195,7 @@ $card-content-max-height: 410px;
     width: 100%;
   }
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     height: unset;
 
     .picture {
@@ -204,45 +205,45 @@ $card-content-max-height: 410px;
   }
 }
 
-.link{
-  color: $brand-color-main;
+.link {
+  color: settings.$brand-color-main;
   cursor: pointer;
-  font-family: $font-family-1;
+  font-family: settings.$font-family-1;
   text-transform: uppercase;
   text-decoration: none;
   font-weight: bold;
 
   &:hover {
-    color: $brand-color-main-hover;
+    color: settings.$brand-color-main-hover;
   }
 }
 
-.hepmLinks{
+.hepmLinks {
   display: flex;
   flex-wrap: wrap;
 }
 
 // mobile only
-
 .spacer {
   height: 1px;
-  width: calc(100% - (2 * #{$mobile-sidebar-side-paddings}));
-  background-color: $alto;
+  width: calc(100% - (2 * #{settings.$mobile-sidebar-side-paddings}));
+  background-color: settings.$alto;
 }
 
 .spacerContainer {
   height: 3px;
   width: 100%;
-  background-color: $white;
+  background-color: settings.$white;
   display: flex;
   justify-content: center;
 }
 
 .exploreAreaButtonContainer {
-  background-color: $white;
+  background-color: settings.$white;
   display: flex;
   justify-content: center;
   width: 100%;
+
   padding: {
     bottom: 12px;
     top: 12px;
@@ -251,17 +252,17 @@ $card-content-max-height: 410px;
 
 .exploreAreaButton {
   @extend %title;
-  font-family: $font-family-1;
-  font-size: $font-size-xxs;
-  width: calc(100% - (2 * #{$mobile-sidebar-side-paddings}));
+  font-family: settings.$font-family-1;
+  font-size: settings.$font-size-xxs;
+  width: calc(100% - (2 * #{settings.$mobile-sidebar-side-paddings}));
   border-radius: 2px;
   padding: 10px 40px;
-  color: $firefly;
-  background-color: $robins-egg-blue;
+  color: settings.$firefly;
+  background-color: settings.$robins-egg-blue;
 }
 
 .shareButton {
-  background-color: $elephant;
+  background-color: settings.$elephant;
   height: 32px;
   position: absolute;
   right: 0;
@@ -275,6 +276,8 @@ $card-content-max-height: 410px;
   height: 42px;
   width: 42px;
   right: 10px;
-  box-shadow: $box-shadow-soft;
-  z-index: $bring-to-front;
+  box-shadow: settings.$box-shadow-soft;
+  z-index: settings.$bring-to-front;
 }
+
+// End of file

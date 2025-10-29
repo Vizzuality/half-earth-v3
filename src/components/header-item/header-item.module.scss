@@ -1,13 +1,13 @@
-@import 'styles/settings';
-@import 'styles/mixins';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/mixins' as mixins;
+@use 'styles/typography-extends' as *;
 
 .headerItem {
   @extend %subtitle;
   display: flex;
   align-items: flex-end;
   flex: 1 1 0;
-  color: $white;
+  color: settings.$white;
   text-align: left;
   font-weight: 500;
   padding: 0 25px 0 10px;
@@ -23,20 +23,23 @@
   transform: translate(5px, -2px);
 
   .arrowUp {
-    @include caret($_temporary-light-text, 'up');
+    // Using grey-text as replacement for temporary light text token
+    @include mixins.caret(settings.$grey-text, 'up');
     position: absolute;
     top: -6.5px;
+
     &.highlightedSort::after {
-      border-top-color: $white;
+      border-top-color: settings.$white;
     }
   }
 
   .arrowDown {
-    @include caret($_temporary-light-text, 'down');
+    @include mixins.caret(settings.$grey-text, 'down');
     position: absolute;
     bottom: 11px;
+
     &.highlightedSort::after {
-      border-bottom-color: $white;
+      border-bottom-color: settings.$white;
     }
   }
 }

@@ -1,15 +1,17 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .inputContainer {
   @extend %title;
-  background-color: $white;
+  background-color: settings.$white;
   border-radius: 6px;
   position: relative;
+
   &.fullWidth {
     width: 100%;
   }
+
   &.disabled {
     pointer-events: none;
     cursor: not-allowed;
@@ -17,17 +19,17 @@
 }
 
 .searchResultsList {
-  z-index: $bring-to-front;
+  z-index: settings.$bring-to-front;
   height: 300px;
   overflow-y: auto;
 }
 
 .searchResultsListMobile {
-  z-index: $over-front;
+  z-index: settings.$over-front;
 }
 
 .placeholderIcon {
-  fill: $grey-text;
+  fill: settings.$grey-text;
   pointer-events: none;
   position: absolute;
   height: 16px;
@@ -42,31 +44,35 @@
   background-color: transparent;
   padding: 10px;
   border: none;
-  color: $dark;
+  color: settings.$dark;
+
   &::placeholder {
-    color: $grey-text;
+    color: settings.$grey-text;
     padding-left: 30px;
-    opacity: 1; /* Firefox */
+    opacity: 1;
+    /* Firefox */
   }
-  &:focus{
-    background-color: $dark-opacity;
+
+  &:focus {
+    background-color: settings.$dark-opacity;
   }
-  &:not(:placeholder-shown) ~ .placeholderIcon {
+
+  &:not(:placeholder-shown)~.placeholderIcon {
     display: none;
   }
 }
 
 .optionsList {
   @extend %bodyText;
-  color: $dark-text;
-  background-color: $white;
+  color: settings.$dark-text;
+  background-color: settings.$white;
   list-style: none;
   margin: 0;
-  padding: $sidebar-paddings 0;
+  padding: settings.$sidebar-paddings 0;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 
-  &.longList{
+  &.longList {
     border-bottom-right-radius: 0;
   }
 
@@ -75,17 +81,17 @@
   }
 
   .option {
-    padding: 5px $sidebar-paddings;
+    padding: 5px settings.$sidebar-paddings;
     cursor: pointer;
 
     &:hover {
-      background-color: $dark-opacity;
+      background-color: settings.$dark-opacity;
     }
   }
 
   .emptyOption {
-    padding: 5px $sidebar-paddings;
-    color: $grey-text;
+    padding: 5px settings.$sidebar-paddings;
+    color: settings.$grey-text;
     cursor: default;
   }
 
@@ -96,26 +102,31 @@
 
   .suggestionLayerType {
     min-width: 97px;
-    color: $grey-text;
+    color: settings.$grey-text;
   }
 }
 
 .dark {
   background-color: transparent;
-  border: 1px solid $white-opacity;
+  border: 1px solid settings.$white-opacity;
+
   &:hover,
   &.open {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
+
   .input {
-    color: $white;
+    color: settings.$white;
+
     &::placeholder {
-      color: $grey-text;
+      color: settings.$grey-text;
       padding-left: 30px;
-      opacity: 1; /* Firefox */
+      opacity: 1;
+      /* Firefox */
     }
-    &:focus{
-      background-color: $dark-opacity;
+
+    &:focus {
+      background-color: settings.$dark-opacity;
     }
   }
 }
@@ -125,6 +136,7 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
+
   &:last-child {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -135,30 +147,34 @@
   .optionsList {
     padding: 20px 10vw;
   }
+
   .suggestion {
     text-transform: uppercase;
     padding: 0 5vw;
     width: 90vw;
 
-    @media #{$mobile-landscape} {
+    @media #{settings.$mobile-landscape} {
       padding: 0 7vw 0 3vw;
     }
   }
+
   .placeholderIcon {
     display: none;
   }
+
   .closeIcon {
-    fill: $grey-text;
+    fill: settings.$grey-text;
     height: 12px;
     position: absolute;
     right: calc(6px + 4vw);
     top: 14px;
     width: 12px;
 
-    @media #{$mobile-landscape} {
+    @media #{settings.$mobile-landscape} {
       right: 3vw;
     }
   }
+
   .resetBtn {
     background: transparent;
     border: none;
@@ -167,18 +183,19 @@
     right: 12px;
     top: 0;
     width: 30px;
-    z-index: $over-front;
+    z-index: settings.$over-front;
 
-    @media #{$mobile-landscape} {
+    @media #{settings.$mobile-landscape} {
       right: 0;
       width: 60px;
     }
   }
 
   .input {
-    border: 1px solid $grey-text;
+    border: 1px solid settings.$grey-text;
     border-radius: 4px;
     padding-left: 48px;
+
     &::placeholder {
       padding-left: 0px;
     }
@@ -186,7 +203,7 @@
 }
 
 .closeIcon {
-  fill: $white;
+  fill: settings.$white;
   height: 8px;
   position: absolute;
   right: 10px;

@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 $checkbox-size: 14px;
 
@@ -20,7 +20,7 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   position: relative;
-  padding-left: calc(#{$checkbox-size} + 10px );
+  padding-left: calc(#{$checkbox-size} + 10px);
   cursor: pointer;
   height: 30px;
   width: 100%;
@@ -31,7 +31,7 @@ input[type="checkbox"] {
     width: $checkbox-size;
     position: absolute;
     left: 0;
-    border: 1px solid $white;
+    border: 1px solid settings.$white;
     border-radius: 2px;
   }
 
@@ -70,8 +70,8 @@ input[type="checkbox"] {
   height: 100%;
   right: 0px;
   position: absolute;
-  border: solid 5px  $alto;
-  border-top-color:  $robins-egg-blue;
+  border: solid 5px settings.$alto;
+  border-top-color: settings.$robins-egg-blue;
   border-radius: 50%;
 }
 
@@ -86,6 +86,7 @@ input[type="checkbox"] {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

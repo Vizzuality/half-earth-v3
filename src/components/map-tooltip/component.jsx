@@ -44,6 +44,7 @@ function MapTooltipComponent({
   }, []);
 
   useEffect(() => {
+    if (!view) return;
     if (isVisible && tooltipPosition) {
       view.openPopup({
         location: tooltipPosition.centroid,
@@ -52,7 +53,7 @@ function MapTooltipComponent({
     } else {
       view.closePopup();
     }
-  }, [isVisible, tooltipPosition]);
+  }, [isVisible, tooltipPosition, view]);
 
   return (
     <div

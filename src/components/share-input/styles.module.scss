@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 $tabsMarginBottom: 4px;
 
@@ -13,36 +13,36 @@ $tabsMarginBottom: 4px;
   margin-bottom: 20px;
   flex-direction: column;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     flex-direction: row;
   }
 }
 
-.copyIcon{
+.copyIcon {
   margin-right: 5px;
 }
 
 .coordinates {
   margin-bottom: 54px;
-  font-size: $font-size-xs;
-  color: $brand-color-main;
+  font-size: settings.$font-size-xs;
+  color: settings.$brand-color-main;
 }
 
 .inputButton {
-  border: 1px solid $white-opacity;
-  background-color: $white;
+  border: 1px solid settings.$white-opacity;
+  background-color: settings.$white;
   padding: 10px;
   width: stretch;
   height: 40px;
-  border-radius: $card-border-radius;
+  border-radius: settings.$card-border-radius;
   margin-bottom: 8px;
-  box-shadow: 0px 1px 2px 0px $black;
+  box-shadow: 0px 1px 2px 0px settings.$black;
 
   &:focus {
     outline: none;
   }
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     border-right-style: none;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -51,11 +51,11 @@ $tabsMarginBottom: 4px;
 }
 
 .button {
-  background-color: $brand-color-main;
+  background-color: settings.$brand-color-main;
   height: 40px !important;
   border-radius: 6px;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     border-radius: 0px 6px 6px 0px;
   }
 }
@@ -68,9 +68,9 @@ $tabsMarginBottom: 4px;
   align-items: center;
   justify-content: center;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     margin-left: -10px;
-    width: 100px ;
+    width: 100px;
   }
 }
 
@@ -83,15 +83,16 @@ $tabsMarginBottom: 4px;
 .tab {
   @extend %title;
   position: relative;
-  color: $white;
+  color: settings.$white;
   cursor: pointer;
   position: relative;
-  margin-right: $site-gutter;
+  margin-right: settings.$site-gutter;
   cursor: pointer;
 }
 
 .activeTab {
-  color: $brand-color-main;
+  color: settings.$brand-color-main;
+
   &:after {
     content: '';
     position: absolute;
@@ -99,6 +100,6 @@ $tabsMarginBottom: 4px;
     bottom: 0;
     width: 100%;
     height: 1px;
-    background-color: $brand-color-main;
+    background-color: settings.$brand-color-main;
   }
 }

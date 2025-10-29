@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .trendChart {
   display: block;
@@ -8,19 +8,19 @@
 }
 
 .label {
-  font-size: $font-size-xxs;
+  font-size: settings.$font-size-xxs;
   text-anchor: end;
-  font-family: $font-family-1;
+  font-family: settings.$font-family-1;
 }
 
 .cursorText {
   @extend %annotation;
 
-  fill: $white;
+  fill: settings.$white;
   text-anchor: center;
 }
 
 .cursorLine {
-  stroke: $white;
+  stroke: settings.$white;
   stroke-dasharray: 2;
 }

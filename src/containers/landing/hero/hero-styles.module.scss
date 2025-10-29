@@ -1,6 +1,6 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
   display: flex;
@@ -8,19 +8,19 @@
   width: 100vw;
   margin-top: 30px;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     margin-top: 70px;
   }
 
   .subtitle {
     @extend %title;
-    color: $robins-egg-blue;
+    color: settings.$robins-egg-blue;
     text-align: center;
   }
 
   .title {
     @extend %display1;
-    color: $white;
+    color: settings.$white;
     font-weight: 200;
     margin-bottom: 0;
     margin-top: 6px;
@@ -28,18 +28,18 @@
     font-size: 35px;
     padding: 0 10px;
 
-    @media #{$tablet-landscape} {
+    @media #{settings.$tablet-landscape} {
       font-size: 45px;
     }
   }
 
   .ctoText {
     @extend %title;
-    color: $white;
+    color: settings.$white;
     text-align: center;
     margin: 20px 10px;
 
-    @media #{$tablet-landscape} {
+    @media #{settings.$tablet-landscape} {
       margin: 61px 0 40px 0;
     }
   }

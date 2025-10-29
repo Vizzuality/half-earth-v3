@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 $max-width: 520px;
 $area-title-width: 230px;
@@ -11,7 +11,7 @@ $area-title-width: 230px;
   height: auto !important;
   max-height: 100vh !important;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     max-width: $max-width !important;
     width: $max-width !important;
     max-height: 400px !important;
@@ -27,8 +27,9 @@ $area-title-width: 230px;
   align-items: left;
   flex-direction: column;
   padding: 24px;
-  background-color: $brand-color-secondary;
-  @media #{$tablet-landscape} {
+  background-color: settings.$brand-color-secondary;
+
+  @media #{settings.$tablet-landscape} {
     max-width: $max-width;
     width: $max-width;
   }
@@ -40,14 +41,14 @@ $area-title-width: 230px;
 
 .title {
   @extend %headline;
-  color: $white;
+  color: settings.$white;
   margin: 0;
   text-align: left;
 }
 
 .description {
   @extend %bodyText;
-  color: $grey-text;
+  color: settings.$grey-text;
   margin: 0;
 }
 
@@ -57,8 +58,8 @@ $area-title-width: 230px;
 
   .backBtn {
     @extend %title;
-    background-color: $white;
-    color: $dark-text;
+    background-color: settings.$white;
+    color: settings.$dark-text;
     height: 38px;
     margin-right: 12px;
     padding: 0 25px;
@@ -66,8 +67,8 @@ $area-title-width: 230px;
 
   .exploreBtn {
     @extend %title;
-    background-color: $brand-color-main;
-    color: $white;
+    background-color: settings.$brand-color-main;
+    color: settings.$white;
     height: 38px;
     padding: 0 17px;
     text-transform: uppercase;

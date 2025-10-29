@@ -1,36 +1,36 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 // Copied styles from tippy.js package
 
-[data-tippy-root]{
-  max-width:calc(100vw - 10px)
+[data-tippy-root] {
+  max-width: calc(100vw - 10px)
 }
 
 .tippy-box {
-  position:relative;
-  white-space:normal;
-  outline:0;
-  transition-property: transform,visibility,opacity;
+  position: relative;
+  white-space: normal;
+  outline: 0;
+  transition-property: transform, visibility, opacity;
 }
 
-.tippy-box[data-inertia][data-state=visible]{
-  transition-timing-function:cubic-bezier(.54,1.5,.38,1.11);
+.tippy-box[data-inertia][data-state=visible] {
+  transition-timing-function: cubic-bezier(.54, 1.5, .38, 1.11);
 }
 
-.tippy-box[data-animation=fade][data-state=hidden]{
+.tippy-box[data-animation=fade][data-state=hidden] {
   opacity: 0;
 }
 
-.tippy-box[data-placement^=top]>.tippy-arrow{
+.tippy-box[data-placement^=top]>.tippy-arrow {
   bottom: 0;
 }
 
-.light.tippy-box[data-placement^=top]>.tippy-arrow{
+.light.tippy-box[data-placement^=top]>.tippy-arrow {
   box-shadow: -0.5px 7px 2px rgba(0, 0, 0, 0.05);
-  z-index: $over-all;
+  z-index: settings.$over-all;
 }
 
-.tippy-box[data-placement^=top]>.tippy-arrow:before{
+.tippy-box[data-placement^=top]>.tippy-arrow:before {
   bottom: -7px;
   left: 0;
   border-width: 8px 8px 0;
@@ -52,10 +52,10 @@
 }
 
 .tippy-box[data-placement^=left]>.tippy-arrow {
-  right:0
+  right: 0
 }
 
-.tippy-box[data-placement^=left]>.tippy-arrow:before{
+.tippy-box[data-placement^=left]>.tippy-arrow:before {
   border-width: 8px 0 8px 8px;
   border-left-color: initial;
   right: -7px;
@@ -63,11 +63,14 @@
 }
 
 .tippy-box[data-placement^=right]>.tippy-arrow {
-  left:0;
+  left: 0;
 }
 
 .tippy-box[data-placement^=right]>.tippy-arrow:before {
-  left:-7px;border-width:8px 8px 8px 0;border-right-color:initial;transform-origin:center right
+  left: -7px;
+  border-width: 8px 8px 8px 0;
+  border-right-color: initial;
+  transform-origin: center right
 }
 
 .tippy-arrow:before {
@@ -81,10 +84,12 @@
   position: relative;
   padding: 0;
   z-index: 1
-};
+}
+
+;
 
 .tippy-arrow {
   height: 16px;
   width: 16px;
-  color: $white;
+  color: settings.$white;
 }

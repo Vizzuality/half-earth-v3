@@ -1,8 +1,8 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .iconSquare {
-  background-color: $brand-color-secondary;
+  background-color: settings.$brand-color-secondary;
   border-radius: 2px;
   display: flex;
   width: 32px;
@@ -11,7 +11,7 @@
   justify-content: center;
 
   &:hover {
-    background-color: $brand-color-secondary-hover;
+    background-color: settings.$brand-color-secondary-hover;
   }
 }
 
@@ -19,29 +19,29 @@
   @extend %title;
   width: 100%;
   height: 40px;
-  color: $dark-text;
+  color: settings.$dark-text;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: $border-radius-desktop;
-  background-color: $brand-color-main;
+  border-radius: settings.$border-radius-desktop;
+  background-color: settings.$brand-color-main;
 
   &:hover {
-    background-color: $white;
+    background-color: settings.$white;
   }
 }
 
 .rectangular-secondary {
   @extend .rectangular-primary;
-  color: $light-text;
-  background-color: $brand-color-secondary;
+  color: settings.$light-text;
+  background-color: settings.$brand-color-secondary;
   padding: 10px;
   margin-top: 10px;
 
 
   &:hover {
-    background-color: $white;
-    background-color: $firefly;
+    background-color: settings.$white;
+    background-color: settings.$firefly;
   }
 }
 
@@ -49,15 +49,15 @@
   @extend %title;
   width: 100%;
   height: 40px;
-  background-color: $white;
-  color: $dark-text;
+  background-color: settings.$white;
+  color: settings.$dark-text;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: $border-radius-desktop;
+  border-radius: settings.$border-radius-desktop;
 
   &:hover {
-    background-color: $brand-color-main;
+    background-color: settings.$brand-color-main;
   }
 
   .icon {
@@ -70,39 +70,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: $rounded-button-size;
-  height: $rounded-button-size;
+  width: settings.$rounded-button-size;
+  height: settings.$rounded-button-size;
   border-radius: 100%;
-  background-color: $white;
+  background-color: settings.$white;
 
   .icon {
-    fill: $dark-text;
-    width: $font-size-xs;
-    height: $font-size-xs;
+    fill: settings.$dark-text;
+    width: settings.$font-size-xs;
+    height: settings.$font-size-xs;
   }
 }
 
 .compound {
   display: flex;
   padding: 6px;
-  background-color: $brand-color-secondary;
-  border-radius: $border-radius-desktop;
+  background-color: settings.$brand-color-secondary;
+  border-radius: settings.$border-radius-desktop;
 
   .icon {
-    fill: $white;
-    margin-right: $paragraph-gutter;
+    fill: settings.$white;
+    margin-right: settings.$paragraph-gutter;
   }
 
   .label {
     @extend %title;
-    color: $white;
+    color: settings.$white;
   }
 }
 
 .square {
   width: 180px;
   height: 104px;
-  border: 1px solid $brand-color-main;
+  border: 1px solid settings.$brand-color-main;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,23 +112,25 @@
   .icon {
     width: 35px;
     height: 35px;
-    fill: $white;
-    margin-bottom: $paragraph-gutter;
+    fill: settings.$white;
+    margin-bottom: settings.$paragraph-gutter;
   }
 
   .label {
     @extend %title;
-    color: $white;
+    color: settings.$white;
   }
 
   &:hover,
   &.active {
-    background-color: $brand-color-main;
+    background-color: settings.$brand-color-main;
+
     .icon {
-      fill: $dark-text;
+      fill: settings.$dark-text;
     }
+
     .label {
-      color: $dark-text;
+      color: settings.$dark-text;
     }
   }
 }

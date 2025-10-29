@@ -1,9 +1,9 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .header {
   align-items: center;
-  color: $white;
+  color: settings.$white;
   display: flex;
   position: absolute;
   z-index: 10;
@@ -13,8 +13,9 @@
   .backBtn {
     padding: 0;
     margin-left: -10px;
+
     .arrowIcon {
-      fill: $white;
+      fill: settings.$white;
       height: 36px;
       width: 34px;
     }

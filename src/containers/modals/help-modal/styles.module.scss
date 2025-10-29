@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .modal {
   width: 95% !important;
@@ -15,6 +15,7 @@
 .closeBtn {
   background-color: transparent;
   border: none;
+
   svg {
     height: 20px;
     width: 20px;
@@ -26,7 +27,7 @@
 }
 
 .modalContainer {
-  background-color: $brand-color-secondary;
+  background-color: settings.$brand-color-secondary;
   display: flex;
   height: 100%;
   padding: 24px;
@@ -46,9 +47,10 @@
       flex-direction: column;
       min-width: 500px;
       margin-bottom: 112px;
+
       .title {
         @extend %display1;
-        color: $white;
+        color: settings.$white;
         font-weight: 100;
         margin-bottom: 56px;
       }
@@ -64,12 +66,12 @@
           padding: 0;
 
           span {
-            color: $white;
-            font-family: $font-family-1;
-            font-size: $font-size-xxs;
+            color: settings.$white;
+            font-family: settings.$font-family-1;
+            font-size: settings.$font-size-xxs;
             font-weight: bold;
-            letter-spacing: $letter-spacing;
-            line-height: $line-height;
+            letter-spacing: settings.$letter-spacing;
+            line-height: settings.$line-height;
             margin-top: 20px;
             text-transform: uppercase;
           }
@@ -82,7 +84,7 @@
       text-align: center;
       width: 100%;
 
-      @media #{$tablet-portrait} {
+      @media #{settings.$tablet-portrait} {
         width: 800px;
         display: flex;
         text-align: left;
@@ -93,22 +95,23 @@
         align-items: center;
         display: flex;
         margin-right: 50px;
+
         &:last-of-type {
           margin-right: 0;
         }
 
         .storyText {
           width: 250px;
-          color: $white;
-          font-family: $font-family-1;
-          font-size: $font-size-sm;
-          font-weight: $font-weight-light;
-          line-height: $line-height-lg;
+          color: settings.$white;
+          font-family: settings.$font-family-1;
+          font-size: settings.$font-size-sm;
+          font-weight: settings.$font-weight-light;
+          line-height: settings.$line-height-lg;
           margin-left: 20px;
 
           .storyTitle {
-            font-size: $font-size-sm;
-            font-weight: $font-weight;
+            font-size: settings.$font-size-sm;
+            font-weight: settings.$font-weight;
             line-height: 0;
             text-transform: uppercase;
           }

@@ -1,8 +1,8 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/common-animations.module';
-@import 'styles/shared-sidebar.module';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/common-animations.module' as *;
+@use 'styles/shared-sidebar.module' as *;
+@use 'styles/typography-extends' as *;
 
 .sidebarCardContainer {
   @extend .sharedSidebarCardContainer;
@@ -15,24 +15,24 @@
 
 .layersTitle {
   @extend %subtitle;
-  color: $white;
+  color: settings.$white;
 }
 
 .description {
   @extend %bodyText;
-  color: $white;
+  color: settings.$white;
 }
 
 .legendContainer,
 .sourceContainer,
 .togglesContainer,
 .dropdownContainer {
-  padding-top: $sidebar-vertical-flow;
+  padding-top: settings.$sidebar-vertical-flow;
 }
 
 .togglesContainer {
   // this way we expand the toggles to the edge of the sidebar
   position: relative;
-  left: -$sidebar-paddings;
-  width: calc(100% + (2 * #{$sidebar-paddings}));
+  left: calc(-1 * #{settings.$sidebar-paddings});
+  width: calc(100% + (2 * #{settings.$sidebar-paddings}));
 }
