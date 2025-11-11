@@ -167,7 +167,7 @@ export const layersConfig = {
     url: LAYERS_URLS[ADMIN_AREAS_FEATURE_LAYER],
     renderer: BORDERS_LAYERS_RENDERER,
     bbox: null,
-    portalId: [ 'dcd82cc752bf45eea09e454a2aac2763', 'a5e0c4b6c24048948a7095823d277c56'],
+    portalId: [ 'a5e0c4b6c24048948a7095823d277c56', 'dcd82cc752bf45eea09e454a2aac2763'],
   },
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
     title: GADM_0_ADMIN_AREAS_FEATURE_LAYER,
