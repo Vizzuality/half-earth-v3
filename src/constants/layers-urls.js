@@ -159,7 +159,7 @@ export const NRC_MARINE_SPI_DATA_LAYER =
   'https://utility.arcgis.com/usrsvcs/servers/026649c877694cea96cbc1a9f06950f5/rest/services/marine_spi_per_year_20250328/FeatureServer/0';
 
 const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL =
-  'https://utility.arcgis.com/usrsvcs/servers/5e1697a4c2af4dc3aaa0c4355d51b47f/rest/services/gadm0_v4_1_country_precalculated_aoi_summaries_Oct_2025_simplified/FeatureServer';
+  'https://utility.arcgis.com/usrsvcs/servers/a5e0c4b6c24048948a7095823d277c56/rest/services/gadm0_v4_1_country_precalculated_aoi_summaries_Oct_2025/FeatureServer';
 const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
   'https://utility.arcgis.com/usrsvcs/servers/dcd82cc752bf45eea09e454a2aac2763/rest/services/gadm1_v4_1_province_precalculated_aoi_summaries_Oct_2025/FeatureServer';
 
