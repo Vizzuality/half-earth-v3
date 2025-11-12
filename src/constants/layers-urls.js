@@ -441,7 +441,7 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/aa916663f833485aa1ca74cb02461856/rest/services/NRC_country_marine_species_list_Oct_2025/FeatureServer',
   // AOIs lookup tables
   [SEARCH_LOOKUP_TABLE]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/analyze_areas_aoi_lookup_searchbar_Oct_2025/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/analyze_areas_aoi_lookup_searchbar_Nov_2025_ordered/FeatureServer/0',
   [ELU_LOOKUP_TABLE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   // [AMPHIBIAN_LOOKUP]:
