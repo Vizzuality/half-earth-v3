@@ -37,8 +37,8 @@ function FeaturePlaceLinks({ slug, hepmLinks, t }) {
       rel="noopener noreferrer"
       className={styles.link}
     >
-      {index === 0 && t(`Priority Place ${link.id}`)}
-      {index > 0 && isNaN(link.id) ? t(`, ${link.id}`) : t(`, #${link.id}`)}
+      {index === 0 && t(`Priority Place #${link.id}`)}
+      {index > 0 && t(`, ${link.id}`)}
     </a>
   ));
 }
