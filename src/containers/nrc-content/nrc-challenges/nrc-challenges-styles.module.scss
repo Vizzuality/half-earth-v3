@@ -1,9 +1,9 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .challengesContainer {
-  background: $dark;
-  border: 1px solid $elephant;
+  background: settings.$dark;
+  border: 1px solid settings.$elephant;
   border-radius: 6px;
   margin: 8px 16px 8px 0;
   position: relative;
@@ -15,18 +15,21 @@
     justify-content: space-between;
     padding: 16px;
     margin: 0;
+
     .chartTitleContainer {
       align-items: center;
       display: flex;
+
       .chartTitleIndicators,
       .chartTitleFilter {
         align-items: center;
         display: flex;
       }
     }
+
     .chartTitle {
       @extend %bodyText;
-      color: $white;
+      color: settings.$white;
       margin: 0 10px 0 0;
       white-space: nowrap;
     }
@@ -62,22 +65,22 @@
           .xAxisIndicator,
           .yAxisIndicator {
             @extend %bodyText;
-            color: $alto;
-            font-size: $font-size-tick;
+            color: settings.$alto;
+            font-size: settings.$font-size-tick;
           }
         }
       }
 
       .yAxisContainer {
         @extend %bodyText;
-        color: $alto;
+        color: settings.$alto;
         width: 330px;
         transform-origin: left;
         transform: rotate(-90deg);
         position: relative;
         bottom: 50%;
         left: 2px;
-        font-size: $font-size-tick;
+        font-size: settings.$font-size-tick;
       }
     }
 
@@ -85,18 +88,19 @@
       @extend %annotation;
       margin: 24px;
       align-self: flex-end;
+
       .legendTitle {
-        color: $grey-text;
+        color: settings.$grey-text;
         font-weight: 300;
-        font-size: $font-size-legend;
+        font-size: settings.$font-size-legend;
       }
 
       .legendItem {
         align-items: center;
-        color: $white;
+        color: settings.$white;
         display: flex;
         margin: 0;
-        font-size: $font-size-tick;
+        font-size: settings.$font-size-tick;
 
         .legendItemColor {
           border-radius: 50%;
@@ -125,6 +129,7 @@
   &.shrunken {
     .chartHeader {
       position: relative;
+
       svg {
         position: absolute;
         right: 16px;
@@ -134,9 +139,11 @@
       .chartTitleContainer {
         align-items: flex-start;
         flex-direction: column;
+
         .dropdownContainer {
           margin-right: 6px;
           width: 180px;
+
           span {
             max-width: 145px;
             text-overflow: ellipsis;
@@ -189,10 +196,10 @@
 
 .titleTooltip {
   @extend %annotation;
-  border-radius: $border-radius-desktop;
-  background: $white;
-  box-shadow: $box-shadow-light;
-  color: $dark-text;
+  border-radius: settings.$border-radius-desktop;
+  background: settings.$white;
+  box-shadow: settings.$box-shadow-light;
+  color: settings.$dark-text;
   margin-bottom: 5px;
   padding: 2px 6px;
   width: 200px;

@@ -1,18 +1,18 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
   display: flex;
   min-height: 138px;
   max-width: 413px;
-  outline: 1px solid $elephant;
+  outline: 1px solid settings.$elephant;
   padding: 0;
   position: relative;
   transition: 0.4s;
 
   .numberContainer {
     align-content: center;
-    border-right: 1px solid $elephant;
+    border-right: 1px solid settings.$elephant;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,7 +21,7 @@
 
     p {
       @extend %display1;
-      color: $white;
+      color: settings.$white;
       font-size: 32px;
     }
 
@@ -32,7 +32,7 @@
 
   .content {
     border-left: 1px solid transparent;
-    color: $white;
+    color: settings.$white;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -69,14 +69,14 @@
 
     p {
       @extend %annotation;
-      color: $white;
+      color: settings.$white;
       margin: 0 8px 0 0;
     }
   }
 }
 
 .container:hover {
-  box-shadow: 0 0 0 2px $brand-color-main;
+  box-shadow: 0 0 0 2px settings.$brand-color-main;
   outline: none;
 
   .gif {
@@ -95,8 +95,8 @@
     border-left: none;
   }
 
-  .numberContainer  {
-    border-right: 2px solid $brand-color-main;
+  .numberContainer {
+    border-right: 2px solid settings.$brand-color-main;
   }
 
   .volumeContainer {

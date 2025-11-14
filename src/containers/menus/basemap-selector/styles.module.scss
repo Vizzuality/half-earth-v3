@@ -1,9 +1,9 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .basemapContainer {
   bottom: 16px;
-  border: 2px solid $grey-text;
+  border: 2px solid settings.$grey-text;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -12,16 +12,17 @@
   position: absolute;
   right: 16px;
   width: 64px;
-  z-index: $default-z-index;
+  z-index: settings.$default-z-index;
   transition: 0.3s;
+
   &:hover {
-    border: 2px solid $brand-color-main-hover;
+    border: 2px solid settings.$brand-color-main-hover;
   }
 
 
   .basemapLabel {
     @extend %miniAnnotation;
-    color: $white;
+    color: settings.$white;
     margin: 1px auto;
   }
 }

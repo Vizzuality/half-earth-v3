@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .modal {
   padding: 0;
@@ -8,7 +8,7 @@
   width: 90%;
   height: auto;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     width: 50%;
     min-width: 512px;
   }
@@ -17,7 +17,7 @@
 .modalContent {
   padding: 20px 30px;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     padding: 50px 60px;
   }
 
@@ -34,14 +34,14 @@
 }
 
 .metadataDescription {
-  margin: $site-gutter 0;
+  margin: settings.$site-gutter 0;
 }
 
 .metadataList {
   font-size: 12px;
   font-weight: 300;
   font-style: normal;
-  margin: $site-gutter 0;
+  margin: settings.$site-gutter 0;
 
   dt,
   dd {
@@ -57,22 +57,22 @@
     margin-left: 10px;
   }
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     font-size: 14px;
   }
 }
 
 .metadataSource {
   opacity: 0.5;
-  font-size: $font-size-xxs;
+  font-size: settings.$font-size-xxs;
   font-weight: 300;
   line-height: 1.5;
 
   a {
-    color: $brand-color-main;
+    color: settings.$brand-color-main;
   }
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     font-size: 12px;
   }
 }

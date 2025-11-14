@@ -1,13 +1,12 @@
-@import 'styles/settings';
-@import 'styles/typography-extends.scss';
-
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
   display: flex;
   align-items: center;
   padding: 30px;
   width: 100%;
-  border: 1px dashed $white;
+  border: 1px dashed settings.$white;
   border-radius: 4px;
   cursor: pointer;
 
@@ -23,7 +22,7 @@
 
     .label {
       @extend %bodyText;
-      color: $white;
+      color: settings.$white;
       display: block;
       padding-bottom: 0;
     }

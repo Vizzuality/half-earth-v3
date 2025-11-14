@@ -1,6 +1,6 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
   display: flex;
@@ -11,24 +11,24 @@
   width: 100vw;
   justify-content: space-between;
 
-  @media #{$mobile-landscape} {
+  @media #{settings.$mobile-landscape} {
     margin-top: 0px;
     justify-content: start;
   }
 
   .subtitle {
     @extend %subtitle;
-    color: $robins-egg-blue;
+    color: settings.$robins-egg-blue;
     text-align: center;
 
-    @media #{$mobile-landscape} {
+    @media #{settings.$mobile-landscape} {
       margin-bottom: 0;
     }
   }
 
   .title {
     @extend %display1;
-    color: $white;
+    color: settings.$white;
     font-weight: 200;
     margin: 6px 20px 0 20px;
     text-align: center;
@@ -36,7 +36,7 @@
     padding: 0;
     line-height: 32px;
 
-    @media #{$mobile-landscape} {
+    @media #{settings.$mobile-landscape} {
       margin-top: 0;
       padding: 20px;
     }
@@ -44,12 +44,12 @@
 
   .footer {
     @extend %annotation;
-    color: $grey-text;
+    color: settings.$grey-text;
     display: flex;
     font-weight: 300;
     margin: 0 20px 0 20px;
 
-    @media #{$mobile-landscape} {
+    @media #{settings.$mobile-landscape} {
       bottom: 40px;
       position: absolute;
       font-size: 12px;
@@ -61,7 +61,7 @@
     }
 
     a {
-      color: $grey-text;
+      color: settings.$grey-text;
       text-decoration: underline;
     }
   }
@@ -74,7 +74,7 @@
     gap: 8px;
     margin: 32px 16px;
 
-    @media #{$mobile-landscape} {
+    @media #{settings.$mobile-landscape} {
       flex-direction: row;
       flex-wrap: nowrap;
       gap: 24px;

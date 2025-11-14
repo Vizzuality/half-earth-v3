@@ -1,11 +1,11 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
-  background: $dark;
-  border: 1px solid $elephant;
+  background: settings.$dark;
+  border: 1px solid settings.$elephant;
   border-radius: 8px;
-  color: $white;
+  color: settings.$white;
   display: flex;
   flex-direction: column;
   height: auto;
@@ -22,7 +22,7 @@
   .description {
     @extend %bodyText;
 
-    @media print{
+    @media print {
       font-size: 14pt;
       line-height: 22pt;
     }
@@ -46,10 +46,10 @@
 
 .tooltip {
   @extend %annotation;
-  border-radius: $border-radius-desktop;
-  background: $white;
-  box-shadow: $box-shadow-light;
-  color: $dark-text;
+  border-radius: settings.$border-radius-desktop;
+  background: settings.$white;
+  box-shadow: settings.$box-shadow-light;
+  color: settings.$dark-text;
   margin-bottom: 5px;
   padding: 2px 6px;
   width: 200px;

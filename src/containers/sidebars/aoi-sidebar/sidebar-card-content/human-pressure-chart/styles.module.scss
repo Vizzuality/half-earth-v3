@@ -1,11 +1,11 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .title {
   @extend %display2;
   text-align: center;
   margin: 0;
-  padding-bottom: $site-gutter;
+  padding-bottom: settings.$site-gutter;
   letter-spacing: 0.8px;
 }
 
@@ -27,6 +27,7 @@
       padding: 0;
 
     }
+
     .percentage {
       @extend %display2;
       margin: 0;

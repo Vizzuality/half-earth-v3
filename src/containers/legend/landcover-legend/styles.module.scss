@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .legendContainer {
   bottom: 28px;
@@ -7,21 +7,22 @@
   flex-direction: column;
   height: 64px;
   position: absolute;
-  left: $sidebar-width;
+  left: settings.$sidebar-width;
   margin-left: 46px;
-  z-index: $default-z-index;
+  z-index: settings.$default-z-index;
   max-width: 500px;
-  @media #{$tablet-portrait} {
+
+  @media #{settings.$tablet-portrait} {
     bottom: 50px;
     max-width: 250px;
   }
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     max-width: 400px;
   }
 
 
-  @media #{$desktop} {
+  @media #{settings.$desktop} {
     bottom: 16px;
     max-width: none;
   }
@@ -29,7 +30,7 @@
 
   .legendTitle {
     @extend %annotation;
-    color: $white;
+    color: settings.$white;
     text-transform: uppercase;
   }
 
@@ -39,7 +40,7 @@
     flex-wrap: wrap;
     height: 12px;
 
-    @media #{$desktop} {
+    @media #{settings.$desktop} {
       max-width: 900px;
     }
 
@@ -51,7 +52,7 @@
       height: 12px;
       margin-bottom: 6px;
 
-      @media #{$desktop} {
+      @media #{settings.$desktop} {
         margin-bottom: 0;
       }
 
@@ -62,9 +63,10 @@
         height: 8px;
         margin-right: 4px;
       }
+
       .legendItemLabel {
         @extend %annotation;
-        color: $white;
+        color: settings.$white;
         white-space: nowrap;
       }
     }

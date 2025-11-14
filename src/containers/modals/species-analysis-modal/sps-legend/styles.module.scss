@@ -1,12 +1,12 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .legend {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     justify-content: space-between;
     flex-direction: row;
   }

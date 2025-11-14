@@ -1,51 +1,52 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .tooltipPlacement {
   position: absolute;
-  z-index: $over-all;
+  z-index: settings.$over-all;
 }
 
 .tooltipContainer {
-    align-items: center;;
-    display: flex;
-    justify-content: space-between;
-    height: 38px;
-    min-width: 170px;
-    max-width: 370px;
+  align-items: center;
+  ;
+  display: flex;
+  justify-content: space-between;
+  height: 38px;
+  min-width: 170px;
+  max-width: 370px;
 }
 
 .tooltipContainerReverse {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 .tooltip {
-    @extend %annotation;
-    align-items: center;
-    background-color: $white;
-    border-radius: 2px;
-    display: flex;
-    height: 38px;
-    justify-content: center;
-    min-width: 165px;
-    padding: 0 10px;
+  @extend %annotation;
+  align-items: center;
+  background-color: settings.$white;
+  border-radius: 2px;
+  display: flex;
+  height: 38px;
+  justify-content: center;
+  min-width: 165px;
+  padding: 0 10px;
 }
 
 .arrow {
-    width: 0;
-    height: 0;
-    top: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
+  width: 0;
+  height: 0;
+  top: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
 }
 
 .arrowLeft {
-    border-right: 5px solid $white;
-    left: -5px;
+  border-right: 5px solid settings.$white;
+  left: -5px;
 }
 
 .arrowRight {
-    border-left: 5px solid $white;
-    right: -5px;
+  border-left: 5px solid settings.$white;
+  right: -5px;
 }

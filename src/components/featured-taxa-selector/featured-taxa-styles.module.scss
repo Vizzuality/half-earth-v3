@@ -1,13 +1,13 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .wrapper {
   overflow: hidden;
   @include bottom();
   position: fixed;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     position: absolute;
     width: unset;
     bottom: 20px;
@@ -26,7 +26,7 @@
   border-radius: 2px;
   padding: 10px 14px 10px 12px;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     padding: 10px 0;
     width: 500px;
   }
@@ -48,20 +48,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $grey-text;
+  background-color: settings.$grey-text;
 }
 
 .taxaName {
   @extend %bodyText;
-  color: $white;
+  color: settings.$white;
   margin: 0;
 }
 
 .selectedTaxa {
-  background-color: $priority-blue;
-  box-shadow: 0 0 8px 0 $white;
-  border: 2px solid $white;
-  svg g{
-    fill: $white;
+  background-color: settings.$priority-blue;
+  box-shadow: 0 0 8px 0 settings.$white;
+  border: 2px solid settings.$white;
+
+  svg g {
+    fill: settings.$white;
   }
 }

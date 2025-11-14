@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .tooltipContainer {
   display: flex;
@@ -25,9 +25,9 @@
 
   .switchDataButton {
     @extend %subtitle;
-    border: 1px solid $white;
-    color: $white;
-    font-size: $font-size-xxs;
+    border: 1px solid settings.$white;
+    color: settings.$white;
+    font-size: settings.$font-size-xxs;
     height: 25px;
     text-transform: capitalize;
     min-width: 50px;
@@ -39,8 +39,9 @@
 
   .switchDataActiveButton {
     @extend %subtitle;
-    background-color: $white;
-    color: $_temporary-dark-text;
+    background-color: settings.$white;
+    // Replaced private $_temporary-dark-text with public token
+    color: settings.$dark-text;
   }
 }
 
@@ -51,19 +52,19 @@
 
 .tooltipName {
   @extend %title;
-  color: $white;
+  color: settings.$white;
 }
 
 .tooltipExplore {
   @extend %title;
-  background-color: $white;
+  background-color: settings.$white;
   width: 100%;
   height: 30px;
   padding: 5px 20px;
   border-radius: 2px;
 
   &:hover {
-    background-color: $brand-color-main;
+    background-color: settings.$brand-color-main;
   }
 }
 
@@ -72,7 +73,7 @@
   position: absolute;
   right: 10px;
   top: 10px;
-  fill: $white;
+  fill: settings.$white;
   cursor: pointer;
 }
 
@@ -90,7 +91,7 @@
 
   .subtitle {
     @extend %subtitle;
-    font-size: $font-size-xxs;
+    font-size: settings.$font-size-xxs;
     letter-spacing: 1.2px;
     margin: 0;
     padding-bottom: 10px;
@@ -100,14 +101,14 @@
 .countryInfo {
   display: flex;
   flex-direction: column;
-  background-color: $white-opacity;
-  padding: $site-gutter;
+  background-color: settings.$white-opacity;
+  padding: settings.$site-gutter;
   border-radius: 6px;
   margin-bottom: 10px;
 
   .infoPill {
     display: flex;
-    padding-bottom: $site-gutter;
+    padding-bottom: settings.$site-gutter;
 
     &:last-child {
       padding: 0;
@@ -147,6 +148,7 @@
     .spi {
       padding-bottom: 0;
     }
+
     .subtitle {
       font-size: 12px;
       padding-bottom: 0;
@@ -174,7 +176,8 @@
     .switchDataActiveButton {
       @extend %subtitle;
       background-color: #E9E9E9;
-      color: $_temporary-dark-text;
+      // Replaced private $_temporary-dark-text with public token
+      color: settings.$dark-text;
     }
   }
 
@@ -194,13 +197,16 @@
       }
     }
 
-    @media #{$mobile-landscape} {
+    @media #{settings.$mobile-landscape} {
       padding: 10px 10% 10px 8%;
+
       .infoPill {
         padding-bottom: 4px;
+
         .text {
           font-size: 12px;
         }
+
         .numeric {
           font-size: 12px;
         }

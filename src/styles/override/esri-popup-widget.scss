@@ -1,21 +1,21 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .esri-popup {
-  @media #{$tablet-only} {
+  @media #{settings.$tablet-only} {
     top: auto !important;
     bottom: auto !important;
   }
 
-  @media #{$mobile-only} {
+  @media #{settings.$mobile-only} {
     left: 3vw !important;
     top: auto !important;
     bottom: 0 !important;
     right: 3vw !important;
   }
 
-  @media #{$mobile-landscape} {
+  @media #{settings.$mobile-landscape} {
     left: auto !important;
     right: 4vw !important;
     bottom: auto !important;
@@ -23,7 +23,9 @@
   }
 }
 
-.esri-popup__header, .esri-popup__footer, .esri-popup__feature-menu {
+.esri-popup__header,
+.esri-popup__footer,
+.esri-popup__feature-menu {
   display: none;
 }
 
@@ -34,15 +36,18 @@
     top: 16px;
     bottom: 16px;
   }
+
   padding-bottom: 3px;
 
-  @media #{$mobile-only} {
+  @media #{settings.$mobile-only} {
     border-radius: 8px;
   }
-  @media #{$mobile-landscape} {
+
+  @media #{settings.$mobile-landscape} {
     border-radius: 8px;
   }
 }
+
 .esri-features__content-container {
   padding: 0 !important;
 }
@@ -51,13 +56,14 @@
   max-width: 285px;
   max-height: 500px !important;
   border-radius: 2px;
-  background-color: $firefly;
+  background-color: settings.$firefly;
 
-  @media #{$mobile-only} {
+  @media #{settings.$mobile-only} {
     min-width: 94vw !important;
     background: transparent;
   }
-  @media #{$mobile-landscape} {
+
+  @media #{settings.$mobile-landscape} {
     min-width: 340px !important;
     max-height: 340px !important;
     background: transparent;
@@ -69,17 +75,17 @@
 }
 
 .esri-feature__content-node {
-  background-color: $firefly;
-  color: $white;
+  background-color: settings.$firefly;
+  color: settings.$white;
   padding: 16px;
 
-  @media #{$mobile-only} {
-    background-color: $elephant;
+  @media #{settings.$mobile-only} {
+    background-color: settings.$elephant;
   }
 }
 
 .esri-popup__pointer-direction {
-  background-color: $firefly;
+  background-color: settings.$firefly;
   height: 5px;
   transform: scale(2.0, 2) rotate(45deg) !important;
   width: 10px;
@@ -103,7 +109,7 @@
 }
 
 .esri-popup__pointer {
-  @media #{$mobile-landscape} {
+  @media #{settings.$mobile-landscape} {
     display: none;
   }
 }
@@ -120,8 +126,8 @@
 
 .tooltip-area-name {
   letter-spacing: 1.5px;
-  line-height: $line-height;
-  font-size: $font-size-xxs;
+  line-height: settings.$line-height;
+  font-size: settings.$font-size-xxs;
   text-transform: uppercase;
   margin: 0;
 }

@@ -1,34 +1,35 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/common-animations.module';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/common-animations.module' as *;
 
 .sharedSidebarCardContainer {
-  width: calc(#{$sidebar-width} + #{$sidebar-border-width} + #{$sidebar-border-width});
-  margin: 2px 2px $cards-bottom-margin;
+  width: calc(#{settings.$sidebar-width} + #{settings.$sidebar-border-width} + #{settings.$sidebar-border-width});
+  margin: 2px 2px settings.$cards-bottom-margin;
   box-sizing: border-box;
-  border: $sidebar-border;
-  border-radius: $sidebar-border-radius;
+  border: settings.$sidebar-border;
+  border-radius: settings.$sidebar-border-radius;
 
   &:hover {
-    border-color: $brand-color-main;
+    border-color: settings.$brand-color-main;
   }
 
   &.open {
-    border-color: $brand-color-main;
+    border-color: settings.$brand-color-main;
   }
 }
 
-.sharedLayersTogglesContainer{
+.sharedLayersTogglesContainer {
   @include backdropBlur();
-  padding-left: $sidebar-paddings;
-  padding-right: $sidebar-paddings;
+  padding-left: settings.$sidebar-paddings;
+  padding-right: settings.$sidebar-paddings;
   overflow: hidden;
-  width: $sidebar-width;
+  width: settings.$sidebar-width;
   height: 0;
   @include animationFunction($propertyToAnimate: height);
+
   &.open {
     height: auto;
     overflow: visible;
-    padding-bottom: $sidebar-paddings;
+    padding-bottom: settings.$sidebar-paddings;
   }
 }

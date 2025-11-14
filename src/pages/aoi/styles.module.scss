@@ -1,12 +1,12 @@
-@import 'styles/settings';
-@import 'styles/common-animations.module';
-@import 'styles/ui.module';
+@use 'styles/settings' as settings;
+@use 'styles/common-animations.module' as *;
+@use 'styles/ui.module' as *;
 
 .sidebarContainer {
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
-  top: $ui-left-top;
-  left: $site-gutter;
+  top: settings.$ui-left-top;
+  left: settings.$site-gutter;
 }
 
 .modeSwitch {
@@ -20,7 +20,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: $challenges-view-background;
+  background-color: settings.$challenges-view-background;
   width: 100vw;
   height: 100vh;
 }
@@ -28,13 +28,13 @@
 
 .challengesChart {
   position: relative;
-  left: calc(#{$sidebar-width} + 120px);
+  left: calc(#{settings.$sidebar-width} + 120px);
   top: 50px;
 }
 
 .rankingChart {
   position: relative;
-  left: calc(#{$sidebar-width} + 83px);
+  left: calc(#{settings.$sidebar-width} + 83px);
   top: 50px;
 }
 

@@ -1,13 +1,13 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .dropdownContainer {
   padding: 10px;
-  background-color: $white;
+  background-color: settings.$white;
   border-radius: 6px;
   position: relative;
-  border: 1px solid $dark-opacity;
+  border: 1px solid settings.$dark-opacity;
 
   &.fullWidth {
     width: 100%;
@@ -26,7 +26,7 @@
 
 .selectedOptionLabel {
   @extend %title;
-  color: $dark-text;
+  color: settings.$dark-text;
 }
 
 .closeSearch {
@@ -59,21 +59,23 @@
   margin-left: 10px;
   transform: rotate(90deg);
   transition: all .1s linear;
+
   &.dropdownOpen {
     position: relative;
     top: -2px;
     transform: rotate(-90deg);
   }
+
   path {
-    fill: $dark-text;
-    stroke: $dark-text;
+    fill: settings.$dark-text;
+    stroke: settings.$dark-text;
   }
 }
 
 .group {
   &:not(:last-child) {
     &::after {
-      background-color: $dark-opacity;
+      background-color: settings.$dark-opacity;
       height: 1px;
       content: "";
       display: block;
@@ -103,30 +105,31 @@
   max-height: 220px;
   overflow: auto;
   @extend %title;
-  color: $dark-text;
+  color: settings.$dark-text;
   cursor: pointer;
-  background-color: $white;
+  background-color: settings.$white;
   list-style: none;
-  padding: $sidebar-paddings 0;
+  padding: settings.$sidebar-paddings 0;
   margin-top: 4px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  border: 1px solid $dark-opacity;
+  border: 1px solid settings.$dark-opacity;
 
   &.fullWidth {
     width: 100%;
   }
 
   .option {
-    padding: 5px $sidebar-paddings;
+    padding: 5px settings.$sidebar-paddings;
 
     &:hover {
-      background-color: $dark-opacity;
+      background-color: settings.$dark-opacity;
     }
 
     &.selectedOption {
       pointer-events: none;
-      color: rgba($_temporary-dark-text, 0.5);
+      // Replaced private $_temporary-dark-text with public token
+      color: rgba(settings.$dark-text, 0.5);
     }
   }
 }
@@ -136,12 +139,12 @@
 }
 
 .optionListContainer {
-  z-index: $over-modal;
+  z-index: settings.$over-modal;
 }
 
 .dark {
   background-color: transparent;
-  border: 1px solid $grey-text;
+  border: 1px solid settings.$grey-text;
 
   &:not(:first-child) {
     border-top-left-radius: 0;
@@ -151,7 +154,7 @@
 
   &:hover,
   &.open {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
 
   .option {
@@ -159,7 +162,7 @@
   }
 
   .selectedOptionLabel {
-    color: $grey-text;
+    color: settings.$grey-text;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -174,24 +177,24 @@
     width: 16px;
 
     path {
-      fill: $white;
-      stroke: $white;
+      fill: settings.$white;
+      stroke: settings.$white;
     }
   }
 
   .searchInput {
     input {
-      color: $white;
+      color: settings.$white;
 
       &::placeholder {
-        color: $grey-text;
+        color: settings.$grey-text;
       }
     }
 
   }
 
   .closeSearch svg {
-    fill: $white;
+    fill: settings.$white;
   }
 
 }
@@ -200,9 +203,10 @@
   border-radius: 6px;
   text-transform: unset;
   padding: 2px;
+
   .option {
     padding: 5px 6px;
-    color: $dark-text;
+    color: settings.$dark-text;
     font-size: 14px;
   }
 }
@@ -217,16 +221,17 @@
   background-color: transparent;
   border: none;
   border-radius: 0;
-  border-bottom: 1px solid $white;
+  border-bottom: 1px solid settings.$white;
   padding: 7px 0 13px 0;
   height: 36px;
+
   &:hover,
   &.open {
     background-color: transparent;
   }
 
   .selectedOptionLabel {
-    color: $white;
+    color: settings.$white;
     width: 200px;
     white-space: nowrap;
     overflow: hidden;
@@ -239,8 +244,8 @@
     width: 16px;
 
     path {
-      fill: $white;
-      stroke: $white;
+      fill: settings.$white;
+      stroke: settings.$white;
     }
   }
 }
@@ -248,10 +253,11 @@
 .disabled {
   pointer-events: none;
   cursor: not-allowed;
+
   .arrowIcon {
     path {
-      fill: $white-opacity;
-      stroke: $white-opacity;
+      fill: settings.$white-opacity;
+      stroke: settings.$white-opacity;
     }
   }
 }
@@ -261,6 +267,7 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
+
   &:last-child {
     border-top-left-radius: 0;
     border-top-right-radius: 0;

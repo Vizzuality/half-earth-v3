@@ -1,26 +1,28 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .sourcesWrapper {
   @extend %annotation;
-  color: $dark-text;
+  color: settings.$dark-text;
   display: block;
-  padding-top: $paragraph-gutter;
+  padding-top: settings.$paragraph-gutter;
   font-style: normal;
 
   .source {
     text-decoration: underline;
+
     &:hover {
       cursor: pointer;
-      color: $dark-text-hover;
+      color: settings.$dark-text-hover;
     }
   }
 
   &.light {
-    color: $grey-text;
+    color: settings.$grey-text;
+
     .source {
       &:hover {
-        color: $grey-text-hover;
+        color: settings.$grey-text-hover;
       }
     }
   }
@@ -28,29 +30,33 @@
 
 .metadataSource {
   @extend %annotation;
-  color: $dark-text;
+  color: settings.$dark-text;
   display: block;
-  padding-top: $paragraph-gutter;
+  padding-top: settings.$paragraph-gutter;
   font-style: normal;
 
   p {
     margin: 0;
+
     a {
       text-decoration: underline;
-      color: $dark-text;
+      color: settings.$dark-text;
+
       &:hover {
         cursor: pointer;
-        color: $dark-text-hover;
+        color: settings.$dark-text-hover;
       }
     }
   }
 
   &.light {
-    color: $grey-text;
+    color: settings.$grey-text;
+
     a {
-      color: $grey-text;
+      color: settings.$grey-text;
+
       &:hover {
-        color: $grey-text-hover;
+        color: settings.$grey-text-hover;
       }
     }
   }

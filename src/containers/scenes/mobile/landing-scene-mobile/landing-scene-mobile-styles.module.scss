@@ -1,22 +1,22 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/common-animations.module';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/common-animations.module' as *;
+@use 'styles/typography-extends' as *;
 
 .sceneContainer {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - #{$nav-bar-height});
-  height: calc(100svh - #{$nav-bar-height});
+  height: calc(100vh - #{settings.$nav-bar-height});
+  height: calc(100svh - #{settings.$nav-bar-height});
   position: absolute;
-  top: $nav-bar-height;
+  top: settings.$nav-bar-height;
 
   @media screen and (max-height: 670px) {
     overflow: auto;
   }
 
-  @media #{$mobile-landscape} {
+  @media #{settings.$mobile-landscape} {
     flex-direction: row;
     height: calc(100dvb - 30px);
     overflow-y: hidden;

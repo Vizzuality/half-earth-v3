@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .footer {
   align-items: center;
@@ -9,16 +9,16 @@
 
   .footerText {
     @extend %annotation;
-    color: $white;
+    color: settings.$white;
     font-size: 14px;
   }
 
   .analyzeBtn {
-    background-color: $white;
+    background-color: settings.$white;
     white-space: nowrap;
     padding: 5px 15px;
     width: auto;
-    color: $dark-text;
+    color: settings.$dark-text;
 
     svg {
       fill: currentColor;
@@ -26,7 +26,7 @@
     }
 
     &:hover {
-      background-color: $brand-color-main;
+      background-color: settings.$brand-color-main;
     }
   }
 
@@ -36,6 +36,7 @@
     .footerText {
       font-size: 12px;
     }
+
     .analyzeBtn {
       width: 100%;
     }

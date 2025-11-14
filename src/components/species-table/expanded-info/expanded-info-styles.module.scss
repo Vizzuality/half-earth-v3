@@ -1,5 +1,4 @@
-@import 'styles/settings';
-
+@use 'styles/settings' as settings;
 
 .loaderContainer {
   min-height: 70px;
@@ -36,11 +35,11 @@
 }
 
 .description {
-  font-family: $font-family-1-light;
-  font-size: $font-size-sm;
+  font-family: settings.$font-family-1-light;
+  font-size: settings.$font-size-sm;
   flex: 1;
   text-align: left;
-  color: $white;
+  color: settings.$white;
 
   // To add ellipsis after 4 lines
   display: -webkit-box;
@@ -52,8 +51,8 @@
 }
 
 .link {
-  font-family: $font-family-1;
-  color: $brand-color-main;
+  font-family: settings.$font-family-1;
+  color: settings.$brand-color-main;
   text-transform: uppercase;
   text-underline-position: from-font;
 }

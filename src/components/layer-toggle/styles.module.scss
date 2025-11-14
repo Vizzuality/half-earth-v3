@@ -1,68 +1,68 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .light {
-  color: $white;
+  color: settings.$white;
 
   &.checked {
-    fill: $white;
-    stroke: $white;
+    fill: settings.$white;
+    stroke: settings.$white;
   }
 
   &:hover,
   &.checked {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
 
   label::after {
-    border: 1px solid $white;
+    border: 1px solid settings.$white;
   }
 
   input:checked+label::after {
-    border: 2px solid $white;
+    border: 2px solid settings.$white;
   }
 }
 
 .dark {
-  color: $dark-text;
+  color: settings.$dark-text;
 
   &.checked {
-    fill: $dark-text;
-    stroke: $dark-text;
+    fill: settings.$dark-text;
+    stroke: settings.$dark-text;
   }
 
   &:hover,
   &.checked {
-    background-color: $dark-opacity;
+    background-color: settings.$dark-opacity;
   }
 
   label::after {
-    border: 1px solid $dark-text;
+    border: 1px solid settings.$dark-text;
   }
 
   input:checked+label::after {
-    border: 2px solid $dark-text;
+    border: 2px solid settings.$dark-text;
   }
 }
 
 .lighter {
-  color: $dark-text;
+  color: settings.$dark-text;
 
   &.checked {
-    fill: $dark-text;
-    stroke: $dark-text;
+    fill: settings.$dark-text;
+    stroke: settings.$dark-text;
   }
 
   label::after {
-    border: 1px solid $dark-text;
+    border: 1px solid settings.$dark-text;
   }
 
   input:checked+label::after {
-    border: 2px solid $dark-text;
+    border: 2px solid settings.$dark-text;
   }
 }
 
 .disabled {
   &:hover {
-    background-color: $white-opacity;
+    background-color: settings.$white-opacity;
   }
 }

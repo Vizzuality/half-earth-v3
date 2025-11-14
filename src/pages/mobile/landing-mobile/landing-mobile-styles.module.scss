@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .container {
   position: relative;
@@ -16,7 +16,7 @@
     height: 7svh;
     right: 20px;
     top: 0;
-    z-index: $over-front;
+    z-index: settings.$over-front;
 
   }
 }

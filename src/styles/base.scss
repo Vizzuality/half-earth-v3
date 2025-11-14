@@ -1,10 +1,10 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/tooltip.scss';
-@import 'styles/override/tippy.scss';
-@import 'styles/override/esri-component.scss';
-@import 'styles/override/esri-ui.scss';
-@import 'styles/override/esri-popup-widget.scss';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/tooltip';
+@use 'styles/override/tippy';
+@use 'styles/override/esri-component';
+@use 'styles/override/esri-ui';
+@use 'styles/override/esri-popup-widget';
 
 $site-gutter: 20px;
 
@@ -21,7 +21,7 @@ html {
 }
 
 body * {
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
 }
@@ -57,7 +57,7 @@ button:focus {
 @font-face {
   font-family: 'Open Sans';
   src: url('../assets/fonts/OpenSans-Regular.woff2') format('woff2');
-  font-weight: $font-weight;
+  font-weight: settings.$font-weight;
   font-display: swap;
   font-style: normal;
 }
@@ -65,7 +65,7 @@ button:focus {
 @font-face {
   font-family: 'Open Sans';
   src: url('../assets/fonts/OpenSans-Italic.woff2') format('woff2');
-  font-weight: $font-weight;
+  font-weight: settings.$font-weight;
   font-display: swap;
   font-style: italic;
 }
@@ -73,7 +73,7 @@ button:focus {
 @font-face {
   font-family: 'Open Sans';
   src: url('../assets/fonts/OpenSans-SemiBold.woff2') format('woff2');
-  font-weight: $font-weight-semibold;
+  font-weight: settings.$font-weight-semibold;
   font-display: swap;
   font-style: normal;
 }
@@ -81,7 +81,7 @@ button:focus {
 @font-face {
   font-family: 'Open Sans';
   src: url('../assets/fonts/OpenSans-Bold.woff2') format('woff2');
-  font-weight: $font-weight-bold;
+  font-weight: settings.$font-weight-bold;
   font-display: swap;
   font-style: normal;
 }
@@ -89,7 +89,7 @@ button:focus {
 @font-face {
   font-family: 'Open Sans';
   src: url('../assets/fonts/OpenSans-BoldItalic.woff2') format('woff2');
-  font-weight: $font-weight-bold;
+  font-weight: settings.$font-weight-bold;
   font-display: swap;
   font-style: italic;
 }
@@ -97,7 +97,7 @@ button:focus {
 @font-face {
   font-family: 'Open Sans';
   src: url('../assets/fonts/OpenSans-Light.woff2') format('woff2');
-  font-weight: $font-weight-light;
+  font-weight: settings.$font-weight-light;
   font-display: swap;
   font-style: normal;
 }
@@ -105,7 +105,7 @@ button:focus {
 @font-face {
   font-family: 'Open Sans';
   src: url('../assets/fonts/OpenSans-LightItalic.woff2') format('woff2');
-  font-weight: $font-weight-light;
+  font-weight: settings.$font-weight-light;
   font-display: swap;
   font-style: italic;
 }
@@ -121,13 +121,13 @@ button:focus {
 
 .visually-hidden {
   position: absolute;
-	position: absolute !important;
-	width: 1px !important;
-	height: 1px !important;
-	padding: 0 !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	clip: rect(0,0,0,0) !important;
-	white-space: nowrap !important;
-	border: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
