@@ -42,7 +42,7 @@ function NRCLandingSidebar({
       id: GLOBAL_SPI_FEATURE_LAYER,
       title: GLOBAL_SPI_FEATURE_LAYER,
       slug: GLOBAL_SPI_FEATURE_LAYER, // TODO: change specific slug for metadata
-      portalId: 'e8683dd4a3c9457aa1f4e9af8ce8fe49',
+      portalId: '7c71497f02f34a6b9fc52f1c600a684e',
       metadataTitle: t('Land SPI'),
     },
     {

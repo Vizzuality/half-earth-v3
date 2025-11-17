@@ -32,6 +32,7 @@ function DataGlobeComponent({
 }) {
   return (
     <>
+    
       <Logo className={uiStyles.halfEarthLogoTopLeft} />
       <DataScene
         sceneMode={sceneMode}

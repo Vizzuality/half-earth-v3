@@ -1,0 +1,111 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.banner {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: $over-modal;
+  width: 100%;
+  transform: translateY(100%);
+  overflow: hidden;
+  background-color: rgba($navy-he, 0.8);
+  padding: 6px;
+  padding-left: 2rem;
+  outline: none;
+  font-size: small;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  font-family: $font-family-inter;
+
+  @extend %annotation;
+  color: $white;
+}
+
+.buttonItems {
+  color: $dark-text;
+  gap: 10px;
+  font-family: $font-family-inter ;
+  text-decoration: none;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 0.5px;
+  }
+
+  path,
+  circle,
+  rect,
+  line,
+  polyline,
+  polygon,
+  ellipse {
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 0.2px;
+  }
+}
+
+.bannerContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bannerHeading {
+  color: #18BAB4;
+}
+
+.bannerText {
+  color: $white;
+  font-weight: 600;
+}
+
+@media #{$desktop} {
+  .bannerContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.closeIcon {
+  width: 42px;
+  height: 42px;
+  padding: 8px 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: $white;
+
+  path,
+  circle,
+  rect,
+  line,
+  polyline,
+  polygon,
+  ellipse {
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 0.2px;
+  }
+}
+
+.button {
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

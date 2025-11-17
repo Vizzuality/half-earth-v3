@@ -80,7 +80,7 @@ const getCountryId = createSelector([getCountryData], (countryData) => {
   if (!countryData) {
     return null;
   }
-  return countryData.OBJECTID;
+  return countryData.MOL_ID;
 });
 
 export const getOnboardingType = createSelector(

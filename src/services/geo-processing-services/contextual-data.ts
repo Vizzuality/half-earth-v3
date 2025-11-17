@@ -9,6 +9,7 @@ import {
 const { inputGeometryKey, outputTablesKeys } =
   CONTEXTUAL_DATA_SERVICE_CONFIG;
 
+  // Function to get CRF data for a given area of interest (AOI) feature geometry
 export function getCrfData(aoiFeatureGeometry: GetCrfData) {
   return new Promise((resolve, reject) => {
     const JSONGeometry = aoiFeatureGeometry.toJSON();

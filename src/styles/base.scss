@@ -110,6 +110,14 @@ button:focus {
   font-style: italic;
 }
 
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/Inter-LightItalic.ttf') format('ttf');
+  font-weight: $font-weight-light;
+  font-display: swap;
+  font-style: normal;
+}
+
 
 .visually-hidden {
   position: absolute;

@@ -99,7 +99,7 @@ function SearchLocation({
   }, [searchLocationModal]);
 
   const renderSuggestion = (text) => {
-    const [name, layer] = text.split('|');
+    const [name, layer] = text.split(/\|(?=[^|]*$)/);
     const layerTypeText = layer && getLayerTypeText(layer, t);
     return (
       <div className={styles.suggestion}>

@@ -34,6 +34,7 @@ function FeaturedPlaceCardContainer(props) {
     link: '',
     hepmLink: [],
     dateTime: '',
+    slug: '',
   });
 
   const handleClose = () => {
