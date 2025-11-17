@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .globesContainerLanding {
   align-content: end;
@@ -8,7 +8,7 @@
   width: 100%;
   margin: auto 0 0 0;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     padding: 0 45px;
   }
   &.isMobile {
@@ -27,7 +27,7 @@
   z-index: 70;
   bottom: 0;
 
-  @media #{$tablet-landscape} {
+  @media #{settings.$tablet-landscape} {
     padding: 0 45px;
   }
 }

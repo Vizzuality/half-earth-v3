@@ -1,11 +1,12 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .switcher {
   display: inline-block;
   position: relative;
-  @media #{$mobile-only} {
+
+  @media #{settings.$mobile-only} {
     position: static;
   }
 
@@ -14,20 +15,21 @@
   }
 
   &:hover .switcherBtn {
-    color: $white;
-    font-weight: $font-weight-bold;
+    color: settings.$white;
+    font-weight: settings.$font-weight-bold;
   }
 
   .switcherBtn {
     @extend %subtitle;
     border: none;
-    color: $white;
-    font-weight: $font-weight-bold;
+    color: settings.$white;
+    font-weight: settings.$font-weight-bold;
     margin-top: 4px;
     transition: color 200ms ease-in;
     height: 32px;
     width: 32px;
-    @media #{$mobile-only} {
+
+    @media #{settings.$mobile-only} {
       margin-top: 0;
       padding-top: 0;
       height: 7svh;
@@ -36,26 +38,26 @@
 
   .switcherContent {
     @extend %subtitle;
-    color: $grey-text;
+    color: settings.$grey-text;
     display: none;
     position: absolute;
     z-index: 1;
     right: 32px;
     top: 8px;
 
-    @media #{$mobile-only} {
+    @media #{settings.$mobile-only} {
       top: 0.3svh;
     }
 
 
     button {
       display: flex;
-      color: $grey-text;
-      font-size: $font-size-xs;
+      color: settings.$grey-text;
+      font-size: settings.$font-size-xs;
       text-transform: uppercase;
       padding: 5px;
 
-      @media #{$mobile-only} {
+      @media #{settings.$mobile-only} {
         height: 7svh;
         padding-top: 0;
         display: flex;
@@ -63,8 +65,8 @@
       }
 
       &:hover {
-        color: $white;
-        font-weight: $font-weight-bold;
+        color: settings.$white;
+        font-weight: settings.$font-weight-bold;
       }
     }
   }

@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .aboutBtn {
   @extend %annotation;
@@ -10,6 +10,6 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: $bring-to-front;
+  z-index: settings.$bring-to-front;
   padding: 20px 20px 8px 40px;
 }

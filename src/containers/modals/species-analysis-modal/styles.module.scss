@@ -1,13 +1,13 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .modal {
   width: 100vw !important;
   height: 100vh !important;
   max-width: 100%;
-  background-color: $elephant;
-  color: $grey-text;
+  background-color: settings.$elephant;
+  color: settings.$grey-text;
 }
 
 .closeBtn {
@@ -26,7 +26,7 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
@@ -41,7 +41,7 @@
   position: relative;
   margin-left: 0;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     margin: 0 130px;
   }
 }
@@ -54,7 +54,7 @@
 
 .title {
   @extend %display2;
-  font-size: $font-size-rg;
+  font-size: settings.$font-size-rg;
 }
 
 .subtitle {
@@ -62,13 +62,13 @@
 }
 
 .bold {
-  font-weight: $font-weight-bold;
+  font-weight: settings.$font-weight-bold;
 }
 
 .moreProtectionSentence {
   @extend %annotation;
   min-height: 26px;
-  color: $grey-text;
+  color: settings.$grey-text;
   margin-top: 20px;
   font-style: italic;
 }

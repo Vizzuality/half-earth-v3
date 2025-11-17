@@ -1,15 +1,15 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/common-animations.module';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/common-animations.module' as *;
 
 .sidebarContainer {
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
-  height: calc(100vh - #{$nav-bar-height});
-  width: calc(#{$sidebar-width} + 30px);
-  top: $nav-bar-height;
-  left: $site-gutter;
-  padding-bottom: $site-gutter;
+  height: calc(100vh - #{settings.$nav-bar-height});
+  width: calc(#{settings.$sidebar-width} + 30px);
+  top: settings.$nav-bar-height;
+  left: settings.$site-gutter;
+  padding-bottom: settings.$site-gutter;
   padding-left: 5px;
-  z-index: $default-z-index;
+  z-index: settings.$default-z-index;
 }

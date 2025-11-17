@@ -1,7 +1,7 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/ui.module';
-@import 'styles/common-animations.module';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/ui.module' as *;
+@use 'styles/common-animations.module' as *;
 
 $section-padding: 0 24px;
 
@@ -10,22 +10,23 @@ $section-padding: 0 24px;
   @include backdropBlur();
 
   flex-direction: column;
-  width: $sidebar-width;
+  width: settings.$sidebar-width;
   height: auto;
   border-radius: 12px;
-  background-color: $brand-color-secondary;
+  background-color: settings.$brand-color-secondary;
   overflow: hidden;
   @include animationFunction();
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     display: flex;
   }
 
-  &.bestPlaces{
-    box-shadow: $box-shadow-half-earth-green;
+  &.bestPlaces {
+    box-shadow: settings.$box-shadow-half-earth-green;
   }
+
   &.discoverPlaces {
-    box-shadow: $box-shadow-tangerine;
+    box-shadow: settings.$box-shadow-tangerine;
   }
 }
 
@@ -48,7 +49,7 @@ $section-padding: 0 24px;
 
 .title {
   @extend %headline;
-  color: $white;
+  color: settings.$white;
   margin-top: 54px;
   margin-bottom: 0;
 }
@@ -72,18 +73,18 @@ $section-padding: 0 24px;
 
   .buttonText {
     @extend %subtitle;
-    color: $white;
+    color: settings.$white;
   }
 
   .arrowIcon {
-    fill: $white;
+    fill: settings.$white;
     position: relative;
     top: 3px;
     left: 10px;
   }
 }
 
-.buttonSection{
+.buttonSection {
   display: flex;
   justify-content: flex-start;
   padding: $section-padding;
@@ -93,7 +94,7 @@ $section-padding: 0 24px;
     height: 40px;
     border-radius: 8px;
     padding: 0 16px;
-    color: $dark-text;
+    color: settings.$dark-text;
     text-transform: uppercase;
 
     &.bestPlaces {

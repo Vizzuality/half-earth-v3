@@ -1,21 +1,21 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
-@import 'styles/common-animations.module';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
+@use 'styles/common-animations.module' as *;
 
 $icon-size: 25px;
 
 .header {
-  padding-top: $sidebar-margin;
-  padding-left: $mobile-sidebar-side-paddings;
+  padding-top: settings.$sidebar-margin;
+  padding-left: settings.$mobile-sidebar-side-paddings;
   display: flex;
   flex-direction: column;
-  height: $sidebar-header-height-mobile;
+  height: settings.$sidebar-header-height-mobile;
   position: relative;
 
-  @media #{$tablet-portrait} {
-    padding-left: $sidebar-paddings;
-    height: $sidebar-header-height;
+  @media #{settings.$tablet-portrait} {
+    padding-left: settings.$sidebar-paddings;
+    height: settings.$sidebar-header-height;
   }
 }
 
@@ -30,18 +30,18 @@ $icon-size: 25px;
 
 .shareButton {
   position: absolute;
-  right: $share-button-margin;
-  top: $share-button-margin;
+  right: settings.$share-button-margin;
+  top: settings.$share-button-margin;
 }
 
 .button {
   display: flex;
   align-items: center;
-  font-size: $font-size-xxs;
-  font-weight: $font-weight-bold;
-  font-family: $font-family-1;
+  font-size: settings.$font-size-xxs;
+  font-weight: settings.$font-weight-bold;
+  font-family: settings.$font-family-1;
   letter-spacing: 2px;
-  color: $robins-egg-blue;
+  color: settings.$robins-egg-blue;
   padding: 0;
 }
 
@@ -75,7 +75,7 @@ $icon-size: 25px;
 .titleContainer {
   @extend %headline;
   font-size: 24px;
-  color: $white;
+  color: settings.$white;
   margin-top: 5px;
   margin-right: 40px;
   overflow: hidden;
@@ -86,7 +86,7 @@ $icon-size: 25px;
   display: flex;
   flex-direction: column;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     padding-bottom: 0;
     margin-right: 0;
     font-size: 32px;

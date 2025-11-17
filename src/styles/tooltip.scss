@@ -1,37 +1,37 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 %tooltip-apperance {
-	@extend %annotation;
-	background-color: $white !important;
-	color: $dark-text !important;
-	padding: 8px 10px !important;
-	opacity: 1 !important;
+  @extend %annotation;
+  background-color: settings.$white !important;
+  color: settings.$dark-text !important;
+  padding: 8px 10px !important;
+  opacity: 1 !important;
 }
 
 :global {
-	.infoTooltipStyle {
-		@extend %tooltip-apperance;
-		box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
+  .infoTooltipStyle {
+    @extend %tooltip-apperance;
+    box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
 
-		&.place-left:after {
-			border-left-color: $white !important;
-		}
+    &.place-left:after {
+      border-left-color: settings.$white !important;
+    }
 
-		&.place-top:after {
-			border-top-color: $white !important;
-			border-top-width: 8px !important;
-		}
+    &.place-top:after {
+      border-top-color: settings.$white !important;
+      border-top-width: 8px !important;
+    }
 
-		&.place-right:after {
-			border-right-color: $white !important;
-		}
-	}
+    &.place-right:after {
+      border-right-color: settings.$white !important;
+    }
+  }
 
-	.legendButtonTooltip {
-		.rc-tooltip-content > .rc-tooltip-inner {
-			@extend %tooltip-apperance;
-			max-width: unset;
-		}
+  .legendButtonTooltip {
+    .rc-tooltip-content>.rc-tooltip-inner {
+      @extend %tooltip-apperance;
+      max-width: unset;
+    }
   }
 }

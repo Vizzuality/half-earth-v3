@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
 
 .zoomComponent {
   display: flex;
@@ -10,7 +10,7 @@
 
 .zoomButton {
   align-items: center;
-  background-color: $elephant;
+  background-color: settings.$elephant;
   display: flex;
   height: 32px;
   justify-content: center;
@@ -18,16 +18,16 @@
   width: 32px;
 
   &:hover svg {
-    fill: $robins-egg-blue;
+    fill: settings.$robins-egg-blue;
   }
 
   svg {
-    fill: $white;
+    fill: settings.$white;
   }
 }
 
 .spacer {
-  background-color: $space-background;
+  background-color: settings.$space-background;
   height: 2px;
   opacity: 0.4;
   position: absolute;

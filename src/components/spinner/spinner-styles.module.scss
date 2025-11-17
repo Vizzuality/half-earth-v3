@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 $size: 100px;
 
@@ -10,11 +10,13 @@ $size: 100px;
   height: $size;
   border-radius: 100px;
   border: 4px solid rgba(255, 255, 255, 0.1);
-  -webkit-mask: linear-gradient(rgba(0, 0, 0, 0.1), $black 90%); // don't remove -webkit prefix - as of today mask is supported on chrome and safari only with the -webkit prefix
+  -webkit-mask: linear-gradient(rgba(0, 0, 0, 0.1), settings.$black 90%); // don't remove -webkit prefix - as of today mask is supported on chrome and safari only with the -webkit prefix
+  mask: linear-gradient(rgba(0, 0, 0, 0.1), settings.$black 90%);
   transform-origin: 50% 60%;
   transform: perspective(200px) rotateX(66deg);
   animation: spinner-wiggle 1.2s infinite;
 }
+
 .spinner:before,
 .spinner:after {
   content: "";
@@ -31,21 +33,32 @@ $size: 100px;
 }
 
 .spinner:before {
-  border-top-color: $brand-color-main;
+  border-top-color: settings.$brand-color-main;
 }
 
 .spinner:after {
-  border-top-color: $white;
+  border-top-color: settings.$white;
   animation-delay: 0.3s;
 }
 
 @keyframes spinner-spin {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
 @keyframes spinner-fade {
-  20% { opacity: .1; }
-  40% { opacity: 1; }
-  60% { opacity: .1; }
+  20% {
+    opacity: .1;
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: .1;
+  }
 }
 
 .spinnerAbsolute {
@@ -53,24 +66,25 @@ $size: 100px;
   top: 42%;
   left: 42%;
 
-  @media #{$tablet-portrait} {
+  @media #{settings.$tablet-portrait} {
     top: 42%;
     left: 47%;
   }
 }
 
 .spinnerWithOverlay {
-  background-color: $firefly;
+  background-color: settings.$firefly;
   width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
-  @media #{$mobile-only} {
+
+  @media #{settings.$mobile-only} {
     top: 0;
     left: 0;
     position: absolute;
     background-color: transparent;
-    z-index: $over-front;
+    z-index: settings.$over-front;
   }
 }
 
@@ -79,8 +93,10 @@ $size: 100px;
   margin-right: -50%;
   position: absolute;
   top: 50%;
-  transform: translate(-50%, -50%) perspective(200px) rotateX(66deg);;
-  @media #{$mobile-only} {
-   top: 50dvb;
+  transform: translate(-50%, -50%) perspective(200px) rotateX(66deg);
+  ;
+
+  @media #{settings.$mobile-only} {
+    top: 50dvb;
   }
 }

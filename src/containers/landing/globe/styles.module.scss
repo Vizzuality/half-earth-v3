@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
   height: 200px;
@@ -15,16 +15,17 @@
   }
 
   .content {
-    color: $white;
+    color: settings.$white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
     padding: 0;
 
-    @media #{$tablet-landscape} {
+    @media #{settings.$tablet-landscape} {
       padding: 0 40px;
     }
+
     .title {
       @extend %display2;
       font-size: 24px;
@@ -34,10 +35,10 @@
     .description {
       @extend %bodyText;
       margin: 0;
-      z-index: $default-z-index;
+      z-index: settings.$default-z-index;
       font-size: 12px;
 
-      @media #{$tablet-landscape} {
+      @media #{settings.$tablet-landscape} {
         font-size: 12px;
       }
     }

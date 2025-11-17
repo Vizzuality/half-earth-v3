@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
-@import 'styles/ui.module';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
+@use 'styles/ui.module' as *;
 
 $scroll-bar-width: 7px;
 $margin-left: 16px;
@@ -10,9 +10,9 @@ $spi-country-width: 226px;
 
 .chartTitle {
   @extend %bodyText;
-  color: $white;
+  color: settings.$white;
   margin: 0.4rem 1rem 0 0;
-  font-weight: $font-weight-bold;
+  font-weight: settings.$font-weight-bold;
 
   &.filterTitle {
     margin-left: 1rem;
@@ -33,7 +33,7 @@ $spi-country-width: 226px;
 
 .titleText {
   @extend %subtitle;
-  color: $grey-text;
+  color: settings.$grey-text;
   margin: 0;
 }
 
@@ -66,7 +66,7 @@ $spi-country-width: 226px;
     .legendItem {
       @extend %annotation;
       align-items: center;
-      color: $grey-text;
+      color: settings.$grey-text;
       display: flex;
 
       .legendColor {
@@ -97,7 +97,7 @@ $spi-country-width: 226px;
     cursor: default;
 
     .titleText {
-      color: $white;
+      color: settings.$white;
       letter-spacing: 0.06em;
     }
   }
@@ -142,8 +142,8 @@ $spi-country-width: 226px;
 
 .spiCountryButton {
   @extend %subtitle;
-  line-height: $line-height;
-  color: $grey-text;
+  line-height: settings.$line-height;
+  color: settings.$grey-text;
   text-align: left;
   min-width: $spi-country-width;
   max-width: $spi-country-width;
@@ -152,7 +152,7 @@ $spi-country-width: 226px;
   white-space: nowrap;
 
   &:hover {
-    color: $white;
+    color: settings.$white;
   }
 }
 
@@ -180,8 +180,8 @@ $spi-country-width: 226px;
     width: 100%;
     height: 40px;
     z-index: 9;
-    background-image: linear-gradient(to top, $dark 0%, rgba(9, 12, 20, 0) 100%);
-    }
+    background-image: linear-gradient(to top, settings.$dark 0%, rgba(9, 12, 20, 0) 100%);
+  }
 
 }
 
@@ -192,22 +192,24 @@ $spi-country-width: 226px;
 }
 
 .found {
-  color: $white;
+  color: settings.$white;
 }
 
 .selectedCountry {
-  color: $white;
-  font-weight: $font-weight-bold;
-  background-color: $white-opacity;
+  color: settings.$white;
+  font-weight: settings.$font-weight-bold;
+  background-color: settings.$white-opacity;
 
-  .titleText, .spiCountryIndex, .spiCountryName {
-    color: $white;
-    font-weight: $font-weight-bold;
+  .titleText,
+  .spiCountryIndex,
+  .spiCountryName {
+    color: settings.$white;
+    font-weight: settings.$font-weight-bold;
   }
 }
 
 .tooltip {
-  background-color: $elephant;
+  background-color: settings.$elephant;
   display: flex;
   position: relative;
 
@@ -217,7 +219,7 @@ $spi-country-width: 226px;
     padding: 6px;
 
     @extend %annotation;
-    color: $grey-text;
+    color: settings.$grey-text;
   }
 
   .values {
@@ -229,8 +231,9 @@ $spi-country-width: 226px;
       justify-content: center;
       height: 50%;
       padding: 5px;
-      color: $_temporary-dark-text;
-      font-size: $font-size-xs;
+      // Replaced private $_temporary-dark-text with public token
+      color: settings.$dark-text;
+      font-size: settings.$font-size-xs;
     }
   }
 }
@@ -243,33 +246,33 @@ $spi-country-width: 226px;
 // Colors
 
 .nonEndemic {
-  background-color: $non-endemic-species;
+  background-color: settings.$non-endemic-species;
 }
 
 .endemic {
-  background-color: $endemic-species;
+  background-color: settings.$endemic-species;
 }
 
 .veryHigh {
-  background-color: $human-modification-high-color;
+  background-color: settings.$human-modification-high-color;
 }
 
 .totalMinusVeryHigh {
-  background-color: $human-modification-color;
+  background-color: settings.$human-modification-color;
 }
 
 .protected {
-  background-color: $protected-areas;
+  background-color: settings.$protected-areas;
 }
 
 .protectionNeeded {
-  background-color: $protection-needed;
+  background-color: settings.$protection-needed;
 }
 
 .protectionNotNeeded {
-  background-color: $protection-non-needed-color;
+  background-color: settings.$protection-non-needed-color;
 }
 
 .noModification {
-  background-color: $non-human-modification;
+  background-color: settings.$non-human-modification;
 }
