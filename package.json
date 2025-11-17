@@ -52,15 +52,13 @@
     "vite": "^5.3.1",
     "vite-plugin-radar": "^0.10.1",
     "vite-plugin-svgr": "^4.2.0",
-    "vite-tsconfig-paths": "^4.3.2",
-    "workbox-build": "^4.3.1"
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run build-service-worker && npm run transifex:push",
+    "build": "tsc && vite build && npm run transifex:push",
     "start": "vite preview",
     "clean-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
-    "build-service-worker": "node ./src/service-worker-build.cjs",
     "cypress:open": "cypress open",
     "docs:serve": "bundle exec jekyll serve",
     "transifex:push": "dotenv cross-var ./node_modules/.bin/txjs-cli push src/ --token=%VITE_APP_TRANSIFEX_TOKEN% --secret=%VITE_APP_TRANSIFEX_SECRET%",
