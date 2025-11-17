@@ -26,7 +26,7 @@ function MaskAndOutlineGraphicLayer(props) {
 
   useEffect(() => {
     if (graphicsLayer && geometry) {
-      const expandedExtent = geometry.extent.clone().expand(1000);
+      const expandedExtent = geometry.extent.clone().expand(10000);
       const maskGeometry = geometryEngine.difference(expandedExtent, geometry);
       const maskGraphic = createGraphic(Graphic, MASK_STYLES, maskGeometry);
       const outlineGraphic = createGraphic(Graphic, GRID_CELL_STYLES, geometry);
