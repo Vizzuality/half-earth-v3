@@ -1,5 +1,5 @@
-@import 'styles/typography-extends';
-@import 'styles/settings';
+@use 'styles/typography-extends' as *;
+@use 'styles/settings' as settings;
 
 .protectedAreasTable {
   position: relative;
@@ -9,9 +9,10 @@
   border-collapse: collapse;
 
   tr {
-    border-bottom: solid 1px $firefly;
+    border-bottom: solid 1px settings.$firefly;
 
-    th, td {
+    th,
+    td {
       text-align: left;
     }
 
@@ -42,7 +43,7 @@
 
   .firstColumn {
     .nameLink {
-      color: $white;
+      color: settings.$white;
       text-align: left;
       text-decoration: underline;
       padding-bottom: 0.5px;
@@ -61,6 +62,6 @@
   .header {
     position: sticky;
     top: 0;
-    background-color: $firefly;
+    background-color: settings.$firefly;
   }
 }

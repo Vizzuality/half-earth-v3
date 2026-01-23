@@ -1,6 +1,6 @@
-@import 'styles/ui.module';
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/ui.module' as *;
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .tabs {
   display: flex;
@@ -13,16 +13,16 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
-    border-radius: $card-border-radius;
-    border: 1px solid $brand-color-main;
+    border-radius: settings.$card-border-radius;
+    border: 1px solid settings.$brand-color-main;
   }
 
   .hasBorder {
-    border-left: 1px solid $grey-text;
+    border-left: 1px solid settings.$grey-text;
 
     &.first {
       border-left: 0;
-      border-right: 1px solid $grey-text;
+      border-right: 1px solid settings.$grey-text;
     }
   }
 
@@ -36,13 +36,13 @@
     padding: 12px 0;
     height: 50px;
     width: 100%;
-    color: $white;
+    color: settings.$white;
     text-align: center;
     cursor: pointer;
 
     &[aria-selected="true"] {
-      background-color: $brand-color-main;
-      color: $black;
+      background-color: settings.$brand-color-main;
+      color: settings.$black;
     }
   }
 

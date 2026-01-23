@@ -1,14 +1,14 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .title {
   @extend %annotation;
-  line-height: $line-height;
+  line-height: settings.$line-height;
 }
 
 .subtitle {
   @extend %annotation;
-  color: $grey-text;
+  color: settings.$grey-text;
 }
 
 .bars {
@@ -24,15 +24,15 @@
 .bar {
   display: block;
   width: 80px;
-  background-color: $white-opacity-20;
+  background-color: settings.$white-opacity-20;
   margin: 10px 2px 0 0;
 
   .xAxisTick {
     @extend %annotation;
     top: 80px;
     position: absolute;
-    font-size: $font-size-xxs;
-    color: $oslo-gray;
+    font-size: settings.$font-size-xxs;
+    color: settings.$oslo-gray;
     min-width: 30px;
     margin-left: -6px;
   }
@@ -41,14 +41,14 @@
     @extend %annotation;
     margin-top: -20px;
     text-align: center;
-    font-size: $font-size-xxs;
+    font-size: settings.$font-size-xxs;
   }
 
   .tickHighlighted {
-    color: $white;
+    color: settings.$white;
   }
 
   &.highlighted {
-    background-color: $white;
+    background-color: settings.$white;
   }
 }

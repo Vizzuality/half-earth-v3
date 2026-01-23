@@ -1,9 +1,9 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .xAxisTick {
   @extend %annotation;
-  color: $grey-text;
+  color: settings.$grey-text;
   font-size: 8px;
   font-weight: 200;
 }

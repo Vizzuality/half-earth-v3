@@ -1,16 +1,16 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .container {
   display: flex;
   width: 100%;
-  outline: 1px solid $elephant;
+  outline: 1px solid settings.$elephant;
   transition: 0.4s;
   padding: 24px 0 16px 16px;
 
   .content {
     border-left: 1px solid transparent;
-    color: $white;
+    color: settings.$white;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -20,7 +20,7 @@
 
     .title {
       @extend %bodyText;
-      color: $grey-text;
+      color: settings.$grey-text;
       text-transform: uppercase;
       letter-spacing: 0;
       margin: 0 0 4px 0;
@@ -29,12 +29,12 @@
 
     .description {
       @extend %bodyText;
-      color: $white;
+      color: settings.$white;
       font-size: 16px;
       margin: 0;
-      line-height: $line-height-lg;
+      line-height: settings.$line-height-lg;
 
-      @media #{$mobile-landscape} {
+      @media #{settings.$mobile-landscape} {
         font-size: 14px;
         max-width: 90%;
       }

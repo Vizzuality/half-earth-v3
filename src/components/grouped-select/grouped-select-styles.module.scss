@@ -1,26 +1,28 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 :export {
   colors: {
-    alto: $alto;
-    black: $black;
-    white: $white;
+    alto: settings.$alto;
+    black: settings.$black;
+    white: settings.$white;
   }
 
   fontFamily: {
-    font-family-1: $font-family-1;
+    font-family-1: settings.$font-family-1;
   }
 
   fontSizes: {
-    font-size-sm: $font-size-sm;
+    font-size-sm: settings.$font-size-sm;
   }
 
   fontWeights: {
-    font-weight-bold: $font-weight-bold;
+    font-weight-bold: settings.$font-weight-bold;
   }
-};
+}
+
+;
 
 .arrowIcon {
   position: absolute;
@@ -30,8 +32,8 @@
   transition: all .1s linear;
 
   path {
-    fill: $white;
-    stroke: $white;
+    fill: settings.$white;
+    stroke: settings.$white;
   }
 }
 
@@ -42,7 +44,7 @@
 }
 
 .singleValue {
-  color: $white !important;
+  color: settings.$white !important;
   margin: 0;
   padding: 0;
   white-space: nowrap;
@@ -55,10 +57,10 @@
 }
 
 .groupHeading {
-  color: $black;
-  font-family: $font-family-1;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-sm;
+  color: settings.$black;
+  font-family: settings.$font-family-1;
+  font-weight: settings.$font-weight-bold;
+  font-size: settings.$font-size-sm;
   padding-left: 10px;
   text-transform: capitalize;
 }

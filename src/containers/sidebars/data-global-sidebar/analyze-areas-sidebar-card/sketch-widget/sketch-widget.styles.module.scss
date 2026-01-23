@@ -1,49 +1,50 @@
-@import 'styles/settings';
-@import 'styles/typography-extends.scss';
-@import 'styles/shared-sidebar.module';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
+@use 'styles/shared-sidebar.module' as *;
 
 .sketchWidget {
   display: flex;
-  background-color: $firefly;
+  background-color: settings.$firefly;
   position: absolute;
   left: 50%;
-  top: $nav-bar-height;
+  top: settings.$nav-bar-height;
   border-radius: 2px;
-  border: 2px solid $brand-color-main;
+  border: 2px solid settings.$brand-color-main;
   height: 40px;
-  z-index: $default-z-index;
+  z-index: settings.$default-z-index;
 
   &.edit {
-    background-color: $space-background;
+    background-color: settings.$space-background;
     @include backdropBlur();
     height: 56px;
   }
 }
 
 .sketchButton {
-  color: $white;
+  color: settings.$white;
 
   &:hover,
   &:focus {
-    background-color: $firefly;
-    color: $brand-color-main;
+    background-color: settings.$firefly;
+    color: settings.$brand-color-main;
     outline: none;
   }
 
-  &:disabled  {
-    color: $logos-text;
+  &:disabled {
+    color: settings.$logos-text;
   }
 
   &.esri-button-create &:not(.esri-sketch__button--selected) {
-    color: $white;
+    color: settings.$white;
   }
 
   &.esri-sketch__button--selected {
-    background-color: $firefly;
-    color: $brand-color-main !important;
+    background-color: settings.$firefly;
+    color: settings.$brand-color-main !important;
 
     &:hover {
-      color: $brand-color-main;
+      color: settings.$brand-color-main;
     }
   }
 }
@@ -55,13 +56,13 @@
 }
 
 .editDelete {
-  background-color: $firefly;
+  background-color: settings.$firefly;
   height: 40px;
   border-radius: 2px;
 
   &:hover {
-    background-color: $space-background;
-    color: $white;
+    background-color: settings.$space-background;
+    color: settings.$white;
   }
 }
 

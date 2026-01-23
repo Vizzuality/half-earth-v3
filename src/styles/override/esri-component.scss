@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .esri-component {
   box-shadow: none !important;
@@ -14,7 +14,7 @@
 .esri-view-surface {
   height: 100%;
 
-  @media #{$mobile-only} {
+  @media #{settings.$mobile-only} {
     height: 100svh;
   }
 }

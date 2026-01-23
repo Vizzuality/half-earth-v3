@@ -25,6 +25,7 @@ function AOIEntryTooltipComponent({
   useClickOutside(tooltipref, () => handleTooltipClose(), buttonRef);
 
   useEffect(() => {
+    if (!view) return;
     if (tooltipPosition && !!tooltipContent) {
       const { latitude, longitude } = tooltipPosition.centroid;
       view.openPopup({
@@ -34,7 +35,7 @@ function AOIEntryTooltipComponent({
     } else {
       view.closePopup();
     }
-  }, [tooltipPosition, !!tooltipContent]);
+  }, [tooltipPosition, !!tooltipContent, view]);
 
   const {
     attributes: { MOL_ID, AREA_KM2 },

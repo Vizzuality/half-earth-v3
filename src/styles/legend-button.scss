@@ -1,4 +1,4 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 .legendButton {
   height: 14px;
@@ -7,8 +7,8 @@
   z-index: 2;
 
   svg {
-    fill: $white;
-    stroke: $white;
+    fill: settings.$white;
+    stroke: settings.$white;
     height: 14px;
     width: 14px;
   }

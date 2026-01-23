@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Colors
 $white: #fff;
 $black: #000000;
@@ -36,13 +38,13 @@ $navy-he: $elephant;
 $brand-color-main: #18bab4;
 $app-background: #0a212e;
 $brand-color-secondary: $elephant;
-$brand-color-main-hover: darken($brand-color-main, 10);
-$brand-color-secondary-hover: lighten($elephant, 10);
+$brand-color-main-hover: color.adjust($brand-color-main, $lightness: -10%);
+$brand-color-secondary-hover: color.adjust($elephant, $lightness: 10%);
 
 $dark-text: #222;
-$dark-text-hover: darken($dark-text, 30%);
+$dark-text-hover: color.adjust($dark-text, $lightness: -30%);
 $grey-text: #a0afb8;
-$grey-text-hover: lighten($grey-text, 10%);
+$grey-text-hover: color.adjust($grey-text, $lightness: 10%);
 $dark-opacity: rgba(34, 34, 34, 0.1);
 $_temporary-dark-text: #222;
 $_temporary-light-text: #747474;

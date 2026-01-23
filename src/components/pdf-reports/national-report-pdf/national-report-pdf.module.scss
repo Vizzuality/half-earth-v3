@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 $gap: 20pt;
 
@@ -26,9 +26,10 @@ $gap: 20pt;
   @extend %bodyText;
 }
 
-.sources, .urlWrapper {
+.sources,
+.urlWrapper {
   @extend %bodyText;
-  color: rgba($navy-he, 0.5);
+  color: rgba(settings.$navy-he, 0.5);
 }
 
 .sectionTitle {
@@ -40,7 +41,7 @@ $gap: 20pt;
 
 .spiAverageText {
   @extend %annotation;
-  color: $grey-text;
+  color: settings.$grey-text;
 }
 
 @media print {
@@ -57,7 +58,8 @@ $gap: 20pt;
 
   a {
     text-decoration: none;
-    color: $_temporary-light-text;
+    // Replaced private $_temporary-light-text with public token
+    color: settings.$grey-text;
   }
 
   p {
@@ -75,17 +77,17 @@ $gap: 20pt;
     opacity: 1;
     width: 842pt;
     height: 595pt;
-    background-color: $white;
+    background-color: settings.$white;
     display: grid;
     column-gap: 8pt;
     row-gap: $gap;
     grid-template-columns: repeat(8, 94.5pt);
     grid-template-rows: 42pt 190pt 270pt 20pt;
     grid-template-areas:
-    "hd hd hd hd hd hd hd logo"
-    "ind ind ind ind ind ind ind ind"
-    "species species chart chart chart chart chart chart"
-    "sources sources . . . url url url";
+      "hd hd hd hd hd hd hd logo"
+      "ind ind ind ind ind ind ind ind"
+      "species species chart chart chart chart chart chart"
+      "sources sources . . . url url url";
 
     .title {
       grid-area: hd;
@@ -134,9 +136,9 @@ $gap: 20pt;
 
       .indicatorCard {
         padding: 11pt 16pt;
-        background-color: $white-opacity-pdf;
+        background-color: settings.$white-opacity-pdf;
         border: none;
-        color: $dark-text;
+        color: settings.$dark-text;
 
         .description {
           font-size: 14pt;
@@ -151,7 +153,7 @@ $gap: 20pt;
 
     .speciesComposition {
       grid-area: species;
-      background-color: $white-opacity-pdf;
+      background-color: settings.$white-opacity-pdf;
       padding: 16pt;
       border-radius: 8pt;
       display: flex;
@@ -160,7 +162,7 @@ $gap: 20pt;
     }
 
     .endemic {
-      font-weight: $font-weight-bold;
+      font-weight: settings.$font-weight-bold;
       margin-bottom: 5pt;
     }
 
@@ -176,30 +178,35 @@ $gap: 20pt;
 
     .areaChartContainer {
       grid-area: chart;
-      background-color: $white-opacity-pdf;
+      background-color: settings.$white-opacity-pdf;
       padding: 16pt;
       border-radius: 8pt;
+
       .chartHeader {
         display: flex;
         justify-content: space-between;
+
         .areaChartLegend {
-          color: $black;
+          color: settings.$black;
           display: flex;
         }
+
         .areaChartLegendItem {
           align-items: center;
           display: flex;
         }
+
         .area1ChartLegendLine {
-          border: 1pt solid $black;
+          border: 1pt solid settings.$black;
           height: 1pt;
           margin-right: 6pt;
           width: 20pt;
         }
+
         .area2ChartLegendLine {
           background-color: transparent;
           border: none;
-          border-top: 2pt dashed $black;
+          border-top: 2pt dashed settings.$black;
           margin-left: 16pt;
           margin-right: 6pt;
           width: 20pt;
@@ -216,7 +223,7 @@ $gap: 20pt;
       justify-self: flex-end;
 
       .urlText {
-        color: $brand-color-main;
+        color: settings.$brand-color-main;
       }
     }
   }

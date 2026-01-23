@@ -3,7 +3,7 @@ import { SpeciesItem } from 'types/services-types';
 const { VITE_APP_MOL_API } = import.meta.env;
 
 const config = {
-  url: `https://api.mol.org/2.x/species/info`,
+  url: `https://dev-mol3-dot-api-2-x-dot-map-of-life.appspot.com/2.x/species/info`,
   query: '?scientificname=',
   lang: '&lang=',
 };

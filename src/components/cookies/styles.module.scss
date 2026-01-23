@@ -1,21 +1,21 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .cookies {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: $over-modal;
+  z-index: settings.$over-modal;
   width: 100%;
   transform: translateY(100%);
   overflow: hidden;
-  background-color: rgba($navy-he, 0.8);
+  background-color: rgba(settings.$navy-he, 0.8);
   padding: 6px;
   padding-left: 2rem;
   outline: none;
 
   @extend %annotation;
-  color: $white;
+  color: settings.$white;
 }
 
 .bannerContainer {
@@ -23,7 +23,7 @@
   flex-direction: column;
 }
 
-@media #{$desktop} {
+@media #{settings.$desktop} {
   .bannerContainer {
     display: flex;
     flex-direction: row;
@@ -33,8 +33,8 @@
 }
 
 .link {
-  color: $white;
-  font-weight: $font-weight-bold;
+  color: settings.$white;
+  font-weight: settings.$font-weight-bold;
   text-decoration: underline;
 }
 

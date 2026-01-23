@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 $content-padding: 16px;
 $content-height: calc(100vh - 105px);
@@ -41,19 +41,19 @@ $content-height-mobile: 100svh;
   }
 
   .closeButton {
-    top: $local-sidebar-top-margin;
+    top: settings.$local-sidebar-top-margin;
     right: -16px;
     position: absolute;
   }
 
   .header {
-    padding-top: $local-sidebar-top-margin;
+    padding-top: settings.$local-sidebar-top-margin;
     padding-left: $content-padding;
     padding-bottom: 12px;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    border-bottom: 1px solid $white-opacity;
+    border-bottom: 1px solid settings.$white-opacity;
 
     .titleWrapper {
       display: flex;
@@ -62,7 +62,7 @@ $content-height-mobile: 100svh;
         @extend %display2;
         margin: 0;
         padding-left: 10px;
-        color: $white;
+        color: settings.$white;
       }
 
       .backBtn {
@@ -70,11 +70,12 @@ $content-height-mobile: 100svh;
         margin-left: -10px;
 
         .arrowIcon {
-          fill: $white;
+          fill: settings.$white;
           height: 36px;
           width: 34px;
+
           &:hover {
-            fill: $grey-text;
+            fill: settings.$grey-text;
           }
         }
       }
@@ -82,12 +83,11 @@ $content-height-mobile: 100svh;
   }
 
   .countryDescriptionContainer {
-    padding: $local-sidebar-top-margin $content-padding
-      $local-sidebar-top-margin 0;
+    padding: settings.$local-sidebar-top-margin $content-padding settings.$local-sidebar-top-margin 0;
 
     .countryDescription {
       @extend %bodyText;
-      color: $grey-text;
+      color: settings.$grey-text;
       margin: 0;
     }
   }
@@ -96,18 +96,18 @@ $content-height-mobile: 100svh;
     display: flex;
     padding: 12px 12px 12px 16px;
     border-radius: 6px;
-    background: $white-opacity;
-    box-shadow: $box-shadow-light;
+    background: settings.$white-opacity;
+    box-shadow: settings.$box-shadow-light;
     margin-top: 8px;
   }
 
   .disclaimerBold {
-    font-weight: $font-weight-bold;
+    font-weight: settings.$font-weight-bold;
   }
 
   .disclaimer {
-    color: $white;
-    font-size: $font-size-xs;
+    color: settings.$white;
+    font-size: settings.$font-size-xs;
   }
 
   .actionButtons {
@@ -118,7 +118,7 @@ $content-height-mobile: 100svh;
 
   .actionButton {
     margin-right: 8px;
-    color: $white;
+    color: settings.$white;
 
     svg {
       fill: currentColor;
@@ -127,16 +127,18 @@ $content-height-mobile: 100svh;
 
   .sourceText {
     @extend %annotation;
-    color: $grey-text;
+    color: settings.$grey-text;
     display: flex;
     margin: 0 40px 0 20px;
-    border-bottom: 1px solid $grey-text;
+    border-bottom: 1px solid settings.$grey-text;
     padding: 12px 0;
+
     a {
-      color: $grey-text;
+      color: settings.$grey-text;
       text-decoration: underline;
+
       &:hover {
-        color: $white;
+        color: settings.$white;
       }
     }
   }
@@ -144,8 +146,8 @@ $content-height-mobile: 100svh;
   .countryName {
     @extend %display2;
     margin: 0;
-    padding-left: $site-gutter;
-    color: $white;
+    padding-left: settings.$site-gutter;
+    color: settings.$white;
   }
 
   .flagWrapper {
@@ -160,10 +162,10 @@ $content-height-mobile: 100svh;
 
   .titleTooltip {
     @extend %annotation;
-    border-radius: $border-radius-desktop;
-    background: $white;
-    box-shadow: $box-shadow-light;
-    color: $dark-text;
+    border-radius: settings.$border-radius-desktop;
+    background: settings.$white;
+    box-shadow: settings.$box-shadow-light;
+    color: settings.$dark-text;
     margin-bottom: 5px;
     padding: 2px 6px;
     width: 200px;
@@ -176,11 +178,9 @@ $content-height-mobile: 100svh;
     width: 100%;
     height: 50px;
     z-index: 9;
-    background-image: linear-gradient(
-      to top,
-      $app-background 0%,
-      rgba(9, 12, 20, 0) 100%
-    );
+    background-image: linear-gradient(to top,
+        settings.$app-background 0%,
+        rgba(9, 12, 20, 0) 100%);
   }
 
   &.mobile {
@@ -194,7 +194,7 @@ $content-height-mobile: 100svh;
 
     .closeButton {
       right: 10px;
-      color: $white;
+      color: settings.$white;
       background-color: transparent;
 
       svg {

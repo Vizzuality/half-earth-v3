@@ -1,13 +1,13 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 .modal {
   width: 100vw !important;
   height: 100vh !important;
   max-width: 100%;
-  background-color: $elephant;
-  color: $grey-text;
+  background-color: settings.$elephant;
+  color: settings.$grey-text;
 }
 
 .closeBtn {
@@ -30,7 +30,7 @@
       margin-left: 10px;
       background: transparent;
       border: none;
-      color: $grey-text;
+      color: settings.$grey-text;
     }
   }
 }

@@ -1,6 +1,6 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/typography-extends' as *;
 
 $checkbox-size: 15px;
 

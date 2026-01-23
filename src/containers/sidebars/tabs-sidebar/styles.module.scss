@@ -1,14 +1,14 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/shared-sidebar.module';
-@import 'styles/typography-extends.scss';
+@use 'styles/settings' as settings;
+@use 'styles/ui.module' as *;
+@use 'styles/shared-sidebar.module';
+@use 'styles/typography-extends';
 
 .sidebarTabsContainer {
   @extend .sharedSidebarCardContainer;
   @include backdropBlur();
 
   &:hover {
-    border-color: $elephant;
+    border-color: settings.$elephant;
   }
 }
 
@@ -28,6 +28,7 @@
   li[role="presentation"] {
     flex: 1;
     padding: 6px 3px 6px 6px;
+
     &:last-child {
       padding: 6px 6px 6px 3px;
     }
@@ -39,21 +40,21 @@
     padding: 12px 0;
     height: 50px;
     width: 100%;
-    color: $white;
+    color: settings.$white;
     text-align: center;
     cursor: pointer;
 
     &:hover {
-      background-color: $firefly;
+      background-color: settings.$firefly;
     }
 
     &[aria-selected="true"] {
-      background-color: $elephant;
-      border-radius: $border-radius-desktop;
-      color: $white;
+      background-color: settings.$elephant;
+      border-radius: settings.$border-radius-desktop;
+      color: settings.$white;
 
       &:hover {
-        background-color: $firefly;
+        background-color: settings.$firefly;
       }
     }
 
@@ -71,15 +72,15 @@
         height: 18px;
         margin-right: 10px;
         width: 18px;
-        fill: $white;
+        fill: settings.$white;
       }
 
       .layersIndicator {
         @extend %subtitle;
         align-items: center;
-        background-color: $white;
+        background-color: settings.$white;
         border-radius: 100%;
-        color: $elephant;
+        color: settings.$elephant;
         display: flex;
         height: 16px;
         justify-content: center;
@@ -93,7 +94,7 @@
         position: relative;
 
         .aoiIndicator {
-          background-color: $screamin-green;
+          background-color: settings.$screamin-green;
           border-radius: 50%;
           height: 6px;
           position: absolute;

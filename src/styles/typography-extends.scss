@@ -1,8 +1,8 @@
-@import 'styles/settings';
+@use 'styles/settings' as settings;
 
 // Onboarding landing page
 %display1 {
-  font-family: $font-family-serif;
+  font-family: settings.$font-family-serif;
   font-size: 45px;
   font-weight: 300;
   letter-spacing: 2px;
@@ -15,7 +15,7 @@
 
 // Mainly cards and section titles
 %display2 {
-  font-family: $font-family-serif;
+  font-family: settings.$font-family-serif;
   font-size: 32px;
   font-weight: 200;
   line-height: 36px;
@@ -29,7 +29,7 @@
 // Titles H1
 // Categories, Areas names
 %headline {
-  font-family: $font-family-sans-serif;
+  font-family: settings.$font-family-sans-serif;
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -43,7 +43,7 @@
 // Titles H2
 // Sections title
 %title {
-  font-family: $font-family-sans-serif;
+  font-family: settings.$font-family-sans-serif;
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;
@@ -58,10 +58,10 @@
 // Subtitles H3
 // Legend title, Actions, Small titles
 %subtitle {
-  font-family: $font-family-sans-serif;
+  font-family: settings.$font-family-sans-serif;
   font-size: 12px;
   font-weight: 400;
-  line-height: $line-height-lg;
+  line-height: settings.$line-height-lg;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   @media print {
@@ -72,10 +72,10 @@
 
 // Datasets, Geodescriber
 %bodyText {
-  font-family: $font-family-sans-serif;
-  font-size: $font-size-sm;
+  font-family: settings.$font-family-sans-serif;
+  font-size: settings.$font-size-sm;
   font-weight: 300;
-  line-height: $line-height-lg;
+  line-height: settings.$line-height-lg;
   letter-spacing: 0px;
   @media print{
     font-size: 10pt;
@@ -86,25 +86,25 @@
 // Sources
 // Tooltips, descriptions
 %annotation {
-  font-family: $font-family-sans-serif;
+  font-family: settings.$font-family-sans-serif;
   font-size: 12px;
   font-weight: 300;
-  line-height: $line-height-lg;
+  line-height: settings.$line-height-lg;
   letter-spacing: 0px;
 }
 
 // Sections title - mobile
 %titleMobile {
-  font-family: $font-family-sans-serif;
-  font-size: $font-size-xxs;
+  font-family: settings.$font-family-sans-serif;
+  font-size: settings.$font-size-xxs;
   letter-spacing: 2px;
   line-height: 20px;
   text-transform: uppercase;
 }
 
 %miniAnnotation {
-  font-family: $font-family-1;
-  font-size: $font-size-xxxs;
+  font-family: settings.$font-family-1;
+  font-size: settings.$font-size-xxxs;
   text-transform: uppercase;
-  font-weight: $font-weight-bold;
+  font-weight: settings.$font-weight-bold;
 }

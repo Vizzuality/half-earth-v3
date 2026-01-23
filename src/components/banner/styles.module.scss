@@ -1,15 +1,15 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .banner {
   position: relative;
   top: 0;
   left: 0;
-  z-index: $over-modal;
+  z-index: settings.$over-modal;
   width: 100%;
   transform: translateY(100%);
   overflow: hidden;
-  background-color: rgba($navy-he, 0.8);
+  background-color: rgba(settings.$navy-he, 0.8);
   padding: 6px;
   padding-left: 2rem;
   outline: none;
@@ -17,16 +17,16 @@
   font-weight: 500;
   display: flex;
   justify-content: space-between;
-  font-family: $font-family-inter;
+  font-family: settings.$font-family-inter;
 
   @extend %annotation;
-  color: $white;
+  color: settings.$white;
 }
 
 .buttonItems {
-  color: $dark-text;
+  color: settings.$dark-text;
   gap: 10px;
-  font-family: $font-family-inter ;
+  font-family: settings.$font-family-inter ;
   text-decoration: none;
 
   svg {
@@ -60,11 +60,11 @@
 }
 
 .bannerText {
-  color: $white;
+  color: settings.$white;
   font-weight: 600;
 }
 
-@media #{$desktop} {
+@media #{settings.$desktop} {
   .bannerContainer {
     display: flex;
     flex-direction: row;
@@ -86,7 +86,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: $white;
+  color: settings.$white;
 
   path,
   circle,

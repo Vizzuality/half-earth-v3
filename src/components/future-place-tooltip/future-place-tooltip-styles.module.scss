@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .tooltipContainer {
   display: none;
@@ -30,18 +30,19 @@
 
 .tooltipName {
   @extend %title;
-  color: $white;
+  color: settings.$white;
 }
 
 .tooltipExplore {
   @extend %title;
-  background-color: $white;
+  background-color: settings.$white;
   width: 100%;
   height: 30px;
   padding: 5px 20px;
   border-radius: 2px;
+
   &:hover {
-    background-color: $brand-color-main;
+    background-color: settings.$brand-color-main;
   }
 }
 
@@ -51,7 +52,7 @@
   right: 10px;
   top: 10px;
   cursor: pointer;
-  fill: $white;
+  fill: settings.$white;
 }
 
 .areaSection {

@@ -1,5 +1,5 @@
-@import 'styles/settings';
-@import 'styles/typography-extends';
+@use 'styles/settings' as settings;
+@use 'styles/typography-extends' as *;
 
 .indicatorCardsContainer {
   display: grid;
@@ -7,7 +7,7 @@
   grid-gap: 10px;
   padding-right: 16px;
 
-  @media #{$mobile-landscape} {
+  @media #{settings.$mobile-landscape} {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
@@ -15,19 +15,20 @@
     height: 17px;
     width: 100%;
   }
+
   .spiAverageText {
     @extend %annotation;
-    color: $grey-text;
+    color: settings.$grey-text;
     margin: 0;
   }
 }
 
 .titleTooltip {
   @extend %annotation;
-  border-radius: $border-radius-desktop;
-  background: $white;
-  box-shadow: $box-shadow-light;
-  color: $dark-text;
+  border-radius: settings.$border-radius-desktop;
+  background: settings.$white;
+  box-shadow: settings.$box-shadow-light;
+  color: settings.$dark-text;
   margin-bottom: 5px;
   padding: 2px 6px;
   width: 200px;
